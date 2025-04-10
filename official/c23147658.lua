@@ -59,7 +59,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 	--Check if current phase is player's end phase
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 	--Lose 600 ATK during each of your end phases
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
@@ -68,6 +68,6 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(-600)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 	c:RegisterEffect(e1)
 end

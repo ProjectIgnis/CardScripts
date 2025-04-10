@@ -1,5 +1,5 @@
--- 天昇星テンマ
--- Tenma the Sky Star
+--天昇星テンマ
+--Tenma the Sky Star
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon with no tribute
@@ -87,7 +87,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(-500)
 	c:RegisterEffect(e1)
@@ -97,4 +97,3 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 			end
 	end
 end
-

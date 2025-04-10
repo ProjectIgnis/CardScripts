@@ -1,4 +1,5 @@
 --TG ハルバード・キャノン
+--T.G. Halberd Cannon
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -43,7 +44,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.spop)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x27}
+s.listed_series={SET_TG}
 s.synchro_tuner_required=1
 s.synchro_nt_required=2
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
@@ -64,7 +65,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x27) and c:IsCanBeSpecialSummoned(e,0,tp,false,true)
+	return c:IsSetCard(SET_TG) and c:IsCanBeSpecialSummoned(e,0,tp,false,true)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end

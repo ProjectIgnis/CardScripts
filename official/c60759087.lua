@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(0,TIMING_MAIN_END+TIMING_END_PHASE)
+	e1:SetHintTiming(0,TIMING_MAIN_END|TIMING_END_PHASE)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetCondition(s.condition)
 	e1:SetTarget(s.conttg)
@@ -24,13 +24,13 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tdop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x153,0x154}
+s.listed_series={SET_KI_SIKIL,SET_LIL_LA}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(tp,LOCATION_MZONE,0):Filter(Card.IsFaceup,nil)
-	return g:IsExists(Card.IsSetCard,1,nil,0x153) and g:IsExists(Card.IsSetCard,1,nil,0x154)
+	return g:IsExists(Card.IsSetCard,1,nil,SET_KI_SIKIL) and g:IsExists(Card.IsSetCard,1,nil,SET_LIL_LA)
 end
 function s.filter1(c)
-	return c:IsFaceup() and (c:IsSetCard(0x153) or c:IsSetCard(0x154)) and c:IsAbleToChangeControler()
+	return c:IsFaceup() and (c:IsSetCard(SET_KI_SIKIL) or c:IsSetCard(SET_LIL_LA)) and c:IsAbleToChangeControler()
 end
 function s.filter2(c)
 	return c:IsFaceup() and c:IsAbleToChangeControler()
@@ -70,6 +70,6 @@ end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) then
-		Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)
+		Duel.SendtoDeck(tc,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	end
 end

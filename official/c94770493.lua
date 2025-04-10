@@ -21,13 +21,13 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) and tc:GetFlagEffect(id)==0 then
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+		tc:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 		--Can make another attack
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_EXTRA_ATTACK)
 		e1:SetValue(tc:GetAttackAnnouncedCount())
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 		--Double its ATK
 		local e2=Effect.CreateEffect(c)
@@ -35,7 +35,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EVENT_BATTLE_START)
 		e2:SetCountLimit(1)
 		e2:SetOperation(s.atkop)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e2:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e2)
 	end
 end
@@ -47,6 +47,6 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetValue(e:GetHandler():GetAttack()*2)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_DAMAGE)
 	e:GetHandler():RegisterEffect(e1)
 end

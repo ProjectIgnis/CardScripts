@@ -1,4 +1,5 @@
 --閃光のイリュージョン
+--Glorious Illusion
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -38,9 +39,9 @@ function s.initial_effect(c)
 	e4:SetOperation(s.disop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x38}
+s.listed_series={SET_LIGHTSWORN}
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x38) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_LIGHTSWORN) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end

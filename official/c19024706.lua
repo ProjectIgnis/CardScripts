@@ -1,4 +1,5 @@
 --ヒーロー逆襲
+--Hero Counterattack
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,15 +12,15 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x3008}
+s.listed_series={SET_ELEMENTAL_HERO}
 function s.cfilter(c,tp)
-	return c:IsSetCard(0x3008) and c:IsPreviousControler(tp)
+	return c:IsSetCard(SET_ELEMENTAL_HERO) and c:IsPreviousControler(tp)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_HAND,0,1,nil,0x3008) end
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_HAND,0,1,nil,SET_ELEMENTAL_HERO) end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(tp,LOCATION_HAND,0)
@@ -27,7 +28,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=sg:GetFirst()
 	if tc then
 		Duel.ConfirmCards(1-tp,tc)
-		if tc:IsSetCard(0x3008) and tc:IsMonster() then
+		if tc:IsSetCard(SET_ELEMENTAL_HERO) and tc:IsMonster() then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 			local dg=Duel.SelectMatchingCard(tp,aux.TRUE,tp,0,LOCATION_MZONE,1,1,nil)
 			Duel.Destroy(dg,REASON_EFFECT)

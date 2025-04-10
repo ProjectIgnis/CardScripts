@@ -1,4 +1,5 @@
 --カチコチドラゴン
+--Kachi Kochi Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -11,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_BATTLE_DESTROYING)
 	e1:SetCountLimit(1)
 	e1:SetCondition(s.atcon)
-	e1:SetCost(s.atcost)
+	e1:SetCost(Cost.Detach(1))
 	e1:SetOperation(s.atop)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
 end
@@ -19,10 +20,6 @@ function s.atcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
 	return bc:IsLocation(LOCATION_GRAVE) and bc:IsMonster() and c:CanChainAttack() and c:IsStatus(STATUS_OPPO_BATTLE)
-end
-function s.atcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.atop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ChainAttack()

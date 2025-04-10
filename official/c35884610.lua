@@ -2,7 +2,7 @@
 --U.A. Powered Jersey
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsSetCard,0xb2))
+	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsSetCard,SET_UA))
 	--ATK increase
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_EQUIP)
@@ -34,7 +34,7 @@ function s.initial_effect(c)
 	e5:SetCategory(CATEGORY_REMOVE)
 	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e5:SetRange(LOCATION_SZONE)
-	e5:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e5:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e5:SetCountLimit(1)
 	e5:SetCondition(s.rmcon)
 	e5:SetTarget(s.rmtg)
@@ -52,7 +52,7 @@ function s.initial_effect(c)
 	e6:SetOperation(s.thop)
 	c:RegisterEffect(e6)
 end
-s.listed_series={0xb2}
+s.listed_series={SET_UA}
 function s.damcon(e)
 	return e:GetHandler():GetEquipTarget():GetBattleTarget()~=nil
 end
@@ -70,11 +70,11 @@ function s.atop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e1:SetCode(EFFECT_EXTRA_ATTACK)
 	e1:SetValue(1)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_BATTLE)
 	tc:RegisterEffect(e1)
 end
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

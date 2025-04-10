@@ -45,7 +45,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,2))
 		Duel.SelectTarget(tp,s.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,c)
 		c:RegisterFlagEffect(0,RESET_CHAIN,EFFECT_FLAG_CLIENT_HINT,1,0,65)
-		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+		c:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 	else
 		e:SetProperty(0)
 	end
@@ -60,7 +60,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsCanAddCounter(COUNTER_SPELL,1)

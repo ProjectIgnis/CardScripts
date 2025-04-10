@@ -12,12 +12,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x54}
+s.listed_series={SET_GAGAGA}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x54),tp,LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_GAGAGA),tp,LOCATION_MZONE,0,1,nil) end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local sg=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,0x54),tp,LOCATION_MZONE,0,nil)
+	local sg=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,SET_GAGAGA),tp,LOCATION_MZONE,0,nil)
 	local atk=#sg*500
 	local c=e:GetHandler()
 	local tc=sg:GetFirst()
@@ -26,7 +26,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(atk)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY,2)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_STANDBY,2)
 		tc:RegisterEffect(e1)
 	end
 end

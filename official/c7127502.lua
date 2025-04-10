@@ -1,4 +1,5 @@
 --竜魔王レクターP
+--Lector Pendulum, the Dracoverlord
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon

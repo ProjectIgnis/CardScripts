@@ -1,4 +1,5 @@
 --炎虎梁山爆
+--Five Brothers Explosion
 local s,id=GetID()
 function s.initial_effect(c)
 	--recover

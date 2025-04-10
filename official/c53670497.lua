@@ -1,4 +1,5 @@
 --復活の聖刻印
+--Hieratic Seal From the Ashes
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -32,12 +33,12 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x69}
+s.listed_series={SET_HIERATIC}
 function s.filter1(c)
-	return c:IsSetCard(0x69) and c:IsMonster() and c:IsAbleToGrave()
+	return c:IsSetCard(SET_HIERATIC) and c:IsMonster() and c:IsAbleToGrave()
 end
 function s.filter2(c)
-	return c:IsFaceup() and c:IsSetCard(0x69) and c:IsMonster()
+	return c:IsFaceup() and c:IsSetCard(SET_HIERATIC) and c:IsMonster()
 end
 function s.target1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -52,7 +53,7 @@ function s.target1(e,tp,eg,ep,ev,re,r,rp,chk)
 			Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 		end
 		e:SetLabel(1)
-		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+		e:GetHandler():RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 	end
 end
 function s.target2(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -65,7 +66,7 @@ function s.target2(e,tp,eg,ep,ev,re,r,rp,chk)
 	else
 		Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 	end
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+	e:GetHandler():RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -77,7 +78,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoGrave(g,REASON_EFFECT)
 	else
 		local g=Duel.SelectMatchingCard(tp,s.filter2,tp,LOCATION_REMOVED,0,1,1,nil)
-		Duel.SendtoGrave(g,REASON_EFFECT+REASON_RETURN)
+		Duel.SendtoGrave(g,REASON_EFFECT|REASON_RETURN)
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
@@ -85,7 +86,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x69) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_HIERATIC) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end

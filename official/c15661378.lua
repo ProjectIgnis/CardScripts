@@ -31,7 +31,7 @@ function s.fusfilter(c,code,fc,tp)
 end
 function s.matfilter(c,fc,sub,sub2,mg,sg,tp,contact,sumtype)
 	if sumtype&SUMMON_TYPE_FUSION~=0 and fc:IsLocation(LOCATION_EXTRA) and not contact then
-		return c:IsLocation(LOCATION_ONFIELD+LOCATION_HAND) and c:IsControler(tp)
+		return c:IsLocation(LOCATION_ONFIELD|LOCATION_HAND) and c:IsControler(tp)
 	end
 	return true
 end
@@ -42,7 +42,7 @@ function s.contactfil(tp)
 	return Duel.GetMatchingGroup(s.filteraux,tp,LOCATION_ONFIELD,0,nil)
 end
 function s.contactop(g)
-	Duel.Remove(g,POS_FACEUP,REASON_COST+REASON_MATERIAL)
+	Duel.Remove(g,POS_FACEUP,REASON_COST|REASON_MATERIAL)
 end
 function s.splimit(e,se,sp,st)
 	return e:GetHandler():GetLocation()~=LOCATION_EXTRA or (st&SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION
@@ -58,7 +58,7 @@ function s.remtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,LOCATION_DECK,0,1,nil)
 		and Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_DECK,1,nil)
 		and Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_EXTRA,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,0,LOCATION_DECK+LOCATION_EXTRA)
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,0,LOCATION_DECK|LOCATION_EXTRA)
 end
 function s.remop(e,tp,eg,ep,ev,re,r,rp)
 	local g1=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,LOCATION_DECK,0,nil)

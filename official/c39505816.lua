@@ -1,5 +1,5 @@
 --炎天禍サンバーン
---Sunburn the Solar Calamity
+--Cataclysmic Scorching Sunburner
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -49,4 +49,3 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-

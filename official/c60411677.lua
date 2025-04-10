@@ -1,4 +1,4 @@
---Japanese name
+--ジャッジメント・オブ・アヌビス
 --Anubis the Last Judge
 --scripted by pyrQ
 local s,id=GetID()

@@ -22,7 +22,7 @@ end
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD,0)==0 and Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>=3
-		and Duel.GetCurrentPhase()==PHASE_DRAW and c:IsReason(REASON_RULE)
+		and Duel.IsPhase(PHASE_DRAW) and c:IsReason(REASON_RULE)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -30,13 +30,13 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_PUBLIC)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_MAIN1)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_MAIN1)
 		c:RegisterEffect(e1)
-		c:RegisterFlagEffect(id,RESET_PHASE+PHASE_MAIN1,EFFECT_FLAG_CLIENT_HINT,1,0,66)
+		c:RegisterFlagEffect(id,RESET_PHASE|PHASE_MAIN1,EFFECT_FLAG_CLIENT_HINT,1,0,66)
 	end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_MAIN1
+	return Duel.IsPhase(PHASE_MAIN1)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetFlagEffect(id)~=0 end

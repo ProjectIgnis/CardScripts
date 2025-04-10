@@ -12,9 +12,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.loseop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x40}
+s.listed_series={SET_FORBIDDEN_ONE}
 function s.filter(c)
-	return c:IsFaceup() and c:IsType(TYPE_NORMAL) and c:IsSetCard(0x40)
+	return c:IsFaceup() and c:IsType(TYPE_NORMAL) and c:IsSetCard(SET_FORBIDDEN_ONE)
 end
 function s.loseop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

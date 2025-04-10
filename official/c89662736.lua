@@ -1,4 +1,5 @@
 --武神器－ヤタ
+--Bujingi Crow
 local s,id=GetID()
 function s.initial_effect(c)
 	--negate attack
@@ -10,19 +11,15 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(s.nacon)
-	e1:SetCost(s.nacost)
+	e1:SetCost(Cost.SelfToGrave)
 	e1:SetTarget(s.natg)
 	e1:SetOperation(s.naop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x88}
+s.listed_series={SET_BUJIN}
 function s.nacon(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttackTarget()
-	return at:IsControler(tp) and at:IsFaceup() and at:IsSetCard(0x88) and at:IsRace(RACE_BEASTWARRIOR)
-end
-function s.nacost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
+	return at:IsControler(tp) and at:IsFaceup() and at:IsSetCard(SET_BUJIN) and at:IsRace(RACE_BEASTWARRIOR)
 end
 function s.natg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetAttacker():IsOnField() end

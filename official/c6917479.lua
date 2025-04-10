@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
-	e1:SetCost(s.ctcost)
+	e1:SetCost(Cost.PayLP(1000))
 	e1:SetTarget(s.cttg)
 	e1:SetOperation(s.ctop)
 	c:RegisterEffect(e1)
@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e3:SetCode(EVENT_PHASE+PHASE_BATTLE)
+	e3:SetCode(EVENT_PHASE|PHASE_BATTLE)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1)
 	e3:SetCondition(function(e) return e:GetHandler():HasFlagEffect(id) end)
@@ -35,10 +35,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={SET_VAMPIRE}
-function s.ctcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,1000) end
-	Duel.PayLPCost(tp,1000)
-end
 function s.ctfilter2(c)
 	return c:IsFaceup() and c:IsSetCard(SET_VAMPIRE) and c:IsAbleToChangeControler()
 end

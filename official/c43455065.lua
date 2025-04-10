@@ -1,4 +1,5 @@
 --魔力の泉
+--Magical Spring
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -29,11 +30,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		ct=Duel.GetMatchingGroupCount(s.filter,tp,LOCATION_ONFIELD,0,nil)
 		if ct>0 then
 			Duel.BreakEffect()
-			Duel.DiscardHand(tp,nil,ct,ct,REASON_EFFECT+REASON_DISCARD)
+			Duel.DiscardHand(tp,nil,ct,ct,REASON_EFFECT|REASON_DISCARD)
 		end
 	end
 	local rct=1
-	if Duel.GetTurnPlayer()~=tp then rct=2 end
+	if Duel.IsTurnPlayer(1-tp) then rct=2 end
 	local c=e:GetHandler()
 	--indestructable
 	local e1=Effect.CreateEffect(c)
@@ -43,7 +44,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
 	e1:SetTarget(s.indtg)
 	e1:SetValue(1)
-	e1:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN,rct)
+	e1:SetReset(RESET_PHASE|PHASE_END|RESET_OPPO_TURN,rct)
 	Duel.RegisterEffect(e1,tp)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
@@ -54,13 +55,13 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_CANNOT_INACTIVATE)
 	e2:SetValue(s.efilter)
-	e2:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN,rct)
+	e2:SetReset(RESET_PHASE|PHASE_END|RESET_OPPO_TURN,rct)
 	Duel.RegisterEffect(e2,tp)
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetCode(EFFECT_CANNOT_DISEFFECT)
 	e3:SetValue(s.efilter)
-	e3:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN,rct)
+	e3:SetReset(RESET_PHASE|PHASE_END|RESET_OPPO_TURN,rct)
 	Duel.RegisterEffect(e3,tp)
 	--cannot disable
 	local e4=Effect.CreateEffect(c)
@@ -69,14 +70,14 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e4:SetTargetRange(0,LOCATION_ONFIELD)
 	e4:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
 	e4:SetTarget(s.indtg)
-	e4:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN,rct)
+	e4:SetReset(RESET_PHASE|PHASE_END|RESET_OPPO_TURN,rct)
 	Duel.RegisterEffect(e4,tp)
 end
 function s.indtg(e,c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsSpellTrap()
 end
 function s.efilter(e,ct)
 	local te,tp=Duel.GetChainInfo(ct,CHAININFO_TRIGGERING_EFFECT,CHAININFO_TRIGGERING_PLAYER)
 	local tc=te:GetHandler()
-	return tp~=e:GetHandlerPlayer() and tc:IsType(TYPE_SPELL+TYPE_TRAP)
+	return tp~=e:GetHandlerPlayer() and tc:IsSpellTrap()
 end

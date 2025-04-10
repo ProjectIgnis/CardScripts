@@ -1,4 +1,5 @@
 --アンブラル・アンフォーム
+--Umbral Horror Unform
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -13,13 +14,13 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x87}
+s.listed_series={SET_UMBRAL_HORROR}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return Duel.GetAttacker()==c and c:IsLocation(LOCATION_GRAVE) and c:IsReason(REASON_BATTLE)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x87) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_UMBRAL_HORROR) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)

@@ -1,4 +1,5 @@
 --カラクリ武者 六参壱八
+--Karakuri Bushi mdl 6318 "Muzanichiha"
 local s,id=GetID()
 function s.initial_effect(c)
 	--must attack
@@ -36,7 +37,7 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter(c)
-	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousSetCard(0x11)
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousSetCard(SET_KARAKURI)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.filter,1,nil)
@@ -47,7 +48,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		e1:SetValue(400)
 		c:RegisterEffect(e1)
 	end

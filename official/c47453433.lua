@@ -1,4 +1,5 @@
 --振り出し
+--Back to Square One
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -14,10 +15,10 @@ function s.initial_effect(c)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,e:GetHandler()) end
-	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST|REASON_DISCARD)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:GetLocation()==LOCATION_MZONE and chkc:IsAbleToDeck() end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsAbleToDeck() end
 	if chk==0 then return Duel.IsExistingTarget(Card.IsAbleToDeck,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectTarget(tp,Card.IsAbleToDeck,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
@@ -26,6 +27,6 @@ end
 function s.activate(e)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
-		Duel.SendtoDeck(tc,nil,0,REASON_EFFECT)
+		Duel.SendtoDeck(tc,nil,SEQ_DECKTOP,REASON_EFFECT)
 	end
 end

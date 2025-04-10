@@ -3,7 +3,7 @@
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddPersistentProcedure(c,0,aux.FaceupFilter(Card.IsSetCard,0x135),CATEGORY_ATKCHANGE,EFFECT_FLAG_DAMAGE_STEP,TIMING_DAMAGE_STEP,TIMING_DAMAGE_STEP,s.condition)
+	aux.AddPersistentProcedure(c,0,aux.FaceupFilter(Card.IsSetCard,SET_IGNISTER),CATEGORY_ATKCHANGE,EFFECT_FLAG_DAMAGE_STEP,TIMING_DAMAGE_STEP,TIMING_DAMAGE_STEP,aux.StatChangeDamageStepCondition)
 	--atk up
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -40,10 +40,7 @@ function s.initial_effect(c)
 	e5:SetCode(EVENT_REMOVE)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x135}
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
-end
+s.listed_series={SET_IGNISTER}
 function s.atkcon(e)
 	return Duel.GetTurnPlayer()~=e:GetHandlerPlayer() and e:GetHandler():GetCardTargetCount()>0
 end
@@ -62,4 +59,3 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Draw(p,d,REASON_EFFECT)
 end
-

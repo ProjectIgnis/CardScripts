@@ -1,4 +1,5 @@
 --クリフォート・ツール
+--Qliphort Scout
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -19,22 +20,18 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_PZONE)
 	e3:SetCountLimit(1)
-	e3:SetCost(s.cost)
+	e3:SetCost(Cost.PayLP(800))
 	e3:SetTarget(s.target)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xaa}
+s.listed_series={SET_QLI}
 s.listed_names={id}
 function s.splimit(e,c,tp,sumtp,sumpos)
-	return not c:IsSetCard(0xaa)
-end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,800) end
-	Duel.PayLPCost(tp,800)
+	return not c:IsSetCard(SET_QLI)
 end
 function s.filter(c)
-	return c:IsSetCard(0xaa) and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(SET_QLI) and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

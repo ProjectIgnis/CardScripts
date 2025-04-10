@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.regop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x9b}
+s.listed_series={SET_MELODIOUS}
 function s.condition(e,c)
 	return c:IsRace(RACE_FAIRY)
 end
@@ -25,10 +25,10 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetTargetRange(LOCATION_HAND+LOCATION_MZONE,0)
+	e1:SetTargetRange(LOCATION_HAND|LOCATION_MZONE,0)
 	e1:SetCode(EFFECT_EXTRA_SUMMON_COUNT)
-	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x9b))
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_MELODIOUS))
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+	Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1)
 end

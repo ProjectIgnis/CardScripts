@@ -1,4 +1,5 @@
 --モンスター・スロット
+--Monster Slots
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -13,7 +14,7 @@ function s.initial_effect(c)
 end
 function s.filter1(c,tp)
 	local lv=c:GetLevel()
-	return lv>0 and c:IsFaceup() and Duel.IsExistingTarget(s.filter2,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil,lv)
+	return lv>0 and c:IsFaceup() and Duel.IsExistingTarget(s.filter2,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,nil,lv)
 end
 function s.filter2(c,lv)
 	return c:IsLevel(lv) and c:IsAbleToRemove() and aux.SpElimFilter(c,true)
@@ -26,7 +27,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	local g1=Duel.SelectTarget(tp,s.filter1,tp,LOCATION_MZONE,0,1,1,nil,tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g2=Duel.SelectTarget(tp,s.filter2,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil,g1:GetFirst():GetLevel())
+	local g2=Duel.SelectTarget(tp,s.filter2,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,1,nil,g1:GetFirst():GetLevel())
 	e:SetLabelObject(g1:GetFirst())
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g2,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)

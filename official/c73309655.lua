@@ -37,7 +37,7 @@ end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
 	local lg=c:GetLinkedGroup()
-	local zone=c:GetFreeLinkedZone()&0x1f
+	local zone=c:GetFreeLinkedZone()&ZONES_MMZ
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(1-tp) and s.spfilter(chkc,e,tp,zone) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
 		and Duel.IsExistingTarget(s.spfilter,tp,0,LOCATION_GRAVE,1,nil,e,tp,zone) end
@@ -46,7 +46,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,tp,LOCATION_GRAVE)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
-	local zone=e:GetHandler():GetFreeLinkedZone()&0x1f
+	local zone=e:GetHandler():GetFreeLinkedZone()&ZONES_MMZ
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) and zone~=0 then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP,zone)
@@ -54,7 +54,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and rp==1-tp and c:IsSummonType(SUMMON_TYPE_LINK) and c:IsPreviousLocation(LOCATION_MZONE)
+	return c:IsReason(REASON_BATTLE|REASON_EFFECT) and rp==1-tp and c:IsLinkSummoned() and c:IsPreviousLocation(LOCATION_MZONE)
 end
 function s.thfilter(c)
 	return c:IsDefenseBelow(1500) and c:IsMonster() and c:IsAttribute(ATTRIBUTE_WATER) and c:IsAbleToHand()
@@ -71,4 +71,3 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-

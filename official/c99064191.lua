@@ -31,7 +31,7 @@ function s.target1(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=pe:GetHandler()
 	if pe:IsActiveType(TYPE_EFFECT) and tc:IsLevelAbove(5)
 		and Duel.IsChainDisablable(ct-1) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
-		Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
+		Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST|REASON_DISCARD)
 		Duel.SetOperationInfo(0,CATEGORY_DISABLE,tc,1,0,0)
 		if tc:IsRelateToEffect(pe) then
 			Duel.SetOperationInfo(0,CATEGORY_DESTROY,tc,1,0,0)
@@ -56,7 +56,7 @@ function s.condition2(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.cost2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST|REASON_DISCARD)
 end
 function s.target2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetFlagEffect(id)==0 end

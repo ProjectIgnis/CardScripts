@@ -1,4 +1,5 @@
 --スネーク・チョーク
+--Serpent Suppression
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -13,10 +14,10 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTargetRange(0,LOCATION_MZONE)
 	e2:SetTarget(s.indtg)
-	e2:SetValue(aux.TargetBoolFunction(Card.IsSetCard,0x3c))
+	e2:SetValue(aux.TargetBoolFunction(Card.IsSetCard,SET_REPTILIANNE))
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x3c}
+s.listed_series={SET_REPTILIANNE}
 function s.indtg(e,c)
 	return c:GetAttack()==0 and c:IsAttackPos()
 end

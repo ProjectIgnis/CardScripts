@@ -1,7 +1,6 @@
 --Ｌｉｖｅ☆Ｔｗｉｎ エントランス
---Live☆Twin Entrance
+--Live☆Twin Home
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -19,17 +18,17 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 	--Lists “Kisikil” and "Lilla" archetype
-s.listed_series={0x153,0x154}
+s.listed_series={SET_KI_SIKIL,SET_LIL_LA}
 	--Specifically lists itself
 s.listed_names={id}
 	--Discard 1 card as cost
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,e:GetHandler()) end
-	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST|REASON_DISCARD)
 end
 	--Check “Kisikil” or “Lilla” monster
 function s.filter(c,e,tp)
-	return (c:IsSetCard(0x153) or c:IsSetCard(0x154)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
+	return (c:IsSetCard(SET_KI_SIKIL) or c:IsSetCard(SET_LIL_LA)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
 end
 	--Activation legality
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -52,11 +51,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,1),nil)
 end
 	--Locked into "Evil★Twin" monsters for extra deck
 function s.splimit(e,c)
-	return not c:IsSetCard(0x155) and c:IsLocation(LOCATION_EXTRA)
+	return not c:IsSetCard(SET_EVIL_TWIN) and c:IsLocation(LOCATION_EXTRA)
 end

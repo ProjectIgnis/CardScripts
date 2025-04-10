@@ -1,4 +1,5 @@
 --イリュージョン・スナッチ
+--Illusory Snatcher
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -18,7 +19,7 @@ function s.initial_effect(c)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local ec=eg:GetFirst()
-	return ep==tp and ec:IsSummonType(SUMMON_TYPE_TRIBUTE)
+	return ep==tp and ec:IsTributeSummoned()
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -40,7 +41,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			else
 				e1:SetValue(ec:GetRace())
 			end
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 			c:RegisterEffect(e1)
 			local e2=Effect.CreateEffect(c)
 			e2:SetType(EFFECT_TYPE_SINGLE)
@@ -50,13 +51,13 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			else
 				e2:SetValue(ec:GetAttribute())
 			end
-			e2:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+			e2:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 			c:RegisterEffect(e2)
 			local e3=Effect.CreateEffect(c)
 			e3:SetType(EFFECT_TYPE_SINGLE)
 			e3:SetCode(EFFECT_CHANGE_LEVEL)
 			e3:SetValue(ec:GetLevel())
-			e3:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+			e3:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 			c:RegisterEffect(e3)
 		end
 	end

@@ -1,4 +1,5 @@
 --ディスカバード・アタック
+--Checkmate
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,14 +12,14 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x45}
+s.listed_series={SET_ARCHFIEND}
 s.listed_names={35975813}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(1)
 	return true
 end
 function s.rfilter(c,tp)
-	return c:IsSetCard(0x45) and Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,c)
+	return c:IsSetCard(SET_ARCHFIEND) and Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,c)
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsCode(35975813)
@@ -44,7 +45,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DIRECT_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end

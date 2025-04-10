@@ -1,5 +1,5 @@
 --百景戦都ゴルディロックス
---Landscaper Goldilocks
+--Goldilocks the Battle Landscaper
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -67,4 +67,3 @@ function s.seqop(e,tp,eg,ep,ev,re,r,rp,chk)
 		end
 	end
 end
-

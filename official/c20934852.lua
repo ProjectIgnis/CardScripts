@@ -1,12 +1,12 @@
--- 海晶乙女アクア・アルゴノート
--- Marincess Aqua Argonaut
--- Scripted by Hatter
+--海晶乙女アクア・アルゴノート
+--Marincess Aqua Argonaut
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	-- 2+ WATER monsters
+	--2+ WATER monsters
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsAttribute,ATTRIBUTE_WATER),2)
-	-- Attack target limit
+	--Attack target limit
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_SELECT_BATTLE_TARGET)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTargetRange(0,LOCATION_MZONE)
 	e1:SetValue(function(e,c)return c~=e:GetHandler()end)
 	c:RegisterEffect(e1)
-	-- Return to hand
+	--Return to hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_TOHAND)
@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
-	-- Special Summon and negate
+	--Special Summon and negate
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_DISABLE)

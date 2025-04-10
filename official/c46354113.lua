@@ -1,4 +1,5 @@
 --ロケット・ヘルモス・キャノン
+--Rocket Hermos Cannon
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -41,20 +42,20 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e1:SetValue(s.eqlimit)
 	e1:SetLabelObject(tc)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	c:RegisterEffect(e1)
 	--extra attack
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_EQUIP)
 	e2:SetCode(EFFECT_EXTRA_ATTACK)
 	e2:SetValue(1)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 	c:RegisterEffect(e2)
 	--pierce
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_EQUIP)
 	e3:SetCode(EFFECT_PIERCE)
-	e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e3:SetReset(RESET_EVENT|RESETS_STANDARD)
 	c:RegisterEffect(e3)
 end
 function s.eqlimit(e,c)

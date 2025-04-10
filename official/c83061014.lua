@@ -1,4 +1,5 @@
 --後に亀と呼ばれる神
+--Numen erat Testudo
 local s,id=GetID()
 function s.initial_effect(c)
 	--disable spsummon

@@ -10,15 +10,10 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_PHASE+PHASE_END)
 	e1:SetRange(LOCATION_MZONE|LOCATION_HAND)
 	e1:SetCountLimit(1,id)
-	e1:SetCost(s.excvtcost)
+	e1:SetCost(Cost.SelfToGrave)
 	e1:SetTarget(s.excvttg)
 	e1:SetOperation(s.excvtop)
 	c:RegisterEffect(e1)
-end
-function s.excvtcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(c,REASON_COST)
 end
 function s.excvttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=5-Duel.GetMatchingGroupCount(nil,tp,0,LOCATION_STZONE,nil)

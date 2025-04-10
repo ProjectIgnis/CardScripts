@@ -1,4 +1,5 @@
 --霞の谷の風使い
+--Mist Valley Windmaster
 local s,id=GetID()
 function s.initial_effect(c)
 	--hand adjust

@@ -1,4 +1,5 @@
 --ガガガカイザー
+--Gagaga Caesar
 local s,id=GetID()
 function s.initial_effect(c)
 	--atklimit
@@ -25,7 +26,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.atkcon(e)
-	return not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x54),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
+	return not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_GAGAGA),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
 end
 function s.rfilter(c,tp)
 	local lv=c:GetLevel()
@@ -34,18 +35,18 @@ function s.rfilter(c,tp)
 end
 function s.tfilter(c,clv)
 	local lv=c:GetLevel()
-	return lv>0 and lv~=clv and c:IsFaceup() and c:IsSetCard(0x54)
+	return lv>0 and lv~=clv and c:IsFaceup() and c:IsSetCard(SET_GAGAGA)
 end
 function s.lvcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.rfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil,tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.rfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.rfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil,tp)
+	local g=Duel.SelectMatchingCard(tp,s.rfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,1,nil,tp)
 	local lv=g:GetFirst():GetLevel()
 	Duel.SetTargetParam(lv)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.lvop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,0x54),tp,LOCATION_MZONE,0,nil)
+	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,SET_GAGAGA),tp,LOCATION_MZONE,0,nil)
 	local lv=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
 	local tc=g:GetFirst()
 	for tc in aux.Next(g) do
@@ -54,7 +55,7 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_CHANGE_LEVEL)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetValue(lv)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 	end
 end

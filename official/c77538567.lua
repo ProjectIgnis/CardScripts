@@ -1,4 +1,5 @@
 --魔宮の賄賂
+--Dark Bribe
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

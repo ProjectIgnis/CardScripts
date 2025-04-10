@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(s.thcon)
-	e1:SetCost(aux.bfgcost)
+	e1:SetCost(Cost.SelfBanish)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
@@ -23,14 +23,14 @@ function s.initial_effect(c)
 	e2:SetOperation(s.efop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xba}
+s.listed_series={SET_RAIDRAPTOR}
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsReason(REASON_COST) and re:IsActivated() and re:IsActiveType(TYPE_XYZ)
 		and c:IsPreviousLocation(LOCATION_OVERLAY)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0xba) and c:IsAbleToHand()
+	return c:IsSetCard(SET_RAIDRAPTOR) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc) end
@@ -58,19 +58,19 @@ function s.efop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetCondition(s.atkcon)
 	e1:SetOperation(s.atkop)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	rc:RegisterEffect(e1,true)
 	if not rc:IsType(TYPE_EFFECT) then
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_ADD_TYPE)
 		e2:SetValue(TYPE_EFFECT)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		rc:RegisterEffect(e2,true)
 	end
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ)
+	return e:GetHandler():IsXyzSummoned()
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -79,7 +79,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(300)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		c:RegisterEffect(e1)
 	end
 end

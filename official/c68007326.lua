@@ -1,4 +1,5 @@
 --守護天使 ジャンヌ
+--Guardian Angel Joan
 local s,id=GetID()
 function s.initial_effect(c)
 	--recover

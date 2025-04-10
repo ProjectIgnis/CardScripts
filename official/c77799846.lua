@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetCountLimit(1)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCost(s.cost)
+	e1:SetCost(Cost.Detach(1))
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
 	--special summon
@@ -28,11 +28,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x85}
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
-end
+s.listed_series={SET_SUPER_DEFENSE_ROBOT}
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and c:IsFaceup() then
@@ -41,7 +37,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(1000)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END,2)
+		e1:SetReset(RESETS_STANDARD_DISABLE_PHASE_END,2)
 		c:RegisterEffect(e1)
 	end
 end
@@ -49,13 +45,13 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsReason(REASON_DESTROY) and e:GetHandler():GetOverlayCount()>0
 end
 function s.rfilter(c,tp)
-	return c:IsSetCard(0x85) and c:IsMonster() and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
+	return c:IsSetCard(SET_SUPER_DEFENSE_ROBOT) and c:IsMonster() and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 		and (Duel.GetLocationCount(tp,LOCATION_MZONE)>0 or (c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5))
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.rfilter,tp,LOCATION_GRAVE+LOCATION_MZONE,0,1,nil,tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.rfilter,tp,LOCATION_GRAVE|LOCATION_MZONE,0,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.rfilter,tp,LOCATION_GRAVE+LOCATION_MZONE,0,1,1,nil,tp)
+	local g=Duel.SelectMatchingCard(tp,s.rfilter,tp,LOCATION_GRAVE|LOCATION_MZONE,0,1,1,nil,tp)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -63,7 +59,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function s.mfilter(c)
-	return c:IsSetCard(0x85) and c:IsMonster()
+	return c:IsSetCard(SET_SUPER_DEFENSE_ROBOT) and c:IsMonster()
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

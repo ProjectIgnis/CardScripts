@@ -1,4 +1,5 @@
 --セイクリッドの星痕
+--Constellar Star Chart
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -20,9 +21,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.op)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x53}
+s.listed_series={SET_CONSTELLAR}
 function s.gfilter(c,tp)
-	return c:IsSetCard(0x53) and c:IsType(TYPE_XYZ) and c:IsControler(tp)
+	return c:IsSetCard(SET_CONSTELLAR) and c:IsType(TYPE_XYZ) and c:IsControler(tp)
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.gfilter,1,nil,tp)

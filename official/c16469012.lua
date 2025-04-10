@@ -1,4 +1,5 @@
 --テーヴァ
+--Teva
 local s,id=GetID()
 function s.initial_effect(c)
 	--to deck
@@ -11,13 +12,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_TRIBUTE)
+	return e:GetHandler():IsTributeSummoned()
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_ATTACK)
 	e1:SetTargetRange(0,LOCATION_MZONE)
-	e1:SetReset(RESET_PHASE+PHASE_END,2)
+	e1:SetReset(RESET_PHASE|PHASE_END,2)
 	Duel.RegisterEffect(e1,tp)
 end

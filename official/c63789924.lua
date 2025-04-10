@@ -1,4 +1,5 @@
 --盗人の煙玉
+--Smoke Grenade of the Thief
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c)
@@ -15,7 +16,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
-	return (r&0x41)==0x41 and e:GetHandler():GetEquipTarget()~=nil and e:GetHandler():IsLocation(LOCATION_GRAVE)
+	return (r&(REASON_DESTROY|REASON_EFFECT))==(REASON_DESTROY|REASON_EFFECT) and e:GetHandler():GetEquipTarget()~=nil and e:GetHandler():IsLocation(LOCATION_GRAVE)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -29,7 +30,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(p,g)
 		Duel.Hint(HINT_SELECTMSG,p,HINTMSG_DISCARD)
 		local sg=g:Select(p,1,1,nil)
-		Duel.SendtoGrave(sg,REASON_EFFECT+REASON_DISCARD)
+		Duel.SendtoGrave(sg,REASON_EFFECT|REASON_DISCARD)
 		Duel.ShuffleHand(1-p)
 	end
 end

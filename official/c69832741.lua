@@ -18,6 +18,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetTargetRange(1,0)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end

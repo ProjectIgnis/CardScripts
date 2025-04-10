@@ -27,7 +27,7 @@ function s.initial_effect(c)
 end
 function s.aclimit(e,re,tp)
 	local tc=re:GetHandler()
-	return tc:IsLocation(LOCATION_MZONE) and tc:IsFaceup() and tc:IsAttackPos() and re:IsActiveType(TYPE_MONSTER)
+	return tc:IsLocation(LOCATION_MZONE) and tc:IsFaceup() and tc:IsAttackPos() and re:IsMonsterEffect()
 end
 function s.tgcon(e)
 	return e:GetHandler():IsDefensePos()

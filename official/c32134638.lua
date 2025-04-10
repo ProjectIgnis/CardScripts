@@ -1,4 +1,5 @@
 --ダイナミスト・アンキロス
+--Dinomist Ankylos
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -20,12 +21,12 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetTargetRange(LOCATION_MZONE,0)
 	e2:SetValue(LOCATION_REMOVED)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0xd8))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_DINOMIST))
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xd8}
+s.listed_series={SET_DINOMIST}
 function s.tfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0xd8) and c:IsControler(tp) and c:IsLocation(LOCATION_ONFIELD)
+	return c:IsFaceup() and c:IsSetCard(SET_DINOMIST) and c:IsControler(tp) and c:IsLocation(LOCATION_ONFIELD)
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
@@ -34,7 +35,7 @@ function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.SelectEffectYesNo(tp,e:GetHandler()) then
-		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1)
 		if Duel.NegateEffect(ev) then
 			Duel.BreakEffect()
 			Duel.Destroy(e:GetHandler(),REASON_EFFECT)

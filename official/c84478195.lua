@@ -1,4 +1,5 @@
 --深淵の結界像
+--Barrier Statue of the Abyss
 local s,id=GetID()
 function s.initial_effect(c)
 	--disable spsummon

@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SUMMON,s.counterfilter)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
 end
-s.listed_series={0x119}
+s.listed_series={SET_SALAMANGREAT}
 function s.counterfilter(c)
 	return c:IsAttribute(ATTRIBUTE_FIRE)
 end
@@ -29,7 +29,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
 	Duel.RegisterEffect(e1,tp)
@@ -39,7 +39,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local e3=Effect.CreateEffect(e:GetHandler())
 	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e3:SetDescription(aux.Stringid(id,1))
-	e3:SetReset(RESET_PHASE+PHASE_END)
+	e3:SetReset(RESET_PHASE|PHASE_END)
 	e3:SetTargetRange(1,0)
 	Duel.RegisterEffect(e3,tp)
 end

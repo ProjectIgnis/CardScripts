@@ -1,4 +1,5 @@
 --スレイブタイガー
+--Test Tiger
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon rule
@@ -17,28 +18,23 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCost(s.spcost)
+	e2:SetCost(Cost.SelfTribute)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x19}
+s.listed_series={SET_GLADIATOR}
 function s.sprcon(e,c)
 	if c==nil then return true end 
 	local tp=c:GetControler()
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x19),tp,LOCATION_MZONE,0,1,nil)
-end
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsReleasable() end
-	Duel.Release(c,REASON_COST)
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_GLADIATOR),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.tgfilter(c,ft)
-	return c:IsFaceup() and c:IsSetCard(0x19) and c:IsAbleToDeck() and (ft>-1 or c:GetSequence()<5)
+	return c:IsFaceup() and c:IsSetCard(SET_GLADIATOR) and c:IsAbleToDeck() and (ft>-1 or c:GetSequence()<5)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x19) and c:IsCanBeSpecialSummoned(e,130,tp,false,false)
+	return c:IsSetCard(SET_GLADIATOR) and c:IsCanBeSpecialSummoned(e,130,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
@@ -53,11 +49,11 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=Duel.GetFirstTarget()
 	if not rc or not rc:IsFaceup() or not rc:IsRelateToEffect(e) then return end
-	local rt=Duel.SendtoDeck(rc,nil,2,REASON_EFFECT)
+	local rt=Duel.SendtoDeck(rc,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	if rt==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local tc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp):GetFirst()
 	if tc and Duel.SpecialSummon(tc,130,tp,tp,false,false,POS_FACEUP)>0 then
-		tc:RegisterFlagEffect(tc:GetOriginalCode(),RESET_EVENT+RESETS_STANDARD_DISABLE,0,0)
+		tc:RegisterFlagEffect(tc:GetOriginalCode(),RESET_EVENT|RESETS_STANDARD_DISABLE,0,0)
 	end
 end

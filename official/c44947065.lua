@@ -1,4 +1,5 @@
 --強者の苦痛
+--Burden of the Mighty
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

@@ -1,4 +1,5 @@
 --竜の逆鱗
+--Dragon's Rage
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate

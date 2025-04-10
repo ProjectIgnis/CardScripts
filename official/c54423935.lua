@@ -10,12 +10,12 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
-	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER|TIMING_END_PHASE)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0xba}
+s.listed_series={SET_RAIDRAPTOR}
 function s.filter(c,e,tp)
-	return c:IsFaceup() and c:IsSetCard(0xba)
+	return c:IsFaceup() and c:IsSetCard(SET_RAIDRAPTOR)
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetCode())
 end
 function s.spfilter(c,e,tp,cd)
@@ -48,7 +48,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetLabel(sc:GetFieldID())
 			e1:SetCondition(s.imcon)
 			e1:SetValue(aux.imval1)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			tc:RegisterEffect(e1)
 			--Cannot be targeted by opponent's card effects
 			local e2=e1:Clone()

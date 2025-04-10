@@ -1,4 +1,5 @@
 --クリムゾン・ブレーダー
+--Crimson Blader
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -22,10 +23,10 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCondition(s.sumcon)
 	e1:SetTarget(s.sumlimit)
 	e1:SetLabel(Duel.GetTurnCount())
-	if Duel.GetTurnPlayer()==tp then
-		e1:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
+	if Duel.IsTurnPlayer(tp) then
+		e1:SetReset(RESET_PHASE|PHASE_END|RESET_OPPO_TURN)
 	else
-		e1:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN,2)
+		e1:SetReset(RESET_PHASE|PHASE_END|RESET_OPPO_TURN,2)
 	end
 	Duel.RegisterEffect(e1,tp)
 	local e2=e1:Clone()

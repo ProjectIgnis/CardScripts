@@ -1,4 +1,5 @@
 --コトダマ
+--Kotodama
 local s,id=GetID()
 function s.initial_effect(c)
 	--adjust
@@ -23,7 +24,7 @@ function s.adjustop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local pg=e:GetLabelObject()
 	if c:GetFlagEffect(id)==0 then
-		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD_DISABLE,0,1)
+		c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD_DISABLE,0,1)
 		pg:Clear()
 	end
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,0,LOCATION_MZONE,LOCATION_MZONE,nil)

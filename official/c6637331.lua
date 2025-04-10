@@ -1,5 +1,5 @@
 --深淵の獣ドルイドヴルム
---Byssted Druidwurm
+--Bystial Druiswurm
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -40,12 +40,12 @@ function s.spfilter(c,tp)
 		and c:IsFaceup() and Duel.GetMZoneCount(tp,c)>0
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE+LOCATION_GRAVE) and s.spfilter(chkc,tp) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE|LOCATION_GRAVE) and s.spfilter(chkc,tp) end
 	local c=e:GetHandler()
-	if chk==0 then return Duel.IsExistingTarget(s.spfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_GRAVE,1,nil,tp)
+	if chk==0 then return Duel.IsExistingTarget(s.spfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,LOCATION_GRAVE,1,nil,tp)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectTarget(tp,s.spfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_GRAVE,1,1,nil,tp)
+	local g=Duel.SelectTarget(tp,s.spfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,LOCATION_GRAVE,1,1,nil,tp)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,tp,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,tp,LOCATION_HAND)
 end
@@ -60,7 +60,7 @@ function s.spquickcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0
 end
 function s.tgfilter(c)
-	return c:IsSummonType(SUMMON_TYPE_SPECIAL) and c:IsAbleToGrave()
+	return c:IsSpecialSummoned() and c:IsAbleToGrave()
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and s.tgfilter(chkc) end

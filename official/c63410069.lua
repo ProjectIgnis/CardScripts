@@ -1,11 +1,10 @@
 --砂漠の飛蝗賊
 --Desert Locusts
 --Scripted by Cybercatman
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
-	c:EnableReviveLimit()	
+	c:EnableReviveLimit()
 	--Synchro summon procedure
 	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTuner(nil),1,99)
 	--If synchro summoned, the turn player discards 1
@@ -25,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
-	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END)
+	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER|TIMING_MAIN_END)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCondition(s.sccon)
 	e2:SetTarget(s.sctarg)
@@ -33,7 +32,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
+	return e:GetHandler():IsSynchroSummoned()
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -46,10 +45,10 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	if #g==0 then return end
 	Duel.Hint(HINT_SELECTMSG,cp,HINTMSG_DISCARD)
 	local sg=g:Select(cp,1,1,nil)
-	Duel.SendtoGrave(sg,REASON_DISCARD+REASON_EFFECT)
+	Duel.SendtoGrave(sg,REASON_DISCARD|REASON_EFFECT)
 end
 function s.sccon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp and (Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2)
+	return Duel.IsTurnPlayer(1-tp) and (Duel.IsMainPhase())
 end
 function s.sctarg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

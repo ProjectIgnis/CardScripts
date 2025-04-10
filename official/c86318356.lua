@@ -1,4 +1,5 @@
 --草原
+--Sogen
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,7 +13,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsRace,RACE_WARRIOR+RACE_BEASTWARRIOR))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsRace,RACE_WARRIOR|RACE_BEASTWARRIOR))
 	e2:SetValue(200)
 	c:RegisterEffect(e2)
 	--Def

@@ -1,4 +1,5 @@
 --Kozmo－フォルミート
+--Kozmo Strawman
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -9,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1,id)
-	e1:SetCost(s.spcost1)
+	e1:SetCost(Cost.SelfBanish)
 	e1:SetTarget(s.sptg1)
 	e1:SetOperation(s.spop1)
 	c:RegisterEffect(e1)
@@ -21,18 +22,14 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
-	e2:SetCost(s.spcost2)
+	e2:SetCost(Cost.PayLP(500))
 	e2:SetTarget(s.sptg2)
 	e2:SetOperation(s.spop2)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xd2}
-function s.spcost1(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() end
-	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
-end
+s.listed_series={SET_KOZMO}
 function s.spfilter1(c,e,tp)
-	return c:IsSetCard(0xd2) and c:IsLevelAbove(3) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_KOZMO) and c:IsLevelAbove(3) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
@@ -48,12 +45,8 @@ function s.spop1(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-function s.spcost2(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,500) end
-	Duel.PayLPCost(tp,500)
-end
 function s.spfilter2(c,e,tp)
-	return c:IsFaceup() and c:IsSetCard(0xd2) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsFaceup() and c:IsSetCard(SET_KOZMO) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and s.spfilter2(chkc,e,tp) end
@@ -66,16 +59,16 @@ end
 function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
+	if tc:IsRelateToEffect(e) and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1,true)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e2,true)
 		local e3=Effect.CreateEffect(c)
 		e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -87,7 +80,7 @@ function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetOperation(s.desop)
 		e3:SetLabelObject(tc)
 		Duel.RegisterEffect(e3,tp)
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+		tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1)
 	end
 	Duel.SpecialSummonComplete()
 end

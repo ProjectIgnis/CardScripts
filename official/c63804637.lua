@@ -1,6 +1,5 @@
 --幻奏のイリュージョン
 --Melodious Illusion
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Targeted "Melodious" monster becomes unaffected by opponent's card effects, also can attack twice
@@ -10,12 +9,12 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
-	e1:SetHintTiming(0,TIMING_BATTLE_START+TIMING_END_PHASE)
+	e1:SetHintTiming(0,TIMING_BATTLE_START|TIMING_END_PHASE)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x9b}
+s.listed_series={SET_MELODIOUS}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x9b)
+	return c:IsFaceup() and c:IsSetCard(SET_MELODIOUS)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -34,7 +33,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetRange(LOCATION_MZONE)
 		e1:SetCode(EFFECT_IMMUNE_EFFECT)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		e1:SetValue(s.efilter)
 		e1:SetOwnerPlayer(tp)
 		tc:RegisterEffect(e1)
@@ -44,11 +43,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_EXTRA_ATTACK)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e2:SetReset(RESETS_STANDARD_PHASE_END)
 		e2:SetValue(1)
 		tc:RegisterEffect(e2)
 	end
 end
 function s.efilter(e,re)
-	return e:GetOwnerPlayer()~=re:GetOwnerPlayer() and re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
+	return e:GetOwnerPlayer()~=re:GetOwnerPlayer() and re:IsSpellTrapEffect()
 end

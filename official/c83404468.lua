@@ -1,4 +1,4 @@
---Japanese name
+--一色万骨
 --The Toil of the Normal
 --scripted by Naim
 local s,id=GetID()

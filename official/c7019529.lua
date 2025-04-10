@@ -1,4 +1,5 @@
 --空の昆虫兵
+--Insect Soldiers of the Sky
 local s,id=GetID()
 function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)

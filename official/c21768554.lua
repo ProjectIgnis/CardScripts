@@ -24,10 +24,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xc}
+s.listed_series={SET_ALIEN}
 s.counter_list={COUNTER_A}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0xc),tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_ALIEN),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.filter(c)
 	return c:GetCounter(COUNTER_A)>0 and c:IsControlerCanBeChanged()
@@ -55,12 +55,12 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_SET_CONTROL)
 			e1:SetValue(tp)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD-RESET_TURN_SET)
 			e1:SetCondition(s.con)
 			tc:RegisterEffect(e1)
 		end
 	end
-	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+	c:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 end
 function s.con(e)
 	local c=e:GetOwner()

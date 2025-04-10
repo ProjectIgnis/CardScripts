@@ -1,4 +1,5 @@
 --幻界突破
+--Dracocension
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -51,7 +52,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_BATTLE_DESTROY_REDIRECT)
 		e1:SetValue(LOCATION_DECKSHF)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 	end
 end

@@ -1,4 +1,4 @@
---Japanese name
+--聖神蛇アポピス
 --Divine Serpent Apophis
 --Scripted by Eerie Code
 local s,id=GetID()

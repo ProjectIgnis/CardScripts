@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetCondition(function() return Duel.IsMainPhase() end)
-	e2:SetCost(aux.SelfTributeCost)
+	e2:SetCost(Cost.SelfTribute)
 	e2:SetTarget(s.sstg)
 	e2:SetOperation(s.ssop)
 	c:RegisterEffect(e2)
@@ -37,7 +37,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.thtg)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
-	-- Check for Fusion Monsters sent to the GY
+	--Check for Fusion Monsters sent to the GY
 	aux.GlobalCheck(s,function()
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -48,7 +48,7 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_ALBAZ}
 s.listed_series={SET_SWORDSOUL}
--- global check
+--global check
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	for tc in eg:Iter() do
 		if tc:IsType(TYPE_FUSION) then

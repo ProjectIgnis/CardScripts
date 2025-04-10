@@ -2,7 +2,7 @@
 --Miniaturize
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddPersistentProcedure(c,nil,s.filter,CATEGORY_ATKCHANGE,EFFECT_FLAG_DAMAGE_STEP,TIMING_DAMAGE_STEP,TIMING_DAMAGE_STEP+0x1c0,s.condition)
+	aux.AddPersistentProcedure(c,nil,s.filter,CATEGORY_ATKCHANGE,EFFECT_FLAG_DAMAGE_STEP,TIMING_DAMAGE_STEP,TIMING_DAMAGE_STEP|TIMINGS_CHECK_MONSTER,aux.StatChangeDamageStepCondition)
 	--eff
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -24,9 +24,6 @@ function s.initial_effect(c)
 	e3:SetCondition(s.descon)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
-end
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end
 function s.filter(c)
 	return c:IsFaceup() and c:GetBaseAttack()>1000 and c:HasLevel() and c:GetLevel()~=1

@@ -1,6 +1,5 @@
 --Ｅｍフレイム・イーター
 --Performage Flame Eater
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon itself from hand
@@ -26,8 +25,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xc6}
-
+s.listed_series={SET_PERFORMAGE}
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
@@ -53,7 +51,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
-		e2:SetReset(RESET_EVENT+RESETS_REDIRECT)
+		e2:SetReset(RESET_EVENT|RESETS_REDIRECT)
 		e2:SetValue(LOCATION_REMOVED)
 		c:RegisterEffect(e2,true)
 	end
@@ -64,7 +62,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetTargetRange(1,0)
 	e3:SetTarget(s.splimit)
-	e3:SetReset(RESET_PHASE+PHASE_END)
+	e3:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e3,tp)
 end
 function s.damval(e,re,val,r,rp,rc)
@@ -75,7 +73,7 @@ function s.damval(e,re,val,r,rp,rc)
 	return 0
 end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
-	return not c:IsSetCard(0xc6)
+	return not c:IsSetCard(SET_PERFORMAGE)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

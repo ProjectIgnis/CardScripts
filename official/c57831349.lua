@@ -1,4 +1,5 @@
 --竜星の九支
+--Nine Pillars of Yang Zing
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,13 +12,13 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x9e}
+s.listed_series={SET_YANG_ZING}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x9e)
+	return c:IsFaceup() and c:IsSetCard(SET_YANG_ZING)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD,0,1,nil)
-		and (re:IsActiveType(TYPE_MONSTER) or re:IsHasType(EFFECT_TYPE_ACTIVATE)) and Duel.IsChainNegatable(ev)
+		and (re:IsMonsterEffect() or re:IsHasType(EFFECT_TYPE_ACTIVATE)) and Duel.IsChainNegatable(ev)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -27,13 +28,13 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.desfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x9e)
+	return c:IsFaceup() and c:IsSetCard(SET_YANG_ZING)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local ec=re:GetHandler()
 	if Duel.NegateActivation(ev) and ec:IsRelateToEffect(re) then
 		ec:CancelToGrave()
-		if Duel.SendtoDeck(ec,nil,2,REASON_EFFECT)~=0 and ec:IsLocation(LOCATION_DECK+LOCATION_EXTRA) then
+		if Duel.SendtoDeck(ec,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)~=0 and ec:IsLocation(LOCATION_DECK|LOCATION_EXTRA) then
 			local g=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_ONFIELD,0,e:GetHandler())
 			if #g>0 then
 				Duel.BreakEffect()

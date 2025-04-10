@@ -1,4 +1,5 @@
 --SDロボ・モンキ
+--Super Defense Robot Monki
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -23,10 +24,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x85}
+s.listed_series={SET_SUPER_DEFENSE_ROBOT}
 s.listed_names={71071546}
 function s.filter(c,e,tp)
-	return (c:IsSetCard(0x85) or c:IsCode(71071546)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return (c:IsSetCard(SET_SUPER_DEFENSE_ROBOT) or c:IsCode(71071546)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sumtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -46,12 +47,12 @@ function s.rmfilter(c,tp)
 		and Duel.IsExistingTarget(s.thfilter,tp,LOCATION_GRAVE,0,1,c)
 end
 function s.thfilter(c)
-	return (c:IsSetCard(0x85) or c:IsCode(71071546)) and c:IsMonster() and c:IsAbleToHand()
+	return (c:IsSetCard(SET_SUPER_DEFENSE_ROBOT) or c:IsCode(71071546)) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.rmfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil,tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.rmfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.rmfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil,tp)
+	local g=Duel.SelectMatchingCard(tp,s.rmfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,1,nil,tp)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

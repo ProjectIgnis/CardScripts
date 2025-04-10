@@ -1,4 +1,5 @@
 --ワーム・ソリッド
+--Worm Solid
 local s,id=GetID()
 function s.initial_effect(c)
 	--defup
@@ -16,9 +17,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.regop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x3e}
+s.listed_series={SET_WORM}
 function s.vfilter(c)
-	return c:IsSetCard(0x3e) and c:IsRace(RACE_REPTILE)
+	return c:IsSetCard(SET_WORM) and c:IsRace(RACE_REPTILE)
 end
 function s.defval(e,c)
 	return Duel.GetMatchingGroupCount(s.vfilter,c:GetControler(),LOCATION_GRAVE,0,nil)*100
@@ -33,12 +34,12 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EVENT_DAMAGE_STEP_END)
 		e1:SetTarget(s.destg)
 		e1:SetOperation(s.desop)
-		e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
+		e1:SetReset(RESET_PHASE|PHASE_DAMAGE)
 		c:RegisterEffect(e1)
 	end
 end
 function s.desfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsSpellTrap()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) and s.desfilter(chkc) end

@@ -11,21 +11,18 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
-	e3:SetHintTiming(TIMING_DAMAGE_STEP,TIMING_DAMAGE_STEP+TIMINGS_CHECK_MONSTER)
+	e3:SetHintTiming(TIMING_DAMAGE_STEP,TIMING_DAMAGE_STEP|TIMINGS_CHECK_MONSTER)
 	e3:SetCountLimit(1)
-	e3:SetCondition(s.atkcon)
+	e3:SetCondition(aux.StatChangeDamageStepCondition)
 	e3:SetCost(s.atkcost)
 	e3:SetTarget(s.atktg)
 	e3:SetOperation(s.atkop)
 	c:RegisterEffect(e3)
 end
-s.counter_list={0x37}
-function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
-end
+s.counter_list={COUNTER_KAIJU}
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,1,0x37,3,REASON_COST) end
-	Duel.RemoveCounter(tp,1,1,0x37,3,REASON_COST)
+	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,1,COUNTER_KAIJU,3,REASON_COST) end
+	Duel.RemoveCounter(tp,1,1,COUNTER_KAIJU,3,REASON_COST)
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler()) end
@@ -41,13 +38,13 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetValue(atk/2)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_SET_DEFENSE_FINAL)
 		e2:SetValue(def/2)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e2)
 	end
 end

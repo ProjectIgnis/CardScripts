@@ -10,7 +10,7 @@ function s.matfilter(c,e,tp,check_or_run)
 	return aux.SpElimFilter(c) and c:IsAbleToRemove(tp,POS_FACEDOWN)
 end
 function s.fextra(e,tp,mg)
-	if not Duel.IsPlayerAffectedByEffect(tp,69832741) then
+	if not Duel.IsPlayerAffectedByEffect(tp,CARD_SPIRIT_ELIMINATION) then
 		return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsAbleToRemove),tp,LOCATION_GRAVE,0,nil)
 	end
 	return nil
@@ -27,7 +27,7 @@ function s.stage2(e,tc,tp,sg,chk)
 		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1,true)
 	end
 end

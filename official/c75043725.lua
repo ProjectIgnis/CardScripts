@@ -1,4 +1,5 @@
 --冥界の使者
+--Emissary of the Afterlife
 local s,id=GetID()
 function s.initial_effect(c)
 	--search

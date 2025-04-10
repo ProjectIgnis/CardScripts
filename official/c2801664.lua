@@ -34,9 +34,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.atkop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x137}
+s.listed_series={SET_ANCIENT_WARRIORS}
 function s.sscon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x137),tp,LOCATION_MZONE,0,2,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_ANCIENT_WARRIORS),tp,LOCATION_MZONE,0,2,nil)
 end
 function s.sstg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -70,7 +70,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetCode(EFFECT_EXTRA_ATTACK_MONSTER)
 		e1:SetValue(1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		c:RegisterEffect(e1)
 	end
 end

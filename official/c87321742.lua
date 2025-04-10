@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop2)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xba}
+s.listed_series={SET_RAIDRAPTOR}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsAttribute,ATTRIBUTE_DARK),tp,LOCATION_MZONE,0,1,nil)
 end
@@ -48,7 +48,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,2),nil)
 end
@@ -56,7 +56,7 @@ function s.splimit(e,c)
 	return not c:IsAttribute(ATTRIBUTE_DARK)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0xba) and c:HasLevel() and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_RAIDRAPTOR) and c:HasLevel() and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.xyzdarkfilter(c)
 	return c:IsType(TYPE_XYZ) and c:IsAttribute(ATTRIBUTE_DARK)
@@ -81,12 +81,12 @@ function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(e:GetHandler())
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e2)
 	end
 end

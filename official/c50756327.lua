@@ -1,5 +1,5 @@
 --魔導原典 クロウリー
---Crowley the Origin of Prophecy
+--Crowley, the First Propheseer
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -28,12 +28,12 @@ function s.initial_effect(c)
 	e2:SetTarget(aux.FieldSummonProcTg(s.nttg))
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x106e}
+s.listed_series={SET_SPELLBOOK}
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
+	return e:GetHandler():IsLinkSummoned()
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x106e) and c:IsAbleToHand()
+	return c:IsSetCard(SET_SPELLBOOK) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
@@ -70,4 +70,3 @@ end
 function s.nttg(e,c)
 	return c:IsLevelAbove(5) and c:IsRace(RACE_SPELLCASTER)
 end
-

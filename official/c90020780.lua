@@ -1,7 +1,6 @@
 --シノビネクロ
 --Shinobi Necro
 --Scripted by andré
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Draw 1, then discard 1
@@ -47,8 +46,8 @@ function s.doperation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.Draw(p,d,REASON_EFFECT)~=0 then
 		Duel.ShuffleHand(tp)
 		Duel.BreakEffect()
-		Duel.DiscardHand(tp,nil,1,1,REASON_EFFECT+REASON_DISCARD)
-	end	
+		Duel.DiscardHand(tp,nil,1,1,REASON_EFFECT|REASON_DISCARD)
+	end
 end
 function s.spcondition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_GRAVE) and (e:GetHandler():IsReason(REASON_EFFECT) 
@@ -68,7 +67,7 @@ function s.spoperation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
-		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
+		e1:SetReset(RESET_EVENT|RESETS_REDIRECT)
 		e1:SetValue(LOCATION_REMOVED)
 		c:RegisterEffect(e1,true)
 	end

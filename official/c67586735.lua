@@ -1,5 +1,5 @@
 --剛鬼ツープラトン
---Gouki Doubleteam
+--Gouki Tagpartner
 local s,id=GetID()
 function s.initial_effect(c)
 	--atk up
@@ -19,17 +19,17 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCondition(aux.exccon)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.tdtg)
 	e2:SetOperation(s.tdop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xfc}
+s.listed_series={SET_GOUKI}
 function s.ddcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local rc=c:GetReasonCard()
 	return c:IsLocation(LOCATION_GRAVE) and r & REASON_LINK == REASON_LINK
-		and rc:IsSetCard(0xfc) and rc:IsType(TYPE_LINK)
+		and rc:IsSetCard(SET_GOUKI) and rc:IsType(TYPE_LINK)
 end
 function s.ddtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -38,17 +38,17 @@ end
 function s.ddop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local sync=c:GetReasonCard()
-	if sync:IsRelateToEffect(e) and sync:IsFaceup() and sync:IsSetCard(0xfc) and sync:IsLinkMonster() then
+	if sync:IsRelateToEffect(e) and sync:IsFaceup() and sync:IsSetCard(SET_GOUKI) and sync:IsLinkMonster() then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(1000)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		sync:RegisterEffect(e1)
 	end
 end
 function s.filter(c)
-	return c:IsSetCard(0xfc) and c:IsSpell() and c:IsAbleToDeck()
+	return c:IsSetCard(SET_GOUKI) and c:IsSpell() and c:IsAbleToDeck()
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -60,6 +60,6 @@ end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) then
-		Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)
+		Duel.SendtoDeck(tc,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	end
 end

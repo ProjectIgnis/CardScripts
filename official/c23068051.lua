@@ -1,4 +1,5 @@
 --幽麗なる幻滝
+--Waterfall of Dragon Souls
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -43,9 +44,9 @@ function s.filter2(c)
 	return (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and c:IsRace(RACE_WYRM) and c:IsAbleToGraveAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_MZONE+LOCATION_HAND,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_MZONE|LOCATION_HAND,0,1,nil) end
 	local ft=Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)
-	local g=Duel.GetMatchingGroup(s.filter2,tp,LOCATION_MZONE+LOCATION_HAND,0,nil)
+	local g=Duel.GetMatchingGroup(s.filter2,tp,LOCATION_MZONE|LOCATION_HAND,0,nil)
 	local ct=math.min(ft-1,#g+1)
 	local sg=g:Select(tp,1,ct,nil)
 	e:SetLabel(#sg+1)

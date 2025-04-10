@@ -1,4 +1,5 @@
 --Subterror Behemoth Voltelluric
+--Subterror Behemoth Voltelluric
 local s,id=GetID()
 function s.initial_effect(c)
 	--flip
@@ -45,8 +46,8 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	local tct=1
-	if Duel.GetTurnPlayer()~=tp then tct=2
-	elseif Duel.GetCurrentPhase()==PHASE_END then tct=3 end
+	if Duel.IsTurnPlayer(1-tp) then tct=2
+	elseif Duel.IsPhase(PHASE_END) then tct=3 end
 	if tc:IsFacedown() and tc:IsRelateToEffect(e) then
 		Duel.GetControl(tc,tp,PHASE_END,tct)
 	end
@@ -72,7 +73,7 @@ end
 function s.postg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsCanTurnSet() and c:GetFlagEffect(id)==0 end
-	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET+RESET_PHASE+PHASE_END,0,1)
+	c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD-RESET_TURN_SET|RESET_PHASE|PHASE_END,0,1)
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,c,1,0,0)
 end
 function s.posop(e,tp,eg,ep,ev,re,r,rp)

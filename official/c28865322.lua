@@ -1,4 +1,5 @@
 --魔装邪龍 イーサルウェポン
+--Aether, the Evil Empowering Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -27,15 +28,15 @@ function s.initial_effect(c)
 	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0xca}
+s.listed_series={SET_EMPOWERED_WARRIOR}
 function s.cfilter(c)
-	return c:IsSetCard(0xca) and c:IsMonster() and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
+	return c:IsSetCard(SET_EMPOWERED_WARRIOR) and c:IsMonster() and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 		and Duel.IsExistingTarget(aux.TRUE,0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c)
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,1,nil)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

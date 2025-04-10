@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x2b}
+s.listed_series={SET_NINJA}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local res,teg,tep,tev,tre,tr,trp=Duel.CheckEvent(EVENT_SPSUMMON_SUCCESS,true)
@@ -38,7 +38,7 @@ function s.tgfilter(c,e,tp)
 	return c:IsFaceup() and c:IsControler(tp) and (not e or c:IsRelateToEffect(e))
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.tgfilter,1,nil,nil,1-tp) and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x2b),tp,LOCATION_MZONE,0,1,nil)
+	return eg:IsExists(s.tgfilter,1,nil,nil,1-tp) and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_NINJA),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -53,7 +53,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetValue(tc:GetAttack()/2)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 	end
 end

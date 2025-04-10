@@ -1,7 +1,6 @@
 --妖醒龍ラルバウール
 --Omni Dragon Brotaur
 --Scripted by AlphaKretin
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon from hand or GY
@@ -11,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_DESTROYED)
-	e1:SetRange(LOCATION_HAND+LOCATION_GRAVE)
+	e1:SetRange(LOCATION_HAND|LOCATION_GRAVE)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(s.spcon)
 	e1:SetTarget(s.sptg)
@@ -51,7 +50,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 		e1:SetValue(LOCATION_REMOVED)
-		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
+		e1:SetReset(RESET_EVENT|RESETS_REDIRECT)
 		c:RegisterEffect(e1,true)
 	end
 end
@@ -72,7 +71,7 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_EFFECT+REASON_DISCARD,nil,REASON_EFFECT)~=0
+	if Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_EFFECT|REASON_DISCARD,nil,REASON_EFFECT)~=0
 		and tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil,tc)

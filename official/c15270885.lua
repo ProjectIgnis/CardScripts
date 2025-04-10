@@ -1,6 +1,5 @@
 --トゥーン・ゴブリン突撃部隊
 --Toon Goblin Attack Force
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Cannot attack the turn it was summoned
@@ -33,7 +32,7 @@ function s.initial_effect(c)
 	--Change itself to defense position
 	local e6=Effect.CreateEffect(c)
 	e6:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e6:SetCode(EVENT_PHASE+PHASE_BATTLE)
+	e6:SetCode(EVENT_PHASE|PHASE_BATTLE)
 	e6:SetRange(LOCATION_MZONE)
 	e6:SetCountLimit(1)
 	e6:SetCondition(s.poscon)
@@ -41,12 +40,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e6)
 end
 s.listed_names={15259703}
-
 function s.atklimit(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_CANNOT_ATTACK)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESETS_STANDARD_PHASE_END)
 	e:GetHandler():RegisterEffect(e1)
 end
 function s.sfilter(c)
@@ -76,6 +74,6 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_CANNOT_CHANGE_POSITION)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_COPY_INHERIT+EFFECT_FLAG_CLIENT_HINT)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,3)
+	e1:SetReset(RESETS_STANDARD_PHASE_END,3)
 	c:RegisterEffect(e1)
 end

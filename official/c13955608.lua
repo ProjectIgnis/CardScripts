@@ -1,4 +1,5 @@
 --機動砦 ストロング・ホールド
+--Stronghold the Moving Fortress
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -13,14 +14,14 @@ end
 s.listed_names={41172955,86445415,13839120}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id,0,0x21,0,2000,4,RACE_MACHINE,ATTRIBUTE_EARTH) end
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,id,0,TYPE_MONSTER|TYPE_EFFECT,0,2000,4,RACE_MACHINE,ATTRIBUTE_EARTH) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
-		or not Duel.IsPlayerCanSpecialSummonMonster(tp,id,0,0x21,0,2000,4,RACE_MACHINE,ATTRIBUTE_EARTH) then return end
+		or not Duel.IsPlayerCanSpecialSummonMonster(tp,id,0,TYPE_MONSTER|TYPE_EFFECT,0,2000,4,RACE_MACHINE,ATTRIBUTE_EARTH) then return end
 	c:AddMonsterAttribute(TYPE_TRAP+TYPE_EFFECT)
 	Duel.SpecialSummonStep(c,0,tp,tp,true,false,POS_FACEUP_DEFENSE)
 	c:AddMonsterAttributeComplete()
@@ -32,7 +33,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(3000)
 	e1:SetCondition(s.atkcon)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	c:RegisterEffect(e1,true)
 	Duel.SpecialSummonComplete()
 end

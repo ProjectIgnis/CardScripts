@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	--Change it to Defense Position
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e2:SetCode(EVENT_PHASE+PHASE_BATTLE)
+	e2:SetCode(EVENT_PHASE|PHASE_BATTLE)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
 	e2:SetCondition(s.poscon)
@@ -49,7 +49,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(1000)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESETS_STANDARD_PHASE_END)
 	c:RegisterEffect(e1)
 end
 function s.poscon(e,tp,eg,ep,ev,re,r,rp)
@@ -62,7 +62,7 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep==tp and Duel.GetCurrentPhase()==PHASE_DRAW and Duel.IsTurnPlayer(tp)
+	return ep==tp and Duel.IsPhase(PHASE_DRAW) and Duel.IsTurnPlayer(tp)
 end
 function s.spfilter(c,e,tp)
 	return c:IsLocation(LOCATION_HAND) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

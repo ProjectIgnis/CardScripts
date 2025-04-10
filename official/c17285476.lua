@@ -1,4 +1,5 @@
 --ナチュル・モスキート
+--Naturia Mosquito
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -20,10 +21,10 @@ function s.initial_effect(c)
 	e2:SetValue(1)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x2a}
+s.listed_series={SET_NATURIA}
 function s.atcon(e)
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x2a),e:GetOwnerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_NATURIA),e:GetOwnerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
 end
 function s.reftg(e,c)
-	return c~=e:GetHandler() and c:IsFaceup() and c:IsSetCard(0x2a)
+	return c~=e:GetHandler() and c:IsFaceup() and c:IsSetCard(SET_NATURIA)
 end

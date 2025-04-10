@@ -1,4 +1,5 @@
 --埋蔵金の地図
+--Treasure Map
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -27,6 +28,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	if Duel.Draw(p,d,REASON_EFFECT)==2 then
 		Duel.BreakEffect()
-		Duel.DiscardHand(tp,nil,1,1,REASON_EFFECT+REASON_DISCARD)
+		Duel.DiscardHand(tp,nil,1,1,REASON_EFFECT|REASON_DISCARD)
 	end
 end

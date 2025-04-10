@@ -1,9 +1,9 @@
--- 死者所生
--- Monster Rebirth
--- Scripted by Hatter
+--死者所生
+--Monster Rebirth
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Special Summon
+	--Special Summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -16,12 +16,12 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	-- Register battle destructions
+	--Register battle destructions
 	aux.GlobalCheck(s,function()
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCode(EVENT_BATTLE_DESTROYED)
-		ge1:SetOperation(function()Duel.RegisterFlagEffect(0,id,RESET_PHASE+PHASE_END,0,1)end)
+		ge1:SetOperation(function()Duel.RegisterFlagEffect(0,id,RESET_PHASE|PHASE_END,0,1)end)
 		Duel.RegisterEffect(ge1,0)
 	end)
 end
@@ -30,9 +30,9 @@ function s.spcostfilter(c)
 	return c:IsCode(CARD_MONSTER_REBORN) and c:IsAbleToGraveAsCost()
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.spcostfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.spcostfilter,tp,LOCATION_HAND|LOCATION_DECK,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,s.spcostfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.spcostfilter,tp,LOCATION_HAND|LOCATION_DECK,0,1,1,nil)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function s.spfilter(c,e,tp)

@@ -1,8 +1,6 @@
 --中生代化石マシン スカルワゴン
 --Fossil Machine Skull Wagon
 --Logical Nonsense
-
---Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
 	--Susion summon procedure
@@ -46,47 +44,39 @@ function s.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetRange(LOCATION_GRAVE)
 	e3:SetCountLimit(1,id)
-	e3:SetCost(aux.bfgcost)
+	e3:SetCost(Cost.SelfBanish)
 	e3:SetTarget(s.destg)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
---Specifically lists "Fossil Fusion"
 s.listed_names={CARD_FOSSIL_FUSION}
-
-	--Check for a rock monster in your GY
 function s.ffilter(c,fc,sumtype,tp)
 	return c:IsRace(RACE_ROCK) and c:IsLocation(LOCATION_GRAVE) and c:IsControler(tp)
 end
-	--Check for a level 5 or 6 monster
 function s.matfilter(c)
 	local lv=c:GetLevel()
 	return c:HasLevel() and (lv==5 or lv==6)
 end
-	--Activation legality
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetTargetPlayer(1-tp)
 	Duel.SetTargetParam(800)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,800)
 end
-	--Inflict 800 damage after destroying a monster by battle
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Damage(p,d,REASON_EFFECT)
 end
-	--Activation legality
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsSpellTrap() end
-	if chk==0 then return Duel.IsExistingTarget(Card.IsType,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil,TYPE_SPELL+TYPE_TRAP) end
+	if chk==0 then return Duel.IsExistingTarget(Card.IsSpellTrap,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(tp,Card.IsType,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil,TYPE_SPELL+TYPE_TRAP)
+	local g=Duel.SelectTarget(tp,Card.IsSpellTrap,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end
-	--Destroy 1 spell/trap on the field
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) then
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end

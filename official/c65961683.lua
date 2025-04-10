@@ -1,4 +1,5 @@
 --ジュラック・ヴェルヒプト
+--Jurrac Velphito
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -23,7 +24,7 @@ function s.initial_effect(c)
 end
 function s.valop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not c:IsSummonType(SUMMON_TYPE_SYNCHRO) then return end
+	if not c:IsSynchroSummoned() then return end
 	local g=c:GetMaterial()
 	local tc=g:GetFirst()
 	local atk=0
@@ -36,7 +37,7 @@ function s.valop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_SET_ATTACK)
 	e1:SetValue(atk)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 	c:RegisterEffect(e1)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_SET_DEFENSE)

@@ -19,7 +19,7 @@ function s.initial_effect(c)
 end
 s.listed_names={63162310,67284908}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetEquipTarget():GetControler()==tp
+	return e:GetHandler():GetEquipTarget():IsControler(tp)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

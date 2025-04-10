@@ -5,7 +5,7 @@ function s.initial_effect(c)
 	c:SetUniqueOnField(1,0,id)
 	--fusion material
 	c:EnableReviveLimit()
-	Fusion.AddProcMixRep(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0xa9),1,99,30068120)
+	Fusion.AddProcMixRep(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_FLUFFAL),1,99,30068120)
 	--destroy
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_DESTROY)
@@ -22,14 +22,14 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_UPDATE_ATTACK)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetTargetRange(LOCATION_MZONE,0)
-	e3:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0xad))
+	e3:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_FRIGHTFUR))
 	e3:SetValue(s.atkval)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xa9,0xad}
-s.material_setcode={0xa9,0xc3}
+s.listed_series={SET_FLUFFAL,SET_FRIGHTFUR}
+s.material_setcode={SET_FLUFFAL,SET_EDGE_IMP}
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)
+	return e:GetHandler():IsFusionSummoned()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() end
@@ -44,7 +44,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Destroy(g,REASON_EFFECT)
 end
 function s.atkfilter(c)
-	return c:IsFaceup() and (c:IsSetCard(0xa9) or c:IsSetCard(0xad))
+	return c:IsFaceup() and (c:IsSetCard(SET_FLUFFAL) or c:IsSetCard(SET_FRIGHTFUR))
 end
 function s.atkval(e,c)
 	return Duel.GetMatchingGroupCount(s.atkfilter,c:GetControler(),LOCATION_MZONE,0,nil)*300

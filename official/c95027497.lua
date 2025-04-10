@@ -1,4 +1,5 @@
 --忍者マスター HANZO
+--Ninja Grandmaster Hanzo
 local s,id=GetID()
 function s.initial_effect(c)
 	--search
@@ -22,12 +23,12 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x61,0x2b}
+s.listed_series={SET_NINJITSU_ART,SET_NINJA}
 function s.filter1(c)
-	return c:IsSetCard(0x61) and c:IsAbleToHand()
+	return c:IsSetCard(SET_NINJITSU_ART) and c:IsAbleToHand()
 end
 function s.filter2(c)
-	return c:IsSetCard(0x2b) and c:GetCode()~=id and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_NINJA) and c:GetCode()~=id and c:IsMonster() and c:IsAbleToHand()
 end
 function s.tg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_DECK,0,1,nil) end

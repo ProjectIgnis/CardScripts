@@ -16,9 +16,9 @@ function s.initial_effect(c)
 	e1:SetLabel(0)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x141}
+s.listed_series={SET_RIKKA}
 function s.spfilter1(c,e,tp,check)
-	return c:IsSetCard(0x141) and c:IsMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return c:IsSetCard(SET_RIKKA) and c:IsMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 		and (check==0 or Duel.IsExistingMatchingCard(s.spfilter2,tp,LOCATION_GRAVE,0,1,c,e,tp))
 end
 function s.spfilter2(c,e,tp)

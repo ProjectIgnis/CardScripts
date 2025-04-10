@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCondition(s.negcon)
-	e1:SetCost(aux.SelfTributeCost)
+	e1:SetCost(Cost.SelfTribute)
 	e1:SetTarget(s.negtg)
 	e1:SetOperation(s.negop)
 	c:RegisterEffect(e1)
@@ -131,7 +131,7 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) and c:IsAbleToExtra() and Duel.SendtoDeck(c,nil,0,REASON_EFFECT)~=0
+	if c:IsRelateToEffect(e) and c:IsAbleToExtra() and Duel.SendtoDeck(c,nil,SEQ_DECKTOP,REASON_EFFECT)~=0
 		and c:IsLocation(LOCATION_EXTRA) and tc and tc:IsRelateToEffect(e) then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end

@@ -1,4 +1,5 @@
 --異次元の狂獣
+--D.D. Crazy Beast
 local s,id=GetID()
 function s.initial_effect(c)
 	--remove

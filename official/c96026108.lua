@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e2:SetType(EFFECT_TYPE_IGNITION)
-	e2:SetRange(LOCATION_HAND+LOCATION_GRAVE)
+	e2:SetRange(LOCATION_HAND|LOCATION_GRAVE)
 	e2:SetCountLimit(1,id)
 	e2:SetCost(Drytron.TributeCost)
 	e2:SetTarget(s.sptg)
@@ -25,9 +25,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.sumfilter)
 end
-s.listed_series={0x151}
+s.listed_series={SET_DRYTRON}
 function s.spconlimit(e,se,sp,st)
-	return se:IsHasType(EFFECT_TYPE_ACTIONS) and se:GetHandler():IsSetCard(0x151)
+	return se:IsHasType(EFFECT_TYPE_ACTIONS) and se:GetHandler():IsSetCard(SET_DRYTRON)
 end
 function s.sumfilter(c)
 	return not c:IsSummonableCard()

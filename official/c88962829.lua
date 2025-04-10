@@ -1,4 +1,4 @@
---
+--騎甲虫ライト・フラッパー
 --Beetrooper Light Flapper
 --Scripted by Zefile
 local s,id=GetID()
@@ -30,13 +30,13 @@ function s.initial_effect(c)
 	e3:SetOperation(s.atkop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x172}
+s.listed_series={SET_BEETROOPER}
 function s.thfilter(c,e)
-	return c:IsSetCard(0x172) and c:IsMonster() and c:IsFaceup() and c:IsAbleToHand()
+	return c:IsSetCard(SET_BEETROOPER) and c:IsMonster() and c:IsFaceup() and c:IsAbleToHand()
 		and c:IsCanBeEffectTarget(e)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,nil,e)
+	local g=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_GRAVE|LOCATION_REMOVED,0,nil,e)
 	if chk==0 then return g:GetClassCount(Card.GetCode)>=2 end
 	local tg=aux.SelectUnselectGroup(g,e,tp,2,2,aux.dncheck,1,tp,HINTMSG_ATOHAND)
 	Duel.SetTargetCard(tg)
@@ -52,7 +52,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_CANNOT_TRIGGER)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e1:SetReset(RESETS_STANDARD_PHASE_END)
 			sc:RegisterEffect(e1)
 		end
 		local e2=Effect.CreateEffect(c)
@@ -62,7 +62,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetTargetRange(1,0)
 		e2:SetValue(s.aclimit)
 		e2:SetLabel(table.unpack(tg:GetClass(Card.GetCode)))
-		e2:SetReset(RESET_PHASE+PHASE_END)
+		e2:SetReset(RESET_PHASE|PHASE_END)
 		Duel.RegisterEffect(e2,tp)
 	end
 end

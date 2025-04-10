@@ -1,7 +1,6 @@
 --スプリガンズ・メリーメイカ
---Sprigguns Merry-Maker
+--Springans Merrymaker
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -27,7 +26,7 @@ function s.initial_effect(c)
 	e2:SetCategory(CATEGORY_REMOVE)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
-	e2:SetHintTiming(0,TIMING_MAIN_END+TIMING_BATTLE_START+TIMING_BATTLE_END)
+	e2:SetHintTiming(0,TIMING_MAIN_END|TIMING_BATTLE_START|TIMING_BATTLE_END)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetCondition(s.bancon)
@@ -36,11 +35,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 	--Lists "Sprigguns" archetype
-s.listed_series={0x158}
-
+s.listed_series={SET_SPRINGANS}
 	--Check for a "Sprigguns" monster
 function s.tgfilter(c)
-	return c:IsMonster() and c:IsSetCard(0x158) and c:IsAbleToGrave()
+	return c:IsMonster() and c:IsSetCard(SET_SPRINGANS) and c:IsAbleToGrave()
 end
 	--Activation legality
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -72,11 +70,11 @@ function s.banop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsFaceup() and c:IsRelateToEffect(e) then
 		local ct=c:GetOverlayCount()
-		Duel.Remove(c,POS_FACEUP,REASON_EFFECT+REASON_TEMPORARY)
+		Duel.Remove(c,POS_FACEUP,REASON_EFFECT|REASON_TEMPORARY)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_PHASE+PHASE_END)
-		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_PHASE|PHASE_END)
 		e1:SetLabelObject(c)
 		e1:SetCountLimit(1)
 		e1:SetOperation(s.retop)
@@ -93,5 +91,5 @@ function s.banop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.retop(e,tp,eg,ep,ev,re,r,rp)
-    Duel.ReturnToField(e:GetLabelObject())
+	Duel.ReturnToField(e:GetLabelObject())
 end

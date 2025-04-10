@@ -26,9 +26,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop2)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x9f}
+s.listed_series={SET_PERFORMAPAL}
 function s.thfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x9f) and c:IsAbleToHand()
+	return c:IsFaceup() and c:IsSetCard(SET_PERFORMAPAL) and c:IsAbleToHand()
 end
 function s.thtg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(tp) and s.thfilter(chkc) end
@@ -48,7 +48,7 @@ function s.thop1(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetTargetRange(1,0)
 		e1:SetLabelObject(tc)
 		e1:SetValue(s.aclimit)
-		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_PHASE|PHASE_END)
 		Duel.RegisterEffect(e1,tp)
 	end
 end

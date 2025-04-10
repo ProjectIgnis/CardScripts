@@ -25,10 +25,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if h1>0 or h2>0 then Duel.BreakEffect() end
 	if h1>0 then
 		Duel.ShuffleHand(tp)
-		Duel.DiscardHand(tp,aux.TRUE,1,1,REASON_EFFECT+REASON_DISCARD)
+		Duel.DiscardHand(tp,aux.TRUE,1,1,REASON_EFFECT|REASON_DISCARD)
 	end
 	if h2>0 then 
 		Duel.ShuffleHand(1-tp)
-		Duel.DiscardHand(1-tp,aux.TRUE,1,1,REASON_EFFECT+REASON_DISCARD)
+		Duel.DiscardHand(1-tp,aux.TRUE,1,1,REASON_EFFECT|REASON_DISCARD)
 	end
 end

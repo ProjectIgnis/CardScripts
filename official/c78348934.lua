@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(TIMING_DAMAGE_STEP)
 	e1:SetCountLimit(1,id)
-	e1:SetCondition(s.condition)
+	e1:SetCondition(aux.StatChangeDamageStepCondition)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
@@ -28,9 +28,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_DESTRUCTION_SWORD,SET_BUSTER_BLADER}
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
-end
 function s.rmvfilter(c,e)
 	return c:IsMonster() and c:IsAbleToRemove() and c:IsCanBeEffectTarget(e)
 end
@@ -71,7 +68,7 @@ function s.cfilter(c)
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_DISCARD+REASON_COST)
+	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_DISCARD|REASON_COST)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToHand() end

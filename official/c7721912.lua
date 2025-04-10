@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1,{id,1})
-	e3:SetCost(s.thcost)
+	e3:SetCost(Cost.SelfTribute)
 	e3:SetTarget(s.thtg)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
@@ -47,23 +47,19 @@ function s.tunop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_CODE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		e1:SetValue(19642774)
 		tc:RegisterEffect(e1)
 		--Becomes Tuner
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_ADD_TYPE)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e2:SetReset(RESETS_STANDARD_PHASE_END)
 		e2:SetValue(TYPE_TUNER)
 		tc:RegisterEffect(e2)
 	end
 end
 --search a equip
-function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() end
-	Duel.Release(e:GetHandler(),REASON_COST)
-end
 function s.thfilter(c)
 	return c:IsType(TYPE_EQUIP) and c:IsSpell() and c:IsAbleToHand()
 end

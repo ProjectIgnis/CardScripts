@@ -1,4 +1,4 @@
---Japanese name
+--巳剣勧請
 --Mitsurugi Prayers
 --scripted by Naim
 local s,id=GetID()

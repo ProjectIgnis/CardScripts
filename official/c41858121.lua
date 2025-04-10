@@ -31,7 +31,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	if g:IsExists(s.tgfilter,1,nil,e) then return end
-	Duel.SendtoDeck(g,nil,0,REASON_EFFECT)
+	Duel.SendtoDeck(g,nil,SEQ_DECKTOP,REASON_EFFECT)
 	Duel.ShuffleDeck(tp)
 	Duel.BreakEffect()
 	local op=0

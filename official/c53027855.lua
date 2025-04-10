@@ -1,4 +1,5 @@
 --風霊神ウィンドローズ
+--Windrose the Elemental Lord
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -40,7 +41,7 @@ function s.spcon(e,c)
 		Duel.GetMatchingGroupCount(Card.IsAttribute,c:GetControler(),LOCATION_GRAVE,0,nil,ATTRIBUTE_WIND)==5
 end
 function s.desfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsSpellTrap()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -62,9 +63,9 @@ function s.leaveop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetTurnPlayer()==effp then
 		e1:SetLabel(Duel.GetTurnCount())
 		e1:SetCondition(s.skipcon)
-		e1:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN,2)
+		e1:SetReset(RESET_PHASE|PHASE_END|RESET_SELF_TURN,2)
 	else
-		e1:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN,1)
+		e1:SetReset(RESET_PHASE|PHASE_END|RESET_SELF_TURN,1)
 	end
 	Duel.RegisterEffect(e1,effp)
 end

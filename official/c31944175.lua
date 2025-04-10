@@ -30,5 +30,5 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
 	local g=Duel.SelectMatchingCard(tp,Card.IsRace,tp,LOCATION_HAND,0,1,1,c,RACE_CYBERSE)
-	Duel.SendtoGrave(g,REASON_DISCARD+REASON_COST)
+	Duel.SendtoGrave(g,REASON_DISCARD|REASON_COST)
 end

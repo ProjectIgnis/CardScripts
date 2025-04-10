@@ -28,13 +28,13 @@ function s.initial_effect(c)
 end
 s.listed_names={74388798}
 s.LVnum=7
-s.LVset=0xe7
+s.LVset=SET_SILENT_SWORDSMAN
 function s.distg(e,c)
 	return c:IsSpell()
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local tl=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
-	if (tl&LOCATION_SZONE)~=0 and re:IsActiveType(TYPE_SPELL) then
+	if (tl&LOCATION_SZONE)~=0 and re:IsSpellEffect() then
 		Duel.NegateEffect(ev)
 	end
 end

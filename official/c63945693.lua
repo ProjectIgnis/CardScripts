@@ -12,9 +12,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x34}
+s.listed_series={SET_CRYSTAL}
 function s.filter(c)
-	return c:IsSetCard(0x34) and c:IsSpellTrap() and c:IsAbleToHand()
+	return c:IsSetCard(SET_CRYSTAL) and c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end
@@ -28,4 +28,3 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-

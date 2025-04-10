@@ -1,5 +1,5 @@
 --Ｎｏ－Ｐ．Ｕ．Ｎ．Ｋ．ディア・ノート
---Noh-P.U.N.K. Dia Note
+--Noh-P.U.N.K. Deer Note
 --Scripted by Yuno
 local s,id=GetID()
 function s.initial_effect(c)
@@ -28,13 +28,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={id}
-s.listed_series={0x173}
+s.listed_series={SET_PUNK}
 --Special Summon (from hand)
 function s.tgyspcheck(c,rc,e,tp)
 	return c:IsCanBeSpecialSummoned(e,0,tp,false,false) and rc:IsAbleToGrave()
 end
 function s.cfilter(c,e,tp,rc)
-	return c:IsSetCard(0x173) and c:IsMonster() and not c:IsPublic()
+	return c:IsSetCard(SET_PUNK) and c:IsMonster() and not c:IsPublic()
 		and (s.tgyspcheck(c,rc,e,tp) or s.tgyspcheck(rc,c,e,tp))
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -66,7 +66,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x173) and not c:IsLevel(5) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_PUNK) and not c:IsLevel(5) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.spfilter(chkc,e,tp) end
@@ -89,6 +89,6 @@ function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(aux.TargetBoolFunction(Card.IsCode,id))
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end

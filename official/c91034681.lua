@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0xc3),aux.FilterBoolFunctionEx(Card.IsSetCard,0xa9))
+	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_EDGE_IMP),aux.FilterBoolFunctionEx(Card.IsSetCard,SET_FLUFFAL))
 	--damage after destroying
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -28,8 +28,8 @@ function s.initial_effect(c)
 	e2:SetOperation(s.damop2)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xad,0xc3,0xa9}
-s.material_setcode={0xc3,0xa9}
+s.listed_series={SET_FRIGHTFUR,SET_EDGE_IMP,SET_FLUFFAL}
+s.material_setcode={SET_EDGE_IMP,SET_FLUFFAL}
 function s.damtg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetTargetPlayer(1-tp)
@@ -46,7 +46,7 @@ function s.damcon2(e,tp,eg,ep,ev,re,r,rp)
 		and c:IsPreviousPosition(POS_FACEUP)
 end
 function s.damfilter(c)
-	return c:IsMonster() and c:IsSetCard(0xad)
+	return c:IsMonster() and c:IsSetCard(SET_FRIGHTFUR)
 end
 function s.damtg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	local gc=Duel.GetMatchingGroupCount(s.damfilter,tp,LOCATION_GRAVE,0,nil)

@@ -1,4 +1,5 @@
 --悪夢の蜃気楼
+--Mirage of Nightmare
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -14,7 +15,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCountLimit(1)
-	e2:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e2:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e2:SetCondition(s.drcon)
 	e2:SetTarget(s.drtg)
 	e2:SetOperation(s.drop)
@@ -27,7 +28,7 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetCountLimit(1)
-	e3:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e3:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e3:SetCondition(s.dccon)
 	e3:SetTarget(s.dctg)
 	e3:SetOperation(s.dcop)
@@ -39,7 +40,7 @@ function s.clear(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(0)
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp and Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)<4
+	return Duel.IsTurnPlayer(1-tp) and Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)<4
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -55,7 +56,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	else e:GetLabelObject():SetLabel(0) end
 end
 function s.dccon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and e:GetLabelObject():GetLabel()~=0
+	return Duel.IsTurnPlayer(tp) and e:GetLabelObject():GetLabel()~=0
 end
 function s.dctg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -68,5 +69,5 @@ function s.dcop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local g=Duel.GetFieldGroup(tp,LOCATION_HAND,0)
 	local sg=g:RandomSelect(tp,e:GetLabel())
-	Duel.SendtoGrave(sg,REASON_EFFECT+REASON_DISCARD)
+	Duel.SendtoGrave(sg,REASON_EFFECT|REASON_DISCARD)
 end

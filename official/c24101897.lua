@@ -32,14 +32,14 @@ function s.initial_effect(c)
 	e4:SetCode(EVENT_SUMMON_SUCCESS)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x8d}
+s.listed_series={SET_GHOSTRICK}
 function s.sumcon(e)
-	return not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x8d),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
+	return not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_GHOSTRICK),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function s.postg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsCanTurnSet() and c:GetFlagEffect(id)==0 end
-	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET+RESET_PHASE+PHASE_END,0,1)
+	c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD-RESET_TURN_SET|RESET_PHASE|PHASE_END,0,1)
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,c,1,0,0)
 end
 function s.posop(e,tp,eg,ep,ev,re,r,rp)
@@ -49,7 +49,7 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x8d),tp,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler())
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_GHOSTRICK),tp,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler())
 end
 function s.filter(c,e)
 	return c:IsFaceup() and c:IsLevelAbove(4) and c:IsCanTurnSet() and (not e or c:IsRelateToEffect(e))
@@ -61,7 +61,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,g,#g,0,0)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	if not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x8d),tp,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler()) then return end
+	if not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_GHOSTRICK),tp,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler()) then return end
 	local g=eg:Filter(s.filter,nil,e)
 	Duel.ChangePosition(g,POS_FACEDOWN_DEFENSE)
 end

@@ -1,4 +1,5 @@
 --極星霊リョースアールヴ
+--Ljosalf of the Nordic Alfar
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -12,13 +13,13 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x42}
+s.listed_series={SET_NORDIC}
 function s.filter(c,e,tp)
 	local lv=c:GetLevel()
 	return c:IsFaceup() and lv>0 and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_HAND,0,1,nil,lv,e,tp)
 end
 function s.filter2(c,lv,e,tp)
-	return c:IsSetCard(0x42) and c:GetLevel()<=lv and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_NORDIC) and c:GetLevel()<=lv and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end

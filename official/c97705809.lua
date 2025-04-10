@@ -1,4 +1,5 @@
 --スーパーチャージ
+--Supercharge
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,12 +13,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x16}
+s.listed_series={SET_ROID}
 function s.cfilter(c)
-	return c:IsFacedown() or not c:IsSetCard(0x16) or not c:IsRace(RACE_MACHINE)
+	return c:IsFacedown() or not c:IsSetCard(SET_ROID) or not c:IsRace(RACE_MACHINE)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp and Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)~=0
+	return Duel.IsTurnPlayer(1-tp) and Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)~=0
 		and not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

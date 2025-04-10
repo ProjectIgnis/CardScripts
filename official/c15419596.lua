@@ -71,5 +71,5 @@ function s.actcon(e)
 end
 function s.aclimit(e,re,tp)
 	local tc=re:GetHandler()
-	return tc:IsLocation(LOCATION_MZONE) and re:IsActiveType(TYPE_MONSTER) and e:GetHandler():GetColumnGroup():IsContains(tc)
+	return tc:IsLocation(LOCATION_MZONE) and re:IsMonsterEffect() and e:GetHandler():GetColumnGroup():IsContains(tc)
 end

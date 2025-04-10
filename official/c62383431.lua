@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop2)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x163}
+s.listed_series={SET_OGDOADIC}
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,nil,1,false,aux.ReleaseCheckMMZ,nil) end
 	local g=Duel.SelectReleaseGroupCost(tp,nil,1,1,false,aux.ReleaseCheckMMZ,nil)
@@ -55,19 +55,19 @@ function s.spop1(e,tp,eg,ep,ev,re,r,rp)
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_DISABLE)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			tc:RegisterEffect(e1)
 			local e2=Effect.CreateEffect(c)
 			e2:SetType(EFFECT_TYPE_SINGLE)
 			e2:SetCode(EFFECT_DISABLE_EFFECT)
-			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 			tc:RegisterEffect(e2)
 		end
 		Duel.SpecialSummonComplete()
 	end
 end
 function s.spfilter2(c,e,tp)
-	return c:IsSetCard(0x163) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_OGDOADIC) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.spfilter2(chkc,e,tp) end
@@ -85,7 +85,7 @@ function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
-		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
+		e1:SetReset(RESET_EVENT|RESETS_REDIRECT)
 		e1:SetValue(LOCATION_REMOVED)
 		tc:RegisterEffect(e1,true)
 	end

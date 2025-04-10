@@ -1,4 +1,5 @@
 --トライデント・ドラギオン
+--Trident Dragion
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -24,7 +25,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
+	return e:GetHandler():IsSynchroSummoned()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(tp) end
@@ -43,7 +44,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetCode(EFFECT_EXTRA_ATTACK)
 		e1:SetValue(ct)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		c:RegisterEffect(e1)
 	end
 end

@@ -1,4 +1,5 @@
 --E・HERO エリクシーラー
+--Elemental HERO Electrum
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -38,9 +39,9 @@ function s.initial_effect(c)
 	e5:SetValue(s.val)
 	c:RegisterEffect(e5)
 end
-s.material_setcode={0x8,0x3008}
+s.material_setcode={SET_HERO,SET_ELEMENTAL_HERO}
 function s.retcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)
+	return e:GetHandler():IsFusionSummoned()
 end
 function s.rettg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

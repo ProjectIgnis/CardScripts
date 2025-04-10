@@ -25,13 +25,13 @@ function s.cfilter(c)
 	return c:IsLocation(LOCATION_MZONE) and c:IsFaceup() and c:IsRace(RACE_DRAGON)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
-	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) or not (re:IsActiveType(TYPE_TRAP) and re:IsHasType(EFFECT_TYPE_ACTIVATE)) then return false end
+	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) or not (re:IsTrapEffect() and re:IsHasType(EFFECT_TYPE_ACTIVATE)) then return false end
 	local tg=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 	return tg and tg:IsExists(s.cfilter,1,nil) and Duel.IsChainDisablable(ev)
 end
 function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,e:GetHandler()) end
-	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST|REASON_DISCARD)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

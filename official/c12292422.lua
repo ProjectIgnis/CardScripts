@@ -30,9 +30,9 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgyfilter,tp,LOCATION_HAND,0,1,nil)
-		and Duel.GetFieldGroupCount(1-tp,0,LOCATION_HAND+LOCATION_DECK)>0 end
+		and Duel.GetFieldGroupCount(1-tp,0,LOCATION_HAND|LOCATION_DECK)>0 end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_HAND)
-	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,1-tp,LOCATION_HAND+LOCATION_DECK)
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,1-tp,LOCATION_HAND|LOCATION_DECK)
 end
 function s.filter(c,typ,lv)
 	return c:IsRace(typ) and c:IsLevel(lv) and c:IsAbleToGrave()
@@ -45,7 +45,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_LVRANK)
 		local lv=Duel.AnnounceLevel(tp,1,12)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-		local g=Duel.SelectMatchingCard(1-tp,s.filter,1-tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,typ,lv)
+		local g=Duel.SelectMatchingCard(1-tp,s.filter,1-tp,LOCATION_HAND|LOCATION_DECK,0,1,1,nil,typ,lv)
 			if #g>0 then
 			Duel.SendtoGrave(g,REASON_EFFECT)
 		end

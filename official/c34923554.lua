@@ -1,5 +1,5 @@
 --無限起動ドラグショベル
---Infinite Ignition Drag Shovel
+--Infinitrack Drag Shovel
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)

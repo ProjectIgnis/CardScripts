@@ -1,7 +1,8 @@
 --エンシェント・ドラゴン
+--Ancient Dragon
 local s,id=GetID()
 function s.initial_effect(c)
-	-- atk/lv up
+	--atk/lv up
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_ATKCHANGE)
@@ -22,7 +23,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
 		e1:SetValue(500)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		c:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_UPDATE_LEVEL)

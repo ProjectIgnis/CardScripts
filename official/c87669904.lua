@@ -58,7 +58,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e4:SetOperation(s.desop)
 	Duel.RegisterEffect(e4,tp)
 	aux.RegisterClientHint(c,nil,tp,1,0,aux.Stringid(id,1),nil)
-	if Duel.DiscardHand(tp,nil,1,1,REASON_EFFECT+REASON_DISCARD)>0
+	if Duel.DiscardHand(tp,nil,1,1,REASON_EFFECT|REASON_DISCARD)>0
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_DUAL_AVATAR_SPIRIT,SET_DUAL_AVATAR,TYPES_TOKEN,0,0,2,RACE_WARRIOR,ATTRIBUTE_LIGHT) then
 		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 		if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=math.min(ft,1) end

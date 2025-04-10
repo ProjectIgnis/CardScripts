@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_COUNTER)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
-	e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e1:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
 	e1:SetCondition(s.addccon)
@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.addccon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.addct(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

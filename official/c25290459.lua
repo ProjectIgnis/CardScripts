@@ -12,10 +12,10 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x41}
+s.listed_series={SET_LV}
 function s.costfilter(c,e,tp)
-	if not c:IsSetCard(0x41) or not c:IsAbleToGraveAsCost() or not c:IsFaceup() then return false end
-	return c.listed_names and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,c,e,tp)
+	if not c:IsSetCard(SET_LV) or not c:IsAbleToGraveAsCost() or not c:IsFaceup() then return false end
+	return c.listed_names and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND|LOCATION_DECK,0,1,nil,c,e,tp)
 end
 function s.spfilter(c,class,e,tp)
 	return c:IsMonster() and c:IsCanBeSpecialSummoned(e,0,tp,true,true)
@@ -36,7 +36,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(g,REASON_COST)
 	local code=g:GetFirst():GetOriginalCode()
 	Duel.SetTargetParam(code)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND|LOCATION_DECK)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
@@ -44,7 +44,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local class=Duel.GetMetatable(code)
 	if class==nil or class.listed_names==nil then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,class,e,tp)
+	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND|LOCATION_DECK,0,1,1,nil,class,e,tp)
 	local tc=g:GetFirst()
 	if tc then
 		Duel.SpecialSummon(tc,0,tp,tp,true,true,POS_FACEUP)

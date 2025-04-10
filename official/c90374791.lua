@@ -1,4 +1,5 @@
 --アームド・チェンジャー
+--Armed Changer
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c,nil,nil,nil,s.cost)

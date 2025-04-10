@@ -1,4 +1,5 @@
 --邪竜星－ガイザー
+--Yazi, Evil of the Yang Zing
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -36,9 +37,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x9e}
+s.listed_series={SET_YANG_ZING}
 function s.desfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x9e)
+	return c:IsFaceup() and c:IsSetCard(SET_YANG_ZING)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

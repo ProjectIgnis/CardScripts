@@ -1,4 +1,5 @@
 --決戦融合－ファイナル・フュージョン
+--Final Fusion
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

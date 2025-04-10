@@ -1,4 +1,5 @@
 --地天の騎士ガイアドレイク
+--Gaia Drake, the Universal Force
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material

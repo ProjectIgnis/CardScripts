@@ -7,7 +7,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetCode(EFFECT_ADD_TYPE)
-	e1:SetRange(LOCATION_HAND+LOCATION_GRAVE)
+	e1:SetRange(LOCATION_HAND|LOCATION_GRAVE)
 	e1:SetValue(TYPE_NORMAL)
 	c:RegisterEffect(e1)
 	local e2=e1:Clone()
@@ -34,7 +34,7 @@ function s.initial_effect(c)
 	e5:SetCode(EVENT_FREE_CHAIN)
 	e5:SetRange(LOCATION_MZONE)
 	e5:SetCondition(s.spcon)
-	e5:SetCost(s.spcost)
+	e5:SetCost(Cost.SelfTribute)
 	e5:SetTarget(s.sptg)
 	e5:SetOperation(s.spop)
 	c:RegisterEffect(e5)
@@ -58,10 +58,6 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0
-end
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() end
-	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function s.spfilter(c,e,tp)
 	return c:IsCode(CARD_BLUEEYES_W_DRAGON) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

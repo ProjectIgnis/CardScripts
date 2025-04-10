@@ -1,10 +1,10 @@
 --アマゾネスペット虎獅王
---Amazoness King Liger
+--Amazoness Pet Liger King
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	Fusion.AddProcMix(c,true,true,s.mfilter,aux.FilterBoolFunctionEx(Card.IsSetCard,0x4))
+	Fusion.AddProcMix(c,true,true,s.mfilter,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_AMAZONESS))
 	--Cannot attack monsters, except this one
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -25,9 +25,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x4}
+s.listed_series={SET_AMAZONESS}
 function s.mfilter(c,sc,st,tp)
-	return c:IsSetCard(0x4,sc,st,tp) and c:IsLevelAbove(5)
+	return c:IsSetCard(SET_AMAZONESS,sc,st,tp) and c:IsLevelAbove(5)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -38,14 +38,14 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_OATH+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetCode(EFFECT_CANNOT_ATTACK)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESETS_STANDARD_PHASE_END)
 	c:RegisterEffect(e1,true)
 end
 function s.desfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x4) and Duel.GetMZoneCount(tp,c)>0
+	return c:IsFaceup() and c:IsSetCard(SET_AMAZONESS) and Duel.GetMZoneCount(tp,c)>0
 end
 function s.spfilter(c,e,tp)
-	return c:IsRace(RACE_WARRIOR) and c:IsSetCard(0x4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsRace(RACE_WARRIOR) and c:IsSetCard(SET_AMAZONESS) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

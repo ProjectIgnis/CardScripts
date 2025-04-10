@@ -30,13 +30,13 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.Draw(tp,1,REASON_EFFECT)~=0 then
 		Duel.ShuffleHand(tp)
 		Duel.BreakEffect()
-		Duel.DiscardHand(tp,nil,1,1,REASON_EFFECT+REASON_DISCARD)
+		Duel.DiscardHand(tp,nil,1,1,REASON_EFFECT|REASON_DISCARD)
 	end
 end
 function s.postg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsCanTurnSet() and c:GetFlagEffect(id)==0 end
-	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET+RESET_PHASE+PHASE_END,0,1)
+	c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD-RESET_TURN_SET|RESET_PHASE|PHASE_END,0,1)
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,c,1,0,0)
 end
 function s.posop(e,tp,eg,ep,ev,re,r,rp)

@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
-	local e1=Fusion.CreateSummonEff(c,aux.FilterBoolFunction(Card.IsSetCard,0x1047),aux.FALSE,s.extrafil,nil,nil,s.stage2,nil,nil,nil,nil,nil,nil,nil,s.extratg)
+	local e1=Fusion.CreateSummonEff(c,aux.FilterBoolFunction(Card.IsSetCard,SET_GEM_KNIGHT),aux.FALSE,s.extrafil,nil,nil,s.stage2,nil,nil,nil,nil,nil,nil,nil,s.extratg)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	c:RegisterEffect(e1)
 	--Destroy
@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.atkop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x1047}
+s.listed_series={SET_GEM_KNIGHT}
 function s.extrafil(e,tp,mg1)
 	return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsAbleToGrave),tp,LOCATION_DECK,0,nil)
 end
@@ -39,7 +39,7 @@ function s.stage2(e,tc,tp,sg,chk)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetValue(0)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD-RESET_TOFIELD)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_SET_DEFENSE_FINAL)
@@ -63,7 +63,7 @@ function s.cfilter(c)
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_COST+REASON_DISCARD,nil)
+	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_COST|REASON_DISCARD,nil)
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetFirstCardTarget() end
@@ -76,7 +76,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(tc:GetBaseAttack())
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
+		e1:SetReset(RESETS_STANDARD_PHASE_END|RESET_OPPO_TURN)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_UPDATE_DEFENSE)

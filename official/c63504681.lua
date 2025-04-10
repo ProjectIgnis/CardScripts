@@ -74,7 +74,7 @@ function s.initial_effect(c)
 end
 s.xyz_number=86
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return Duel.IsTurnPlayer(1-tp)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

@@ -1,5 +1,5 @@
 --竜輝巧－ファフニール
---Draitron Fafnir
+--Drytron Fafnir
 --Scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -41,9 +41,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 s.listed_names={id}
-s.listed_series={0x151}
+s.listed_series={SET_DRYTRON}
 function s.thfilter(c)
-	return c:IsSpellTrap() and c:IsSetCard(0x151) and c:IsAbleToHand() and not c:IsCode(id)
+	return c:IsSpellTrap() and c:IsSetCard(SET_DRYTRON) and c:IsAbleToHand() and not c:IsCode(id)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
@@ -60,7 +60,7 @@ function s.effectfilter(e,ct)
 	return te:GetHandler():IsRitualSpell()
 end
 function s.lvcond(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x151),tp,LOCATION_MZONE,0,1,nil) 
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_DRYTRON),tp,LOCATION_MZONE,0,1,nil) 
 end
 function s.lvfilter(c)
 	return c:IsFaceup() and c:HasLevel() and c:IsLevelAbove(2) and c:IsAttackAbove(1000)
@@ -79,7 +79,7 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_LEVEL)
 			e1:SetValue(-lv)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e1:SetReset(RESETS_STANDARD_PHASE_END)
 			tc:RegisterEffect(e1)
 		end
 	end

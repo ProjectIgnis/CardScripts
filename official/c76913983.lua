@@ -1,8 +1,9 @@
 --BF－アームズ・ウィング
+--Blackwing Armed Wing
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
-	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x33),1,1,Synchro.NonTuner(nil),1,99)
+	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_BLACKWING),1,1,Synchro.NonTuner(nil),1,99)
 	c:EnableReviveLimit()
 	--atkup
 	local e1=Effect.CreateEffect(c)
@@ -19,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_PIERCE)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x33}
+s.listed_series={SET_BLACKWING}
 function s.atkcon(e)
 	local ph=Duel.GetCurrentPhase()
 	if ph~=PHASE_DAMAGE and ph~=PHASE_DAMAGE_CAL then return false end

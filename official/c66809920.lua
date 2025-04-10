@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e2:SetCountLimit(1,{id,1})
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x122}
+s.listed_series={SET_VALKYRIE}
 s.listed_names={92182447}
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return re and re:GetHandler():IsSpell() and e:GetHandler():IsPreviousLocation(LOCATION_HAND)
@@ -50,7 +50,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x122) and not c:IsCode(id)
+	return c:IsSetCard(SET_VALKYRIE) and not c:IsCode(id)
 end
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
@@ -71,11 +71,10 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e1:SetReset(RESETS_STANDARD_PHASE_END)
 			e1:SetCode(EFFECT_SET_ATTACK)
 			e1:SetValue(rc:GetBaseAttack())
 			c:RegisterEffect(e1)
 		end
 	end
 end
-

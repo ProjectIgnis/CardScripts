@@ -1,4 +1,4 @@
---Japanese name
+--守護獣セルケト
 --Merciless Scorpion of Serket
 --Scripted by The Razgriz
 local s,id=GetID()
@@ -64,7 +64,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	g:DeleteGroup()
 end
 function s.thfilter(c)
-	return (c:IsCode(CARD_TEMPLE_OF_THE_KINGS) or (c:IsSpell() and c:ListsCode(CARD_TEMPLE_OF_THE_KINGS)))  and c:IsAbleToHand()
+	return (c:IsCode(CARD_TEMPLE_OF_THE_KINGS) or (c:IsSpell() and c:ListsCode(CARD_TEMPLE_OF_THE_KINGS))) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

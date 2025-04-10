@@ -1,4 +1,5 @@
 --ガエル・サンデス
+--D.3.S. Frog
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -14,7 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={12538374}
-s.material_setcode=0x12
+s.material_setcode=SET_FROG
 function s.atkval(e,c)
 	return Duel.GetMatchingGroupCount(Card.IsCode,c:GetControler(),LOCATION_GRAVE,0,nil,12538374)*500
 end

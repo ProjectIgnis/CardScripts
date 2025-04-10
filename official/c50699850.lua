@@ -1,9 +1,9 @@
--- 悪魔嬢ロリス
--- Loris, Lady of Lament
--- Scripted by Hatter
+--悪魔嬢ロリス
+--Loris, Lady of Lament
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Draw
+	--Draw
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TODECK+CATEGORY_DRAW)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.drtg)
 	e1:SetOperation(s.drop)
 	c:RegisterEffect(e1)
-	-- Set
+	--Set
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_LEAVE_GRAVE)
@@ -33,14 +33,14 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.drfilter(c,e)
-	return c:IsFaceup() and c:GetType()==TYPE_TRAP and c:IsAbleToDeck() and c:IsCanBeEffectTarget(e)
+	return c:IsFaceup() and c:IsNormalTrap() and c:IsAbleToDeck() and c:IsCanBeEffectTarget(e)
 end
 function s.rescon(sg,e,tp,mg)
 	return #sg==3 or (#sg==6 and Duel.IsPlayerCanDraw(tp,2))
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_REMOVED+LOCATION_GRAVE) and chkc:IsControler(tp) and s.drfilter(chkc,e) end
-	local g=Duel.GetMatchingGroup(s.drfilter,tp,LOCATION_REMOVED+LOCATION_GRAVE,0,nil,e)
+	if chkc then return chkc:IsLocation(LOCATION_REMOVED|LOCATION_GRAVE) and chkc:IsControler(tp) and s.drfilter(chkc,e) end
+	local g=Duel.GetMatchingGroup(s.drfilter,tp,LOCATION_REMOVED|LOCATION_GRAVE,0,nil,e)
 	if chk==0 then return #g>=3 and Duel.IsPlayerCanDraw(tp,1) end
 	local dg=aux.SelectUnselectGroup(g,e,tp,3,6,s.rescon,1,tp,HINTMSG_TODECK,s.rescon)
 	Duel.SetTargetCard(dg)
@@ -66,7 +66,7 @@ function s.rlsetcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.rlsetconfilter,1,e:GetHandler())
 end
 function s.setfilter(c)
-	return c:GetType()==TYPE_TRAP and c:IsSSetable()
+	return c:IsNormalTrap() and c:IsSSetable()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.setfilter(chkc) end
@@ -82,7 +82,7 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tgsetconfilter(c,tp)
-	return c:GetType()==TYPE_TRAP and c:IsPreviousControler(tp)
+	return c:IsNormalTrap() and c:IsPreviousControler(tp)
 end
 function s.tgsetcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp and r&REASON_EFFECT==REASON_EFFECT and eg:IsExists(s.tgsetconfilter,1,nil,tp)

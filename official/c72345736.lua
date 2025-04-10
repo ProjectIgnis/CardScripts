@@ -2,8 +2,8 @@
 --Six Samurai United
 local s,id=GetID()
 function s.initial_effect(c)
-	c:EnableCounterPermit(0x3)
-	c:SetCounterLimit(0x3,2)
+	c:EnableCounterPermit(COUNTER_BUSHIDO)
+	c:SetCounterLimit(COUNTER_BUSHIDO,2)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -37,25 +37,25 @@ function s.initial_effect(c)
 	e5:SetValue(1)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x3d}
-s.counter_place_list={0x3}
+s.listed_series={SET_SIX_SAMURAI}
+s.counter_place_list={COUNTER_BUSHIDO}
 function s.ctfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x3d)
+	return c:IsFaceup() and c:IsSetCard(SET_SIX_SAMURAI)
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	if eg:IsExists(s.ctfilter,1,nil) then
-		e:GetHandler():AddCounter(0x3,1)
+		e:GetHandler():AddCounter(COUNTER_BUSHIDO,1)
 	end
 end
 function s.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
-	local ct=e:GetHandler():GetCounter(0x3)
+	local ct=e:GetHandler():GetCounter(COUNTER_BUSHIDO)
 	e:SetLabel(ct)
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return c:GetCounter(0x3)>0 and Duel.IsPlayerCanDraw(tp,c:GetCounter(0x3)) end
+	if chk==0 then return c:GetCounter(COUNTER_BUSHIDO)>0 and Duel.IsPlayerCanDraw(tp,c:GetCounter(COUNTER_BUSHIDO)) end
 	local ct=e:GetLabel()
 	Duel.SetTargetPlayer(tp)
 	Duel.SetTargetParam(ct)

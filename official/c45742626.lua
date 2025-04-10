@@ -1,4 +1,5 @@
 --巡死神リーパー
+--Pilgrim Reaper
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -22,17 +23,13 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1,id)
-	e3:SetCost(s.cost)
+	e3:SetCost(Cost.Detach(1))
 	e3:SetTarget(s.target)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3,false,REGISTER_FLAG_DETACH_XMAT)
 end
 function s.value(e,c)
 	return Duel.GetMatchingGroupCount(Card.IsAttribute,0,LOCATION_GRAVE,LOCATION_GRAVE,nil,ATTRIBUTE_DARK)*200
-end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,5) and Duel.IsPlayerCanDiscardDeck(1-tp,5) end

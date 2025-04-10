@@ -31,12 +31,12 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop2)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x24}
+s.listed_series={SET_SCRAP}
 function s.lcheck(g,lc,sumtype,tp)
-	return g:IsExists(Card.IsSetCard,1,nil,0x24,lc,sumtype,tp)
+	return g:IsExists(Card.IsSetCard,1,nil,SET_SCRAP,lc,sumtype,tp)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x24) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_SCRAP) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.spfilter(chkc,e,tp) end
@@ -63,7 +63,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c,tp)
-	return c:IsReason(REASON_EFFECT) and c:IsPreviousSetCard(0x24) and c:IsMonster() and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
+	return c:IsReason(REASON_EFFECT) and c:IsPreviousSetCard(SET_SCRAP) and c:IsMonster() and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
 end
 function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)

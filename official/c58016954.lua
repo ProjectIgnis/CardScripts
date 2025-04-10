@@ -1,4 +1,5 @@
 --イェシャドール－セフィラナーガ
+--Shaddoll Zefranaga
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -28,16 +29,16 @@ function s.initial_effect(c)
 	e4:SetCondition(aux.TRUE)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x9d,0xc4}
+s.listed_series={SET_SHADDOLL,SET_ZEFRA}
 function s.splimit(e,c,sump,sumtype,sumpos,targetp)
-	if c:IsSetCard(0x9d) or c:IsSetCard(0xc4) then return false end
+	if c:IsSetCard(SET_SHADDOLL) or c:IsSetCard(SET_ZEFRA) then return false end
 	return (sumtype&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
 end
 function s.condition1(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_PENDULUM)
+	return e:GetHandler():IsPendulumSummoned()
 end
 function s.cfilter(c)
-	return c:IsSetCard(0xc4)
+	return c:IsSetCard(SET_ZEFRA)
 end
 function s.filter(c)
 	return c:IsAbleToHand()

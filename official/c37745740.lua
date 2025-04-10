@@ -1,4 +1,5 @@
 --EMガンバッター
+--Performapal Bowhopper
 local s,id=GetID()
 function s.initial_effect(c)
 	--damage
@@ -26,11 +27,11 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x9f}
+s.listed_series={SET_PERFORMAPAL}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsSetCard,1,false,nil,nil,0x9f) end
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsSetCard,1,false,nil,nil,SET_PERFORMAPAL) end
 	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
-	local g=Duel.SelectReleaseGroupCost(tp,Card.IsSetCard,1,1,false,nil,nil,0x9f)
+	local g=Duel.SelectReleaseGroupCost(tp,Card.IsSetCard,1,1,false,nil,nil,SET_PERFORMAPAL)
 	e:SetLabel(g:GetFirst():GetLevel()*100)
 	Duel.Release(g,REASON_COST)
 end
@@ -45,14 +46,14 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Damage(p,d,REASON_EFFECT)
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsSetCard,1,false,nil,nil,0x9f) end
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsSetCard,1,false,nil,nil,SET_PERFORMAPAL) end
 	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
-	local g=Duel.SelectReleaseGroupCost(tp,Card.IsSetCard,1,1,false,nil,nil,0x9f)
+	local g=Duel.SelectReleaseGroupCost(tp,Card.IsSetCard,1,1,false,nil,nil,SET_PERFORMAPAL)
 	e:SetLabelObject(g:GetFirst())
 	Duel.Release(g,REASON_COST)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x9f) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_PERFORMAPAL) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc) and chkc~=e:GetLabelObject() end

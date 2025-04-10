@@ -1,4 +1,5 @@
 --Kozmo－グリンドル
+--Kozmo Goodwitch
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -9,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1,id)
-	e1:SetCost(s.spcost)
+	e1:SetCost(Cost.SelfBanish)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
@@ -21,18 +22,14 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCountLimit(1)
-	e2:SetCost(s.poscost)
+	e2:SetCost(Cost.PayLP(500))
 	e2:SetTarget(s.postg)
 	e2:SetOperation(s.posop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xd2}
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() end
-	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
-end
+s.listed_series={SET_KOZMO}
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0xd2) and c:IsLevelAbove(5) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_KOZMO) and c:IsLevelAbove(5) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
@@ -47,10 +44,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
-end
-function s.poscost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,500) end
-	Duel.PayLPCost(tp,500)
 end
 function s.posfilter(c)
 	return c:IsFaceup() and c:IsCanTurnSet()

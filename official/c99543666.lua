@@ -1,5 +1,5 @@
 --烙印劇城デスピア
---Despia, the Stigmatika Theatre
+--Despia, Theater of the Branded
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

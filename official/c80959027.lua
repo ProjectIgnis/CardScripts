@@ -1,5 +1,5 @@
 --魔導獣 バジリスク
---Mythical Beast Basilisk
+--Mythical Beast Bashilisk
 local s,id=GetID()
 function s.initial_effect(c)
 	Pendulum.AddProcedure(c)
@@ -44,7 +44,7 @@ function s.initial_effect(c)
 end
 s.listed_names={id}
 s.counter_place_list={COUNTER_SPELL}
-s.listed_series={0x10d}
+s.listed_series={SET_MYTHICAL_BEAST}
 function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_PZONE,0) == 1
 end
@@ -73,12 +73,12 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.acop(e,tp,eg,ep,ev,re,r,rp)
-	if re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL) and e:GetHandler():GetFlagEffect(1)>0 then
+	if re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsSpellEffect() and e:GetHandler():GetFlagEffect(1)>0 then
 		e:GetHandler():AddCounter(COUNTER_SPELL,1)
 	end
 end
 function s.thfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x10d) and c:IsAbleToHand()
+	return c:IsFaceup() and c:IsSetCard(SET_MYTHICAL_BEAST) and c:IsAbleToHand()
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -86,15 +86,14 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RemoveCounter(tp,1,0,COUNTER_SPELL,3,REASON_COST)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_PZONE+LOCATION_EXTRA,0,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_PZONE+LOCATION_EXTRA)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_PZONE|LOCATION_EXTRA,0,1,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_PZONE|LOCATION_EXTRA)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
-	local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_PZONE+LOCATION_EXTRA,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_PZONE|LOCATION_EXTRA,0,1,1,nil)
 	if #g>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-

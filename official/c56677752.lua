@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_DESTROY)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetType(EFFECT_TYPE_IGNITION)
-	e2:SetRange(LOCATION_HAND+LOCATION_GRAVE)
+	e2:SetRange(LOCATION_HAND|LOCATION_GRAVE)
 	e2:SetCountLimit(1,id)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
@@ -39,13 +39,13 @@ function s.initial_effect(c)
 	e3:SetOperation(s.penop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x99,0x9f}
+s.listed_series={SET_ODD_EYES,SET_PERFORMAPAL}
 s.listed_names={id}
 function s.texcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsTurnPlayer(1-tp)
 end
 function s.cfilter(c)
-	return c:IsType(TYPE_PENDULUM) and c:IsSetCard(0x99) and not c:IsForbidden()
+	return c:IsType(TYPE_PENDULUM) and c:IsSetCard(SET_ODD_EYES) and not c:IsForbidden()
 end
 function s.textg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,1,nil) end
@@ -62,7 +62,7 @@ function s.texop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spcfilter(c)
-	return c:IsFaceup() and c:IsOriginalType(TYPE_MONSTER) and (c:IsSetCard(0x99) or c:IsSetCard(0x9f))
+	return c:IsFaceup() and c:IsOriginalType(TYPE_MONSTER) and (c:IsSetCard(SET_ODD_EYES) or c:IsSetCard(SET_PERFORMAPAL))
 		and not c:IsCode(id)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

@@ -1,4 +1,5 @@
 --混沌の黒魔術師
+--Dark Magician of Chaos
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon success

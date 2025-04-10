@@ -1,4 +1,5 @@
 --HEROの遺産
+--Legacy of a HERO
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -13,8 +14,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={SET_HERO}
 function s.cfilter(c)
-	return c:ListsArchetypeAsMaterial(0x8) and c:IsType(TYPE_FUSION) and c:IsAbleToExtraAsCost()
+	return c:ListsArchetypeAsMaterial(SET_HERO) and c:IsType(TYPE_FUSION) and c:IsAbleToExtraAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,2,nil) end

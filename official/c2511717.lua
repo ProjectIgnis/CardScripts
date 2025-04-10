@@ -21,9 +21,9 @@ function s.initial_effect(c)
 	e2:SetValue(1500)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x3d}
+s.listed_series={SET_SIX_SAMURAI}
 function s.filter(c,e,tp)
-	return c:IsLevelBelow(4) and c:IsSetCard(0x3d) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsLevelBelow(4) and c:IsSetCard(SET_SIX_SAMURAI) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -39,7 +39,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.atkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x3d) and c:GetCode()~=id
+	return c:IsFaceup() and c:IsSetCard(SET_SIX_SAMURAI) and c:GetCode()~=id
 end
 function s.atkcon(e)
 	local c=e:GetHandler()

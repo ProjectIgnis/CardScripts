@@ -1,4 +1,5 @@
 --捕食植物オフリス・スコーピオ
+--Predaplant Ophrys Scorpio
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon
@@ -17,7 +18,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x10f3}
+s.listed_series={SET_PREDAPLANT}
 s.listed_names={id}
 function s.cfilter(c)
 	return c:IsMonster() and c:IsAbleToGraveAsCost()
@@ -29,7 +30,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x10f3) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_PREDAPLANT) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

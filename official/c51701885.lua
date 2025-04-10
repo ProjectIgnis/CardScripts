@@ -1,4 +1,5 @@
 --テレポンD.D.
+--D.D. Telepon
 local s,id=GetID()
 function s.initial_effect(c)
 	--remove
@@ -19,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e2:SetRange(LOCATION_REMOVED)
 	e2:SetCountLimit(1)
-	e2:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e2:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e2:SetCondition(s.spcon)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
@@ -44,8 +45,8 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	if tc then
 		Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
 		if c:IsRelateToEffect(e) then
-			c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,3)
-			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,3)
+			c:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,3)
+			tc:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,3)
 			e:SetLabelObject(tc)
 		end
 	end
@@ -53,7 +54,7 @@ end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject():GetLabelObject()
 	local c=e:GetHandler()
-	return tc and Duel.GetTurnCount()~=tc:GetTurnID() and Duel.GetTurnPlayer()==tp
+	return tc and Duel.GetTurnCount()~=tc:GetTurnID() and Duel.IsTurnPlayer(tp)
 		and c:GetFlagEffect(id)~=0 and tc:GetFlagEffect(id)~=0
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

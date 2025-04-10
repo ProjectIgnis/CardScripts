@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.regop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xe1}
+s.listed_series={SET_METALFOES}
 function s.desfilter(c,tp)
 	if c:IsFacedown() then return false end
 	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
@@ -39,7 +39,7 @@ function s.desfilter(c,tp)
 	end
 end
 function s.filter(c,ignore)
-	return c:IsSetCard(0xe1) and c:IsSpellTrap() and c:IsSSetable(ignore)
+	return c:IsSetCard(SET_METALFOES) and c:IsSpellTrap() and c:IsSSetable(ignore)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(tp) and s.desfilter(chkc,tp) and chkc~=e:GetHandler() end
@@ -73,11 +73,11 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCountLimit(1)
 	e1:SetCondition(s.thcon)
 	e1:SetOperation(s.thop)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0xe1) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_METALFOES) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil)

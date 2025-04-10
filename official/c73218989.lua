@@ -47,7 +47,7 @@ function s.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_QUICK_O)
 	e4:SetCode(EVENT_FREE_CHAIN)
 	e4:SetRange(LOCATION_MZONE)
-	e4:SetHintTiming(0,TIMING_MAIN_END+TIMINGS_CHECK_MONSTER_E)
+	e4:SetHintTiming(0,TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E)
 	e4:SetCondition(s.descon)
 	e4:SetCost(s.descost)
 	e4:SetTarget(s.destg)
@@ -74,15 +74,15 @@ end
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	local g1=Duel.GetMatchingGroup(s.spfilter1,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil,tp)
-	local g2=Duel.GetMatchingGroup(s.spfilter2,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,nil,tp)
+	local g1=Duel.GetMatchingGroup(s.spfilter1,tp,LOCATION_MZONE|LOCATION_GRAVE,0,nil,tp)
+	local g2=Duel.GetMatchingGroup(s.spfilter2,tp,LOCATION_ONFIELD|LOCATION_GRAVE,0,nil,tp)
 	local g=g1:Clone()
 	g:Merge(g2)
 	return #g1>0 and #g2>0 and aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,0)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
-	local g1=Duel.GetMatchingGroup(s.spfilter1,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil,tp)
-	local g2=Duel.GetMatchingGroup(s.spfilter2,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil,tp)
+	local g1=Duel.GetMatchingGroup(s.spfilter1,tp,LOCATION_MZONE|LOCATION_GRAVE,0,nil,tp)
+	local g2=Duel.GetMatchingGroup(s.spfilter2,tp,LOCATION_MZONE|LOCATION_GRAVE,0,nil,tp)
 	local rg=g1:Clone()
 	rg:Merge(g2)
 	local g=aux.SelectUnselectGroup(rg,e,tp,2,2,s.rescon,1,tp,HINTMSG_REMOVE,nil,nil,true)
@@ -102,7 +102,7 @@ end
 --counter and damage
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return ep==1-tp and re:IsActiveType(TYPE_MONSTER) and c:GetFlagEffect(1)~=0
+	return ep==1-tp and re:IsMonsterEffect() and c:GetFlagEffect(1)~=0
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

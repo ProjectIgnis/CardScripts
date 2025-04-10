@@ -1,4 +1,5 @@
 --暗黒界の書物
+--Dark World Grimoire
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -20,7 +21,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and (r&REASON_ADJUST)~=0
+	return Duel.IsTurnPlayer(tp) and (r&REASON_ADJUST)~=0
 end
 function s.filter(c,e,tp)
 	return c:IsCanBeSpecialSummoned(e,0,tp,false,false)

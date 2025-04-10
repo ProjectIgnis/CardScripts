@@ -48,7 +48,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.thop)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x400d,0x113}
+s.listed_series={SET_ELEMENTSABER,SET_ELEMENTAL_LORD}
 s.listed_names={61557074}
 function s.intg(e,c)
 	return c:IsFaceup() and c:IsCode(61557074)
@@ -62,7 +62,7 @@ function s.filter1(c,e,tp)
 		and Duel.GetMZoneCount(tp,c)>0
 end
 function s.filter2(c,e,tp,att)
-	return c:IsSetCard(0x400d) and c:GetOriginalAttribute()~=att and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_ELEMENTSABER) and c:GetOriginalAttribute()~=att and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
@@ -90,7 +90,7 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(c,REASON_COST)
 end
 function s.thfilter(c)
-	return c:IsMonster() and c:IsSetCard(0x113) and c:IsAbleToHand()
+	return c:IsMonster() and c:IsSetCard(SET_ELEMENTAL_LORD) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local hg=Duel.GetFieldGroup(tp,LOCATION_HAND,0)
@@ -101,7 +101,7 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local hg=Duel.GetFieldGroup(tp,LOCATION_HAND,0)
-	local ct=Duel.SendtoGrave(hg,REASON_EFFECT+REASON_DISCARD)
+	local ct=Duel.SendtoGrave(hg,REASON_EFFECT|REASON_DISCARD)
 	if ct<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.thfilter),tp,LOCATION_GRAVE,0,ct,ct,nil)

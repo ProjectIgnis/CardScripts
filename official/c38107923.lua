@@ -1,4 +1,5 @@
 --ダーク・ネフティス
+--Dark Nephthys
 local s,id=GetID()
 function s.initial_effect(c)
 	--to grave
@@ -17,7 +18,7 @@ function s.initial_effect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e2:SetRange(LOCATION_GRAVE)
-	e2:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e2:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e2:SetCondition(s.spcon)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
@@ -40,9 +41,9 @@ function s.costfilter(c)
 	return c:IsAttribute(ATTRIBUTE_DARK) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end
 function s.tgcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,2,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,2,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,2,2,nil)
+	local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,2,2,nil)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -53,7 +54,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then
 		Duel.SendtoGrave(c,REASON_EFFECT)
-		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN,0,1)
+		c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_STANDBY|RESET_SELF_TURN,0,1)
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
@@ -76,7 +77,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsSpellTrap() end
 	if chk==0 then return true end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(tp,Card.IsType,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil,TYPE_SPELL+TYPE_TRAP)
+	local g=Duel.SelectTarget(tp,Card.IsSpellTrap,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)

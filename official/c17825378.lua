@@ -1,10 +1,10 @@
--- 捕食植物トリアンティス
--- Predaplant Triantis
--- Scripted by Hatter
+--捕食植物トリアンティス
+--Predaplant Triantis
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	Pendulum.AddProcedure(c)
-	-- Allow cards in the Pendulum Zones as fusion materials
+	--Allow cards in the Pendulum Zones as fusion materials
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_EXTRA_FUSION_MATERIAL)
@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetTargetRange(LOCATION_PZONE,0)
 	e1:SetValue(function(_,c) return c and c:IsAttribute(ATTRIBUTE_DARK) end)
 	c:RegisterEffect(e1)
-	-- Place Predator Counters
+	--Place Predator Counters
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_COUNTER)
@@ -28,7 +28,7 @@ s.counter_place_list={COUNTER_PREDATOR}
 function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return (r&REASON_FUSION)==REASON_FUSION and c:IsFaceup()
-		and c:IsLocation(LOCATION_GRAVE+LOCATION_EXTRA) 
+		and c:IsLocation(LOCATION_GRAVE|LOCATION_EXTRA) 
 end
 function s.cttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)>0
@@ -46,7 +46,7 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_CHANGE_LEVEL)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			e1:SetCondition(s.lvcon)
 			e1:SetValue(1)
 			tc:RegisterEffect(e1)

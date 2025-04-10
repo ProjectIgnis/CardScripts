@@ -51,7 +51,7 @@ function s.regcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.thcfilter,1,c,c,tp)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_CHAIN,0,1)
+	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_CHAIN,0,1)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(id)>0
@@ -61,12 +61,12 @@ function s.thfilter(c)
 		and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_GRAVE+LOCATION_EXTRA,0,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_GRAVE+LOCATION_EXTRA)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_GRAVE|LOCATION_EXTRA,0,1,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_GRAVE|LOCATION_EXTRA)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.thfilter),tp,LOCATION_GRAVE+LOCATION_EXTRA,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.thfilter),tp,LOCATION_GRAVE|LOCATION_EXTRA,0,1,1,nil)
 	if #g>0 then
 		Duel.HintSelection(g,true)
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
@@ -77,7 +77,7 @@ function s.rmfilter(c,e)
 	return c:IsCanBeEffectTarget(e) and c:IsSummonLocation(LOCATION_EXTRA) and c:IsAbleToRemove()
 end
 function s.rescon(sg,e,tp,mg)
-    return sg:FilterCount(Card.IsControler,nil,tp)==1
+	return sg:FilterCount(Card.IsControler,nil,tp)==1
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
@@ -91,15 +91,15 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetTargetCards(e)
 	if #g~=2 then return end
 	for tc in aux.Next(g) do
-		if Duel.Remove(tc,0,REASON_EFFECT+REASON_TEMPORARY)~=0 then
-			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+		if Duel.Remove(tc,0,REASON_EFFECT|REASON_TEMPORARY)~=0 then
+			tc:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 		end
 	end
 	g:KeepAlive()
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_PHASE+PHASE_END)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	e1:SetLabelObject(g)
 	e1:SetCountLimit(1)
 	e1:SetCondition(s.retcon)

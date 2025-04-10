@@ -26,16 +26,16 @@ function s.rmfilter(c,e)
 	return c:IsAbleToRemove() and aux.SpElimFilter(c) and (not e or c:IsCanBeEffectTarget(e))
 end
 function s.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local dg=Duel.GetMatchingGroup(s.rmfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,nil,e)
+	local dg=Duel.GetMatchingGroup(s.rmfilter,tp,0,LOCATION_MZONE|LOCATION_GRAVE,nil,e)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,aux.FaceupFilter(Card.IsAttribute,ATTRIBUTE_EARTH),1,false,aux.ReleaseCheckTarget,nil,dg) end
 	local cg=Duel.SelectReleaseGroupCost(tp,aux.FaceupFilter(Card.IsAttribute,ATTRIBUTE_EARTH),1,1,false,aux.ReleaseCheckTarget,nil,dg)
 	Duel.Release(cg,REASON_COST)
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE+LOCATION_GRAVE) and chkc:IsControler(1-tp) and s.rmfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(s.rmfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,1,nil) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE|LOCATION_GRAVE) and chkc:IsControler(1-tp) and s.rmfilter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(s.rmfilter,tp,0,LOCATION_MZONE|LOCATION_GRAVE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectTarget(tp,s.rmfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,1,2,nil)
+	local g=Duel.SelectTarget(tp,s.rmfilter,tp,0,LOCATION_MZONE|LOCATION_GRAVE,1,2,nil)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,#g,0,0)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)

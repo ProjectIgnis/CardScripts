@@ -21,32 +21,32 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCondition(function(_,tp) return Duel.GetLP(tp)<=500 end)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.atktg)
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x6f}
+s.listed_series={SET_HEROIC}
 function s.spfilter(c,e,tp)
 	return c:IsRace(RACE_WARRIOR) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,e,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_GRAVE)
+		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND|LOCATION_GRAVE,0,1,nil,e,tp) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND|LOCATION_GRAVE)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter),tp,LOCATION_HAND+LOCATION_GRAVE,0,1,1,nil,e,tp):GetFirst()
-	if tc and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) and not tc:IsSetCard(0x6f) then
+	local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter),tp,LOCATION_HAND|LOCATION_GRAVE,0,1,1,nil,e,tp):GetFirst()
+	if tc and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) and not tc:IsSetCard(SET_HEROIC) then
 		local c=e:GetHandler()
 		--Negate its effects
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
 		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
@@ -58,14 +58,14 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetType(EFFECT_TYPE_SINGLE)
 		e3:SetCode(EFFECT_CANNOT_ATTACK)
 		e3:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_CLIENT_HINT)
-		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e3:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e3)
 	end
 	Duel.SpecialSummonComplete()
 end
 function s.heroiccount(tp)
-	local mct=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,0x6f),tp,LOCATION_ONFIELD,0,nil)
-	local oct=Duel.GetOverlayGroup(tp,1,0):FilterCount(Card.IsSetCard,nil,0x6f)
+	local mct=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,SET_HEROIC),tp,LOCATION_ONFIELD,0,nil)
+	local oct=Duel.GetOverlayGroup(tp,1,0):FilterCount(Card.IsSetCard,nil,SET_HEROIC)
 	return mct+oct
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -85,7 +85,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e1:SetValue(ct*500)
 		tc:RegisterEffect(e1)
 	end

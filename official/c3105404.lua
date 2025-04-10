@@ -1,4 +1,5 @@
 --ブリリアント・スパーク
+--Brilliant Spark
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -22,11 +23,11 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x1047}
+s.listed_series={SET_GEM_KNIGHT}
 function s.filter(c,e,tp)
 	return c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE)
 		and ((c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()~=tp) or (c:IsReason(REASON_BATTLE) and Duel.GetAttacker():IsControler(1-tp)))
-		and c:IsSetCard(0x1047) and c:GetBaseAttack()>0 and c:IsCanBeEffectTarget(e) and c:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED)
+		and c:IsSetCard(SET_GEM_KNIGHT) and c:GetBaseAttack()>0 and c:IsCanBeEffectTarget(e) and c:IsLocation(LOCATION_GRAVE|LOCATION_REMOVED)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return eg:IsContains(chkc) and s.filter(chkc,e,tp) end
@@ -43,7 +44,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x1047) and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(SET_GEM_KNIGHT) and c:IsAbleToGraveAsCost()
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetFlagEffect(id)==0

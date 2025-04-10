@@ -1,4 +1,5 @@
 --充電器
+--Battery Charger
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -7,18 +8,14 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCost(s.cost)
+	e1:SetCost(Cost.PayLP(500))
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x28}
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,500) end
-	Duel.PayLPCost(tp,500)
-end
+s.listed_series={SET_BATTERYMAN}
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x28) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_BATTERYMAN) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end

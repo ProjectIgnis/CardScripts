@@ -27,19 +27,19 @@ function s.initial_effect(c)
 	e2:SetOperation(s.ddop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x38}
+s.listed_series={SET_LIGHTSWORN}
 s.listed_names={id}
 function s.cfilter(c)
-	return c:IsMonster() and c:IsSetCard(0x38) and c:IsAbleToRemoveAsCost() and (c:IsLocation(LOCATION_HAND) or aux.SpElimFilter(c,true))
+	return c:IsMonster() and c:IsSetCard(SET_LIGHTSWORN) and c:IsAbleToRemoveAsCost() and (c:IsLocation(LOCATION_HAND) or aux.SpElimFilter(c,true))
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND|LOCATION_MZONE|LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND|LOCATION_MZONE|LOCATION_GRAVE,0,1,1,nil)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.spfilter(c,e,tp)
-	return c:IsFaceup() and c:IsSetCard(0x38) and not c:IsCode(id)
+	return c:IsFaceup() and c:IsSetCard(SET_LIGHTSWORN) and not c:IsCode(id)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -59,8 +59,8 @@ end
 function s.ddcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local rc=re:GetHandler()
-	return re:IsActiveType(TYPE_MONSTER) and rc~=c
-		and rc:IsSetCard(0x38) and rc:IsControler(tp)
+	return re:IsMonsterEffect() and rc~=c
+		and rc:IsSetCard(SET_LIGHTSWORN) and rc:IsControler(tp)
 end
 function s.ddtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

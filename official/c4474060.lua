@@ -1,3 +1,4 @@
+--ＳＰＹＲＡＬ ＧＥＡＲ－ドローン
 --SPYRAL GEAR - Drone
 local s,id=GetID()
 function s.initial_effect(c)
@@ -22,8 +23,8 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetHintTiming(TIMING_DAMAGE_STEP)
-	e3:SetCondition(s.atkcon)
-	e3:SetCost(s.atkcost)
+	e3:SetCondition(aux.StatChangeDamageStepCondition)
+	e3:SetCost(Cost.SelfTribute)
 	e3:SetTarget(s.atktg)
 	e3:SetOperation(s.atkop)
 	c:RegisterEffect(e3)
@@ -39,7 +40,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0xee}
+s.listed_series={SET_SPYRAL}
 s.listed_names={41091257}
 function s.sttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,0,LOCATION_DECK)>2 end
@@ -47,15 +48,8 @@ end
 function s.stop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SortDecktop(tp,1-tp,3)
 end
-function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
-end
-function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() end
-	Duel.Release(e:GetHandler(),REASON_COST)
-end
 function s.atkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xee)
+	return c:IsFaceup() and c:IsSetCard(SET_SPYRAL)
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.atkfilter(chkc) end
@@ -72,12 +66,12 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(atk)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 	end
 end
 function s.cfilter(c,tp)
-	return c:IsSetCard(0xee) and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(SET_SPYRAL) and c:IsAbleToRemoveAsCost()
 		and Duel.IsExistingTarget(s.thfilter,tp,LOCATION_GRAVE,0,1,c)
 end
 function s.thfilter(c)

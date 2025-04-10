@@ -1,4 +1,5 @@
 --光神化
+--Celestial Transformation
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -31,7 +32,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 			e1:SetCode(EFFECT_SET_ATTACK)
 			e1:SetValue(atk/2)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			tc:RegisterEffect(e1,true)
 			local e2=Effect.CreateEffect(e:GetHandler())
 			e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -39,7 +40,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetRange(LOCATION_MZONE)
 			e2:SetCode(EVENT_PHASE+PHASE_END)
 			e2:SetOperation(s.desop)
-			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 			e2:SetCountLimit(1)
 			tc:RegisterEffect(e2,true)
 		end

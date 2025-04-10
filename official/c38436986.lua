@@ -1,22 +1,22 @@
--- 壱世壊に軋む爪音
--- Tearalaments Metanoise
--- Scripted by Hatter
+--壱世壊に軋む爪音
+--Tearlaments Metanoise
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Flip 1 monster face-down
+	--Flip 1 monster face-down
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_POSITION+CATEGORY_TOGRAVE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(TIMING_BATTLE_PHASE,TIMINGS_CHECK_MONSTER_E+TIMING_MAIN_END+TIMING_BATTLE_PHASE)
+	e1:SetHintTiming(TIMING_BATTLE_PHASE,TIMINGS_CHECK_MONSTER_E|TIMING_MAIN_END|TIMING_BATTLE_PHASE)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(s.poscon)
 	e1:SetTarget(s.postg)
 	e1:SetOperation(s.posop)
 	c:RegisterEffect(e1)
-	-- Add 1 "Tearalaments" monster to the hand
+	--Add 1 "Tearalaments" monster to the hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TOHAND)
@@ -30,13 +30,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={CARD_VISAS_STARFROST}
-s.listed_series={0x182}
+s.listed_series={SET_TEARLAMENTS}
 function s.poscon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_VISAS_STARFROST),tp,LOCATION_ONFIELD,0,1,nil)
-		or Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x182),tp,LOCATION_MZONE,0,1,nil)
+		or Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_TEARLAMENTS),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.tgfilter(c)
-	return c:IsSetCard(0x182) and c:IsMonster() and c:IsAbleToGrave()
+	return c:IsSetCard(SET_TEARLAMENTS) and c:IsMonster() and c:IsAbleToGrave()
 end
 function s.postg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() and chkc:IsCanTurnSet() end
@@ -58,7 +58,7 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x182) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_TEARLAMENTS) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc) end

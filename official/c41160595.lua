@@ -1,4 +1,5 @@
 --コーリング・マジック
+--Spell Calling
 local s,id=GetID()
 function s.initial_effect(c)
 	--set
@@ -14,11 +15,11 @@ function s.initial_effect(c)
 end
 function s.setcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return (r&0x41)==0x41 and rp~=tp and re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and c:IsPreviousControler(tp)
+	return (r&(REASON_DESTROY|REASON_EFFECT))==(REASON_DESTROY|REASON_EFFECT) and rp~=tp and re:IsSpellTrapEffect() and c:IsPreviousControler(tp)
 		and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEDOWN)
 end
 function s.filter(c)
-	return c:GetType()==TYPE_SPELL+TYPE_QUICKPLAY and c:IsSSetable()
+	return c:IsQuickPlaySpell() and c:IsSSetable()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0

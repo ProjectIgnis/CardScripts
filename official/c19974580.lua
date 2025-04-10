@@ -31,7 +31,7 @@ function s.rfilter(c)
 	return c:IsSetCard(SET_IRON_CHAIN) and c:IsMonster() and c:IsAbleToRemove() and aux.SpElimFilter(c,true)
 end
 function s.attg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.rfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.rfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,nil) end
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_SPIRIT_ELIMINATION) then
 		Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,tp,LOCATION_MZONE)
 	else
@@ -41,7 +41,7 @@ end
 function s.atop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) or c:IsFacedown() then return end
-	local g=Duel.GetMatchingGroup(s.rfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil)
+	local g=Duel.GetMatchingGroup(s.rfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,nil)
 	local ct=Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 	if ct>0 then
 		local e1=Effect.CreateEffect(c)

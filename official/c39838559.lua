@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_UPDATE_LEVEL)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x107))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_FA))
 	e2:SetValue(2)
 	e2:SetCondition(s.lvcon)
 	c:RegisterEffect(e2)
@@ -42,11 +42,11 @@ function s.initial_effect(c)
 	e4:SetOperation(s.thop2)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x107}
+s.listed_series={SET_FA}
 s.listed_names={id}
 function s.lvcon(e)
 	local ph=Duel.GetCurrentPhase()
-	return ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE
+	return Duel.IsBattlePhase()
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -54,9 +54,9 @@ function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	for rc in aux.Next(eg) do
 		if rc:IsStatus(STATUS_OPPO_BATTLE) then
 			if rc:IsRelateToBattle() then
-				if rc:IsControler(tp) and rc:IsSetCard(0x107) then return true end
+				if rc:IsControler(tp) and rc:IsSetCard(SET_FA) then return true end
 			else
-				if rc:IsPreviousControler(tp) and rc:IsPreviousSetCard(0x107) then return true end
+				if rc:IsPreviousControler(tp) and rc:IsPreviousSetCard(SET_FA) then return true end
 			end
 		end
 	end
@@ -78,7 +78,7 @@ function s.thcon2(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsReason(REASON_EFFECT) and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEUP)
 end
 function s.thfilter2(c)
-	return c:IsSetCard(0x107) and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(SET_FA) and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thtg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter2,tp,LOCATION_DECK,0,1,nil) end

@@ -1,4 +1,5 @@
 --王墓の罠
+--Trap of the Imperial Tomb
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

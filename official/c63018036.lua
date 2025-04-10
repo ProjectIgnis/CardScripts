@@ -1,4 +1,5 @@
 --緊急鋼核処分
+--Iron Core Immediate Disposal
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

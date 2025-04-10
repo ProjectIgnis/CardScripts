@@ -1,4 +1,5 @@
 --マジェスペクター・フォックス
+--Majespecter Fox - Kyubi
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -33,9 +34,9 @@ function s.initial_effect(c)
 	e5:SetValue(s.indval)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0xd0}
+s.listed_series={SET_MAJESPECTER}
 function s.thfilter(c)
-	return c:IsSetCard(0xd0) and c:IsTrap() and c:IsAbleToHand()
+	return c:IsSetCard(SET_MAJESPECTER) and c:IsTrap() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

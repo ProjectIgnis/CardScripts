@@ -1,4 +1,5 @@
 --ガスタの静寂 カーム
+--Caam, Serenity of Gusto
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -14,9 +15,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x10}
+s.listed_series={SET_GUSTO}
 function s.filter(c)
-	return c:IsSetCard(0x10) and c:IsMonster() and c:IsAbleToDeckAsCost()
+	return c:IsSetCard(SET_GUSTO) and c:IsMonster() and c:IsAbleToDeckAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,2,nil) end

@@ -1,4 +1,5 @@
 --猛毒の風
+--Poisonous Winds
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

@@ -1,4 +1,5 @@
 --光霊術－「聖」
+--Spiritual Light Art - Hijiri
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

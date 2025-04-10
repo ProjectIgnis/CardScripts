@@ -54,12 +54,12 @@ function s.initial_effect(c)
 	e6:SetOperation(s.retop)
 	c:RegisterEffect(e6)
 end
-s.listed_series={0x33}
+s.listed_series={SET_BLACKWING}
 function s.eqlimit(e,c)
-	return c:IsSetCard(0x33)
+	return c:IsSetCard(SET_BLACKWING)
 end
 function s.eqfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x33)
+	return c:IsFaceup() and c:IsSetCard(SET_BLACKWING)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.eqfilter(chkc) end
@@ -86,7 +86,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(tp,0,LOCATION_HAND,nil)
 	if #g==0 then return end
 	local sg=g:RandomSelect(1-tp,1)
-	Duel.SendtoGrave(sg,REASON_DISCARD+REASON_EFFECT)
+	Duel.SendtoGrave(sg,REASON_DISCARD|REASON_EFFECT)
 end
 function s.retcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

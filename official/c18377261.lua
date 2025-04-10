@@ -1,25 +1,25 @@
--- 剣の御巫ハレ
--- Hare the Sword Mikanko
--- Scripted by Hatter
+--剣の御巫ハレ
+--Ha-Re the Sword Mikanko
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Take no battle damage
+	--Take no battle damage
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
 	e1:SetCondition(aux.NOT(s.eqcon))
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
-	-- Cannot be destroyed by battle
+	--Cannot be destroyed by battle
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e2:SetCondition(s.eqcon)
 	c:RegisterEffect(e2)
-	-- Reflect battle damage
+	--Reflect battle damage
 	local e3=e2:Clone()
 	e3:SetCode(EFFECT_REFLECT_BATTLE_DAMAGE)
 	c:RegisterEffect(e3)
-	-- Search 1 "Mikanko" Equip Spell
+	--Search 1 "Mikanko" Equip Spell
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,0))
 	e4:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -31,12 +31,12 @@ function s.initial_effect(c)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x18e}
+s.listed_series={SET_MIKANKO}
 function s.eqcon(e)
 	return e:GetHandler():GetEquipCount()>0
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x18e) and c:IsType(TYPE_EQUIP) and c:IsSpell() and c:IsAbleToHand()
+	return c:IsSetCard(SET_MIKANKO) and c:IsType(TYPE_EQUIP) and c:IsSpell() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

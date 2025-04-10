@@ -1,4 +1,5 @@
 --ハーピィズペット仔竜
+--Harpie's Pet Baby Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--at limit
@@ -36,10 +37,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x64) and c:GetCode()~=id
+	return c:IsFaceup() and c:IsSetCard(SET_HARPIE) and c:GetCode()~=id
 end
 function s.atlimit(e,c)
-	return c:IsFaceup() and c:IsSetCard(0x64) and c:GetCode()~=id
+	return c:IsFaceup() and c:IsSetCard(SET_HARPIE) and c:GetCode()~=id
 end
 function s.adcon(e)
 	return Duel.IsExistingMatchingCard(s.cfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,2,nil)

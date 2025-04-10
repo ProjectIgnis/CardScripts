@@ -19,19 +19,19 @@ function s.initial_effect(c)
 	e2:SetTargetRange(LOCATION_MZONE,0)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetCondition(s.atkcon)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x79))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_FIRE_FIST))
 	e2:SetValue(500)
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
 	e3:SetCode(EFFECT_UPDATE_DEFENSE)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x7c,0x79}
+s.listed_series={SET_FIRE_FORMATION,SET_FIRE_FIST}
 function s.setcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp~=tp and e:GetHandler():GetPreviousControler()==tp
 end
 function s.filter(c)
-	return c:IsSetCard(0x7c) and c:IsSpell() and c:IsSSetable()
+	return c:IsSetCard(SET_FIRE_FORMATION) and c:IsSpell() and c:IsSSetable()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end
@@ -44,7 +44,7 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x7c) and c:IsSpellTrap()
+	return c:IsFaceup() and c:IsSetCard(SET_FIRE_FORMATION) and c:IsSpellTrap()
 end
 function s.atkcon(e)
 	return Duel.IsExistingMatchingCard(s.cfilter,e:GetHandlerPlayer(),LOCATION_ONFIELD,0,1,nil)

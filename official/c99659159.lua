@@ -28,15 +28,15 @@ function s.initial_effect(c)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x29}
+s.listed_series={SET_DRAGUNITY}
 function s.equipf(c)
-	return c:IsSetCard(0x29) and (c:GetOriginalType()&TYPE_MONSTER)~=0
+	return c:IsSetCard(SET_DRAGUNITY) and c:IsMonsterCard()
 end
 function s.atktg(e,c)
 	return c:GetEquipGroup():IsExists(s.equipf,1,nil)
 end
 function s.filter(c)
-	return c:IsSetCard(0x29) and c:IsRace(RACE_DRAGON) and not c:IsForbidden()
+	return c:IsSetCard(SET_DRAGUNITY) and c:IsRace(RACE_DRAGON) and not c:IsForbidden()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() end
@@ -59,7 +59,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_EQUIP_LIMIT)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	e1:SetValue(s.eqlimit)
 	e1:SetLabelObject(tc)
 	sc:RegisterEffect(e1)

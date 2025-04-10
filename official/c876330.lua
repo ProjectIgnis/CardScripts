@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	aux.AddEREquipLimit(c,nil,s.eqval,Card.EquipByEffectAndLimitRegister,e3)
 end
 function s.spfilter(c,ft)
-	return c:IsFaceup() and c:IsSetCard(0x29) and c:IsAbleToGraveAsCost() and (ft>0 or c:GetSequence()<5)
+	return c:IsFaceup() and c:IsSetCard(SET_DRAGUNITY) and c:IsAbleToGraveAsCost() and (ft>0 or c:GetSequence()<5)
 end
 function s.spcon1(e,c)
 	if c==nil then return true end
@@ -58,13 +58,13 @@ function s.spop1(e,tp,eg,ep,ev,re,r,rp,c)
 	g:DeleteGroup()
 end
 function s.eqval(ec,c,tp)
-	return ec:IsControler(tp) and ec:IsSetCard(0x29) and ec:IsRace(RACE_DRAGON)
+	return ec:IsControler(tp) and ec:IsSetCard(SET_DRAGUNITY) and ec:IsRace(RACE_DRAGON)
 end
 function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetPreviousLocation()==LOCATION_HAND
 end
 function s.filter(c)
-	return c:IsSetCard(0x29) and c:IsRace(RACE_DRAGON) and not c:IsForbidden()
+	return c:IsSetCard(SET_DRAGUNITY) and c:IsRace(RACE_DRAGON) and not c:IsForbidden()
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc) end

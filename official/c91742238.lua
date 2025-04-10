@@ -1,7 +1,6 @@
 --リターン・オブ・アンデット
 --Return of the Zombies
 --Scripted by Eerie Code
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Banish 1 zombie monster from field, then controller of it special summons 1 zombie monster from their GY
@@ -12,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1,id)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
-	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER|TIMING_END_PHASE)
 	c:RegisterEffect(e1)
 	--Set itself from GY
 	local e2=Effect.CreateEffect(c)
@@ -73,7 +72,7 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
-		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
+		e1:SetReset(RESET_EVENT|RESETS_REDIRECT)
 		e1:SetValue(LOCATION_REMOVED)
 		c:RegisterEffect(e1)
 	end

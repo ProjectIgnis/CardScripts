@@ -24,7 +24,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	else Duel.PayLPCost(tp,800) end
 end
 function s.filter(c,e,tp)
-	return (c:GetType()&0x41)==0x41 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsType(TYPE_FUSION) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end
@@ -49,7 +49,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_EQUIP_LIMIT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e1:SetValue(s.eqlimit)
 		c:RegisterEffect(e1)
 	end

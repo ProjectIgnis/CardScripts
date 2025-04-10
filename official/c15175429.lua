@@ -1,4 +1,5 @@
 --マジック・リアクター・AID
+--Spell Reactor ・RE
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy&damage
@@ -17,7 +18,7 @@ function s.initial_effect(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and ep~=tp
-		and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL)
+		and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsSpellEffect()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return re:GetHandler():IsDestructable() end

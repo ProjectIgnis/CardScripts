@@ -29,9 +29,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={CARD_KURIBOH}
-s.listed_series={0xa4}
+s.listed_series={SET_KURIBOH}
 function s.thcfilter(c,tp)
-	return c:IsPreviousSetCard(0xa4) and c:IsPreviousControler(tp)
+	return c:IsPreviousSetCard(SET_KURIBOH) and c:IsPreviousControler(tp)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.thcfilter,1,nil,tp)
@@ -53,7 +53,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker():IsControler(1-tp) 
-		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0xa4),tp,LOCATION_MZONE,0,1,e:GetHandler()) 
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_KURIBOH),tp,LOCATION_MZONE,0,1,e:GetHandler()) 
 		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsAttackAbove,1),tp,LOCATION_MZONE,0,1,e:GetHandler())
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
@@ -67,7 +67,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 			e1:SetValue(0)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e1:SetReset(RESETS_STANDARD_PHASE_END)
 			tc:RegisterEffect(e1)
 			if not tc:IsImmuneToEffect(e) then flag=1 end
 		end

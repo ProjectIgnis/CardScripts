@@ -1,5 +1,5 @@
 --Beetrooper Formation
---Scripted by Zefile
+--Beetrooper Formation
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -31,9 +31,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={64213018}
-s.listed_series={0x172}
+s.listed_series={SET_BEETROOPER}
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x172) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_BEETROOPER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.spfilter(chkc,e,tp) end
@@ -55,7 +55,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_CANNOT_ATTACK)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e1:SetReset(RESETS_STANDARD_PHASE_END)
 			tc:RegisterEffect(e1)
 		end
 		local atk=tc:GetTextAttack()
@@ -65,7 +65,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tkfilter(c,tp)
-	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and (c:GetPreviousRaceOnField()&RACE_INSECT)>0
+	return c:IsReason(REASON_BATTLE|REASON_EFFECT) and (c:GetPreviousRaceOnField()&RACE_INSECT)>0
 		and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
 end
 function s.tkcon(e,tp,eg,ep,ev,re,r,rp)
@@ -73,13 +73,13 @@ function s.tkcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.tktarget(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0x172,TYPES_TOKEN,1000,1000,3,RACE_INSECT,ATTRIBUTE_EARTH) end
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,SET_BEETROOPER,TYPES_TOKEN,1000,1000,3,RACE_INSECT,ATTRIBUTE_EARTH) end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0)
 end
 function s.tkop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0x172,TYPES_TOKEN,1000,1000,3,RACE_INSECT,ATTRIBUTE_EARTH) then
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,SET_BEETROOPER,TYPES_TOKEN,1000,1000,3,RACE_INSECT,ATTRIBUTE_EARTH) then
 		local token=Duel.CreateToken(tp,id+1)
 		Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)
 	end

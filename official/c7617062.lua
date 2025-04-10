@@ -1,4 +1,5 @@
 --ゴーストリック・ミュージアム
+--Ghostrick Museum
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -53,12 +54,12 @@ function s.dirtg(e,c)
 	return not Duel.IsExistingMatchingCard(Card.IsFaceup,c:GetControler(),0,LOCATION_MZONE,1,nil)
 end
 function s.ftarget(e,c)
-	return not c:IsSetCard(0x8d)
+	return not c:IsSetCard(SET_GHOSTRICK)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE,0,1)
-	eg:GetFirst():RegisterFlagEffect(id+1,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE,0,1)
+	c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_DAMAGE,0,1)
+	eg:GetFirst():RegisterFlagEffect(id+1,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_DAMAGE,0,1)
 end
 function s.poscon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(id)>0

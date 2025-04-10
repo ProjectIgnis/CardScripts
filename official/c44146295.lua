@@ -55,7 +55,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(e) then
 		local reset=RESET_SELF_TURN
 		if Duel.IsTurnPlayer(tp) then reset=RESET_OPPO_TURN end
-		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+reset,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,2))
+		c:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END|reset,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,2))
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,s.rmfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
@@ -65,7 +65,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsSummonType(SUMMON_TYPE_FUSION)
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsFusionSummoned()
 		and rp==1-tp and c:IsPreviousControler(tp)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
@@ -77,7 +77,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCountLimit(1)
 	e1:SetCondition(s.descon)
 	e1:SetOperation(s.desop)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)

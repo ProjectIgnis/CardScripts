@@ -25,13 +25,13 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x12b}
+s.listed_series={SET_MARINCESS}
 s.listed_names={id}
 function s.mfilter(c,lc,sumtype,tp)
-	return c:IsSetCard(0x12b,lc,sumtype,tp) and c:IsLevelBelow(4)
+	return c:IsSetCard(SET_MARINCESS,lc,sumtype,tp) and c:IsLevelBelow(4)
 end
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
+	return e:GetHandler():IsLinkSummoned()
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
@@ -39,7 +39,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(1,0)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	e1:SetTarget(s.splimit)
 	Duel.RegisterEffect(e1,tp)
 end
@@ -47,7 +47,7 @@ function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return c:IsCode(id) and sumtype&SUMMON_TYPE_LINK==SUMMON_TYPE_LINK
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x12b) and c:IsMonster() and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(SET_MARINCESS) and c:IsMonster() and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc) end
@@ -67,7 +67,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetTargetRange(1,0)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	e1:SetTarget(s.splimit2)
 	Duel.RegisterEffect(e1,tp)
 end

@@ -1,4 +1,5 @@
 --不協和音
+--Discord
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -31,11 +32,11 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetCountLimit(1)
 	e1:SetCondition(s.tgcon)
 	e1:SetOperation(s.tgop)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_SELF_TURN,3)
+	e1:SetReset(RESETS_STANDARD_PHASE_END|RESET_SELF_TURN,3)
 	e:GetHandler():RegisterEffect(e1)
 end
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=e:GetLabel()

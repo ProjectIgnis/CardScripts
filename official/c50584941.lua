@@ -12,11 +12,11 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x1045}
+s.listed_series={SET_RED_DRAGON_ARCHFIEND}
 s.check=false
 function s.cfilter(c,tp)
 	local code=c:GetOriginalCode()
-	return c:IsSetCard(0x1045) and c:IsType(TYPE_SYNCHRO) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
+	return c:IsSetCard(SET_RED_DRAGON_ARCHFIEND) and c:IsType(TYPE_SYNCHRO) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 		and Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,c,code)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -24,17 +24,17 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	return true
 end
 function s.filter(c,code)
-	return c:IsFaceup() and c:IsSetCard(0x1045) and c:IsType(TYPE_SYNCHRO) and (not c:IsCode(code) or not c:IsOriginalCode(code))
+	return c:IsFaceup() and c:IsSetCard(SET_RED_DRAGON_ARCHFIEND) and c:IsType(TYPE_SYNCHRO) and (not c:IsCode(code) or not c:IsOriginalCode(code))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc,e:GetLabel()) end
 	if chk==0 then
 		if not s.check then return false end
 		s.check=false
-		return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil,tp)
+		return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,nil,tp)
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil,tp)
+	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,1,nil,tp)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 	local code=g:GetFirst():GetOriginalCode()
 	e:SetLabel(code)
@@ -51,8 +51,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_CHANGE_CODE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetValue(code)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
-		tc:ReplaceEffect(code,RESET_EVENT+RESETS_STANDARD)
+		tc:ReplaceEffect(code,RESET_EVENT|RESETS_STANDARD)
 	end
 end

@@ -41,7 +41,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.spop2)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0xfd}
+s.listed_series={SET_WORLD_CHALICE}
 function s.spcheck(g,lc,sumtype,tp)
 	return g:CheckDifferentPropertyBinary(Card.GetRace,lc,sumtype,tp) and g:CheckDifferentPropertyBinary(Card.GetAttribute,lc,sumtype,tp)
 end
@@ -66,7 +66,7 @@ function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.spfilter2(c,e,tp)
-	return c:IsSetCard(0xfd) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_WORLD_CHALICE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

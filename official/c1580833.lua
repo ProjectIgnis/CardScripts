@@ -24,9 +24,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xd8}
+s.listed_series={SET_DINOMIST}
 function s.filter(c,tp)
-	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_ONFIELD) and c:IsSetCard(0xd8)
+	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_ONFIELD) and c:IsSetCard(SET_DINOMIST)
 		and not c:IsReason(REASON_REPLACE) and (c:IsReason(REASON_BATTLE) or (c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()~=tp))
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -39,7 +39,7 @@ function s.repval(e,c)
 	return s.filter(c,e:GetHandlerPlayer())
 end
 function s.repop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Destroy(e:GetHandler(),REASON_EFFECT+REASON_REPLACE)
+	Duel.Destroy(e:GetHandler(),REASON_EFFECT|REASON_REPLACE)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()

@@ -10,18 +10,14 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
 	e1:SetCondition(s.spcon)
-	e1:SetCost(s.spcost)
+	e1:SetCost(Cost.PayLP(500))
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
 s.listed_names={74983882}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_MAIN2
-end
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,500) end
-	Duel.PayLPCost(tp,500)
+	return Duel.IsPhase(PHASE_MAIN2)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

@@ -1,4 +1,5 @@
 --真海皇 トライドン
+--Legendary Atlantean Tridon
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -34,14 +35,14 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		if e:GetLabel()==0 and Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return false end
 		e:SetLabel(0)
-		return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e,tp)
+		return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND|LOCATION_DECK,0,1,nil,e,tp)
 	end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK+LOCATION_HAND)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK|LOCATION_HAND)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK+LOCATION_HAND,0,1,1,nil,e,tp)
+	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK|LOCATION_HAND,0,1,1,nil,e,tp)
 	if #g>0 and Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)>0 then
 		Duel.BreakEffect()
 		local tg=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
@@ -51,7 +52,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetValue(-300)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			tc:RegisterEffect(e1)
 		end
 	end

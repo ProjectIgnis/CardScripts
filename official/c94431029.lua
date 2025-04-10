@@ -52,4 +52,3 @@ function s.compare(c1,c2)
 	end
 	return false
 end
-

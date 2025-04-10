@@ -1,4 +1,5 @@
 --クリスタル・アバター
+--Krystal Avatar
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -18,7 +19,7 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local atk=Duel.GetLP(tp)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id,0,0x21,atk,0,4,RACE_WARRIOR,ATTRIBUTE_LIGHT) end
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,id,0,TYPE_MONSTER|TYPE_EFFECT,atk,0,4,RACE_WARRIOR,ATTRIBUTE_LIGHT) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
@@ -26,15 +27,15 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	local atk=Duel.GetLP(tp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
-		or not Duel.IsPlayerCanSpecialSummonMonster(tp,id,0,0x21,atk,0,4,RACE_WARRIOR,ATTRIBUTE_LIGHT) then return end
-	c:AddMonsterAttribute(TYPE_TRAP+TYPE_EFFECT)
+		or not Duel.IsPlayerCanSpecialSummonMonster(tp,id,0,TYPE_MONSTER|TYPE_EFFECT,atk,0,4,RACE_WARRIOR,ATTRIBUTE_LIGHT) then return end
+	c:AddMonsterAttribute(TYPE_TRAP|TYPE_EFFECT)
 	Duel.SpecialSummonStep(c,0,tp,tp,true,false,POS_FACEUP_ATTACK)
 	c:AddMonsterAttributeComplete()
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_SET_ATTACK)
 	e1:SetValue(atk)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	c:RegisterEffect(e1)
 	--damage
 	local e2=Effect.CreateEffect(c)
@@ -45,7 +46,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetCondition(s.damcon)
 	e2:SetTarget(s.damtg)
 	e2:SetOperation(s.damop)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 	c:RegisterEffect(e2,true)
 	Duel.SpecialSummonComplete()
 	local at=Duel.GetAttacker()

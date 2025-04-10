@@ -1,4 +1,5 @@
 --十二獣ラビーナ
+--Zoodiac Bunnyblast
 local s,id=GetID()
 function s.initial_effect(c)
 	--to hand
@@ -19,18 +20,18 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_XMATERIAL+EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_CHAINING)
 	e2:SetCondition(s.discon)
-	e2:SetCost(s.discost)
+	e2:SetCost(Cost.Detach(1))
 	e2:SetTarget(s.distg)
 	e2:SetOperation(s.disop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xf1}
+s.listed_series={SET_ZOODIAC}
 s.listed_names={id}
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return (r&REASON_EFFECT+REASON_BATTLE)~=0
 end
 function s.thfilter(c)
-	return c:IsSetCard(0xf1) and c:IsAbleToHand() and not c:IsCode(id)
+	return c:IsSetCard(SET_ZOODIAC) and c:IsAbleToHand() and not c:IsCode(id)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc) end
@@ -49,13 +50,9 @@ function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:GetOriginalRace()==RACE_BEASTWARRIOR
 		and not c:IsStatus(STATUS_BATTLE_DESTROYED) and ep==1-tp
-		and re:IsActiveType(TYPE_SPELL) and Duel.IsChainNegatable(ev)
+		and re:IsSpellEffect() and Duel.IsChainNegatable(ev)
 		and re:IsHasProperty(EFFECT_FLAG_CARD_TARGET)
 		and Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS):IsContains(c)
-end
-function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

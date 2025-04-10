@@ -11,14 +11,10 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e1:SetCondition(s.negcon)
-	e1:SetCost(s.negcost)
+	e1:SetCost(Cost.SelfToGrave)
 	e1:SetTarget(s.negtg)
 	e1:SetOperation(s.negop)
 	c:RegisterEffect(e1)
-end
-function s.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsChainNegatable(ev) and aux.damcon1(e,tp,eg,ep,ev,re,r,rp)

@@ -1,4 +1,5 @@
 --レッド・ワイバーン
+--Red Wyvern
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -23,7 +24,7 @@ function s.cfilter(c,atk)
 	return c:IsFaceup() and c:GetAttack()>atk
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
+	return e:GetHandler():IsSynchroSummoned()
 		and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,e:GetHandler():GetAttack())
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -27,7 +27,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_REMOVE,nil,1,1-tp,LOCATION_MZONE|LOCATION_GRAVE)
 end
 function s.hlfilter(c)
-	return c:IsNormalTrap() and (c:IsSetCard(SET_HOLE) or c:IsSetCard(SET_TRAP_HOLE))
+	return c:IsNormalTrap() and c:IsSetCard({SET_HOLE,SET_TRAP_HOLE})
 end
 function s.rmfilter(c)
 	return c:IsMonster() and c:IsAbleToRemove() and aux.SpElimFilter(c)

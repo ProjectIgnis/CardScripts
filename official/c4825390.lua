@@ -1,7 +1,6 @@
 --イチロクの魔物台帳
---Pawnshop Ledgerbook
+--Ichiroku's Ledger Book
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -28,14 +27,14 @@ end
 	--Banish up to 2 of opponent's monsters until End Phase
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetTargetCards(e)
-	if Duel.Remove(tg,0,REASON_EFFECT+REASON_TEMPORARY)>0 then
+	if Duel.Remove(tg,0,REASON_EFFECT|REASON_TEMPORARY)>0 then
 		local c=e:GetHandler()
 		for rc in tg:Iter() do
 			local e1=Effect.CreateEffect(c)
 			e1:SetDescription(aux.Stringid(id,1))
 			e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 			e1:SetCode(EVENT_PHASE+PHASE_END)
-			e1:SetReset(RESET_PHASE+PHASE_END)
+			e1:SetReset(RESET_PHASE|PHASE_END)
 			e1:SetLabelObject(rc)
 			e1:SetCountLimit(1)
 			e1:SetOperation(s.retop)

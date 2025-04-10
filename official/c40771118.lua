@@ -34,20 +34,20 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={CARD_DESTINY_BOARD}
-s.listed_series={0x1c}
+s.listed_series={SET_SPIRIT_MESSAGE}
 function s.filter(c)
-	return c:IsFaceup() and (c:IsCode(CARD_DESTINY_BOARD) or c:IsSetCard(0x1c))
+	return c:IsFaceup() and (c:IsCode(CARD_DESTINY_BOARD) or c:IsSetCard(SET_SPIRIT_MESSAGE))
 end
 function s.thfilter(c)
 	return c:IsRace(RACE_FIEND) and c:IsMonster() and c:IsAbleToHand()
 		and (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE))
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED) and chkc:IsControler(tp) and s.thfilter(chkc) end
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE|LOCATION_REMOVED) and chkc:IsControler(tp) and s.thfilter(chkc) end
 	local ct=Duel.GetMatchingGroupCount(s.filter,tp,LOCATION_ONFIELD,0,nil)
-	if chk==0 then return ct>0 and Duel.IsExistingTarget(s.thfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,nil) end
+	if chk==0 then return ct>0 and Duel.IsExistingTarget(s.thfilter,tp,LOCATION_GRAVE|LOCATION_REMOVED,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectTarget(tp,s.thfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,ct,nil)
+	local g=Duel.SelectTarget(tp,s.thfilter,tp,LOCATION_GRAVE|LOCATION_REMOVED,0,1,ct,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,#g,0,0)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
@@ -68,13 +68,13 @@ end
 function s.pltg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
 	if e:GetHandler():GetSequence()<5 then ft=ft+1 end
-	if chk==0 then return ft>0 and Duel.IsExistingMatchingCard(s.smfilter,tp,LOCATION_DECK+LOCATION_HAND+LOCATION_GRAVE,0,1,nil) end
+	if chk==0 then return ft>0 and Duel.IsExistingMatchingCard(s.smfilter,tp,LOCATION_DECK|LOCATION_HAND|LOCATION_GRAVE,0,1,nil) end
 end
 function s.plop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_DARK_SANCTUARY) then return s.extraop(e,tp,eg,ep,ev,re,r,rp) end
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,2))
-	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.smfilter),tp,LOCATION_DECK+LOCATION_HAND+LOCATION_GRAVE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.smfilter),tp,LOCATION_DECK|LOCATION_HAND|LOCATION_GRAVE,0,1,1,nil)
 	if #g>0 then
 		Duel.MoveToField(g:GetFirst(),tp,tp,LOCATION_SZONE,POS_FACEUP,true)
 	end
@@ -82,9 +82,9 @@ end
 function s.extraop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,2))
-	local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.smfilter),tp,LOCATION_DECK+LOCATION_HAND+LOCATION_GRAVE,0,1,1,nil):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.smfilter),tp,LOCATION_DECK|LOCATION_HAND|LOCATION_GRAVE,0,1,1,nil):GetFirst()
 	if not tc then return end
-	if Duel.IsPlayerCanSpecialSummonMonster(tp,id,0,0x11,0,0,1,RACE_FIEND,ATTRIBUTE_DARK,POS_FACEUP,tp,181)
+	if Duel.IsPlayerCanSpecialSummonMonster(tp,id,0,TYPE_MONSTER|TYPE_NORMAL,0,0,1,RACE_FIEND,ATTRIBUTE_DARK,POS_FACEUP,tp,181)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and (Duel.GetLocationCount(tp,LOCATION_SZONE)<1
 		or Duel.SelectYesNo(tp,aux.Stringid(CARD_DARK_SANCTUARY,0))) then
@@ -98,14 +98,14 @@ function s.extraop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetRange(LOCATION_MZONE)
 			e1:SetCode(EFFECT_IMMUNE_EFFECT)
 			e1:SetValue(s.efilter)
-			e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
+			e1:SetReset(RESET_EVENT|RESETS_REDIRECT)
 			tc:RegisterEffect(e1)
 			--cannot be target
 			local e2=Effect.CreateEffect(c)
 			e2:SetType(EFFECT_TYPE_SINGLE)
 			e2:SetCode(EFFECT_IGNORE_BATTLE_TARGET)
 			e2:SetValue(1)
-			e2:SetReset(RESET_EVENT+RESETS_REDIRECT)
+			e2:SetReset(RESET_EVENT|RESETS_REDIRECT)
 			tc:RegisterEffect(e2)
 			Duel.SpecialSummonComplete()
 	elseif Duel.GetLocationCount(tp,LOCATION_SZONE)>0 then

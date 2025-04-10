@@ -1,5 +1,5 @@
 --ゼロ・デイ・ブラスター
---Zero Day Blaster
+--Zero-Day Blaster
 --scripted by andré
 local s,id=GetID()
 function s.initial_effect(c)
@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER|TIMING_END_PHASE)
 	e1:SetCost(s.cost)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)

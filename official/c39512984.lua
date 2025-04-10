@@ -4,7 +4,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0x1047),3)
+	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_GEM_KNIGHT),3)
 	--spsummon condition
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -30,24 +30,24 @@ function s.initial_effect(c)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x47,0x1047}
-s.material_setcode={0x47,0x1047}
+s.listed_series={SET_GEM,SET_GEM_KNIGHT}
+s.material_setcode={SET_GEM,SET_GEM_KNIGHT}
 function s.splimit(e,se,sp,st)
 	return not e:GetHandler():IsLocation(LOCATION_EXTRA) or (st&SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION
 end
 function s.atkfilter(c)
-	return c:IsSetCard(0x47) and c:IsMonster()
+	return c:IsSetCard(SET_GEM) and c:IsMonster()
 end
 function s.atkup(e,c)
 	return Duel.GetMatchingGroupCount(s.atkfilter,c:GetControler(),LOCATION_GRAVE,0,nil)*100
 end
 function s.filter(c)
-	return c:IsLevelBelow(7) and c:IsSetCard(0x1047) and c:IsType(TYPE_FUSION) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
+	return c:IsLevelBelow(7) and c:IsSetCard(SET_GEM_KNIGHT) and c:IsType(TYPE_FUSION) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,e:GetHandler()) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,e:GetHandler()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,e:GetHandler())
+	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,1,e:GetHandler())
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 	e:SetLabel(g:GetFirst():GetOriginalCode())
 end
@@ -58,10 +58,10 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		e1:SetCode(EFFECT_CHANGE_CODE)
 		e1:SetValue(code)
 		c:RegisterEffect(e1)
-		c:CopyEffect(code,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,1)
+		c:CopyEffect(code,RESETS_STANDARD_PHASE_END,1)
 	end
 end

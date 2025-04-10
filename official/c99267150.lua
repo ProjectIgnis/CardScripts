@@ -1,4 +1,5 @@
 --F・G・D
+--Five-Headed Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -19,5 +20,5 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.batfilter(e,c)
-	return c:IsAttribute(0x2f)
+	return c:IsAttribute(ATTRIBUTE_DARK|ATTRIBUTE_WIND|ATTRIBUTE_FIRE|ATTRIBUTE_WATER|ATTRIBUTE_EARTH)
 end

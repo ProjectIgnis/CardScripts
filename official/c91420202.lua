@@ -1,5 +1,5 @@
 --アドヴェンデット・セイヴァー
---Advendread Savior
+--Avendread Savior
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -37,10 +37,10 @@ function s.initial_effect(c)
 	e3:SetOperation(s.atkop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x106}
+s.listed_series={SET_VENDREAD}
 s.listed_names={4388680}
 function s.thfilter(c)
-	return c:IsSetCard(0x106) and c:IsAbleToHand()
+	return c:IsSetCard(SET_VENDREAD) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc) end
@@ -79,7 +79,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(-ct)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		bc:RegisterEffect(e1)
 	end
 end

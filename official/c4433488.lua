@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cfilter(c,sp)
-	return c:IsLinkMonster() and c:IsSummonType(SUMMON_TYPE_LINK) and c:GetSummonPlayer()==sp
+	return c:IsLinkMonster() and c:IsLinkSummoned() and c:GetSummonPlayer()==sp
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)

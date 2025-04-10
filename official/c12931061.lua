@@ -25,19 +25,19 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={19814508}
-s.listed_series={0x107,0xb2}
+s.listed_series={SET_FA,SET_UA}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK|LOCATION_GRAVE)
 end
 function s.thfilter(c)
-	return c:IsAbleToHand() and ((c:IsMonster() and c:IsLocation(LOCATION_DECK) and (c:IsSetCard(0x107) or c:IsSetCard(0xb2)))
+	return c:IsAbleToHand() and ((c:IsMonster() and c:IsLocation(LOCATION_DECK) and (c:IsSetCard(SET_FA) or c:IsSetCard(SET_UA)))
 		or (c:IsCode(19814508) and c:IsLocation(LOCATION_GRAVE)))
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.IsExistingMatchingCard(aux.NecroValleyFilter(s.thfilter),tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+	if Duel.IsExistingMatchingCard(aux.NecroValleyFilter(s.thfilter),tp,LOCATION_DECK|LOCATION_GRAVE,0,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-		local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.thfilter),tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil)
+		local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.thfilter),tp,LOCATION_DECK|LOCATION_GRAVE,0,1,1,nil)
 		if #g>0 then
 			Duel.SendtoHand(g,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,g)
@@ -67,9 +67,9 @@ function s.sumop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetDescription(aux.Stringid(id,3))
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_EXTRA_SUMMON_COUNT)
-	e1:SetTargetRange(LOCATION_HAND+LOCATION_MZONE,0)
-	e1:SetTarget(function(_,c) return c:IsSetCard(0xb2) or c:IsSetCard(0x107) end)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetTargetRange(LOCATION_HAND|LOCATION_MZONE,0)
+	e1:SetTarget(function(_,c) return c:IsSetCard(SET_UA) or c:IsSetCard(SET_FA) end)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+	Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1)
 end

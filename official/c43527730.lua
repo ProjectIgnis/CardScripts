@@ -1,5 +1,5 @@
 --御巫の水舞踏
---Arabesque of the Mikanko
+--Mikanko Water Arabesque
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -21,16 +21,16 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x18e}
+s.listed_series={SET_MIKANKO}
 function s.spfilter(c,e,tp,code)
-	return c:IsSetCard(0x18e) and not c:IsOriginalCode(code) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_MIKANKO) and not c:IsOriginalCode(code) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and e:GetHandler():CheckEquipTarget(c)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local eqc=e:GetHandler():GetEquipTarget()
 	if chk==0 then return eqc and eqc:IsAbleToHand() and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e,tp,eqc:GetOriginalCode()) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK)
+		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND|LOCATION_DECK,0,1,nil,e,tp,eqc:GetOriginalCode()) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND|LOCATION_DECK)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,eqc,1,0,0)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
@@ -38,7 +38,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local eqc=c:GetEquipTarget()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,e,tp,eqc:GetOriginalCode())
+	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND|LOCATION_DECK,0,1,1,nil,e,tp,eqc:GetOriginalCode())
 	if #g>0 and Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)>0 then
 		local eq=g:GetFirst()
 		if Duel.Equip(tp,c,eq) and eqc:IsFaceup() and eqc:IsAbleToHand() then

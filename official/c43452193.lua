@@ -1,4 +1,5 @@
 --異次元トンネル－ミラーゲート－
+--Mirror Gate
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,10 +12,10 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x3008}
+s.listed_series={SET_ELEMENTAL_HERO}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttackTarget()
-	return Duel.GetTurnPlayer()~=tp and at and at:IsFaceup() and at:IsSetCard(0x3008)
+	return Duel.IsTurnPlayer(1-tp) and at and at:IsFaceup() and at:IsSetCard(SET_ELEMENTAL_HERO)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local a=Duel.GetAttacker()
@@ -29,7 +30,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local at=Duel.GetAttackTarget()
 	if a:IsRelateToEffect(e) and a:CanAttack() and at:IsRelateToEffect(e) then
-		if Duel.SwapControl(a,at,RESET_PHASE+PHASE_END,1) then
+		if Duel.SwapControl(a,at,RESET_PHASE|PHASE_END,1) then
 			Duel.CalculateDamage(a,at)
 		end
 	end

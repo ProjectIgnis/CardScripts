@@ -1,10 +1,10 @@
 --ティアラメンツ・キトカロス
---Tearalaments Kitkalos
+--Tearlaments Kitkallos
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0x182),aux.FilterBoolFunctionEx(Card.IsRace,RACE_AQUA))
+	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_TEARLAMENTS),aux.FilterBoolFunctionEx(Card.IsRace,RACE_AQUA))
 	--Search or send to the GY 1 "Tearalaments" card from your Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -40,9 +40,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.gyop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x182}
+s.listed_series={SET_TEARLAMENTS}
 function s.thfilter(c)
-	return c:IsSetCard(0x182) and (c:IsAbleToHand() or c:IsAbleToGrave())
+	return c:IsSetCard(SET_TEARLAMENTS) and (c:IsAbleToHand() or c:IsAbleToGrave())
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -54,23 +54,23 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	aux.ToHandOrElse(tc,tp)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x182) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_TEARLAMENTS) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and chkc:IsAbleToGrave() end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingTarget(Card.IsAbleToGrave,tp,LOCATION_MZONE,0,1,nil)
-		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,e,tp) end
+		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND|LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectTarget(tp,Card.IsAbleToGrave,tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,g,#g,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_GRAVE)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND|LOCATION_GRAVE)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<1 then return end
 	local tc=Duel.GetFirstTarget()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter),tp,LOCATION_HAND+LOCATION_GRAVE,0,1,1,nil,e,tp)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter),tp,LOCATION_HAND|LOCATION_GRAVE,0,1,1,nil,e,tp)
 	if #g>0 and Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)>0 and tc:IsRelateToEffect(e) and tc:IsControler(tp) then
 		Duel.SendtoGrave(tc,REASON_EFFECT)
 	end

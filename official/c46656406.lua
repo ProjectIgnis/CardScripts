@@ -1,4 +1,5 @@
 --呪言の鏡
+--Mirror of Oaths
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

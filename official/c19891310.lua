@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x72}
+s.listed_series={SET_GEARGIA}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local bt=Duel.GetAttacker()
 	if bt and bt:IsControler(tp) then return bt:IsRace(RACE_MACHINE) end
@@ -44,7 +44,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_DISABLE)
 	e1:SetTargetRange(0,LOCATION_ONFIELD)
-	e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
+	e1:SetReset(RESET_PHASE|PHASE_DAMAGE)
 	Duel.RegisterEffect(e1,tp)
 	local e2=Effect.CreateEffect(e:GetHandler())
 	e2:SetType(EFFECT_TYPE_FIELD)
@@ -52,17 +52,17 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetCode(EFFECT_CANNOT_ACTIVATE)
 	e2:SetTargetRange(0,1)
 	e2:SetValue(s.aclimit)
-	e2:SetReset(RESET_PHASE+PHASE_DAMAGE)
+	e2:SetReset(RESET_PHASE|PHASE_DAMAGE)
 	Duel.RegisterEffect(e2,tp)
 end
 function s.aclimit(e,re,tp)
-	return re:IsHasType(EFFECT_TYPE_ACTIVATE) or re:IsActiveType(TYPE_MONSTER)
+	return re:IsHasType(EFFECT_TYPE_ACTIVATE) or re:IsMonsterEffect()
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousPosition(POS_FACEUP) and e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x72) and c:IsAbleToHand()
+	return c:IsSetCard(SET_GEARGIA) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc) and chkc~=e:GetHandler() end

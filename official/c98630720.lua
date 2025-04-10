@@ -38,20 +38,20 @@ function s.initial_effect(c)
 	e5:SetRange(LOCATION_MZONE)
 	e5:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e5:SetCountLimit(1,id)
-	e5:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
+	e5:SetHintTiming(0,TIMINGS_CHECK_MONSTER|TIMING_END_PHASE)
 	e5:SetTarget(s.distg)
 	e5:SetOperation(s.disop)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x102}
+s.listed_series={SET_ROKKET}
 function s.etg(e,re,rp)
-	return re:IsActiveType(TYPE_MONSTER)
+	return re:IsMonsterEffect()
 end
 function s.disfilter(c)
 	return c:IsFaceup() and not c:IsDisabled() and c:IsType(TYPE_EFFECT)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x102) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_ROKKET) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
@@ -82,13 +82,13 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc1:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
 		e2:SetValue(RESET_TURN_SET)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc1:RegisterEffect(e2)
 		if tc1:IsImmuneToEffect(e1) or tc1:IsImmuneToEffect(e2) or not tc2 or not tc2:IsRelateToEffect(e) then return end
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then

@@ -38,11 +38,11 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetFieldGroup(tp,0,LOCATION_ONFIELD+LOCATION_HAND)
+	local g=Duel.GetFieldGroup(tp,0,LOCATION_ONFIELD|LOCATION_HAND)
 	if chk==0 then return #g>0 end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetFieldGroup(tp,0,LOCATION_ONFIELD+LOCATION_HAND)
+	local g=Duel.GetFieldGroup(tp,0,LOCATION_ONFIELD|LOCATION_HAND)
 	if #g>0 then Duel.Destroy(g,REASON_EFFECT) end
 end

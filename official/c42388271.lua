@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,id)
-	e1:SetCost(s.spcost)
+	e1:SetCost(Cost.SelfToGrave)
 	e1:SetCondition(s.spcon)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
@@ -49,10 +49,6 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)
 end
 	--Cost of sending from hand to GY
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
-end
 	--Check for link monsters that can be special summoned
 function s.spfilter(c,e,tp)
 	return c:IsLinkMonster() and c:IsCanBeSpecialSummoned(e,0,tp,true,false) and c:IsCanBeEffectTarget(e)
@@ -79,7 +75,7 @@ function s.edfilter(c,tp)
 end
 	--If this ever happened and monster was normal summoned
 function s.dkcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.edfilter,1,nil,1-tp) and e:GetHandler():IsSummonType(SUMMON_TYPE_NORMAL) and rp~=tp
+	return eg:IsExists(s.edfilter,1,nil,1-tp) and e:GetHandler():IsNormalSummoned() and rp~=tp
 end
 	--Check for a monster
 function s.dkfilter(c)
@@ -98,4 +94,3 @@ function s.dkop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoGrave(g,REASON_EFFECT)
 	end
 end
-

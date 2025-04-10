@@ -1,8 +1,10 @@
 --多様進化
+--Evo-Diversity
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -11,9 +13,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x304e,0x604e}
+s.listed_series={SET_EVOLTILE,SET_EVOLSAUR}
 function s.filter(c)
-	return c:IsMonster() and (c:IsSetCard(0x304e) or c:IsSetCard(0x604e)) and c:IsAbleToHand()
+	return c:IsMonster() and c:IsSetCard({SET_EVOLTILE,SET_EVOLSAUR}) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

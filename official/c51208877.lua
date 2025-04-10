@@ -1,9 +1,9 @@
--- 運命の抱く爆弾
--- Blast Held by Fate
--- Scripted by Hatter
+--運命の抱く爆弾
+--Blast Held by Destiny
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Destroy 1 monster with the highest ATK
+	--Destroy 1 monster with the highest ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_DAMAGE)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.destg)
 	e1:SetOperation(s.desop)
 	c:RegisterEffect(e1)
-	-- Add 1 Level 4 EARTH Fairy monster to the hand
+	--Add 1 Level 4 EARTH Fairy monster to the hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TOHAND)
@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
 	e2:SetCode(EVENT_TO_GRAVE)
 	e2:SetCountLimit(1,{id,1})
-	e2:SetCondition(function(e) return e:GetHandler():IsPreviousLocation(LOCATION_HAND+LOCATION_DECK) end)
+	e2:SetCondition(function(e) return e:GetHandler():IsPreviousLocation(LOCATION_HAND|LOCATION_DECK) end)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)

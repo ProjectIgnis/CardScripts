@@ -1,4 +1,5 @@
 --隷属の鱗粉
+--Butterflyoke
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -25,7 +26,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return Duel.IsTurnPlayer(1-tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local tc=Duel.GetAttacker()
@@ -49,7 +50,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 			e1:SetValue(s.eqlimit)
 			e1:SetLabelObject(tc)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			c:RegisterEffect(e1)
 		end
 	else

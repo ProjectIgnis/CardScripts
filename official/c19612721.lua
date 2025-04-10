@@ -1,4 +1,5 @@
 --円盤闘士
+--Disc Fighter
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy

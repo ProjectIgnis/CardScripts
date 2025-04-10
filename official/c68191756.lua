@@ -14,14 +14,14 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x10c}
+s.listed_series={SET_MEKK_KNIGHT}
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x10c) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return c:IsSetCard(SET_MEKK_KNIGHT) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK)
+		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND|LOCATION_DECK,0,1,nil,e,tp) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND|LOCATION_DECK)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -32,15 +32,15 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<1 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,e,tp)
+	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND|LOCATION_DECK,0,1,1,nil,e,tp)
 	local tc=g:GetFirst()
 	if tc and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE) then
 		local fid=c:GetFieldID()
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,fid)
+		tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1,fid)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
@@ -55,7 +55,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummonComplete()
 end
 function s.splimit(e,c)
-	return not c:IsSetCard(0x10c)
+	return not c:IsSetCard(SET_MEKK_KNIGHT)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()

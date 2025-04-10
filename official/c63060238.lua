@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.tgop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x3008}
+s.listed_series={SET_ELEMENTAL_HERO}
 s.listed_names={CARD_POLYMERIZATION}
 function s.thfilter(c)
 	return c:IsCode(CARD_POLYMERIZATION) and c:IsAbleToHand()
@@ -45,7 +45,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tgfilter(c)
-	return c:IsSetCard(0x3008) and not c:IsCode(id) and c:IsAbleToGrave()
+	return c:IsSetCard(SET_ELEMENTAL_HERO) and not c:IsCode(id) and c:IsAbleToGrave()
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -63,7 +63,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_CHANGE_ATTRIBUTE)
 		e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
 		e1:SetValue(tc:GetAttribute())
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_DISABLE_PHASE_END)
 		c:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_SET_ATTACK_FINAL)
@@ -82,7 +82,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	e4:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e4:SetTargetRange(1,0)
 	e4:SetTarget(s.splimit)
-	e4:SetReset(RESET_PHASE+PHASE_END)
+	e4:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e4,tp)
 	--Cannot Special Summon from the Main Deck check
 	local e5=Effect.CreateEffect(c)
@@ -90,7 +90,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	e5:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e5:SetCode(CARD_EHERO_BLAZEMAN)
 	e5:SetTargetRange(1,0)
-	e5:SetReset(RESET_PHASE+PHASE_END)
+	e5:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e5,tp)
 end
 function s.splimit(e,c,tp,sumtp,sumpos)

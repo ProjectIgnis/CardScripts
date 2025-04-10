@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,id)
 	e2:SetCondition(s.dmgcon)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetOperation(s.dmgop)
 	c:RegisterEffect(e2)
 end

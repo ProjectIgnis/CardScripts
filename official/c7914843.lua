@@ -1,4 +1,5 @@
 --電磁ミノ虫
+--Electromagnetic Bagworm
 local s,id=GetID()
 function s.initial_effect(c)
 	--flip
@@ -33,8 +34,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) and tc:IsRace(RACE_MACHINE) then
 		local tct=1
-		if Duel.GetTurnPlayer()~=tp then tct=2
-		elseif Duel.GetCurrentPhase()==PHASE_END then tct=3 end
+		if Duel.IsTurnPlayer(1-tp) then tct=2
+		elseif Duel.IsPhase(PHASE_END) then tct=3 end
 		Duel.GetControl(tc,tp,PHASE_END,tct)
 	end
 end
@@ -46,7 +47,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	e1:SetValue(-500)
 	bc:RegisterEffect(e1)
 	local e2=e1:Clone()

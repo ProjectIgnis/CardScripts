@@ -1,5 +1,5 @@
 --プロンプトホーン
---Prompt Horn
+--Prompthorn
 --
 local s,id=GetID()
 function s.initial_effect(c)
@@ -24,7 +24,7 @@ function s.spfilter(c,e,tp)
 	return c:IsRace(RACE_CYBERSE) and c:IsType(TYPE_NORMAL) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,nil,e,tp)
+	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_DECK|LOCATION_GRAVE,0,nil,e,tp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if ft>1 and Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
 	if chk==0 then return ft>-1 and Duel.CheckReleaseGroupCost(tp,s.costfilter,1,false,nil,nil,e,tp,g,ft) end
@@ -39,7 +39,7 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if ft>1 and Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
-	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.spfilter),tp,LOCATION_DECK+LOCATION_GRAVE,0,nil,e,tp)
+	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.spfilter),tp,LOCATION_DECK|LOCATION_GRAVE,0,nil,e,tp)
 	if ft<=0 or #g==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local sg=g:SelectWithSumEqual(tp,Card.GetLevel,e:GetLabel(),1,ft)
@@ -48,7 +48,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		local tc=sg:GetFirst()
 		for tc in aux.Next(sg) do
 			Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
-			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,fid)
+			tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1,fid)
 		end
 		Duel.SpecialSummonComplete()
 		sg:KeepAlive()
@@ -80,4 +80,3 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=g:Filter(s.rmfilter,nil,e:GetLabel())
 	Duel.Remove(tg,POS_FACEUP,REASON_EFFECT)
 end
-

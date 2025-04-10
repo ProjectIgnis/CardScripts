@@ -37,10 +37,10 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop2)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x51}
+s.listed_series={SET_GADGET}
 function s.lkcon(e)
 	local c=e:GetHandler()
-	return c:IsStatus(STATUS_SPSUMMON_TURN) and c:IsSummonType(SUMMON_TYPE_LINK)
+	return c:IsStatus(STATUS_SPSUMMON_TURN) and c:IsLinkSummoned()
 end
 function s.spfilter(c,e,tp,zone)
 	return c:IsLevelBelow(4) and c:IsRace(RACE_MACHINE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
@@ -65,7 +65,7 @@ function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
 	return (r&REASON_EFFECT+REASON_BATTLE)~=0
 end
 function s.spfilter2(c,e,tp)
-	return c:IsSetCard(0x51) and c:IsLevel(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_GADGET) and c:IsLevel(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

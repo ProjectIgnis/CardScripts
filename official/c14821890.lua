@@ -1,9 +1,9 @@
--- 相剣暗転
--- Swordsoul Blackout
--- Scripted by Hatter
+--相剣暗転
+--Swordsoul Blackout
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Destroy
+	--Destroy
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.destg)
 	e1:SetOperation(s.desop)
 	c:RegisterEffect(e1)
-	-- Special Summon token
+	--Special Summon token
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -26,13 +26,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={TOKEN_SWORDSOUL}
-s.listed_series={0x16d}
+s.listed_series={SET_SWORDSOUL}
 function s.desfilter(c,e,tp)
 	return c:IsCanBeEffectTarget(e) and (c:IsControler(1-tp) or (c:IsFaceup() and c:IsMonster() and c:IsRace(RACE_WYRM)))
 end
 function s.desrescon(sg,e,tp,mg)
-    local own=sg:FilterCount(Card.IsControler,nil,tp)
-    return own==1,own>1
+	local own=sg:FilterCount(Card.IsControler,nil,tp)
+	return own==1,own>1
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
@@ -51,7 +51,7 @@ end
 function s.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-			and Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_SWORDSOUL,0x16d,TYPES_TOKEN+TYPE_TUNER,0,0,4,RACE_WYRM,ATTRIBUTE_WATER)
+			and Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_SWORDSOUL,SET_SWORDSOUL,TYPES_TOKEN+TYPE_TUNER,0,0,4,RACE_WYRM,ATTRIBUTE_WATER)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0)
@@ -61,7 +61,7 @@ function s.tkop(e,tp,eg,ep,ev,re,r,rp)
 		local c=e:GetHandler()
 		local token=Duel.CreateToken(tp,TOKEN_SWORDSOUL)
 		Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)
-		-- Cannot Special Summon non-Synchro monsters from Extra Deck
+		--Cannot Special Summon non-Synchro monsters from Extra Deck
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD)
 		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
@@ -69,11 +69,11 @@ function s.tkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 		e1:SetAbsoluteRange(tp,1,0)
 		e1:SetTarget(function(_,c) return c:IsLocation(LOCATION_EXTRA) and not c:IsType(TYPE_SYNCHRO) end)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		token:RegisterEffect(e1,true)
-		-- Lizard check
+		--Lizard check
 		local e2=aux.createContinuousLizardCheck(c,LOCATION_MZONE,function(_,c) return not c:IsOriginalType(TYPE_SYNCHRO) end)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		token:RegisterEffect(e2,true)
 	end
 	Duel.SpecialSummonComplete()

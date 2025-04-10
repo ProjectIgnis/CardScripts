@@ -1,5 +1,5 @@
 --墓穴ホール
---Grave Hole
+--Gravedigger's Trap Hole
 --Scripted by Hel
 local s,id=GetID()
 function s.initial_effect(c)
@@ -16,7 +16,7 @@ end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	local activateLocation = Duel.GetChainInfo(ev, CHAININFO_TRIGGERING_LOCATION)
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
-		and ep~=tp and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainDisablable(ev)
+		and ep~=tp and re:IsMonsterEffect() and Duel.IsChainDisablable(ev)
 		and (activateLocation==LOCATION_GRAVE or activateLocation==LOCATION_HAND or activateLocation==LOCATION_REMOVED)
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -31,4 +31,3 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Damage(1-tp,2000,REASON_EFFECT)
 	end
 end
-

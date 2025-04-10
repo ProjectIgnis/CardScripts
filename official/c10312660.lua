@@ -1,5 +1,5 @@
 --未界域の歓待
---You are in Danger!
+--You're in Danger!
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -14,9 +14,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x11e}
+s.listed_series={SET_DANGER}
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x11e) and c:IsMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsPublic()
+	return c:IsSetCard(SET_DANGER) and c:IsMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsPublic()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local rvg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_DECK,0,nil,e,tp)
@@ -33,7 +33,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=tg:GetFirst()
 	if tc and tc:IsCanBeSpecialSummoned(e,0,tp,false,false) then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1,fid)
+		tc:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1,fid)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_PHASE+PHASE_END)
@@ -43,7 +43,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetLabelObject(tc)
 		e1:SetCondition(s.descon)
 		e1:SetOperation(s.desop)
-		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_PHASE|PHASE_END)
 		Duel.RegisterEffect(e1,tp)
 	end
 end 

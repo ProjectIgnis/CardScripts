@@ -40,7 +40,7 @@ function s.atktg(e,c)
 end
 function s.aclimit(e,re,tp)
 	local loc=re:GetActivateLocation()
-	return loc==LOCATION_MZONE and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():GetAttack()>e:GetHandler():GetAttack()
+	return loc==LOCATION_MZONE and re:IsMonsterEffect() and re:GetHandler():GetAttack()>e:GetHandler():GetAttack()
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -69,4 +69,3 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 	end
 end
-

@@ -7,14 +7,14 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_EQUIP)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e1:SetRange(LOCATION_HAND+LOCATION_MZONE)
+	e1:SetRange(LOCATION_HAND|LOCATION_MZONE)
 	e1:SetTarget(s.eqtg)
 	e1:SetOperation(s.eqop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x9a}
+s.listed_series={SET_SUPERHEAVY_SAMURAI}
 function s.eqfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x9a)
+	return c:IsFaceup() and c:IsSetCard(SET_SUPERHEAVY_SAMURAI)
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.eqfilter(chkc) and chkc~=e:GetHandler() end
@@ -28,7 +28,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	if c:IsLocation(LOCATION_MZONE) and c:IsFacedown() then return end
 	local tc=Duel.GetFirstTarget()
-	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 or tc:GetControler()==1-tp or tc:IsFacedown() or not tc:IsRelateToEffect(e) then
+	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 or tc:IsControler(1-tp) or tc:IsFacedown() or not tc:IsRelateToEffect(e) then
 		Duel.SendtoGrave(c,REASON_EFFECT)
 		return
 	end
@@ -37,7 +37,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_EQUIP_LIMIT)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	e1:SetValue(s.eqlimit)
 	e1:SetLabelObject(tc)
 	c:RegisterEffect(e1)
@@ -49,7 +49,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetTargetRange(0,LOCATION_MZONE)
 	e2:SetValue(s.atlimit)
 	e2:SetLabelObject(tc)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 	c:RegisterEffect(e2)
 	--tribute to special summon
 	local e3=Effect.CreateEffect(c)
@@ -60,7 +60,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	e3:SetCost(s.spcost)
 	e3:SetTarget(s.sptg)
 	e3:SetOperation(s.spop)
-	e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e3:SetReset(RESET_EVENT|RESETS_STANDARD)
 	c:RegisterEffect(e3)
 end
 function s.eqlimit(e,c)
@@ -76,7 +76,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(tc,REASON_COST)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x9a) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_SUPERHEAVY_SAMURAI) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)

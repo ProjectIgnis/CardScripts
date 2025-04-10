@@ -1,4 +1,5 @@
 --D－カウンター
+--D - Counter
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -13,7 +14,7 @@ function s.initial_effect(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	return tc:IsControler(tp) and tc:IsPosition(POS_FACEUP) and tc:IsSetCard(0xc008)
+	return tc:IsControler(tp) and tc:IsPosition(POS_FACEUP) and tc:IsSetCard(SET_DESTINY_HERO)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local a=Duel.GetAttacker()

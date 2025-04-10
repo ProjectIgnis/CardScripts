@@ -13,9 +13,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x3a}
+s.listed_series={SET_GISHKI}
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x3a) and c:IsRitualMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,true)
+	return c:IsSetCard(SET_GISHKI) and c:IsRitualMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,true)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -34,7 +34,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetCode(EFFECT_CANNOT_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		sc:RegisterEffect(e1,true)
 		--Return it to hand during end phase
 		local e2=Effect.CreateEffect(c)
@@ -44,7 +44,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetRange(LOCATION_MZONE)
 		e2:SetCountLimit(1)
 		e2:SetOperation(function(e) Duel.SendtoHand(e:GetHandler(),nil,REASON_EFFECT) end)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		sc:RegisterEffect(e2,true)
 	end
 end

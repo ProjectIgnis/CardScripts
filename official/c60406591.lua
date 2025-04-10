@@ -34,7 +34,7 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	s[2]=eg:GetFirst():GetBattleTarget()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return s[0]==tp and #eg==1 and eg:GetFirst()==s[2]  and eg:GetFirst():GetBattlePosition()==POS_FACEUP_ATTACK
+	return s[0]==tp and #eg==1 and eg:GetFirst()==s[2] and eg:GetFirst():GetBattlePosition()==POS_FACEUP_ATTACK
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=s[1]

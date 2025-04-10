@@ -1,4 +1,5 @@
 --E・HERO フレイム・ブラスト
+--Elemental HERO Inferno
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -21,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetValue(1000)
 	c:RegisterEffect(e2)
 end
-s.material_setcode={0x8,0x3008}
+s.material_setcode={SET_HERO,SET_ELEMENTAL_HERO}
 function s.atkcon(e)
 	local ph=Duel.GetCurrentPhase()
 	if ph~=PHASE_DAMAGE and ph~=PHASE_DAMAGE_CAL then return false end

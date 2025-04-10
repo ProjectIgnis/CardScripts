@@ -15,7 +15,7 @@ function s.initial_effect(c)
 end
 function s.filter(c,e,tp)
 	return c:IsLocation(LOCATION_GRAVE) and c:IsCanBeEffectTarget(e) and c:IsPreviousLocation(LOCATION_MZONE)
-		and c:IsPreviousControler(tp) and c:IsReason(REASON_DESTROY) and c:IsReason(REASON_BATTLE+REASON_EFFECT)
+		and c:IsPreviousControler(tp) and c:IsReason(REASON_DESTROY) and c:IsReason(REASON_BATTLE|REASON_EFFECT)
 		and c:IsType(TYPE_SYNCHRO) and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,c)
 end
 function s.spfilter(c,e,tp,tc)

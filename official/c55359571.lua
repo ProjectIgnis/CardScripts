@@ -1,4 +1,4 @@
---Japanese name
+--こちょぼの人形祀り
 --Kochobo's Hinamatsuri
 --scripted by Naim
 local s,id=GetID()

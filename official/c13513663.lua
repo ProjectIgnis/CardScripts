@@ -1,4 +1,5 @@
 --竜魂の城
+--Castle of Dragon Souls
 local s,id=GetID()
 function s.initial_effect(c)
 	c:SetUniqueOnField(1,0,id)
@@ -9,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetHintTiming(TIMING_DAMAGE_STEP)
 	e1:SetCost(s.cost)
-	e1:SetCondition(s.atkcon)
+	e1:SetCondition(aux.StatChangeDamageStepCondition)
 	e1:SetTarget(s.target)
 	c:RegisterEffect(e1)
 	--atkup
@@ -21,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_CARD_TARGET)
 	e2:SetHintTiming(TIMING_DAMAGE_STEP)
-	e2:SetCondition(s.atkcon)
+	e2:SetCondition(aux.StatChangeDamageStepCondition)
 	e2:SetCost(s.atkcost)
 	e2:SetTarget(s.atktg)
 	e2:SetOperation(s.atkop)
@@ -42,9 +43,6 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(1)
 	if chk==0 then return true end
 end
-function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
-end
 function s.cfilter(c,tp)
 	return c:IsRace(RACE_DRAGON) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true) 
 		and Duel.IsExistingTarget(Card.IsFaceup,tp,LOCATION_MZONE,0,1,c)
@@ -53,14 +51,14 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local label=e:GetLabel()
 	if chkc then return s.atktg(e,tp,eg,ep,ev,re,r,rp,0,chkc) end
 	if chk==0 then
-		if Duel.GetCurrentPhase()==PHASE_DAMAGE then
+		if Duel.IsPhase(PHASE_DAMAGE) then
 			if label==1 then e:SetLabel(0) end
 			return (label~=1 or s.atkcost(e,tp,eg,ep,ev,re,r,rp,0)) and s.atktg(e,tp,eg,ep,ev,re,r,rp,0)
 		end
 		return true
 	end
 	if (label~=1 or s.atkcost(e,tp,eg,ep,ev,re,r,rp,0)) and s.atktg(e,tp,eg,ep,ev,re,r,rp,0) 
-		and (Duel.GetCurrentPhase()==PHASE_DAMAGE or Duel.SelectYesNo(tp,aux.Stringid(id,2))) then
+		and (Duel.IsPhase(PHASE_DAMAGE) or Duel.SelectYesNo(tp,aux.Stringid(id,2))) then
 		e:SetCategory(CATEGORY_ATKCHANGE)
 		e:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_CARD_TARGET)
 		e:SetOperation(s.atkop)
@@ -75,9 +73,9 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	end
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil,tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local rg=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil,tp)
+	local rg=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,1,nil,tp)
 	Duel.Remove(rg,POS_FACEUP,REASON_COST)
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -86,17 +84,17 @@ function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		and Duel.IsExistingTarget(Card.IsFaceup,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	Duel.SelectTarget(tp,Card.IsFaceup,tp,LOCATION_MZONE,0,1,1,nil)
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+	e:GetHandler():RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
+	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(700)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end

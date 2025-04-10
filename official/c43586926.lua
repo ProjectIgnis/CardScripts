@@ -1,4 +1,5 @@
 --ドル・ドラ
+--Twin-Headed Behemoth
 local s,id=GetID()
 function s.initial_effect(c)
 	--to grave
@@ -22,7 +23,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_DUEL)
 		e1:SetTarget(s.sptg)
 		e1:SetOperation(s.spop)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		c:RegisterEffect(e1)
 	end
 end
@@ -37,7 +38,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK)
 		e1:SetValue(1000)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		c:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_SET_DEFENSE)

@@ -28,15 +28,15 @@ function s.initial_effect(c)
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x29}
+s.listed_series={SET_DRAGUNITY}
 function s.eqval(ec,c,tp)
-	return ec:IsControler(tp) and ec:IsLevelBelow(3) and ec:IsSetCard(0x29) and ec:IsRace(RACE_DRAGON)
+	return ec:IsControler(tp) and ec:IsLevelBelow(3) and ec:IsSetCard(SET_DRAGUNITY) and ec:IsRace(RACE_DRAGON)
 end
 function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
+	return e:GetHandler():IsSynchroSummoned()
 end
 function s.filter(c)
-	return c:IsLevelBelow(3) and c:IsSetCard(0x29) and c:IsRace(RACE_DRAGON) and not c:IsForbidden()
+	return c:IsLevelBelow(3) and c:IsSetCard(SET_DRAGUNITY) and c:IsRace(RACE_DRAGON) and not c:IsForbidden()
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -72,7 +72,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetValue(c:GetAttack()*2)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_DISABLE_PHASE_END)
 		c:RegisterEffect(e1)
 	end
 end

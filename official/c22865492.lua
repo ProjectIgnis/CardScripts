@@ -44,7 +44,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_HERO,SET_VISION_HERO}
 function s.recon(e,tp,eg,ep,ev,re,r,rp)
-	return ep==tp and r&(REASON_BATTLE+REASON_EFFECT)~=0
+	return ep==tp and r&(REASON_BATTLE|REASON_EFFECT)~=0
 end
 function s.rectg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0 end

@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(s.nacon)
-	e1:SetCost(s.nacost)
+	e1:SetCost(Cost.SelfDiscard)
 	e1:SetTarget(s.natg)
 	e1:SetOperation(s.naop)
 	c:RegisterEffect(e1)
@@ -34,10 +34,6 @@ s.listed_names={44221928}
 function s.nacon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker():IsControler(1-tp) and Duel.GetAttackTarget()==nil
 end
-function s.nacost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsDiscardable() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
-end
 function s.natg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetAttacker():IsOnField() end
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,Duel.GetAttacker(),1,0,0)
@@ -51,14 +47,14 @@ function s.naop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		a:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
 		e2:SetValue(RESET_TURN_SET)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		a:RegisterEffect(e2)
 	end
 end

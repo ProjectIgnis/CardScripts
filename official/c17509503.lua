@@ -1,5 +1,5 @@
 --一色即発
---Breaking Point of the Normal
+--The Revenge of the Normal
 --
 local s,id=GetID()
 function s.initial_effect(c)
@@ -32,4 +32,3 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local sg=g:Select(tp,1,ft,nil)
 	Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
 end
-

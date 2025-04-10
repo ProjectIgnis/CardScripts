@@ -1,4 +1,5 @@
 --武神逐
+--Bujinfidel
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,13 +13,13 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x88}
+s.listed_series={SET_BUJIN}
 function s.rfilter(c,e,tp,ft)
-	return c:IsSetCard(0x88) and c:IsRace(RACE_BEASTWARRIOR) and (ft>0 or (c:GetSequence()<5 and c:IsControler(tp))) and (c:IsFaceup() or c:IsControler(tp))
+	return c:IsSetCard(SET_BUJIN) and c:IsRace(RACE_BEASTWARRIOR) and (ft>0 or (c:GetSequence()<5 and c:IsControler(tp))) and (c:IsFaceup() or c:IsControler(tp))
 		and Duel.IsExistingTarget(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,c:GetCode(),e,tp)
 end
 function s.spfilter(c,code,e,tp)
-	return c:IsSetCard(0x88) and not c:IsCode(code) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_BUJIN) and not c:IsCode(code) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(1)

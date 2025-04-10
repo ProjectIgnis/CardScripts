@@ -29,10 +29,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xaf}
+s.listed_series={SET_DD}
 s.listed_names={id}
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() and chkc:IsSummonType(SUMMON_TYPE_PENDULUM) end
+	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() and chkc:IsPendulumSummoned() end
 	if chk==0 then return Duel.IsExistingTarget(aux.FaceupFilter(Card.IsSummonType,SUMMON_TYPE_PENDULUM),tp,0,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectTarget(tp,aux.FaceupFilter(Card.IsSummonType,SUMMON_TYPE_PENDULUM),tp,0,LOCATION_MZONE,1,1,nil)
@@ -52,7 +52,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return (r&REASON_EFFECT)~=0
 end
 function s.filter(c,e,tp)
-	return c:IsFaceup() and c:IsSetCard(0xaf) and c:IsType(TYPE_PENDULUM) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,true)
+	return c:IsFaceup() and c:IsSetCard(SET_DD) and c:IsType(TYPE_PENDULUM) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,true)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCountFromEx(tp)>0
@@ -68,12 +68,12 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1,true)
 		local e2=Effect.CreateEffect(e:GetHandler())
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e2,true)
 	end
 	Duel.SpecialSummonComplete()

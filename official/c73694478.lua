@@ -1,4 +1,5 @@
 --転生の超戦士
+--Super Soldier Rebirth
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -20,18 +21,18 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetCondition(s.thcon)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x10cf}
+s.listed_series={SET_BLACK_LUSTER_SOLDIER}
 function s.filter(c,e,tp,ft)
-	return c:IsFaceup() and c:IsSetCard(0x10cf) and (ft>0 or c:GetSequence()<5)
+	return c:IsFaceup() and c:IsSetCard(SET_BLACK_LUSTER_SOLDIER) and (ft>0 or c:GetSequence()<5)
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND,0,1,nil,c:GetCode(),e,tp)
 end
 function s.spfilter(c,code,e,tp)
-	return c:IsSetCard(0x10cf) and not c:IsCode(code) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+	return c:IsSetCard(SET_BLACK_LUSTER_SOLDIER) and not c:IsCode(code) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
@@ -54,10 +55,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return aux.exccon(e) and Duel.GetTurnPlayer()==tp and (Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2)
+	return aux.exccon(e) and Duel.IsTurnPlayer(tp) and (Duel.IsMainPhase())
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x10cf) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_BLACK_LUSTER_SOLDIER) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.thfilter(chkc) end

@@ -28,9 +28,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={71036835,7021574,34419588,70914287,CARD_KURIBOH}
-s.listed_series={0xa4}
+s.listed_series={SET_KURIBOH}
 function s.spcfilter1(c,tp)
-	return c:IsPreviousSetCard(0xa4) and c:IsPreviousControler(tp)
+	return c:IsPreviousSetCard(SET_KURIBOH) and c:IsPreviousControler(tp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.spcfilter1,1,nil,tp)
@@ -70,13 +70,13 @@ function s.spfilter2(c,e,tp)
 	return c:IsCode(70914287) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.spfilter2,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,nil,e,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.spfilter2,tp,LOCATION_HAND|LOCATION_DECK|LOCATION_GRAVE,0,1,nil,e,tp) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND|LOCATION_DECK|LOCATION_GRAVE)
 end
 function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter2),tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,e,tp)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter2),tp,LOCATION_HAND|LOCATION_DECK|LOCATION_GRAVE,0,1,1,nil,e,tp)
 	if #g>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end

@@ -1,4 +1,5 @@
 --クリフォート・アーカイブ
+--Qliphort Carrier
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -18,7 +19,7 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_PZONE)
 	e3:SetCode(EFFECT_UPDATE_ATTACK)
 	e3:SetTargetRange(LOCATION_MZONE,0)
-	e3:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0xaa))
+	e3:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_QLI))
 	e3:SetValue(300)
 	c:RegisterEffect(e3)
 	--summon with no tribute
@@ -59,9 +60,9 @@ function s.initial_effect(c)
 	e8:SetOperation(s.thop)
 	c:RegisterEffect(e8)
 end
-s.listed_series={0xaa}
+s.listed_series={SET_QLI}
 function s.splimit(e,c)
-	return not c:IsSetCard(0xaa)
+	return not c:IsSetCard(SET_QLI)
 end
 function s.ntcon(e,c,minc)
 	if c==nil then return true end
@@ -99,7 +100,7 @@ function s.lvop2(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetValue(4)
-	e1:SetReset(RESET_EVENT|(RESETS_STANDARD|RESET_DISABLE)&~(RESET_TOFIELD|RESET_LEAVE))
+	e1:SetReset(RESET_EVENT|(RESETS_STANDARD_DISABLE)&~(RESET_TOFIELD|RESET_LEAVE))
 	c:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
@@ -107,11 +108,11 @@ function s.lvop2(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetValue(1800)
-	e2:SetReset(RESET_EVENT|(RESETS_STANDARD|RESET_DISABLE)&~(RESET_TOFIELD|RESET_LEAVE))
+	e2:SetReset(RESET_EVENT|(RESETS_STANDARD_DISABLE)&~(RESET_TOFIELD|RESET_LEAVE))
 	c:RegisterEffect(e2)
 end
 function s.immcon(e)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_NORMAL)
+	return e:GetHandler():IsNormalSummoned()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsAbleToHand() end

@@ -1,18 +1,18 @@
--- ソドレミコード・グレーシア
--- Sodoremichord Gracea
--- scripted by Hatter
+--ソドレミコード・グレーシア
+--SolSolfachord Gracia
+--scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- pendulum
+	--pendulum
 	Pendulum.AddProcedure(c)
-	-- cannot activate s/t on pendulum summon
+	--cannot activate s/t on pendulum summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetRange(LOCATION_PZONE)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetOperation(s.sucop)
 	c:RegisterEffect(e1)
-	-- search
+	--search
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	local e3=e2:Clone()
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
-	-- cannot activate monster effects on attack
+	--cannot activate monster effects on attack
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e4:SetCode(EVENT_ATTACK_ANNOUNCE)
@@ -35,9 +35,9 @@ function s.initial_effect(c)
 	e4:SetOperation(s.btop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x164}
+s.listed_series={SET_SOLFACHORD}
 function s.sucfilter(c,tp)
-	return c:IsSetCard(0x164) and c:IsType(TYPE_PENDULUM) and c:IsControler(tp) and c:IsSummonType(SUMMON_TYPE_PENDULUM)
+	return c:IsSetCard(SET_SOLFACHORD) and c:IsType(TYPE_PENDULUM) and c:IsControler(tp) and c:IsPendulumSummoned()
 end
 function s.sucop(e,tp,eg,ep,ev,re,r,rp)
 	if eg:IsExists(s.sucfilter,1,nil,tp) then
@@ -45,10 +45,10 @@ function s.sucop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.chainlm(e,rp,tp)
-	return tp==rp or (e:IsActiveType(TYPE_SPELL+TYPE_TRAP) and not e:IsHasType(EFFECT_TYPE_ACTIVATE))
+	return tp==rp or (e:IsSpellTrapEffect() and not e:IsHasType(EFFECT_TYPE_ACTIVATE))
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x164) and c:IsSpellTrap() and c:IsAbleToHand()
+	return c:IsSetCard(SET_SOLFACHORD) and c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -64,7 +64,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.btcon(e,tp,eg,ep,ev,re,r,rp)
 	local ac=Duel.GetAttacker()
-	return ac and ac:IsControler(tp) and ac:IsType(TYPE_PENDULUM) and ac:IsSetCard(0x164)
+	return ac and ac:IsControler(tp) and ac:IsType(TYPE_PENDULUM) and ac:IsSetCard(SET_SOLFACHORD)
 end
 function s.btop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -76,12 +76,12 @@ function s.btop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTargetRange(0,1)
 	e1:SetCondition(s.actcon)
 	e1:SetValue(s.actlimit)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_DAMAGE)
 	c:RegisterEffect(e1)
 end
 function s.actcon(e)
 	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsEvenScale),e:GetHandlerPlayer(),LOCATION_PZONE,0,1,nil)
 end
 function s.actlimit(e,re,tp)
-	return re:IsActiveType(TYPE_MONSTER)
+	return re:IsMonsterEffect()
 end

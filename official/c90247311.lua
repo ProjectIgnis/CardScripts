@@ -24,16 +24,16 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x2b,0x61}
+s.listed_series={SET_NINJA,SET_NINJITSU_ART}
 function s.splimit(e,se,sp,st)
-	return (se:IsActiveType(TYPE_MONSTER) and se:GetHandler():IsSetCard(0x2b)) or se:GetHandler():IsSetCard(0x61)
+	return (se:IsMonsterEffect() and se:GetHandler():IsSetCard(SET_NINJA)) or se:GetHandler():IsSetCard(SET_NINJITSU_ART)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(1)
 	return true
 end
 function s.cfilter(c)
-	return ((c:IsMonster() and c:IsSetCard(0x2b)) or c:IsSetCard(0x61))
+	return ((c:IsMonster() and c:IsSetCard(SET_NINJA)) or c:IsSetCard(SET_NINJITSU_ART))
 		and (c:IsFaceup() or not c:IsOnField())
 		and c:IsAbleToGraveAsCost()
 end
@@ -41,7 +41,7 @@ function s.filter(c,e)
 	return c:IsSpellTrap() and (not e or c:IsCanBeEffectTarget(e))
 end
 function s.costfilter(c,rg,dg)
-	if not (c:IsMonster() and c:IsSetCard(0x2b)) then return false end
+	if not (c:IsMonster() and c:IsSetCard(SET_NINJA)) then return false end
 	local a=0
 	if dg:IsContains(c) then a=1 end
 	if c:GetEquipCount()==0 then return rg:IsExists(s.costfilter2,1,c,a,dg) end
@@ -54,14 +54,14 @@ function s.costfilter(c,rg,dg)
 end
 function s.costfilter2(c,a,dg)
 	if dg:IsContains(c) then a=a+1 end
-	return c:IsSetCard(0x61) and #dg-a>=1
+	return c:IsSetCard(SET_NINJITSU_ART) and #dg-a>=1
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and s.filter(chkc) end
 	if chk==0 then
 		if e:GetLabel()==1 then
 			e:SetLabel(0)
-			local rg=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_ONFIELD+LOCATION_HAND,0,nil)
+			local rg=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_ONFIELD|LOCATION_HAND,0,nil)
 			local dg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil,e)
 			return rg:IsExists(s.costfilter,1,nil,rg,dg)
 		else
@@ -70,7 +70,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	end
 	if e:GetLabel()==1 then
 		e:SetLabel(0)
-		local rg=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_ONFIELD+LOCATION_HAND,0,nil)
+		local rg=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_ONFIELD|LOCATION_HAND,0,nil)
 		local dg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil,e)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		local sg1=rg:FilterSelect(tp,s.costfilter,1,1,nil,rg,dg)
@@ -98,4 +98,3 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local sg=g:Filter(Card.IsRelateToEffect,nil,e)
 	Duel.Destroy(sg,REASON_EFFECT)
 end
-

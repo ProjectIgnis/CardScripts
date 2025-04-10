@@ -1,4 +1,5 @@
 --裏ガエル
+--Flip Flop Frog
 local s,id=GetID()
 function s.initial_effect(c)
 	--turn set
@@ -21,11 +22,11 @@ function s.initial_effect(c)
 	e2:SetOperation(s.retop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x12}
+s.listed_series={SET_FROG}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsCanTurnSet() and c:GetFlagEffect(id)==0 end
-	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET+RESET_PHASE+PHASE_END,0,1)
+	c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD-RESET_TURN_SET|RESET_PHASE|PHASE_END,0,1)
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,c,1,0,0)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
@@ -35,12 +36,12 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.rettg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x12),tp,LOCATION_MZONE,0,1,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_FROG),tp,LOCATION_MZONE,0,1,nil)
 		and Duel.IsExistingMatchingCard(Card.IsAbleToHand,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,0,0)
 end
 function s.retop(e,tp,eg,ep,ev,re,r,rp)
-	local ct=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,0x12),tp,LOCATION_MZONE,0,nil)
+	local ct=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,SET_FROG),tp,LOCATION_MZONE,0,nil)
 	if ct==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToHand,tp,0,LOCATION_MZONE,1,ct,nil)

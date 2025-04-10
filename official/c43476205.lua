@@ -13,11 +13,11 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0xba}
+s.listed_series={SET_RAIDRAPTOR}
 function s.filter1(c,e,tp)
 	local rk=c:GetRank()
 	local pg=aux.GetMustBeMaterialGroup(tp,Group.FromCards(c),tp,nil,nil,REASON_XYZ)
-	return (#pg<=0 or (#pg==1 and pg:IsContains(c))) and rk>0 and c:IsFaceup() and c:IsSetCard(0xba)
+	return (#pg<=0 or (#pg==1 and pg:IsContains(c))) and rk>0 and c:IsFaceup() and c:IsSetCard(SET_RAIDRAPTOR)
 		and Duel.IsExistingMatchingCard(s.filter3,tp,LOCATION_EXTRA,0,1,nil,e,tp,c,rk+1,pg)
 end
 function s.filter2(c,e,tp)
@@ -29,11 +29,11 @@ end
 function s.filter3(c,e,tp,mc,rk,pg)
 	if c.rum_limit and not c.rum_limit(mc,e) then return false end
 	return mc:IsType(TYPE_XYZ,c,SUMMON_TYPE_XYZ,tp) and c:IsRank(rk)
-		and c:IsSetCard(0xba) and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0
+		and c:IsSetCard(SET_RAIDRAPTOR) and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0
 		and mc:IsCanBeXyzMaterial(c,tp) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if Duel.GetTurnPlayer()==tp then
+	if Duel.IsTurnPlayer(tp) then
 		if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.filter1(chkc,e,tp) end
 		if chk==0 then return Duel.IsExistingTarget(s.filter1,tp,LOCATION_MZONE,0,1,nil,e,tp) end
 		e:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -51,7 +51,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if Duel.GetTurnPlayer()~=tp then
+	if Duel.IsTurnPlayer(1-tp) then
 		if not tc or not tc:IsRelateToEffect(e) or not tc:IsFaceup() or Duel.GetControl(tc,tp)==0 then return end
 		Duel.BreakEffect()
 	end

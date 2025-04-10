@@ -27,41 +27,41 @@ function s.initial_effect(c)
 	e2:SetValue(aux.tgoval)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x27}
+s.listed_series={SET_TG}
 function s.lcheck(g,lc,sumtype,tp)
 	return g:IsExists(s.mzfilter,1,nil,lc,sumtype,tp)
 end
 function s.mzfilter(c,lc,sumtype,tp)
-	return c:IsSetCard(0x27,lc,sumtype,tp) and c:IsType(TYPE_TUNER,lc,sumtype,tp)
+	return c:IsSetCard(SET_TG,lc,sumtype,tp) and c:IsType(TYPE_TUNER,lc,sumtype,tp)
 end
 function s.tgtg(e,c)
-	return e:GetHandler():GetLinkedGroup():IsContains(c) and c:IsSetCard(0x27) and c:IsType(TYPE_SYNCHRO)
+	return e:GetHandler():GetLinkedGroup():IsContains(c) and c:IsSetCard(SET_TG) and c:IsType(TYPE_SYNCHRO)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
+	return e:GetHandler():IsLinkSummoned()
 end
 function s.spfilter(c,e,tp,zone)
-	return c:IsSetCard(0x27) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE,tp,zone)
+	return c:IsSetCard(SET_TG) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE,tp,zone)
 end
 function s.spcheck(sg,e,tp,mg)
 	return sg:GetClassCount(Card.GetLocation)==#sg
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
-		local zone=e:GetHandler():GetLinkedZone(tp)&0x1f
+		local zone=e:GetHandler():GetLinkedZone(tp)&ZONES_MMZ
 		local ct=Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD,zone)
-		local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,nil,e,tp,zone)
+		local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_HAND|LOCATION_DECK|LOCATION_GRAVE,0,nil,e,tp,zone)
 		return ct>2 and not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
 			and aux.SelectUnselectGroup(g,e,tp,3,3,s.spcheck,0)
 	end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,3,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,3,tp,LOCATION_HAND|LOCATION_DECK|LOCATION_GRAVE)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) or Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then return end
-	local zone=e:GetHandler():GetLinkedZone(tp)&0x1f
+	local zone=e:GetHandler():GetLinkedZone(tp)&ZONES_MMZ
 	local ct=Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD,zone)
-	local sg=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.spfilter),tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,nil,e,tp,zone)
+	local sg=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.spfilter),tp,LOCATION_HAND|LOCATION_DECK|LOCATION_GRAVE,0,nil,e,tp,zone)
 	if #sg==0 then return end
 	local rg=aux.SelectUnselectGroup(sg,e,tp,3,3,s.spcheck,1,tp,HINTMSG_SPSUMMON)
 	Duel.SpecialSummon(rg,0,tp,tp,true,false,POS_FACEUP_DEFENSE,zone)
@@ -72,10 +72,9 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.splimit(e,c)
-	return not c:IsSetCard(0x27)
+	return not c:IsSetCard(SET_TG)
 end
-

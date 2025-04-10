@@ -1,4 +1,5 @@
 --E・HERO ワイルドジャギーマン
+--Elemental HERO Wildedge
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -18,4 +19,4 @@ function s.initial_effect(c)
 	e2:SetValue(1)
 	c:RegisterEffect(e2)
 end
-s.material_setcode={0x8,0x3008}
+s.material_setcode={SET_HERO,SET_ELEMENTAL_HERO}

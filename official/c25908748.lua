@@ -1,5 +1,5 @@
 --鉄獣の戦線
---Tribrigade Line
+--Tri-Brigade Stand-Off
 --Scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -38,21 +38,21 @@ function s.initial_effect(c)
 	e4:SetOperation(s.limop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x14f}
+s.listed_series={SET_TRI_BRIGADE}
 function s.splimit(e,c)
 	return c:IsLocation(LOCATION_EXTRA) and not c:IsRace(RACES_BEAST_BWARRIOR_WINGB)
 end
 function s.thfilter(c,typ)
-	return c:IsSetCard(0x14f) and c:IsMonster() and c:GetOriginalRace()~=typ and c:IsAbleToHand()
+	return c:IsSetCard(SET_TRI_BRIGADE) and c:IsMonster() and c:GetOriginalRace()~=typ and c:IsAbleToHand()
 end
 function s.cstfilter(c,tp)
 	return c:IsMonster() and c:IsAbleToGraveAsCost()
 		and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,c:GetOriginalRace())
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.cstfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,nil,tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.cstfilter,tp,LOCATION_HAND|LOCATION_ONFIELD,0,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local sg=Duel.SelectMatchingCard(tp,s.cstfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,1,nil,tp)
+	local sg=Duel.SelectMatchingCard(tp,s.cstfilter,tp,LOCATION_HAND|LOCATION_ONFIELD,0,1,1,nil,tp)
 	Duel.SendtoGrave(sg,REASON_COST)
 	e:SetLabel(sg:GetFirst():GetOriginalRace())
 end
@@ -81,6 +81,6 @@ function s.limop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetDescription(aux.Stringid(id,2))
 	e1:SetTargetRange(0,1)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end

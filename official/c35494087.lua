@@ -7,7 +7,7 @@ function s.initial_effect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e1:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1)
 	e1:SetCondition(s.spcon)
@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	e4:SetCondition(s.sdcon)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x2016}
+s.listed_series={SET_SPEEDROID}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.FilterEqualFunction(Card.GetSummonLocation,LOCATION_EXTRA),tp,0,LOCATION_MZONE,1,nil)
 end
@@ -51,11 +51,11 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.indval(e,c)
-	return c:IsSummonType(SUMMON_TYPE_NORMAL)
+	return c:IsNormalSummoned()
 end
 function s.refval(e,c)
 	if e:GetHandler():GetFlagEffect(id)~=0 then
-		Duel.RegisterFlagEffect(e:GetHandlerPlayer(),id,RESET_PHASE+PHASE_END,0,1)
+		Duel.RegisterFlagEffect(e:GetHandlerPlayer(),id,RESET_PHASE|PHASE_END,0,1)
 		e:GetHandler():ResetFlagEffect(id)
 		return true
 	elseif Duel.GetFlagEffect(e:GetHandlerPlayer(),id)==0 then
@@ -64,7 +64,7 @@ function s.refval(e,c)
 	else return false end
 end
 function s.sdfilter(c)
-	return c:IsFaceup() and not c:IsSetCard(0x2016)
+	return c:IsFaceup() and not c:IsSetCard(SET_SPEEDROID)
 end
 function s.sdcon(e)
 	return Duel.IsExistingMatchingCard(s.sdfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)

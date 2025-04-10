@@ -1,4 +1,5 @@
 --星輝士 デルタテロス
+--Stellarknight Delteros
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -29,7 +30,7 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetCountLimit(1)
-	e3:SetCost(s.descost)
+	e3:SetCost(Cost.Detach(1))
 	e3:SetTarget(s.destg)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3,false,REGISTER_FLAG_DETACH_XMAT)
@@ -45,7 +46,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x9c}
+s.listed_series={SET_TELLARKNIGHT}
 function s.limcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetOverlayCount()>0 and eg:IsExists(Card.IsSummonPlayer,1,nil,tp)
 end
@@ -53,7 +54,7 @@ function s.limop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetCurrentChain()==0 then
 		Duel.SetChainLimitTillChainEnd(s.chainlm)
 	elseif Duel.GetCurrentChain()==1 then
-		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+		e:GetHandler():RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 	end
 end
 function s.limop2(e,tp,eg,ep,ev,re,r,rp)
@@ -64,10 +65,6 @@ function s.limop2(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.chainlm(e,rp,tp)
 	return tp==rp
-end
-function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() end
@@ -86,17 +83,17 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x9c) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_TELLARKNIGHT) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK)
+		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND|LOCATION_DECK,0,1,nil,e,tp) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND|LOCATION_DECK)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,e,tp)
+	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND|LOCATION_DECK,0,1,1,nil,e,tp)
 	if #g>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end

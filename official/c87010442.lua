@@ -1,4 +1,5 @@
 --レガシーハンター
+--Legacy Hunter
 local s,id=GetID()
 function s.initial_effect(c)
 	--todeck
@@ -25,5 +26,5 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(1-tp,LOCATION_HAND,0,nil)
 	if #g==0 then return end
 	local sg=g:RandomSelect(1-tp,1)
-	Duel.SendtoDeck(sg,nil,2,REASON_EFFECT)
+	Duel.SendtoDeck(sg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 end

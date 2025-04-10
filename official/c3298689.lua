@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(0,TIMING_MAIN_END)
-	e1:SetCondition(s.condition)
+	e1:SetCondition(function() return Duel.IsMainPhase() end)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
@@ -19,15 +19,12 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_GRAVE)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.mattg)
 	e2:SetOperation(s.matop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x10db}
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()&PHASE_MAIN1+PHASE_MAIN2>0
-end
+s.listed_series={SET_THE_PHANTOM_KNIGHTS}
 function s.filter1(c,e,tp)
 	local rk=c:GetRank()
 	local pg=aux.GetMustBeMaterialGroup(tp,Group.FromCards(c),tp,nil,nil,REASON_XYZ)
@@ -70,7 +67,7 @@ function s.xyzfilter(c)
 	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_DARK) and c:IsType(TYPE_XYZ)
 end
 function s.matfilter(c)
-	return c:IsSetCard(0x10db) and c:IsMonster()
+	return c:IsSetCard(SET_THE_PHANTOM_KNIGHTS) and c:IsMonster()
 end
 function s.mattg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.xyzfilter(chkc) end

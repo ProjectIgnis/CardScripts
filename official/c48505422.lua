@@ -1,4 +1,5 @@
 --真六武衆－シナイ
+--Legendary Six Samurai - Shinai
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -21,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.rlop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x3d}
+s.listed_series={SET_SIX_SAMURAI}
 s.listed_names={74094021}
 function s.spfilter(c)
 	return c:IsFaceup() and c:IsCode(74094021)
@@ -35,7 +36,7 @@ function s.rlcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.filter(c)
-	return c:IsSetCard(0x3d) and c:GetCode()~=id and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_SIX_SAMURAI) and c:GetCode()~=id and c:IsMonster() and c:IsAbleToHand()
 end
 function s.rltg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.filter(chkc) end

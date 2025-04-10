@@ -1,5 +1,5 @@
 --Ａ・ジェネクス・ケミストリ
---Genex Ally Chemister
+--Genex Ally Chemistrer
 local s,id=GetID()
 function s.initial_effect(c)
 	--Change the Attribute of 1 "Genex" monster you control
@@ -9,17 +9,12 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_HAND)
-	e1:SetCost(s.attrcost)
+	e1:SetCost(Cost.SelfDiscard)
 	e1:SetTarget(s.attrtg)
 	e1:SetOperation(s.attrop)
 	c:RegisterEffect(e1)
 end
 s.listed_series={SET_GENEX}
-function s.attrcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsDiscardable() end
-	Duel.SendtoGrave(c,REASON_COST+REASON_DISCARD)
-end
 function s.attrtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and chkc:IsFaceup() and chkc:IsSetCard(SET_GENEX) and chkc:IsAttributeExcept(e:GetLabel()) end
 	if chk==0 then return Duel.IsExistingTarget(aux.FaceupFilter(Card.IsSetCard,SET_GENEX),tp,LOCATION_MZONE,0,1,nil) end

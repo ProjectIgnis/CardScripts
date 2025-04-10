@@ -1,5 +1,5 @@
 --ジャンク・チェンジャー
---Junk Charger
+--Junk Changer
 local s,id=GetID()
 function s.initial_effect(c)
 	--lv up
@@ -16,9 +16,9 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x43}
+s.listed_series={SET_JUNK}
 function s.filter(c)
-	return c:IsFaceup() and c:HasLevel() and c:IsSetCard(0x43)
+	return c:IsFaceup() and c:HasLevel() and c:IsSetCard(SET_JUNK)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) end
@@ -42,7 +42,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_LEVEL)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		if e:GetLabel()==0 then
 			e1:SetValue(1)
 		else

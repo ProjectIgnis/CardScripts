@@ -41,7 +41,7 @@ function s.initial_effect(c)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_CHAIN,s.chainfilter)
 end
 function s.chainfilter(re,tp,cid)
-	return not (re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsRace(RACE_THUNDER)
+	return not (re:IsMonsterEffect() and re:GetHandler():IsRace(RACE_THUNDER)
 		and (Duel.GetChainInfo(cid,CHAININFO_TRIGGERING_LOCATION)==LOCATION_HAND))
 end
 function s.hspfilter(c,tp,sc)
@@ -66,7 +66,7 @@ function s.hsptg(e,tp,eg,ep,ev,re,r,rp,chk,c)
 end
 function s.hspop(e,tp,eg,ep,ev,re,r,rp,c)
 	local g=e:GetLabelObject()
-	Duel.Release(g,REASON_COST+REASON_MATERIAL)
+	Duel.Release(g,REASON_COST|REASON_MATERIAL)
 	c:SetMaterial(g)
 	g:DeleteGroup()
 end
@@ -77,10 +77,10 @@ function s.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then
 	return not c:IsReason(REASON_REPLACE)
-		and Duel.IsExistingMatchingCard(s.repfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,c) end
+		and Duel.IsExistingMatchingCard(s.repfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,c) end
 	if Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESREPLACE)
-		local g=Duel.SelectMatchingCard(tp,s.repfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,c)
+		local g=Duel.SelectMatchingCard(tp,s.repfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,1,c)
 		Duel.Remove(g:GetFirst(),POS_FACEUP,REASON_EFFECT)
 		return true
 	else return false end

@@ -1,7 +1,6 @@
 --転生炎獣スピニー
 --Salamangreat Spinny
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -14,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(s.atkcon)
-	e1:SetCost(s.atkcost)
+	e1:SetCost(Cost.SelfDiscard)
 	e1:SetTarget(s.atktg)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
@@ -29,21 +28,16 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x119}
+s.listed_series={SET_SALAMANGREAT}
 s.listed_names={id}
-
 	--Check for "Salamangreat" card
 function s.atkfilter2(c)
-	return c:IsFaceup() and c:IsSetCard(0x119)
+	return c:IsFaceup() and c:IsSetCard(SET_SALAMANGREAT)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.atkfilter2,tp,LOCATION_ONFIELD,0,1,nil)
 end
 	--Discard itself as cost
-function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsDiscardable() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
-end
 	--Acitvation legality
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() end
@@ -59,13 +53,13 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(500)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end
 	--Defining what to check
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x119) and not c:IsCode(id)
+	return c:IsFaceup() and c:IsSetCard(SET_SALAMANGREAT) and not c:IsCode(id)
 end
 	--Check for "Salamangreat" monster, other than "Salamangreat Spinny"
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
@@ -88,7 +82,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 		e1:SetValue(LOCATION_REMOVED)
-		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
+		e1:SetReset(RESET_EVENT|RESETS_REDIRECT)
 		c:RegisterEffect(e1,true)
 	end
 end

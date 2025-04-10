@@ -12,7 +12,7 @@ function s.stage2(e,tc,tp,sg,chk)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e1:SetValue(2600)
 		tc:RegisterEffect(e1)
 		--attack twice
@@ -22,8 +22,7 @@ function s.stage2(e,tc,tp,sg,chk)
 		e2:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e2:SetDescription(aux.Stringid(id,1))
 		e2:SetValue(1)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e2)
 	end
 end
-

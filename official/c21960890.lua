@@ -1,4 +1,4 @@
---Japanese name
+--大屍教
 --Dark Necromancer
 --scripted by Naim
 local s,id=GetID()

@@ -1,7 +1,6 @@
 --悪魔嬢マリス
 --Malice, Lady of Lament
 --Scripted by Eerie Code
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Set 1 of your traps, that is banished or in GY
@@ -25,13 +24,13 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(sg,REASON_COST)
 end
 function s.filter(c)
-	return c:GetType()==TYPE_TRAP and (c:IsFaceup() or not c:IsLocation(LOCATION_REMOVED)) and c:IsSSetable()
+	return c:IsNormalTrap() and (c:IsFaceup() or not c:IsLocation(LOCATION_REMOVED)) and c:IsSSetable()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED) and chkc:IsControler(tp) and s.filter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,nil) end
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE|LOCATION_REMOVED) and chkc:IsControler(tp) and s.filter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE|LOCATION_REMOVED,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
-	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,1,nil)
+	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_GRAVE|LOCATION_REMOVED,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,g,1,0,0)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
@@ -43,7 +42,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
-		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
+		e1:SetReset(RESET_EVENT|RESETS_REDIRECT)
 		e1:SetValue(LOCATION_DECKBOT)
 		tc:RegisterEffect(e1,true)
 	end

@@ -12,10 +12,10 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(0,TIMING_BATTLE_START+TIMING_BATTLE_END)
+	e1:SetHintTiming(0,TIMING_BATTLE_START|TIMING_BATTLE_END)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
-	e1:SetCondition(s.sccon)
+	e1:SetCondition(function() return Duel.IsMainPhase() or Duel.IsBattlePhase() end)
 	e1:SetTarget(s.sctg)
 	e1:SetOperation(s.scop)
 	c:RegisterEffect(e1)
@@ -30,16 +30,12 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x43}
+s.listed_series={SET_JUNK}
 function s.matfilter(c,lc,sumtype,tp)
-	return c:IsType(TYPE_EFFECT,lc,sumtype,tp) and c:IsRace(RACE_WARRIOR+RACE_MACHINE,lc,sumtype,tp)
+	return c:IsType(TYPE_EFFECT,lc,sumtype,tp) and c:IsRace(RACE_WARRIOR|RACE_MACHINE,lc,sumtype,tp)
 end
 function s.lcheck(g,lc,sumtype,tp)
 	return g:IsExists(Card.IsType,1,nil,TYPE_TUNER,lc,sumtype,tp)
-end
-function s.sccon(e,tp,eg,ep,ev,re,r,rp)
-	local ph=Duel.GetCurrentPhase()
-	return ph==PHASE_MAIN1 or (ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE) or ph==PHASE_MAIN2
 end
 function s.scfilter(c,mg)
 	return c:IsSynchroSummonable(nil,mg)
@@ -64,11 +60,11 @@ function s.scop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsReason(REASON_DESTROY) and c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:GetReasonPlayer()~=tp
-	and c:IsPreviousLocation(LOCATION_MZONE) and c:IsSummonType(SUMMON_TYPE_LINK)
+	return c:IsReason(REASON_DESTROY) and c:IsReason(REASON_BATTLE|REASON_EFFECT) and c:GetReasonPlayer()~=tp
+	and c:IsPreviousLocation(LOCATION_MZONE) and c:IsLinkSummoned()
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x43) and c:IsType(TYPE_SYNCHRO) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0 and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_SYNCHRO,tp,false,false)
+	return c:IsSetCard(SET_JUNK) and c:IsType(TYPE_SYNCHRO) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0 and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_SYNCHRO,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
@@ -82,4 +78,3 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		g:GetFirst():CompleteProcedure()
 	end
 end
-

@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1)
-	e3:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e3:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e3:SetCondition(s.lvcon)
 	e3:SetOperation(s.lvop)
 	c:RegisterEffect(e3)
@@ -35,12 +35,12 @@ function s.initial_effect(c)
 	e4:SetOperation(s.desop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x31}
+s.listed_series={SET_FORTUNE_LADY}
 function s.value(e,c)
 	return c:GetLevel()*200
 end
 function s.lvcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and e:GetHandler():IsLevelAbove(1) and e:GetHandler():IsLevelBelow(11)
+	return Duel.IsTurnPlayer(tp) and e:GetHandler():IsLevelAbove(1) and e:GetHandler():IsLevelBelow(11)
 end
 function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -49,12 +49,12 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_LEVEL)
 	e1:SetValue(1)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 	c:RegisterEffect(e1)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsFaceup() and c:IsAttackPos() and re and re:GetHandler():IsSetCard(0x31)
+	return c:IsFaceup() and c:IsAttackPos() and re and re:GetHandler():IsSetCard(SET_FORTUNE_LADY)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsFaceup() end

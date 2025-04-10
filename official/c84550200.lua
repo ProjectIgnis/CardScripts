@@ -17,9 +17,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_CANNOT_ACTIVATE)
 	e1:SetTargetRange(0,1)
 	e1:SetValue(s.aclimit)
-	e1:SetReset(RESET_PHASE+PHASE_END,2)
+	e1:SetReset(RESET_PHASE|PHASE_END,2)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.aclimit(e,re,tp)
-	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL)
+	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsSpellEffect()
 end

@@ -11,9 +11,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0xb}
+s.listed_series={SET_INFERNITY}
 function s.filter(c)
-	return c:IsSetCard(0xb) and c:IsAbleToGrave()
+	return c:IsSetCard(SET_INFERNITY) and c:IsAbleToGrave()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)>0
@@ -26,7 +26,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local ac=Duel.GetMatchingGroupCount(s.filter,tp,LOCATION_DECK,0,nil)
 	if ac==0 then return end
 	if ac>2 then ac=2 end
-	local ct=Duel.DiscardHand(tp,aux.TRUE,1,ac,REASON_DISCARD+REASON_EFFECT)
+	local ct=Duel.DiscardHand(tp,aux.TRUE,1,ac,REASON_DISCARD|REASON_EFFECT)
 	Duel.BreakEffect()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,ct,ct,nil)

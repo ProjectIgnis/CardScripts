@@ -22,10 +22,10 @@ function s.initial_effect(c)
 		end)
 	end)
 end
-s.listed_series={0x7}
-s.listed_names={83104731}
+s.listed_series={SET_ANCIENT_GEAR}
+s.listed_names={CARD_ANCIENT_GEAR_GOLEM}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x7) and c:IsAbleToGraveAsCost()
+	return c:IsFaceup() and c:IsSetCard(SET_ANCIENT_GEAR) and c:IsAbleToGraveAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tg=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_ONFIELD,0,nil)
@@ -41,7 +41,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_SUMMON)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
-	e1:SetReset(RESET_SELF_TURN+RESET_PHASE+PHASE_END,2)
+	e1:SetReset(RESET_SELF_TURN|RESET_PHASE|PHASE_END,2)
 	e1:SetTargetRange(1,0)
 	Duel.RegisterEffect(e1,tp)
 	local e2=e1:Clone()
@@ -50,7 +50,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local e4=Effect.CreateEffect(e:GetHandler())
 	e4:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e4:SetDescription(aux.Stringid(id,1))
-	e4:SetReset(RESET_SELF_TURN+RESET_PHASE+PHASE_END,2)
+	e4:SetReset(RESET_SELF_TURN|RESET_PHASE|PHASE_END,2)
 	e4:SetTargetRange(1,0)
 	Duel.RegisterEffect(e4,tp)
 	local descnum=tp==c:GetOwner() and 0 or 1
@@ -62,7 +62,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e3:SetOwnerPlayer(tp)
 	e3:SetLabel(0)
 	e3:SetOperation(s.reset)
-	e3:SetReset(RESET_SELF_TURN+RESET_PHASE+PHASE_END,2)
+	e3:SetReset(RESET_SELF_TURN|RESET_PHASE|PHASE_END,2)
 	c:RegisterEffect(e3)
 	table.insert(s[0],e3)
 	s[0][e3]={e1,e2}
@@ -91,18 +91,18 @@ function s.reset(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter(c,e,tp)
-	return c:IsCode(83104731) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+	return c:IsCode(CARD_ANCIENT_GEAR_GOLEM) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		if e:GetLabel()==0 and Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return false end
 		e:SetLabel(0)
-		return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e,tp)
+		return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND|LOCATION_DECK,0,1,nil,e,tp)
 	end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND|LOCATION_DECK)
 end
 function s.dfilter(c)
-	return c:IsFacedown() or c:GetCode()~=83104731
+	return c:IsFacedown() or c:GetCode()~=CARD_ANCIENT_GEAR_GOLEM
 end
 function s.spcheck(sg,e,tp,mg)
 	return sg:FilterCount(Card.IsLocation,nil,LOCATION_HAND)<2 and sg:FilterCount(Card.IsLocation,nil,LOCATION_DECK)<2
@@ -111,7 +111,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if ft<=0 then return end
 	if ft>2 then ft=2 end
-	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_HAND+LOCATION_DECK,0,nil,e,tp)
+	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_HAND|LOCATION_DECK,0,nil,e,tp)
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) or g:FilterCount(Card.IsLocation,nil,LOCATION_HAND)<=0 
 		or g:FilterCount(Card.IsLocation,nil,LOCATION_DECK)<=0 then ft=1 end
 	local sg=aux.SelectUnselectGroup(g,e,tp,ft,ft,s.spcheck,1,tp,HINTMSG_SPSUMMON)

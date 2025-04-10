@@ -1,4 +1,5 @@
 --巨大戦艦 クリスタル・コア
+--B.E.S. Crystal Core
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(0x1f)

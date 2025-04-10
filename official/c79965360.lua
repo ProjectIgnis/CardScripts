@@ -1,7 +1,8 @@
 --アマゾネスの秘宝
+--Amazoness Heirloom
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsSetCard,0x4))
+	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsSetCard,SET_AMAZONESS))
 	--destroy rep
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_EQUIP)
@@ -21,7 +22,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.desop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x4}
+s.listed_series={SET_AMAZONESS}
 function s.valcon(e,re,r,rp)
 	return r==REASON_BATTLE
 end

@@ -36,15 +36,15 @@ function s.initial_effect(c)
 end
 function s.chainop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
-	if rp==tp and rc:GetType()==TYPE_TRAP and re:IsHasType(EFFECT_TYPE_ACTIVATE) then
+	if rp==tp and rc:IsNormalTrap() and re:IsHasType(EFFECT_TYPE_ACTIVATE) then
 		Duel.SetChainLimit(s.chainlm)
 	end
 end
 function s.chainlm(e,rp,tp)
-	return rp==tp or not e:IsActiveType(TYPE_MONSTER)
+	return rp==tp or not e:IsMonsterEffect()
 end
 function s.filter(c)
-	return c:GetType()==(TYPE_TRAP) and c:IsSSetable()
+	return c:IsNormalTrap() and c:IsSSetable()
 end
 function s.fgtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -61,7 +61,7 @@ function s.fgop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_TRIGGER)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e1:SetCondition(s.triggercon)
 		tc:RegisterEffect(e1)
 	end
@@ -74,12 +74,12 @@ function s.cfilter(c)
 	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsReason(REASON_EFFECT)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return rp==tp and re and re:IsActiveType(TYPE_TRAP) and re:GetHandler():GetOriginalType()==TYPE_TRAP
+	return rp==tp and re and re:IsTrapEffect() and re:GetHandler():GetOriginalType()==TYPE_TRAP
 		and eg:IsExists(s.cfilter,1,nil)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(nil,tp,0,LOCATION_ONFIELD+LOCATION_HAND,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,1-tp,LOCATION_ONFIELD+LOCATION_HAND)
+	if chk==0 then return Duel.IsExistingMatchingCard(nil,tp,0,LOCATION_ONFIELD|LOCATION_HAND,1,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,1-tp,LOCATION_ONFIELD|LOCATION_HAND)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)

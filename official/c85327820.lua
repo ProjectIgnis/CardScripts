@@ -4,11 +4,11 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
-	local e1=Ritual.CreateProc(c,RITPROC_GREATER,aux.FilterBoolFunction(Card.IsRace,RACE_CYBERSE),nil,nil,s.extrafil,nil,aux.FilterBoolFunction(Card.IsSetCard,0x135))
+	local e1=Ritual.CreateProc(c,RITPROC_GREATER,aux.FilterBoolFunction(Card.IsRace,RACE_CYBERSE),nil,nil,s.extrafil,nil,aux.FilterBoolFunction(Card.IsSetCard,SET_IGNISTER))
 	local tg=e1:GetTarget()
 	e1:SetTarget(function(e,tp,eg,ep,ev,re,r,rp,chk,...)
 					if chk==0 then
-						if Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x135),tp,LOCATION_MZONE,0,1,nil) then
+						if Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_IGNISTER),tp,LOCATION_MZONE,0,1,nil) then
 							e:SetLabel(1)
 						else
 							e:SetLabel(0)
@@ -29,10 +29,10 @@ function s.initial_effect(c)
 					end)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x135}
+s.listed_series={SET_IGNISTER}
 function s.mfilter(c)
-	return not Duel.IsPlayerAffectedByEffect(c:GetControler(),69832741)
-		and c:IsSetCard(0x135) and c:IsLevelAbove(1) and c:IsAbleToRemove()
+	return not Duel.IsPlayerAffectedByEffect(c:GetControler(),CARD_SPIRIT_ELIMINATION)
+		and c:IsSetCard(SET_IGNISTER) and c:IsLevelAbove(1) and c:IsAbleToRemove()
 end
 function s.extrafil(e,tp,eg,ep,ev,re,r,rp,chk)
 	if e:GetLabel()==1 then

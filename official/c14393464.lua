@@ -32,9 +32,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x132}
+s.listed_series={SET_MATHMECH}
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x132),tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_MATHMECH),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

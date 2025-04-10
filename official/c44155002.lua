@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Synchro summon
-	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x35),1,1,Synchro.NonTuner(nil),1,99)
+	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_FABLED),1,1,Synchro.NonTuner(nil),1,99)
 	c:EnableReviveLimit()
 	--Negate and destroy
 	local e1=Effect.CreateEffect(c)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
-s.listed_series={0x35}
+s.listed_series={SET_FABLED}
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	if ep==tp or Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)~=Duel.GetFieldGroupCount(tp,0,LOCATION_HAND) then return end
 	local rc=re:GetHandler()

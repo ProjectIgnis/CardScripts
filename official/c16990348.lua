@@ -1,5 +1,5 @@
 --猛進する剣闘獣
---Mad Gladiator Beasts
+--Gladiator Beast Charge
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -13,13 +13,13 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x19}
+s.listed_series={SET_GLADIATOR}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
 	if chkc then return chkc:IsOnField() and chkc:IsFaceup() and chkc~=c end
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x19),tp,LOCATION_MZONE,0,1,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_GLADIATOR),tp,LOCATION_MZONE,0,1,nil)
 		and Duel.IsExistingTarget(Card.IsFaceup,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c) end
-	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,0x19),tp,LOCATION_MZONE,0,nil)
+	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,SET_GLADIATOR),tp,LOCATION_MZONE,0,nil)
 	local ct=g:GetClassCount(Card.GetCode)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local sg=Duel.SelectTarget(tp,Card.IsFaceup,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,ct,c)

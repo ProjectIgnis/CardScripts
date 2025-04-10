@@ -1,4 +1,5 @@
 --アマゾネスの格闘戦士
+--Amazoness Fighter
 local s,id=GetID()
 function s.initial_effect(c)
 	--battle dam 0

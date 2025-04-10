@@ -32,7 +32,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x118}
+s.listed_series={SET_CYNET}
 function s.counterfilter(c)
 	return not c:IsSummonLocation(LOCATION_EXTRA) or c:IsRace(RACE_CYBERSE)
 end
@@ -45,7 +45,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	--lizard check
 	aux.addTempLizardCheck(e:GetHandler(),tp,s.lizfilter)
@@ -63,7 +63,7 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	s.cost(e,tp,eg,ep,ev,re,r,rp,1)
 end
 function s.thfilter(c)
-	return c:IsSpellTrap() and c:IsSetCard(0x118) and c:IsAbleToHand()
+	return c:IsSpellTrap() and c:IsSetCard(SET_CYNET) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc) end
@@ -81,7 +81,7 @@ end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return (c:IsReason(REASON_BATTLE) or (rp~=tp and c:IsReason(REASON_EFFECT) and c:IsPreviousControler(tp)))
-		and c:IsPreviousLocation(LOCATION_MZONE) and c:IsSummonType(SUMMON_TYPE_XYZ)
+		and c:IsPreviousLocation(LOCATION_MZONE) and c:IsXyzSummoned()
 end
 function s.spfilter(c,e,tp)
 	return c:IsRace(RACE_CYBERSE) and c:IsLevel(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -104,15 +104,14 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_DISABLE)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			tc:RegisterEffect(e1,true)
 			local e2=Effect.CreateEffect(e:GetHandler())
 			e2:SetType(EFFECT_TYPE_SINGLE)
 			e2:SetCode(EFFECT_DISABLE_EFFECT)
-			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 			tc:RegisterEffect(e2,true)
 		end
 		Duel.SpecialSummonComplete()
 	end
 end
-

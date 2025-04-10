@@ -36,7 +36,7 @@ function s.syncheck(g,sc,tp)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_GRAVE,0,nil,TYPE_TUNER)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO) and g:GetClassCount(Card.GetCode)>3
+	return e:GetHandler():IsSynchroSummoned() and g:GetClassCount(Card.GetCode)>3
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -55,7 +55,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	e1:SetDescription(aux.Stringid(id,2))
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)

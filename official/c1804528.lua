@@ -30,7 +30,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	else return end
 	if opt==0 then
 		local dg=g1:RandomSelect(1-tp,1)
-		Duel.SendtoGrave(dg,REASON_EFFECT+REASON_DISCARD)
+		Duel.SendtoGrave(dg,REASON_EFFECT|REASON_DISCARD)
 	else
 		Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_DESTROY)
 		local dg=g2:Select(1-tp,1,1,nil)

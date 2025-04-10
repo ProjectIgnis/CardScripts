@@ -1,4 +1,4 @@
---
+--ティスティナの猟犬
 --Hound of the Tistina
 --Scripted by Hatter
 local s,id=GetID()
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--“Tistina” monsters can attack directly
+	--"Tistina" monsters can attack directly
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_DIRECT_ATTACK)

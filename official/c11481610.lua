@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x9f,0x99,0x98}
+s.listed_series={SET_PERFORMAPAL,SET_ODD_EYES,SET_MAGICIAN}
 function s.costchk(sg,e,tp)
 	return Duel.IsPlayerCanDraw(tp,#sg)
 end
@@ -35,7 +35,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,ct)
 end
 function s.spfilter(c,e,tp,ls,rs)
-	return ((c:IsSetCard(0x98) and c:IsType(TYPE_PENDULUM)) or c:IsSetCard(0x99) or c:IsSetCard(0x9f))
+	return ((c:IsSetCard(SET_MAGICIAN) and c:IsType(TYPE_PENDULUM)) or c:IsSetCard(SET_ODD_EYES) or c:IsSetCard(SET_PERFORMAPAL))
 		and c:GetLevel()>ls and c:GetLevel()<rs
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
@@ -61,4 +61,3 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SetLP(tp,math.max(lp,0))
 	end
 end
-

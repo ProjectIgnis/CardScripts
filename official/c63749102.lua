@@ -1,6 +1,5 @@
 --イグザリオン・ユニバース
 --Exarion Universe
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Loses 400 ATK, and if it does, inflict piercing damage
@@ -26,7 +25,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetValue(-400)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		c:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetDescription(3208)

@@ -1,4 +1,5 @@
 --ドラグニティナイト－ガジャルグ
+--Dragunity Knight - Gae Dearg
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -16,7 +17,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c)
-	return c:IsLevelBelow(4) and c:IsRace(RACE_DRAGON+RACE_WINGEDBEAST) and c:IsAbleToHand()
+	return c:IsLevelBelow(4) and c:IsRace(RACE_DRAGON|RACE_WINGEDBEAST) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end
@@ -31,5 +32,5 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ConfirmCards(1-tp,g)
 	Duel.ShuffleHand(tp)
 	Duel.BreakEffect()
-	Duel.DiscardHand(tp,Card.IsRace,1,1,REASON_EFFECT+REASON_DISCARD,nil,RACE_DRAGON+RACE_WINGEDBEAST)
+	Duel.DiscardHand(tp,Card.IsRace,1,1,REASON_EFFECT|REASON_DISCARD,nil,RACE_DRAGON|RACE_WINGEDBEAST)
 end

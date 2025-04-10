@@ -1,4 +1,5 @@
 --氷結界の舞姫
+--Dance Princess of the Ice Barrier
 local s,id=GetID()
 function s.initial_effect(c)
 	--to hand
@@ -15,15 +16,15 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x2f}
+s.listed_series={SET_ICE_BARRIER}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x2f)
+	return c:IsFaceup() and c:IsSetCard(SET_ICE_BARRIER)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,e:GetHandler())
 end
 function s.cfilter2(c)
-	return c:IsSetCard(0x2f) and c:IsMonster() and not c:IsPublic()
+	return c:IsSetCard(SET_ICE_BARRIER) and c:IsMonster() and not c:IsPublic()
 end
 function s.filter(c)
 	return c:IsFacedown() and c:IsAbleToHand()

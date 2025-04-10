@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x1048}
+s.listed_series={SET_NUMBER_C}
 function s.filter1(c,e,tp)
 	local rk=c:GetRank()
 	local pg=aux.GetMustBeMaterialGroup(tp,Group.FromCards(c),tp,nil,nil,REASON_XYZ)
@@ -21,7 +21,7 @@ function s.filter1(c,e,tp)
 end
 function s.filter2(c,e,tp,mc,rk,rc,pg)
 	if c.rum_limit and not c.rum_limit(mc,e) then return false end
-	return mc:IsType(TYPE_XYZ,c,SUMMON_TYPE_XYZ,tp) and c:IsRank(rk) and c:IsRace(rc) and c:IsSetCard(0x1048) and mc:IsCanBeXyzMaterial(c,tp)
+	return mc:IsType(TYPE_XYZ,c,SUMMON_TYPE_XYZ,tp) and c:IsRank(rk) and c:IsRace(rc) and c:IsSetCard(SET_NUMBER_C) and mc:IsCanBeXyzMaterial(c,tp)
 		and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0 and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
 end
 function s.disfilter(c)
@@ -56,18 +56,18 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_DISABLE)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			nc:RegisterEffect(e1)
 			local e2=Effect.CreateEffect(c)
 			e2:SetType(EFFECT_TYPE_SINGLE)
 			e2:SetCode(EFFECT_DISABLE_EFFECT)
-			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 			nc:RegisterEffect(e2)
 			if nc:IsType(TYPE_TRAPMONSTER) then
 				local e3=Effect.CreateEffect(c)
 				e3:SetType(EFFECT_TYPE_SINGLE)
 				e3:SetCode(EFFECT_DISABLE_TRAPMONSTER)
-				e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+				e3:SetReset(RESET_EVENT|RESETS_STANDARD)
 				nc:RegisterEffect(e3)
 			end
 		end

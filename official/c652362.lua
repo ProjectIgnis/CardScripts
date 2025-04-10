@@ -13,10 +13,10 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0xc}
+s.listed_series={SET_ALIEN}
 function s.filter(c,e,tp)
 	local lv=c:GetLevel()
-	return lv>0 and lv<=4 and c:IsSetCard(0xc) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return lv>0 and lv<=4 and c:IsSetCard(SET_ALIEN) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end
@@ -30,7 +30,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)~=0 then
 		local fid=e:GetHandler():GetFieldID()
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,fid)
+		tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1,fid)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_PHASE+PHASE_END)

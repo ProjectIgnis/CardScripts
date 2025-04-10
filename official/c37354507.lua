@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x2b),2,2)
+	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_NINJA),2,2)
 	--set
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -28,9 +28,9 @@ function s.initial_effect(c)
 	e3:SetValue(aux.tgoval)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x61,0x2b}
+s.listed_series={SET_NINJITSU_ART,SET_NINJA}
 function s.setfilter(c)
-	return c:IsSetCard(0x61) and c:IsSpellTrap() and c:IsSSetable()
+	return c:IsSetCard(SET_NINJITSU_ART) and c:IsSpellTrap() and c:IsSSetable()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -45,4 +45,3 @@ end
 function s.tgcon(e)
 	return #(e:GetHandler():GetLinkedGroup():Filter(Card.IsMonster,nil))>0
 end
-

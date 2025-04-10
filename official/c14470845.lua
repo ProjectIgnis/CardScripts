@@ -1,6 +1,5 @@
 --おジャマデュオ
 --Ojama Duo
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon 2 tokens to opponent's field
@@ -20,23 +19,23 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetCondition(aux.exccon)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	e2:SetHintTiming(0,TIMING_END_PHASE)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xf}
+s.listed_series={SET_OJAMA}
 s.listed_names={TOKEN_OJAMA}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) and Duel.GetLocationCount(1-tp,LOCATION_MZONE,tp)>1
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_OJAMA,0xf,TYPES_TOKEN,0,1000,2,RACE_BEAST,ATTRIBUTE_LIGHT,POS_FACEUP_DEFENSE,1-tp) end
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_OJAMA,SET_OJAMA,TYPES_TOKEN,0,1000,2,RACE_BEAST,ATTRIBUTE_LIGHT,POS_FACEUP_DEFENSE,1-tp) end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,2,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,tp,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) or Duel.GetLocationCount(1-tp,LOCATION_MZONE,tp)<2 
-		or not Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_OJAMA,0xf,TYPES_TOKEN,0,1000,2,RACE_BEAST,ATTRIBUTE_LIGHT,POS_FACEUP_DEFENSE,1-tp) then return end
+		or not Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_OJAMA,SET_OJAMA,TYPES_TOKEN,0,1000,2,RACE_BEAST,ATTRIBUTE_LIGHT,POS_FACEUP_DEFENSE,1-tp) then return end
 	for i=0,1 do
 		local token=Duel.CreateToken(tp,TOKEN_OJAMA_DUO+i)
 		if Duel.SpecialSummonStep(token,0,tp,1-tp,false,false,POS_FACEUP_DEFENSE) then
@@ -46,7 +45,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UNRELEASABLE_SUM)
 			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			e1:SetValue(1)
 			token:RegisterEffect(e1,true)
 			--Inflict 300 damage when destroyed
@@ -67,7 +66,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	e:Reset()
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0xf) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_OJAMA) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then

@@ -1,4 +1,5 @@
 --魂喰らいの魔刀
+--Sword of the Soul-Eater
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c,0,s.filter,nil,s.cost,s.target,s.operation)
@@ -34,7 +35,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_EQUIP)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM))
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e1)
 	end
 end

@@ -23,9 +23,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.drop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x97}
+s.listed_series={SET_ARTIFACT}
 function s.filter(c,e)
-	return c:IsFaceup() and c:IsSetCard(0x97) and c:IsCanBeEffectTarget(e)
+	return c:IsFaceup() and c:IsSetCard(SET_ARTIFACT) and c:IsCanBeEffectTarget(e)
 end
 function s.xyzfilter(c,mg,tp,chk)
 	return c:IsXyzSummonable(nil,mg,2,2) and (not chk or Duel.GetLocationCountFromEx(tp,tp,mg,c)>0)
@@ -63,7 +63,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_CANNOT_ATTACK)
 	e1:SetTargetRange(LOCATION_MZONE,0)
 	e1:SetTarget(s.attg)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(s.tfilter,nil,e)
 	if #g<2 then return end
@@ -75,7 +75,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.attg(e,c)
-	return not c:IsSetCard(0x97)
+	return not c:IsSetCard(SET_ARTIFACT)
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp and e:GetHandler():IsPreviousControler(tp)

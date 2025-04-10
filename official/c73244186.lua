@@ -1,9 +1,9 @@
 -- 
--- Moray of Avarice
--- Scripted by Hatter
+--Moray of Avarice
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Draw 2 cards
+	--Draw 2 cards
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DRAW)
@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.drcostfilter(c)
-	return c:IsFaceup() and c:IsRace(RACE_FISH+RACE_SEASERPENT+RACE_AQUA) and c:IsAbleToRemoveAsCost()
+	return c:IsFaceup() and c:IsRace(RACE_FISH|RACE_SEASERPENT|RACE_AQUA) and c:IsAbleToRemoveAsCost()
 end
 function s.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.drcostfilter,tp,LOCATION_MZONE,0,1,nil) end

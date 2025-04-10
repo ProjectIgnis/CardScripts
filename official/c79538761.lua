@@ -1,4 +1,5 @@
 --トルクチューン・ギア
+--Torque Tune Gear
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddUnionProcedure(c,nil)

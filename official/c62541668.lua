@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
-	e1:SetCost(aux.dxmcostgen(2,2,nil))
+	e1:SetCost(Cost.Detach(2,2,nil))
 	e1:SetTarget(s.rmtg)
 	e1:SetOperation(s.rmop)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
@@ -29,15 +29,15 @@ s.xyz_number=77
 function s.ovfilter(c,tp,xyzc)
 	local rk=c:GetRank()
 	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_DARK,xyzc,SUMMON_TYPE_XYZ,tp)
-	       and c:IsType(TYPE_XYZ,xyzc,SUMMON_TYPE_XYZ,tp) and (rk==10 or rk==11)
+		and c:IsType(TYPE_XYZ,xyzc,SUMMON_TYPE_XYZ,tp) and (rk==10 or rk==11)
 end
 function s.xyzop(e,tp,chk)
 	if chk==0 then return true end
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD+RESET_PHASE+PHASE_END,0,1)
+	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD-RESET_TOFIELD|RESET_PHASE|PHASE_END,0,1)
 	return true
 end
 function s.rmfilter(c)
-	return c:IsSummonType(SUMMON_TYPE_SPECIAL) and c:IsAbleToRemove() and c:IsMonster()
+	return c:IsSpecialSummoned() and c:IsAbleToRemove() and c:IsMonster()
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetFlagEffect(id)==0
@@ -60,7 +60,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return not c:IsReason(REASON_REPLACE) and c:IsReason(REASON_BATTLE+REASON_EFFECT)
+	if chk==0 then return not c:IsReason(REASON_REPLACE) and c:IsReason(REASON_BATTLE|REASON_EFFECT)
 		and c:CheckRemoveOverlayCard(tp,1,REASON_EFFECT) end
 	if Duel.SelectEffectYesNo(tp,c,96) then
 		c:RemoveOverlayCard(tp,1,1,REASON_EFFECT)

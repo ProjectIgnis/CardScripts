@@ -1,4 +1,5 @@
 --ゼラの天使
+--Angel of Zera
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -23,7 +24,7 @@ function s.initial_effect(c)
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e3:SetRange(LOCATION_REMOVED)
-	e3:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e3:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e3:SetCountLimit(1,id)
 	e3:SetCondition(s.spcon)
 	e3:SetTarget(s.sptg)
@@ -36,7 +37,7 @@ function s.atkval(e,c)
 end
 function s.spreg(e,tp,eg,ep,ev,re,r,rp)
 	e:SetLabel(Duel.GetTurnCount())
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,2)
+	e:GetHandler():RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,2)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

@@ -28,14 +28,14 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x8,0x5008}
+s.listed_series={SET_HERO,SET_VISION_HERO}
 s.listed_names={}
 function s.cfilter(c)
-	return c:IsMonster() and c:IsSetCard(0x8) and c:IsDiscardable()
+	return c:IsMonster() and c:IsSetCard(SET_HERO) and c:IsDiscardable()
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,e:GetHandler()) end
-	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_COST+REASON_DISCARD,e:GetHandler())
+	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_COST|REASON_DISCARD,e:GetHandler())
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -49,7 +49,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter(c)
-	return c:IsSetCard(0x5008) and c:IsMonster() and not c:IsForbidden() and not c:IsCode(id)
+	return c:IsSetCard(SET_VISION_HERO) and c:IsMonster() and not c:IsForbidden() and not c:IsCode(id)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil)
@@ -64,7 +64,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_CHANGE_TYPE)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD-RESET_TURN_SET)
 		e1:SetValue(TYPE_TRAP+TYPE_CONTINUOUS)
 		tc:RegisterEffect(e1)
 	end
@@ -75,14 +75,14 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	--lizard check
 	aux.addTempLizardCheck(e:GetHandler(),tp,s.lizfilter)
 end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
-	return not c:IsSetCard(0x8) and c:IsLocation(LOCATION_EXTRA)
+	return not c:IsSetCard(SET_HERO) and c:IsLocation(LOCATION_EXTRA)
 end
 function s.lizfilter(e,c)
-	return not c:IsOriginalSetCard(0x8)
+	return not c:IsOriginalSetCard(SET_HERO)
 end

@@ -1,4 +1,5 @@
 --爆炎集合体 ガイヤ・ソウル
+--Gaia Soul the Combustible Collective
 local s,id=GetID()
 function s.initial_effect(c)
 	--atk
@@ -40,7 +41,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		e1:SetValue(e:GetLabel()*1000)
 		c:RegisterEffect(e1)
 	end

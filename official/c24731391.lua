@@ -66,7 +66,7 @@ end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
-	return Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL and bc and bc:IsLinkMonster()
+	return Duel.IsPhase(PHASE_DAMAGE_CAL) and bc and bc:IsLinkMonster()
 end
 function s.thfilter(c)
 	return c:IsRace(RACE_CYBERSE) and c:IsMonster() and c:IsAbleToHand()

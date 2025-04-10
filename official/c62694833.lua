@@ -1,7 +1,6 @@
 --魁炎星－シーブ
 --Brotherhood of the Fire Fist - Ram
 --Scripted by Eerie Code
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--When normal summoned, set 1 "Fire Formation" spell/trap from deck
@@ -27,18 +26,17 @@ function s.initial_effect(c)
 	e2:SetOperation(s.setop2)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x7c,0x79}
-
+s.listed_series={SET_FIRE_FORMATION,SET_FIRE_FIST}
 function s.setcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST|REASON_DISCARD)
 end
 function s.setfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x7c) and c:IsSpellTrap()
+	return c:IsFaceup() and c:IsSetCard(SET_FIRE_FORMATION) and c:IsSpellTrap()
 		and Duel.IsExistingMatchingCard(s.setfilter2,tp,LOCATION_DECK,0,1,nil,c)
 end
 function s.setfilter2(c,tc)
-	return c:IsSetCard(0x7c) and c:IsSpellTrap() and not c:IsCode(tc:GetCode()) and c:IsSSetable()
+	return c:IsSetCard(SET_FIRE_FORMATION) and c:IsSpellTrap() and not c:IsCode(tc:GetCode()) and c:IsSSetable()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsOnField() and s.setfilter(chkc,tp) end
@@ -56,10 +54,10 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.setcon2(e,tp,eg,ep,ev,re,r,rp)
-	return re and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0x79)
+	return re and re:IsMonsterEffect() and re:GetHandler():IsSetCard(SET_FIRE_FIST)
 end
 function s.setfilter3(c,tp)
-	return c:IsSetCard(0x7c) and c:IsSpellTrap() and c:IsSSetable()
+	return c:IsSetCard(SET_FIRE_FORMATION) and c:IsSpellTrap() and c:IsSSetable()
 		and not Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,1,nil,c:GetCode())
 end
 function s.settg2(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -1,6 +1,5 @@
 --雙極の破械神
 --Abominable Unchained Soul
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Can only be special summoned once per turn
@@ -50,7 +49,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function s.spcfilter(c,tp)
-	return c:IsReason(REASON_BATTLE+REASON_EFFECT)
+	return c:IsReason(REASON_BATTLE|REASON_EFFECT)
 		and c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
@@ -69,7 +68,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST|REASON_DISCARD)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
@@ -88,7 +87,7 @@ function s.regcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD) and e:GetHandler():IsReason(REASON_DESTROY)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+	e:GetHandler():RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 end
 function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(id)>0
@@ -107,7 +106,7 @@ function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
-		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
+		e1:SetReset(RESET_EVENT|RESETS_REDIRECT)
 		e1:SetValue(LOCATION_DECKBOT)
 		c:RegisterEffect(e1,true)
 	end

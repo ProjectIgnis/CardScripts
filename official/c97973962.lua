@@ -1,5 +1,5 @@
 --暴走召喚師アレイスター
---Aleister the Meltdown Invoker
+--Aleister the Invoker of Madness
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetCode(EFFECT_CHANGE_CODE)
-	e1:SetRange(LOCATION_MZONE+LOCATION_GRAVE)
+	e1:SetRange(LOCATION_MZONE|LOCATION_GRAVE)
 	e1:SetValue(86120751)
 	c:RegisterEffect(e1)
 	--search
@@ -41,7 +41,7 @@ function s.spcheck(g,lc,sumtype,tp)
 	return g:CheckDifferentPropertyBinary(Card.GetRace,lc,sumtype,tp) and g:CheckDifferentPropertyBinary(Card.GetAttribute,lc,sumtype,tp)
 end
 function s.thcfilter(c,tp)
-	return c:IsSummonType(SUMMON_TYPE_FUSION)
+	return c:IsFusionSummoned()
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg and eg:IsExists(s.thcfilter,1,nil,tp)
@@ -56,7 +56,7 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_EFFECT+REASON_DISCARD)~=0 then
+	if Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_EFFECT|REASON_DISCARD)~=0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil)
 		if #g>0 then

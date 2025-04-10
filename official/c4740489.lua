@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.atop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x2066}
+s.listed_series={SET_MAGNET_WARRIOR}
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsLevelBelow(4) and c:IsRace(RACE_ROCK) and c:IsAttribute(ATTRIBUTE_EARTH)
 end
@@ -38,7 +38,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x2066) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_MAGNET_WARRIOR) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.spfilter(chkc,e,tp) end

@@ -1,4 +1,5 @@
 --大暴落
+--Heavy Slump
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

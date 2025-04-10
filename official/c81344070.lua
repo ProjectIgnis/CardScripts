@@ -1,7 +1,6 @@
 --海造賊－金髪の訓練生
 --Goldenhair, the Newest Plunder Patroll
 --Scripted by pyrQ
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon itself from hand
@@ -27,16 +26,15 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop2)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x13f}
-
+s.listed_series={SET_PLUNDER_PATROLL}
 function s.spcfilter(c,tp)
-	return c:IsSetCard(0x13f) and c:IsOriginalType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(SET_PLUNDER_PATROLL) and c:IsOriginalType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
 		and (c:IsFaceup() or c:IsLocation(LOCATION_HAND)) and Duel.GetMZoneCount(tp,c)>0
 end
 function s.spcost1(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.spcfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,e:GetHandler(),tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.spcfilter,tp,LOCATION_HAND|LOCATION_ONFIELD,0,1,e:GetHandler(),tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local tc=Duel.SelectMatchingCard(tp,s.spcfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,1,e:GetHandler(),tp)
+	local tc=Duel.SelectMatchingCard(tp,s.spcfilter,tp,LOCATION_HAND|LOCATION_ONFIELD,0,1,1,e:GetHandler(),tp)
 	Duel.SendtoGrave(tc,REASON_COST)
 end
 function s.sptg1(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -50,7 +48,7 @@ function s.spop1(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spcost2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST|REASON_DISCARD)
 end
 function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -68,9 +66,9 @@ function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetDescription(aux.Stringid(id,2))
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.splimit(e,c)
-	return not c:IsSetCard(0x13f)
+	return not c:IsSetCard(SET_PLUNDER_PATROLL)
 end

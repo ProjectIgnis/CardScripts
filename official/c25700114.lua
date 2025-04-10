@@ -1,6 +1,5 @@
 --ダストンローラー
 --Duston Roller
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Targeted monster cannot be tributed, or be used as fusion/synchro/Xyz material
@@ -24,8 +23,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x80}
-
+s.listed_series={SET_DUSTON}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) end
 	if chk==0 then return Duel.IsExistingTarget(nil,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
@@ -43,7 +41,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UNRELEASABLE_SUM)
 		e1:SetValue(1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_UNRELEASABLE_NONSUM)
@@ -55,7 +53,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e3:SetCode(EFFECT_CANNOT_BE_FUSION_MATERIAL)
 		e3:SetValue(1)
-		e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e3:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e3)
 		--Cannot be used as synchro material
 		local e4=e3:Clone()
@@ -71,11 +69,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return rp~=tp and (r&0x41)==0x41 and c:IsPreviousControler(tp)
+	return rp~=tp and (r&(REASON_DESTROY|REASON_EFFECT))==(REASON_DESTROY|REASON_EFFECT) and c:IsPreviousControler(tp)
 		and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEDOWN)
 end
 function s.filter(c)
-	return c:IsSetCard(0x80) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_DUSTON) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

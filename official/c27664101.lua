@@ -16,7 +16,7 @@ function s.initial_effect(c)
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsChainNegatable(ev) and aux.damcon1(e,tp,eg,ep,ev,re,r,rp)
-		and (re:IsActiveType(TYPE_MONSTER) or re:IsHasType(EFFECT_TYPE_ACTIVATE))
+		and (re:IsMonsterEffect() or re:IsHasType(EFFECT_TYPE_ACTIVATE))
 end
 function s.filter(c,e,tp)
 	return c:IsLinkMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

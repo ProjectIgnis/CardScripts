@@ -1,10 +1,10 @@
 --オービタル７
 --Orbital 7
-
 local s,id=GetID()
+local COUNTER_YOU_GOT_IT_BOSS=0x2c
 function s.initial_effect(c)
 	--Can hold You Got It Boss! counters
-	c:EnableCounterPermit(0x2c)
+	c:EnableCounterPermit(COUNTER_YOU_GOT_IT_BOSS)
 	--Place 1 You Got It Boss! counter on itselef
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -15,8 +15,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--Make its ATK become 2000
 	local e2=Effect.CreateEffect(c)
-	e2:SetCategory(CATEGORY_ATKCHANGE)
 	e2:SetDescription(aux.Stringid(id,1))
+	e2:SetCategory(CATEGORY_ATKCHANGE)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCost(s.atkcost)
@@ -30,24 +30,23 @@ function s.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetCost(s.thcost)
+	e3:SetCost(Cost.SelfTribute)
 	e3:SetTarget(s.thtg)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x55,0x7b}
-s.counter_place_list={0x2c}
-
+s.listed_series={SET_PHOTON,SET_GALAXY}
+s.counter_place_list={COUNTER_YOU_GOT_IT_BOSS}
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and c:IsFaceup() then
-		c:AddCounter(0x2c,1)
+		c:AddCounter(COUNTER_YOU_GOT_IT_BOSS,1)
 	end
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ct=e:GetHandler():GetCounter(0x2c)
-	if chk==0 then return ct>0 and e:GetHandler():IsCanRemoveCounter(tp,0x2c,ct,REASON_COST) end
-	e:GetHandler():RemoveCounter(tp,0x2c,ct,REASON_COST)
+	local ct=e:GetHandler():GetCounter(COUNTER_YOU_GOT_IT_BOSS)
+	if chk==0 then return ct>0 and e:GetHandler():IsCanRemoveCounter(tp,COUNTER_YOU_GOT_IT_BOSS,ct,REASON_COST) end
+	e:GetHandler():RemoveCounter(tp,COUNTER_YOU_GOT_IT_BOSS,ct,REASON_COST)
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetAttack()~=2000 end
@@ -61,7 +60,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetValue(2000)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		c:RegisterEffect(e1)
 		--Cannot attack directly
 		local e2=Effect.CreateEffect(c)
@@ -69,7 +68,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		c:RegisterEffect(e2)
 		--Send itself to GY
 		local e3=Effect.CreateEffect(c)
@@ -85,12 +84,8 @@ end
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoGrave(e:GetHandler(),REASON_EFFECT)
 end
-function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() end
-	Duel.Release(e:GetHandler(),REASON_COST)
-end
 function s.filter(c)
-	return (c:IsSetCard(0x55) or c:IsSetCard(0x7b)) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard({SET_PHOTON,SET_GALAXY}) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.filter(chkc) end

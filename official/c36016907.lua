@@ -1,7 +1,6 @@
 --ジャック・ア・ボーラン
 --Jack-o-Bolan
 --Scripted by Eerie Code
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon itself from hand
@@ -35,7 +34,7 @@ function s.hspcfilter(c)
 end
 function s.hspcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.hspcfilter,tp,LOCATION_HAND,0,1,e:GetHandler()) end
-	Duel.DiscardHand(tp,s.hspcfilter,1,1,REASON_COST+REASON_DISCARD,e:GetHandler())
+	Duel.DiscardHand(tp,s.hspcfilter,1,1,REASON_COST|REASON_DISCARD,e:GetHandler())
 end
 function s.hsptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -49,7 +48,7 @@ function s.hspop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp and Duel.GetCurrentPhase()&PHASE_MAIN1+PHASE_MAIN2~=0 and e:GetHandler():IsAbleToRemove(tp)
+	return Duel.IsTurnPlayer(1-tp) and Duel.IsMainPhase() and e:GetHandler():IsAbleToRemove(tp)
 end
 function s.spfilter(c,e,tp)
 	return c:IsRace(RACE_ZOMBIE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -72,17 +71,17 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
-		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
+		e1:SetReset(RESET_EVENT|RESETS_REDIRECT)
 		e1:SetValue(LOCATION_REMOVED)
 		tc:RegisterEffect(e1,true)
 		Duel.SpecialSummonComplete()
 		if c:IsRelateToEffect(e) then
 		Duel.BreakEffect() --Banish this card until end phase
-		Duel.Remove(c,POS_FACEUP,REASON_EFFECT+REASON_TEMPORARY)
+		Duel.Remove(c,POS_FACEUP,REASON_EFFECT|REASON_TEMPORARY)
 		local e2=Effect.CreateEffect(e:GetHandler())
 		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e2:SetCode(EVENT_PHASE+PHASE_END)
-		e2:SetReset(RESET_PHASE+PHASE_END)
+		e2:SetReset(RESET_PHASE|PHASE_END)
 		e2:SetLabelObject(c)
 		e2:SetCountLimit(1)
 		e2:SetOperation(s.retop)

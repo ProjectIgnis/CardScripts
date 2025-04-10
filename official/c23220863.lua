@@ -1,4 +1,5 @@
 --シュルブの魔導騎兵
+--Magical Cavalry of Cxulub
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -13,5 +14,5 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.efilter(e,te)
-	return te:IsActiveType(TYPE_MONSTER) and te:IsActivated() and not te:GetOwner():IsType(TYPE_PENDULUM)
+	return te:IsMonsterEffect() and te:IsActivated() and not te:GetOwner():IsType(TYPE_PENDULUM)
 end

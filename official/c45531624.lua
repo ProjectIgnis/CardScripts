@@ -30,12 +30,12 @@ function s.initial_effect(c)
 	e3:SetOperation(s.drop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xe4}
+s.listed_series={SET_CELTIC_GUARD}
 function s.atcon(e)
 	return Duel.GetFieldGroupCount(e:GetHandlerPlayer(),LOCATION_HAND,0)>=1
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0xe4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_CELTIC_GUARD) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -54,7 +54,7 @@ function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp and Duel.GetAttacker()==e:GetHandler()
 end
 function s.drfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xe4)
+	return c:IsFaceup() and c:IsSetCard(SET_CELTIC_GUARD)
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=Duel.GetMatchingGroupCount(s.drfilter,tp,LOCATION_MZONE,0,nil)

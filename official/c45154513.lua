@@ -1,7 +1,6 @@
 --アルグールマゼラ
 --Alghoul Mazera
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -9,7 +8,7 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_DESTROY_REPLACE)
-	e1:SetRange(LOCATION_HAND+LOCATION_GRAVE)
+	e1:SetRange(LOCATION_HAND|LOCATION_GRAVE)
 	e1:SetCountLimit(1,id)
 	e1:SetTarget(s.reptg)
 	e1:SetValue(s.repval)

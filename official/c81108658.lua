@@ -19,10 +19,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={id}
-s.listed_series={0x165}
+s.listed_series={SET_URSARCTIC}
 --Banish
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x165)
+	return c:IsFaceup() and c:IsSetCard(SET_URSARCTIC)
 end
 function s.bfilter(c)
 	return c:IsAbleToRemove()
@@ -38,8 +38,8 @@ function s.bantg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,tc,1,tp,LOCATION_GRAVE)
 end
 function s.banop(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.GetFirstTarget()	
-	if tc and tc:IsRelateToEffect(e) then
+	local tc=Duel.GetFirstTarget()
+	if tc:IsRelateToEffect(e) then
 		Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
 	end
 end

@@ -32,9 +32,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.atkop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xc1}
+s.listed_series={SET_PSY_FRAME}
 function s.scfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0xc1) and c:IsControler(tp)
+	return c:IsFaceup() and c:IsSetCard(SET_PSY_FRAME) and c:IsControler(tp)
 end
 function s.sccon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.scfilter,1,nil,tp)
@@ -45,7 +45,7 @@ function s.sccost(e,tp,eg,ep,ev,re,r,rp,chk)
 	c:RegisterFlagEffect(id,RESET_CHAIN,0,1)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0xc1)
+	return c:IsFaceup() and c:IsSetCard(SET_PSY_FRAME)
 end
 function s.sctg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
@@ -68,17 +68,17 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
 	if tc:IsControler(1-tp) then tc=Duel.GetAttackTarget() end
 	e:SetLabelObject(tc)
-	return tc and tc:IsControler(tp) and tc:IsSetCard(0xc1) and tc:IsRelateToBattle() and Duel.GetAttackTarget()~=nil
+	return tc and tc:IsControler(tp) and tc:IsSetCard(SET_PSY_FRAME) and tc:IsRelateToBattle() and Duel.GetAttackTarget()~=nil
 end
 function s.atkfilter(c)
-	return c:IsSetCard(0xc1) and c:GetAttack()>0 and c:IsDiscardable()
+	return c:IsSetCard(SET_PSY_FRAME) and c:GetAttack()>0 and c:IsDiscardable()
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.atkfilter,tp,LOCATION_HAND,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
 	local g=Duel.SelectMatchingCard(tp,s.atkfilter,tp,LOCATION_HAND,0,1,1,nil)
 	e:SetLabel(g:GetFirst():GetAttack())
-	Duel.SendtoGrave(g,REASON_COST+REASON_DISCARD)
+	Duel.SendtoGrave(g,REASON_COST|REASON_DISCARD)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
@@ -88,7 +88,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(e:GetLabel())
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end

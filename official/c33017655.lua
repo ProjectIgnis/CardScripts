@@ -1,4 +1,5 @@
 --暗黒界の門
+--The Gates of Dark World
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -35,9 +36,9 @@ function s.costfilter(c)
 	return c:IsRace(RACE_FIEND) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,1,nil)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -51,7 +52,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
 	local g=Duel.SelectMatchingCard(tp,Card.IsRace,tp,LOCATION_HAND,0,1,1,nil,RACE_FIEND)
 	if #g>0 then
-		Duel.SendtoGrave(g,REASON_EFFECT+REASON_DISCARD)
+		Duel.SendtoGrave(g,REASON_EFFECT|REASON_DISCARD)
 		Duel.BreakEffect()
 		Duel.Draw(tp,1,REASON_EFFECT)
 	end

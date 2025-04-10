@@ -1,4 +1,5 @@
 --ストームサイファー
+--Storm Cipher
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot attack directly
@@ -30,8 +31,8 @@ function s.immval(e,te)
 	local tc=te:GetHandler()
 	if not (tc:IsLocation(LOCATION_MZONE) or tc:IsPreviousLocation(LOCATION_MZONE)) then return end
 	if tc:IsLocation(LOCATION_MZONE) then
-		return te:IsActiveType(TYPE_MONSTER) and te:IsActivated() and tc:GetSequence()>4
+		return te:IsMonsterEffect() and te:IsActivated() and tc:GetSequence()>4
 	elseif tc:IsPreviousLocation(LOCATION_MZONE) then
-		return te:IsActiveType(TYPE_MONSTER) and te:IsActivated() and tc:GetPreviousSequence()>4
+		return te:IsMonsterEffect() and te:IsActivated() and tc:GetPreviousSequence()>4
 	end
 end

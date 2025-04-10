@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_HAND)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetCountLimit(1,id)
-	e2:SetCost(s.thcost)
+	e2:SetCost(Cost.SelfDiscard)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
@@ -30,20 +30,16 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
-	e3:SetHintTiming(TIMING_DAMAGE_STEP,TIMING_DAMAGE_STEP+TIMINGS_CHECK_MONSTER)
+	e3:SetHintTiming(TIMING_DAMAGE_STEP,TIMING_DAMAGE_STEP|TIMINGS_CHECK_MONSTER)
 	e3:SetCountLimit(1,{id,1})
-	e3:SetCondition(s.condition)
+	e3:SetCondition(aux.StatChangeDamageStepCondition)
 	e3:SetTarget(s.target)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xb4}
-function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsDiscardable() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
-end
+s.listed_series={SET_NEKROZ}
 function s.thfilter(c)
-	return c:IsSetCard(0xb4) and c:IsSpellTrap() and c:IsAbleToHand()
+	return c:IsSetCard(SET_NEKROZ) and c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -57,9 +53,6 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
-end
 function s.filter(c)
 	return c:IsSummonLocation(LOCATION_EXTRA) and not (c:GetAttack()==0 and c:IsDisabled())
 end
@@ -72,24 +65,24 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc and  tc:IsFaceup() and tc:IsRelateToEffect(e) then
+	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetValue(0)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e2:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e2)
 		local e3=Effect.CreateEffect(c)
 		e3:SetType(EFFECT_TYPE_SINGLE)
 		e3:SetCode(EFFECT_DISABLE_EFFECT)
 		e3:SetValue(RESET_TURN_SET)
-		e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e3:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e3)
 	end
 end

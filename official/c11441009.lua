@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetCondition(s.negcon)
-	e2:SetCost(aux.dxmcostgen(1,1))
+	e2:SetCost(Cost.Detach(1,1))
 	e2:SetTarget(s.negtg)
 	e2:SetOperation(s.negop)
 	c:RegisterEffect(e2)
@@ -37,7 +37,7 @@ s.listed_names={id}
 s.listed_series={SET_PUNK}
 function s.ovfilter(c,tp,xyzc)
 	return c:IsFaceup() and c:IsSetCard(SET_PUNK,xyzc,SUMMON_TYPE_XYZ,tp)
-	   and (c:IsType(TYPE_FUSION,xyzc,SUMMON_TYPE_XYZ,tp) or c:IsType(TYPE_SYNCHRO,xyzc,SUMMON_TYPE_XYZ,tp))
+		and (c:IsType(TYPE_FUSION,xyzc,SUMMON_TYPE_XYZ,tp) or c:IsType(TYPE_SYNCHRO,xyzc,SUMMON_TYPE_XYZ,tp))
 end
 function s.xyzop(e,tp,chk)
 	if chk==0 then return not Duel.HasFlagEffect(tp,id) end

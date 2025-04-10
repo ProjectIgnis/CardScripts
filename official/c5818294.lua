@@ -1,4 +1,5 @@
 --武神器－ヘツカ
+--Bujingi Turtle
 local s,id=GetID()
 function s.initial_effect(c)
 	--negate
@@ -9,13 +10,13 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_CHAINING)
 	e1:SetRange(LOCATION_GRAVE)
 	e1:SetCondition(s.negcon)
-	e1:SetCost(aux.bfgcost)
+	e1:SetCost(Cost.SelfBanish)
 	e1:SetTarget(s.negtg)
 	e1:SetOperation(s.negop)
 	c:RegisterEffect(e1)
 end
 function s.tfilter(c,tp)
-	return c:IsLocation(LOCATION_MZONE) and c:IsControler(tp) and c:IsFaceup() and c:IsSetCard(0x88)
+	return c:IsLocation(LOCATION_MZONE) and c:IsControler(tp) and c:IsFaceup() and c:IsSetCard(SET_BUJIN)
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end

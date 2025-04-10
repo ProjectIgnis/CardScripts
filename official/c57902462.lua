@@ -1,4 +1,5 @@
 --聖導騎士イシュザーク
+--Divine Knight Ishzark
 local s,id=GetID()
 function s.initial_effect(c)
 	--remove

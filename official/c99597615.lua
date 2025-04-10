@@ -1,4 +1,5 @@
 --悪魔のくちづけ
+--Malevolent Nuzzler
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c)
@@ -16,7 +17,7 @@ function s.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e4:SetCode(EVENT_TO_GRAVE)
 	e4:SetCondition(s.tdcon)
-	e4:SetCost(s.tdcost)
+	e4:SetCost(Cost.PayLP(500))
 	e4:SetTarget(s.tdtg)
 	e4:SetOperation(s.tdop)
 	c:RegisterEffect(e4)
@@ -24,16 +25,12 @@ end
 function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
-function s.tdcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,500) end
-	Duel.PayLPCost(tp,500)
-end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToDeck() end
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,e:GetHandler(),1,0,0)
 end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsRelateToEffect(e) then
-		Duel.SendtoDeck(e:GetHandler(),nil,0,REASON_EFFECT)
+		Duel.SendtoDeck(e:GetHandler(),nil,SEQ_DECKTOP,REASON_EFFECT)
 	end
 end

@@ -22,9 +22,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={}
-s.listed_series={0x139,0x54,0x59,0x82,0x8f}
+s.listed_series={SET_ONOMAT,SET_GAGAGA,SET_GOGOGO,SET_DODODO,SET_ZUBABA}
 function s.filter(c)
-	return c:IsSetCard(0x139) and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(SET_ONOMAT) and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
@@ -37,7 +37,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.lvfilter1(c,tp)
-	return c:IsFaceup() and c:HasLevel() and (c:IsSetCard(0x54) or c:IsSetCard(0x59) or c:IsSetCard(0x82) or c:IsSetCard(0x8f))
+	return c:IsFaceup() and c:HasLevel() and (c:IsSetCard(SET_GAGAGA) or c:IsSetCard(SET_GOGOGO) or c:IsSetCard(SET_DODODO) or c:IsSetCard(SET_ZUBABA))
 		and Duel.IsExistingMatchingCard(s.lvfilter2,tp,LOCATION_MZONE,0,1,c,c:GetLevel())
 end
 function s.lvfilter2(c,lv)
@@ -61,9 +61,8 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_CHANGE_LEVEL)
 			e1:SetValue(lv)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e1:SetReset(RESETS_STANDARD_PHASE_END)
 			lc:RegisterEffect(e1)
 		end
 	end
 end
-

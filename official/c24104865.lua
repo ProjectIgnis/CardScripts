@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
-	e3:SetCode(EVENT_PHASE+PHASE_BATTLE)
+	e3:SetCode(EVENT_PHASE|PHASE_BATTLE)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1)
 	e3:SetCondition(s.spcon)
@@ -58,7 +58,7 @@ function s.checkop2(e,tp,eg,ep,ev,re,r,rp)
 	end
 	if aux.bdgcon(e,tp,eg,ep,ev,re,r,rp) then
 		g:AddCard(t)
-		t:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE,0,1)
+		t:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_BATTLE,0,1)
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
@@ -90,8 +90,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	for tc in aux.Next(sg) do
 		Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,0)
-		c:CreateRelation(tc,RESET_EVENT+0x1020000)
+		tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,0)
+		c:CreateRelation(tc,RESET_EVENT|RESET_TURN_SET|RESET_TOFIELD)
 	end
 	Duel.SpecialSummonComplete()
 end

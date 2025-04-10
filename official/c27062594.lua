@@ -1,4 +1,5 @@
 --運命の扉
+--The Door of Destiny
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,13 +12,13 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x107f}
+s.listed_series={SET_UTOPIA}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker():IsControler(1-tp) and Duel.GetAttackTarget()==nil
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id,0,0x21,0,0,1,RACE_FIEND,ATTRIBUTE_LIGHT) end
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,id,0,TYPE_MONSTER|TYPE_EFFECT,0,0,1,RACE_FIEND,ATTRIBUTE_LIGHT) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
@@ -26,7 +27,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e)
-		or not Duel.IsPlayerCanSpecialSummonMonster(tp,id,0,0x21,0,0,1,RACE_FIEND,ATTRIBUTE_LIGHT) then return end
+		or not Duel.IsPlayerCanSpecialSummonMonster(tp,id,0,TYPE_MONSTER|TYPE_EFFECT,0,0,1,RACE_FIEND,ATTRIBUTE_LIGHT) then return end
 	c:AddMonsterAttribute(TYPE_EFFECT+TYPE_TRAP)
 	Duel.SpecialSummonStep(c,0,tp,tp,true,false,POS_FACEUP)
 	c:AddMonsterAttributeComplete()
@@ -36,24 +37,24 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
-	e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e1:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e1:SetCondition(s.damcon)
 	e1:SetCost(s.damcost)
 	e1:SetTarget(s.damtg)
 	e1:SetOperation(s.damop)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	c:RegisterEffect(e1,true)
 	Duel.SpecialSummonComplete()
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x107f) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
+	return c:IsSetCard(SET_UTOPIA) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end
 function s.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,e:GetHandler()) end
-	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,e:GetHandler())
+	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,e:GetHandler()) end
+	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,e:GetHandler())
 	local rg=Group.CreateGroup()
 	repeat
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
@@ -79,7 +80,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(val)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		c:RegisterEffect(e1)
 	end
 end

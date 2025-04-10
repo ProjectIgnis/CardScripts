@@ -10,12 +10,12 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_GRAVE)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(s.condition)
-	e1:SetCost(aux.bfgcost)
+	e1:SetCost(Cost.SelfBanish)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0xa9}
+s.listed_series={SET_FLUFFAL}
 s.listed_names={70245411}
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsCode(70245411)
@@ -24,7 +24,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.filter(c)
-	return c:IsSetCard(0xa9) and c:IsMonster() and c:IsAbleToRemove()
+	return c:IsSetCard(SET_FLUFFAL) and c:IsMonster() and c:IsAbleToRemove()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.filter(chkc) end

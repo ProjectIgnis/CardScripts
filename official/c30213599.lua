@@ -1,4 +1,5 @@
 --墓守の末裔
+--Gravekeeper's Descendant
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy
@@ -13,9 +14,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x2e}
+s.listed_series={SET_GRAVEKEEPERS}
 function s.costfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x2e)
+	return c:IsFaceup() and c:IsSetCard(SET_GRAVEKEEPERS)
 end
 function s.filter(c,e)
 	return c:IsCanBeEffectTarget(e)

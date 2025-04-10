@@ -1,6 +1,5 @@
 --リ・バイブル
 --Re-Cover
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon itself from GY
@@ -11,17 +10,13 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_GRAVE)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(s.condition)
-	e1:SetCost(s.cost)
+	e1:SetCost(Cost.PayLP(2000))
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_EXTRA,0)<=Duel.GetFieldGroupCount(tp,0,LOCATION_EXTRA)-5
-end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,2000) end
-	Duel.PayLPCost(tp,2000)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -37,7 +32,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
-		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
+		e1:SetReset(RESET_EVENT|RESETS_REDIRECT)
 		e1:SetValue(LOCATION_REMOVED)
 		c:RegisterEffect(e1,true)
 	end

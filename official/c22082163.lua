@@ -1,4 +1,5 @@
 --アマゾネスの意地
+--Amazoness Willpower
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -26,12 +27,12 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop2)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x4}
+s.listed_series={SET_AMAZONESS}
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_AMAZONESS) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:GetControler()==tp and s.filter(chkc,e,tp) end
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
@@ -48,13 +49,13 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_CHANGE_POSITION)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e1:SetCondition(s.cpcon)
 		tc:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_MUST_ATTACK)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e2:SetCondition(s.cpcon)
 		tc:RegisterEffect(e2)
 	end

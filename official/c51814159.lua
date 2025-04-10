@@ -15,14 +15,14 @@ function s.initial_effect(c)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x95}
+s.listed_series={SET_RANK_UP_MAGIC}
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsSetCard,1,false,nil,nil,0xba) end
-	local g=Duel.SelectReleaseGroupCost(tp,Card.IsSetCard,1,1,false,nil,nil,0xba)
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsSetCard,1,false,nil,nil,SET_RAIDRAPTOR) end
+	local g=Duel.SelectReleaseGroupCost(tp,Card.IsSetCard,1,1,false,nil,nil,SET_RAIDRAPTOR)
 	Duel.Release(g,REASON_COST)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x95) and c:IsSpell() and c:IsAbleToHand()
+	return c:IsSetCard(SET_RANK_UP_MAGIC) and c:IsSpell() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc) end
@@ -43,9 +43,9 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
-	return (sumtype&SUMMON_TYPE_XYZ)==SUMMON_TYPE_XYZ and not se:GetHandler():IsSetCard(0x95)
+	return (sumtype&SUMMON_TYPE_XYZ)==SUMMON_TYPE_XYZ and not se:GetHandler():IsSetCard(SET_RANK_UP_MAGIC)
 end

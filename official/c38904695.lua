@@ -1,5 +1,5 @@
 --インフェルニティ・ヘル・デーモン
---Infernity Hell Archfiend
+--Infernity Doom Archfiend
 local s,id=GetID()
 function s.initial_effect(c)
 	--Synchro Summon procedure
@@ -46,12 +46,12 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp,chk)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e2:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e2)
 		if Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)==0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 			Duel.AdjustInstantly(tc)
@@ -74,7 +74,7 @@ function s.efop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCode(EFFECT_EXTRA_ATTACK_MONSTER)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	e1:SetValue(1)
 	rc:RegisterEffect(e1)
 end

@@ -1,5 +1,5 @@
 --魔轟神獣ルビィラーダ
---The Fabled Rudyruda
+--The Fabled Rubyruda
 local s,id=GetID()
 function s.initial_effect(c)
 	--Negate attack
@@ -11,13 +11,13 @@ function s.initial_effect(c)
 	e1:SetOperation(s.op)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x35}
+s.listed_series={SET_FABLED}
 function s.cfilter(c)
-	return c:IsSetCard(0x35) and c:IsMonster() and c:IsDiscardable()
+	return c:IsSetCard(SET_FABLED) and c:IsMonster() and c:IsDiscardable()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_COST|REASON_DISCARD)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateAttack()

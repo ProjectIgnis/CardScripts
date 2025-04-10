@@ -1,5 +1,5 @@
 --混沌幻魔アーミタイル
---Armityle the Chaos Phantom
+--Armityle the Chaos Phantasm
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -30,7 +30,7 @@ function s.contactfil(tp)
 	return Duel.GetMatchingGroup(Card.IsAbleToRemoveAsCost,tp,LOCATION_ONFIELD,0,nil)
 end
 function s.contactop(g)
-	Duel.Remove(g,POS_FACEUP,REASON_COST+REASON_MATERIAL)
+	Duel.Remove(g,POS_FACEUP,REASON_COST|REASON_MATERIAL)
 end
 function s.atkcon(e)
 	return Duel.GetTurnPlayer()==e:GetHandlerPlayer()

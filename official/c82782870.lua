@@ -1,4 +1,4 @@
---Japanese name
+--巳剣之尊 草那藝
 --Mitsurugi no Mikoto, Kusanagi
 --scripted by Naim
 local s,id=GetID()

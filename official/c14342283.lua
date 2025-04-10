@@ -1,4 +1,5 @@
 --暴走闘君
+--Token Stampede
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

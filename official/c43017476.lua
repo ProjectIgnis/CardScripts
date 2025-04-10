@@ -1,4 +1,5 @@
 --デューテリオン
+--Duoterion
 local s,id=GetID()
 function s.initial_effect(c)
 	--search
@@ -8,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,id)
-	e1:SetCost(s.cost)
+	e1:SetCost(Cost.SelfDiscard)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
@@ -27,14 +28,9 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x100}
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsDiscardable() end
-	Duel.SendtoGrave(c,REASON_COST+REASON_DISCARD)
-end
+s.listed_series={SET_BONDING}
 function s.filter(c)
-	return c:IsSetCard(0x100) and c:IsSpellTrap() and c:IsAbleToHand()
+	return c:IsSetCard(SET_BONDING) and c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

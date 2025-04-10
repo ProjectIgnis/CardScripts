@@ -9,16 +9,13 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(TIMING_DAMAGE_STEP)
-	e1:SetCondition(s.condition)
+	e1:SetCondition(aux.StatChangeDamageStepCondition)
 	e1:SetCost(s.cost)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x10db}
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
-end
+s.listed_series={SET_THE_PHANTOM_KNIGHTS}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(1)
 	return true
@@ -32,7 +29,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		if e:GetLabel()==0 then return false end
 		e:SetLabel(0)
 		return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-			and Duel.IsPlayerCanSpecialSummonMonster(tp,id,0x10db,0x11,600,0,2,RACE_WARRIOR,ATTRIBUTE_DARK)
+			and Duel.IsPlayerCanSpecialSummonMonster(tp,id,SET_THE_PHANTOM_KNIGHTS,TYPE_MONSTER|TYPE_NORMAL,600,0,2,RACE_WARRIOR,ATTRIBUTE_DARK)
 			and Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 	e:SetLabel(0)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
@@ -47,13 +44,13 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(-600)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_CHANGE_LEVEL)
 		e2:SetValue(2)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e2:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e2)
 		local e3=Effect.CreateEffect(c)
 		e3:SetType(EFFECT_TYPE_FIELD)
@@ -61,10 +58,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetTargetRange(LOCATION_MZONE,0)
 		e3:SetTarget(s.indtarget)
 		e3:SetValue(1)
-		e3:SetReset(RESET_PHASE+PHASE_END)
+		e3:SetReset(RESET_PHASE|PHASE_END)
 		Duel.RegisterEffect(e3,tp)
 		if c:IsRelateToEffect(e) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-			and Duel.IsPlayerCanSpecialSummonMonster(tp,id,0x10db,0x11,600,0,2,RACE_WARRIOR,ATTRIBUTE_DARK) then
+			and Duel.IsPlayerCanSpecialSummonMonster(tp,id,SET_THE_PHANTOM_KNIGHTS,TYPE_MONSTER|TYPE_NORMAL,600,0,2,RACE_WARRIOR,ATTRIBUTE_DARK) then
 			Duel.BreakEffect()
 			c:AddMonsterAttribute(TYPE_NORMAL)
 			Duel.SpecialSummonStep(c,0,tp,tp,true,false,POS_FACEUP_DEFENSE)
@@ -74,5 +71,5 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.indtarget(e,c)
-	return c:IsFaceup() and c:IsSetCard(0x10db)
+	return c:IsFaceup() and c:IsSetCard(SET_THE_PHANTOM_KNIGHTS)
 end

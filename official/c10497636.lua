@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetRange(LOCATION_MZONE)
-	local timing=TIMING_BATTLE_PHASE+TIMING_BATTLE_END+TIMING_DAMAGE_STEP+TIMING_ATTACK+TIMING_BATTLE_START
+	local timing=TIMING_BATTLE_PHASE|TIMING_BATTLE_END|TIMING_DAMAGE_STEP|TIMING_ATTACK|TIMING_BATTLE_START
 	e3:SetHintTiming(timing,timing)
 	e3:SetCountLimit(1)
 	e3:SetCondition(s.atkcon)
@@ -44,7 +44,7 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge1,0)
 	end)
 end
-s.listed_series={0x161}
+s.listed_series={SET_WAR_ROCK}
 function s.checkfilter(c)
 	return c and c:IsFaceup() and c:IsAttribute(ATTRIBUTE_EARTH) and c:IsRace(RACE_WARRIOR)
 end
@@ -52,10 +52,10 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsDamageCalculated() then return end
 	local bc0,bc1=Duel.GetBattleMonster(0)
 	if s.checkfilter(bc0) then
-		Duel.RegisterFlagEffect(bc0:GetControler(),id,RESET_PHASE+PHASE_END,0,1)
+		Duel.RegisterFlagEffect(bc0:GetControler(),id,RESET_PHASE|PHASE_END,0,1)
 	end
 	if s.checkfilter(bc1) then
-		Duel.RegisterFlagEffect(bc1:GetControler(),id,RESET_PHASE+PHASE_END,0,1)
+		Duel.RegisterFlagEffect(bc1:GetControler(),id,RESET_PHASE|PHASE_END,0,1)
 	end
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -73,7 +73,7 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
@@ -87,7 +87,7 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 			e3:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 			e3:SetTarget(s.distg)
 			e3:SetLabel(tc:GetOriginalCodeRule())
-			e3:SetReset(RESET_PHASE+PHASE_END)
+			e3:SetReset(RESET_PHASE|PHASE_END)
 			Duel.RegisterEffect(e3,tp)
 			local e4=Effect.CreateEffect(c)
 			e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -95,7 +95,7 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 			e4:SetCondition(s.discon)
 			e4:SetOperation(s.disop)
 			e4:SetLabel(tc:GetOriginalCodeRule())
-			e4:SetReset(RESET_PHASE+PHASE_END)
+			e4:SetReset(RESET_PHASE|PHASE_END)
 			Duel.RegisterEffect(e4,tp)
 		end
 	end
@@ -108,7 +108,7 @@ end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	local code=e:GetLabel()
 	local code1,code2=re:GetHandler():GetOriginalCodeRule()
-	return re:IsActiveType(TYPE_MONSTER) and (code1==code or code2==code)
+	return re:IsMonsterEffect() and (code1==code or code2==code)
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,id)
@@ -116,10 +116,10 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsBattlePhase() and Duel.GetFlagEffect(tp,id)>0
-		and (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
+		and aux.StatChangeDamageStepCondition()
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x161),tp,LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_WAR_ROCK),tp,LOCATION_MZONE,0,1,nil) end
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -131,17 +131,17 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetRange(LOCATION_MZONE)
 		e1:SetCode(EFFECT_EXTRA_ATTACK_MONSTER)
 		e1:SetValue(1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_DISABLE_PHASE_END)
 		c:RegisterEffect(e1,true)
 	end
-	local atkg=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,0x161),tp,LOCATION_MZONE,0,nil)
-	for tc in aux.Next(atkg) do
+	local atkg=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,SET_WAR_ROCK),tp,LOCATION_MZONE,0,nil)
+	for tc in atkg:Iter() do
 		--Increase ATK
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_UPDATE_ATTACK)
 		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
+		e2:SetReset(RESETS_STANDARD_PHASE_END|RESET_OPPO_TURN)
 		e2:SetValue(200)
 		tc:RegisterEffect(e2)
 	end

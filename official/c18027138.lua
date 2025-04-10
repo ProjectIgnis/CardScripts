@@ -1,6 +1,5 @@
 --カバーカーニバル
 --Hippo Carnival
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon 3 tokens to your field
@@ -14,7 +13,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={TOKEN_HIPPO}
-
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>2
@@ -36,7 +34,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetCode(EFFECT_UNRELEASABLE_SUM)
 			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 			e1:SetValue(1)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			token:RegisterEffect(e1)
 			local e2=e1:Clone()
 			e2:SetCode(EFFECT_UNRELEASABLE_NONSUM)
@@ -49,11 +47,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e3:SetRange(LOCATION_MZONE)
 			e3:SetAbsoluteRange(tp,1,0)
 			e3:SetTarget(aux.TargetBoolFunction(Card.IsLocation,LOCATION_EXTRA))
-			e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e3:SetReset(RESET_EVENT|RESETS_STANDARD)
 			token:RegisterEffect(e3)
 			--Clock Lizard check
 			local e4=aux.createContinuousLizardCheck(e:GetHandler(),LOCATION_MZONE)
-			e4:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e4:SetReset(RESET_EVENT|RESETS_STANDARD)
 			token:RegisterEffect(e4,true)
 		end
 		Duel.SpecialSummonComplete()
@@ -63,6 +61,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_CANNOT_SELECT_BATTLE_TARGET)
 	e1:SetTargetRange(0,LOCATION_MZONE)
 	e1:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsCode,TOKEN_HIPPO)))
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end

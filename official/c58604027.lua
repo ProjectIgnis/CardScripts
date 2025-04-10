@@ -92,7 +92,7 @@ function s.efilter(e,te)
 	return te:GetOwner()~=e:GetOwner()
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.thfilter(c)
 	return c:IsMonster() and c:IsSetCard(SET_FORBIDDEN_ONE) and c:IsAbleToHand()

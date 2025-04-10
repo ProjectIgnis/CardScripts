@@ -55,7 +55,7 @@ function s.eqval(ec,c,tp)
 	return ec:IsControler(1-tp) and ec:IsType(TYPE_SYNCHRO)
 end
 function s.filter(c,tp)
-	return c:IsMonster() and (c:GetReason()&0x41)==0x41 and c:IsPreviousControler(tp)
+	return c:IsMonster() and (c:GetReason()&(REASON_DESTROY|REASON_EFFECT))==(REASON_DESTROY|REASON_EFFECT) and c:IsPreviousControler(tp)
 		and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
@@ -96,7 +96,7 @@ function s.equipop(c,e,tp,tc)
 		e2:SetType(EFFECT_TYPE_EQUIP)
 		e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_OWNER_RELATE)
 		e2:SetCode(EFFECT_UPDATE_ATTACK)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e2:SetValue(atk)
 		tc:RegisterEffect(e2)
 	end
@@ -109,10 +109,10 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.dircon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_MAIN1 and not e:GetHandler():IsHasEffect(EFFECT_DIRECT_ATTACK)
+	return Duel.IsPhase(PHASE_MAIN1) and not e:GetHandler():IsHasEffect(EFFECT_DIRECT_ATTACK)
 end
 function s.dcfilter(c)
-	return (c:GetOriginalType()&TYPE_MONSTER)~=0 and c:IsAbleToGraveAsCost()
+	return c:IsMonsterCard() and c:IsAbleToGraveAsCost()
 end
 function s.dircost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetEquipGroup():IsExists(s.dcfilter,1,nil) end
@@ -127,6 +127,6 @@ function s.dirop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_DIRECT_ATTACK)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESETS_STANDARD_PHASE_END)
 	c:RegisterEffect(e1,true)
 end

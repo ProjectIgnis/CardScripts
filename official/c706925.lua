@@ -24,13 +24,13 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x77}
+s.listed_series={SET_ATLANTEAN}
 s.listed_names={id}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==1-tp
 end
 function s.spfilter(c,e,tp)
-	return not c:IsCode(id) and c:IsLevelBelow(4) and c:IsSetCard(0x77) and c:IsRace(RACE_SEASERPENT)
+	return not c:IsCode(id) and c:IsLevelBelow(4) and c:IsSetCard(SET_ATLANTEAN) and c:IsRace(RACE_SEASERPENT)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -47,7 +47,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsReason(REASON_COST) and re:IsActivated() and re:IsActiveType(TYPE_MONSTER)
+	return e:GetHandler():IsReason(REASON_COST) and re:IsActivated() and re:IsMonsterEffect()
 		and re:GetHandler():IsAttribute(ATTRIBUTE_WATER)
 end
 function s.desfilter(c)

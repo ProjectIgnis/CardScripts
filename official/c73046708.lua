@@ -66,7 +66,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetCode(EVENT_DAMAGE_STEP_END)
 		e3:SetRange(LOCATION_SZONE)
 		e3:SetCondition(s.atkcon)
-		e3:SetCost(s.atkcost)
+		e3:SetCost(Cost.SelfToGrave)
 		e3:SetOperation(function() Duel.ChainAttack() end)
 		e3:SetReset(RESET_EVENT|RESETS_STANDARD)
 		eqc:RegisterEffect(e3)
@@ -75,9 +75,4 @@ end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local ec=e:GetHandler():GetEquipTarget()
 	return ec==Duel.GetAttacker() and ec:CanChainAttack()
-end
-function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(c,REASON_COST)
 end

@@ -1,4 +1,5 @@
 --E・HERO クノスペ
+--Elemental HERO Knospe
 local s,id=GetID()
 function s.initial_effect(c)
 	--direct attack
@@ -25,7 +26,7 @@ function s.initial_effect(c)
 	e3:SetValue(aux.imval1)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x3008}
+s.listed_series={SET_ELEMENTAL_HERO}
 function s.adcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp
 end
@@ -37,7 +38,7 @@ function s.adop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
 		e1:SetValue(100)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		c:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_UPDATE_DEFENSE)
@@ -46,7 +47,7 @@ function s.adop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x3008)
+	return c:IsFaceup() and c:IsSetCard(SET_ELEMENTAL_HERO)
 end
 function s.atcon(e)
 	return Duel.IsExistingMatchingCard(s.filter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())

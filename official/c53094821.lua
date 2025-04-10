@@ -1,7 +1,6 @@
 --トゥーン・テラー
 --Toon Terror
 --Scripted by Hel
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Negate the activation of a monster effect or spell/trap card
@@ -17,7 +16,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={15259703}
-
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsCode(15259703)
 end
@@ -28,7 +26,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD,0,1,nil)
 		or not Duel.IsExistingMatchingCard(s.cfilter2,tp,LOCATION_MZONE,0,1,nil)
 		or not Duel.IsChainNegatable(ev) then return false end
-	return re:IsActiveType(TYPE_MONSTER) or re:IsHasType(EFFECT_TYPE_ACTIVATE)
+	return re:IsMonsterEffect() or re:IsHasType(EFFECT_TYPE_ACTIVATE)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

@@ -1,9 +1,9 @@
--- マッド・ハッカー
--- Mad Hacker
--- Scripted by Hatter
+--マッド・ハッカー
+--Mad Hacker
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Special Summon
+	--Special Summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	-- Take control
+	--Take control
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_CONTROL)
@@ -68,7 +68,7 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetControl(g,tp) then
 		local c=e:GetHandler()
 		local tc=g:GetFirst()
-		-- Cannot activate its effects
+		--Cannot activate its effects
 		local e1=Effect.CreateEffect(c)
 		e1:SetDescription(3302)
 		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
@@ -76,7 +76,7 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_CANNOT_TRIGGER)
 		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_CONTROL)
 		tc:RegisterEffect(e1,true)
-		-- Cannot Special Summon non-Link monsters from Extra Deck
+		--Cannot Special Summon non-Link monsters from Extra Deck
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_FIELD)
 		e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
@@ -86,7 +86,7 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetTarget(function(_,c) return c:IsLocation(LOCATION_EXTRA) and not c:IsType(TYPE_LINK) end)
 		e2:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_CONTROL)
 		tc:RegisterEffect(e2,true)
-		-- Lizard check
+		--Lizard check
 		local e3=aux.createContinuousLizardCheck(c,LOCATION_MZONE,function(_,c) return c:IsOriginalType(TYPE_LINK) end)
 		e3:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_CONTROL)
 		tc:RegisterEffect(e3,true)

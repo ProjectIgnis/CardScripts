@@ -1,5 +1,5 @@
 --ダークアイ・ナイトメア
---Dark-Eye Nightmare
+--Dark Eye Nightmare
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -63,7 +63,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 				Duel.SendtoDeck(g,nil,SEQ_DECKTOP,REASON_EFFECT)
 			end
 		elseif lbl==3 then
-			Duel.DiscardHand(p,nil,1,1,REASON_EFFECT+REASON_DISCARD)
+			Duel.DiscardHand(p,nil,1,1,REASON_EFFECT|REASON_DISCARD)
 		end
 	end
 end
@@ -72,7 +72,7 @@ function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if Duel.SelectEffectYesNo(tp,e:GetHandler(),96) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 		local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_GRAVE,0,1,1,nil)
-		Duel.Remove(g,POS_FACEUP,REASON_EFFECT+REASON_REPLACE)
+		Duel.Remove(g,POS_FACEUP,REASON_EFFECT|REASON_REPLACE)
 		return true
 	else return false end
 end

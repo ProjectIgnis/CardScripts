@@ -9,13 +9,10 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(TIMING_DAMAGE_STEP)
-	e1:SetCondition(s.condition)
+	e1:SetCondition(aux.StatChangeDamageStepCondition)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-end
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsType(TYPE_XYZ) end
@@ -30,19 +27,18 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
 	if #g>0 and tc:IsRelateToEffect(e) then
 		local atk=tc:GetRank()*200
-		local sc=g:GetFirst()
-		for sc in aux.Next(g) do
+		for sc in g:Iter() do
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e1:SetReset(RESETS_STANDARD_PHASE_END)
 			e1:SetValue(atk)
 			sc:RegisterEffect(e1)
 		end
 		if tc:IsAbleToDeck() and not tc:IsHasEffect(EFFECT_NECRO_VALLEY)
 			and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 			Duel.BreakEffect()
-			Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)
+			Duel.SendtoDeck(tc,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 		end
 	end
 end

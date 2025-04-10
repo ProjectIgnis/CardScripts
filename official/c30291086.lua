@@ -52,7 +52,7 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	if op==2 then
 		local tg=Duel.GetTargetCards(e)
 		if #tg>0 then
-			ct=Duel.SendtoGrave(tg,REASON_EFFECT+REASON_RETURN)
+			ct=Duel.SendtoGrave(tg,REASON_EFFECT|REASON_RETURN)
 		end
 	elseif op~=1 then return end
 	if not ct or ct==0 then return end
@@ -64,6 +64,6 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 		{b1,aux.Stringid(id,3)},
 		{b2,aux.Stringid(id,4)})
 	if lvop then
-		c:UpdateLevel(lvop==1 and ct or -ct,RESET_EVENT|RESETS_STANDARD_DISABLE|RESET_PHASE|PHASE_END)
+		c:UpdateLevel(lvop==1 and ct or -ct,RESETS_STANDARD_DISABLE_PHASE_END)
 	end
 end

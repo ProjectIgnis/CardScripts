@@ -1,4 +1,5 @@
 --黄血鬼
+--Yellow-Bellied Oni
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -26,7 +27,7 @@ function s.initial_effect(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local c=eg:GetFirst()
-	return #eg==1 and c:IsControler(tp) and c:IsSummonType(SUMMON_TYPE_XYZ)
+	return #eg==1 and c:IsControler(tp) and c:IsXyzSummoned()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -58,7 +59,7 @@ function s.rdop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(-300)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_UPDATE_RANK)

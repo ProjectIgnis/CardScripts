@@ -34,10 +34,10 @@ function s.initial_effect(c)
 	e4:SetValue(1)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x100a}
+s.listed_series={SET_STEELSWARM}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_MAIN1 and not Duel.CheckPhaseActivity() and e:GetHandler():IsSetCard(0x100a)
-		and not Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_ONFIELD,0,1,nil,TYPE_SPELL+TYPE_TRAP) 
+	return Duel.IsPhase(PHASE_MAIN1) and not Duel.CheckPhaseActivity() and e:GetHandler():IsSetCard(SET_STEELSWARM)
+		and not Duel.IsExistingMatchingCard(Card.IsSpellTrap,tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetActivityCount(tp,ACTIVITY_SPSUMMON)==0 end
@@ -45,7 +45,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	e1:SetTargetRange(1,0)
 	e1:SetLabelObject(e)
 	e1:SetTarget(s.splimit)
@@ -53,7 +53,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local e2=Effect.CreateEffect(e:GetHandler())
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e2:SetDescription(aux.Stringid(id,1))
-	e2:SetReset(RESET_PHASE+PHASE_END)
+	e2:SetReset(RESET_PHASE|PHASE_END)
 	e2:SetTargetRange(1,0)
 	Duel.RegisterEffect(e2,tp)
 end
@@ -71,5 +71,5 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.sumlimit(e,c)
-	return not c:IsSetCard(0x100a)
+	return not c:IsSetCard(SET_STEELSWARM)
 end

@@ -1,4 +1,5 @@
 --アクアアクトレス・アロワナ
+--Aquaactress Arowana
 local s,id=GetID()
 function s.initial_effect(c)
 	--to hand
@@ -11,9 +12,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x10cd}
+s.listed_series={SET_AQUAACTRESS}
 function s.filter(c)
-	return c:IsSetCard(0x10cd) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_AQUAACTRESS) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

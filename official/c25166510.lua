@@ -27,10 +27,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x119}
+s.listed_series={SET_SALAMANGREAT}
 	--Defining what to check
 function s.cfilter(c)
-	return c:IsMonster() and c:IsSetCard(0x119)
+	return c:IsMonster() and c:IsSetCard(SET_SALAMANGREAT)
 end
 	--Check for 3+ "Salamangreat" monsters in your GY
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
@@ -79,25 +79,24 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 				e1:SetType(EFFECT_TYPE_SINGLE)
 				e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 				e1:SetCode(EFFECT_DISABLE)
-				e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+				e1:SetReset(RESETS_STANDARD_PHASE_END)
 				tc:RegisterEffect(e1)
 				local e2=Effect.CreateEffect(c)
 				e2:SetType(EFFECT_TYPE_SINGLE)
 				e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 				e2:SetCode(EFFECT_DISABLE_EFFECT)
 				e2:SetValue(RESET_TURN_SET)
-				e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+				e2:SetReset(RESETS_STANDARD_PHASE_END)
 				tc:RegisterEffect(e2)
 				if tc:IsType(TYPE_TRAPMONSTER) then
 					local e3=Effect.CreateEffect(c)
 					e3:SetType(EFFECT_TYPE_SINGLE)
 					e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 					e3:SetCode(EFFECT_DISABLE_TRAPMONSTER)
-					e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+					e3:SetReset(RESETS_STANDARD_PHASE_END)
 					tc:RegisterEffect(e3)
 				end
 			end
 		end
 	end
 end
-

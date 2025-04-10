@@ -1,4 +1,5 @@
 --夜霧のスナイパー
+--Cloak and Dagger
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -24,7 +25,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTarget(s.rmtg)
 	e1:SetOperation(s.rmop)
 	e1:SetLabel(ac)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	c:RegisterEffect(e1)
 	local e2=e1:Clone()
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)

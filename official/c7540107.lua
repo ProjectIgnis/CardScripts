@@ -36,12 +36,12 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={id}
-s.listed_series={0xfc}
+s.listed_series={SET_GOUKI}
 function s.incon(e)
 	return e:GetHandler():IsPosition(POS_FACEUP_DEFENSE)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0xfc) and c:IsMonster()
+	return c:IsFaceup() and c:IsSetCard(SET_GOUKI) and c:IsMonster()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil) end
@@ -55,7 +55,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(200)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 	end
 end
@@ -63,7 +63,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0xfc) and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(SET_GOUKI) and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -77,4 +77,3 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-

@@ -1,4 +1,5 @@
 --聖騎士トリスタン
+--Noble Knight Drystan
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot be battle target
@@ -34,9 +35,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x107a,0x207a}
+s.listed_series={SET_NOBLE_KNIGHT,SET_NOBLE_ARMS}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x107a)
+	return c:IsFaceup() and c:IsSetCard(SET_NOBLE_KNIGHT)
 end
 function s.con(e)
 	return Duel.IsExistingMatchingCard(s.cfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
@@ -48,7 +49,7 @@ function s.tglimit(e,c)
 	return c~=e:GetHandler() and c:GetAttack()<1800
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(Card.IsSetCard,1,nil,0x207a)
+	return eg:IsExists(Card.IsSetCard,1,nil,SET_NOBLE_ARMS)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsFaceup() end

@@ -36,7 +36,7 @@ function s.initial_effect(c)
 	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
 function s.attcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and rp==tp and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
+	return Duel.IsTurnPlayer(tp) and rp==tp and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
 end
 function s.atttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local rt=re:GetActiveType()&(TYPE_SPELL|TYPE_MONSTER|TYPE_TRAP)
@@ -56,7 +56,7 @@ function s.attop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp and Duel.IsChainNegatable(ev) and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
+	return Duel.IsTurnPlayer(1-tp) and Duel.IsChainNegatable(ev) and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then 

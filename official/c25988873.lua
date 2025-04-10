@@ -1,4 +1,5 @@
 --ドラグニティ－パルチザン
+--Dragunity Partisan
 local s,id=GetID()
 function s.initial_effect(c)
 	--equip
@@ -17,9 +18,9 @@ function s.initial_effect(c)
 	e2:SetValue(TYPE_TUNER)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x29}
+s.listed_series={SET_DRAGUNITY}
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x29) and c:IsRace(RACE_WINGEDBEAST) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_DRAGUNITY) and c:IsRace(RACE_WINGEDBEAST) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
@@ -43,7 +44,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_EQUIP_LIMIT)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	e1:SetValue(s.eqlimit)
 	e1:SetLabelObject(tc)
 	c:RegisterEffect(e1)

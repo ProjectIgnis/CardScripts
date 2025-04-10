@@ -2,7 +2,7 @@
 --Doomking Balerdroch
 local s,id=GetID()
 function s.initial_effect(c)
-	--Negate an activated effect  or Banish 1 monster from the field or GY.
+	--Negate an activated effect or Banish 1 monster from the field or GY.
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DISABLE+CATEGORY_REMOVE)
@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetRange(LOCATION_GRAVE)
-	e2:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e2:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e2:SetCountLimit(1,id)
 	e2:SetCondition(s.spcon)
 	e2:SetTarget(s.sptg)

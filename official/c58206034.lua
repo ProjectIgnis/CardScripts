@@ -20,7 +20,7 @@ function s.initial_effect(c)
 end
 s.listed_names={12817939}
 s.LVnum=8
-s.LVset=0x4f
+s.LVset=SET_DARK_LUCIUS
 function s.discon(e)
 	return e:GetHandler():GetFlagEffect(12817939)~=0
 end
@@ -32,7 +32,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_EXC_GRAVE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_EXC_GRAVE)
 		d:RegisterEffect(e1)
 	end
 end

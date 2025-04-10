@@ -1,9 +1,9 @@
--- ボティス
--- Votis
--- Scripted by Hatter
+--ボティス
+--Votis
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Add to hand
+	--Add to hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_REMOVE+CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.exctg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
-	-- Excavate and sort cards
+	--Excavate and sort cards
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -55,7 +55,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.sdcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:GetTurnID()==Duel.GetTurnCount() and c:IsPreviousLocation(LOCATION_MZONE) and c:IsSummonType(SUMMON_TYPE_NORMAL)
+	return c:GetTurnID()==Duel.GetTurnCount() and c:IsPreviousLocation(LOCATION_MZONE) and c:IsNormalSummoned()
 end
 function s.sdop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)<3 then return end

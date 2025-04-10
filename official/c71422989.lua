@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
-	local params={aux.FilterBoolFunction(Card.IsSetCard,0x1047),Card.IsAbleToRemove,nil,Fusion.BanishMaterial}
+	local params={aux.FilterBoolFunction(Card.IsSetCard,SET_GEM_KNIGHT),Card.IsAbleToRemove,nil,Fusion.BanishMaterial}
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -15,9 +15,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
 end
-s.listed_series={0x1047}
+s.listed_series={SET_GEM_KNIGHT}
 function s.counterfilter(c)
-	return c:IsSetCard(0x1047)
+	return c:IsSetCard(SET_GEM_KNIGHT)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetCustomActivityCount(id,tp,ACTIVITY_SPSUMMON)==0 end
@@ -25,17 +25,17 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
 	Duel.RegisterEffect(e1,tp)
 	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,1),nil)
 end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
-	return not c:IsSetCard(0x1047)
+	return not c:IsSetCard(SET_GEM_KNIGHT)
 end
 function s.filter(c)
-	return c:IsSetCard(0x1047) and c:IsAbleToHand()
+	return c:IsSetCard(SET_GEM_KNIGHT) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

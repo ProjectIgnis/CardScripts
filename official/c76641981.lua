@@ -1,4 +1,5 @@
 --TG1－EM1
+--TG1-EM1
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,9 +13,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x27}
+s.listed_series={SET_TG}
 function s.filter1(c)
-	return c:IsFaceup() and c:IsSetCard(0x27) and c:IsAbleToChangeControler()
+	return c:IsFaceup() and c:IsSetCard(SET_TG) and c:IsAbleToChangeControler()
 end
 function s.filter2(c)
 	return c:IsAbleToChangeControler()

@@ -1,4 +1,5 @@
 --プロト・サイバー・ドラゴン
+--Proto-Cyber Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--code

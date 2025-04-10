@@ -1,4 +1,5 @@
 --Kozmo－デルタシャトル
+--Kozmo Delta Shuttle
 local s,id=GetID()
 function s.initial_effect(c)
 	--atk/def
@@ -24,9 +25,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xd2}
+s.listed_series={SET_KOZMO}
 function s.cfilter(c)
-	return c:IsSetCard(0xd2) and c:IsMonster() and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(SET_KOZMO) and c:IsMonster() and c:IsAbleToGraveAsCost()
 end
 function s.adcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -52,7 +53,7 @@ function s.adop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(-100*lv)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		--defdown
 		local e2=e1:Clone()
@@ -62,7 +63,7 @@ function s.adop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsReason(REASON_DESTROY) and c:IsReason(REASON_BATTLE+REASON_EFFECT)
+	return c:IsReason(REASON_DESTROY) and c:IsReason(REASON_BATTLE|REASON_EFFECT)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -70,7 +71,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(c,POS_FACEUP,REASON_COST)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0xd2) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_KOZMO) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

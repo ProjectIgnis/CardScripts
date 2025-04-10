@@ -2,8 +2,9 @@
 --Lillybot
 local s,id=GetID()
 function s.initial_effect(c)
-	--summon,flip
+	--Special Summon 1 "Orbital 7" from your GY
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
@@ -14,9 +15,9 @@ function s.initial_effect(c)
 	local e2=e1:Clone()
 	e2:SetCode(EVENT_FLIP)
 	c:RegisterEffect(e2)
-	--
+	--Special Summon "Photon" and/or "Galaxy" monsters from your hand
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(id,0))
+	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_MZONE)
@@ -26,11 +27,10 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop2)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x7b,0x55}
-s.listed_names={71071546}
+s.listed_series={SET_GALAXY,SET_PHOTON}
+s.listed_names={71071546} --"Orbital 7"
 function s.filter(c,e,tp)
-	return c:IsCode(71071546)
-		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_ATTACK|POS_FACEDOWN_DEFENSE)
+	return c:IsCode(71071546) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_ATTACK|POS_FACEDOWN_DEFENSE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end
@@ -49,7 +49,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spfilter(c,e,tp)
-	return (c:IsSetCard(0x7b) or c:IsSetCard(0x55)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard({SET_GALAXY,SET_PHOTON}) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.cfilter(c,ft,tp)
 	return c:IsRace(RACE_MACHINE)

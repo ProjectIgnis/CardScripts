@@ -1,4 +1,4 @@
---
+--ティスティナの抱擁
 --Embrace of the Tistina
 --Scripted by Hatter
 local s,id=GetID()

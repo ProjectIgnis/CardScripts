@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
-	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsAttribute,ATTRIBUTE_FIRE),1,1,Synchro.NonTunerEx(Card.IsSetCard,0x79),1,99)
+	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsAttribute,ATTRIBUTE_FIRE),1,1,Synchro.NonTunerEx(Card.IsSetCard,SET_FIRE_FIST),1,99)
 	c:EnableReviveLimit()
 	--set
 	local e1=Effect.CreateEffect(c)
@@ -23,12 +23,12 @@ function s.initial_effect(c)
 	e2:SetValue(s.atkval)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x7c,0x79}
+s.listed_series={SET_FIRE_FORMATION,SET_FIRE_FIST}
 function s.setcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SYNCHRO
 end
 function s.filter(c)
-	return c:IsSetCard(0x7c) and c:IsSpellTrap() and c:IsSSetable()
+	return c:IsSetCard(SET_FIRE_FORMATION) and c:IsSpellTrap() and c:IsSSetable()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

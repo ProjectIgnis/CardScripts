@@ -1,5 +1,5 @@
 --喰光の竜輝巧
---Draitron Eclipse
+--Drytron Eclipse
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
@@ -23,14 +23,14 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetCondition(aux.exccon)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.atktg)
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x151}
+s.listed_series={SET_DRYTRON}
 function s.thfilter(c)
-	return c:IsMonster() and c:IsSetCard(0x151) and c:IsAbleToHand()
+	return c:IsMonster() and c:IsSetCard(SET_DRYTRON) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.thfilter(chkc) end
@@ -45,9 +45,9 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 	end
 end
-s.atkfilter=aux.FaceupFilter(Card.IsSetCard,0x151)
+s.atkfilter=aux.FaceupFilter(Card.IsSetCard,SET_DRYTRON)
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and chkc:IsFaceup() and chkc:IsSetCard(0x151) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and chkc:IsFaceup() and chkc:IsSetCard(SET_DRYTRON) end
 	if chk==0 then return Duel.IsExistingTarget(s.atkfilter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATKDEF)
 	Duel.SelectTarget(tp,s.atkfilter,tp,LOCATION_MZONE,0,1,1,nil)
@@ -58,7 +58,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,2)
+		e1:SetReset(RESETS_STANDARD_PHASE_END,2)
 		e1:SetValue(2000)
 		tc:RegisterEffect(e1)
 	end

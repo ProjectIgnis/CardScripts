@@ -1,7 +1,6 @@
 --原質の円環炉
 --Materiactor Annulus
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)

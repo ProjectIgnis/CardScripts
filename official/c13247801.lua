@@ -1,5 +1,5 @@
 --機甲部隊の防衛圏
---Machina Defense Region
+--Machina Defense Perimeter
 --Scripted by Hel
 local s,id=GetID()
 function s.initial_effect(c)

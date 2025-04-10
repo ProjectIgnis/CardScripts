@@ -1,5 +1,5 @@
 --めぐり－Ａｉ－
---A.I Meet You
+--A.I. Meet You
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,4 +1,5 @@
 --ロード・オブ・ザ・レッド
+--Lord of the Red
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -35,7 +36,7 @@ function s.destg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 end
 function s.desfilter2(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsSpellTrap()
 end
 function s.destg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and s.desfilter2(chkc) end

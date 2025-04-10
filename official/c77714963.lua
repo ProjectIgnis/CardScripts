@@ -1,5 +1,5 @@
 --骸魔妖ー夜叉 
---Yasha,the Skeletal Mayakashi
+--Yasha, the Skeletal Mayakashi
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
@@ -26,13 +26,13 @@ function s.initial_effect(c)
 	--Lizard check
 	aux.addContinuousLizardCheck(c,LOCATION_MZONE,s.lizfilter)
 end
-s.listed_series={0x121}
+s.listed_series={SET_MAYAKASHI}
 function s.cfilter(c)
-	return c:IsMonster() and c:IsSetCard(0x121) and c:IsDiscardable()
+	return c:IsMonster() and c:IsSetCard(SET_MAYAKASHI) and c:IsDiscardable()
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,e:GetHandler()) end
-	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_COST+REASON_DISCARD,e:GetHandler())
+	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_COST|REASON_DISCARD,e:GetHandler())
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -46,8 +46,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.sslimit(e,c,sump,sumtype,sumpos,targetp,se)
-	return c:IsLocation(LOCATION_EXTRA) and not c:IsSetCard(0x121)
+	return c:IsLocation(LOCATION_EXTRA) and not c:IsSetCard(SET_MAYAKASHI)
 end
 function s.lizfilter(e,c)
-	return not c:IsOriginalSetCard(0x121)
+	return not c:IsOriginalSetCard(SET_MAYAKASHI)
 end

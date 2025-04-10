@@ -1,5 +1,5 @@
 --焔聖騎士将－オリヴィエ
---Infernoble Knight General Oliver
+--Infernoble Knight Captain Oliver
 local s,id=GetID()
 function s.initial_effect(c)
 	--Synchro Summon procedure
@@ -67,7 +67,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_IGNORE_IMMUNE)
 		e1:SetCode(EFFECT_ADD_TYPE)
 		e1:SetValue(TYPE_TUNER)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e1)
 		if tc and tc:IsRelateToEffect(e) and tc:IsControler(tp) then
 			s.equipop(c,e,tp,tc)
@@ -81,7 +81,7 @@ function s.equipop(c,e,tp,tc)
 	e1:SetType(EFFECT_TYPE_EQUIP)
 	e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_OWNER_RELATE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	e1:SetValue(500)
 	tc:RegisterEffect(e1)
 	--Equip limit
@@ -90,7 +90,7 @@ function s.equipop(c,e,tp,tc)
 	e2:SetCode(EFFECT_EQUIP_LIMIT)
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e2:SetValue(s.eqlimit)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 	tc:RegisterEffect(e2)
 end
 function s.eqlimit(e,c)

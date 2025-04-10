@@ -1,9 +1,9 @@
--- 壱世壊を劈く弦声
--- Tearalaments Heartbeats
--- Scripted by Hatter
+--壱世壊を劈く弦声
+--Tearlaments Heartbeat
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Shuffle 1 Spell/Trap to the Deck
+	--Shuffle 1 Spell/Trap to the Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TODECK+CATEGORY_HANDES)
@@ -11,11 +11,11 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,id)
-	e1:SetHintTiming(0,TIMING_END_PHASE+TIMING_EQUIP)
+	e1:SetHintTiming(0,TIMING_END_PHASE|TIMING_EQUIP)
 	e1:SetTarget(s.tdtg)
 	e1:SetOperation(s.tdop)
 	c:RegisterEffect(e1)
-	-- Add 1 "Tearalaments" Trap to the hand
+	--Add 1 "Tearalaments" Trap to the hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TOHAND)
@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={CARD_VISAS_STARFROST}
-s.listed_series={0x182}
+s.listed_series={SET_TEARLAMENTS}
 function s.tdfilter(c)
 	return c:IsSpellTrap() and c:IsAbleToDeck()
 end
@@ -56,7 +56,7 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x182) and c:IsTrap() and c:IsAbleToHand()
+	return c:IsSetCard(SET_TEARLAMENTS) and c:IsTrap() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc) end

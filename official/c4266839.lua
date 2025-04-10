@@ -1,4 +1,5 @@
 --精神寄生体
+--Kiseitai
 local s,id=GetID()
 function s.initial_effect(c)
 	--damage
@@ -27,7 +28,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_EQUIP_LIMIT)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	e1:SetValue(s.eqlimit)
 	c:RegisterEffect(e1)
 	--recover
@@ -35,20 +36,20 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_RECOVER)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
-	e2:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e2:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCountLimit(1)
 	e2:SetCondition(s.recon)
 	e2:SetTarget(s.retg)
 	e2:SetOperation(s.reop)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 	c:RegisterEffect(e2)
 end
 function s.eqlimit(e,c)
 	return e:GetOwner()==c
 end
 function s.recon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return Duel.IsTurnPlayer(1-tp)
 end
 function s.retg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

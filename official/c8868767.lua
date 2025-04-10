@@ -23,7 +23,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local res=false
 		if turn_p==tp then
-			res=Duel.IsExistingMatchingCard(s.rmfilter,tp,LOCATION_GRAVE+LOCATION_MZONE,0,1,nil)
+			res=Duel.IsExistingMatchingCard(s.rmfilter,tp,LOCATION_GRAVE|LOCATION_MZONE,0,1,nil)
 		else
 			res=Duel.IsPlayerCanDiscardDeck(tp,1)
 		end
@@ -43,7 +43,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetLabel()==tp then
 		--Activated during your turn
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-		local rg=Duel.SelectMatchingCard(tp,s.rmfilter,tp,LOCATION_GRAVE+LOCATION_MZONE,0,res,res,nil)
+		local rg=Duel.SelectMatchingCard(tp,s.rmfilter,tp,LOCATION_GRAVE|LOCATION_MZONE,0,res,res,nil)
 		if #rg==0 then return end
 		if Duel.Remove(rg,POS_FACEUP,REASON_EFFECT)==res and res==1 then
 			Duel.BreakEffect()
@@ -55,7 +55,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			local og=Duel.GetOperatedGroup()
 			if og:FilterCount(Card.IsLocation,nil,LOCATION_GRAVE)~=res then return end
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-			local rg=Duel.SelectMatchingCard(tp,s.rmfilter,tp,LOCATION_GRAVE+LOCATION_MZONE,0,1,1,nil)
+			local rg=Duel.SelectMatchingCard(tp,s.rmfilter,tp,LOCATION_GRAVE|LOCATION_MZONE,0,1,1,nil)
 			if #rg==0 then return end
 			Duel.BreakEffect()
 			Duel.Remove(rg,POS_FACEUP,REASON_EFFECT) 

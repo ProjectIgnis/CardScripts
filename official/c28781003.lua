@@ -13,18 +13,14 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1,id)
-	e1:SetCost(s.spcost)
+	e1:SetCost(Cost.Detach(1))
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
 end
-s.listed_series={0x10db,0xba,0x2073}
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
-end
+s.listed_series={SET_THE_PHANTOM_KNIGHTS,SET_RAIDRAPTOR,SET_XYZ_DRAGON}
 function s.spfilter(c,e,tp,mc,rk,pg)
-	return c:IsType(TYPE_XYZ) and (c:IsSetCard(0xba) or c:IsSetCard(0x2073) or c:IsSetCard(0x10db))
+	return c:IsType(TYPE_XYZ) and (c:IsSetCard(SET_RAIDRAPTOR) or c:IsSetCard(SET_XYZ_DRAGON) or c:IsSetCard(SET_THE_PHANTOM_KNIGHTS))
 		and (c:IsRank(rk-1) or c:IsRank(rk+1))
 		and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0
 		and (#pg<=0 or pg:IsContains(mc))
@@ -60,8 +56,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 				e1:SetLabelObject(sc)
 				e1:SetCondition(s.descon)
 				e1:SetOperation(s.desop)
-				e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
-				sc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,1))
+				e1:SetReset(RESETS_STANDARD_PHASE_END|RESET_OPPO_TURN)
+				sc:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END|RESET_OPPO_TURN,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,1))
 				Duel.RegisterEffect(e1,tp)
 			end
 		end

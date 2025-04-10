@@ -1,4 +1,5 @@
 --スピア・ドラゴン
+--Spear Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--to defense

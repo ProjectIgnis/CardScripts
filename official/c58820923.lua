@@ -1,4 +1,5 @@
 --No.95 ギャラクシーアイズ・ダークマター・ドラゴン
+--Number 95: Galaxy-Eyes Dark Matter Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -25,17 +26,17 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCondition(s.atkcon)
-	e3:SetCost(s.atkcost)
+	e3:SetCost(Cost.Detach(1))
 	e3:SetTarget(s.atktg)
 	e3:SetOperation(s.atkop)
 	c:RegisterEffect(e3,false,REGISTER_FLAG_DETACH_XMAT)
 end
 s.xyz_number=95
 function s.ovfilter(c,tp,xyzc)
-	return c:IsFaceup() and c:IsSetCard(0x107b,xyzc,SUMMON_TYPE_XYZ,tp) and c:IsType(TYPE_XYZ,xyzc,SUMMON_TYPE_XYZ,tp)
+	return c:IsFaceup() and c:IsSetCard(SET_GALAXY_EYES,xyzc,SUMMON_TYPE_XYZ,tp) and c:IsType(TYPE_XYZ,xyzc,SUMMON_TYPE_XYZ,tp)
 end
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ)
+	return e:GetHandler():IsXyzSummoned()
 end
 function s.cfilter(c)
 	return c:IsRace(RACE_DRAGON) and c:IsAbleToGraveAsCost()
@@ -71,10 +72,6 @@ end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsAbleToEnterBP()
 end
-function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
-end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetEffectCount(EFFECT_EXTRA_ATTACK)==0
 		and e:GetHandler():GetEffectCount(EFFECT_EXTRA_ATTACK_MONSTER)==0 end
@@ -87,7 +84,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetCode(EFFECT_EXTRA_ATTACK_MONSTER)
 		e1:SetValue(1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		c:RegisterEffect(e1)
 	end
 end

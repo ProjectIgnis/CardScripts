@@ -1,4 +1,5 @@
 --闇の幻影
+--Dark Illusion
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -16,7 +17,7 @@ function s.cfilter(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return end
-	if not re:IsActiveType(TYPE_MONSTER) and not re:IsHasType(EFFECT_TYPE_ACTIVATE) then return false end
+	if not re:IsMonsterEffect() and not re:IsHasType(EFFECT_TYPE_ACTIVATE) then return false end
 	local tg=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 	return tg and tg:IsExists(s.cfilter,1,nil) and Duel.IsChainNegatable(ev)
 end

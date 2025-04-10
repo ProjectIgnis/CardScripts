@@ -4,7 +4,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--2+ "Prank-Kids" monsters
-	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x120),2)
+	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_PRANK_KIDS),2)
 	--Must be Link Summoned
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_SINGLE)
@@ -19,8 +19,8 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E+TIMING_MAIN_END)
-	e1:SetCost(aux.CostWithReplace(s.descost,CARD_PRANKKIDS_MEOWMU))
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E|TIMING_MAIN_END)
+	e1:SetCost(aux.CostWithReplace(Cost.SelfTribute,CARD_PRANKKIDS_MEOWMU))
 	e1:SetTarget(s.destg)
 	e1:SetOperation(s.desop)
 	c:RegisterEffect(e1)
@@ -37,12 +37,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x120}
-function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsReleasable() end
-	Duel.Release(c,REASON_COST)
-end
+s.listed_series={SET_PRANK_KIDS}
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local sg=Duel.GetMatchingGroup(Card.IsSpellTrap,tp,0,LOCATION_ONFIELD,nil)
 	if chk==0 then return #sg>0 end

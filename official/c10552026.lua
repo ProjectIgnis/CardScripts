@@ -4,7 +4,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Link Summon
 	c:EnableReviveLimit()
-	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0xfc),2,2)
+	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_GOUKI),2,2)
 	--Negate monster effect
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -19,14 +19,14 @@ function s.initial_effect(c)
 	e1:SetOperation(s.negop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0xfc}
+s.listed_series={SET_GOUKI}
 s.listed_names={id}
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsStatus(STATUS_BATTLE_DESTROYED) then return false end
 	local loc,seq,p=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION,CHAININFO_TRIGGERING_SEQUENCE,CHAININFO_TRIGGERING_CONTROLER)
 	if p==1-tp then seq=seq+16 end
-	return re:IsActiveType(TYPE_MONSTER) and (loc&LOCATION_MZONE)~=0 and bit.extract(c:GetLinkedZone(),seq)~=0 and Duel.IsChainNegatable(ev)
+	return re:IsMonsterEffect() and (loc&LOCATION_MZONE)~=0 and bit.extract(c:GetLinkedZone(),seq)~=0 and Duel.IsChainNegatable(ev)
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -37,7 +37,7 @@ function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0xfc) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_GOUKI) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) and Duel.Destroy(eg,REASON_EFFECT)>0 then

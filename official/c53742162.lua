@@ -1,14 +1,14 @@
--- 氷水浸蝕
--- Icejade Erosion
--- Scripted by Hatter
+--氷水浸蝕
+--Icejade Erosion
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Activate
+	--Activate
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_ACTIVATE)
 	e0:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e0)
-	-- Negate
+	--Negate
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_DISABLE)
@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.negtg)
 	e1:SetOperation(s.negop)
 	c:RegisterEffect(e1)
-	-- Add to hand or Special Summon
+	--Add to hand or Special Summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND+CATEGORY_SPECIAL_SUMMON)
@@ -35,16 +35,16 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x16e}
+s.listed_series={SET_ICEJADE}
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsOnField() and chkc:IsNegatable() end
 	if chk==0 then
-		return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x16e),tp,LOCATION_MZONE,0,1,nil)
+		return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_ICEJADE),tp,LOCATION_MZONE,0,1,nil)
 			and Duel.IsExistingTarget(Card.IsNegatable,tp,0,LOCATION_ONFIELD,1,nil)
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_NEGATE)
 	local g=Duel.SelectTarget(tp,Card.IsNegatable,tp,0,LOCATION_ONFIELD,1,1,nil)
-	local dg=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,0x16e),tp,LOCATION_MZONE,0,nil)
+	local dg=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,SET_ICEJADE),tp,LOCATION_MZONE,0,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,dg,1,tp,LOCATION_MZONE)
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,1,1-tp,LOCATION_ONFIELD)
 end
@@ -52,23 +52,23 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local dg=Duel.SelectMatchingCard(tp,aux.FaceupFilter(Card.IsSetCard,0x16e),tp,LOCATION_MZONE,0,1,1,nil)
+	local dg=Duel.SelectMatchingCard(tp,aux.FaceupFilter(Card.IsSetCard,SET_ICEJADE),tp,LOCATION_MZONE,0,1,1,nil)
 	if #dg<=0 or Duel.Destroy(dg,REASON_EFFECT)<=0 then return end
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup()
 		and tc:IsControler(1-tp) and not tc:IsDisabled() then
-		-- Negate effects
+		--Negate effects
 		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
 		e2:SetValue(RESET_TURN_SET)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e2:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e2)
 	end
 end
@@ -80,7 +80,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp and eg:IsExists(s.thconfilter,1,nil,tp)
 end
 function s.thfilter(c,ft,e,tp)
-	return c:IsMonster() and c:IsSetCard(0x16e) 
+	return c:IsMonster() and c:IsSetCard(SET_ICEJADE) 
 		and (c:IsAbleToHand() or (ft>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -1,4 +1,5 @@
 --EMギタートル
+--Performapal Guitartle
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -25,9 +26,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x9f}
+s.listed_series={SET_PERFORMAPAL}
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return rp==tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_PENDULUM) and re:GetHandler():IsSetCard(0x9f) and e:GetHandler()~=re:GetHandler()
+	return rp==tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_PENDULUM) and re:GetHandler():IsSetCard(SET_PERFORMAPAL) and e:GetHandler()~=re:GetHandler()
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
@@ -50,7 +51,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_LSCALE)
 		e1:SetValue(2)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_UPDATE_RSCALE)

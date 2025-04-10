@@ -29,10 +29,10 @@ function s.initial_effect(c)
 	e3:SetCondition(s.sscon)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xb2}
+s.listed_series={SET_UA}
 s.listed_names={id}
 function s.spfilter(c,ft)
-	return c:IsFaceup() and c:IsSetCard(0xb2) and not c:IsCode(id) and c:IsAbleToHandAsCost()
+	return c:IsFaceup() and c:IsSetCard(SET_UA) and not c:IsCode(id) and c:IsAbleToHandAsCost()
 		and (ft>0 or c:GetSequence()<5)
 end
 function s.spcon(e,c)
@@ -62,21 +62,21 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	g:DeleteGroup()
 end
 function s.ssfilter(c,e,tp)
-	return c:IsSetCard(0xb2) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsCode(id)
+	return c:IsSetCard(SET_UA) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsCode(id)
 end
 function s.sstg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(s.ssfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,e,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_GRAVE)
+		and Duel.IsExistingMatchingCard(s.ssfilter,tp,LOCATION_HAND|LOCATION_GRAVE,0,1,nil,e,tp) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND|LOCATION_GRAVE)
 end
 function s.ssop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.ssfilter),tp,LOCATION_HAND+LOCATION_GRAVE,0,1,1,nil,e,tp)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.ssfilter),tp,LOCATION_HAND|LOCATION_GRAVE,0,1,1,nil,e,tp)
 	if #g>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
 function s.sscon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==1-tp
+	return Duel.IsTurnPlayer(1-tp)
 end

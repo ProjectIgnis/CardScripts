@@ -17,10 +17,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={CARD_ALBAZ}
-s.listed_series={0x166}
+s.listed_series={SET_DESPIA}
 --To hand + potential Fusion Summon
 function s.thfilter(c)
-	return c:IsAbleToHand() and ((c:IsSetCard(0x166) and c:IsMonster()) or c:IsCode(CARD_ALBAZ))
+	return c:IsAbleToHand() and ((c:IsSetCard(SET_DESPIA) and c:IsMonster()) or c:IsCode(CARD_ALBAZ))
 end
 function s.fextra(e,tp,mg)
 	return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsAbleToRemove),tp,LOCATION_MZONE,0,nil)
@@ -52,7 +52,7 @@ function s.stage2(e,tc,tp,mg,chk)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end

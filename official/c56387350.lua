@@ -1,4 +1,5 @@
 --ヴァンパイア・ベビー
+--Vampire Baby
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -6,7 +7,7 @@ function s.initial_effect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e1:SetCode(EVENT_PHASE+PHASE_BATTLE)
+	e1:SetCode(EVENT_PHASE|PHASE_BATTLE)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
 	e1:SetCondition(s.spcon)
@@ -21,7 +22,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE,0,1)
+	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_BATTLE,0,1)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(id)~=0

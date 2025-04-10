@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1,id)
 	e1:SetHintTiming(0,TIMING_MAIN_END|TIMINGS_CHECK_MONSTER)
 	e1:SetCondition(function() return Duel.IsMainPhase() end)
-	e1:SetCost(s.spcost)
+	e1:SetCost(Cost.SelfToGrave)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
@@ -35,11 +35,6 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_GEM,SET_GEM_KNIGHT}
 s.material_setcode={SET_GEM}
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(c,REASON_COST)
-end
 function s.spfilter(c,e,tp,hc)
 	if not (c:IsSetCard(SET_GEM) and not c:IsRace(RACE_ROCK) and c:IsMonster() and c:IsCanBeSpecialSummoned(e,0,tp,true,false)) then return false end
 	if c:IsLocation(LOCATION_EXTRA) then

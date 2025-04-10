@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0x40b5),aux.FilterBoolFunctionEx(Card.IsSetCard,0x10b5),aux.FilterBoolFunctionEx(Card.IsSetCard,0x20b5))
+	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_RITUAL_BEAST_ULTI),aux.FilterBoolFunctionEx(Card.IsSetCard,SET_RITUAL_BEAST_TAMER),aux.FilterBoolFunctionEx(Card.IsSetCard,SET_SPIRITUAL_BEAST))
 	Fusion.AddContactProc(c,s.contactfil,s.contactop,true,aux.TRUE,1)
 	--negate
 	local e1=Effect.CreateEffect(c)
@@ -15,13 +15,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
-s.listed_series={0xb5,0x40b5,0x10b5,0x20b5}
-s.material_setcode={0xb5,0x10b5,0x20b5,0x40b5}
+s.listed_series={SET_RITUAL_BEAST,SET_RITUAL_BEAST_ULTI,SET_RITUAL_BEAST_TAMER,SET_SPIRITUAL_BEAST}
+s.material_setcode={SET_RITUAL_BEAST,SET_RITUAL_BEAST_TAMER,SET_SPIRITUAL_BEAST,SET_RITUAL_BEAST_ULTI}
 function s.contactfil(tp)
 	return Duel.GetMatchingGroup(Card.IsAbleToRemoveAsCost,tp,LOCATION_MZONE,0,nil)
 end
 function s.contactop(g)
-	Duel.Remove(g,POS_FACEUP,REASON_COST+REASON_MATERIAL)
+	Duel.Remove(g,POS_FACEUP,REASON_COST|REASON_MATERIAL)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SPECIAL+1
@@ -37,15 +37,15 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCost(s.discost)
 	e1:SetTarget(s.distg)
 	e1:SetOperation(s.disop)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	e:GetHandler():RegisterEffect(e1)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	return re~=e and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
-		and (re:IsActiveType(TYPE_MONSTER) or re:IsHasType(EFFECT_TYPE_ACTIVATE)) and Duel.IsChainNegatable(ev)
+		and (re:IsMonsterEffect() or re:IsHasType(EFFECT_TYPE_ACTIVATE)) and Duel.IsChainNegatable(ev)
 end
 function s.filter(c)
-	return c:IsSetCard(0xb5) and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(SET_RITUAL_BEAST) and c:IsAbleToRemoveAsCost()
 end
 function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,nil) end

@@ -1,4 +1,5 @@
 --オーバー・デッド・ライン
+--Overdoom Line
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -42,12 +43,12 @@ function s.acttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetRange(LOCATION_SZONE)
 	e1:SetCondition(s.descon)
 	e1:SetOperation(s.desop)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_SELF_TURN,2)
+	e1:SetReset(RESETS_STANDARD_PHASE_END|RESET_SELF_TURN,2)
 	c:RegisterEffect(e1)
 	c:SetTurnCounter(0)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -70,13 +71,13 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	local atkg=e:GetLabelObject()
 	if c:GetFlagEffect(id)==0 then
-		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD_DISABLE,0,1)
+		c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD_DISABLE,0,1)
 		atkg:Clear()
 	end
 	local g=eg:Filter(s.filter,nil,e,tp)
 	local tc=g:GetFirst()
 	for tc in aux.Next(g) do
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+		tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1)
 		atkg:AddCard(tc)
 	end
 end

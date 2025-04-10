@@ -1,4 +1,5 @@
 --偉大魔獣 ガーゼット
+--Great Maju Garzett
 local s,id=GetID()
 function s.initial_effect(c)
 	--tribute check
@@ -26,7 +27,7 @@ function s.valcheck(e,c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK)
 		e1:SetValue(atk)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE-RESET_TOFIELD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE-RESET_TOFIELD)
 		c:RegisterEffect(e1)
 	end
 end

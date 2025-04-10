@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return Duel.IsTurnPlayer(1-tp)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -36,7 +36,7 @@ end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	if Duel.Destroy(e:GetHandler(),REASON_EFFECT)~=0 then
-		Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
+		Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE|PHASE_BATTLE_STEP,1)
 	end
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -44,7 +44,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_DISCARD+REASON_COST,nil)
 end
 function s.spfilter(c,e,tp)
-	return c:IsAttackBelow(2000) and c:IsRace(RACE_WARRIOR+RACE_SPELLCASTER)
+	return c:IsAttackBelow(2000) and c:IsRace(RACE_WARRIOR|RACE_SPELLCASTER)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

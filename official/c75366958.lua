@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x11a}
+s.listed_series={SET_DINOWRESTLER}
 function s.spcon(e,c)
 	if c==nil then return true end
 	return Duel.GetFieldGroupCount(c:GetControler(),LOCATION_MZONE,0)==0
@@ -31,5 +31,5 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 end
 function s.synlimit(e,c)
 	if not c then return false end
-	return not c:IsSetCard(0x11a)
+	return not c:IsSetCard(SET_DINOWRESTLER)
 end

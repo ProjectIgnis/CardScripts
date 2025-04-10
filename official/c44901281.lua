@@ -18,9 +18,9 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_SPSUMMON)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x100d}
+s.listed_series={SET_X_SABER}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x100d)
+	return c:IsFaceup() and c:IsSetCard(SET_X_SABER)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentChain(true)==0 and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil)

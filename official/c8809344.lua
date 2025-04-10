@@ -1,4 +1,5 @@
 --外神ナイアルラ
+--Outer Entity Nyarla
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -26,11 +27,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.rkcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ)
+	return e:GetHandler():IsXyzSummoned()
 end
 function s.rkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
-	local ct=Duel.DiscardHand(tp,Card.IsDiscardable,1,60,REASON_COST+REASON_DISCARD)
+	local ct=Duel.DiscardHand(tp,Card.IsDiscardable,1,60,REASON_COST|REASON_DISCARD)
 	e:SetLabel(ct)
 end
 function s.rkop(e,tp,eg,ep,ev,re,r,rp)
@@ -39,7 +40,7 @@ function s.rkop(e,tp,eg,ep,ev,re,r,rp)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_UPDATE_RANK)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		e2:SetValue(e:GetLabel())
 		c:RegisterEffect(e2)
 	end
@@ -68,7 +69,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
 		e1:SetCode(EFFECT_CHANGE_ATTRIBUTE)
 		e1:SetValue(tc:GetOriginalAttribute())
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		c:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_CHANGE_RACE)

@@ -43,7 +43,7 @@ end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
-	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE+LOCATION_HAND)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK|LOCATION_GRAVE|LOCATION_HAND)
 end
 function s.filter(c,e,tp,cd)
 	return c:IsCode(cd) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -54,14 +54,14 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
+	e1:SetReset(RESET_PHASE|PHASE_DAMAGE)
 	e1:SetTargetRange(1,1)
 	Duel.RegisterEffect(e1,tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local tc=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_DECK,0,1,1,nil):GetFirst()
 	if tc and Duel.SendtoGrave(tc,REASON_EFFECT)>0
 		and tc:IsLocation(LOCATION_GRAVE) and tc:IsType(TYPE_NORMAL) then
-		local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.filter),tp,LOCATION_DECK+LOCATION_GRAVE+LOCATION_HAND,0,nil,e,tp,tc:GetCode())
+		local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.filter),tp,LOCATION_DECK|LOCATION_GRAVE|LOCATION_HAND,0,nil,e,tp,tc:GetCode())
 		local ct=Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) and math.min(1,Duel.GetLocationCount(tp,LOCATION_MZONE),#g) or math.min(#g,Duel.GetLocationCount(tp,LOCATION_MZONE))
 		if ct>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

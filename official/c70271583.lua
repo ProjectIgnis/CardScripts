@@ -1,4 +1,5 @@
 --カラクリ守衛 参壱参
+--Karakuri Watchdog mdl 313 "Saizan"
 local s,id=GetID()
 function s.initial_effect(c)
 	--must attack
@@ -32,7 +33,7 @@ function s.initial_effect(c)
 	e5:SetValue(1)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x11}
+s.listed_series={SET_KARAKURI}
 function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsFaceup() and c:IsRelateToEffect(e) then
@@ -43,7 +44,7 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==tp and (e:GetHandler()==Duel.GetAttacker() or e:GetHandler()==Duel.GetAttackTarget())
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x11)
+	return c:IsFaceup() and c:IsSetCard(SET_KARAKURI)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -54,7 +55,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		e1:SetValue(800)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()

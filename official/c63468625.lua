@@ -38,7 +38,7 @@ function s.initial_effect(c)
 	e4:SetCategory(CATEGORY_DAMAGE)
 	e4:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e4:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_FIELD)
-	e4:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e4:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetCountLimit(1)
 	e4:SetCondition(s.damcon)
@@ -47,12 +47,12 @@ function s.initial_effect(c)
 	e4:SetOperation(s.damop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x13}
+s.listed_series={SET_MEKLORD}
 function s.eqval(ec,c,tp)
 	return ec:IsType(TYPE_SYNCHRO) and ec:IsControler(1-tp)
 end
 function s.spfilter(c)
-	return c:IsMonster() and c:IsSetCard(0x13) and c:IsAbleToGraveAsCost()
+	return c:IsMonster() and c:IsSetCard(SET_MEKLORD) and c:IsAbleToGraveAsCost()
 end
 function s.spcon(e,c)
 	if c==nil then return true end
@@ -96,7 +96,7 @@ function s.equipop(c,e,tp,tc)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_EQUIP)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 	e2:SetValue(atk)
 	tc:RegisterEffect(e2)
 end
@@ -108,7 +108,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.dcfilter(c)
 	return c:GetFlagEffect(id)~=0 and c:IsAbleToGraveAsCost()
@@ -123,7 +123,7 @@ function s.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetCode(EFFECT_CANNOT_BP)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
 	e1:SetTargetRange(1,0)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	local atk=g:GetFirst():GetTextAttack()
 	if atk<0 then atk=0 end

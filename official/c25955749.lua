@@ -1,5 +1,5 @@
 --閃刀術式－ジャミングウェーブ
---Brandish Skill Jamming Wave
+--Sky Striker Maneuver - Jamming Waves!
 --
 local s,id=GetID()
 function s.initial_effect(c)
@@ -43,4 +43,3 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-

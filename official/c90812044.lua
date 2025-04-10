@@ -1,6 +1,5 @@
 --連鎖召喚
 --Chain Summon
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -45,9 +44,9 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
 		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_CLIENT_HINT)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		sc:RegisterEffect(e1,true)
-		sc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+		sc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1)
 		--Return it to extra deck during end phase
 		local e2=Effect.CreateEffect(e:GetHandler())
 		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -71,5 +70,5 @@ function s.retcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
-	Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)
+	Duel.SendtoDeck(tc,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 end

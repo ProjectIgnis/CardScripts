@@ -1,5 +1,5 @@
 --ベアルクティ－ミクポーラ
---Ursarctic Micpola
+--Ursarctic Mikpolar
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -17,9 +17,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x165}
+s.listed_series={SET_URSARCTIC}
 function s.thfilter(c)
-	return c:IsSetCard(0x165) and c:IsMonster() and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(SET_URSARCTIC) and c:IsMonster() and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

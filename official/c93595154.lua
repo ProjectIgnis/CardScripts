@@ -46,7 +46,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsReason(REASON_COST) and re and re:IsActivated() and re:IsActiveType(TYPE_MONSTER)
+	if c:IsReason(REASON_COST) and re and re:IsActivated() and re:IsMonsterEffect()
 		and re:GetHandler():IsCode(CARD_ALBAZ) then
 		local e1=Effect.CreateEffect(c)
 		e1:SetDescription(aux.Stringid(id,1))
@@ -58,12 +58,12 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCondition(s.setcon)
 		e1:SetTarget(s.settg)
 		e1:SetOperation(s.setop)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		c:RegisterEffect(e1)
 	end
 end
 function s.setcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_END
+	return Duel.IsPhase(PHASE_END)
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsSSetable() end

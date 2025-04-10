@@ -1,4 +1,5 @@
 --EMオッドアイズ・ユニコーン
+--Performapal Odd-Eyes Unicorn
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -28,13 +29,13 @@ function s.initial_effect(c)
 	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x9f,0x99}
+s.listed_series={SET_PERFORMAPAL,SET_ODD_EYES}
 function s.atkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x9f)
+	return c:IsFaceup() and c:IsSetCard(SET_PERFORMAPAL)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttacker()
-	return at:IsControler(tp) and at:IsSetCard(0x99)
+	return at:IsControler(tp) and at:IsSetCard(SET_ODD_EYES)
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local at=Duel.GetAttacker()
@@ -54,12 +55,12 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(atk)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_BATTLE)
 		at:RegisterEffect(e1)
 	end
 end
 function s.filter(c)
-	return c:IsSetCard(0x9f) and c:GetAttack()>0
+	return c:IsSetCard(SET_PERFORMAPAL) and c:GetAttack()>0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc) end

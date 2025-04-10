@@ -1,4 +1,5 @@
 --王宮の号令
+--Royal Command
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate

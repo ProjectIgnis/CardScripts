@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e3:SetCategory(CATEGORY_DRAW)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e3:SetCode(EVENT_PHASE+PHASE_BATTLE)
+	e3:SetCode(EVENT_PHASE|PHASE_BATTLE)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1)
 	e3:SetCondition(s.drcon)
@@ -36,10 +36,10 @@ function s.initial_effect(c)
 	e3:SetOperation(s.drop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xe6}
+s.listed_series={SET_FLOWER_CARDIAN}
 s.listed_names={id}
 function s.hspfilter(c,ft,tp)
-	return c:IsSetCard(0xe6) and c:GetLevel()==1 and not c:IsCode(id)
+	return c:IsSetCard(SET_FLOWER_CARDIAN) and c:GetLevel()==1 and not c:IsCode(id)
 end
 function s.hspcon(e,c)
 	if c==nil then return true end
@@ -72,7 +72,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local tc=Duel.GetOperatedGroup():GetFirst()
 		Duel.ConfirmCards(1-tp,tc)
 		Duel.BreakEffect()
-		if tc:IsMonster() and tc:IsSetCard(0xe6) then
+		if tc:IsMonster() and tc:IsSetCard(SET_FLOWER_CARDIAN) then
 			if tc:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 				Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 			end

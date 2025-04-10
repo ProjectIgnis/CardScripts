@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e2:SetCode(EFFECT_CHANGE_CODE)
-	e2:SetRange(LOCATION_SZONE+LOCATION_GRAVE)
+	e2:SetRange(LOCATION_SZONE|LOCATION_GRAVE)
 	e2:SetValue(70245411)
 	c:RegisterEffect(e2)
 	--Draw 1 card. If "Edge Imp" monster, destroy 1 card, else return 1 card from hand to deck
@@ -42,13 +42,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 	--Lists "Edge Imp" archetype
-s.listed_series={0xc3}
+s.listed_series={SET_EDGE_IMP}
 	--Specifically lists "Toy Vendor"
 s.listed_names={70245411}
 	--Discard 1 card as a cost
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,e:GetHandler()) end
-	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST|REASON_DISCARD)
 end
 	--Activation legality
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -62,7 +62,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.Draw(tp,1,REASON_EFFECT)==0 then return end
 	local tc=Duel.GetOperatedGroup():GetFirst()
 	Duel.ConfirmCards(1-tp,tc)
-	if tc:IsSetCard(0xc3) and tc:IsMonster() then
+	if tc:IsSetCard(SET_EDGE_IMP) and tc:IsMonster() then
 		if Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 			local tg=dg:Select(tp,1,1,nil)
@@ -74,9 +74,9 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 		local g=Duel.SelectMatchingCard(tp,Card.IsAbleToDeck,tp,LOCATION_HAND,0,1,1,nil)
 		if Duel.SelectOption(tp,aux.Stringid(id,3),aux.Stringid(id,4))==0 then
-			Duel.SendtoDeck(g,nil,0,REASON_EFFECT)
+			Duel.SendtoDeck(g,nil,SEQ_DECKTOP,REASON_EFFECT)
 		else
-			Duel.SendtoDeck(g,nil,1,REASON_EFFECT)
+			Duel.SendtoDeck(g,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
 		end
 	end
 	Duel.ShuffleHand(tp)
@@ -95,7 +95,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		e1:SetValue(tc:GetAttack()/2)
 		tc:RegisterEffect(e1)
 	end

@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x7f}
+s.listed_series={SET_UTOPIC}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetActivityCount(tp,ACTIVITY_SPSUMMON)==0 end
 	local e1=Effect.CreateEffect(e:GetHandler())
@@ -23,7 +23,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
 	e1:SetLabelObject(e)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,1),nil)
 end
@@ -34,7 +34,7 @@ function s.filter(c,e,tp)
 	return c:IsCanBeEffectTarget(e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.xyzfilter(c,mg,tp,chk)
-	return c:IsSetCard(0x7f) and c:IsXyzSummonable(nil,mg,3,3) and (not chk or Duel.GetLocationCountFromEx(tp,tp,mg,c)>0)
+	return c:IsSetCard(SET_UTOPIC) and c:IsXyzSummonable(nil,mg,3,3) and (not chk or Duel.GetLocationCountFromEx(tp,tp,mg,c)>0)
 end
 function s.mfilter1(c,mg,exg,tp)
 	return mg:IsExists(s.mfilter2,1,c,c,mg,exg,tp)
@@ -82,7 +82,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
@@ -94,7 +94,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #xyzg>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local xyz=xyzg:Select(tp,1,1,nil):GetFirst()
-		xyz:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+		xyz:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 		Duel.XyzSummon(tp,xyz,nil,g)
 	end
 end

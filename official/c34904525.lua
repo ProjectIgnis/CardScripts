@@ -34,7 +34,7 @@ function s.contactfil(tp)
 	return Duel.GetMatchingGroup(Card.IsAbleToRemoveAsCost,tp,LOCATION_ONFIELD,0,nil)
 end
 function s.contactop(g)
-	Duel.Remove(g,POS_FACEUP,REASON_COST+REASON_MATERIAL)
+	Duel.Remove(g,POS_FACEUP,REASON_COST|REASON_MATERIAL)
 end
 function s.thfilter(c)
 	return c:IsSpellTrap() and c:IsAbleToHand() and c:ListsCode(CARD_SANGA_OF_THE_THUNDER) and c:ListsCode(CARD_KAZEJIN) and c:ListsCode(CARD_SUIJIN)

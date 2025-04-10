@@ -1,4 +1,5 @@
 --セフィラの神意
+--Zefra Providence
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -20,10 +21,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.repop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xc4}
+s.listed_series={SET_ZEFRA}
 s.listed_names={id}
 function s.filter(c)
-	return c:IsSetCard(0xc4) and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(SET_ZEFRA) and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end
@@ -38,7 +39,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.repfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0xc4) and c:IsLocation(LOCATION_ONFIELD)
+	return c:IsFaceup() and c:IsSetCard(SET_ZEFRA) and c:IsLocation(LOCATION_ONFIELD)
 		and c:IsControler(tp) and not c:IsReason(REASON_REPLACE)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)

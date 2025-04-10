@@ -1,4 +1,5 @@
 --ゴルゴニック・グール
+--Gorgonic Ghoul
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -9,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(2,id)
 	e1:SetCondition(s.spcon)
-	e1:SetCost(s.spcost)
+	e1:SetCost(Cost.PayLP(300))
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
@@ -20,10 +21,6 @@ function s.cfilter(c)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD,0,1,nil)
-end
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,300) end
-	Duel.PayLPCost(tp,300)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

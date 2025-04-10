@@ -32,7 +32,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.cfilter(c)
-	return c:IsSummonType(SUMMON_TYPE_SPECIAL)
+	return c:IsSpecialSummoned()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
@@ -68,5 +68,5 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.distg(e,c)
-	return c:IsStatus(STATUS_SPSUMMON_TURN) and c:IsSummonType(SUMMON_TYPE_SPECIAL)
+	return c:IsStatus(STATUS_SPSUMMON_TURN) and c:IsSpecialSummoned()
 end

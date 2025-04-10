@@ -1,4 +1,4 @@
---Japanese name
+--神の怒り
 --Dangers of the Divine
 --scripted by pyrQ
 local s,id=GetID()

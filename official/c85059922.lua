@@ -1,12 +1,12 @@
--- 超魔導戦士－マスター・オブ・カオス
--- Master of Chaos
--- Scripted by Hatter
+--超魔導戦士－マスター・オブ・カオス
+--Master of Chaos
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	-- Fusion Materials
+	--Fusion Materials
 	Fusion.AddProcMix(c,true,true,CARD_DARK_MAGICIAN,s.ffilter)
-	-- Special Summon
+	--Special Summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -14,11 +14,11 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
 	e1:SetCountLimit(1,id)
-	e1:SetCondition(function(e) return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION) end)
+	e1:SetCondition(function(e) return e:GetHandler():IsFusionSummoned() end)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	-- Banish all opponent monsters
+	--Banish all opponent monsters
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_REMOVE)
@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.rmtg)
 	e2:SetOperation(s.rmop)
 	c:RegisterEffect(e2)
-	-- Add Spell to hand
+	--Add Spell to hand
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetCategory(CATEGORY_TOHAND)
@@ -44,10 +44,10 @@ function s.initial_effect(c)
 end
 s.material={CARD_DARK_MAGICIAN}
 s.listed_names={CARD_DARK_MAGICIAN}
-s.listed_series={0xcf}
-s.material_setcode={0xcf}
+s.listed_series={SET_CHAOS}
+s.material_setcode={SET_CHAOS}
 function s.ffilter(c,fc,sumtype,tp)
-	return c:IsType(TYPE_RITUAL,fc,sumtype,tp) and (c:IsSetCard(0xcf,fc,sumtype,tp) or c:IsSetCard(0x1048,fc,sumtype,tp))
+	return c:IsType(TYPE_RITUAL,fc,sumtype,tp) and (c:IsSetCard(SET_CHAOS,fc,sumtype,tp) or c:IsSetCard(SET_NUMBER_C,fc,sumtype,tp))
 end
 function s.attfilter(c)
 	return c:IsAttribute(ATTRIBUTE_LIGHT) or c:IsAttribute(ATTRIBUTE_DARK)
@@ -92,7 +92,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsSummonType(SUMMON_TYPE_FUSION) and c:IsReason(REASON_BATTLE+REASON_EFFECT)
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsFusionSummoned() and c:IsReason(REASON_BATTLE|REASON_EFFECT)
 end
 function s.thfilter(c)
 	return c:IsSpell() and c:IsAbleToHand()

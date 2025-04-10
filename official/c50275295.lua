@@ -1,5 +1,5 @@
 --電脳堺門－青龍
---Datascape Gate - Qinglong
+--Virtual World Gate - Qinglong
 --Scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -27,19 +27,19 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_GRAVE)
 	e3:SetCountLimit(1,{id,1})
-	e3:SetCost(aux.bfgcost)
+	e3:SetCost(Cost.SelfBanish)
 	e3:SetTarget(s.thtg)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x150}
+s.listed_series={SET_VIRTUAL_WORLD}
 function s.costfilter(c)
-	return c:IsSetCard(0x150) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
+	return c:IsSetCard(SET_VIRTUAL_WORLD) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end
 function s.ngcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_GRAVE+LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_GRAVE|LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_GRAVE+LOCATION_MZONE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_GRAVE|LOCATION_MZONE,0,1,1,nil)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.ngtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -56,18 +56,18 @@ function s.ngop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
 		e2:SetValue(RESET_TURN_SET)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e2:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e2)
 	end
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x150) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_VIRTUAL_WORLD) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

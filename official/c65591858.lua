@@ -15,9 +15,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
 end
-s.listed_series={0x70}
+s.listed_series={SET_CHRONOMALY}
 function s.counterfilter(c)
-	return c:IsSetCard(0x70)
+	return c:IsSetCard(SET_CHRONOMALY)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetCustomActivityCount(id,tp,ACTIVITY_SPSUMMON)==0 end
@@ -25,17 +25,17 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
 	Duel.RegisterEffect(e1,tp)
 	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,1),nil)
 end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
-	return not c:IsSetCard(0x70)
+	return not c:IsSetCard(SET_CHRONOMALY)
 end
 function s.filter(c,e,tp)
-	return c:GetLevel()==5 and c:IsSetCard(0x70) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:GetLevel()==5 and c:IsSetCard(SET_CHRONOMALY) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end

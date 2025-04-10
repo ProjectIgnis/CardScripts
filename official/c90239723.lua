@@ -1,4 +1,5 @@
 --D・リペアユニット
+--Morphtronic Repair Unit
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -23,9 +24,9 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_CANNOT_CHANGE_POSITION)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x26}
+s.listed_series={SET_MORPHTRONIC}
 function s.cfilter(c)
-	return c:IsSetCard(0x26) and c:IsMonster() and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(SET_MORPHTRONIC) and c:IsMonster() and c:IsAbleToGraveAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end
@@ -34,7 +35,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x26) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_MORPHTRONIC) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end
@@ -56,12 +57,12 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Equip(tp,c,tc)
 		--Add Equip limit
 		e:SetLabelObject(tc)
-		tc:CreateRelation(c,RESET_EVENT+RESETS_STANDARD)
+		tc:CreateRelation(c,RESET_EVENT|RESETS_STANDARD)
 		local e1=Effect.CreateEffect(tc)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_EQUIP_LIMIT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e1:SetValue(s.eqlimit)
 		c:RegisterEffect(e1)
 	end

@@ -1,4 +1,5 @@
 --ジャンク・ブレイカー
+--Junk Breaker
 local s,id=GetID()
 function s.initial_effect(c)
 	--disable
@@ -14,20 +15,16 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCondition(s.condition)
-	e2:SetCost(s.cost)
+	e2:SetCost(Cost.SelfTribute)
 	e2:SetTarget(s.target)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
 function s.sumsuc(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD&~(RESET_TEMP_REMOVE|RESET_TURN_SET)+RESET_PHASE+PHASE_END,0,1)
+	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD&~(RESET_TEMP_REMOVE|RESET_TURN_SET)|RESET_PHASE|PHASE_END,0,1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(id)>0
-end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() end
-	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsNegatableMonster,tp,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler()) end
@@ -41,18 +38,18 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(e:GetHandler())
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e2:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e2)
 		if tc:IsType(TYPE_TRAPMONSTER) then
 			local e3=Effect.CreateEffect(e:GetHandler())
 			e3:SetType(EFFECT_TYPE_SINGLE)
 			e3:SetCode(EFFECT_DISABLE_TRAPMONSTER)
-			e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e3:SetReset(RESETS_STANDARD_PHASE_END)
 			tc:RegisterEffect(e3)
 		end
 	end

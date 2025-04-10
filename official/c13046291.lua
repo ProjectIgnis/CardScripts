@@ -39,7 +39,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 		and Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
 	local sg=Duel.SelectReleaseGroupCost(tp,s.costfilter,1,1,false,nil,nil,e,tp,ft)
 	Duel.Release(sg,REASON_COST)
-	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST|REASON_DISCARD)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>-1
@@ -61,22 +61,22 @@ end
 function s.atchcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost()
 		and Duel.IsExistingTarget(s.xyzfilter,tp,LOCATION_MZONE,0,1,nil)
-		and Duel.IsExistingMatchingCard(Card.IsRace,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,RACE_REPTILE+RACE_DINOSAUR) end
+		and Duel.IsExistingMatchingCard(Card.IsRace,tp,LOCATION_HAND|LOCATION_GRAVE,0,1,nil,RACE_REPTILE|RACE_DINOSAUR) end
 	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
 end
 function s.atchtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.xyzfilter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(s.xyzfilter,tp,LOCATION_MZONE,0,1,nil)
-		and Duel.IsExistingMatchingCard(Card.IsRace,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,RACE_REPTILE+RACE_DINOSAUR) end
+		and Duel.IsExistingMatchingCard(Card.IsRace,tp,LOCATION_HAND|LOCATION_GRAVE,0,1,nil,RACE_REPTILE|RACE_DINOSAUR) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	Duel.SelectTarget(tp,s.xyzfilter,tp,LOCATION_MZONE,0,1,1,nil)
 end
 function s.atchop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() and not tc:IsImmuneToEffect(e)
-		and Duel.IsExistingMatchingCard(Card.IsRace,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,RACE_REPTILE+RACE_DINOSAUR) then
+		and Duel.IsExistingMatchingCard(Card.IsRace,tp,LOCATION_HAND|LOCATION_GRAVE,0,1,nil,RACE_REPTILE|RACE_DINOSAUR) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
-		local g=Duel.GetMatchingGroup(Card.IsRace,tp,LOCATION_HAND+LOCATION_GRAVE,0,nil,RACE_REPTILE+RACE_DINOSAUR)
+		local g=Duel.GetMatchingGroup(Card.IsRace,tp,LOCATION_HAND|LOCATION_GRAVE,0,nil,RACE_REPTILE|RACE_DINOSAUR)
 		local sg=aux.SelectUnselectGroup(g,e,tp,1,2,aux.dncheck,1,tp,HINTMSG_SPSUMMON)
 		if sg then
 			Duel.Overlay(tc,sg)

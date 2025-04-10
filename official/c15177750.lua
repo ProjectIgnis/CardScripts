@@ -53,10 +53,10 @@ function s.tgfilter(c)
 		and (c:IsFaceup() or c:IsLocation(LOCATION_HAND))
 end
 function s.rccost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_MZONE|LOCATION_HAND,0,1,nil) end
 	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_MZONE|LOCATION_HAND,0,1,1,nil)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function s.rctg(e,tp,eg,ep,ev,re,r,rp,chk)

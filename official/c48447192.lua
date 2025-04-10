@@ -1,7 +1,8 @@
 --剣の煌き
+--Sword of Sparkles
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsSetCard,0x100d))
+	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsSetCard,SET_X_SABER))
 	--destroy
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -25,7 +26,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.retop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x100d}
+s.listed_series={SET_X_SABER}
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local ec=e:GetHandler():GetEquipTarget()
 	return ec and eg:IsContains(ec)
@@ -55,6 +56,6 @@ end
 function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then
-		Duel.SendtoDeck(c,nil,0,REASON_EFFECT)
+		Duel.SendtoDeck(c,nil,SEQ_DECKTOP,REASON_EFFECT)
 	end
 end

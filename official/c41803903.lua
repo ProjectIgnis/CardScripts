@@ -1,5 +1,5 @@
 --魔界台本「ロマンティック・テラー」
---Abyss Script - Romantic Teller
+--Abyss Script - Romantic Terror
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -22,13 +22,13 @@ function s.initial_effect(c)
 	e2:SetOperation(s.setop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x10ec,0x20ec}
+s.listed_series={SET_ABYSS_ACTOR,SET_ABYSS_SCRIPT}
 function s.thfilter(c,e,tp)
-	return c:IsFaceup() and c:IsType(TYPE_PENDULUM) and c:IsSetCard(0x10ec) and c:IsAbleToHand()
+	return c:IsFaceup() and c:IsType(TYPE_PENDULUM) and c:IsSetCard(SET_ABYSS_ACTOR) and c:IsAbleToHand()
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,c)
 end
 function s.spfilter(c,e,tp,hc)
-	return c:IsFaceup() and c:IsType(TYPE_PENDULUM) and c:IsSetCard(0x10ec)
+	return c:IsFaceup() and c:IsType(TYPE_PENDULUM) and c:IsSetCard(SET_ABYSS_ACTOR)
 		and not c:IsOriginalCode(hc:GetOriginalCode()) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 		and Duel.GetLocationCountFromEx(tp,tp,hc,c)>0
 end
@@ -47,7 +47,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter2(c)
-	return c:IsSetCard(0x10ec) and c:IsFaceup() and c:IsType(TYPE_PENDULUM)
+	return c:IsSetCard(SET_ABYSS_ACTOR) and c:IsFaceup() and c:IsType(TYPE_PENDULUM)
 end
 function s.setcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -56,7 +56,7 @@ function s.setcon(e,tp,eg,ep,ev,re,r,rp)
 		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_EXTRA,0,1,nil)
 end
 function s.setfilter(c)
-	return c:IsSetCard(0x20ec) and c:IsSpell() and c:IsSSetable()
+	return c:IsSetCard(SET_ABYSS_SCRIPT) and c:IsSpell() and c:IsSSetable()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -69,4 +69,3 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	local sg=g:Select(tp,1,ct,nil)
 	Duel.SSet(tp,sg)
 end
-

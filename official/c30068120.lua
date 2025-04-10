@@ -1,4 +1,5 @@
 --エッジインプ・シザー
+--Edge Imp Sabres
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -17,7 +18,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToDeckAsCost,tp,LOCATION_HAND,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToDeckAsCost,tp,LOCATION_HAND,0,1,1,nil)
-	Duel.SendtoDeck(g,nil,0,REASON_COST)
+	Duel.SendtoDeck(g,nil,SEQ_DECKTOP,REASON_COST)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

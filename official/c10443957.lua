@@ -31,7 +31,7 @@ function s.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCondition(s.discon)
-	e3:SetCost(s.discost)
+	e3:SetCost(Cost.Detach(1))
 	e3:SetTarget(s.distg)
 	e3:SetOperation(s.disop)
 	c:RegisterEffect(e3,false,REGISTER_FLAG_DETACH_XMAT)
@@ -45,7 +45,7 @@ function s.ovfilter(c,tp,lc)
 end
 function s.xyzop(e,tp,chk)
 	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 end
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+	Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1)
 	return true
 end
 function s.atkval(e,c)
@@ -71,10 +71,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev)
-end
-function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

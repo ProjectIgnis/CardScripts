@@ -1,14 +1,14 @@
--- 壱世壊に奏でる哀唱
--- Tearalaments Sulliek
--- Scripted by Hatter
+--壱世壊に奏でる哀唱
+--Tearlaments Sulliek
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Activate
+	--Activate
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_ACTIVATE)
 	e0:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e0)
-	-- Negate 1 face-up monster's effects
+	--Negate 1 face-up monster's effects
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DISABLE+CATEGORY_TOGRAVE)
@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.distg)
 	e1:SetOperation(s.disop)
 	c:RegisterEffect(e1)
-	-- Add 1 "Tearlaments" monster to the hand
+	--Add 1 "Tearlaments" monster to the hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
@@ -56,7 +56,7 @@ end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not (tc:IsFaceup() and tc:IsRelateToEffect(e) and tc:IsCanBeDisabledByEffect(e)) or tc:IsImmuneToEffect(e) then return end
-	-- Negate its effects
+	--Negate its effects
 	Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_SINGLE)

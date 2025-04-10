@@ -1,4 +1,5 @@
 --闘争本能
+--Battle Instinct
 local s,id=GetID()
 function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
@@ -11,7 +12,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp and Duel.GetAttackTarget()==nil
+	return Duel.IsTurnPlayer(1-tp) and Duel.GetAttackTarget()==nil
 		and Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0
 end
 function s.spfilter(c,e,tp)

@@ -1,4 +1,5 @@
 --豪雨の結界像
+--Barrier Statue of the Torrent
 local s,id=GetID()
 function s.initial_effect(c)
 	--disable spsummon

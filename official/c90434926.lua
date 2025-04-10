@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and Duel.GetCurrentPhase()==PHASE_DRAW
+	return Duel.IsTurnPlayer(tp) and Duel.IsPhase(PHASE_DRAW)
 end
 function s.filter(c)
 	return c:IsAttribute(ATTRIBUTE_DARK) and not c:IsPublic()

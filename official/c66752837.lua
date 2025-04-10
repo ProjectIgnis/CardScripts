@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOHAND)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_TO_GRAVE)
-	e2:SetRange(LOCATION_HAND+LOCATION_GRAVE)
+	e2:SetRange(LOCATION_HAND|LOCATION_GRAVE)
 	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
 	e2:SetCountLimit(1,id)
 	e2:SetCondition(s.spcon)
@@ -25,7 +25,7 @@ s.listed_names={id}
 function s.cfilter(c)
 	return c:IsRace(RACE_DRAGON) and c:GetPreviousRaceOnField()==RACE_DRAGON
 		and c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousLocation(LOCATION_MZONE)
-		and c:IsReason(REASON_EFFECT+REASON_BATTLE) and not c:IsCode(id)
+		and c:IsReason(REASON_EFFECT|REASON_BATTLE) and not c:IsCode(id)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	if eg:IsContains(e:GetHandler()) then return false end

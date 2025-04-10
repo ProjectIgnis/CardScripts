@@ -1,8 +1,9 @@
 --星杯剣士アウラム
+--Auram the World Chalice Blademaster
 local s,id=GetID()
 function s.initial_effect(c)
 	--link summon
-	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0xfd),2,2)
+	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_WORLD_CHALICE),2,2)
 	c:EnableReviveLimit()
 	--atkup
 	local e1=Effect.CreateEffect(c)
@@ -36,15 +37,15 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop2)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xfe,0xfd}
+s.listed_series={SET_WORLD_LEGACY,SET_WORLD_CHALICE}
 function s.atkfilter(c)
-	return c:IsMonster() and c:IsSetCard(0xfe)
+	return c:IsMonster() and c:IsSetCard(SET_WORLD_LEGACY)
 end
 function s.atkval(e,c)
 	return Duel.GetMatchingGroup(s.atkfilter,c:GetControler(),LOCATION_GRAVE,0,nil):GetClassCount(Card.GetCode)*300
 end
 function s.cfilter(c,g,tp,zone)
-	return c:IsSetCard(0xfd) and g:IsContains(c)
+	return c:IsSetCard(SET_WORLD_CHALICE) and g:IsContains(c)
 		and Duel.GetMZoneCount(tp,c,tp,LOCATION_REASON_TOFIELD,zone)>0
 end
 function s.spcost1(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -78,7 +79,7 @@ function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.spfilter2(c,e,tp)
-	return c:IsSetCard(0xfd) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_WORLD_CHALICE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

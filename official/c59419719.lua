@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Fusion summon 1 "Fossil" fusion monster
 	--By banishing appropriate monsters from either GY as material
-	local e1=Fusion.CreateSummonEff({handler=c,fusfilter=aux.FilterBoolFunction(Card.IsSetCard,0x14c),matfilter=aux.FALSE,extrafil=s.fextra,
+	local e1=Fusion.CreateSummonEff({handler=c,fusfilter=aux.FilterBoolFunction(Card.IsSetCard,SET_FOSSIL),matfilter=aux.FALSE,extrafil=s.fextra,
 										stage2=s.stage2,extraop=Fusion.BanishMaterial,extratg=s.extratarget})
 	c:RegisterEffect(e1)
 	--Add this card from GY to hand
@@ -22,9 +22,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x14c}
+s.listed_series={SET_FOSSIL}
 function s.fextra(e,tp,mg)
-	if not Duel.IsPlayerAffectedByEffect(tp,69832741) then
+	if not Duel.IsPlayerAffectedByEffect(tp,CARD_SPIRIT_ELIMINATION) then
 		return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsAbleToRemove),tp,LOCATION_GRAVE,LOCATION_GRAVE,nil)
 	else
 		return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsAbleToRemove),tp,LOCATION_ONFIELD,0,nil)
@@ -42,7 +42,7 @@ function s.stage2(e,tc,tp,sg,chk)
 			e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 			e1:SetRange(LOCATION_MZONE)
 			e1:SetValue(s.tgval)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			tc:RegisterEffect(e1,true)
 		end
 	end
@@ -53,10 +53,10 @@ function s.extratarget(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.tgval(e,re,rp)
 	local rc=re:GetHandler()
-	return re:IsActiveType(TYPE_MONSTER)
+	return re:IsMonsterEffect()
 end
 function s.thcfilter(c,tp)
-	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsSetCard(0x14c) and c:IsType(TYPE_FUSION)
+	return c:IsReason(REASON_BATTLE|REASON_EFFECT) and c:IsSetCard(SET_FOSSIL) and c:IsType(TYPE_FUSION)
 		and c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)

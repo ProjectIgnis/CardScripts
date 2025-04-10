@@ -1,5 +1,5 @@
 --大いなる魔導
---Theologia Magistus
+--Magistus Theurgy
 --Scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -15,16 +15,16 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x152}
+s.listed_series={SET_MAGISTUS}
 function s.tgfilter(c,tp,check)
-	return c:IsFaceup() and c:IsSetCard(0x152) and Duel.IsExistingMatchingCard(s.eqfilter,tp,LOCATION_EXTRA+LOCATION_MZONE+LOCATION_GRAVE,0,1,c,check)
+	return c:IsFaceup() and c:IsSetCard(SET_MAGISTUS) and Duel.IsExistingMatchingCard(s.eqfilter,tp,LOCATION_EXTRA|LOCATION_MZONE|LOCATION_GRAVE,0,1,c,check)
 end
 function s.eqfilter(c,check)
 	return not c:IsForbidden() and c:IsMonster()
-		and ((check and c:IsLocation(LOCATION_EXTRA) and c:IsType(TYPE_EXTRA)) or (c:IsSetCard(0x152) and not c:IsLevel(4)))
+		and ((check and c:IsLocation(LOCATION_EXTRA) and c:IsType(TYPE_EXTRA)) or (c:IsSetCard(SET_MAGISTUS) and not c:IsLevel(4)))
 end
 function s.chkfilter(c,typ)
-	return c:IsMonster() and c:IsSetCard(0x152) and c:IsType(typ)
+	return c:IsMonster() and c:IsSetCard(SET_MAGISTUS) and c:IsType(typ)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local check=Duel.IsExistingMatchingCard(s.chkfilter,tp,LOCATION_GRAVE,0,1,nil,TYPE_FUSION)
@@ -46,14 +46,14 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		and Duel.IsExistingMatchingCard(s.chkfilter,tp,LOCATION_GRAVE,0,1,nil,TYPE_XYZ)
 		and Duel.IsExistingMatchingCard(s.chkfilter,tp,LOCATION_GRAVE,0,1,nil,TYPE_LINK)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-	local g=Duel.SelectMatchingCard(tp,s.eqfilter,tp,LOCATION_EXTRA+LOCATION_MZONE+LOCATION_GRAVE,0,1,1,tc,check)
+	local g=Duel.SelectMatchingCard(tp,s.eqfilter,tp,LOCATION_EXTRA|LOCATION_MZONE|LOCATION_GRAVE,0,1,1,tc,check)
 	local eq=g:GetFirst()
 	if eq then
 		Duel.Equip(tp,eq,tc,true)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_EQUIP_LIMIT)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e1:SetValue(s.eqlimit)
 		e1:SetLabelObject(tc)
 		eq:RegisterEffect(e1)

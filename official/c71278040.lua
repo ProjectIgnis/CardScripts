@@ -41,7 +41,7 @@ function s.initial_effect(c)
 end
 s.listed_names={id}
 function s.linkfilter(c,tp)
-	return c:IsSummonType(SUMMON_TYPE_LINK) and c:IsSummonPlayer(tp)
+	return c:IsLinkSummoned() and c:IsSummonPlayer(tp)
 end
 function s.handspcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.linkfilter,1,nil,tp)

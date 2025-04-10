@@ -1,5 +1,5 @@
 --戦華の暴－董穎
---Ancient Warriors – Cruel Dong Zhong
+--Ancient Warriors - Savage Don Ying
 --Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
@@ -50,9 +50,9 @@ function s.initial_effect(c)
 	e5:SetOperation(s.rmop)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x137}
+s.listed_series={SET_ANCIENT_WARRIORS}
 function s.thfilter(c)
-	return c:IsSetCard(0x137) and (c:IsLevelAbove(7) or c:IsType(TYPE_CONTINUOUS)) and c:IsAbleToHand()
+	return c:IsSetCard(SET_ANCIENT_WARRIORS) and (c:IsLevelAbove(7) or c:IsType(TYPE_CONTINUOUS)) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -67,7 +67,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x137) and c:IsLevelAbove(7) and c:IsFaceup()
+	return c:IsSetCard(SET_ANCIENT_WARRIORS) and c:IsLevelAbove(7) and c:IsFaceup()
 end
 function s.costcon(e)
 	return Duel.IsExistingMatchingCard(s.cfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
@@ -89,11 +89,11 @@ function s.rmfilter(c)
 	return c:IsAbleToRemove() and aux.SpElimFilter(c)
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE+LOCATION_GRAVE) and s.rmfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(s.rmfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,1,nil)
+	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE|LOCATION_GRAVE) and s.rmfilter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(s.rmfilter,tp,0,LOCATION_MZONE|LOCATION_GRAVE,1,nil)
 		and Duel.IsPlayerCanDraw(tp,1) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectTarget(tp,s.rmfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,1,1,nil)
+	local g=Duel.SelectTarget(tp,s.rmfilter,tp,0,LOCATION_MZONE|LOCATION_GRAVE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end

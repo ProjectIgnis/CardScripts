@@ -41,7 +41,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(id)>0
 end
 function s.spfilter(c,e,tp)
-	return c:IsLevelBelow(3) and c:IsSetCard(0x9f) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsLevelBelow(3) and c:IsSetCard(SET_PERFORMAPAL) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -57,10 +57,10 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x9f) and c:IsMonster() and c:IsAbleToRemoveAsCost() and not c:IsCode(id)
+	return c:IsSetCard(SET_PERFORMAPAL) and c:IsMonster() and c:IsAbleToRemoveAsCost() and not c:IsCode(id)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp and (Duel.IsAbleToEnterBP() or (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE))
+	return Duel.IsTurnPlayer(1-tp) and (Duel.IsAbleToEnterBP() or Duel.IsBattlePhase())
 end
 function s.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return aux.bfgcost(e,tp,eg,ep,ev,re,r,rp,0)
@@ -76,6 +76,6 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(1,0)
 	e1:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
-	e1:SetReset(RESET_PHASE+PHASE_DAMAGE_CAL)
+	e1:SetReset(RESET_PHASE|PHASE_DAMAGE_CAL)
 	Duel.RegisterEffect(e1,tp)
 end

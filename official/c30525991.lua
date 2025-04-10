@@ -1,4 +1,5 @@
 --スパルタクァの呪術師
+--Witch Doctor of Sparta
 local s,id=GetID()
 function s.initial_effect(c)
 	--recover

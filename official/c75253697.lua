@@ -13,16 +13,12 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
-	e1:SetCost(s.descost)
+	e1:SetCost(Cost.Detach(2))
 	e1:SetTarget(s.destg)
 	e1:SetOperation(s.desop)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
 end
 s.xyz_number=72
-function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,2,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,2,2,REASON_COST)
-end
 function s.dfilter(c,pos)
 	return c:IsPosition(pos)
 end
@@ -48,6 +44,6 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(0,1)
 	e1:SetValue(HALF_DAMAGE)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end

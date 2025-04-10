@@ -1,4 +1,5 @@
 --不幸を告げる黒猫
+--A Cat of Ill Omen
 local s,id=GetID()
 function s.initial_effect(c)
 	--flip

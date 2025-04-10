@@ -30,9 +30,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x140}
+s.listed_series={SET_ADAMANCIPATOR}
 function s.thfilter(c)
-	return c:IsSetCard(0x140) and c:IsAbleToHand()
+	return c:IsSetCard(SET_ADAMANCIPATOR) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>=5 end
@@ -59,7 +59,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==1-tp and Duel.IsExistingMatchingCard(Card.IsAttribute,tp,LOCATION_GRAVE,0,1,nil,ATTRIBUTE_FIRE)
+	return Duel.IsTurnPlayer(1-tp) and Duel.IsExistingMatchingCard(Card.IsAttribute,tp,LOCATION_GRAVE,0,1,nil,ATTRIBUTE_FIRE)
 end
 function s.spfilter(c,e,tp)
 	return c:IsRace(RACE_ROCK) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)

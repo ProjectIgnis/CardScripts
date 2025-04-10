@@ -21,7 +21,7 @@ function s.initial_effect(c)
 end
 function s.coincon(e,tp,eg,ep,ev,re,r,rp)
 	local ex,eg,et,cp,ct=Duel.GetOperationInfo(ev,CATEGORY_COIN)
-	if ex and ct==1 and re:IsActiveType(TYPE_MONSTER) then
+	if ex and ct==1 and re:IsMonsterEffect() then
 		e:SetLabelObject(re)
 		return true
 	else return false end

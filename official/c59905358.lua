@@ -14,7 +14,7 @@ function s.initial_effect(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsChainNegatable(ev) then return false end
-	if not re:IsActiveType(TYPE_MONSTER) and not re:IsHasType(EFFECT_TYPE_ACTIVATE) then return false end
+	if not re:IsMonsterEffect() and not re:IsHasType(EFFECT_TYPE_ACTIVATE) then return false end
 	local ex=Duel.GetOperationInfo(ev,CATEGORY_DICE)
 	return ex
 end

@@ -1,4 +1,5 @@
 --二角獣レーム
+--Bicorn Re'em
 local s,id=GetID()
 function s.initial_effect(c)
 	--deckdes

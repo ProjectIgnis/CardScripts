@@ -1,5 +1,5 @@
 --空牙団の参謀 シール
---Scripted by Eerie Code
+--Seal, Strategist Fur Hire
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -26,10 +26,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x114}
+s.listed_series={SET_FUR_HIRE}
 s.listed_names={}
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x114) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_FUR_HIRE) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -45,13 +45,13 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x114) and c:IsControler(tp)
+	return c:IsFaceup() and c:IsSetCard(SET_FUR_HIRE) and c:IsControler(tp)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return not eg:IsContains(e:GetHandler()) and eg:IsExists(s.cfilter,1,nil,tp)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x114) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_FUR_HIRE) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc) end
@@ -66,4 +66,3 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 	end
 end
-

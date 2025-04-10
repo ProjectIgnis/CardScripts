@@ -1,5 +1,5 @@
 --花札衛－五光－
---Flower Cardian Five Lights
+--Flower Cardian Lightflare
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -38,7 +38,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
-s.listed_series={0xe6}
+s.listed_series={SET_FLOWER_CARDIAN}
 s.listed_names={id}
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) then return false end
@@ -62,7 +62,7 @@ function s.discon2(e,tp,eg,ep,ev,re,r,rp)
 	if not oc then return false end
 	if oc:IsControler(tp) then tc,oc=oc,tc end
 	e:SetLabelObject(oc)
-	return tc:IsSetCard(0xe6) and tc:IsControler(tp) and oc:IsControler(1-tp)
+	return tc:IsSetCard(SET_FLOWER_CARDIAN) and tc:IsControler(tp) and oc:IsControler(1-tp)
 end
 function s.disop2(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
@@ -70,21 +70,21 @@ function s.disop2(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_DISABLE)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_BATTLE)
 	tc:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(e:GetHandler())
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_DISABLE_EFFECT)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE)
+	e2:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_BATTLE)
 	tc:RegisterEffect(e2)
 end
 function s.sccon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return (c:IsReason(REASON_BATTLE) or (c:GetReasonPlayer()==1-tp and c:IsReason(REASON_EFFECT) and c:IsPreviousControler(tp)))
-		and c:IsPreviousPosition(POS_FACEUP) and c:IsSummonType(SUMMON_TYPE_SYNCHRO)
+		and c:IsPreviousPosition(POS_FACEUP) and c:IsSynchroSummoned()
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0xe6) and c:IsType(TYPE_SYNCHRO) and not c:IsCode(id) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_FLOWER_CARDIAN) and c:IsType(TYPE_SYNCHRO) and not c:IsCode(id) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sctg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end

@@ -1,4 +1,5 @@
 --ウィルスメール
+--Infected Mail
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -38,12 +39,12 @@ function s.atop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DIRECT_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+		tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e2:SetCode(EVENT_PHASE+PHASE_BATTLE)
+		e2:SetCode(EVENT_PHASE|PHASE_BATTLE)
 		e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 		e2:SetCountLimit(1)
 		e2:SetLabelObject(tc)

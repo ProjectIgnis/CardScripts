@@ -1,9 +1,9 @@
--- アラメシアの儀
--- Rite of Aramesir
--- Scripted by Hatter
+--アラメシアの儀
+--Rite of Aramesir
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Special Summon 1 "Adventurer Token"
+	--Special Summon 1 "Adventurer Token"
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
@@ -15,20 +15,20 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	-- Count activated monster effects
+	--Count activated monster effects
 	Duel.AddCustomActivityCounter(id,ACTIVITY_CHAIN,s.actfilter)
 end
 s.listed_names={TOKEN_ADVENTURER,39568067}
 function s.actfilter(re)
 	local rc=re:GetHandler()
-	return not (re:IsMonsterEffect() and rc:IsOnField() and not rc:IsSummonType(SUMMON_TYPE_SPECIAL))
+	return not (re:IsMonsterEffect() and rc:IsOnField() and not rc:IsSpecialSummoned())
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,TOKEN_ADVENTURER),tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetCustomActivityCount(id,tp,ACTIVITY_CHAIN)==0 end
-	-- Cannot activate effects of monsters, except Special Summoned monsters
+	--Cannot activate effects of monsters, except Special Summoned monsters
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetType(EFFECT_TYPE_FIELD)

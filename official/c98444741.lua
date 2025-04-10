@@ -1,4 +1,5 @@
 --積み上げる幸福
+--Accumulated Fortune
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

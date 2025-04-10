@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetCountLimit(1,0,EFFECT_COUNT_CODE_SINGLE)
-	e3:SetCost(s.cost)
+	e3:SetCost(Cost.PayLP(700))
 	e3:SetTarget(s.thtg)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
@@ -62,10 +62,6 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 		local sg=g:Select(1-tp,ct,ct,nil)
 		Duel.SendtoDeck(sg,nil,SEQ_DECKSHUFFLE,REASON_RULE,1-tp)
 	end
-end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,700) end
-	Duel.PayLPCost(tp,700)
 end
 function s.thfilter(c)
 	return c:IsSetCard(SET_URSARCTIC) and c:IsMonster() and c:IsAbleToHand()

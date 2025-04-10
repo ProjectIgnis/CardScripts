@@ -1,4 +1,5 @@
 --A・O・J フィールド・マーシャル
+--Ally of Justice Field Marshal
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon

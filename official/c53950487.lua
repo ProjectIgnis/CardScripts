@@ -1,5 +1,5 @@
--- B・F－突撃のヴォウジェ
--- Battlewasp - Halberd the Charge
+--B・F－突撃のヴォウジェ
+--Battlewasp - Halberd the Charge
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.damop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x12f}
+s.listed_series={SET_BATTLEWASP}
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local d=c:GetBattleTarget()
@@ -46,7 +46,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
-		e1:SetReset(RESET_PHASE+PHASE_DAMAGE_CAL)
+		e1:SetReset(RESET_PHASE|PHASE_DAMAGE_CAL)
 		e1:SetValue(d:GetAttack()/2)
 		d:RegisterEffect(e1)
 	end
@@ -55,7 +55,7 @@ function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp
 end
 function s.damfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x12f)
+	return c:IsFaceup() and c:IsSetCard(SET_BATTLEWASP)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.damfilter,tp,LOCATION_MZONE,0,1,nil) end

@@ -1,4 +1,5 @@
 --BF－流離いのコガラシ
+--Blackwing - Kogarashi the Wanderer
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -22,10 +23,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.limitop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x33}
+s.listed_series={SET_BLACKWING}
 function s.cfilter(c,tp)
-	return c:IsSetCard(0x33) and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE)
-		and c:IsPreviousPosition(POS_FACEUP) and (c:GetReason()&0x41)==0x41
+	return c:IsSetCard(SET_BLACKWING) and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE)
+		and c:IsPreviousPosition(POS_FACEUP) and (c:GetReason()&(REASON_DESTROY|REASON_EFFECT))==(REASON_DESTROY|REASON_EFFECT)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)

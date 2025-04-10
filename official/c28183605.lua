@@ -22,18 +22,18 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	aux.AddEREquipLimit(c,nil,s.eqval,Card.EquipByEffectAndLimitRegister,e2)
 end
-s.listed_series={0x29}
+s.listed_series={SET_DRAGUNITY}
 function s.eqval(ec,c,tp)
-	return ec:IsControler(tp) and ec:IsLevelBelow(3) and ec:IsSetCard(0x29) and ec:IsRace(RACE_DRAGON)
+	return ec:IsControler(tp) and ec:IsLevelBelow(3) and ec:IsSetCard(SET_DRAGUNITY) and ec:IsRace(RACE_DRAGON)
 end
 function s.atkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x29)
+	return c:IsFaceup() and c:IsSetCard(SET_DRAGUNITY)
 end
 function s.atkval(e,c)
 	return Duel.GetMatchingGroupCount(s.atkfilter,c:GetControler(),LOCATION_ONFIELD,0,nil)*200
 end
 function s.filter(c)
-	return c:IsLevelBelow(3) and c:IsSetCard(0x29) and c:IsRace(RACE_DRAGON) and not c:IsForbidden()
+	return c:IsLevelBelow(3) and c:IsSetCard(SET_DRAGUNITY) and c:IsRace(RACE_DRAGON) and not c:IsForbidden()
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc) end

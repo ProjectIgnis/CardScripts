@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.indop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x97}
+s.listed_series={SET_ARTIFACT}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsPreviousLocation(LOCATION_SZONE) and c:IsPreviousPosition(POS_FACEDOWN)
@@ -46,7 +46,7 @@ function s.indcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsTurnPlayer(1-tp)
 end
 function s.tg(e,c)
-	return c:IsFaceup() and c:IsSetCard(0x97)
+	return c:IsFaceup() and c:IsSetCard(SET_ARTIFACT)
 end
 function s.indop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
@@ -55,7 +55,7 @@ function s.indop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTarget(s.tg)
 	e1:SetTargetRange(LOCATION_MZONE,0)
 	e1:SetValue(aux.indoval)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)

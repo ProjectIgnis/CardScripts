@@ -1,4 +1,5 @@
 --エヴォリューション・バースト
+--Evolution Burst
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -24,7 +25,7 @@ s.listed_names={CARD_CYBER_DRAGON}
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	if tc:IsCode(CARD_CYBER_DRAGON) then
-		Duel.RegisterFlagEffect(tc:GetControler(),id,RESET_PHASE+PHASE_END,0,1)
+		Duel.RegisterFlagEffect(tc:GetControler(),id,RESET_PHASE|PHASE_END,0,1)
 	end
 end
 function s.cfilter(c)
@@ -41,7 +42,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetProperty(EFFECT_FLAG_OATH)
 	e1:SetTarget(aux.TargetBoolFunction(Card.IsCode,CARD_CYBER_DRAGON))
 	e1:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

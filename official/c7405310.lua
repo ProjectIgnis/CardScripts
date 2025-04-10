@@ -33,6 +33,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			Duel.ConfirmCards(tp,cg)
 		end
 	else
-		Duel.DiscardHand(tp,nil,1,1,REASON_EFFECT+REASON_DISCARD)
+		Duel.DiscardHand(tp,nil,1,1,REASON_EFFECT|REASON_DISCARD)
 	end
 end

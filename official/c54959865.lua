@@ -1,4 +1,5 @@
 --N・エア・ハミングバード
+--Neo-Spacian Air Hummingbird
 local s,id=GetID()
 function s.initial_effect(c)
 	--recover

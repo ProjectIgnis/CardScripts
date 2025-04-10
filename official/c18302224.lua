@@ -1,4 +1,5 @@
 --リバース・オブ・ネオス
+--Reverse of Neos
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,11 +12,11 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x9}
+s.listed_series={SET_NEOS}
 s.listed_names={CARD_NEOS}
 function s.cfilter(c,tp)
 	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp)
-		and c:IsPreviousPosition(POS_FACEUP) and c:IsSetCard(0x9) and c:IsType(TYPE_FUSION)
+		and c:IsPreviousPosition(POS_FACEUP) and c:IsSetCard(SET_NEOS) and c:IsType(TYPE_FUSION)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)
@@ -38,7 +39,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(1000)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(e:GetHandler())
 		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -46,7 +47,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EVENT_PHASE+PHASE_END)
 		e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 		e2:SetOperation(s.desop)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e2:SetReset(RESETS_STANDARD_PHASE_END)
 		e2:SetCountLimit(1)
 		tc:RegisterEffect(e2,true)
 	end

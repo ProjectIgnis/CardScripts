@@ -1,4 +1,5 @@
 --月鏡の盾
+--Moon Mirror Shield
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c)
@@ -17,7 +18,7 @@ function s.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e4:SetCode(EVENT_TO_GRAVE)
 	e4:SetCondition(s.tdcon)
-	e4:SetCost(s.tdcost)
+	e4:SetCost(Cost.PayLP(500))
 	e4:SetTarget(s.tdtg)
 	e4:SetOperation(s.tdop)
 	c:RegisterEffect(e4)
@@ -37,7 +38,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetValue(val+100)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE_CAL)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_DAMAGE_CAL)
 		ec:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_SET_DEFENSE_FINAL)
@@ -47,10 +48,6 @@ end
 function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousLocation(LOCATION_ONFIELD)
-end
-function s.tdcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,500) end
-	Duel.PayLPCost(tp,500)
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

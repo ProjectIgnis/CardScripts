@@ -1,4 +1,5 @@
 --十二獣ヴァイパー
+--Zoodiac Whiptail
 local s,id=GetID()
 function s.initial_effect(c)
 	--material
@@ -7,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e1:SetRange(LOCATION_HAND+LOCATION_MZONE)
+	e1:SetRange(LOCATION_HAND|LOCATION_MZONE)
 	e1:SetTarget(s.mattg)
 	e1:SetOperation(s.matop)
 	c:RegisterEffect(e1)

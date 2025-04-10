@@ -32,16 +32,16 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 		e1:SetRange(LOCATION_GRAVE)
 		e1:SetCountLimit(1)
-		e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
+		e1:SetCode(EVENT_PHASE|PHASE_STANDBY)
 		e1:SetCondition(s.spcon)
 		e1:SetTarget(s.sptg)
 		e1:SetOperation(s.spop)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN,1)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_STANDBY|RESET_SELF_TURN,1)
 		c:RegisterEffect(e1)
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)

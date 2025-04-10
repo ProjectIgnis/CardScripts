@@ -1,4 +1,5 @@
 --ダブル・ディフェンダー
+--Double Defender
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -20,7 +21,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return tp~=Duel.GetTurnPlayer() and Duel.IsExistingMatchingCard(Card.IsPosition,tp,LOCATION_MZONE,0,2,nil,POS_FACEUP_DEFENSE)
+	return Duel.IsTurnPlayer(1-tp) and Duel.IsExistingMatchingCard(Card.IsPosition,tp,LOCATION_MZONE,0,2,nil,POS_FACEUP_DEFENSE)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local tg=Duel.GetAttacker()

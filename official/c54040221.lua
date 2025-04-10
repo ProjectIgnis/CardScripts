@@ -1,4 +1,5 @@
 --炎帝近衛兵
+--Royal Firestorm Guards
 local s,id=GetID()
 function s.initial_effect(c)
 	--to deck and draw
@@ -28,10 +29,10 @@ end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	if not tg or tg:FilterCount(Card.IsRelateToEffect,nil,e)~=4 then return end
-	Duel.SendtoDeck(tg,nil,0,REASON_EFFECT)
+	Duel.SendtoDeck(tg,nil,SEQ_DECKTOP,REASON_EFFECT)
 	local g=Duel.GetOperatedGroup()
 	if g:IsExists(Card.IsLocation,1,nil,LOCATION_DECK) then Duel.ShuffleDeck(tp) end
-	local ct=g:FilterCount(Card.IsLocation,nil,LOCATION_DECK+LOCATION_EXTRA)
+	local ct=g:FilterCount(Card.IsLocation,nil,LOCATION_DECK|LOCATION_EXTRA)
 	if ct==4 then
 		Duel.BreakEffect()
 		Duel.Draw(tp,2,REASON_EFFECT)

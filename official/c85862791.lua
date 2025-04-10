@@ -1,5 +1,5 @@
 --泥仕合
---This Match Is A Draw
+--Fighting Dirty
 --scripted by andré
 local s,id=GetID()
 function s.initial_effect(c)

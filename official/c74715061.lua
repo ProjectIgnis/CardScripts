@@ -1,5 +1,5 @@
 --ストライピング・パートナー
---Striping Panther
+--Striping Partner
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -33,7 +33,7 @@ function s.initial_effect(c)
 end
 function s.spcon1(e,tp,eg,ep,ev,re,r,rp)
 	local loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
-	return re:IsActiveType(TYPE_MONSTER) and loc==LOCATION_MZONE and rp==tp
+	return re:IsMonsterEffect() and loc==LOCATION_MZONE and rp==tp
 end
 function s.sptg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

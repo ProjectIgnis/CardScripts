@@ -1,4 +1,5 @@
 --M.X－セイバー インヴォーカー
+--M-X-Saber Invoker
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -11,17 +12,13 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetCountLimit(1)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCost(s.cost)
+	e1:SetCost(Cost.Detach(1))
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
 end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
-end
 function s.spfilter(c,e,tp)
-	return c:IsRace(RACE_WARRIOR+RACE_BEASTWARRIOR) and c:IsAttribute(ATTRIBUTE_EARTH)
+	return c:IsRace(RACE_WARRIOR|RACE_BEASTWARRIOR) and c:IsAttribute(ATTRIBUTE_EARTH)
 		and c:GetLevel()==4 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -36,7 +33,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=g:GetFirst()
 	if tc and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE)~=0 then
 		local fid=e:GetHandler():GetFieldID()
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,fid)
+		tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1,fid)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_PHASE+PHASE_END)

@@ -1,4 +1,5 @@
 --ハーピィ・レディ1
+--Harpie Lady 1
 local s,id=GetID()
 function s.initial_effect(c)
 	--atkup

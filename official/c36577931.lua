@@ -1,5 +1,5 @@
 --悲劇のデスピアン
---Despian of Tragedy
+--Despian Tragedy
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
@@ -25,19 +25,19 @@ function s.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetRange(LOCATION_GRAVE)
 	e3:SetCountLimit(1,id)
-	e3:SetCost(aux.bfgcost)
+	e3:SetCost(Cost.SelfBanish)
 	e3:SetTarget(s.settg)
 	e3:SetOperation(s.setop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x166,0x160}
+s.listed_series={SET_DESPIA,SET_BRANDED}
 s.listed_names={id}
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsReason(REASON_EFFECT) and c:IsFaceup()
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x166) and c:IsMonster() and c:IsAbleToHand() and not c:IsCode(id)
+	return c:IsSetCard(SET_DESPIA) and c:IsMonster() and c:IsAbleToHand() and not c:IsCode(id)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -52,7 +52,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.setfilter(c)
-	return c:IsSetCard(0x160) and c:IsSpellTrap() and c:IsSSetable()
+	return c:IsSetCard(SET_BRANDED) and c:IsSpellTrap() and c:IsSSetable()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.setfilter(chkc) end

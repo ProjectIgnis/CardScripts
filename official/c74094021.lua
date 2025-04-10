@@ -1,4 +1,5 @@
 --真六武衆－ミズホ
+--Legendary Six Samurai - Mizuho
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -22,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x3d}
+s.listed_series={SET_SIX_SAMURAI}
 s.listed_names={48505422}
 function s.spfilter(c)
 	return c:IsFaceup() and c:IsCode(48505422)
@@ -33,7 +34,7 @@ function s.spcon(e,c)
 		Duel.IsExistingMatchingCard(s.spfilter,c:GetControler(),LOCATION_ONFIELD,0,1,nil)
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x3d)
+	return c:IsSetCard(SET_SIX_SAMURAI)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local dg=Duel.GetMatchingGroup(Card.IsCanBeEffectTarget,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil,e)

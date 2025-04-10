@@ -1,4 +1,5 @@
 --生存競争
+--Survival of the Fittest
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -8,14 +9,11 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(TIMING_DAMAGE_STEP)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
-	e1:SetCondition(s.condition)
+	e1:SetCondition(aux.StatChangeDamageStepCondition)
 	e1:SetCost(aux.RemainFieldCost)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-end
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsRace(RACE_DINOSAUR)
@@ -31,14 +29,14 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsLocation(LOCATION_SZONE) or not c:IsRelateToEffect(e) or c:IsStatus(STATUS_LEAVE_CONFIRMED) then return end
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
+	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		Duel.Equip(tp,c,tc)
 		--Atkup
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_EQUIP)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(1000)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e1)
 		--Equip limit
 		local e2=Effect.CreateEffect(c)
@@ -46,7 +44,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EFFECT_EQUIP_LIMIT)
 		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e2:SetValue(s.eqlimit)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e2)
 		--chain attack
 		local e3=Effect.CreateEffect(c)
@@ -56,7 +54,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetCode(EVENT_BATTLE_DESTROYING)
 		e3:SetCondition(s.atcon)
 		e3:SetOperation(s.atop)
-		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e3:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e3)
 	else
 		c:CancelToGrave(false)
@@ -80,6 +78,6 @@ function s.atop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_BATTLE)
 	ec:RegisterEffect(e1)
 end

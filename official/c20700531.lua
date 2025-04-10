@@ -1,4 +1,5 @@
 --氷結界の修験者
+--Pilgrim of the Ice Barrier
 local s,id=GetID()
 function s.initial_effect(c)
 	--indes

@@ -1,4 +1,5 @@
 --王宮の陥落
+--Royal Surrender
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

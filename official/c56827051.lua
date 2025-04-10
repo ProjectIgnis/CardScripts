@@ -1,4 +1,5 @@
 --影霊衣の巫女 エリアル
+--Ariel, Priestess of the Nekroz
 local s,id=GetID()
 function s.initial_effect(c)
 	--level change
@@ -23,9 +24,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xb4}
+s.listed_series={SET_NEKROZ}
 function s.cfilter(c)
-	return c:IsSetCard(0xb4) and not c:IsPublic()
+	return c:IsSetCard(SET_NEKROZ) and not c:IsPublic()
 end
 function s.lvcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end
@@ -52,14 +53,14 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_LEVEL)
 	e1:SetValue(ct)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESETS_STANDARD_DISABLE_PHASE_END)
 	c:RegisterEffect(e1)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return (r&REASON_EFFECT)~=0
 end
 function s.filter(c)
-	return c:IsSetCard(0xb4) and c:IsMonster() and not c:IsType(TYPE_RITUAL) and c:IsAbleToHand()
+	return c:IsSetCard(SET_NEKROZ) and c:IsMonster() and not c:IsType(TYPE_RITUAL) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

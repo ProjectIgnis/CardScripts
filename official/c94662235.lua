@@ -21,11 +21,11 @@ function s.initial_effect(c)
 	e2:SetOperation(s.activate2)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x31}
+s.listed_series={SET_FORTUNE_LADY}
 function s.check(tp)
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
 	local count=#g
-	return count>0 and g:FilterCount(Card.IsSetCard,nil,0x31)==count
+	return count>0 and g:FilterCount(Card.IsSetCard,nil,SET_FORTUNE_LADY)==count
 end
 function s.condition1(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentChain(true)==0 and s.check(tp)
@@ -44,7 +44,7 @@ function s.activate1(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EVENT_PHASE+PHASE_END)
 	e1:SetRange(LOCATION_REMOVED)
 	e1:SetCountLimit(1)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESETS_STANDARD_PHASE_END)
 	e1:SetOperation(s.retop)
 	ec:RegisterEffect(e1)
 end
@@ -67,7 +67,7 @@ function s.activate2(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EVENT_PHASE+PHASE_END)
 		e1:SetRange(LOCATION_REMOVED)
 		e1:SetCountLimit(1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		e1:SetOperation(s.retop)
 		ec:RegisterEffect(e1)
 	end

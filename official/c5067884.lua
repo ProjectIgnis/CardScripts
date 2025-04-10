@@ -1,6 +1,5 @@
 --ダイナミスト・スピノス
---Dinomist Spino
-
+--Dinomist Spinos
 local s,id=GetID()
 function s.initial_effect(c)
 	--Enable pendulum summon
@@ -24,10 +23,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xd8}
-
+s.listed_series={SET_DINOMIST}
 function s.repfilter(c,tp)
-	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_ONFIELD) and c:IsSetCard(0xd8)
+	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_ONFIELD) and c:IsSetCard(SET_DINOMIST)
 		and not c:IsReason(REASON_REPLACE) and (c:IsReason(REASON_BATTLE) or (c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()~=tp))
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -40,15 +38,15 @@ function s.repval(e,c)
 	return s.repfilter(c,e:GetHandlerPlayer())
 end
 function s.repop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Destroy(e:GetHandler(),REASON_EFFECT+REASON_REPLACE)
+	Duel.Destroy(e:GetHandler(),REASON_EFFECT|REASON_REPLACE)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsAbleToEnterBP()
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsSetCard,1,false,nil,c,0xd8) end
-	local rg=Duel.SelectReleaseGroupCost(tp,Card.IsSetCard,1,1,false,nil,c,0xd8)
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsSetCard,1,false,nil,c,SET_DINOMIST) end
+	local rg=Duel.SelectReleaseGroupCost(tp,Card.IsSetCard,1,1,false,nil,c,SET_DINOMIST)
 	Duel.Release(rg,REASON_COST)
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -71,19 +69,19 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local op=e:GetLabel()
 	if op==0 then
 		if c:IsFaceup() and c:IsRelateToEffect(e) then
-			c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END,0,0)
+			c:RegisterFlagEffect(id,RESETS_STANDARD_DISABLE_PHASE_END,0,0)
 			--Can attack directly
 			local e1=Effect.CreateEffect(c)
 			e1:SetDescription(3205)
 			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_DIRECT_ATTACK)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e1:SetReset(RESETS_STANDARD_PHASE_END)
 			c:RegisterEffect(e1)
 		end
 	elseif op==1 then
 		if c:IsFaceup() and c:IsRelateToEffect(e) then
-			c:RegisterFlagEffect(id+1,RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END,0,0)
+			c:RegisterFlagEffect(id+1,RESETS_STANDARD_DISABLE_PHASE_END,0,0)
 			--Can make a second attack
 			local e2=Effect.CreateEffect(c)
 			e2:SetDescription(3201)
@@ -91,7 +89,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetCode(EFFECT_EXTRA_ATTACK)
 			e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 			e2:SetValue(1)
-			e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e2:SetReset(RESETS_STANDARD_PHASE_END)
 			c:RegisterEffect(e2)
 		end
 	end

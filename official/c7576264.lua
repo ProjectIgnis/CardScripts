@@ -1,4 +1,5 @@
 --幻獣ワイルドホーン
+--Phantom Beast Wild-Horn
 local s,id=GetID()
 function s.initial_effect(c)
 	--pierce

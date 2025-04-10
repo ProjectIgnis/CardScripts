@@ -1,4 +1,5 @@
 --オベリスクの巨神兵
+--Obelisk the Tormentor
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon with 3 tribute
@@ -51,7 +52,7 @@ function s.sumsuc(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SetChainLimitTillChainEnd(aux.FALSE)
 end
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_SPECIAL)
+	return e:GetHandler():IsSpecialSummoned()
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -70,7 +71,7 @@ function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_OATH)
 	e1:SetCode(EFFECT_CANNOT_ATTACK_ANNOUNCE)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESETS_STANDARD_PHASE_END)
 	e:GetHandler():RegisterEffect(e1)
 	local g=Duel.SelectReleaseGroupCost(tp,nil,2,2,false,aux.ReleaseCheckTarget,nil,dg)
 	Duel.Release(g,REASON_COST)

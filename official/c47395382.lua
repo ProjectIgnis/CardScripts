@@ -1,8 +1,9 @@
 --魔轟神レイジオン
+--Fabled Ragin
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
-	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x35),1,1,Synchro.NonTuner(nil),1,99)
+	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_FABLED),1,1,Synchro.NonTuner(nil),1,99)
 	c:EnableReviveLimit()
 	--draw
 	local e1=Effect.CreateEffect(c)
@@ -16,9 +17,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.op)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x35}
+s.listed_series={SET_FABLED}
 function s.con(e,tp,eg,ep,ev,re,r,rp,chk)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
+	return e:GetHandler():IsSynchroSummoned()
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then

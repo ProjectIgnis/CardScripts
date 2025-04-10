@@ -1,4 +1,5 @@
 --Sin 青眼の白龍
+--Malefic Blue-Eyes White Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

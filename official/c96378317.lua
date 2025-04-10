@@ -1,7 +1,6 @@
 --鉄獣の邂逅
 --Tri-Brigade Rendezvous
 --Scripted by Hatter
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--ATK up
@@ -12,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetHintTiming(TIMING_DAMAGE_STEP)
 	e1:SetCountLimit(1,id)
-	e1:SetCondition(s.atkcon)
+	e1:SetCondition(aux.StatChangeDamageStepCondition)
 	e1:SetTarget(s.atktg)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
@@ -26,9 +25,6 @@ function s.initial_effect(c)
 	e2:SetValue(s.repval)
 	e2:SetOperation(s.repop)
 	c:RegisterEffect(e2)
-end
-function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end
 function s.filter(c,e)
 	return c:IsFaceup() and c:IsRace(RACES_BEAST_BWARRIOR_WINGB)
@@ -45,17 +41,17 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
 	if #g>0 then g:ForEach(s.op,e:GetHandler()) end
 end
-function s.op(tc,c)	
+function s.op(tc,c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESETS_STANDARD_PHASE_END)
 	e1:SetValue(700)
 	tc:RegisterEffect(e1)
 end
 function s.repfilter(c,tp)
 	return c:IsFaceup() and c:IsRace(RACES_BEAST_BWARRIOR_WINGB) and c:IsLinked() and c:IsLocation(LOCATION_MZONE) 
-		and c:IsControler(tp) and not c:IsReason(REASON_REPLACE) and c:IsReason(REASON_EFFECT+REASON_BATTLE)
+		and c:IsControler(tp) and not c:IsReason(REASON_REPLACE) and c:IsReason(REASON_EFFECT|REASON_BATTLE)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemove() and eg:IsExists(s.repfilter,1,nil,tp) end

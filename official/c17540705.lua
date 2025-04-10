@@ -1,4 +1,5 @@
 --EMダグ・ダガーマン
+--Performapal Dag Daggerman
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -44,16 +45,16 @@ function s.initial_effect(c)
 	e4:SetOperation(s.drop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x9f}
+s.listed_series={SET_PERFORMAPAL}
 function s.threg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,EFFECT_FLAG_OATH,1)
+	e:GetHandler():RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,EFFECT_FLAG_OATH,1)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(id)~=0
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x9f) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_PERFORMAPAL) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.thfilter(chkc) end
@@ -70,16 +71,16 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_PENDULUM)
+	return e:GetHandler():IsPendulumSummoned()
 end
 function s.drreg(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():RegisterFlagEffect(id+1,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+	e:GetHandler():RegisterFlagEffect(id+1,RESETS_STANDARD_PHASE_END,0,1)
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(id+1)~=0
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x9f) and c:IsMonster() and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(SET_PERFORMAPAL) and c:IsMonster() and c:IsAbleToGraveAsCost()
 end
 function s.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end

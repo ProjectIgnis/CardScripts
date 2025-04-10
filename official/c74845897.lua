@@ -1,4 +1,5 @@
 --真炎の爆発
+--Rekindling
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -35,7 +36,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 		local tc=g:GetFirst()
 		for tc in aux.Next(g) do
 			Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
-			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1,fid)
+			tc:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1,fid)
 		end
 		Duel.SpecialSummonComplete()
 		g:KeepAlive()
@@ -43,7 +44,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_PHASE+PHASE_END)
 		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
-		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_PHASE|PHASE_END)
 		e1:SetCountLimit(1)
 		e1:SetLabel(fid)
 		e1:SetLabelObject(g)

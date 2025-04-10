@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER|TIMING_END_PHASE)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
@@ -19,10 +19,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x2b}
+s.listed_series={SET_NINJA}
 function s.filter1(c,tp,slv,ft)
 	local lv1=c:GetLevel()
-	return c:IsFaceup() and c:IsSetCard(0x2b) and lv1>0 and (ft>0 or c:GetSequence()<5)
+	return c:IsFaceup() and c:IsSetCard(SET_NINJA) and lv1>0 and (ft>0 or c:GetSequence()<5)
 		and Duel.IsExistingTarget(s.filter2,tp,0,LOCATION_MZONE,1,nil,lv1,slv)
 end
 function s.filter2(c,lv1,slv)
@@ -30,7 +30,7 @@ function s.filter2(c,lv1,slv)
 	return c:IsFaceup() and lv2>0 and lv1+lv2>=slv
 end
 function s.spfilter(c,e,tp,lv)
-	return c:IsRace(RACE_DRAGON+RACE_DINOSAUR+RACE_SEASERPENT) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and (not lv or c:IsLevelBelow(lv))
+	return c:IsRace(RACE_DRAGON|RACE_DINOSAUR|RACE_SEASERPENT) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and (not lv or c:IsLevelBelow(lv))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x18b}
+s.listed_series={SET_GHOTI}
 function s.spfilter(c,e,tp)
 	return c:IsFaceup() and c:IsLevelBelow(4) and c:IsRace(RACE_FISH) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
@@ -49,13 +49,13 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
 		e2:SetValue(RESET_TURN_SET)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e2)
 	end
 	Duel.SpecialSummonComplete()
@@ -64,13 +64,13 @@ function s.cfilter(c)
 	return (c:IsFaceup() or c:IsLocation(LOCATION_HAND)) and c:IsRace(RACE_FISH) and c:IsAbleToRemoveAsCost()
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,1,1,nil)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x18b) and c:IsTrap() and c:IsAbleToHand()
+	return c:IsSetCard(SET_GHOTI) and c:IsTrap() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

@@ -1,6 +1,5 @@
 --氷結界の還零龍 トリシューラ
---Trishula, Subzero Dragon of the Ice Barrier
-
+--Trishula, Zero Dragon of the Ice Barrier
 local s,id=GetID()
 function s.initial_effect(c)
 	--Synchro summon procedure
@@ -31,7 +30,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
+	return e:GetHandler():IsSynchroSummoned()
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,1,nil) end
@@ -49,7 +48,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsSummonType(SUMMON_TYPE_SYNCHRO)
+	return c:IsSynchroSummoned()
 		and (c:IsReason(REASON_BATTLE) or (c:GetReasonPlayer()==1-tp and c:IsReason(REASON_EFFECT)))
 		and c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE)
 end
@@ -59,14 +58,14 @@ function s.spfilter(c,e,tp)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local loc=LOCATION_EXTRA
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then loc=loc+LOCATION_GRAVE end
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then loc=loc|LOCATION_GRAVE end
 	if chk==0 then return Duel.IsExistingMatchingCard(s.spfilter,tp,loc,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,loc)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local loc=LOCATION_EXTRA
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then loc=loc+LOCATION_GRAVE end
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then loc=loc|LOCATION_GRAVE end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter),tp,loc,0,1,1,nil,e,tp)
 	if #g>0 and Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)~=0 then
@@ -74,7 +73,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK)
 		e1:SetValue(3300)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD-RESET_TOFIELD)
 		g:GetFirst():RegisterEffect(e1)
 		local g2=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
 		if #g2>0 then
@@ -82,7 +81,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 				local e1=Effect.CreateEffect(e:GetHandler())
 				e1:SetType(EFFECT_TYPE_SINGLE)
 				e1:SetCode(EFFECT_SET_ATTACK_FINAL)
-				e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+				e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 				e1:SetValue(math.ceil(tc2:GetBaseAttack()/2))
 				tc2:RegisterEffect(e1)
 			end
@@ -93,18 +92,18 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 				local e1=Effect.CreateEffect(c)
 				e1:SetType(EFFECT_TYPE_SINGLE)
 				e1:SetCode(EFFECT_DISABLE)
-				e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+				e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 				tc3:RegisterEffect(e1)
 				local e2=Effect.CreateEffect(c)
 				e2:SetType(EFFECT_TYPE_SINGLE)
 				e2:SetCode(EFFECT_DISABLE_EFFECT)
-				e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+				e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 				tc3:RegisterEffect(e2)
 				if tc3:IsType(TYPE_TRAPMONSTER) then
 					local e3=Effect.CreateEffect(c)
 					e3:SetType(EFFECT_TYPE_SINGLE)
 					e3:SetCode(EFFECT_DISABLE_TRAPMONSTER)
-					e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+					e3:SetReset(RESET_EVENT|RESETS_STANDARD)
 					tc3:RegisterEffect(e3)
 				end
 			end

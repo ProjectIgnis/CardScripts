@@ -22,7 +22,7 @@ function s.initial_effect(c)
 end
 s.listed_names={31709826}
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return tp~=Duel.GetTurnPlayer() and Duel.GetAttackTarget()~=nil
+	return Duel.IsTurnPlayer(1-tp) and Duel.GetAttackTarget()~=nil
 end
 function s.filter(c,atg)
 	return c:IsFaceup() and c:IsCode(31709826) and atg:IsContains(c)

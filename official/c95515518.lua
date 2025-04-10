@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Link Summon
 	c:EnableReviveLimit()
-	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x109),3,3)
+	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_THE_WEATHER),3,3)
 	--Special Summon 1 of your banished "The Weather" monsters
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -48,12 +48,12 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 s.listed_names={54178659}
-s.listed_series={0x109}
+s.listed_series={SET_THE_WEATHER}
 function s.spcon1(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
+	return e:GetHandler():IsLinkSummoned()
 end
 function s.spfilter1(c,e,tp)
-	return c:IsFaceup() and c:IsSetCard(0x109) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsFaceup() and c:IsSetCard(SET_THE_WEATHER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -70,7 +70,7 @@ function s.spop1(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsSummonType(SUMMON_TYPE_LINK)
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsLinkSummoned()
 end
 function s.spfilter2(c,e,tp)
 	return c:IsCode(54178659) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -88,7 +88,7 @@ function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.eftg(e,c)
 	local lg=e:GetHandler():GetLinkedGroup()
-	return c:IsType(TYPE_EFFECT) and c:IsSetCard(0x109) and lg:IsContains(c)
+	return c:IsType(TYPE_EFFECT) and c:IsSetCard(SET_THE_WEATHER) and lg:IsContains(c)
 end
 function s.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return aux.bfgcost(e,tp,eg,ep,ev,re,r,rp,chk) end
@@ -104,17 +104,17 @@ function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and Duel.Remove(tc,0,REASON_EFFECT+REASON_TEMPORARY)>0 then
+	if tc:IsRelateToEffect(e) and Duel.Remove(tc,0,REASON_EFFECT|REASON_TEMPORARY)>0 then
 		local ct=Duel.GetCurrentPhase()<=PHASE_STANDBY and 2 or 1
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD-RESET_TEMP_REMOVE+RESET_PHASE+PHASE_STANDBY,0,ct)
+		tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD-RESET_TEMP_REMOVE|RESET_PHASE|PHASE_STANDBY,0,ct)
 		--Banish it until the Standby Phase of the next turn
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
+		e1:SetCode(EVENT_PHASE|PHASE_STANDBY)
 		e1:SetCountLimit(1)
 		e1:SetCondition(s.retcon)
 		e1:SetOperation(s.retop)
-		e1:SetReset(RESET_PHASE+PHASE_STANDBY,ct)
+		e1:SetReset(RESET_PHASE|PHASE_STANDBY,ct)
 		e1:SetLabel(Duel.GetTurnCount())
 		e1:SetLabelObject(tc)
 		Duel.RegisterEffect(e1,tp)

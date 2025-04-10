@@ -1,4 +1,5 @@
 --古代の機械巨人
+--Ancient Gear Golem
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot special summon

@@ -73,7 +73,7 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsReason(REASON_DESTROY) and c:IsReason(REASON_BATTLE+REASON_EFFECT) then
+	if c:IsReason(REASON_DESTROY) and c:IsReason(REASON_BATTLE|REASON_EFFECT) then
 		local e1=Effect.CreateEffect(c)
 		e1:SetDescription(aux.Stringid(id,1))
 		e1:SetCategory(CATEGORY_SPECIAL_SUMMON)

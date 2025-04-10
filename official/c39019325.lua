@@ -1,4 +1,5 @@
 --玉砕指令
+--Order to Smash
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -18,7 +19,7 @@ function s.rfilter(c,e)
 		and c:IsFaceup() and c:IsLevelBelow(2) and c:IsReleasable() and c:IsReleasableByEffect() and not c:IsImmuneToEffect(e)
 end
 function s.dfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsSpellTrap()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.rfilter(chkc,e) end

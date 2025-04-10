@@ -1,4 +1,5 @@
 --弾幕回避
+--Do a Barrel Roll
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -14,7 +15,7 @@ function s.initial_effect(c)
 end
 s.listed_names={TOKEN_MECHA_PHANTOM_BEAST}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsChainNegatable(ev) and (re:IsActiveType(TYPE_MONSTER) or re:IsHasType(EFFECT_TYPE_ACTIVATE))
+	return Duel.IsChainNegatable(ev) and (re:IsMonsterEffect() or re:IsHasType(EFFECT_TYPE_ACTIVATE))
 end
 function s.filter(c)
 	return c:IsReleasable() and not c:IsStatus(STATUS_BATTLE_DESTROYED)

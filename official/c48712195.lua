@@ -1,4 +1,5 @@
 --カードトレーダー
+--Card Trader
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,7 +13,7 @@ function s.initial_effect(c)
 	e2:SetCategory(CATEGORY_DRAW)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e2:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e2:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCountLimit(1)
 	e2:SetCondition(s.drcon)
@@ -22,7 +23,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToDeckAsCost,tp,LOCATION_HAND,0,1,nil) end

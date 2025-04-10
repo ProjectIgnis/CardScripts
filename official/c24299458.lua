@@ -1,7 +1,6 @@
 --禁じられた一滴
 --Forbidden Droplet
 --Scripted by Eerie Code
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,14 +11,11 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetHintTiming(TIMING_DAMAGE_STEP)
-	e1:SetCondition(s.condition)
+	e1:SetCondition(aux.StatChangeDamageStepCondition)
 	e1:SetCost(s.cost)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-end
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(100)
@@ -30,18 +26,18 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		if e:GetLabel()~=100 then return false end
 		e:SetLabel(0)
-		return ct>0 and Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_ONFIELD+LOCATION_HAND,0,1,e:GetHandler())
+		return ct>0 and Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_ONFIELD|LOCATION_HAND,0,1,e:GetHandler())
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToGraveAsCost,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,ct,e:GetHandler())
+	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToGraveAsCost,tp,LOCATION_HAND|LOCATION_ONFIELD,0,1,ct,e:GetHandler())
 	Duel.SendtoGrave(g,REASON_COST)
 	local og=Duel.GetOperatedGroup()
 	e:SetLabel(#og)
 	local typ=0
-	for tc in aux.Next(og) do
+	for tc in og:Iter() do
 		typ = typ|tc:GetOriginalType()
 	end
-	Duel.SetChainLimit(s.chainlimit(typ&0x7))
+	Duel.SetChainLimit(s.chainlimit(typ&(TYPE_MONSTER|TYPE_SPELL|TYPE_TRAP)))
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,nil,#og,0,0)
 end
 function s.chainlimit(typ)
@@ -61,21 +57,21 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local e0=Effect.CreateEffect(c)
 		e0:SetType(EFFECT_TYPE_SINGLE)
 		e0:SetCode(EFFECT_SET_ATTACK_FINAL)
-		e0:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e0:SetReset(RESETS_STANDARD_PHASE_END)
 		e0:SetValue(math.ceil(tc:GetAttack()/2))
 		tc:RegisterEffect(e0)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
 		e2:SetValue(RESET_TURN_SET)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e2:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e2)
 	end
 end

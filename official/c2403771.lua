@@ -62,5 +62,5 @@ function s.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.desrepop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-	Duel.SendtoGrave(tg,REASON_EFFECT+REASON_REPLACE)
+	Duel.SendtoGrave(tg,REASON_EFFECT|REASON_REPLACE)
 end

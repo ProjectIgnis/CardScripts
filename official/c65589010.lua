@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetTargetRange(LOCATION_MZONE,0)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x146))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_DOGMATIKA))
 	e2:SetValue(s.tgval)
 	c:RegisterEffect(e2)
 	--destroy
@@ -42,12 +42,12 @@ function s.initial_effect(c)
 	e4:SetOperation(s.gyop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x146}
+s.listed_series={SET_DOGMATIKA}
 function s.tgval(e,re,rp)
-	return re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSummonType(SUMMON_TYPE_SPECIAL) and re:GetHandler():IsSummonLocation(LOCATION_EXTRA)
+	return re:IsMonsterEffect() and re:GetHandler():IsSpecialSummoned() and re:GetHandler():IsSummonLocation(LOCATION_EXTRA)
 end
 function s.check(c,tp)
-	return c and c:IsControler(tp) and c:IsSetCard(0x146)
+	return c and c:IsControler(tp) and c:IsSetCard(SET_DOGMATIKA)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetAttackTarget()~=nil

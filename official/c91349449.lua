@@ -1,6 +1,5 @@
 --ライトレイ ソーサラー
 --Lightray Sorcerer
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -49,7 +48,7 @@ function s.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_OATH+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetCode(EFFECT_CANNOT_ATTACK)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESETS_STANDARD_PHASE_END)
 	e:GetHandler():RegisterEffect(e1,true)
 end
 function s.filter1(c)
@@ -75,7 +74,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	local tc2=g:GetFirst()
 	if tc1==tc2 then tc2=g:GetNext() end
-	if tc1:IsRelateToEffect(e) and Duel.SendtoDeck(tc1,nil,2,REASON_EFFECT)~=0 then
+	if tc1:IsRelateToEffect(e) and Duel.SendtoDeck(tc1,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)~=0 then
 		if tc2:IsFaceup() and tc2:IsRelateToEffect(e) then
 			Duel.Remove(tc2,POS_FACEUP,REASON_EFFECT)
 		end

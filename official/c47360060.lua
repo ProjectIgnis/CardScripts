@@ -1,4 +1,5 @@
 --反射の聖刻印
+--Hieratic Seal of Reflection
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,12 +13,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x69}
+s.listed_series={SET_HIERATIC}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsChainNegatable(ev) and (re:IsActiveType(TYPE_MONSTER) or re:IsHasType(EFFECT_TYPE_ACTIVATE))
+	return Duel.IsChainNegatable(ev) and (re:IsMonsterEffect() or re:IsHasType(EFFECT_TYPE_ACTIVATE))
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x69) and not c:IsStatus(STATUS_BATTLE_DESTROYED)
+	return c:IsSetCard(SET_HIERATIC) and not c:IsStatus(STATUS_BATTLE_DESTROYED)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.cfilter,1,false,nil,nil) end

@@ -1,4 +1,5 @@
 --ファイティング・スピリッツ
+--Fighting Spirit
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c)
@@ -27,5 +28,5 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	return Duel.SelectEffectYesNo(tp,c,96)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Destroy(e:GetHandler(),REASON_EFFECT+REASON_REPLACE)
+	Duel.Destroy(e:GetHandler(),REASON_EFFECT|REASON_REPLACE)
 end

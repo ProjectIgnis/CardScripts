@@ -1,4 +1,5 @@
 --メタファイズ・ラグナロク
+--Metaphys Ragnarok
 local s,id=GetID()
 function s.initial_effect(c)
 	--remove
@@ -27,7 +28,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x105}
+s.listed_series={SET_METAPHYS}
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local rg=Duel.GetDecktopGroup(tp,3)
 	if chk==0 then return rg:FilterCount(Card.IsAbleToRemove,nil)==3 end
@@ -39,13 +40,13 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 and Duel.Remove(g,POS_FACEUP,REASON_EFFECT)~=0
 		and c:IsFaceup() and c:IsRelateToEffect(e) then
 		local og=Duel.GetOperatedGroup()
-		local oc=og:FilterCount(Card.IsSetCard,nil,0x105)
+		local oc=og:FilterCount(Card.IsSetCard,nil,SET_METAPHYS)
 		if oc==0 then return end
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(oc*300)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		c:RegisterEffect(e1)
 	end
 end
@@ -53,7 +54,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x105) and c:IsLevelAbove(5) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_METAPHYS) and c:IsLevelAbove(5) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -65,7 +66,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local tc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp):GetFirst()
 	if tc and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)~=0 then
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+		tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1)
 		local e2=Effect.CreateEffect(e:GetHandler())
 		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e2:SetCode(EVENT_PHASE+PHASE_END)

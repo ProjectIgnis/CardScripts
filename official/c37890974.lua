@@ -32,17 +32,17 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x114}
+s.listed_series={SET_FUR_HIRE}
 function s.spfilter1(c,e,tp)
 	local lv=c:GetLevel()
 	return (c:IsReason(REASON_BATTLE) or (rp~=tp and c:IsReason(REASON_EFFECT)))
-		and c:IsPreviousSetCard(0x114) and c:IsMonster()
+		and c:IsPreviousSetCard(SET_FUR_HIRE) and c:IsMonster()
 		and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp)
-		and c:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED) and c:IsCanBeEffectTarget(e)
+		and c:IsLocation(LOCATION_GRAVE|LOCATION_REMOVED) and c:IsCanBeEffectTarget(e)
 		and lv>0 and Duel.IsExistingMatchingCard(s.spfilter2,tp,LOCATION_DECK,0,1,nil,e,tp,lv)
 end
 function s.spfilter2(c,e,tp,lv)
-	return c:GetLevel()<lv and c:IsSetCard(0x114) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:GetLevel()<lv and c:IsSetCard(SET_FUR_HIRE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return eg:IsContains(chkc) and s.spfilter1(chkc,e,tp) end
@@ -64,4 +64,3 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-

@@ -1,5 +1,5 @@
 --破械神の慟哭
---Wail of the Hakaishin
+--Wailing of the Unchained Souls
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
@@ -34,9 +34,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x130}
+s.listed_series={SET_UNCHAINED}
 function s.cfilter(c,tp)
-	return c:IsSetCard(0x130) and c:IsSummonType(SUMMON_TYPE_LINK) and c:GetSummonPlayer()==tp
+	return c:IsSetCard(SET_UNCHAINED) and c:IsLinkSummoned() and c:GetSummonPlayer()==tp
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)
@@ -60,7 +60,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsReason(REASON_EFFECT) and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEDOWN)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x130) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_UNCHAINED) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

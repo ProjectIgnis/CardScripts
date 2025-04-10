@@ -1,4 +1,5 @@
 --真紅眼の黒竜剣
+--Red-Eyes Black Dragon Sword
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -41,19 +42,19 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e1:SetValue(s.eqlimit)
 	e1:SetLabelObject(tc)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	c:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_EQUIP)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetValue(1000)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 	c:RegisterEffect(e2)
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_EQUIP)
 	e3:SetCode(EFFECT_UPDATE_ATTACK)
 	e3:SetValue(s.atkval)
-	e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e3:SetReset(RESET_EVENT|RESETS_STANDARD)
 	c:RegisterEffect(e3)
 	local e4=e3:Clone()
 	e4:SetCode(EFFECT_UPDATE_DEFENSE)
@@ -63,5 +64,5 @@ function s.eqlimit(e,c)
 	return c==e:GetLabelObject()
 end
 function s.atkval(e,c)
-	return Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsRace,RACE_DRAGON),0,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE,nil)*500
+	return Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsRace,RACE_DRAGON),0,LOCATION_MZONE|LOCATION_GRAVE,LOCATION_MZONE|LOCATION_GRAVE,nil)*500
 end

@@ -1,4 +1,5 @@
 --奇跡の蘇生
+--Miraculous Rebirth
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

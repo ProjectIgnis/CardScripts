@@ -1,4 +1,5 @@
 --いたずら好きな双子悪魔
+--Delinquent Duo
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -7,14 +8,10 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCost(s.cost)
+	e1:SetCost(Cost.PayLP(1000))
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,1000) end
-	Duel.PayLPCost(tp,1000)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)>0 end
@@ -26,12 +23,12 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(p,0,LOCATION_HAND)
 	if #g>0 then
 		local sg=g:RandomSelect(p,1)
-		Duel.SendtoGrave(sg,REASON_EFFECT+REASON_DISCARD)
+		Duel.SendtoGrave(sg,REASON_EFFECT|REASON_DISCARD)
 		g:RemoveCard(sg:GetFirst())
 		if #g>0 then
 			Duel.Hint(HINT_SELECTMSG,1-p,HINTMSG_DISCARD)
 			sg=g:Select(1-p,1,1,nil)
-			Duel.SendtoGrave(sg,REASON_EFFECT+REASON_DISCARD)
+			Duel.SendtoGrave(sg,REASON_EFFECT|REASON_DISCARD)
 		end
 	end
 end

@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,id)
 	e2:SetCondition(aux.exccon)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
@@ -33,7 +33,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_CHANGE_LEVEL)
 	e1:SetValue(3)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESETS_STANDARD_DISABLE_PHASE_END)
 	c:RegisterEffect(e1)
 end
 function s.thfilter(c)
@@ -51,4 +51,3 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-

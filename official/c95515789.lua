@@ -1,5 +1,5 @@
 --赫の聖女カルテシア
---Red Cartesia, the Virtuous
+--Blazing Cartesia, the Virtuous
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -53,12 +53,12 @@ s.listed_names={CARD_ALBAZ}
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	for tc in eg:Iter() do
 		if tc:IsType(TYPE_FUSION) then 
-			Duel.RegisterFlagEffect(tc:GetControler(),id,RESET_PHASE+PHASE_END,0,1)
+			Duel.RegisterFlagEffect(tc:GetControler(),id,RESET_PHASE|PHASE_END,0,1)
 		end
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_ALBAZ),tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_ALBAZ),tp,LOCATION_ONFIELD|LOCATION_GRAVE,0,1,nil)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

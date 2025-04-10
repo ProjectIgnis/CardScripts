@@ -26,9 +26,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.fdop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x8d}
+s.listed_series={SET_GHOSTRICK}
 function s.sfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x8d)
+	return c:IsFaceup() and c:IsSetCard(SET_GHOSTRICK)
 end
 function s.sumcon(e)
 	return not Duel.IsExistingMatchingCard(s.sfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
@@ -36,7 +36,7 @@ end
 function s.postg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsCanTurnSet() and c:GetFlagEffect(id)==0 end
-	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET+RESET_PHASE+PHASE_END,0,1)
+	c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD-RESET_TURN_SET|RESET_PHASE|PHASE_END,0,1)
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,c,1,0,0)
 end
 function s.posop(e,tp,eg,ep,ev,re,r,rp)
@@ -57,14 +57,14 @@ function s.fdop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCountLimit(1)
 	e1:SetCondition(s.condition)
 	e1:SetOperation(s.operation)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsCanTurnSet()
 end
 function s.spfilter(c,e,tp,lv)
-	return c:IsSetCard(0x8d) and c:IsLevelBelow(lv) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
+	return c:IsSetCard(SET_GHOSTRICK) and c:IsLevelBelow(lv) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)

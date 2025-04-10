@@ -15,7 +15,7 @@ function s.initial_effect(c)
 end
 s.roll_dice=true
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_TRIBUTE)
+	return e:GetHandler():IsTributeSummoned()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -29,7 +29,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		e1:SetValue(dice*200)
 		c:RegisterEffect(e1)
 	end

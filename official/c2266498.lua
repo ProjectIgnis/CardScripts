@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.registerloccount(e1:GetOperation()))
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x106}
+s.listed_series={SET_VENDREAD}
 function s.registerloccount(func)
 	return function(e,tp,...)
 		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
@@ -21,10 +21,10 @@ function s.registerloccount(func)
 	end
 end
 function s.cfilter(c,e)
-	return c:IsSetCard(0x106) and not c:IsPublic()
+	return c:IsSetCard(SET_VENDREAD) and not c:IsPublic()
 end
 function s.filter(c,e,tp)
-	return c:IsFaceup() and c:IsSetCard(0x106) and Duel.IsPlayerCanRelease(tp,c) and c:IsLocation(LOCATION_REMOVED)
+	return c:IsFaceup() and c:IsSetCard(SET_VENDREAD) and Duel.IsPlayerCanRelease(tp,c) and c:IsLocation(LOCATION_REMOVED)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
 end
 function s.extrafil(e,tp,eg,ep,ev,re,r,rp)

@@ -14,12 +14,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x10}
+s.listed_series={SET_GUSTO}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return (r&0x41)==0x41
+	return (r&(REASON_DESTROY|REASON_EFFECT))==(REASON_DESTROY|REASON_EFFECT)
 end
 function s.filter(c,e,tp)
-	return c:IsLevelAbove(5) and c:IsSetCard(0x10) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsLevelAbove(5) and c:IsSetCard(SET_GUSTO) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

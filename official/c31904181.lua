@@ -1,4 +1,5 @@
 --六武衆－ニサシ
+--The Six Samurai - Nisashi
 local s,id=GetID()
 function s.initial_effect(c)
 	--atk twice
@@ -18,16 +19,16 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desrepop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x3d}
+s.listed_series={SET_SIX_SAMURAI}
 s.listed_names={id}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x3d) and not c:IsCode(id)
+	return c:IsFaceup() and c:IsSetCard(SET_SIX_SAMURAI) and not c:IsCode(id)
 end
 function s.dircon(e)
 	return Duel.IsExistingMatchingCard(s.cfilter,e:GetHandler():GetControler(),LOCATION_MZONE,0,1,nil)
 end
 function s.repfilter(c,e)
-	return c:IsFaceup() and c:IsSetCard(0x3d)
+	return c:IsFaceup() and c:IsSetCard(SET_SIX_SAMURAI)
 		and c:IsDestructable(e) and not c:IsStatus(STATUS_DESTROY_CONFIRMED+STATUS_BATTLE_DESTROYED)
 end
 function s.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -45,5 +46,5 @@ end
 function s.desrepop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
 	tc:SetStatus(STATUS_DESTROY_CONFIRMED,false)
-	Duel.Destroy(tc,REASON_EFFECT+REASON_REPLACE)
+	Duel.Destroy(tc,REASON_EFFECT|REASON_REPLACE)
 end

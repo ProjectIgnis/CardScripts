@@ -65,5 +65,5 @@ end
 function s.desrepop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
 	tc:SetStatus(STATUS_DESTROY_CONFIRMED,false)
-	Duel.Destroy(tc,REASON_EFFECT+REASON_REPLACE)
+	Duel.Destroy(tc,REASON_EFFECT|REASON_REPLACE)
 end

@@ -24,10 +24,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tgop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xc3}
+s.listed_series={SET_EDGE_IMP}
 s.listed_names={id}
 function s.cfilter(c)
-	return c:IsSetCard(0xc3) and c:IsMonster() and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(SET_EDGE_IMP) and c:IsMonster() and c:IsAbleToGraveAsCost()
 end
 function s.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end
@@ -44,7 +44,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Damage(p,d,REASON_EFFECT)
 end
 function s.tgfilter(c)
-	return c:IsSetCard(0xc3) and not c:IsCode(id) and c:IsMonster() and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(SET_EDGE_IMP) and not c:IsCode(id) and c:IsMonster() and c:IsAbleToGraveAsCost()
 end
 function s.tgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -60,8 +60,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_CHANGE_CODE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESETS_STANDARD_PHASE_END)
 	e1:SetValue(e:GetLabel())
 	c:RegisterEffect(e1)
 end
-

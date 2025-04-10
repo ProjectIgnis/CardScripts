@@ -1,4 +1,5 @@
 --D・リモコン
+--Morphtronic Remoten
 local s,id=GetID()
 function s.initial_effect(c)
 	--search
@@ -25,23 +26,23 @@ function s.initial_effect(c)
 	e2:SetOperation(s.opd)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x26}
+s.listed_series={SET_MORPHTRONIC}
 function s.filter(c,lv)
-	return c:IsSetCard(0x26) and c:GetLevel()==lv and c:IsAbleToHand()
+	return c:IsSetCard(SET_MORPHTRONIC) and c:GetLevel()==lv and c:IsAbleToHand()
 end
 function s.cona(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsDisabled() and e:GetHandler():IsAttackPos()
 end
 function s.filtera(c,tp)
 	local lv=c:GetLevel()
-	return c:IsSetCard(0x26) and lv>0 and c:IsAbleToRemove() and aux.SpElimFilter(c,true) 
+	return c:IsSetCard(SET_MORPHTRONIC) and lv>0 and c:IsAbleToRemove() and aux.SpElimFilter(c,true) 
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,lv)
 end
 function s.tga(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE+LOCATION_GRAVE) and chkc:IsControler(tp) and s.filtera(chkc,tp) end
-	if chk==0 then return Duel.IsExistingTarget(s.filtera,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil,tp) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE|LOCATION_GRAVE) and chkc:IsControler(tp) and s.filtera(chkc,tp) end
+	if chk==0 then return Duel.IsExistingTarget(s.filtera,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectTarget(tp,s.filtera,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil,tp)
+	local g=Duel.SelectTarget(tp,s.filtera,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,1,nil,tp)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
@@ -61,7 +62,7 @@ function s.cond(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.filterd(c,tp)
 	local lv=c:GetLevel()
-	return c:IsSetCard(0x26) and lv>0 and c:IsAbleToGrave()
+	return c:IsSetCard(SET_MORPHTRONIC) and lv>0 and c:IsAbleToGrave()
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,1,nil,lv)
 end
 function s.tgd(e,tp,eg,ep,ev,re,r,rp,chk)

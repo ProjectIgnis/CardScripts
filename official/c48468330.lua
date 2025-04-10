@@ -1,5 +1,5 @@
 --魔神童
---Majindou
+--Terrifying Toddler of Torment
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsPreviousLocation(LOCATION_HAND+LOCATION_DECK)
+	return e:GetHandler():IsPreviousLocation(LOCATION_HAND|LOCATION_DECK)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -53,4 +53,3 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoGrave(g,REASON_EFFECT)
 	end
 end
-

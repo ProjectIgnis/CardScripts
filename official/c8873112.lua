@@ -1,4 +1,5 @@
 --アーティファクト－チャクラム
+--Artifact Chakram
 local s,id=GetID()
 function s.initial_effect(c)
 	--set

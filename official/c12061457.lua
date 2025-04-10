@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.cfilter(c)
-	return c:IsReason(REASON_DESTROY) and c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsPreviousLocation(LOCATION_MZONE)
+	return c:IsReason(REASON_DESTROY) and c:IsReason(REASON_BATTLE|REASON_EFFECT) and c:IsPreviousLocation(LOCATION_MZONE)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return not eg:IsContains(e:GetHandler()) and eg:IsExists(s.cfilter,1,nil)
@@ -51,7 +51,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 		e1:SetValue(LOCATION_REMOVED)
-		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
+		e1:SetReset(RESET_EVENT|RESETS_REDIRECT)
 		c:RegisterEffect(e1,true)
 	end
 end

@@ -1,4 +1,5 @@
 --悪夢再び
+--Recurring Nightmare
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

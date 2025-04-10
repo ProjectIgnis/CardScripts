@@ -1,5 +1,5 @@
 --ユニゾン・チューン
---Uni-song Tuning
+--Uni-Song Tuning
 --scripted Logical Nonsense
 local s,id=GetID()
 function s.initial_effect(c)
@@ -43,14 +43,13 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_LEVEL_FINAL)
 		e1:SetValue(tc1:GetLevel())
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc2:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(e:GetHandler())
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_ADD_TYPE)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e2:SetReset(RESETS_STANDARD_PHASE_END)
 		e2:SetValue(TYPE_TUNER)
 		tc2:RegisterEffect(e2)
 	end
 end
-

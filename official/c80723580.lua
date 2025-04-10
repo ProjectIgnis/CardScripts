@@ -1,4 +1,5 @@
 --大落とし穴
+--Giant Trap Hole
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

@@ -38,7 +38,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x12d}
+s.listed_series={SET_SIMORGH}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	if s.thcost(e,tp,eg,ep,ev,re,r,rp,0) and s.thtg(e,tp,eg,ep,ev,re,r,rp,0)
@@ -61,7 +61,7 @@ function s.atlimit(e,c)
 	return c:IsFaceup() and c:IsRace(RACE_WINGEDBEAST) and c:GetAttack()<s.atkval(e:GetHandlerPlayer())
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsAbleToGraveAsCost() and c:IsSetCard(0x12d) and c:IsLevelAbove(7)
+	return c:IsFaceup() and c:IsAbleToGraveAsCost() and c:IsSetCard(SET_SIMORGH) and c:IsLevelAbove(7)
 end
 function s.rescon(sg,e,tp,mg)
 	return sg:GetClassCount(Card.GetOriginalAttribute)==#sg and Duel.IsExistingMatchingCard(Card.IsAbleToHand,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,sg+e:GetHandler())

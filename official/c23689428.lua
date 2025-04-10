@@ -1,5 +1,5 @@
 --無限起動 ゴライアス
---Infinite Ignition Goliath
+--Infinitrack Goliath
 local s,id=GetID()
 function s.initial_effect(c)
 	--Link summon method
@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.mattg)
 	e1:SetOperation(s.matop)
 	c:RegisterEffect(e1)
-	-- give effect
+	--give effect
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_XMATERIAL)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.matfilter(c,lc,sumtype,tp)
-	return c:IsSetCard(0x127,lc,sumtype,tp) and not c:IsType(TYPE_LINK,lc,sumtype,tp)
+	return c:IsSetCard(SET_INFINITRACK,lc,sumtype,tp) and not c:IsType(TYPE_LINK,lc,sumtype,tp)
 end
 function s.matcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)

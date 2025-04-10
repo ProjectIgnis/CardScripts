@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x83}
+s.listed_series={SET_PUPPET}
 function s.tgfilter(c,e,tp)
 	return c:IsFaceup() and c:IsLevelBelow(3) and c:IsAttribute(ATTRIBUTE_EARTH) and c:IsRace(RACE_WARRIOR)
 		and c:IsAbleToGrave() and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,c)
@@ -32,7 +32,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function s.atkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x83) and c:IsOriginalAttribute(ATTRIBUTE_EARTH) and c:IsOriginalRace(RACE_WARRIOR)
+	return c:IsFaceup() and c:IsSetCard(SET_PUPPET) and c:IsOriginalAttribute(ATTRIBUTE_EARTH) and c:IsOriginalRace(RACE_WARRIOR)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
@@ -49,7 +49,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			e1:SetValue(ct*100)
 			sc:RegisterEffect(e1)
 			local e2=e1:Clone()

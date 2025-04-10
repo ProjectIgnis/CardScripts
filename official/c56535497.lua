@@ -23,8 +23,7 @@ function s.initial_effect(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return (Duel.IsTurnPlayer(tp) and Duel.IsMainPhase())
-		or (Duel.IsTurnPlayer(1-tp) and Duel.IsBattlePhase()
-		and (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()))
+		or (Duel.IsTurnPlayer(1-tp) and Duel.IsBattlePhase() and aux.StatChangeDamageStepCondition())
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
@@ -49,7 +48,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 	e1:SetValue(atk)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESETS_STANDARD_PHASE_END)
 	tc1:RegisterEffect(e1)
 	--Increase ATK
 	local e2=e1:Clone()

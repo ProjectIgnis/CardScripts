@@ -1,4 +1,5 @@
 --黄泉へ渡る船
+--Yomi Ship
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy

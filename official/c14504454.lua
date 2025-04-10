@@ -1,9 +1,9 @@
--- 悪魔嬢アリス
--- Alice, Lady of Lament
--- Scripted by Hatter
+--悪魔嬢アリス
+--Alice, Lady of Lament
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Special Summon
+	--Special Summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	-- Special summon self
+	--Special summon self
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.hsptg)
 	e2:SetOperation(s.hspop)
 	c:RegisterEffect(e2)
-	-- Search
+	--Search
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
@@ -41,9 +41,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_names={id}
-s.listed_series={0x176}
+s.listed_series={SET_LADY_OF_LAMENT}
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x176) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_LADY_OF_LAMENT) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.spfilter(chkc,e,tp) end
@@ -63,9 +63,9 @@ function s.hspcostfilter(c)
 	return c:IsTrap() and c:IsAbleToRemoveAsCost()
 end
 function s.hspcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.hspcostfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.hspcostfilter,tp,LOCATION_HAND|LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.hspcostfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.hspcostfilter,tp,LOCATION_HAND|LOCATION_GRAVE,0,1,1,nil)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.hsptg(e,tp,eg,ep,ev,re,r,rp,chk)

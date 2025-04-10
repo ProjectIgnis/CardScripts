@@ -1,4 +1,5 @@
 --静寂のロッド－ケースト
+--Rod of Silence - Kay'est
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c)
@@ -43,7 +44,7 @@ function s.distg(e,c)
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local ec=e:GetHandler()
-	if not ec:GetEquipTarget() or not re:IsActiveType(TYPE_SPELL) or not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return end
+	if not ec:GetEquipTarget() or not re:IsSpellEffect() or not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return end
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 	if not g or not g:IsContains(ec:GetEquipTarget()) then return end
 	if Duel.NegateEffect(ev) and re:GetHandler():IsRelateToEffect(re) then

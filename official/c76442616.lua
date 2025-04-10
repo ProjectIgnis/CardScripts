@@ -1,4 +1,5 @@
 --HERO'S ボンド
+--HERO's Bond
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,15 +12,15 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x8,0x3008}
+s.listed_series={SET_HERO,SET_ELEMENTAL_HERO}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x8)
+	return c:IsFaceup() and c:IsSetCard(SET_HERO)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 end
 function s.filter(c,e,tp)
-	return c:IsLevelBelow(4) and c:IsSetCard(0x3008) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsLevelBelow(4) and c:IsSetCard(SET_ELEMENTAL_HERO) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)

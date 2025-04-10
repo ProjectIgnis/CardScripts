@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,{id,0})
-	e1:SetCost(s.thcost)
+	e1:SetCost(Cost.SelfDiscard)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
@@ -52,11 +52,6 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.HasFlagEffect(rp,id) and re:GetHandler():IsCode(CARD_MILLENNIUM_CROSS) and re:IsHasType(EFFECT_TYPE_ACTIVATE) then
 		Duel.RegisterFlagEffect(rp,id,0,0,0)
 	end
-end
-function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsDiscardable() end
-	Duel.SendtoGrave(c,REASON_COST|REASON_DISCARD)
 end
 function s.thfilter(c)
 	return c:IsCode(CARD_MILLENNIUM_CROSS) and c:IsAbleToHand()

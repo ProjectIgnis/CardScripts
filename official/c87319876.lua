@@ -1,4 +1,5 @@
 --トラスト・ガーディアン
+--Trust Guardian
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro
@@ -32,7 +33,7 @@ function s.cop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_COUNT)
 	e1:SetCountLimit(1)
 	e1:SetValue(s.valcon)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	rc:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(c)
 	e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
@@ -40,12 +41,12 @@ function s.cop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetCode(EVENT_DAMAGE_STEP_END)
 	e2:SetCondition(s.adcon)
 	e2:SetOperation(s.adop)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 	rc:RegisterEffect(e2)
 end
 function s.valcon(e,re,r,rp)
 	if r&REASON_BATTLE~=0 then
-		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE,0,1)
+		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_DAMAGE,0,1)
 		return true
 	else return false end
 end
@@ -58,7 +59,7 @@ function s.adop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(-400)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	c:RegisterEffect(e1)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_UPDATE_DEFENSE)

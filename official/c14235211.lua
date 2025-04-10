@@ -1,4 +1,5 @@
 --暴風竜の防人
+--Rider of the Storm Winds
 local s,id=GetID()
 function s.initial_effect(c)
 	--equip
@@ -7,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCategory(CATEGORY_EQUIP)
-	e1:SetRange(LOCATION_HAND+LOCATION_MZONE)
+	e1:SetRange(LOCATION_HAND|LOCATION_MZONE)
 	e1:SetTarget(s.eqtg)
 	e1:SetOperation(s.eqop)
 	c:RegisterEffect(e1)
@@ -47,7 +48,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_EQUIP_LIMIT)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	e1:SetValue(s.eqlimit)
 	e1:SetLabelObject(tc)
 	c:RegisterEffect(e1)

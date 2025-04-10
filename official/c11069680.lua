@@ -1,7 +1,6 @@
 --ジャンク・コンバーター
 --Junk Converter
 --Scripted by Naim
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Add 1 "Synchron" monster from deck
@@ -28,8 +27,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x1017}
-
+s.listed_series={SET_SYNCHRON}
 function s.cfilter(c)
 	return c:IsType(TYPE_TUNER) and c:IsDiscardable()
 end
@@ -39,10 +37,10 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
 	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND,0,1,1,e:GetHandler())
 	g:AddCard(e:GetHandler())
-	Duel.SendtoGrave(g,REASON_DISCARD+REASON_COST)
+	Duel.SendtoGrave(g,REASON_DISCARD|REASON_COST)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x1017) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_SYNCHRON) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -79,7 +77,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_TRIGGER)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 	Duel.SpecialSummonComplete()

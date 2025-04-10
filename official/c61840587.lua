@@ -29,9 +29,9 @@ function s.initial_effect(c)
 	e3:SetLabelObject(e1)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x28}
+s.listed_series={SET_BATTERYMAN}
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x28) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_BATTERYMAN) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end
@@ -63,7 +63,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=sg:GetFirst()
 	while tc and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP_ATTACK) do
 		c:SetCardTarget(tc)
-		tc:CreateRelation(c,RESET_EVENT+0x1020000)
+		tc:CreateRelation(c,RESET_EVENT|RESET_TURN_SET|RESET_TOFIELD)
 		tc=sg:GetNext()
 	end
 	e:SetLabelObject(sg)

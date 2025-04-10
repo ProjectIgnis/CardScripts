@@ -1,4 +1,5 @@
 --ギアギアクセル
+--Geargiaccelerator
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -22,9 +23,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x72}
+s.listed_series={SET_GEARGIA}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x72)
+	return c:IsFaceup() and c:IsSetCard(SET_GEARGIA)
 end
 function s.spcon(e,c)
 	if c==nil then return true end
@@ -35,7 +36,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.filter(c)
-	return c:IsSetCard(0x72) and c:GetCode()~=id and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_GEARGIA) and c:GetCode()~=id and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc) end

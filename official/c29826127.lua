@@ -1,4 +1,5 @@
 --暗黒よりの軍勢
+--The Forces of Darkness
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,12 +12,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x6}
+s.listed_series={SET_DARK_WORLD}
 function s.filter(c)
-	return c:IsSetCard(0x6) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_DARK_WORLD) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:GetControler()==tp and chkc:GetLocation()==LOCATION_GRAVE and s.filter(chkc) end
+	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.filter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE,0,2,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_GRAVE,0,2,2,nil)

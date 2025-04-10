@@ -1,5 +1,5 @@
 --ふわんだりぃず×ろびーな
---Flundereeze x Robina
+--Floowandereeze & Robina
 --Logical Nonsense
 --Substitute ID
 local s,id=GetID()
@@ -46,13 +46,13 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	e1:SetTargetRange(1,0)
 	Duel.RegisterEffect(e1,tp)
 	local e2=Effect.CreateEffect(e:GetHandler())
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e2:SetDescription(aux.Stringid(id,2))
-	e2:SetReset(RESET_PHASE+PHASE_END)
+	e2:SetReset(RESET_PHASE|PHASE_END)
 	e2:SetTargetRange(1,0)
 	Duel.RegisterEffect(e2,tp)
 end
@@ -77,7 +77,7 @@ function s.nsop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 		if not g:GetFirst():IsLocation(LOCATION_HAND) then return end
 		--Normal summon 1 winged beast monster
-		local sg1=Duel.GetMatchingGroup(s.sumfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,nil)
+		local sg1=Duel.GetMatchingGroup(s.sumfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,nil)
 		if #sg1>0 and Duel.SelectYesNo(tp,aux.Stringid(id,3)) then
 			Duel.BreakEffect()
 			Duel.ShuffleHand(tp)

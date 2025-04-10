@@ -25,15 +25,15 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_SZONE)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x134}
+s.listed_series={SET_GENERAIDER}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,e:GetHandler()) end
-	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST|REASON_DISCARD)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local ch=Duel.GetCurrentChain(true)-1
 	return ep==1-tp and ch>0 and Duel.GetChainInfo(ch,CHAININFO_TRIGGERING_CONTROLER)==tp
-		and Duel.GetChainInfo(ch,CHAININFO_TRIGGERING_EFFECT):GetHandler():IsSetCard(0x134)
+		and Duel.GetChainInfo(ch,CHAININFO_TRIGGERING_EFFECT):GetHandler():IsSetCard(SET_GENERAIDER)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) and Duel.IsPlayerCanDraw(1-tp,1) end
@@ -47,7 +47,7 @@ function s.repop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	Duel.Draw(tp,1,REASON_EFFECT)
 	Duel.Draw(1-tp,1,REASON_EFFECT)
-	if e:IsActiveType(TYPE_SPELL+TYPE_TRAP) and e:IsHasType(EFFECT_TYPE_ACTIVATE) then
+	if e:IsSpellTrapEffect() and e:IsHasType(EFFECT_TYPE_ACTIVATE) then
 		c:CancelToGrave(false)
 	end
 end

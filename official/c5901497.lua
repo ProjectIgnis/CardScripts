@@ -1,4 +1,5 @@
 --女王の影武者
+--Queen's Double
 local s,id=GetID()
 function s.initial_effect(c)
 	--direct attack

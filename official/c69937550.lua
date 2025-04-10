@@ -1,4 +1,5 @@
 --宝玉獣 アンバー・マンモス
+--Crystal Beast Amber Mammoth
 local s,id=GetID()
 function s.initial_effect(c)
 	--send replace
@@ -20,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.cbop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x1034}
+s.listed_series={SET_CRYSTAL_BEAST}
 function s.repcon(e)
 	local c=e:GetHandler()
 	return c:IsFaceup() and c:IsLocation(LOCATION_MZONE) and c:IsReason(REASON_DESTROY)
@@ -31,15 +32,15 @@ function s.repop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_CHANGE_TYPE)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD-RESET_TURN_SET)
 	e1:SetValue(TYPE_SPELL+TYPE_CONTINUOUS)
 	c:RegisterEffect(e1)
-	Duel.RaiseEvent(c,EVENT_CUSTOM+47408488,e,0,tp,0,0)
+	Duel.RaiseEvent(c,EVENT_CUSTOM+CARD_CRYSTAL_TREE,e,0,tp,0,0)
 end
 function s.cbcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local bt=eg:GetFirst()
-	return r~=REASON_REPLACE and c~=bt and bt:IsFaceup() and bt:IsSetCard(0x1034) and bt:GetControler()==c:GetControler()
+	return r~=REASON_REPLACE and c~=bt and bt:IsFaceup() and bt:IsSetCard(SET_CRYSTAL_BEAST) and bt:GetControler()==c:GetControler()
 end
 function s.cbtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetAttacker():GetAttackableTarget():IsContains(e:GetHandler()) end

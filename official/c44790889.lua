@@ -1,4 +1,5 @@
 --ハンマーラッシュ・バウンサー
+--Hammer Bounzer
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon with no tribute
@@ -25,7 +26,7 @@ function s.ntcon(e,c,minc)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttackTarget()~=nil
-		and not Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_ONFIELD,0,1,nil,TYPE_SPELL+TYPE_TRAP)
+		and not Duel.IsExistingMatchingCard(Card.IsSpellTrap,tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
@@ -34,7 +35,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_CANNOT_ACTIVATE)
 	e1:SetTargetRange(0,1)
 	e1:SetValue(s.aclimit)
-	e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
+	e1:SetReset(RESET_PHASE|PHASE_DAMAGE)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.aclimit(e,re,tp)

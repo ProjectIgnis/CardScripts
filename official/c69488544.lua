@@ -32,7 +32,7 @@ function s.initial_effect(c)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Gemini.EffectStatusCondition(e) and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
-		and rp==1-tp and re:IsActiveType(TYPE_SPELL) and re:IsHasType(EFFECT_TYPE_ACTIVATE)
+		and rp==1-tp and re:IsSpellEffect() and re:IsHasType(EFFECT_TYPE_ACTIVATE)
 end
 function s.filter(c,e,tp)
 	return c:IsType(TYPE_GEMINI) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

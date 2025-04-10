@@ -1,6 +1,5 @@
 --バハムート・シャーク
 --Bahamut Shark
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -14,14 +13,10 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
-	e1:SetCost(s.spcost)
+	e1:SetCost(Cost.Detach(1))
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
-end
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.filter(c,e,tp)
 	return c:IsRankBelow(3) and c:IsAttribute(ATTRIBUTE_WATER) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -41,6 +36,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_CANNOT_ATTACK)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESETS_STANDARD_PHASE_END)
 	c:RegisterEffect(e1)
 end

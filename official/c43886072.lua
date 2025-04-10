@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--2 "Prank-Kids" monsters
-	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x120),2,2)
+	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_PRANK_KIDS),2,2)
 	--A "Prank-Kids" pointed by this card gains 1000 ATK/DEF
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -24,27 +24,22 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,id)
-	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E+TIMING_MAIN_END)
+	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E|TIMING_MAIN_END)
 	e2:SetCondition(s.thcon)
-	e2:SetCost(aux.CostWithReplace(s.thcost,CARD_PRANKKIDS_MEOWMU))
+	e2:SetCost(aux.CostWithReplace(Cost.SelfTribute,CARD_PRANKKIDS_MEOWMU))
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x120}
+s.listed_series={SET_PRANK_KIDS}
 function s.atktg(e,c)
-	return e:GetHandler():GetLinkedGroup():IsContains(c) and c:IsSetCard(0x120)
+	return e:GetHandler():GetLinkedGroup():IsContains(c) and c:IsSetCard(SET_PRANK_KIDS)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return not Duel.IsTurnPlayer(tp)
 end
-function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsReleasable() end
-	Duel.Release(c,REASON_COST)
-end
 function s.thfilter(c,e)
-	return c:IsSetCard(0x120) and not c:IsLinkMonster() and c:IsCanBeEffectTarget(e) and c:IsAbleToHand()
+	return c:IsSetCard(SET_PRANK_KIDS) and not c:IsLinkMonster() and c:IsCanBeEffectTarget(e) and c:IsAbleToHand()
 end
 function s.thcheck(sg,e,tp)
 	return sg:GetClassCount(Card.GetCode)==2
@@ -67,14 +62,11 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	e1:SetTargetRange(LOCATION_MZONE,0)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	e1:SetTarget(s.indtg)
-	e1:SetValue(s.indval)
+	e1:SetValue(aux.indoval)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.indtg(e,c)
-	return c:IsSetCard(0x120)
-end
-function s.indval(e,re,rp)
-	return rp==1-e:GetHandlerPlayer()
+	return c:IsSetCard(SET_PRANK_KIDS)
 end

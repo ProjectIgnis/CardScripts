@@ -24,19 +24,19 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_BATTLED)
 	e3:SetRange(LOCATION_SZONE)
-	e3:SetCost(s.cost)
+	e3:SetCost(Cost.SelfToGrave)
 	e3:SetTarget(s.target)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
 end
 s.listed_names={id}
-s.listed_series={0xc5,0xbb}
+s.listed_series={SET_VOID,SET_INFERNOID}
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST|REASON_DISCARD)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0xc5) and c:IsSpellTrap() and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(SET_VOID) and c:IsSpellTrap() and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -56,7 +56,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.sumlimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
@@ -64,17 +64,13 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,1),nil)
 end
 function s.sumlimit(e,c)
-	return not c:IsSetCard(0xbb)
-end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
+	return not c:IsSetCard(SET_INFERNOID)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
 	if a:IsControler(1-tp) then a,d=d,a end
-	if chk==0 then return a and d and a:IsSetCard(0xbb) and (a:IsAbleToRemove() or d:IsAbleToRemove()) end
+	if chk==0 then return a and d and a:IsSetCard(SET_INFERNOID) and (a:IsAbleToRemove() or d:IsAbleToRemove()) end
 	local g=Group.CreateGroup()
 	if a:IsRelateToBattle() then g:AddCard(a) end
 	if d:IsRelateToBattle() then g:AddCard(d) end

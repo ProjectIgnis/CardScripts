@@ -21,7 +21,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return ft>-1 and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil,ft) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_MZONE,0,1,1,nil,ft)
-	Duel.SendtoDeck(g,nil,0,REASON_COST)
+	Duel.SendtoDeck(g,nil,SEQ_DECKTOP,REASON_COST)
 end
 function s.filter(c,e,tp)
 	return c:IsFaceup() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

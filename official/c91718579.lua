@@ -1,4 +1,5 @@
 --ゴゴゴアリステラ＆デクシア
+--Gogogo Aristera & Dexia
 local s,id=GetID()
 function s.initial_effect(c)
 	--untargetable
@@ -16,7 +17,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x59))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_GOGOGO))
 	e2:SetCondition(s.tgcon)
 	e2:SetValue(aux.tgoval)
 	c:RegisterEffect(e2)
@@ -28,16 +29,16 @@ function s.initial_effect(c)
 	e3:SetOperation(s.effop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x59}
+s.listed_series={SET_GOGOGO}
 function s.tgcon(e)
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x59),0,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler())
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_GOGOGO),0,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler())
 end
 function s.atlimit(e,c)
-	return c:IsFaceup() and c:IsSetCard(0x59)
+	return c:IsFaceup() and c:IsSetCard(SET_GOGOGO)
 end
 function s.effcon(e,tp,eg,ep,ev,re,r,rp)
 	local mg=e:GetHandler():GetReasonCard():GetMaterial()
-	return r==REASON_XYZ and mg:IsExists(Card.IsSetCard,#mg,nil,0x59)
+	return r==REASON_XYZ and mg:IsExists(Card.IsSetCard,#mg,nil,SET_GOGOGO)
 end
 function s.effop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,id)
@@ -52,19 +53,19 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCondition(s.poscon)
 	e1:SetTarget(s.postg)
 	e1:SetOperation(s.posop)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	rc:RegisterEffect(e1,true)
 	if not rc:IsType(TYPE_EFFECT) then
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_ADD_TYPE)
 		e2:SetValue(TYPE_EFFECT)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		rc:RegisterEffect(e2,true)
 	end
 end
 function s.poscon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ)
+	return e:GetHandler():IsXyzSummoned()
 end
 function s.filter(c)
 	return c:IsPosition(POS_FACEUP_ATTACK) and c:IsCanChangePosition()
@@ -83,7 +84,7 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_SET_DEFENSE_FINAL)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	e1:SetValue(0)
 	tc:RegisterEffect(e1)
 end

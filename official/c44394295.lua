@@ -1,13 +1,13 @@
 --影依融合
---Shaddol Fusion
+--Shaddoll Fusion
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
-	local e1=Fusion.CreateSummonEff(c,aux.FilterBoolFunction(Card.IsSetCard,0x9d),nil,s.fextra,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,s.extratg)
+	local e1=Fusion.CreateSummonEff(c,aux.FilterBoolFunction(Card.IsSetCard,SET_SHADDOLL),nil,s.fextra,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,s.extratg)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x9d}
+s.listed_series={SET_SHADDOLL}
 function s.fextra(e,tp,mg)
 	if Duel.IsExistingMatchingCard(Card.IsSummonLocation,tp,0,LOCATION_MZONE,1,nil,LOCATION_EXTRA) then
 		return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsAbleToGrave),tp,LOCATION_DECK,0,nil)

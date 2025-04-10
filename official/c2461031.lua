@@ -36,7 +36,7 @@ function s.initial_effect(c)
 	e5:SetType(EFFECT_TYPE_IGNITION)
 	e5:SetRange(LOCATION_SZONE)
 	e5:SetCondition(function(e) return e:GetHandler():GetEquipTarget() end)
-	e5:SetCost(s.lvcost)
+	e5:SetCost(Cost.SelfToGrave)
 	e5:SetTarget(s.lvtg)
 	e5:SetOperation(s.lvop)
 	c:RegisterEffect(e5)
@@ -66,10 +66,6 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	if tc then
 		s.equipop(c,e,tp,tc)
 	end
-end
-function s.lvcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
 function s.lvfilter(c)
 	return c:IsFaceup() and c:HasLevel()

@@ -1,16 +1,16 @@
--- 青き眼の幻出
--- Apparition with Eyes of Blue
--- Scripted by Hatter
+--青き眼の幻出
+--Vision with Eyes of Blue
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetTarget(s.acttg)
 	c:RegisterEffect(e1)
-	-- Special Summon
+	--Special Summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SPECIAL_SUMMON)
@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={CARD_BLUEEYES_W_DRAGON}
-s.listed_series={0xdd}
+s.listed_series={SET_BLUE_EYES}
 function s.acttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	if s.spcost(e,tp,eg,ep,ev,re,r,rp,0) and s.sptg(e,tp,eg,ep,ev,re,r,rp,0)
@@ -67,7 +67,7 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
 end
 function s.thspfilter(c,e,tp,thc)
-	return (thc:IsOriginalCode(CARD_BLUEEYES_W_DRAGON) or c:IsSetCard(0xdd)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return (thc:IsOriginalCode(CARD_BLUEEYES_W_DRAGON) or c:IsSetCard(SET_BLUE_EYES)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end

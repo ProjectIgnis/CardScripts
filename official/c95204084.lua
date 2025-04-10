@@ -1,4 +1,5 @@
 --コアキメイル・トルネード
+--Koa'ki Meiru Tornado
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy
@@ -20,10 +21,10 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND,0,1,1,nil)
-	Duel.SendtoDeck(g,nil,0,REASON_COST)
+	Duel.SendtoDeck(g,nil,SEQ_DECKTOP,REASON_COST)
 end
 function s.filter(c)
-	return c:IsSummonType(SUMMON_TYPE_SPECIAL)
+	return c:IsSpecialSummoned()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,nil) end

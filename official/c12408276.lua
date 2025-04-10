@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1,id)
-	e1:SetCost(s.spcost)
+	e1:SetCost(Cost.SelfBanish)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
@@ -24,18 +24,14 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e2:SetCountLimit(1)
 	e2:SetCondition(s.negcon)
-	e2:SetCost(s.negcost)
+	e2:SetCost(Cost.PayLP(1000))
 	e2:SetTarget(s.negtg)
 	e2:SetOperation(s.negop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xd2}
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() end
-	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
-end
+s.listed_series={SET_KOZMO}
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0xd2) and c:IsLevelAbove(6) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_KOZMO) and c:IsLevelAbove(6) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>-1
@@ -52,11 +48,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and re:GetHandler()~=e:GetHandler()
-		and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev)
-end
-function s.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,1000) end
-	Duel.PayLPCost(tp,1000)
+		and re:IsMonsterEffect() and Duel.IsChainNegatable(ev)
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

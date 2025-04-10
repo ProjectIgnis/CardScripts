@@ -1,7 +1,6 @@
 --クロニクル・ソーサレス
 --Chronicle Sorceress
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -18,7 +17,6 @@ end
 local BEWD,DM=CARD_BLUEEYES_W_DRAGON,CARD_DARK_MAGICIAN
 	--Mentions "Blue-Eyes White Dragon" and "Dark Magician"
 s.listed_names={BEWD,DM,id}
-
 function s.codefilter(c,code)
 	return not c:IsCode(id) and (c:IsCode(code) or c:ListsCode(code)) and c:IsAbleToGrave()
 end

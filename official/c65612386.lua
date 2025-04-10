@@ -1,4 +1,5 @@
 --魔帝アングマール
+--Angmarl the Fiendish Monarch
 local s,id=GetID()
 function s.initial_effect(c)
 	--search
@@ -14,7 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_TRIBUTE)
+	return e:GetHandler():IsTributeSummoned()
 end
 function s.cfilter(c,tp)
 	return c:IsSpell() and c:IsAbleToRemoveAsCost()

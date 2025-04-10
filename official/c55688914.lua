@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetHintTiming(TIMING_DAMAGE_STEP,TIMING_MAIN_END|TIMING_DAMAGE_STEP)
 	e2:SetCountLimit(1,{id,1})
-	e2:SetCondition(function() return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated() end)
+	e2:SetCondition(aux.StatChangeDamageStepCondition)
 	e2:SetCost(s.opccost)
 	e2:SetTarget(s.vstg)
 	e2:SetOperation(s.vsop)
@@ -90,8 +90,8 @@ function s.vsop(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) or c:IsFacedown() then return end
 	local op=e:GetLabel()
 	if op==1 then
-		c:UpdateDefense(3000,RESET_EVENT|RESETS_STANDARD_DISABLE|RESET_PHASE|PHASE_END)
+		c:UpdateDefense(3000,RESETS_STANDARD_DISABLE_PHASE_END)
 	elseif op==2 then
-		c:UpdateAttack(3000,RESET_EVENT|RESETS_STANDARD_DISABLE|RESET_PHASE|PHASE_END)
+		c:UpdateAttack(3000,RESETS_STANDARD_DISABLE_PHASE_END)
 	end
 end

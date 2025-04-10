@@ -1,4 +1,5 @@
 --ピケルの読心術
+--Pikeru's Second Sight
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -13,7 +14,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_DRAW)
 	e1:SetOperation(s.cfop)
-	e1:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN,2)
+	e1:SetReset(RESET_PHASE|PHASE_END|RESET_OPPO_TURN,2)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.cfop(e,tp,eg,ep,ev,re,r,rp)

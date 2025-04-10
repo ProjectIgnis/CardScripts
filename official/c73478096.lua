@@ -27,7 +27,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_PHOTON,SET_GALAXY}
 function s.spconfilter(c)
-	return c:IsFaceup() and (c:IsSetCard(SET_PHOTON) or c:IsSetCard(SET_GALAXY)) and c:IsMonster()
+	return c:IsFaceup() and c:IsSetCard({SET_PHOTON,SET_GALAXY}) and c:IsMonster()
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -50,7 +50,7 @@ function s.nsop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_EXTRA_SUMMON_COUNT)
-	e1:SetTargetRange(LOCATION_HAND+LOCATION_MZONE,0)
+	e1:SetTargetRange(LOCATION_HAND|LOCATION_MZONE,0)
 	e1:SetTarget(aux.TargetBoolFunction(Card.IsAttribute,ATTRIBUTE_LIGHT))
 	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)

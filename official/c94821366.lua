@@ -1,5 +1,5 @@
 --驚楽園の支配人 <Ɐrlechino>
---Amazement Administrator - Arlechino
+--Amazement Administrator Arlekino
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

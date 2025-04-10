@@ -1,4 +1,5 @@
 --BF－鉄鎖のフェーン
+--Blackwing - Fane the Steel Chain
 local s,id=GetID()
 function s.initial_effect(c)
 	--direct attack

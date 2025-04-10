@@ -1,4 +1,5 @@
 --爆弾ウニ－ボム・アーチン－
+--Explosive Urchin
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -16,14 +17,14 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCountLimit(1)
-	e2:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e2:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e2:SetCondition(s.damcon)
 	e2:SetTarget(s.damtg)
 	e2:SetOperation(s.damop)
 	c:RegisterEffect(e2)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return re:IsActiveType(TYPE_TRAP) and re:IsHasType(EFFECT_TYPE_ACTIVATE) and rp~=tp
+	return re:IsTrapEffect() and re:IsHasType(EFFECT_TYPE_ACTIVATE) and rp~=tp
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -37,7 +38,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetCountLimit(1)
 	e1:SetCondition(s.tgcon)
 	e1:SetOperation(s.tgop)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	c:RegisterEffect(e1)
 	c:SetTurnCounter(0)
 end
@@ -60,7 +61,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Damage(p,d,REASON_EFFECT)
 end
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

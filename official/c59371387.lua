@@ -1,4 +1,5 @@
 --鉄壁の機皇兵
+--The Resolute Meklord Army
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -24,7 +25,7 @@ function s.initial_effect(c)
 	e3:SetValue(1)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x6013}
+s.listed_series={SET_MEKLORD_ARMY}
 function s.target(e,c)
-	return c:IsPosition(POS_FACEUP_ATTACK) and c:IsSetCard(0x6013)
+	return c:IsPosition(POS_FACEUP_ATTACK) and c:IsSetCard(SET_MEKLORD_ARMY)
 end

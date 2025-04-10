@@ -1,4 +1,5 @@
 --月光輪廻舞踊
+--Lunalight Reincarnation Dance
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -13,15 +14,15 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0xdf}
+s.listed_series={SET_LUNALIGHT}
 function s.cfilter(c,tp)
-	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp)
+	return c:IsReason(REASON_BATTLE|REASON_EFFECT) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0xdf) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_LUNALIGHT) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

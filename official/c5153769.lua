@@ -1,4 +1,5 @@
 --マジェスペクター・ガスト
+--Majespecter Gust
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0xd0) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_MAJESPECTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_PZONE) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end

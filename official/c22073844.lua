@@ -67,7 +67,7 @@ end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
-	return bc and bc:IsSummonType(SUMMON_TYPE_SPECIAL)
+	return bc and bc:IsSpecialSummoned()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

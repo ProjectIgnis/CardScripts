@@ -1,12 +1,11 @@
 --剛鬼ザ・ブレード・オーガ
 --Gouki The Blade Ogre
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
 	--Link summon procedure
-	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0xfc),2)
+	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_GOUKI),2)
 	--Gains 300 ATK for each monster it points to
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -25,8 +24,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xfc}
-
+s.listed_series={SET_GOUKI}
 function s.atkval(e,c)
 	return c:GetLinkedGroup():FilterCount(Card.IsMonster,nil)*300
 end
@@ -54,7 +52,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetCode(EFFECT_EXTRA_ATTACK)
 		e1:SetValue(1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		c:RegisterEffect(e1)
 	end
 end

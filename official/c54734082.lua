@@ -1,5 +1,5 @@
 --Magnet Induction
---scripted by pyrQ
+--Magnet Induction
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -14,13 +14,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x2066) and c:GetOriginalLevel()<=4
+	return c:IsFaceup() and c:IsSetCard(SET_MAGNET_WARRIOR) and c:GetOriginalLevel()<=4
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x2066) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_MAGNET_WARRIOR) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,c:GetCode()),tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -35,7 +35,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e1:SetTargetRange(LOCATION_MZONE,0)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	e1:SetTarget(s.tg)
 	e1:SetValue(1)
 	Duel.RegisterEffect(e1,tp)
@@ -51,5 +51,5 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tg(e,c)
-	return c:IsFaceup() and (c:IsSetCard(0x2066) or c:IsSetCard(0xe9))
+	return c:IsFaceup() and (c:IsSetCard(SET_MAGNET_WARRIOR) or c:IsSetCard(SET_MAGNA_WARRIOR))
 end

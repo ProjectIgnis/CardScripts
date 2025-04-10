@@ -1,5 +1,5 @@
 --ロード・オブ・ドラゴン－ドラゴンの独裁者
---The Tyrant of D.
+--Dictator of D.
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special Summon
@@ -35,15 +35,15 @@ function s.initial_effect(c)
 	e3:SetCondition(s.condition)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xdd}
+s.listed_series={SET_BLUE_EYES}
 s.listed_names={CARD_BLUEEYES_W_DRAGON}
 function s.tgfilter(c)
 	return c:IsCode(CARD_BLUEEYES_W_DRAGON) and c:IsAbleToGraveAsCost()
 end
 function s.spcost1(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,e:GetHandler()) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_HAND|LOCATION_DECK,0,1,e:GetHandler()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,e:GetHandler())
+	local g=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_HAND|LOCATION_DECK,0,1,1,e:GetHandler())
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function s.sptg1(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -63,10 +63,10 @@ function s.cfilter(c)
 end
 function s.spcost2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,e:GetHandler()) end
-	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_COST|REASON_DISCARD)
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0xdd) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_BLUE_EYES) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end
@@ -85,5 +85,5 @@ end
 --battle target selection
 function s.condition(e)
 	local tp=e:GetHandlerPlayer()
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0xdd),tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_BLUE_EYES),tp,LOCATION_MZONE,0,1,nil)
 end

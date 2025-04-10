@@ -1,7 +1,6 @@
 --トゥーン・フリップ
 --Toon Page-Flip
 --Scripted by Naim
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Reveal 3 toon monsters from deck, special summon 1 of them
@@ -14,11 +13,10 @@ function s.initial_effect(c)
 	e1:SetCondition(s.condition)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
-	e1:SetHintTiming(0,TIMING_BATTLE_START+TIMING_END_PHASE)
+	e1:SetHintTiming(0,TIMING_BATTLE_START|TIMING_END_PHASE)
 	c:RegisterEffect(e1)
 end
 s.listed_names={15259703}
-
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,15259703),tp,LOCATION_ONFIELD,0,1,nil)
 end

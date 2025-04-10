@@ -1,5 +1,5 @@
 --絶火の竜神ヴァフラム
---Magistus Dragon Vafram
+--Vahram, the Magistus Divinity Dragon
 --Scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -37,13 +37,13 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop2)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x152}
+s.listed_series={SET_MAGISTUS}
 function s.indesvalue(e,re,rp)
-	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and rp==1-e:GetHandlerPlayer()
+	return re:IsSpellTrapEffect() and rp==1-e:GetHandlerPlayer()
 end
 function s.descon1(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsSummonType(SUMMON_TYPE_SYNCHRO)
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsSynchroSummoned()
 end
 function s.destg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_ONFIELD,nil)

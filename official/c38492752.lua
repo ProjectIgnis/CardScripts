@@ -1,4 +1,5 @@
 --ラヴァル・キャノン
+--Laval Cannon
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -15,9 +16,9 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x39}
+s.listed_series={SET_LAVAL}
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x39) and c:IsFaceup() and  c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_LAVAL) and c:IsFaceup() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end

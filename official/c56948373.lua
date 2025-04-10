@@ -1,4 +1,5 @@
 --呪魂の仮面
+--Mask of the Accursed
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c)
@@ -12,7 +13,7 @@ function s.initial_effect(c)
 	e4:SetDescription(aux.Stringid(id,0))
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e4:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e4:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e4:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e4:SetRange(LOCATION_SZONE)
 	e4:SetCountLimit(1)
 	e4:SetCondition(s.damcon)
@@ -21,7 +22,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and e:GetHandler():GetEquipTarget()~=nil
+	return Duel.IsTurnPlayer(tp) and e:GetHandler():GetEquipTarget()~=nil
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

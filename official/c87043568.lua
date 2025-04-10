@@ -1,4 +1,5 @@
 --アサルト・スピリッツ
+--Assault Spirits
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -39,7 +40,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCondition(s.atkcon)
 		e1:SetCost(s.atkcost)
 		e1:SetOperation(s.atkop)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e1)
 		--Equip limit
 		local e2=Effect.CreateEffect(c)
@@ -47,7 +48,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EFFECT_EQUIP_LIMIT)
 		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e2:SetValue(s.eqlimit)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e2:SetLabelObject(tc)
 		c:RegisterEffect(e2)
 	else
@@ -80,7 +81,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		e1:SetValue(e:GetLabel())
 		a:RegisterEffect(e1)
 	end

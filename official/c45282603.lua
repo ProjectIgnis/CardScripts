@@ -1,5 +1,5 @@
 --召喚師セームベル
---Sambeell the Summoner
+--Saambell the Summoner
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special Summon a monster with the same Level as this card

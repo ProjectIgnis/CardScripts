@@ -1,9 +1,9 @@
--- エクソシスター・ステラ
--- Exorsister Stella
--- Scripted by Hatter
+--エクソシスター・ステラ
+--Exosister Stella
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Special Summon from hand
+	--Special Summon from hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_RECOVER)
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.hsptg)
 	e1:SetOperation(s.hspop)
 	c:RegisterEffect(e1)
-	-- Special Summon Xyz
+	--Special Summon Xyz
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -28,9 +28,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={16474916}
-s.listed_series={0x174}
+s.listed_series={SET_EXOSISTER}
 function s.hspfilter(c,e,tp)
-	return c:IsSetCard(0x174) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_EXOSISTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.hsptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -48,7 +48,7 @@ function s.hspop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spfilter(c,e,tp,mc)
-	return c:IsType(TYPE_XYZ,c,SUMMON_TYPE_XYZ,tp) and c:IsSetCard(0x174) and mc:IsCanBeXyzMaterial(c,tp)
+	return c:IsType(TYPE_XYZ,c,SUMMON_TYPE_XYZ,tp) and c:IsSetCard(SET_EXOSISTER) and mc:IsCanBeXyzMaterial(c,tp)
 		and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0 and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

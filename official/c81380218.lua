@@ -1,4 +1,5 @@
 --聖域の歌声
+--Chorus of Sanctuary
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate

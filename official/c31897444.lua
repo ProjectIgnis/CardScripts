@@ -1,5 +1,5 @@
 --冥宮の番人
---Defender of the Netherworld Labyrinth
+--Defender of the Labyrinth
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,7 +1,6 @@
 --聖なる煌炎
---Holy Night Blast
+--Starry Knight Blast
 --Scripted by DyXel
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Negate by returning to hand
@@ -22,8 +21,8 @@ function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp and Duel.IsChainDisablable(ev)
 end
 function s.negfilter(c)
-	return c:IsFaceup() and c:IsRace(RACE_DRAGON) and c:IsAttribute(ATTRIBUTE_LIGHT) and
-	       c:IsLevel(7) and c:IsAbleToHandAsCost()
+	return c:IsFaceup() and c:IsRace(RACE_DRAGON) and c:IsAttribute(ATTRIBUTE_LIGHT)
+		and c:IsLevel(7) and c:IsAbleToHandAsCost()
 end
 function s.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.negfilter,tp,LOCATION_MZONE,0,1,nil) end

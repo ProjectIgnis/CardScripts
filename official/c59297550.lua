@@ -16,13 +16,13 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x58}
+s.listed_series={SET_WIND_UP}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return re:IsActiveType(TYPE_MONSTER)
-		and re:GetHandler():IsSetCard(0x58) and re:GetHandler():GetCode()~=id
+	return re:IsMonsterEffect()
+		and re:GetHandler():IsSetCard(SET_WIND_UP) and re:GetHandler():GetCode()~=id
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x58) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return c:IsSetCard(SET_WIND_UP) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

@@ -1,4 +1,5 @@
 --エクシーズ・ダブル・バック
+--Xyz Double Back
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -43,7 +44,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=g:GetFirst()
 	for tc in aux.Next(g) do
 		if Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
-			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,fid)
+			tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1,fid)
 		end
 	end
 	Duel.SpecialSummonComplete()

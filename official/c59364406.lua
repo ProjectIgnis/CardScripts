@@ -1,4 +1,5 @@
 --灼岩魔獣
+--Burning Beast
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddUnionProcedure(c,aux.FilterBoolFunction(Card.IsCode,85359414),true)

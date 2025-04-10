@@ -1,4 +1,5 @@
 --謙虚な壺
+--Pot of Generosity
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -22,6 +23,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #g>=2 then
 		Duel.Hint(HINT_SELECTMSG,p,HINTMSG_TODECK)
 		local sg=g:Select(p,2,2,nil)
-		Duel.SendtoDeck(sg,nil,2,REASON_EFFECT)
+		Duel.SendtoDeck(sg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	end
 end

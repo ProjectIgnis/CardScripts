@@ -75,7 +75,7 @@ function s.initial_effect(c)
 	e8:SetOperation(s.penop)
 	c:RegisterEffect(e8)
 end
-s.listed_series={0x20f8}
+s.listed_series={SET_SUPREME_KING_DRAGON}
 s.miracle_synchro_fusion=true
 function s.fusfilter1(c,fc,sumtype,tp)
 	return c:IsRace(RACE_DRAGON,fc,sumtype,tp) and c:IsType(TYPE_FUSION,fc,sumtype,tp)
@@ -91,7 +91,7 @@ function s.fusfilter4(c,fc,sumtype,tp)
 end
 function s.limval(e,re,rp)
 	local rc=re:GetHandler()
-	return rc:IsLocation(LOCATION_MZONE) and re:IsActiveType(TYPE_MONSTER)
+	return rc:IsLocation(LOCATION_MZONE) and re:IsMonsterEffect()
 		and rc:IsType(TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ)
 end
 function s.ddcon(e,tp,eg,ep,ev,re,r,rp)
@@ -129,17 +129,17 @@ end
 function s.spfilter(c,e,tp,rp)
 	if c:IsLocation(LOCATION_DECK) and Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return false end
 	if c:IsLocation(LOCATION_EXTRA) and Duel.GetLocationCountFromEx(tp,rp,nil,c)<=0 then return false end
-	return c:IsSetCard(0x20f8) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_SUPREME_KING_DRAGON) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
-		return loc~=0 and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK+LOCATION_EXTRA,0,1,nil,e,tp,rp)
+		return loc~=0 and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK|LOCATION_EXTRA,0,1,nil,e,tp,rp)
 	end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK+LOCATION_EXTRA)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK|LOCATION_EXTRA)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK+LOCATION_EXTRA,0,1,1,nil,e,tp,rp)
+	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK|LOCATION_EXTRA,0,1,1,nil,e,tp,rp)
 	if #g>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end

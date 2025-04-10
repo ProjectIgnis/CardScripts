@@ -1,4 +1,5 @@
 --血涙のオーガ
+--Ogre of the Scarlet Sorrow
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -46,7 +47,7 @@ function s.check(e,tp,eg,ep,ev,re,r,rp)
 		s[1-tc:GetControler()]=s[1-tc:GetControler()]+1
 		if s[1-tc:GetControler()]==1 then
 			s[2]=tc
-			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+			tc:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 		elseif s[1-tc:GetControler()]==2 then
 			Duel.RaiseEvent(tc,EVENT_CUSTOM+id,e,0,0,0,0)
 		end
@@ -59,7 +60,7 @@ function s.check2(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp and Duel.GetAttackTarget()==nil and s[tp]==2
+	return Duel.IsTurnPlayer(1-tp) and Duel.GetAttackTarget()==nil and s[tp]==2
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -83,7 +84,7 @@ function s.adop(e,tp,eg,ep,ev,re,r,rp)
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_SET_ATTACK_FINAL)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 			e1:SetValue(tc:GetAttack())
 			c:RegisterEffect(e1)
 			local e2=e1:Clone()
@@ -98,7 +99,7 @@ function s.adop(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetRange(LOCATION_MZONE)
 		e3:SetTargetRange(0,LOCATION_MZONE)
 		e3:SetValue(s.atlimit)
-		e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e3:SetReset(RESETS_STANDARD_PHASE_END)
 		c:RegisterEffect(e3)
 	end
 end

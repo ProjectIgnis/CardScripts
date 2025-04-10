@@ -1,4 +1,5 @@
 --霞の谷の執行者
+--Mist Valley Executor
 local s,id=GetID()
 function s.initial_effect(c)
 	--to hand

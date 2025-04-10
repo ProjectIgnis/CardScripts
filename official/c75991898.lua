@@ -1,4 +1,5 @@
 --ラヴァルバル・ドラゴン
+--Lavalval Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -16,9 +17,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x39}
+s.listed_series={SET_LAVAL}
 function s.costfilter(c)
-	return c:IsSetCard(0x39) and c:IsAbleToDeckAsCost()
+	return c:IsSetCard(SET_LAVAL) and c:IsAbleToDeckAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_GRAVE,0,2,nil) end

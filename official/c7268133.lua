@@ -1,4 +1,5 @@
 --EMライフ・ソードマン
+--Performapal Life Swordsman
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -17,7 +18,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e2:SetCost(s.atkcost)
+	e2:SetCost(Cost.SelfTribute)
 	e2:SetTarget(s.atktg)
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
@@ -38,14 +39,10 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetValue(ev)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		c:RegisterEffect(e1)
 	end
 	Duel.SpecialSummonComplete()
-end
-function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() end
-	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and chkc:IsFaceup() end
@@ -60,6 +57,6 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(1000)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESETS_STANDARD_PHASE_END)
 	tc:RegisterEffect(e1)
 end

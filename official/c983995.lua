@@ -31,9 +31,9 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return ex and tg~=nil and tc+tg:FilterCount(Card.IsOnField,nil)-#tg>0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGrave,tp,0,LOCATION_ONFIELD+LOCATION_HAND,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGrave,tp,0,LOCATION_ONFIELD|LOCATION_HAND,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,eg,1,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,1-tp,LOCATION_ONFIELD+LOCATION_HAND)
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,1-tp,LOCATION_ONFIELD|LOCATION_HAND)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.NegateEffect(ev) then return end

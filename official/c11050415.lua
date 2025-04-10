@@ -1,6 +1,5 @@
 --超カバーカーニバル
 --Super Hippo Carnival
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon 1 "Performapal Hip Hippo" from hand, deck, or GY
@@ -14,19 +13,18 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={41440148,TOKEN_HIPPO}
-
 function s.filter(c,e,tp)
 	return c:IsCode(41440148) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(s.filter,tp,0x13,0,1,nil,e,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0x13)
+		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND|LOCATION_DECK|LOCATION_GRAVE,0,1,nil,e,tp) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND|LOCATION_DECK|LOCATION_GRAVE)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.filter),tp,0x13,0,1,1,nil,e,tp)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.filter),tp,LOCATION_HAND|LOCATION_DECK|LOCATION_GRAVE,0,1,1,nil,e,tp)
 	if #g>0 then
 		if Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)==0 then return end
 		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
@@ -45,7 +43,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 				e1:SetCode(EFFECT_UNRELEASABLE_SUM)
 				e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 				e1:SetValue(1)
-				e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+				e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 				token:RegisterEffect(e1)
 				local e2=e1:Clone()
 				e2:SetCode(EFFECT_UNRELEASABLE_NONSUM)
@@ -58,11 +56,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 				e3:SetRange(LOCATION_MZONE)
 				e3:SetAbsoluteRange(tp,1,0)
 				e3:SetTarget(s.splimit)
-				e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+				e3:SetReset(RESET_EVENT|RESETS_STANDARD)
 				token:RegisterEffect(e3)
 				--Clock Lizard check
 				local e4=aux.createContinuousLizardCheck(e:GetHandler(),LOCATION_MZONE)
-				e4:SetReset(RESET_EVENT+RESETS_STANDARD)
+				e4:SetReset(RESET_EVENT|RESETS_STANDARD)
 				token:RegisterEffect(e4,true)
 			end
 			Duel.SpecialSummonComplete()
@@ -71,7 +69,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetCode(EFFECT_CANNOT_SELECT_BATTLE_TARGET)
 			e1:SetTargetRange(0,LOCATION_MZONE)
 			e1:SetValue(s.atlimit)
-			e1:SetReset(RESET_PHASE+PHASE_END)
+			e1:SetReset(RESET_PHASE|PHASE_END)
 			Duel.RegisterEffect(e1,tp)
 		end
 	end

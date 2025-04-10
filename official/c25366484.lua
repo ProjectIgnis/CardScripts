@@ -1,4 +1,5 @@
 --E・HERO シャイニング・フレア・ウィングマン
+--Elemental HERO Shining Flare Wingman
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -31,8 +32,8 @@ function s.initial_effect(c)
 	e3:SetValue(s.atkup)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x3008}
-s.material_setcode={0x8,0x3008}
+s.listed_series={SET_ELEMENTAL_HERO}
+s.material_setcode={SET_HERO,SET_ELEMENTAL_HERO}
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local bc=e:GetHandler():GetBattleTarget()
@@ -53,5 +54,5 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.atkup(e,c)
-	return Duel.GetMatchingGroupCount(Card.IsSetCard,c:GetControler(),LOCATION_GRAVE,0,nil,0x3008)*300
+	return Duel.GetMatchingGroupCount(Card.IsSetCard,c:GetControler(),LOCATION_GRAVE,0,nil,SET_ELEMENTAL_HERO)*300
 end

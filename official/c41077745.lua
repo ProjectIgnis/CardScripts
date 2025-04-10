@@ -1,4 +1,5 @@
 --E・HERO アイスエッジ
+--Elemental HERO Ice Edge
 local s,id=GetID()
 function s.initial_effect(c)
 	--direct attack
@@ -24,11 +25,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.datcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_MAIN1
+	return Duel.IsPhase(PHASE_MAIN1)
 end
 function s.datcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST|REASON_DISCARD)
 end
 function s.datop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -36,7 +37,7 @@ function s.datop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DIRECT_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		c:RegisterEffect(e1)
 	end
 end

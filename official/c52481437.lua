@@ -1,5 +1,5 @@
 --弾丸特急バレット・ライナー
---Speedy Express Bullet Liner
+--Super Express Bullet Train
 --Scripted by AlphaKretin and Larry126 (attack cost)
 local s,id=GetID()
 function s.initial_effect(c)
@@ -78,7 +78,7 @@ function s.atop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+	c:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 end
 function s.thfilter(c)
 	return c:IsRace(RACE_MACHINE) and not c:IsCode(id) and c:IsAbleToHand()
@@ -100,4 +100,3 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,tc)
 	end
 end
-

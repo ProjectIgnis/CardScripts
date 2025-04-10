@@ -41,7 +41,7 @@ function s.plop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(TYPE_SPELL|TYPE_CONTINUOUS)
 		e1:SetReset(RESET_EVENT|RESETS_STANDARD&~RESET_TURN_SET)
 		tc:RegisterEffect(e1)
-		Duel.RaiseEvent(tc,EVENT_CUSTOM+47408488,e,0,tp,0,0)
+		Duel.RaiseEvent(tc,EVENT_CUSTOM+CARD_CRYSTAL_TREE,e,0,tp,0,0)
 		--You take no battle damage for the rest of this turn
 		local e2=Effect.CreateEffect(c)
 		e2:SetDescription(aux.Stringid(id,1))

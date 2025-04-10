@@ -42,19 +42,19 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTargetRange(1,1)
 	e1:SetCondition(s.accon)
 	e1:SetValue(s.aclimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.accon(e)
 	local ph=Duel.GetCurrentPhase()
-	return ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE
+	return Duel.IsBattlePhase()
 end
 function s.aclimit(e,re,tp)
-	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
+	return re:IsSpellTrapEffect()
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsSummonType(SUMMON_TYPE_FUSION)
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsFusionSummoned()
 end
 function s.filter1(c)
 	return c:IsRace(RACE_CYBERSE) and c:IsAbleToHand()
@@ -82,4 +82,3 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,sg)
 	end
 end
-

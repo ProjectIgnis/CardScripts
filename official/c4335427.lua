@@ -84,15 +84,15 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	g:DeleteGroup()
 end
 function s.rmfilter(c)
-	return c:IsAbleToRemove() and (c:IsLocation(0x0a) or aux.SpElimFilter(c,false,true))
+	return c:IsAbleToRemove() and (c:IsLocation(LOCATION_HAND|LOCATION_SZONE) or aux.SpElimFilter(c,false,true))
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	local g=Duel.GetMatchingGroup(s.rmfilter,tp,0x1e,0x1e,e:GetHandler())
+	local g=Duel.GetMatchingGroup(s.rmfilter,tp,LOCATION_HAND|LOCATION_ONFIELD|LOCATION_GRAVE,LOCATION_HAND|LOCATION_ONFIELD|LOCATION_GRAVE,e:GetHandler())
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,#g,0,0)
 	Duel.SetChainLimit(aux.FALSE)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(s.rmfilter,tp,0x1e,0x1e,e:GetHandler())
+	local g=Duel.GetMatchingGroup(s.rmfilter,tp,LOCATION_HAND|LOCATION_ONFIELD|LOCATION_GRAVE,LOCATION_HAND|LOCATION_ONFIELD|LOCATION_GRAVE,e:GetHandler())
 	Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 end

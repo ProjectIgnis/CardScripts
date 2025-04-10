@@ -1,7 +1,6 @@
 --インフェルニティ・ポーン
 --Infernity Pawn
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -11,15 +10,14 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_PREDRAW)
 	e1:SetRange(LOCATION_GRAVE)
-	e1:SetCost(aux.bfgcost)
+	e1:SetCost(Cost.SelfBanish)
 	e1:SetCondition(s.condition)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
 	--Lists "Infernity" and "Void" archetype
-s.listed_series={0xb,0xc5}
-
+s.listed_series={SET_INFERNITY,SET_VOID}
 	--During your draw phase, if you have no cards in hand
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return tp==Duel.GetTurnPlayer() and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>0
@@ -27,11 +25,11 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for a "Void" spell/trap
 function s.filter(c)
-	return c:IsSetCard(0xc5) and c:IsSpellTrap() and c:IsSSetable()
+	return c:IsSetCard(SET_VOID) and c:IsSpellTrap() and c:IsSSetable()
 end
 	--Activation legality
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local b1=Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_DECK,0,1,nil,0xb)
+	local b1=Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_DECK,0,1,nil,SET_INFERNITY)
 	local b2=Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil)
 	if chk==0 then return b1 or b2 end
 	if b1 and b2 then
@@ -57,7 +55,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 		e1:SetCode(EFFECT_DRAW_COUNT)
 		e1:SetTargetRange(1,0)
-		e1:SetReset(RESET_PHASE+PHASE_DRAW)
+		e1:SetReset(RESET_PHASE|PHASE_DRAW)
 		e1:SetValue(0)
 		Duel.RegisterEffect(e1,tp)
 	end
@@ -80,14 +78,14 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Activation legality
 function s.toptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_DECK,0,1,nil,0xb) end
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_DECK,0,1,nil,SET_INFERNITY) end
 end
 	--Place 1 "Infernity" monster on top of deck
 function s.topop(e,tp,eg,ep,ev,re,r,rp)
 	_replace_count=_replace_count+1
 	if _replace_count<=_replace_max then
 		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,3))
-		local g=Duel.SelectMatchingCard(tp,Card.IsSetCard,tp,LOCATION_DECK,0,1,1,nil,0xb)
+		local g=Duel.SelectMatchingCard(tp,Card.IsSetCard,tp,LOCATION_DECK,0,1,1,nil,SET_INFERNITY)
 		local tc=g:GetFirst()
 		if tc then
 			Duel.ShuffleDeck(tp)

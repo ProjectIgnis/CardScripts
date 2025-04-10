@@ -1,4 +1,5 @@
 --TG カタパルト・ドラゴン
+--T.G. Catapult Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -12,9 +13,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x27}
+s.listed_series={SET_TG}
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x27) and c:IsLevelBelow(3) and c:IsType(TYPE_TUNER)
+	return c:IsSetCard(SET_TG) and c:IsLevelBelow(3) and c:IsType(TYPE_TUNER)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

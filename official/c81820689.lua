@@ -1,4 +1,5 @@
 --未熟な密偵
+--The Inexperienced Spy
 local s,id=GetID()
 function s.initial_effect(c)
 	--confirm

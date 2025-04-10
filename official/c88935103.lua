@@ -1,4 +1,5 @@
 --貴竜の魔術師
+--Nobledragon Magician
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -40,14 +41,14 @@ function s.initial_effect(c)
 	e6:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e6:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e6:SetType(EFFECT_TYPE_IGNITION)
-	e6:SetRange(LOCATION_HAND+LOCATION_GRAVE)
+	e6:SetRange(LOCATION_HAND|LOCATION_GRAVE)
 	e6:SetTarget(s.sptg)
 	e6:SetOperation(s.spop)
 	c:RegisterEffect(e6)
 end
-s.listed_series={0x99,0x98}
+s.listed_series={SET_ODD_EYES,SET_MAGICIAN}
 function s.descon(e)
-	return not Duel.IsExistingMatchingCard(Card.IsSetCard,e:GetHandlerPlayer(),LOCATION_PZONE,0,1,e:GetHandler(),0x98)
+	return not Duel.IsExistingMatchingCard(Card.IsSetCard,e:GetHandlerPlayer(),LOCATION_PZONE,0,1,e:GetHandler(),SET_MAGICIAN)
 end
 function s.synlimit(e,c)
 	if not c then return false end
@@ -57,7 +58,7 @@ function s.rdcon(e)
 	return e:GetHandler():IsReason(REASON_MATERIAL) and e:GetHandler():IsReason(REASON_SYNCHRO) and e:GetLabel()==1
 end
 function s.sfilter(c)
-	return not c:IsSetCard(0x99)
+	return not c:IsSetCard(SET_ODD_EYES)
 end
 function s.valcheck(e,c)
 	if c:GetMaterial():IsExists(s.sfilter,1,e:GetHandler()) then
@@ -67,7 +68,7 @@ function s.valcheck(e,c)
 	end
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:GetLevel()>=7 and c:IsSetCard(0x99)
+	return c:IsFaceup() and c:GetLevel()>=7 and c:IsSetCard(SET_ODD_EYES)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.cfilter(chkc) end
@@ -85,7 +86,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_LEVEL)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	e1:SetValue(-3)
 	tc:RegisterEffect(e1)
 	if not c:IsRelateToEffect(e) then return end

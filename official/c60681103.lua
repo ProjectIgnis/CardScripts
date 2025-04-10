@@ -1,4 +1,5 @@
 --巨神竜フェルグラント
+--Divine Dragon Lord Felgrand
 local s,id=GetID()
 function s.initial_effect(c)
 	--remove
@@ -30,10 +31,10 @@ function s.rmfilter(c)
 	return c:IsMonster() and c:IsAbleToRemove() and aux.SpElimFilter(c,false,true)
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE+LOCATION_GRAVE) and chkc:IsControler(1-tp) and s.rmfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(s.rmfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,1,nil) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE|LOCATION_GRAVE) and chkc:IsControler(1-tp) and s.rmfilter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(s.rmfilter,tp,0,LOCATION_MZONE|LOCATION_GRAVE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectTarget(tp,s.rmfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,1,1,nil)
+	local g=Duel.SelectTarget(tp,s.rmfilter,tp,0,LOCATION_MZONE|LOCATION_GRAVE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,0,0)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
@@ -47,7 +48,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetValue(atk*100)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 			c:RegisterEffect(e1)
 			local e2=e1:Clone()
 			e2:SetCode(EFFECT_UPDATE_DEFENSE)

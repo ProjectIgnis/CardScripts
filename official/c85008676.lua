@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
 	e1:SetCondition(s.damcon)
-	e1:SetCost(s.damcost)
+	e1:SetCost(Cost.SelfDiscard)
 	e1:SetOperation(s.damop)
 	c:RegisterEffect(e1)
 	--Halve damage
@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_HAND)
 	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e2:SetCondition(aux.damcon1)
-	e2:SetCost(s.damcost)
+	e2:SetCost(Cost.SelfDiscard)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 	--Add to hand
@@ -36,13 +36,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xfc}
+s.listed_series={SET_GOUKI}
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetBattleDamage(tp)>0 and Duel.GetAttacker()~=tp
-end
-function s.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsDiscardable() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
@@ -51,7 +47,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(1,0)
 	e1:SetValue(HALF_DAMAGE)
-	e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
+	e1:SetReset(RESET_PHASE|PHASE_DAMAGE)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
@@ -76,7 +72,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0xfc) and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(SET_GOUKI) and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

@@ -1,4 +1,5 @@
 --グラヴィティ・バインド－超重力の網－
+--Gravity Bind
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate

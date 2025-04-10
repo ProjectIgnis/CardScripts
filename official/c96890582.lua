@@ -1,4 +1,5 @@
 --秒殺の暗殺者
+--Flash Assailant
 local s,id=GetID()
 function s.initial_effect(c)
 	--atkdown

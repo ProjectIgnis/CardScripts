@@ -1,5 +1,5 @@
 --アームド・ドラゴン LV10-ホワイト
---Armed Dragon LV10 - White
+--Armed Dragon LV10 White
 --Scripted by ahtelel
 local s,id=GetID()
 function s.initial_effect(c)
@@ -57,7 +57,7 @@ function s.cfilter(c)
 	return c:IsAbleToRemoveAsCost() and c:HasLevel() and c:IsSetCard(SET_ARMED_DRAGON) and aux.SpElimFilter(c,true,true)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil)
+	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,nil)
 	if chk==0 then return aux.SelectUnselectGroup(g,e,tp,1,#g,s.rescon,0) end
 	local rg=aux.SelectUnselectGroup(g,e,tp,1,#g,s.rescon,1,tp,HINTMSG_REMOVE,s.rescon,nil,false)
 	Duel.Remove(rg,POS_FACEUP,REASON_COST)

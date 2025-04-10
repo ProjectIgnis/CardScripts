@@ -1,6 +1,5 @@
 --エンタメ・フラッシュ
 --Command Performance
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Change opponent's attack position monsters to defense position
@@ -14,9 +13,9 @@ function s.initial_effect(c)
 	e1:SetHintTiming(0,TIMING_BATTLE_START)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x9f}
+s.listed_series={SET_PERFORMAPAL}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x9f)
+	return c:IsFaceup() and c:IsSetCard(SET_PERFORMAPAL)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
@@ -42,7 +41,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_CANNOT_CHANGE_POSITION)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,2)
+			e1:SetReset(RESETS_STANDARD_PHASE_END,2)
 			tc:RegisterEffect(e1)
 		end
 	end

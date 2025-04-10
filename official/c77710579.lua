@@ -39,12 +39,12 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x13,0x3013}
+s.listed_series={SET_MEKLORD,SET_MEKLORD_EMPEROR}
 function s.valcon(e,re,r,rp)
 	return (r&REASON_BATTLE)~=0
 end
 function s.filter(c)
-	return c:IsSetCard(0x13) and c:IsSpellTrap() and c:IsAbleToHand()
+	return c:IsSetCard(SET_MEKLORD) and c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end
@@ -62,18 +62,18 @@ function s.spcond(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsReason(REASON_EFFECT)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x3013) and c:IsMonster() and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+	return c:IsSetCard(SET_MEKLORD_EMPEROR) and c:IsMonster() and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 		and not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsAttribute,c:GetAttribute()),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,nil,e,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK+LOCATION_HAND)
+		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK|LOCATION_HAND,0,1,nil,e,tp) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK|LOCATION_HAND)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,1,nil,e,tp)
+	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK|LOCATION_HAND,0,1,1,nil,e,tp)
 	if #g>0 then
 		Duel.SpecialSummon(g,0,tp,tp,true,false,POS_FACEUP)
 	end
@@ -85,14 +85,14 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTargetRange(LOCATION_MZONE,0)
 	e1:SetCondition(s.atkcon)
 	e1:SetTarget(s.atktg)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	local e2=Effect.CreateEffect(e:GetHandler())
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e2:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e2:SetOperation(s.checkop)
-	e2:SetReset(RESET_PHASE+PHASE_END)
+	e2:SetReset(RESET_PHASE|PHASE_END)
 	e2:SetLabelObject(e1)
 	Duel.RegisterEffect(e2,tp)
 end

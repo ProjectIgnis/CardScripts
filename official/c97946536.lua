@@ -13,37 +13,37 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x56}
+s.listed_series={SET_INZEKTOR}
 function s.cfilter(c,e,tp,ft)
-	return c:IsSetCard(0x56) and c:IsAbleToGraveAsCost() and (c:IsFaceup() or c:IsLocation(LOCATION_HAND))
+	return c:IsSetCard(SET_INZEKTOR) and c:IsAbleToGraveAsCost() and (c:IsFaceup() or c:IsLocation(LOCATION_HAND))
 		and (Duel.IsExistingMatchingCard(s.monfilter,tp,LOCATION_DECK,0,1,nil,e,tp,ft,c)
 		or Duel.IsExistingMatchingCard(s.eqspfilter,tp,LOCATION_DECK,0,1,nil,tp,ft,c))
 end
 function s.monfilter(c,e,tp,ft,sc)
-	return c:IsSetCard(0x56) and c:IsMonster() and (s.monspfilter(c,e,tp,sc) or s.moneqfilter(c,tp,ft,sc))
+	return c:IsSetCard(SET_INZEKTOR) and c:IsMonster() and (s.monspfilter(c,e,tp,sc) or s.moneqfilter(c,tp,ft,sc))
 end
 function s.monspfilter(c,e,tp,sc)
 	return Duel.GetMZoneCount(tp,sc)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.moneqfilter(c,tp,ft,sc)
 	return (ft>0 or (sc and sc:IsLocation(LOCATION_SZONE) and sc:GetSequence()<5)) and not c:IsForbidden()
-		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x56),tp,LOCATION_MZONE,0,1,sc)
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_INZEKTOR),tp,LOCATION_MZONE,0,1,sc)
 end
 function s.eqspfilter(c,tp,ft,sc)
-	return c:IsSetCard(0x56) and c:IsType(TYPE_EQUIP) and c:IsSpell()
+	return c:IsSetCard(SET_INZEKTOR) and c:IsType(TYPE_EQUIP) and c:IsSpell()
 		and (ft>0 or (sc and sc:IsLocation(LOCATION_SZONE) and sc:GetSequence()<5))
 		and Duel.IsExistingMatchingCard(s.eqfilter,tp,LOCATION_MZONE,0,1,sc,c)
 end
 function s.eqfilter(c,ec)
-	return c:IsFaceup() and c:IsSetCard(0x56) and ec:CheckEquipTarget(c)
+	return c:IsFaceup() and c:IsSetCard(SET_INZEKTOR) and ec:CheckEquipTarget(c)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
 	if c:IsLocation(LOCATION_HAND) then ft=ft-1 end
-	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,c,e,tp,ft) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND|LOCATION_ONFIELD,0,1,c,e,tp,ft) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,1,c,e,tp,ft)
+	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND|LOCATION_ONFIELD,0,1,1,c,e,tp,ft)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -81,7 +81,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP)
 		elseif op==2 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-			local ec=Duel.SelectMatchingCard(tp,aux.FaceupFilter(Card.IsSetCard,0x56),tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
+			local ec=Duel.SelectMatchingCard(tp,aux.FaceupFilter(Card.IsSetCard,SET_INZEKTOR),tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
 			if not ec then return end
 			Duel.HintSelection(ec,true)
 			if not Duel.Equip(tp,sc,ec,true) then return end
@@ -89,7 +89,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_EQUIP_LIMIT)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			e1:SetValue(function(e,c) return c==e:GetLabelObject() end)
 			e1:SetLabelObject(ec)
 			sc:RegisterEffect(e1)

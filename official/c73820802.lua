@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e2:SetCategory(CATEGORY_DRAW+CATEGORY_HANDES)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e2:SetRange(LOCATION_SZONE)
-	e2:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e2:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e2:SetCondition(s.condition)
 	e2:SetCountLimit(1)
 	e2:SetOperation(s.operation)
@@ -37,7 +37,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local hg=Duel.GetFieldGroup(1-tp,LOCATION_HAND,0)
 		if #hg>0 then
 			local sg=hg:RandomSelect(1-tp,1)
-			Duel.SendtoGrave(sg,REASON_DISCARD+REASON_EFFECT)
+			Duel.SendtoGrave(sg,REASON_DISCARD|REASON_EFFECT)
 		end
 	end
 	Duel.MoveSequence(tc,1)

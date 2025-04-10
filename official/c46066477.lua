@@ -1,4 +1,5 @@
 --エンタメ・バンド・ハリケーン
+--Performance Hurricane
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,9 +13,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x9f}
+s.listed_series={SET_PERFORMAPAL}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x9f)
+	return c:IsFaceup() and c:IsSetCard(SET_PERFORMAPAL)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) and chkc:IsAbleToHand() end

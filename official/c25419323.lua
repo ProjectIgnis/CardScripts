@@ -1,5 +1,5 @@
 --ダイノルフィア・シェル
---Dinoruffia Shell
+--Dinomorphia Shell
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
@@ -23,13 +23,13 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCondition(s.nodamcon)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetOperation(s.nodamop)
 	c:RegisterEffect(e2)
 end
 s.listed_names={25419324}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_BATTLE_START and Duel.IsTurnPlayer(1-tp)
+	return Duel.IsPhase(PHASE_BATTLE_START) and Duel.IsTurnPlayer(1-tp)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -53,7 +53,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetCode(EFFECT_CANNOT_SELECT_BATTLE_TARGET)
 			e1:SetRange(LOCATION_MZONE)
 			e1:SetTargetRange(0,LOCATION_MZONE)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e1:SetReset(RESETS_STANDARD_PHASE_END)
 			e1:SetValue(s.tgtg)
 			token:RegisterEffect(e1)
 		end
@@ -73,6 +73,6 @@ function s.nodamop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(1,0)
-	e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
+	e1:SetReset(RESET_PHASE|PHASE_DAMAGE)
 	Duel.RegisterEffect(e1,tp)
 end

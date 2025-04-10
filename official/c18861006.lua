@@ -61,7 +61,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 		e1:SetValue(function(e,re,rp) return re:IsActivated() end)
-		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END|RESET_CHAIN)
+		e1:SetReset(RESETS_STANDARD_PHASE_END|RESET_CHAIN)
 		c:RegisterEffect(e1)
 	end
 end

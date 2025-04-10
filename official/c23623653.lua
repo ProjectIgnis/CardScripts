@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,id)
-	e1:SetCost(s.nscost)
+	e1:SetCost(Cost.SelfDiscard)
 	e1:SetTarget(s.nstg)
 	e1:SetOperation(s.nsop)
 	c:RegisterEffect(e1)
@@ -40,11 +40,6 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_RITUAL_BEAST}
 s.listed_names={id}
-function s.nscost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsDiscardable() end
-	Duel.SendtoGrave(c,REASON_COST|REASON_DISCARD)
-end
 function s.nsfilter(c)
 	return c:IsSetCard(SET_RITUAL_BEAST) and c:IsSummonable(true,nil)
 end

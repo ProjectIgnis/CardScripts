@@ -1,9 +1,9 @@
--- 炎獣使いエーカ
--- Flame Buddy Erca the Fire Beast Tamer
--- Scripted by Hatter
+--炎獣使いエーカ
+--Eka the Flame Buddy
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Special Summon 1 Monster Card
+	--Special Summon 1 Monster Card
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	local e2=e1:Clone()
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
-	-- Equip 1 face-up monster to this card
+	--Equip 1 face-up monster to this card
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_EQUIP)
@@ -73,7 +73,7 @@ function s.equipop(c,e,tp,tc)
 		e1:SetType(EFFECT_TYPE_EQUIP)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(500)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 	end
 end

@@ -1,5 +1,5 @@
 --HRUM-ユートピア・フォース
---Hyper-Rank-Up-Magic Hope Force
+--Hyper Rank-Up-Magic Utopiforce
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -39,15 +39,15 @@ function s.initial_effect(c)
 	e3:SetOperation(s.regop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x7f,0x107f}
+s.listed_series={SET_UTOPIC,SET_UTOPIA}
 function s.filter1(c,e,tp)
 	local pg=aux.GetMustBeMaterialGroup(tp,Group.FromCards(c),tp,nil,nil,REASON_XYZ)
-	return (#pg<=0 or (#pg==1 and pg:IsContains(c))) and c:IsFaceup() and c:IsSetCard(0x107f) and c:IsRankBelow(9)
+	return (#pg<=0 or (#pg==1 and pg:IsContains(c))) and c:IsFaceup() and c:IsSetCard(SET_UTOPIA) and c:IsRankBelow(9)
 		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,c,pg)
 end
 function s.filter2(c,e,tp,mc,pg)
 	if c.rum_limit and not c.rum_limit(mc,e) then return false end
-	return mc:IsType(TYPE_XYZ,c,SUMMON_TYPE_XYZ,tp) and c:IsSetCard(0x7f)
+	return mc:IsType(TYPE_XYZ,c,SUMMON_TYPE_XYZ,tp) and c:IsSetCard(SET_UTOPIC)
 		and c:IsRankAbove(10) and mc:IsCanBeXyzMaterial(c,tp)
 		and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0 and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
 end
@@ -74,7 +74,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
-	if not (re:IsActivated() and rc and rc:IsType(TYPE_XYZ) and rc:IsSetCard(0x7f) and rc:IsRankAbove(10)) then return end
+	if not (re:IsActivated() and rc and rc:IsType(TYPE_XYZ) and rc:IsSetCard(SET_UTOPIC) and rc:IsRankAbove(10)) then return end
 	local tg=eg:Filter(aux.FaceupFilter(Card.IsType,TYPE_XYZ),nil,e,tp)
 	if #tg>0 then
 		for tc in aux.Next(tg) do

@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function s.otfilter(c)
-	return c:IsSummonType(SUMMON_TYPE_TRIBUTE)
+	return c:IsTributeSummoned()
 end
 function s.otcon(e,c,minc)
 	if c==nil then return true end
@@ -35,10 +35,10 @@ function s.otop(e,tp,eg,ep,ev,re,r,rp,c)
 	local mg=Duel.GetMatchingGroup(s.otfilter,0,LOCATION_MZONE,LOCATION_MZONE,nil)
 	local sg=Duel.SelectTribute(tp,c,1,1,mg)
 	c:SetMaterial(sg)
-	Duel.Release(sg,REASON_SUMMON+REASON_MATERIAL)
+	Duel.Release(sg,REASON_SUMMON|REASON_MATERIAL)
 end
 function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_TRIBUTE)
+	return e:GetHandler():IsTributeSummoned()
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

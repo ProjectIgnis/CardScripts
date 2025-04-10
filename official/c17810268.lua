@@ -36,20 +36,20 @@ function s.initial_effect(c)
 	e4:SetOperation(s.desop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x18}
-s.counter_place_list={0x1019}
+s.listed_series={SET_CLOUDIAN}
+s.counter_place_list={COUNTER_FOG}
 function s.sdcon(e)
 	return e:GetHandler():IsPosition(POS_FACEUP_DEFENSE)
 end
 function s.addc(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsRelateToEffect(e) then
-		local ct=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,0x18),tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-		e:GetHandler():AddCounter(COUNTER_NEED_ENABLE+0x1019,ct)
+		local ct=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,SET_CLOUDIAN),tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+		e:GetHandler():AddCounter(COUNTER_NEED_ENABLE+COUNTER_FOG,ct)
 	end
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,0x1019,2,REASON_COST) end
-	e:GetHandler():RemoveCounter(tp,0x1019,2,REASON_COST)
+	if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,COUNTER_FOG,2,REASON_COST) end
+	e:GetHandler():RemoveCounter(tp,COUNTER_FOG,2,REASON_COST)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsSpellTrap() end

@@ -1,4 +1,5 @@
 --スローライフ
+--Quiet Life
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -25,7 +26,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_MAIN1 and not Duel.CheckPhaseActivity()
+	return Duel.IsPhase(PHASE_MAIN1) and not Duel.CheckPhaseActivity()
 		and Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0
 end
 function s.sumlimit1(e,c,sump,sumtype,sumpos,targetp,se)

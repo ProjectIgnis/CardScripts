@@ -7,14 +7,14 @@ function s.initial_effect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_GRAVE)
-	e1:SetCost(aux.bfgcost)
+	e1:SetCost(Cost.SelfBanish)
 	e1:SetTarget(s.lvtg)
 	e1:SetOperation(s.lvop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x74}
+s.listed_series={SET_MERMAIL}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x74) and c:HasLevel()
+	return c:IsFaceup() and c:IsSetCard(SET_MERMAIL) and c:HasLevel()
 end
 function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil) end
@@ -30,7 +30,7 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_LEVEL)
 		e1:SetValue(opt+1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 	end
 end

@@ -31,7 +31,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
 end
-s.listed_series={0x46}
+s.listed_series={SET_FUSION}
 function s.counterfilter(c)
 	return c:GetSummonLocation()~=LOCATION_EXTRA or c:IsType(TYPE_FUSION)
 end
@@ -43,7 +43,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,2),nil)
 	--lizard check
@@ -58,11 +58,11 @@ end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil)
 		and s.cost(e,tp,eg,ep,ev,re,r,rp,0) end
-	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST|REASON_DISCARD)
 	s.cost(e,tp,eg,ep,ev,re,r,rp,1)
 end
 function s.thfilter(c)
-	return c:GetType()==TYPE_SPELL and c:IsSetCard(0x46) and c:IsAbleToHand()
+	return c:IsNormalSpell() and c:IsSetCard(SET_FUSION) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

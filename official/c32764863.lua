@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,id)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.rutg)
 	e2:SetOperation(s.ruop)
 	c:RegisterEffect(e2)
@@ -46,7 +46,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_CHANGE_ATTRIBUTE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetValue(ATTRIBUTE_WATER)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		Duel.SpecialSummonComplete()
 	end
@@ -82,4 +82,3 @@ function s.ruop(e,tp,eg,ep,ev,re,r,rp)
 		sc:CompleteProcedure()
 	end
 end
-

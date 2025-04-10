@@ -25,14 +25,14 @@ function s.initial_effect(c)
 	e2:SetHintTiming(0,TIMING_END_PHASE)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetCondition(s.descond)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.destg)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x13,0x9013}
+s.listed_series={SET_MEKLORD,SET_MEKLORD_ASTRO}
 function s.tgfilter(c,e,tp,ft)
-	return c:IsMonster() and c:IsSetCard(0x13) and c:IsCanBeEffectTarget(e)
+	return c:IsMonster() and c:IsSetCard(SET_MEKLORD) and c:IsCanBeEffectTarget(e)
 		and (c:IsAbleToHand() or (ft>0 and c:IsCanBeSpecialSummoned(e,0,tp,true,false)))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -70,11 +70,11 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(function(_,c) return not c:IsRace(RACE_MACHINE) end)
-	e1:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN,reset_ct)
+	e1:SetReset(RESET_PHASE|PHASE_END|RESET_SELF_TURN,reset_ct)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.descond(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x9013),tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_MEKLORD_ASTRO),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsType,TYPE_SYNCHRO),tp,0,LOCATION_MZONE,nil)

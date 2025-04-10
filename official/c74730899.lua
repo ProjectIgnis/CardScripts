@@ -1,4 +1,5 @@
 --燃料電池メン
+--Batteryman Fuel Cell
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -22,9 +23,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.retop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x28}
+s.listed_series={SET_BATTERYMAN}
 function s.spfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x28)
+	return c:IsFaceup() and c:IsSetCard(SET_BATTERYMAN)
 end
 function s.spcon(e,c)
 	if c==nil then return true end
@@ -33,7 +34,7 @@ function s.spcon(e,c)
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_MZONE,0,2,nil)
 end
 function s.retcfilter(c)
-	return c:IsSetCard(0x28)
+	return c:IsSetCard(SET_BATTERYMAN)
 end
 function s.retfilter(c,e)
 	return c:IsAbleToHand() and c:IsCanBeEffectTarget(e)

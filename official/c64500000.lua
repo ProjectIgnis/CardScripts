@@ -1,4 +1,5 @@
 --Z－メタル・キャタピラー
+--Z-Metal Tank
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddUnionProcedure(c,aux.FilterBoolFunction(Card.IsCode,62651957,65622692))

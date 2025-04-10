@@ -1,5 +1,5 @@
 --始源の帝王
---The first monarch
+--The First Monarch
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -34,14 +34,14 @@ function s.initial_effect(c)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id,0,0x21,1000,2400,6,RACE_FIEND,ATTRIBUTE_DARK) end
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,id,0,TYPE_MONSTER|TYPE_EFFECT,1000,2400,6,RACE_FIEND,ATTRIBUTE_DARK) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
-		or not Duel.IsPlayerCanSpecialSummonMonster(tp,id,0,0x21,1000,2400,6,RACE_FIEND,ATTRIBUTE_DARK) then return end
+		or not Duel.IsPlayerCanSpecialSummonMonster(tp,id,0,TYPE_MONSTER|TYPE_EFFECT,1000,2400,6,RACE_FIEND,ATTRIBUTE_DARK) then return end
 	c:AddMonsterAttribute(TYPE_EFFECT+TYPE_TRAP)
 	Duel.SpecialSummonStep(c,1,tp,tp,true,false,POS_FACEUP)
 	c:AddMonsterAttributeComplete()
@@ -52,7 +52,7 @@ function s.chcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.chcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST|REASON_DISCARD)
 end
 function s.chtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -68,19 +68,19 @@ function s.chop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
 	e1:SetCode(EFFECT_CHANGE_ATTRIBUTE)
 	e1:SetValue(att)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	c:RegisterEffect(e1)
 	--double tribute
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_DOUBLE_TRIBUTE)
 	e2:SetValue(s.condition)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 	c:RegisterEffect(e2)
 end
 function s.condition(e,c)
 	return c:IsAttribute(e:GetHandler():GetAttribute())
 end
 function s.splimit(e,c,tp,sumtp,sumpos)
-	return c:IsAttribute(0xff-e:GetHandler():GetAttribute())
+	return c:IsAttribute(ATTRIBUTE_ALL&~(e:GetHandler():GetAttribute()))
 end

@@ -1,4 +1,5 @@
 --星遺物との邂逅
+--World Legacy Discovery
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -11,7 +12,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetRange(LOCATION_FZONE)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0xfd))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_WORLD_CHALICE))
 	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e2:SetValue(300)
 	c:RegisterEffect(e2)
@@ -31,16 +32,16 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0xfd}
+s.listed_series={SET_WORLD_CHALICE}
 function s.spcfilter(c,tp,rp)
-	return c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousControler(tp) and c:IsPreviousSetCard(0xfd)
+	return c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousControler(tp) and c:IsPreviousSetCard(SET_WORLD_CHALICE)
 		and (c:IsReason(REASON_BATTLE) or (rp~=tp and c:IsReason(REASON_EFFECT)))
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.spcfilter,1,nil,tp,rp)
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0xfd) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return c:IsSetCard(SET_WORLD_CHALICE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end

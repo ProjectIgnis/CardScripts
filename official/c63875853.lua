@@ -1,5 +1,5 @@
 --身分転換
---Role Reversal
+--Trading Places
 --
 local s,id=GetID()
 function s.initial_effect(c)
@@ -22,4 +22,3 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SetLP(1-tp,lp1)
 	end
 end
-

@@ -17,7 +17,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_SOLFACHORD}
 function s.zones(e,tp,eg,ep,ev,re,r,rp)
-	local zone=0xff
+	local zone=0xff --all S/T zones
 	local place_g=Duel.GetMatchingGroup(s.plfilter,tp,LOCATION_DECK,0,nil)
 	local left_pend=Duel.CheckLocation(tp,LOCATION_PZONE,0)
 	local right_pend=Duel.CheckLocation(tp,LOCATION_PZONE,1)
@@ -25,7 +25,7 @@ function s.zones(e,tp,eg,ep,ev,re,r,rp)
 	local b2=Duel.IsExistingMatchingCard(s.plfilter,tp,LOCATION_HAND,0,1,nil) and left_pend and right_pend
 		and aux.SelectUnselectGroup(place_g,e,tp,2,2,s.rescon,0,tp,nil)
 	if b1 and not b2 and not (left_pend and right_pend) then
-		zone=0xe
+		zone=0xe --S/T zones without the right and left most ones
 	end
 	return zone
 end

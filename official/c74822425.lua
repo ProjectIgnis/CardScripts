@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0x9d),s.matfilter)
+	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_SHADDOLL),s.matfilter)
 	--cannot spsummon
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
@@ -36,20 +36,20 @@ function s.initial_effect(c)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x9d}
-s.material_setcode=0x9d
+s.listed_series={SET_SHADDOLL}
+s.material_setcode=SET_SHADDOLL
 function s.matfilter(c,lc,sumtype,tp)
 	return c:IsAttribute(ATTRIBUTE_EARTH,lc,sumtype,tp) or c:IsHasEffect(4904633)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) then return false end
 	local loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
-	return loc==LOCATION_MZONE and re:IsActiveType(TYPE_MONSTER)
+	return loc==LOCATION_MZONE and re:IsMonsterEffect()
 		and (re:GetHandler():GetSummonType()&SUMMON_TYPE_SPECIAL)==SUMMON_TYPE_SPECIAL
 		and Duel.IsChainNegatable(ev)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_HAND,0,1,nil,0x9d) end
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_HAND,0,1,nil,SET_SHADDOLL) end
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
 	if re:GetHandler():IsRelateToEffect(re) and re:GetHandler():IsDestructable() then
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,1,0,0)
@@ -58,7 +58,7 @@ end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) and Duel.Destroy(eg,REASON_EFFECT)>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-		local g=Duel.SelectMatchingCard(tp,Card.IsSetCard,tp,LOCATION_HAND,0,1,1,nil,0x9d)
+		local g=Duel.SelectMatchingCard(tp,Card.IsSetCard,tp,LOCATION_HAND,0,1,1,nil,SET_SHADDOLL)
 		if #g>0 then
 			Duel.BreakEffect()
 			Duel.SendtoGrave(g,REASON_EFFECT)
@@ -66,7 +66,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x9d) and c:IsSpellTrap() and c:IsAbleToHand()
+	return c:IsSetCard(SET_SHADDOLL) and c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc) end

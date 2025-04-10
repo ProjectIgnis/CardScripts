@@ -1,5 +1,5 @@
 --うきうきメルフィーズ
---Cheerful Melffys
+--Merry Melffys
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -38,7 +38,7 @@ function s.initial_effect(c)
 	e4:SetCondition(s.tedcond2)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x147}
+s.listed_series={SET_MELFFY}
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() and chkc:IsAbleToHand() end
 	if chk==0 then return Duel.IsExistingTarget(aux.AND(Card.IsFaceup,Card.IsAbleToHand),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
@@ -64,7 +64,7 @@ function s.tedtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,c,1,0,0)
 end
 function s.spfilter(c,e,tp)
-	return c:IsType(TYPE_XYZ) and c:IsSetCard(0x147) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsType(TYPE_XYZ) and c:IsSetCard(SET_MELFFY) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
 end
 function s.tedop(e,tp,eg,ep,ev,re,r,rp)

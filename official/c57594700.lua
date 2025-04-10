@@ -1,9 +1,10 @@
 --幻奏の音姫マイスタリン・シューベルト
+--Schuberta the Melodious Maestra
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0x9b),2)
+	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_MELODIOUS),2)
 	--remove
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_REMOVE+CATEGORY_ATKCHANGE)
@@ -13,16 +14,13 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetHintTiming(TIMING_DAMAGE_STEP)
 	e1:SetCountLimit(1)
-	e1:SetCondition(s.condition)
+	e1:SetCondition(aux.StatChangeDamageStepCondition)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x9b}
-s.material_setcode=0x9b
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
-end
+s.listed_series={SET_MELODIOUS}
+s.material_setcode=SET_MELODIOUS
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsAbleToRemove() end
 	if chk==0 then return Duel.IsExistingTarget(Card.IsAbleToRemove,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil) end
@@ -38,7 +36,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		e1:SetValue(ct*200)
 		c:RegisterEffect(e1)
 	end

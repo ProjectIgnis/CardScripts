@@ -1,7 +1,6 @@
 --予見者ゾルガ
 --Zolga the Prophet
 --Scripted by The Razgriz
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -22,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,{id,1})
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetCondition(s.con)
 	e2:SetTarget(s.tg)
 	e2:SetOperation(s.op)

@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	--destroy
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_DESTROY)
-	e2:SetHintTiming(TIMINGS_CHECK_MONSTER+TIMING_BATTLE_START)
+	e2:SetHintTiming(TIMINGS_CHECK_MONSTER|TIMING_BATTLE_START)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_MZONE)
@@ -64,7 +64,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spcfilter(c,tp)
-	return c:IsReason(REASON_BATTLE+REASON_EFFECT)
+	return c:IsReason(REASON_BATTLE|REASON_EFFECT)
 		and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE)
 		and c:IsPreviousPosition(POS_FACEUP) and (c:GetPreviousAttributeOnField()&ATTRIBUTE_EARTH)==ATTRIBUTE_EARTH
 		and (c:GetPreviousRaceOnField()&RACE_MACHINE)==RACE_MACHINE and not c:IsCode(id)

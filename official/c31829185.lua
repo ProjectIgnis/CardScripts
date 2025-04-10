@@ -38,11 +38,11 @@ end
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	local rg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil)
+	local rg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,nil)
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>-3 and #rg>2 and aux.SelectUnselectGroup(rg,e,tp,3,3,aux.ChkfMMZ(1),0)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
-	local rg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil)
+	local rg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,nil)
 	local g=aux.SelectUnselectGroup(rg,e,tp,3,3,aux.ChkfMMZ(1),1,tp,HINTMSG_REMOVE)
 	if #g>0 then
 		g:KeepAlive()
@@ -61,7 +61,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE)
 		and rp~=tp and (r&REASON_DESTROY)~=0 then
-		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+		c:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 	end
 end
 function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
@@ -88,14 +88,14 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_EQUIP_LIMIT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e1:SetValue(s.eqlimit)
 		c:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_EQUIP)
 		e2:SetCode(EFFECT_SET_CONTROL)
 		e2:SetValue(tp)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD-RESET_TURN_SET)
 		c:RegisterEffect(e2)
 	end
 end

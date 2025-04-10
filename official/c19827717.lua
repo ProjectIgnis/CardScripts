@@ -1,4 +1,5 @@
 --死者の生還
+--Return of the Doomed
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -14,7 +15,7 @@ function s.costfilter(c)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,s.costfilter,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,s.costfilter,1,1,REASON_COST|REASON_DISCARD)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
@@ -24,7 +25,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCountLimit(1)
 	e1:SetCondition(s.retcon)
 	e1:SetOperation(s.retop)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.filter(c)

@@ -1,4 +1,5 @@
 --ナチュル・マンティス
+--Naturia Mantis
 local s,id=GetID()
 function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
@@ -12,9 +13,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x2a}
+s.listed_series={SET_NATURIA}
 function s.cfilter(c)
-	return c:IsSetCard(0x2a) and c:IsMonster() and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(SET_NATURIA) and c:IsMonster() and c:IsAbleToGraveAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end

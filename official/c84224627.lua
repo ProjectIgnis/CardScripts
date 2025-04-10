@@ -1,4 +1,5 @@
 --キャット・シャーク
+--Cat Shark
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -19,21 +20,14 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetHintTiming(TIMING_DAMAGE_STEP)
 	e2:SetCountLimit(1)
-	e2:SetCondition(s.condition)
-	e2:SetCost(s.cost)
+	e2:SetCondition(aux.StatChangeDamageStepCondition)
+	e2:SetCost(Cost.Detach(1))
 	e2:SetTarget(s.target)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
 end
 function s.indcon(e)
 	return e:GetHandler():GetOverlayGroup():IsExists(Card.IsAttribute,1,nil,ATTRIBUTE_WATER)
-end
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
-end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsRankBelow(4)
@@ -50,7 +44,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		e1:SetValue(tc:GetBaseAttack()*2)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()

@@ -1,6 +1,5 @@
 --Ａ・ジェネクス・バードマン
 --Genex Ally Birdman
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon this card from hand
@@ -38,7 +37,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetValue(500)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 			c:RegisterEffect(e1)
 		end
 		--Banish it if it leaves the field
@@ -47,7 +46,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
-		e2:SetReset(RESET_EVENT+RESETS_REDIRECT)
+		e2:SetReset(RESET_EVENT|RESETS_REDIRECT)
 		e2:SetValue(LOCATION_REMOVED)
 		c:RegisterEffect(e2,true)
 	end

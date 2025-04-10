@@ -13,34 +13,34 @@ function s.initial_effect(c)
 	e1:SetCondition(s.spcon)
 	c:RegisterEffect(e1)
 	--search
-	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(id,0))
-	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
-	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
-	e3:SetCost(s.cost)
-	e3:SetTarget(s.thtg)
-	e3:SetOperation(s.tgop)
-	c:RegisterEffect(e3)
+	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,0))
+	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
+	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
+	e2:SetCost(s.cost)
+	e2:SetTarget(s.thtg)
+	e2:SetOperation(s.tgop)
+	c:RegisterEffect(e2)
 	--cannot attack
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e3:SetOperation(s.atklimit)
+	c:RegisterEffect(e3)
+	--effect gain
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e4:SetOperation(s.atklimit)
+	e4:SetCode(EVENT_BE_MATERIAL)
+	e4:SetCondition(s.efcon)
+	e4:SetOperation(s.efop)
 	c:RegisterEffect(e4)
-	--effect gain
-	local e5=Effect.CreateEffect(c)
-	e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e5:SetCode(EVENT_BE_MATERIAL)
-	e5:SetCondition(s.efcon)
-	e5:SetOperation(s.efop)
-	c:RegisterEffect(e5)
 end
-s.listed_series={0x55,0x7b}
+s.listed_series={SET_PHOTON,SET_GALAXY}
 s.listed_names={CARD_GALAXYEYES_P_DRAGON}
 function s.cfilter(c)
-	return c:IsFaceup() and (c:IsSetCard(0x55) or c:IsSetCard(0x7b))  and c:IsMonster()
+	return c:IsFaceup() and c:IsSetCard({SET_PHOTON,SET_GALAXY}) and c:IsMonster()
 end
 function s.spcon(e,c)
 	if c==nil then return true end
@@ -72,12 +72,11 @@ function s.atklimit(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_CANNOT_ATTACK)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESETS_STANDARD_PHASE_END)
 	e:GetHandler():RegisterEffect(e1)
 end
 function s.efcon(e,tp,eg,ep,ev,re,r,rp)
-	return (r&REASON_XYZ)~=0
-		and e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
+	return (r&REASON_XYZ)~=0 and e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.efop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -88,15 +87,14 @@ function s.efop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 	e1:SetCode(EFFECT_BATTLE_DESTROY_REDIRECT)
 	e1:SetValue(LOCATION_REMOVED)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	rc:RegisterEffect(e1,true)
 	if not rc:IsType(TYPE_EFFECT) then
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_ADD_TYPE)
 		e2:SetValue(TYPE_EFFECT)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		rc:RegisterEffect(e2,true)
 	end
 end
-

@@ -23,7 +23,7 @@ function s.extraop(mg,e,tp,eg,ep,ev,re,r,rp)
 	local mat2=mg:Filter(Card.IsLocation,nil,LOCATION_GRAVE):Filter(Card.IsRace,nil,RACE_WARRIOR|RACE_FAIRY)
 	mg:Sub(mat2)
 	Duel.ReleaseRitualMaterial(mg)
-	Duel.SendtoDeck(mat2,nil,2,REASON_EFFECT+REASON_MATERIAL+REASON_RITUAL)
+	Duel.SendtoDeck(mat2,nil,SEQ_DECKSHUFFLE,REASON_EFFECT+REASON_MATERIAL+REASON_RITUAL)
 end
 function s.extratg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

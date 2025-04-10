@@ -1,4 +1,5 @@
 --D－シールド
+--D - Shield
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -13,10 +14,10 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0xc008}
+s.listed_series={SET_DESTINY_HERO}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	return tc:IsControler(tp) and tc:IsPosition(POS_FACEUP_ATTACK) and tc:IsCanChangePosition() and tc:IsSetCard(0xc008)
+	return tc:IsControler(tp) and tc:IsPosition(POS_FACEUP_ATTACK) and tc:IsCanChangePosition() and tc:IsSetCard(SET_DESTINY_HERO)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc==eg:GetFirst() end
@@ -36,7 +37,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_EQUIP)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 		e1:SetValue(1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e1)
 		--Equip limit
 		local e2=Effect.CreateEffect(c)
@@ -45,7 +46,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e2:SetValue(s.eqlimit)
 		e2:SetLabelObject(tc)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e2)
 	else
 		c:CancelToGrave(false)

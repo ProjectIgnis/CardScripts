@@ -1,5 +1,5 @@
 --ジョウルリ－パンクナシワリ・サプライズ
---Joururi P.U.N.K. Nashiwari Surprise
+--Joruri-P.U.N.K. Nashiwari Surprise
 --scripted by Rundas
 local s,id=GetID()
 function s.initial_effect(c)
@@ -15,10 +15,10 @@ function s.initial_effect(c)
 	e1:SetOperation(s.desop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x173}
+s.listed_series={SET_PUNK}
 --Pop
 function s.filter(c)
-	return c:IsSetCard(0x173) and c:IsFaceup()
+	return c:IsSetCard(SET_PUNK) and c:IsFaceup()
 end
 function s.tgfilter(c,punk)
 	return c:IsFacedown() or punk

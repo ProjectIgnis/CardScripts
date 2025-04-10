@@ -1,5 +1,5 @@
 --イビルセラ・ルテア
---Evilcella Lutea
+--Ibicella Lutea
 local s,id=GetID()
 function s.initial_effect(c)
 	--indes
@@ -23,4 +23,3 @@ end
 function s.indcon(e)
 	return Duel.IsExistingMatchingCard(aux.TRUE,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
 end
-

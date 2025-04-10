@@ -1,4 +1,5 @@
 --ツタン仮面
+--Tutan Mask
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

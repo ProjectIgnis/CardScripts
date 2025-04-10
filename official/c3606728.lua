@@ -1,4 +1,5 @@
 --ガガガガール
+--Gagaga Girl
 local s,id=GetID()
 function s.initial_effect(c)
 	--lvchange
@@ -19,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.efop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x54}
+s.listed_series={SET_GAGAGA}
 s.listed_names={26082117}
 function s.lvfilter(c,lv)
 	return c:IsFaceup() and c:IsCode(26082117) and c:GetLevel()~=lv
@@ -38,12 +39,12 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_LEVEL)
 		e1:SetValue(tc:GetLevel())
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e1)
 	end
 end
 function s.ffilter(c)
-	return not c:IsSetCard(0x54)
+	return not c:IsSetCard(SET_GAGAGA)
 end
 function s.efcon(e,tp,eg,ep,ev,re,r,rp)
 	local ec=e:GetHandler():GetReasonCard()
@@ -62,22 +63,22 @@ function s.efop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCondition(s.atkcon)
 	e1:SetTarget(s.atktg)
 	e1:SetOperation(s.atkop)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	rc:RegisterEffect(e1,true)
 	if not rc:IsType(TYPE_EFFECT) then
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_ADD_TYPE)
 		e2:SetValue(TYPE_EFFECT)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		rc:RegisterEffect(e2,true)
 	end
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ)
+	return e:GetHandler():IsXyzSummoned()
 end
 function s.atkfilter(c)
-	return c:IsFaceup() and c:IsSummonType(SUMMON_TYPE_SPECIAL)
+	return c:IsFaceup() and c:IsSpecialSummoned()
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and s.atkfilter(chkc) end
@@ -92,7 +93,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetValue(0)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 	end
 end

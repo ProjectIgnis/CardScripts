@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	e0:SetType(EFFECT_TYPE_SINGLE)
 	e0:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e0:SetCode(EFFECT_CHANGE_CODE)
-	e0:SetRange(LOCATION_MZONE+LOCATION_HAND)
+	e0:SetRange(LOCATION_MZONE|LOCATION_HAND)
 	e0:SetValue(46427957)
 	c:RegisterEffect(e0)
 	--Multiple attacks
@@ -32,7 +32,7 @@ function s.initial_effect(c)
 end
 s.listed_names={32828635,46427957}
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsAbleToEnterBP() and e:GetHandler():IsSummonType(SUMMON_TYPE_RITUAL) 
+	return Duel.IsAbleToEnterBP() and e:GetHandler():IsRitualSummoned() 
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -43,7 +43,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetCode(EFFECT_EXTRA_ATTACK_MONSTER)
 		e1:SetValue(1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		c:RegisterEffect(e1)
 	end
 end
@@ -65,7 +65,7 @@ function s.aclimop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetOperation(s.actop)
 		e1:SetLabelObject(tc)
 		Duel.RegisterEffect(e1,tp)
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_CONTROL,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,2))
+		tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_CONTROL,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,2))
 	end
 end
 function s.actcon(e,tp,eg,ep,ev,re,r,rp)
@@ -86,7 +86,7 @@ function s.actop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTargetRange(0,1)
 	e1:SetCondition(s.actlimitcon)
 	e1:SetValue(1)
-	e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
+	e1:SetReset(RESET_PHASE|PHASE_DAMAGE)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.actlimitcon(e,tp,eg,ep,ev,re,r,rp)

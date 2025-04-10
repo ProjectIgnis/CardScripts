@@ -56,11 +56,11 @@ function s.hdop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	if not g then return end
 	local sg=g:Filter(Card.IsRelateToEffect,nil,e)
-	Duel.SendtoDeck(sg,nil,2,REASON_EFFECT)
+	Duel.SendtoDeck(sg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	local ct=sg:FilterCount(Card.IsLocation,nil,LOCATION_DECK|LOCATION_EXTRA)
 	if ct==0 then return end
 	local dg=Duel.GetFieldGroup(tp,0,LOCATION_HAND):RandomSelect(tp,ct)
-	local dt=Duel.SendtoGrave(dg,REASON_EFFECT+REASON_DISCARD)
+	local dt=Duel.SendtoGrave(dg,REASON_EFFECT|REASON_DISCARD)
 	local c=e:GetHandler()
 	if dt~=0 and c:IsRelateToEffect(e) and c:IsFaceup() then
 		local e1=Effect.CreateEffect(c)

@@ -34,7 +34,7 @@ end
 s.listed_names={73055622,TOKEN_SHINOBIRD}
 s.listed_card_types={TYPE_SPIRIT}
 function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_RITUAL)
+	return e:GetHandler():IsRitualSummoned()
 end
 function s.tdfilter(c)
 	return c:IsSpellTrap() and c:IsAbleToDeck()

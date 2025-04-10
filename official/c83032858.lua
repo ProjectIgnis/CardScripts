@@ -24,9 +24,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.attop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x400d,0x113}
+s.listed_series={SET_ELEMENTSABER,SET_ELEMENTAL_LORD}
 function s.costfilter(c)
-	return c:IsSetCard(0x400d) and c:IsMonster() and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(SET_ELEMENTSABER) and c:IsMonster() and c:IsAbleToGraveAsCost()
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local fg=Group.CreateGroup()
@@ -34,7 +34,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 		fg:AddCard(pe:GetHandler())
 	end
 	local loc=LOCATION_HAND
-	if #fg>0 then loc=LOCATION_HAND+LOCATION_DECK end
+	if #fg>0 then loc=LOCATION_HAND|LOCATION_DECK end
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,loc,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local tc=Duel.SelectMatchingCard(tp,s.costfilter,tp,loc,0,1,1,nil):GetFirst()
@@ -46,12 +46,12 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 			fc=fg:Select(tp,1,1,nil)
 		end
 		Duel.Hint(HINT_CARD,0,fc:GetCode())
-		fc:RegisterFlagEffect(61557074,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,0)
+		fc:RegisterFlagEffect(61557074,RESETS_STANDARD_PHASE_END,0,0)
 	end
 	Duel.SendtoGrave(tc,REASON_COST)
 end
 function s.spfilter(c,e,tp)
-	return c:IsMonster() and not c:IsCode(id) and (c:IsSetCard(0x400d) or c:IsSetCard(0x113)) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+	return c:IsMonster() and not c:IsCode(id) and (c:IsSetCard(SET_ELEMENTSABER) or c:IsSetCard(SET_ELEMENTAL_LORD)) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.spfilter(chkc,e,tp) end
@@ -83,6 +83,6 @@ function s.attop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_CHANGE_ATTRIBUTE)
 	e1:SetValue(e:GetLabel())
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESETS_STANDARD_DISABLE_PHASE_END)
 	c:RegisterEffect(e1)
 end

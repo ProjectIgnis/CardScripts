@@ -1,4 +1,5 @@
 --SRシェイブー・メラン
+--Speedroid Razorang
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot attack
@@ -24,7 +25,7 @@ function s.sumop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_CANNOT_ATTACK)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESETS_STANDARD_PHASE_END)
 	e:GetHandler():RegisterEffect(e1)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
@@ -45,7 +46,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e1:SetReset(RESETS_STANDARD_PHASE_END)
 			e1:SetValue(-800)
 			tc:RegisterEffect(e1)
 		end

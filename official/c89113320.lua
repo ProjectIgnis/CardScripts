@@ -1,4 +1,5 @@
 --EMビッグバイトタートル
+--Performapal Bit Bite Turtle
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -22,9 +23,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x9f,0x99}
+s.listed_series={SET_PERFORMAPAL,SET_ODD_EYES}
 function s.filter(c)
-	return (c:IsSetCard(0x9f) or c:IsSetCard(0x99)) and c:IsMonster()
+	return c:IsSetCard({SET_PERFORMAPAL,SET_ODD_EYES}) and c:IsMonster()
 end
 function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,e:GetHandler()) end
@@ -43,7 +44,7 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_LEVEL)
 		e1:SetValue(-1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD-RESET_TOFIELD|RESET_PHASE|PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end

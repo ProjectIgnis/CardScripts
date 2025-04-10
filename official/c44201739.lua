@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetCondition(s.negcon)
-	e2:SetCost(s.negcost)
+	e2:SetCost(Cost.SelfToGrave)
 	e2:SetTarget(s.negtg)
 	e2:SetOperation(s.negop)
 	c:RegisterEffect(e2)
@@ -56,11 +56,6 @@ end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return rp==1-tp and not c:IsStatus(STATUS_BATTLE_DESTROYED) and c:HasFlagEffect(id) and Duel.IsChainNegatable(ev)
-end
-function s.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(c,REASON_COST)
 end
 function s.tgfilter(c,codes)
 	return c:IsAbleToGrave() and c:IsCode(codes)

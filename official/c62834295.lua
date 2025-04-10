@@ -25,21 +25,21 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xfe,0x11b}
+s.listed_series={SET_WORLD_LEGACY,SET_ORCUST}
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(Card.IsSummonPlayer,1,nil,1-tp)
 end
 function s.tgfilter(c)
-	return (c:IsSetCard(0xfe) or c:IsSetCard(0x11b)) and c:IsMonster() and (c:IsAbleToGrave() or c:IsAbleToRemove())
+	return c:IsSetCard({SET_WORLD_LEGACY,SET_ORCUST}) and c:IsMonster() and (c:IsAbleToGrave() or c:IsAbleToRemove())
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil) end
-	Duel.SetPossibleOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK+LOCATION_HAND)
-	Duel.SetPossibleOperationInfo(0,CATEGORY_REMOVE,nil,1,tp,LOCATION_DECK+LOCATION_HAND)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_HAND|LOCATION_DECK,0,1,nil) end
+	Duel.SetPossibleOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK|LOCATION_HAND)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_REMOVE,nil,1,tp,LOCATION_DECK|LOCATION_HAND)
 end
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,1))
-	local g=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_DECK|LOCATION_HAND,0,1,1,nil)
 	if #g>0 then
 		local tc=g:GetFirst()
 		if tc and tc:IsAbleToGrave() and (not tc:IsAbleToRemove() or Duel.SelectYesNo(tp,aux.Stringid(id,2))) then

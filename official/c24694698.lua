@@ -1,4 +1,5 @@
 --ナチュル・マロン
+--Naturia Marron
 local s,id=GetID()
 function s.initial_effect(c)
 	--send to grave
@@ -23,9 +24,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.drop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x2a}
+s.listed_series={SET_NATURIA}
 function s.tgfilter(c)
-	return c:IsMonster() and c:IsSetCard(0x2a) and c:IsAbleToGrave()
+	return c:IsMonster() and c:IsSetCard(SET_NATURIA) and c:IsAbleToGrave()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -39,7 +40,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter(c)
-	return c:IsSetCard(0x2a) and c:IsMonster() and c:IsAbleToDeck()
+	return c:IsSetCard(SET_NATURIA) and c:IsMonster() and c:IsAbleToDeck()
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -52,10 +53,10 @@ end
 function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	if not tg or tg:FilterCount(Card.IsRelateToEffect,nil,e)~=2 then return end
-	Duel.SendtoDeck(tg,nil,0,REASON_EFFECT)
+	Duel.SendtoDeck(tg,nil,SEQ_DECKTOP,REASON_EFFECT)
 	local g=Duel.GetOperatedGroup()
 	if g:IsExists(Card.IsLocation,1,nil,LOCATION_DECK) then Duel.ShuffleDeck(tp) end
-	local ct=g:FilterCount(Card.IsLocation,nil,LOCATION_DECK+LOCATION_EXTRA)
+	local ct=g:FilterCount(Card.IsLocation,nil,LOCATION_DECK|LOCATION_EXTRA)
 	if ct==2 then
 		Duel.BreakEffect()
 		Duel.Draw(tp,1,REASON_EFFECT)

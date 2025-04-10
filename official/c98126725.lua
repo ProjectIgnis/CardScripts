@@ -1,4 +1,5 @@
 --紫炎の参謀
+--Shien's Advisor
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -11,9 +12,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.atop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x3d}
+s.listed_series={SET_SIX_SAMURAI}
 function s.atcon(e,tp,eg,ep,ev,re,r,rp,chk)
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x3d),tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_SIX_SAMURAI),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.attg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -32,7 +33,7 @@ function s.atop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e1:SetTarget(s.tglimit)
 	e1:SetLabel(e:GetLabel())
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	c:RegisterEffect(e1)
 	--disable spsummon
 	local e2=Effect.CreateEffect(c)
@@ -43,7 +44,7 @@ function s.atop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetTargetRange(1,1)
 	e2:SetTarget(s.tglimit)
 	e2:SetLabel(e:GetLabel())
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 	c:RegisterEffect(e2)
 end
 function s.tglimit(e,c)

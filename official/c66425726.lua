@@ -94,7 +94,7 @@ function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsType(TYPE_PENDULUM) and Duel.CheckPendulumZones(tp) end
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,eg,1,0,0)
-	if c:IsSummonType(SUMMON_TYPE_RITUAL) then
+	if c:IsRitualSummoned() then
 		Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 	end
 end
@@ -109,7 +109,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoGrave(c,REASON_RULE,nil,PLAYER_NONE)
 	else
 		local sg=Group.CreateGroup()
-		if c:IsSummonType(SUMMON_TYPE_RITUAL) then sg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_EXTRA,0,nil,e,tp,c) end
+		if c:IsRitualSummoned() then sg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_EXTRA,0,nil,e,tp,c) end
 		if Duel.MoveToField(c,tp,tp,LOCATION_PZONE,POS_FACEUP,true) and Duel.NegateEffect(ev)
 			and #sg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 			Duel.BreakEffect()

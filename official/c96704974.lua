@@ -16,7 +16,7 @@ function s.initial_effect(c)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,2,e:GetHandler()) end
-	Duel.DiscardHand(tp,nil,2,2,REASON_COST+REASON_DISCARD,e:GetHandler())
+	Duel.DiscardHand(tp,nil,2,2,REASON_COST|REASON_DISCARD,e:GetHandler())
 end
 function s.filter(c)
 	return c:IsTrap() and c:IsSSetable()

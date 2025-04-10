@@ -1,5 +1,5 @@
 --天極輝艦－熊斗竜巧
---Ursatron, the Celestial Polar Illuminaship
+--Ultimate Flagship Ursatron
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -36,7 +36,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop2)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x165,0x151}
+s.listed_series={SET_URSARCTIC,SET_DRYTRON}
 function s.thcfilter(c,tp)
 	return c:IsFaceup() and c:IsType(TYPE_EFFECT) and c:IsControler(tp)
 end
@@ -44,7 +44,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.thcfilter,1,e:GetHandler(),tp)
 end
 function s.thfilter(c)
-	return (c:IsSetCard(0x165) or c:IsSetCard(0x151)) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard({SET_URSARCTIC,SET_DRYTRON}) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

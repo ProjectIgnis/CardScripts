@@ -27,6 +27,6 @@ end
 function s.rop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemove,tp,LOCATION_HAND,0,1,1,nil,tp,POS_FACEDOWN)
-	e:GetHandler():RegisterFlagEffect(id+ep,RESET_PHASE+PHASE_END,0,1)
+	e:GetHandler():RegisterFlagEffect(id+ep,RESET_PHASE|PHASE_END,0,1)
 	return Duel.Remove(g,POS_FACEDOWN,REASON_COST)
 end

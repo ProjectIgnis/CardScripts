@@ -1,4 +1,5 @@
 --ドン・サウザンドの契約
+--Contract with Don Thousand
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -72,13 +73,13 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local pg=e:GetLabelObject()
 	if c:GetFlagEffect(id)==0 then
-		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD_DISABLE,0,1)
+		c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD_DISABLE,0,1)
 		pg:Clear()
 	end
 	local tc=eg:GetFirst()
 	for tc in aux.Next(eg) do
 		pg:AddCard(tc)
-		tc:RegisterFlagEffect(id+1,RESET_EVENT+RESETS_STANDARD,0,1)
+		tc:RegisterFlagEffect(id+1,RESET_EVENT|RESETS_STANDARD,0,1)
 	end
 	return false
 end

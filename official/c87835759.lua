@@ -1,4 +1,5 @@
 --創世の竜騎士
+--Dragon Knight of Creation
 local s,id=GetID()
 function s.initial_effect(c)
 	--level

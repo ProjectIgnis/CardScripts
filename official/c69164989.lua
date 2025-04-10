@@ -16,9 +16,9 @@ function s.initial_effect(c)
 	e1:SetLabel(0)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x141}
+s.listed_series={SET_RIKKA}
 function s.filter(c,e,tp,check)
-	return c:IsSetCard(0x141) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_RIKKA) and c:IsMonster() and c:IsAbleToHand()
 		and (check==0 or Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_DECK,0,1,nil,c:GetOriginalLevel(),c:GetCode()))
 end
 function s.filter2(c,lv,code)

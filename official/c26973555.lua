@@ -1,5 +1,5 @@
 --ＦＮｏ．０ 未来龍皇ホープ
---Number F0: Utopic Future Dragon
+--Number F0: Utopic Draco Future
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetCountLimit(1)
 	e4:SetCondition(s.discon)
-	e4:SetCost(aux.dxmcostgen(1,1,nil))
+	e4:SetCost(Cost.Detach(1,1,nil))
 	e4:SetTarget(s.distg)
 	e4:SetOperation(s.disop)
 	c:RegisterEffect(e4)

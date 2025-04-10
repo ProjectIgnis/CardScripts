@@ -43,7 +43,7 @@ function s.initial_effect(c)
 	e6:SetValue(s.atkval)
 	c:RegisterEffect(e6)
 end
-s.counter_place_list={0x1019}
+s.counter_place_list={COUNTER_FOG}
 function s.sdcon(e)
 	return e:GetHandler():IsPosition(POS_FACEUP_DEFENSE)
 end
@@ -52,13 +52,13 @@ function s.valcheck(e,c)
 	e:SetLabel(g:FilterCount(Card.IsAttribute,nil,ATTRIBUTE_WATER))
 end
 function s.addcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_TRIBUTE)
+	return e:GetHandler():IsTributeSummoned()
 end
 function s.addc(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsRelateToEffect(e) then
-		e:GetHandler():AddCounter(COUNTER_NEED_ENABLE+0x1019,e:GetLabelObject():GetLabel())
+		e:GetHandler():AddCounter(COUNTER_NEED_ENABLE+COUNTER_FOG,e:GetLabelObject():GetLabel())
 	end
 end
 function s.atkval(e,c)
-	return Duel.GetCounter(0,1,1,0x1019)*500
+	return Duel.GetCounter(0,1,1,COUNTER_FOG)*500
 end

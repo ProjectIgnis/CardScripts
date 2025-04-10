@@ -1,4 +1,5 @@
 --オアシスの使者
+--Emissary of the Oasis
 local s,id=GetID()
 function s.initial_effect(c)
 	--atk target

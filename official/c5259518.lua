@@ -50,7 +50,7 @@ function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
 		or (rp~=tp and c:IsReason(REASON_EFFECT) and c:GetPreviousControler()==tp)
 end
 function s.spfilter(c,e,tp)
-	return c:IsAttribute(ATTRIBUTE_DARK) and c:IsRace(RACE_DRAGON+RACE_PLANT) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsAttribute(ATTRIBUTE_DARK) and c:IsRace(RACE_DRAGON|RACE_PLANT) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.spfilter(chkc,e,tp) end

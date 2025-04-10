@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCondition(s.tdcon)
-	e2:SetCost(aux.dxmcostgen(2,2,nil))
+	e2:SetCost(Cost.Detach(2,2,nil))
 	e2:SetTarget(s.tdtg)
 	e2:SetOperation(s.tdop)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
@@ -44,7 +44,7 @@ function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:IsHasType(EFFECT_TYPE_QUICK_O)==e:GetHandler():GetOverlayGroup():IsExists(s.tdconfilter,1,nil)
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local loc=LOCATION_ONFIELD+LOCATION_GRAVE
+	local loc=LOCATION_ONFIELD|LOCATION_GRAVE
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(loc) and chkc:IsAbleToDeck() end
 	if chk==0 then return Duel.IsExistingTarget(Card.IsAbleToDeck,tp,0,loc,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)

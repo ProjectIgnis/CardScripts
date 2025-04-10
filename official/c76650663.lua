@@ -1,4 +1,5 @@
 --A・O・J ブラインド・サッカー
+--Ally of Justice Nullfier
 local s,id=GetID()
 function s.initial_effect(c)
 	--Disable

@@ -1,4 +1,5 @@
 --棘の妖精
+--Prickle Fairy
 local s,id=GetID()
 function s.initial_effect(c)
 	--change position

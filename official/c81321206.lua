@@ -1,5 +1,5 @@
 --ベアルクティ－ミクビリス
---Ursarctic Micbilis
+--Ursarctic Mikbilis
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -16,9 +16,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x165}
+s.listed_series={SET_URSARCTIC}
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x165) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_URSARCTIC) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

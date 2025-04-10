@@ -1,4 +1,5 @@
 --暗黒界の導師 セルリ
+--Ceruli, Guru of Dark World
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -23,7 +24,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsPreviousLocation(LOCATION_HAND) and (r&0x4040)==0x4040
+	return e:GetHandler():IsPreviousLocation(LOCATION_HAND) and r&(REASON_DISCARD|REASON_EFFECT)==REASON_DISCARD|REASON_EFFECT
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -35,12 +36,12 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.hdcon(e,tp,eg,ep,ev,re,r,rp)
-	return re:GetHandler():IsSetCard(0x6)
+	return re:GetHandler():IsSetCard(SET_DARK_WORLD)
 end
 function s.hdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_HANDES,nil,0,1-tp,1)
 end
 function s.hdop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.DiscardHand(1-tp,aux.TRUE,1,1,REASON_EFFECT+REASON_DISCARD,nil)
+	Duel.DiscardHand(1-tp,aux.TRUE,1,1,REASON_EFFECT|REASON_DISCARD,nil)
 end

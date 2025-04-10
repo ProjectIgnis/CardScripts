@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetTargetRange(LOCATION_MZONE,0)
-	e3:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x10b))
+	e3:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_TINDANGLE))
 	e3:SetCondition(s.indcon)
 	e3:SetValue(1)
 	c:RegisterEffect(e3)
@@ -42,7 +42,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x10b}
+s.listed_series={SET_TINDANGLE}
 s.listed_names={94365540,59490397}
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -60,14 +60,14 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1)
 end
 function s.indcon(e)
 	return e:GetHandler():GetFlagEffect(id)~=0
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsLocation(LOCATION_GRAVE) and r==REASON_LINK and c:GetReasonCard():IsSetCard(0x10b)
+	return c:IsLocation(LOCATION_GRAVE) and r==REASON_LINK and c:GetReasonCard():IsSetCard(SET_TINDANGLE)
 end
 function s.thfilter(c,tp)
 	return c:IsCode(59490397) and c:IsAbleToHand()
@@ -94,4 +94,3 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-

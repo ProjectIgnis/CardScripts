@@ -4,7 +4,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Fusion summon procedure
 	c:EnableReviveLimit()
-	Fusion.AddProcMix(c,false,false,51777272,aux.FilterBoolFunctionEx(Card.IsSetCard,0xdf))
+	Fusion.AddProcMix(c,false,false,51777272,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_LUNALIGHT))
 	--Special Summon condition
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -39,8 +39,8 @@ function s.initial_effect(c)
 	e4:SetOperation(s.atkop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0xdf}
-s.material_setcode=0xdf
+s.listed_series={SET_LUNALIGHT}
+s.material_setcode=SET_LUNALIGHT
 function s.splimit(e,se,sp,st)
 	return not e:GetHandler():IsLocation(LOCATION_EXTRA) or (st&SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION
 end
@@ -54,14 +54,14 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_COUNT)
 	e1:SetTargetRange(0,LOCATION_MZONE)
 	e1:SetValue(s.indct)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	if c:IsRelateToEffect(e) then
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_ATTACK_ALL)
 		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e2:SetReset(RESETS_STANDARD_PHASE_END)
 		e2:SetValue(2)
 		c:RegisterEffect(e2)
 	end
@@ -78,7 +78,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(200)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_BATTLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE|RESET_PHASE|PHASE_BATTLE)
 		c:RegisterEffect(e1)
 	end
 end

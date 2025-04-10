@@ -1,4 +1,5 @@
 --『攻撃』封じ
+--Block Attack
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

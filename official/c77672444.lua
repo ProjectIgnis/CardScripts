@@ -1,9 +1,9 @@
--- モーターバイオレンス
--- Motor Violence
--- Scripted by Hatter
+--モーターバイオレンス
+--Motor Frenzy
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Grant ATK
+	--Grant ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_ATKCHANGE)
@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	local e2=e1:Clone()
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
-	-- Special Summon tokens
+	--Special Summon tokens
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
@@ -48,27 +48,27 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	for tc in aux.Next(g) do
 		if tc:IsFaceup() and tc:GetBaseDefense()>0 then
-			-- Increase ATK
+			--Increase ATK
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
+			e1:SetReset(RESETS_STANDARD_PHASE_END|RESET_OPPO_TURN)
 			e1:SetValue(tc:GetBaseDefense()/2)
 			tc:RegisterEffect(e1)
 		end
-		-- Cannot change battle position
+		--Cannot change battle position
 		local e1=Effect.CreateEffect(c)
 		e1:SetDescription(3313)
 		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_CHANGE_POSITION)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
+		e1:SetReset(RESETS_STANDARD_PHASE_END|RESET_OPPO_TURN)
 		tc:RegisterEffect(e1)
 	end
 end
 function s.tkcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsSummonType(SUMMON_TYPE_TRIBUTE)
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsTributeSummoned()
 end
 function s.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)

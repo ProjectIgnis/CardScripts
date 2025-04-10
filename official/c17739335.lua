@@ -1,13 +1,12 @@
 --呪眼の王 ザラキエル
 --Zerrziel, Ruler of the Evil Eyed
 --Scripted by Naim
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
 	--Link summon procedure
-	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x129),2)
+	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_EVIL_EYE),2)
 	--If link summoned with a monster with 2600+ ATK, this card can make a second attack
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -33,14 +32,14 @@ function s.initial_effect(c)
 	e3:SetCategory(CATEGORY_DISABLE)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e3:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e3:SetCountLimit(1)
 	e3:SetCondition(s.discond)
 	e3:SetTarget(s.distg)
 	e3:SetOperation(s.disop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x129}
+s.listed_series={SET_EVIL_EYE}
 s.listed_names={CARD_EVIL_EYE_SELENE}
 function s.matcheck(e,c)
 	local c=e:GetHandler()
@@ -50,9 +49,9 @@ function s.matcheck(e,c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_EXTRA_ATTACK)
 		e1:SetValue(1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD-RESET_TOFIELD)
 		c:RegisterEffect(e1)
-		c:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD,EFFECT_FLAG_CLIENT_HINT,1,0,3201)
+		c:RegisterFlagEffect(0,RESET_EVENT|RESETS_STANDARD-RESET_TOFIELD,EFFECT_FLAG_CLIENT_HINT,1,0,3201)
 	end
 end
 function s.descond(e)
@@ -65,10 +64,10 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingTarget(aux.TRUE,tp,0,LOCATION_ONFIELD,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectTarget(tp,aux.TRUE,tp,0,LOCATION_ONFIELD,1,1,nil)
-	if Duel.GetCurrentPhase()==PHASE_STANDBY then
-		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY,EFFECT_FLAG_OATH,2,Duel.GetTurnCount())
+	if Duel.IsPhase(PHASE_STANDBY) then
+		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_STANDBY,EFFECT_FLAG_OATH,2,Duel.GetTurnCount())
 	else
-		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY,EFFECT_FLAG_OATH,1)
+		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_STANDBY,EFFECT_FLAG_OATH,1)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 end
@@ -101,14 +100,14 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(e:GetHandler())
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
 		e2:SetValue(RESET_TURN_SET)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e2)
 	end
 end

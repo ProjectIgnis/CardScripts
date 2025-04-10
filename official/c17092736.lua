@@ -1,4 +1,5 @@
 --古代の遠眼鏡
+--Ancient Telescope
 local s,id=GetID()
 function s.initial_effect(c)
 	--confirm

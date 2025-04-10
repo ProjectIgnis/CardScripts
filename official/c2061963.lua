@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCode(EVENT_CHAINING)
 	e1:SetCondition(s.condition)
-	e1:SetCost(s.cost)
+	e1:SetCost(Cost.Detach(1))
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
@@ -33,11 +33,7 @@ s.xyz_number=104
 function s.condition(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ph=Duel.GetCurrentPhase()
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and ep~=tp
-		and (ph>PHASE_MAIN1 and ph<PHASE_MAIN2) and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev)
-end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
+		and Duel.IsBattlePhase() and re:IsMonsterEffect() and Duel.IsChainNegatable(ev)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

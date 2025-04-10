@@ -1,4 +1,5 @@
 --ワーム・プリンス
+--Worm Prince
 local s,id=GetID()
 function s.initial_effect(c)
 	--search
@@ -23,9 +24,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x3e}
+s.listed_series={SET_WORM}
 function s.filter(c)
-	return c:IsSetCard(0x3e) and c:IsRace(RACE_REPTILE) and c:IsAbleToHand()
+	return c:IsSetCard(SET_WORM) and c:IsRace(RACE_REPTILE) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end
@@ -40,7 +41,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x3e) and c:IsRace(RACE_REPTILE)
+	return c:IsFaceup() and c:IsSetCard(SET_WORM) and c:IsRace(RACE_REPTILE)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,e:GetHandler())

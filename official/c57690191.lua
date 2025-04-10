@@ -30,16 +30,16 @@ function s.initial_effect(c)
 	e3:SetCountLimit(1)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x107a,0x207a}
+s.listed_series={SET_NOBLE_KNIGHT,SET_NOBLE_ARMS}
 function s.atcon(e)
 	local g=Duel.GetFieldGroup(e:GetHandlerPlayer(),LOCATION_MZONE,0)
 	return #g~=3 or g:IsExists(s.atkfilter,1,nil)
 end
 function s.atkfilter(c)
-	return c:IsFacedown() or not c:IsSetCard(0x107a)
+	return c:IsFacedown() or not c:IsSetCard(SET_NOBLE_KNIGHT)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x107a) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_NOBLE_KNIGHT) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -60,17 +60,17 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
 	Duel.RegisterEffect(e1,tp)
 	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,2),nil)
 end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
-	return not c:IsSetCard(0x107a)
+	return not c:IsSetCard(SET_NOBLE_KNIGHT)
 end
 function s.drfilter(c)
-	return (c:IsSetCard(0x107a) or c:IsSetCard(0x207a)) and c:IsAbleToDeck()
+	return (c:IsSetCard(SET_NOBLE_KNIGHT) or c:IsSetCard(SET_NOBLE_ARMS)) and c:IsAbleToDeck()
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.drfilter(chkc) end
@@ -83,10 +83,10 @@ end
 function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	if not tg or tg:FilterCount(Card.IsRelateToEffect,nil,e)~=3 then return end
-	Duel.SendtoDeck(tg,nil,0,REASON_EFFECT)
+	Duel.SendtoDeck(tg,nil,SEQ_DECKTOP,REASON_EFFECT)
 	local g=Duel.GetOperatedGroup()
 	if g:IsExists(Card.IsLocation,1,nil,LOCATION_DECK) then Duel.ShuffleDeck(tp) end
-	local ct=g:FilterCount(Card.IsLocation,nil,LOCATION_DECK+LOCATION_EXTRA)
+	local ct=g:FilterCount(Card.IsLocation,nil,LOCATION_DECK|LOCATION_EXTRA)
 	if ct==3 then
 		Duel.BreakEffect()
 		Duel.Draw(tp,1,REASON_EFFECT)

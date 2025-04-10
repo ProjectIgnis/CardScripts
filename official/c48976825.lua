@@ -1,4 +1,5 @@
 --異次元からの埋葬
+--Burial from a Different Dimension
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -25,6 +26,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	local sg=tg:Filter(Card.IsRelateToEffect,nil,e)
 	if #sg>0 then
-		Duel.SendtoGrave(sg,REASON_EFFECT+REASON_RETURN)
+		Duel.SendtoGrave(sg,REASON_EFFECT|REASON_RETURN)
 	end
 end

@@ -1,5 +1,5 @@
 --Handigallop
---scripted by andre
+--Handigallop
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot attack direct
@@ -32,4 +32,3 @@ function s.dmgcond(e)
 	local tp=e:GetHandlerPlayer()
 	return Duel.GetLP(tp)>Duel.GetLP(1-tp) and Duel.GetAttacker()==e:GetHandler()
 end
-

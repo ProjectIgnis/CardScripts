@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.roll_dice=true
-s.listed_series={0x26}
+s.listed_series={SET_MORPHTRONIC}
 function s.cona(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsDisabled() and e:GetHandler():IsAttackPos()
 end
@@ -33,7 +33,7 @@ function s.cond(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsDisabled() and e:GetHandler():IsDefensePos()
 end
 function s.cfilter(c)
-	return c:IsLevelBelow(4) and c:IsSetCard(0x26) and c:IsMonster()
+	return c:IsLevelBelow(4) and c:IsSetCard(SET_MORPHTRONIC) and c:IsMonster()
 end
 function s.tga(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>0
@@ -46,7 +46,7 @@ function s.tgd(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DICE,nil,0,tp,1)
 end
 function s.filter(c,e,tp)
-	return c:IsLevelBelow(4) and c:IsSetCard(0x26) and c:IsMonster() and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+	return c:IsLevelBelow(4) and c:IsSetCard(SET_MORPHTRONIC) and c:IsMonster() and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function s.opa(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)==0 then return end

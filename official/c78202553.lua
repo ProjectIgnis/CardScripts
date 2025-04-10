@@ -1,4 +1,5 @@
 --Subterror Behemoth Stalagmo
+--Subterror Behemoth Stalagmo
 local s,id=GetID()
 function s.initial_effect(c)
 	--flip
@@ -32,9 +33,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.posop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xed}
+s.listed_series={SET_SUBTERROR}
 function s.tgfilter(c)
-	return c:IsMonster() and c:IsSetCard(0xed) and c:IsDiscardable()
+	return c:IsMonster() and c:IsSetCard(SET_SUBTERROR) and c:IsDiscardable()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_HAND,0,1,nil)
@@ -43,7 +44,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,2)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.DiscardHand(tp,s.tgfilter,1,1,REASON_EFFECT+REASON_DISCARD)~=0 then
+	if Duel.DiscardHand(tp,s.tgfilter,1,1,REASON_EFFECT|REASON_DISCARD)~=0 then
 		Duel.Draw(tp,2,REASON_EFFECT)
 	end
 end
@@ -68,7 +69,7 @@ end
 function s.postg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsCanTurnSet() and c:GetFlagEffect(id)==0 end
-	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET+RESET_PHASE+PHASE_END,0,1)
+	c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD-RESET_TURN_SET|RESET_PHASE|PHASE_END,0,1)
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,c,1,0,0)
 end
 function s.posop(e,tp,eg,ep,ev,re,r,rp)

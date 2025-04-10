@@ -1,5 +1,5 @@
 --ボンディング－H2O
---Bonding H20
+--Bonding - H2O
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special Summon "Water Dragon" from the hand, Deck or GY

@@ -1,4 +1,4 @@
---Japanese name
+--巳剣大祓
 --Mitsurugi Great Purification
 --scripted by Naim
 local s,id=GetID()
@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,id)
 	e2:SetHintTiming(0,TIMING_STANDBY_PHASE|TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E)
-	e2:SetCost(aux.SelfBanishCost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)

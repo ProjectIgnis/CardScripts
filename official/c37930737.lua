@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.repop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x187}
+s.listed_series={SET_G_GOLEM}
 function s.spfilter(c,e,tp)
 	return c:IsAttribute(ATTRIBUTE_EARTH) and c:IsFaceup() and c:IsCanBeEffectTarget(e)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
@@ -34,7 +34,7 @@ function s.spcheck(sg,e,tp,mg)
 	return sg:GetClassCount(Card.GetCode)==1
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,nil,e,tp)
+	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_GRAVE|LOCATION_REMOVED,0,nil,e,tp)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>1
 		and not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
 		and aux.SelectUnselectGroup(g,e,tp,2,2,s.spcheck,0) end
@@ -50,25 +50,25 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local fid=c:GetFieldID()
 	for tc in g:Iter() do
 		Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,fid)
+		tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1,fid)
 		--Negate its effects
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1,true)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
 		e2:SetValue(RESET_TURN_SET)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e2,true)
 		--Change its ATK/DEF to 0
 		local e3=Effect.CreateEffect(c)
 		e3:SetType(EFFECT_TYPE_SINGLE)
 		e3:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e3:SetValue(0)
-		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e3:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e3,true)
 		local e4=e3:Clone()
 		e4:SetCode(EFFECT_SET_DEFENSE_FINAL)
@@ -105,7 +105,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Destroy(tg,REASON_EFFECT)
 end
 function s.repfilter(c,tp)
-	return c:IsFaceup() and c:IsLocation(LOCATION_MZONE) and c:IsControler(tp) and c:IsSetCard(0x187)
+	return c:IsFaceup() and c:IsLocation(LOCATION_MZONE) and c:IsControler(tp) and c:IsSetCard(SET_G_GOLEM)
 		and not c:IsReason(REASON_REPLACE) and (c:IsReason(REASON_BATTLE) or (c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()==1-tp))
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)

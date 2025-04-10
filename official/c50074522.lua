@@ -1,4 +1,5 @@
 --電磁蚊
+--Magnetic Mosquito
 local s,id=GetID()
 function s.initial_effect(c)
 	--flip

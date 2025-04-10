@@ -1,7 +1,6 @@
 --起動指令 ギア・チャージ
 --Boot-Up Order - Gear Charge
 --Scripted by AlphaKretin
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--When activated, special summon any number of your "Gadget" monsters from S/T zones
@@ -24,10 +23,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={36322312}
-s.listed_series={0x51}
-
+s.listed_series={SET_GADGET}
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x51) and c:IsOriginalType(TYPE_MONSTER) and c:IsType(TYPE_EQUIP) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_GADGET) and c:IsOriginalType(TYPE_MONSTER) and c:IsType(TYPE_EQUIP) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_SZONE) and chkc:IsControler(tp) and s.spfilter(chkc,e,tp) end
@@ -64,7 +62,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST|REASON_DISCARD)
 end
 function s.thfilter(c)
 	return c:IsCode(36322312) and c:IsAbleToHand()

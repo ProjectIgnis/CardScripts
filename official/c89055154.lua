@@ -17,7 +17,7 @@ function s.initial_effect(c)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local dp=Duel.GetChainInfo(ev,CHAININFO_DISABLE_PLAYER)
-	return dp==tp and (re:IsActiveType(TYPE_MONSTER) or re:IsHasType(EFFECT_TYPE_ACTIVATE))
+	return dp==tp and (re:IsMonsterEffect() or re:IsHasType(EFFECT_TYPE_ACTIVATE))
 end
 function s.thfilter(c)
 	return c:IsRace(RACE_FAIRY) and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsAbleToHand()

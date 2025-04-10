@@ -33,10 +33,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={id}
-s.listed_series={0x12b}
+s.listed_series={SET_MARINCESS}
 	--Check for "Marincess" monster, besides same name
 function s.tgfilter(c)
-	return c:IsMonster() and c:IsSetCard(0x12b) and not c:IsCode(id) and c:IsAbleToGrave()
+	return c:IsMonster() and c:IsSetCard(SET_MARINCESS) and not c:IsCode(id) and c:IsAbleToGrave()
 end
 	--Activation legality
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -64,7 +64,7 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 	--Check for "Marincess" card
 function s.thfilter(c)
-	return c:IsSetCard(0x12b) and c:IsAbleToHand()
+	return c:IsSetCard(SET_MARINCESS) and c:IsAbleToHand()
 end
 	--Excavate top 3 cards
 function s.thop(e,tp,eg,ep,ev,re,r,rp)

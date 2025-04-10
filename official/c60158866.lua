@@ -1,5 +1,5 @@
 --不朽の七皇
---Eternity of the Seven Emperors
+--Seventh Eternity
 --Scripted by Rundas
 local s,id=GetID()
 function s.initial_effect(c)
@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x48}
+s.listed_series={SET_NUMBER}
 function s.tgfilter(c,tp)
 	local ovct=c:GetOverlayCount()
 	return c:IsFaceup() and c:IsType(TYPE_XYZ) and (s.nmbrfilter(c) or c:GetOverlayGroup():IsExists(s.nmbrfilter,1,nil))
@@ -28,7 +28,7 @@ function s.tgfilter(c,tp)
 end
 function s.nmbrfilter(c)
 	local no=c.xyz_number
-	return c:IsSetCard(0x48) and no and no>=101 and no<=107
+	return c:IsSetCard(SET_NUMBER) and no and no>=101 and no<=107
 end
 function s.disfilter(c,atk)
 	return c:IsNegatableMonster() and c:IsAttackBelow(atk)
@@ -61,7 +61,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	end
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x48) and c:IsType(TYPE_XYZ) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_NUMBER) and c:IsType(TYPE_XYZ) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
@@ -79,13 +79,13 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		ngc:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
 		e2:SetValue(RESET_TURN_SET)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e2:SetReset(RESETS_STANDARD_PHASE_END)
 		ngc:RegisterEffect(e2)
 	elseif op==2 then
 		--Detach all materials from the target

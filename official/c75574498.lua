@@ -1,4 +1,5 @@
 --プリンセス・コロン
+--Princess Cologne
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -37,20 +38,20 @@ function s.initial_effect(c)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetCode(EVENT_TO_GRAVE)
 	e4:SetCondition(s.spcon2)
-	e4:SetCost(s.spcost2)
+	e4:SetCost(Cost.Detach(1))
 	e4:SetTarget(s.sptg2)
 	e4:SetOperation(s.spop2)
 	c:RegisterEffect(e4,false,REGISTER_FLAG_DETACH_XMAT)
 end
-s.listed_names={81587028}
+s.listed_names={81587028} --"Box of Friends"
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ)
+	return e:GetHandler():IsXyzSummoned()
 end
 function s.spfilter1(c,e,tp)
 	return c:IsCode(81587028) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and  s.spfilter1(chkc,e,tp) end
+	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.spfilter1(chkc,e,tp) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingTarget(s.spfilter1,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
@@ -73,22 +74,18 @@ end
 function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)
 end
-function s.spcost2(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
-end
 function s.spfilter2(c,e,tp)
 	return c:IsType(TYPE_NORMAL) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(s.spfilter2,tp,LOCATION_GRAVE+LOCATION_DECK,0,1,nil,e,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE+LOCATION_DECK)
+		and Duel.IsExistingMatchingCard(s.spfilter2,tp,LOCATION_GRAVE|LOCATION_DECK,0,1,nil,e,tp) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE|LOCATION_DECK)
 end
 function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter2),tp,LOCATION_GRAVE+LOCATION_DECK,0,1,1,nil,e,tp)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter2),tp,LOCATION_GRAVE|LOCATION_DECK,0,1,1,nil,e,tp)
 	if #g>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 	end

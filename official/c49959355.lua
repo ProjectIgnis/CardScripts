@@ -43,7 +43,7 @@ function s.lvtg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_HANDES,nil,0,tp,1)
 end
 function s.lvop1(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.DiscardHand(tp,nil,1,1,REASON_EFFECT+REASON_DISCARD)==0 then return end
+	if Duel.DiscardHand(tp,nil,1,1,REASON_EFFECT|REASON_DISCARD)==0 then return end
 	local tc=Duel.GetFirstTarget()
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		local e1=Effect.CreateEffect(e:GetHandler())
@@ -51,7 +51,7 @@ function s.lvop1(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_UPDATE_LEVEL)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetValue(1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 	end
 end
@@ -77,7 +77,7 @@ function s.lvop2(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_UPDATE_LEVEL)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetValue(1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 	end
 	local e2=Effect.CreateEffect(e:GetHandler())
@@ -85,12 +85,12 @@ function s.lvop2(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetCode(EFFECT_CANNOT_ATTACK)
 	e2:SetTargetRange(LOCATION_MZONE,0)
 	e2:SetTarget(s.atktg)
-	e2:SetReset(RESET_PHASE+PHASE_END)
+	e2:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e2,tp)
 	local e3=Effect.CreateEffect(e:GetHandler())
 	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e3:SetDescription(aux.Stringid(id,2))
-	e3:SetReset(RESET_PHASE+PHASE_END)
+	e3:SetReset(RESET_PHASE|PHASE_END)
 	e3:SetTargetRange(1,0)
 	Duel.RegisterEffect(e3,tp)
 end

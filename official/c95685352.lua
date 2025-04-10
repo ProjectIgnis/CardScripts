@@ -27,8 +27,8 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetHintTiming(TIMING_DAMAGE_STEP)
 	e2:SetCountLimit(1)
-	e2:SetCondition(s.atkcon2)
-	e2:SetCost(s.cost)
+	e2:SetCondition(aux.StatChangeDamageStepCondition)
+	e2:SetCost(Cost.Detach(1))
 	e2:SetTarget(s.target)
 	e2:SetOperation(s.atkop2)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
@@ -43,10 +43,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.pendulum_level=7
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
-end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsFaceup() end
 	if chk==0 then return Duel.IsExistingTarget(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) end
@@ -61,13 +57,10 @@ function s.atkop1(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_BASE_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		e1:SetValue(math.ceil(atk/2))
 		tc:RegisterEffect(e1)
 	end
-end
-function s.atkcon2(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end
 function s.atkop2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -77,7 +70,7 @@ function s.atkop2(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		e1:SetValue(math.ceil(atk/2))
 		tc:RegisterEffect(e1)
 		if c:IsRelateToEffect(e) and c:IsFaceup() then
@@ -85,7 +78,7 @@ function s.atkop2(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetType(EFFECT_TYPE_SINGLE)
 			e2:SetCode(EFFECT_UPDATE_ATTACK)
 			e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-			e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e2:SetReset(RESETS_STANDARD_PHASE_END)
 			e2:SetValue(math.ceil(atk/2))
 			c:RegisterEffect(e2)
 		end

@@ -1,6 +1,5 @@
 --超戦士の盾
 --Super Soldier Shield
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -23,15 +22,14 @@ function s.initial_effect(c)
 	e2:SetOperation(s.setop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x10cf}
+s.listed_series={SET_BLACK_LUSTER_SOLDIER}
 s.counter_list={COUNTER_SPELL}
-
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	if not Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_MZONE,0,1,nil,0x10cf) then return false end
+	if not Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_MZONE,0,1,nil,SET_BLACK_LUSTER_SOLDIER) then return false end
 	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 	return g and g:IsExists(Card.IsLocation,1,nil,LOCATION_MZONE)
-		and Duel.IsChainNegatable(ev) and (re:IsActiveType(TYPE_MONSTER) or re:IsHasType(EFFECT_TYPE_ACTIVATE))
+		and Duel.IsChainNegatable(ev) and (re:IsMonsterEffect() or re:IsHasType(EFFECT_TYPE_ACTIVATE))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -62,7 +60,7 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
-		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
+		e1:SetReset(RESET_EVENT|RESETS_REDIRECT)
 		e1:SetValue(LOCATION_REMOVED)
 		c:RegisterEffect(e1)
 	end

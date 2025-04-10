@@ -1,5 +1,5 @@
 --ＥＭクラシックリボー
---Performapal ClassiKuriboh
+--Performapal Classikuriboh
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetRange(LOCATION_HAND)
 	e3:SetCountLimit(1,{id,0})
-	e3:SetCost(s.sccost)
+	e3:SetCost(Cost.SelfDiscard)
 	e3:SetTarget(s.sctg)
 	e3:SetOperation(s.scop)
 	c:RegisterEffect(e3)
@@ -55,12 +55,7 @@ function s.bpcon(e,tp,eg,ep,ev,re,r,rp)
 	return re and re==e:GetLabelObject()
 end
 function s.bpop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
-end
-function s.sccost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsDiscardable() end
-	Duel.SendtoGrave(c,REASON_DISCARD+REASON_COST)
+	Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE|PHASE_BATTLE_STEP,1)
 end
 function s.sctg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_PZONE) and chkc:IsControler(tp) and chkc:GetScale()~=1 end
@@ -76,7 +71,7 @@ function s.scop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_LSCALE)
 		e1:SetValue(1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_CHANGE_RSCALE)

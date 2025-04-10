@@ -31,7 +31,7 @@ function s.val(e,c)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsSummonType(SUMMON_TYPE_SYNCHRO) then
+	if c:IsSynchroSummoned() then
 		local ct=c:GetMaterialCount()-1
 		c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD_DISABLE,0,0,ct*200)
 	end

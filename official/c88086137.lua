@@ -16,7 +16,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local seq,p,loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_SEQUENCE,CHAININFO_TRIGGERING_CONTROLER,CHAININFO_TRIGGERING_LOCATION)
 	if p==1-tp then seq=seq+16 end
-	return ((re:IsActiveType(TYPE_MONSTER) and loc&LOCATION_MZONE>0 and bit.extract(c:GetColumnZone(LOCATION_MZONE),seq)~=0)
+	return ((re:IsMonsterEffect() and loc&LOCATION_MZONE>0 and bit.extract(c:GetColumnZone(LOCATION_MZONE),seq)~=0)
 		or (re:IsHasType(EFFECT_TYPE_ACTIVATE) and loc&LOCATION_SZONE>0 and bit.extract(c:GetColumnZone(LOCATION_SZONE)>>8,seq)~=0))
 		and Duel.IsChainNegatable(ev)
 end

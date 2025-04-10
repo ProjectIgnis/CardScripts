@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCode(EVENT_FREE_CHAIN)
-	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
+	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER|TIMING_END_PHASE)
 	e2:SetCost(s.cost)
 	e2:SetTarget(s.target)
 	e2:SetOperation(s.operation)
@@ -28,7 +28,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,e:GetHandler()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
 	local cg=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_HAND,0,1,1,nil)
-	Duel.SendtoGrave(cg,REASON_COST+REASON_DISCARD)
+	Duel.SendtoGrave(cg,REASON_COST|REASON_DISCARD)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

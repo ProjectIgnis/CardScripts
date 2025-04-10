@@ -1,5 +1,5 @@
 --メルフィー・ワラビィ
---Melffy Wallaby
+--Melffy Wally
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -38,7 +38,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_names={id}
-s.listed_series={0x147}
+s.listed_series={SET_MELFFY}
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(Card.IsSummonPlayer,1,nil,1-tp)
 end
@@ -52,7 +52,7 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,tp,LOCATION_DECK)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x147) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_MELFFY) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

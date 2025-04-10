@@ -52,7 +52,7 @@ function s.disfilter(c)
 	return c:GetSummonLocation()==LOCATION_EXTRA
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
-	return tp~=ep and Duel.GetCurrentChain()==0 and eg:IsExists(s.disfilter,1,nil) and e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)
+	return tp~=ep and Duel.GetCurrentChain()==0 and eg:IsExists(s.disfilter,1,nil) and e:GetHandler():IsFusionSummoned()
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

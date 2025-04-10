@@ -1,4 +1,5 @@
 --ジャンク・ディフェンダー
+--Junk Defender
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -22,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e2:SetHintTiming(TIMING_DAMAGE_STEP)
 	e2:SetCountLimit(1)
-	e2:SetCondition(s.defcon)
+	e2:SetCondition(aux.StatChangeDamageStepCondition)
 	e2:SetOperation(s.defup)
 	c:RegisterEffect(e2)
 end
@@ -43,15 +44,12 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
-function s.defcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
-end
 function s.defup(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_DEFENSE)
 	e1:SetValue(300)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESETS_STANDARD_PHASE_END)
 	c:RegisterEffect(e1)
 end

@@ -1,4 +1,5 @@
 --レプティレス・ガードナー
+--Reptilianne Gardna
 local s,id=GetID()
 function s.initial_effect(c)
 	--search
@@ -12,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x3c}
+s.listed_series={SET_REPTILIANNE}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsReason(REASON_DESTROY) and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousControler(tp)
@@ -22,7 +23,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.filter(c)
-	return c:IsSetCard(0x3c) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_REPTILIANNE) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)

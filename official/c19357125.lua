@@ -1,4 +1,5 @@
 --ダーク・アサシン
+--Dark Hunter
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy
@@ -16,7 +17,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCondition(s.condition)
-	e2:SetCost(s.cost)
+	e2:SetCost(Cost.SelfTribute)
 	e2:SetTarget(s.target)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
@@ -29,10 +30,6 @@ function s.atkval(e,c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsDisabled() and Duel.IsExistingMatchingCard(Card.IsAttribute,tp,LOCATION_GRAVE,0,5,nil,ATTRIBUTE_DARK)
-end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() end
-	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function s.filter(c)
 	return c:IsFacedown()

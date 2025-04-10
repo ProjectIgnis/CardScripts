@@ -1,4 +1,5 @@
 --神星なる領域
+--Constellar Belt
 local s,id=GetID()
 function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
@@ -16,5 +17,5 @@ end
 function s.efilter(e,ct)
 	local te=Duel.GetChainInfo(ct,CHAININFO_TRIGGERING_EFFECT)
 	local tc=te:GetHandler()
-	return te:IsActiveType(TYPE_MONSTER) and tc:IsAttribute(ATTRIBUTE_LIGHT)
+	return te:IsMonsterEffect() and tc:IsAttribute(ATTRIBUTE_LIGHT)
 end

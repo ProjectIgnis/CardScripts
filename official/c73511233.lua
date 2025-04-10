@@ -35,35 +35,35 @@ function s.initial_effect(c)
 	e3:SetOperation(Fusion.SummonEffOP(table.unpack(params)))
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x98,0x99,0x9f}
+s.listed_series={SET_MAGICIAN,SET_ODD_EYES,SET_PERFORMAPAL}
 function s.thcfilter(c,tp)
-	return c:IsControler(tp) and c:IsSummonType(SUMMON_TYPE_FUSION)
+	return c:IsControler(tp) and c:IsFusionSummoned()
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg and eg:IsExists(s.thcfilter,1,nil,tp)
 end
 function s.thfilter(c)
-	return (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup()) and (c:IsSetCard(0x98) or c:IsSetCard(0x99) or c:IsSetCard(0x9f))
+	return (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup()) and (c:IsSetCard(SET_MAGICIAN) or c:IsSetCard(SET_ODD_EYES) or c:IsSetCard(SET_PERFORMAPAL))
 		and c:IsType(TYPE_PENDULUM) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_GRAVE+LOCATION_EXTRA,0,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_GRAVE+LOCATION_EXTRA)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_GRAVE|LOCATION_EXTRA,0,1,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_GRAVE|LOCATION_EXTRA)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.thfilter),tp,LOCATION_GRAVE+LOCATION_EXTRA,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.thfilter),tp,LOCATION_GRAVE|LOCATION_EXTRA,0,1,1,nil)
 	if #g>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
 function s.effcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_PENDULUM)
+	return e:GetHandler():IsPendulumSummoned()
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+	e:GetHandler():RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(id)~=0

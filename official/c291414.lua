@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e2:SetCode(EFFECT_CHANGE_CODE)
-	e2:SetRange(LOCATION_MZONE+LOCATION_GRAVE)
+	e2:SetRange(LOCATION_MZONE|LOCATION_GRAVE)
 	e2:SetValue(21159309)
 	c:RegisterEffect(e2)
 	--special summon
@@ -33,10 +33,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={21159309}
-s.listed_series={0x3f}
+s.listed_series={SET_MAJESTIC}
 function s.synlimit(e,c)
 	if not c then return false end
-	return not c:IsSetCard(0x3f)
+	return not c:IsSetCard(SET_MAJESTIC)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not e:GetHandler():IsPublic() end

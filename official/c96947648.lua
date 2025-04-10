@@ -1,4 +1,5 @@
 --サルベージ
+--Salvage
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -15,7 +16,7 @@ function s.filter(c)
 	return c:IsMonster() and c:IsAttackBelow(1500) and c:IsAttribute(ATTRIBUTE_WATER) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:GetControler()==tp and chkc:GetLocation()==LOCATION_GRAVE and s.filter(chkc) end
+	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.filter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE,0,2,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_GRAVE,0,2,2,nil)

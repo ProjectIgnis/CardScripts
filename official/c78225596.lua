@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Link Summon
 	c:EnableReviveLimit()
-	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x14a),2)
+	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_APPLIANCER),2)
 	--cannot be targeted by attacks
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -52,7 +52,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.drop)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x14a}
+s.listed_series={SET_APPLIANCER}
 function s.imcon(e)
 	return e:GetHandler():IsLinked()
 end
@@ -64,7 +64,7 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	end
 	local mg=a:GetMutualLinkedGroup()
 	local octg=e:GetHandler():GetMutualLinkedGroup()
-	return a and a:IsControler(tp) and a:IsLinkMonster() and a:IsSetCard(0x14a)
+	return a and a:IsControler(tp) and a:IsLinkMonster() and a:IsSetCard(SET_APPLIANCER)
 		and a~=e:GetHandler() and b and b:IsControler(1-tp)
 		and mg:IsContains(e:GetHandler()) and octg:IsContains(a)
 end
@@ -80,7 +80,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetReset(RESET_PHASE+PHASE_DAMAGE_CAL)
+		e1:SetReset(RESET_PHASE|PHASE_DAMAGE_CAL)
 		e1:SetValue(atkct*1000)
 		a:RegisterEffect(e1)
 	end
@@ -88,14 +88,14 @@ end
 function s.checkfilter(c,e,tp)
 	local mg=c:GetMutualLinkedGroup()
 	local octg=e:GetHandler():GetMutualLinkedGroup()
-	return c:IsSetCard(0x14a) and c:IsLinkMonster() and c:IsControler(tp) and c:IsReason(REASON_DESTROY) and c:IsReason(REASON_BATTLE+REASON_EFFECT)
+	return c:IsSetCard(SET_APPLIANCER) and c:IsLinkMonster() and c:IsControler(tp) and c:IsReason(REASON_DESTROY) and c:IsReason(REASON_BATTLE|REASON_EFFECT)
 		and not (mg:IsContains(e:GetHandler()) and octg:IsContains(c))
 end
 function s.checkcon(e,tp,eg,ep,ev,re,r,rp)
 	return not eg:IsContains(e:GetHandler()) and eg:IsExists(s.checkfilter,1,e:GetHandler(),e,tp)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_CHAIN,0,1)
+	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_CHAIN,0,1)
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(id)>0

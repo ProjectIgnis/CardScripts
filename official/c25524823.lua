@@ -33,9 +33,9 @@ function s.initial_effect(c)
 	e3:SetLabelObject(e4)
 	e4:SetLabelObject(e3)
 end
-s.listed_series={0x2e}
+s.listed_series={SET_GRAVEKEEPERS}
 function s.otfilter(c,tp,relzone)
-	return (c:IsControler(tp) or c:IsFaceup()) and c:IsSetCard(0x2e) and aux.IsZone(c,relzone,tp)
+	return (c:IsControler(tp) or c:IsFaceup()) and c:IsSetCard(SET_GRAVEKEEPERS) and aux.IsZone(c,relzone,tp)
 end
 function s.otcon(e,c,minc,zone,relzone,exeff)
 	if c==nil then return true end
@@ -57,18 +57,18 @@ end
 function s.otop(e,tp,eg,ep,ev,re,r,rp,c)
 	local sg=e:GetLabelObject()
 	c:SetMaterial(sg)
-	Duel.Release(sg,REASON_SUMMON+REASON_MATERIAL)
+	Duel.Release(sg,REASON_SUMMON|REASON_MATERIAL)
 	sg:DeleteGroup()
 end
 function s.valcheck(e,c)
 	local g=c:GetMaterial()
-	local ct=g:FilterCount(Card.IsSetCard,nil,0x2e)
+	local ct=g:FilterCount(Card.IsSetCard,nil,SET_GRAVEKEEPERS)
 	local lv=g:GetSum(Card.GetLevel)
 	e:SetLabel(lv)
 	e:GetLabelObject():SetLabel(ct)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_TRIBUTE)
+	return e:GetHandler():IsTributeSummoned()
 end
 function s.filter(c)
 	return c:IsFacedown()
@@ -128,7 +128,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(lv*100)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		c:RegisterEffect(e1)
 	end
 	if (sel&2)~=0 then
@@ -142,7 +142,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			e1:SetValue(-2000)
 			tc:RegisterEffect(e1)
 			local e2=e1:Clone()

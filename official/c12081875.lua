@@ -1,5 +1,5 @@
 --轟雷機龍-サンダー・ドラゴン
---Thunder Dragon Thunderstorm
+--Thunder Dragon Thunderstormech
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -26,12 +26,12 @@ function s.initial_effect(c)
 	e2:SetValue(s.repval)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x11c}
+s.listed_series={SET_THUNDER_DRAGON}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
+	return e:GetHandler():IsLinkSummoned()
 end
 function s.filter(c,e,tp)
-	if not (c:IsSetCard(0x11c) and c:IsMonster()
+	if not (c:IsSetCard(SET_THUNDER_DRAGON) and c:IsMonster()
 		and (c:IsFaceup() or not c:IsLocation(LOCATION_REMOVED))
 		and c:IsHasEffect(id) and c:IsCanBeEffectTarget(e) and c:IsAbleToDeck()) then 
 		return false
@@ -47,10 +47,10 @@ function s.filter(c,e,tp)
 	return false
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end
-	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,nil,e,tp) end
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE|LOCATION_REMOVED) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end
+	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_GRAVE|LOCATION_REMOVED,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,1,nil,e,tp)
+	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_GRAVE|LOCATION_REMOVED,0,1,1,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,1,tp,0)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
@@ -101,7 +101,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.repfilter(c,tp)
 	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:IsRace(RACE_THUNDER)
-		and not c:IsReason(REASON_REPLACE) and c:IsReason(REASON_EFFECT+REASON_BATTLE)
+		and not c:IsReason(REASON_REPLACE) and c:IsReason(REASON_EFFECT|REASON_BATTLE)
 end
 function s.repcfilter(c)
 	return c:IsAbleToRemove() and aux.SpElimFilter(c,true)

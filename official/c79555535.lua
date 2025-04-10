@@ -1,4 +1,5 @@
 --イグニッションP
+--Ignition Phoenix
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -13,7 +14,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e2:SetValue(300)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0xc8))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_IGKNIGHT))
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
 	e3:SetCode(EFFECT_UPDATE_DEFENSE)
@@ -29,12 +30,12 @@ function s.initial_effect(c)
 	e4:SetOperation(s.desop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0xc8}
+s.listed_series={SET_IGKNIGHT}
 function s.desfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xc8)
+	return c:IsFaceup() and c:IsSetCard(SET_IGKNIGHT)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0xc8) and c:IsAbleToHand()
+	return c:IsSetCard(SET_IGKNIGHT) and c:IsAbleToHand()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(tp) and s.desfilter(chkc) end

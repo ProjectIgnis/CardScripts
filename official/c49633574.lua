@@ -13,9 +13,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.op)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x35}
+s.listed_series={SET_FABLED}
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x35) and c:IsMonster() and c:GetLevel()==3 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_FABLED) and c:IsMonster() and c:GetLevel()==3 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then

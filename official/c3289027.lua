@@ -1,5 +1,5 @@
 --暗黒界の隠者 パアル
---Perl, Hermit of Dark World
+--Parl, Hermit of Dark World
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -16,8 +16,8 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
-local LOCATION_HAND_GRAVE_REMOVED=LOCATION_HAND+LOCATION_GRAVE+LOCATION_REMOVED
-s.listed_series={0x6}
+local LOCATION_HAND_GRAVE_REMOVED=LOCATION_HAND|LOCATION_GRAVE|LOCATION_REMOVED
+s.listed_series={SET_DARK_WORLD}
 s.listed_names={id}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -29,7 +29,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsPreviousLocation(LOCATION_HAND) and r&(REASON_DISCARD+REASON_EFFECT)==REASON_DISCARD+REASON_EFFECT
 end
 function s.spfilter1(c,e,tp)
-	return c:IsSetCard(0x6) and not c:IsCode(id) and
+	return c:IsSetCard(SET_DARK_WORLD) and not c:IsCode(id) and
 		((Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)) or
 		(Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,1-tp)))
 end

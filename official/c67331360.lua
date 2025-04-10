@@ -1,14 +1,14 @@
--- 人形の家
--- Doll House
--- Scripted by Hatter
+--人形の家
+--Doll House
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	-- Special Summon 1 monster from your Deck as a Level 6 DARK monster
+	--Special Summon 1 monster from your Deck as a Level 6 DARK monster
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	-- Attach material and end battle phase
+	--Attach material and end battle phase
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -35,9 +35,9 @@ function s.tgfilter(c,e)
 	return c:IsType(TYPE_NORMAL) and (c:IsAttack(0) or c:IsDefense(0)) and c:IsCanBeEffectTarget(e)
 end
 function s.resconfunc(cg)
-	-- Creates a rescon function to be used with Auxiliary.SelectUnselectGroup
-	-- that will ensure cards in sg will have at least one card in cg with the same name.
-	-- It also ensures that each card has one exclusive pair.
+	--Creates a rescon function to be used with Auxiliary.SelectUnselectGroup
+	--that will ensure cards in sg will have at least one card in cg with the same name.
+	--It also ensures that each card has one exclusive pair.
 	return function (sg,e,tp,mg)
 		local code1=sg:GetFirst():GetCode()
 		local f1=cg:Filter(Card.IsCode,nil,code1)

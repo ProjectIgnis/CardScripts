@@ -21,7 +21,7 @@ end
 function s.spcond(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsNormalSummoned() and not c:IsAttack(0)
-		and (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
+		and aux.StatChangeDamageStepCondition()
 end
 function s.spfilter(c,e,tp)
 	return c:IsRace(RACE_INSECT) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

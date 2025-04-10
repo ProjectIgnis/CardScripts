@@ -1,4 +1,5 @@
 --シャドール・リザード
+--Shaddoll Squamata
 local s,id=GetID()
 function s.initial_effect(c)
 	--flip
@@ -24,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tgop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x9d}
+s.listed_series={SET_SHADDOLL}
 s.listed_names={id}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) end
@@ -43,7 +44,7 @@ function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsReason(REASON_EFFECT)
 end
 function s.filter(c)
-	return c:IsSetCard(0x9d) and not c:IsCode(id) and c:IsAbleToGrave()
+	return c:IsSetCard(SET_SHADDOLL) and not c:IsCode(id) and c:IsAbleToGrave()
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

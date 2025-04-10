@@ -1,4 +1,5 @@
 --サクリファイス・ロータス
+--Samsara Lotus
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special Summon
@@ -20,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
-	e2:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e2:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetCondition(s.dmcon)
 	e2:SetTarget(s.dmtg)
@@ -28,7 +29,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.filter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsSpellTrap()
 end
 function s.sscon(e,tp,eg,ep,ev,re,r,rp)
 	return tp==Duel.GetTurnPlayer() and not Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_ONFIELD,0,1,nil) 
@@ -44,7 +45,7 @@ function s.ssop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.dmcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.dmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

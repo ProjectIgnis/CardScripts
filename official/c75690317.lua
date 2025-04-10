@@ -1,5 +1,5 @@
 --カラクリ蝦蟇 四六弐四
---Karakuri Toad mdl 4624 “Shirokunishi”
+--Karakuri Gama mdl 4624 "Shirokunishi"
 --scripted by Logical Nonsense
 --Substitute ID
 local s,id=GetID()
@@ -26,12 +26,12 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetCountLimit(1,id)
 	e3:SetRange(LOCATION_GRAVE)
-	e3:SetCost(aux.bfgcost)
+	e3:SetCost(Cost.SelfBanish)
 	e3:SetTarget(s.target)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x11}
+s.listed_series={SET_KARAKURI}
 	--Switch battle position
 function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -41,7 +41,7 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for "Karakuri" monster that can switch position
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x11) and c:IsCanChangePosition()
+	return c:IsFaceup() and c:IsSetCard(SET_KARAKURI) and c:IsCanChangePosition()
 end
 	--Activation legality
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -58,4 +58,3 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ChangePosition(tc,POS_FACEUP_DEFENSE,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK)
 	end
 end
-

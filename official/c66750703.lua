@@ -1,7 +1,6 @@
 --炎傑の梁山閣
 --Fire Fortress atop Liang Peak
 --Scripted by ahtelel
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Can hold Fire Fist Counters
@@ -55,10 +54,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e6)
 end
 s.counter_list={0x201}
-s.listed_series={0x79}
-
+s.listed_series={SET_FIRE_FIST}
 function s.ctfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x79)
+	return c:IsFaceup() and c:IsSetCard(SET_FIRE_FIST)
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	if eg:IsExists(s.ctfilter,1,nil) then
@@ -81,7 +79,7 @@ function s.op1(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTargetRange(0,1)
 	e1:SetValue(1)
 	e1:SetCondition(s.actcon)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.actcon(e)
@@ -121,14 +119,14 @@ function s.spfilter(c,e,tp)
 end
 function s.tg3(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local loc=LOCATION_EXTRA
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then loc=loc+LOCATION_DECK end
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then loc=loc|LOCATION_DECK end
 	if chk==0 then return Duel.IsExistingMatchingCard(s.spfilter,tp,loc,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,loc)
 end
 function s.op3(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local loc=LOCATION_EXTRA
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then loc=loc+LOCATION_DECK end
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then loc=loc|LOCATION_DECK end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,loc,0,1,1,nil,e,tp)
 	if #g>0 then

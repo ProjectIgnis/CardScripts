@@ -1,9 +1,9 @@
 -- 
--- Libromancer Magigirl
--- Scripted by Hatter
+--Libromancer Magigirl
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Special Summon self
+	--Special Summon self
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -14,8 +14,8 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	-- Ritual Summon 1 "Libromancer" monster
-	local e2=Ritual.CreateProc(c,RITPROC_GREATER,aux.FilterBoolFunction(Card.IsSetCard,0x17d),nil,aux.Stringid(id,1))
+	--Ritual Summon 1 "Libromancer" monster
+	local e2=Ritual.CreateProc(c,RITPROC_GREATER,aux.FilterBoolFunction(Card.IsSetCard,SET_LIBROMANCER),nil,aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E)
@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetCondition(function(e,tp) return Duel.IsTurnPlayer(1-tp) end)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x17d}
+s.listed_series={SET_LIBROMANCER}
 function s.spcostfilter(c)
 	return c:IsRitualMonster() and not c:IsPublic()
 end

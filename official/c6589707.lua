@@ -1,5 +1,5 @@
 --地中界の厄災
---Calamity Upon the Hidden City
+--Terrors in the Hidden City
 --Scripted by DyXel
 local s,id=GetID()
 function s.initial_effect(c)
@@ -53,7 +53,7 @@ end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	local fid=e:GetHandler():GetFieldID() --in case we have multiples, the id will not be enough
 	for tc in eg:Iter() do
-		tc:RegisterFlagEffect(fid,RESET_EVENT+RESETS_STANDARD,0,1)
+		tc:RegisterFlagEffect(fid,RESET_EVENT|RESETS_STANDARD,0,1)
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)

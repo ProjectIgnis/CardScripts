@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetHintTiming(TIMING_DAMAGE_STEP)
 	e2:SetCountLimit(1,id)
 	e2:SetCondition(s.atkcon)
-	e2:SetCost(s.atkcost)
+	e2:SetCost(Cost.SelfToGrave)
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
 end
@@ -50,10 +50,6 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	if ph~=PHASE_DAMAGE or Duel.IsDamageCalculated() then return false end
 	local tc,oc=Duel.GetBattleMonster(tp)
 	return tc and oc and tc:IsSetCard(SET_TRICKSTAR) and tc:IsFaceup()
-end
-function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc,oc=Duel.GetBattleMonster(tp)

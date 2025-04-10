@@ -1,4 +1,5 @@
 --救済のレイヤード
+--Layard the Liberator
 local s,id=GetID()
 function s.initial_effect(c)
 	--tohand

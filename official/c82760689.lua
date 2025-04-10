@@ -1,4 +1,5 @@
 --宝札雲
+--Lucky Cloud
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -33,11 +34,11 @@ function s.initial_effect(c)
 		end)
 	end)
 end
-s.listed_series={0x18}
+s.listed_series={SET_CLOUDIAN}
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	for tc in aux.Next(eg) do
-		if not s[0] and tc:IsFaceup() and tc:IsSetCard(0x18) then
+		if not s[0] and tc:IsFaceup() and tc:IsSetCard(SET_CLOUDIAN) then
 			if s[1]:IsContains(tc) then s[0]=true
 			else s[1]:AddCard(tc) end
 		end
@@ -50,7 +51,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCountLimit(1)
 	e1:SetCondition(s.drcon)
 	e1:SetOperation(s.drop)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.filter(c,g)

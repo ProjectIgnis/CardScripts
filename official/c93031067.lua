@@ -1,7 +1,6 @@
 --海造賊－拠点
 --Plunder Patroll Shipyarrrd
 --Scripted by Eerie Code
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -15,7 +14,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetTargetRange(LOCATION_MZONE,0)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x13f))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_PLUNDER_PATROLL))
 	e2:SetValue(s.atkval)
 	c:RegisterEffect(e2)
 	--Add 1 "Plunder Patroll" card from deck
@@ -41,20 +40,19 @@ function s.initial_effect(c)
 	e4:SetOperation(s.setop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x13f}
-
+s.listed_series={SET_PLUNDER_PATROLL}
 function s.atkfil(c)
-	return c:IsFaceup() and c:IsSetCard(0x13f) and c:GetSequence()<5
+	return c:IsFaceup() and c:IsSetCard(SET_PLUNDER_PATROLL) and c:GetSequence()<5
 end
 function s.atkval(e,c)
 	return Duel.GetMatchingGroupCount(s.atkfil,e:GetHandlerPlayer(),LOCATION_SZONE,0,nil)*500
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST|REASON_DISCARD)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x13f) and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(SET_PLUNDER_PATROLL) and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -70,7 +68,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.setfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x13f) and c:IsAbleToHand() and not c:IsLocation(LOCATION_FZONE)
+	return c:IsFaceup() and c:IsSetCard(SET_PLUNDER_PATROLL) and c:IsAbleToHand() and not c:IsLocation(LOCATION_FZONE)
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_SZONE) and chkc:IsControler(tp) and s.setfilter(chkc) end
@@ -86,7 +84,7 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if c:IsRelateToEffect(e) and c:IsSSetable()
 		and Duel.SSet(tp,c)~=0 and tc and tc:IsRelateToEffect(e)
-		and tc:IsSetCard(0x13f) and tc:IsLocation(LOCATION_SZONE) then
+		and tc:IsSetCard(SET_PLUNDER_PATROLL) and tc:IsLocation(LOCATION_SZONE) then
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 	end
 end

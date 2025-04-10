@@ -1,4 +1,5 @@
 --CXダーク・フェアリー・チア・ガール
+--CXyz Dark Fairy Cheer Girl
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -23,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_BATTLE_DESTROYING)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetCondition(s.damcon)
-	e2:SetCost(s.damcost)
+	e2:SetCost(Cost.Detach(1))
 	e2:SetTarget(s.damtg)
 	e2:SetOperation(s.damop)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
@@ -44,10 +45,6 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetOverlayGroup():IsExists(Card.IsCode,1,nil,51960178) and aux.bdocon(e,tp,eg,ep,ev,re,r,rp)
-end
-function s.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

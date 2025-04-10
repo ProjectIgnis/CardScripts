@@ -1,4 +1,5 @@
 --ゴーストリック・アルカード
+--Ghostrick Alucard
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -20,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,id)
-	e2:SetCost(s.descost)
+	e2:SetCost(Cost.Detach(1))
 	e2:SetTarget(s.destg)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
@@ -35,13 +36,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x8d}
+s.listed_series={SET_GHOSTRICK}
 function s.tg(e,c)
-	return c~=e:GetHandler() and (c:IsFacedown() or c:IsSetCard(0x8d))
-end
-function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
+	return c~=e:GetHandler() and (c:IsFacedown() or c:IsSetCard(SET_GHOSTRICK))
 end
 function s.desfilter(c)
 	return c:IsFacedown()
@@ -60,7 +57,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter(c)
-	return c:IsSetCard(0x8d) and c:IsAbleToHand()
+	return c:IsSetCard(SET_GHOSTRICK) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc) end

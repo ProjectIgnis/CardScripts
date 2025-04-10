@@ -1,4 +1,5 @@
 --鉄壁の布陣
+--Impenetrable Formation
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -39,7 +40,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_UPDATE_DEFENSE)
 		e1:SetCondition(s.rcon)
 		e1:SetValue(700)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1,true)
 	end
 end

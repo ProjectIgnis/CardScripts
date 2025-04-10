@@ -1,4 +1,5 @@
 --精神同調波
+--Synch Blast Wave
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

@@ -1,4 +1,5 @@
 --RAI－JIN
+--Rai-Jin
 local s,id=GetID()
 function s.initial_effect(c)
 	c:SetUniqueOnField(1,1,id)
@@ -32,7 +33,7 @@ function s.atkval(e,c)
 	return Duel.GetMatchingGroupCount(Card.IsAttribute,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil,ATTRIBUTE_LIGHT)*100
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_LIGHT)

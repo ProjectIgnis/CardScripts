@@ -1,4 +1,5 @@
 --ワーム・テンタクルス
+--Worm Tentacles
 local s,id=GetID()
 function s.initial_effect(c)
 	--multi atk
@@ -13,17 +14,17 @@ function s.initial_effect(c)
 	e1:SetOperation(s.mtop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x3e}
+s.listed_series={SET_WORM}
 function s.mtcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsAbleToEnterBP()
 end
 function s.costfilter(c)
-	return c:IsSetCard(0x3e) and c:IsRace(RACE_REPTILE) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
+	return c:IsSetCard(SET_WORM) and c:IsRace(RACE_REPTILE) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end
 function s.mtcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,e:GetHandler()) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,e:GetHandler()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,e:GetHandler())
+	local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,1,e:GetHandler())
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.mttg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -36,7 +37,7 @@ function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_EXTRA_ATTACK)
 		e1:SetValue(1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		c:RegisterEffect(e1)
 	end
 end

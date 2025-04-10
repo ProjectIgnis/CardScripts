@@ -1,5 +1,5 @@
 --EMクリボーダー
---Performapal Kuribohrder
+--Performapal Kuribohble
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -35,7 +35,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetRange(LOCATION_MZONE)
 			e1:SetTargetRange(1,0)
 			e1:SetValue(1)
-			e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
+			e1:SetReset(RESET_PHASE|PHASE_DAMAGE)
 			c:RegisterEffect(e1)
 			Duel.CalculateDamage(a,c)
 		end

@@ -1,4 +1,5 @@
 --森の住人 ウダン
+--Wodan the Resident of the Forest
 local s,id=GetID()
 function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)

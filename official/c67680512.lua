@@ -46,7 +46,7 @@ function s.lkfilter(c,mg)
 end
 function s.filter(tc,c,tp)
 	local mg=Group.FromCards(c,tc)
-	return tc:IsFaceup() and tc:IsCanBeLinkMaterial() and tc:IsSummonType(SUMMON_TYPE_SPECIAL)
+	return tc:IsFaceup() and tc:IsCanBeLinkMaterial() and tc:IsSpecialSummoned()
 		and Duel.IsExistingMatchingCard(s.lkfilter,tp,LOCATION_EXTRA,0,1,nil,mg)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

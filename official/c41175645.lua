@@ -52,7 +52,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.spop2)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0xe8}
+s.listed_series={SET_SILENT_MAGICIAN}
 s.listed_names={id}
 function s.spcon(e,c)
 	if c==nil then return true end
@@ -77,7 +77,7 @@ function s.value(e,c)
 	return Duel.GetFieldGroupCount(c:GetControler(),LOCATION_HAND,0)*500
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return re:IsActiveType(TYPE_SPELL) and re:IsHasType(EFFECT_TYPE_ACTIVATE)
+	return re:IsSpellEffect() and re:IsHasType(EFFECT_TYPE_ACTIVATE)
 		and Duel.IsChainNegatable(ev) and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -95,18 +95,18 @@ function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
 		and c:IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.filter(c,e,tp)
-	return c:IsMonster() and c:IsSetCard(0xe8) and not c:IsCode(id)
+	return c:IsMonster() and c:IsSetCard(SET_SILENT_MAGICIAN) and not c:IsCode(id)
 		and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK)
+		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND|LOCATION_DECK,0,1,nil,e,tp) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND|LOCATION_DECK)
 end
 function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,e,tp)
+	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND|LOCATION_DECK,0,1,1,nil,e,tp)
 	if #g>0 then
 		Duel.SpecialSummon(g,0,tp,tp,true,false,POS_FACEUP)
 	end

@@ -1,4 +1,5 @@
 --生命力吸収魔術
+--The Spell Absorbing Life
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

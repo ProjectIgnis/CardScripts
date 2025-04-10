@@ -1,4 +1,5 @@
 --魔知ガエル
+--Dupe Frog
 local s,id=GetID()
 function s.initial_effect(c)
 	--change code
@@ -29,7 +30,7 @@ function s.initial_effect(c)
 	e3:SetValue(s.atlimit)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x12}
+s.listed_series={SET_FROG}
 s.listed_names={id}
 function s.atlimit(e,c)
 	return c~=e:GetHandler()
@@ -38,15 +39,15 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp,chk)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.filter(c)
-	return c:IsSetCard(0x12) and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(SET_FROG) and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE+LOCATION_DECK,0,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_GRAVE+LOCATION_DECK)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE|LOCATION_DECK,0,1,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_GRAVE|LOCATION_DECK)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.filter),tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.filter),tp,LOCATION_DECK|LOCATION_GRAVE,0,1,1,nil)
 	if #g>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)

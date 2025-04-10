@@ -1,5 +1,5 @@
 --斬機ディヴィジョン
---Processlayer Division
+--Mathmech Division
 --scripted by Logical Nonsense
 --Substitute ID
 local s,id=GetID()
@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 	--Part of "Zan-Ki" archetype
-s.listed_series={0x132}
+s.listed_series={SET_MATHMECH}
 	--Check for your cyberse monster in EMZ
 function s.costfilter(c,tp)
 	return c:GetSequence()>=5 and c:IsRace(RACE_CYBERSE) and c:IsControler(tp)
@@ -46,8 +46,8 @@ end
 	--Activation legality
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,e,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_GRAVE)
+		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND|LOCATION_GRAVE,0,1,nil,e,tp) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND|LOCATION_GRAVE)
 end
 	--Special summon from hand and/or GY
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
@@ -84,7 +84,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		e1:SetValue(tc:GetAttack()/2)
 		tc:RegisterEffect(e1)
 	end

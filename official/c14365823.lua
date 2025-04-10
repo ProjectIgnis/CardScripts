@@ -36,7 +36,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.matfilter(c,lc,sumtype,tp)
-	return c:IsLevelBelow(3) and c:IsSetCard(0xfb,lc,sumtype,tp)
+	return c:IsLevelBelow(3) and c:IsSetCard(SET_TRICKSTAR,lc,sumtype,tp)
 end
 	--Activation legality
 function s.sstg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -69,4 +69,3 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Damage(p,d,REASON_EFFECT)
 end
-

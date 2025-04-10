@@ -1,4 +1,5 @@
 --ミスト・ウォーム
+--Mist Wurm
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -17,7 +18,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
+	return e:GetHandler():IsSynchroSummoned()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) and chkc:IsAbleToHand() end

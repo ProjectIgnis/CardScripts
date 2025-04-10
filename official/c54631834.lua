@@ -1,4 +1,5 @@
 --端末世界
+--Terminal World
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -17,5 +18,5 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_MAIN1
+	return Duel.IsPhase(PHASE_MAIN1)
 end

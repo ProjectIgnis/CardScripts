@@ -1,4 +1,5 @@
 --武器庫荒らし
+--Arsenal Robber
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

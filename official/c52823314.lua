@@ -1,4 +1,5 @@
 --魔界発現世行きバス
+--Tour Bus From the Underworld
 local s,id=GetID()
 function s.initial_effect(c)
 	--to deck
@@ -25,6 +26,6 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) then
-		Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)
+		Duel.SendtoDeck(tc,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	end
 end

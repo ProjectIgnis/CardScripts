@@ -1,5 +1,5 @@
 --宙の忍者－鳥帷
---Sky Ninja Tobari
+--Tobari the Sky Ninja
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -30,12 +30,12 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_HAND)
 	e3:SetCountLimit(1,id)
-	e3:SetCost(s.spcost)
+	e3:SetCost(Cost.SelfToGrave)
 	e3:SetTarget(s.sptg)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 	--Fusion Summon 1 "Ninja" Fusion Monster
-	local params={function(c) return c:IsSetCard(0x2b) end}
+	local params={function(c) return c:IsSetCard(SET_NINJA) end}
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
@@ -49,21 +49,16 @@ function s.initial_effect(c)
 	e4:SetOperation(Fusion.SummonEffOP(table.unpack(params)))
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x2b}
+s.listed_series={SET_NINJA}
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+	e:GetHandler():RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 end
 function s.indcond(e)
 	local c=e:GetHandler()
 	return c:IsStatus(STATUS_SPSUMMON_TURN) or c:GetFlagEffect(id)>0
 end
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(c,REASON_COST)
-end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x2b) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE|POS_FACEDOWN_DEFENSE)
+	return c:IsSetCard(SET_NINJA) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE|POS_FACEDOWN_DEFENSE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

@@ -35,7 +35,7 @@ function s.atlimit(e,c)
 end
 function s.valcon(e,re,r,rp)
 	if r&REASON_BATTLE~=0 then
-		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+		e:GetHandler():RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 		return true
 	else return false end
 end

@@ -1,4 +1,4 @@
---
+--結晶神ティスティナ
 --Crystal God Tistina
 --Scripted by Hatter
 local s,id=GetID()

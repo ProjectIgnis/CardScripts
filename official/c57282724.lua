@@ -1,5 +1,5 @@
 --星神器デミウルギア
---World Regalia Demiurgear
+--World Gears of Theurlogical Demiurgy
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -50,18 +50,18 @@ function s.initial_effect(c)
 	e5:SetOperation(s.spop)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0xfe}
+s.listed_series={SET_WORLD_LEGACY}
 function s.econ(e)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
+	return e:GetHandler():IsLinkSummoned()
 end
 function s.efilter(e,re)
-	return re:IsActiveType(TYPE_MONSTER) and re:GetOwner()~=e:GetOwner()
+	return re:IsMonsterEffect() and re:GetOwner()~=e:GetOwner()
 end
 function s.matcheck(e,c)
 	local g=c:GetMaterial()
 	local tp=c:GetControler()
 	if g:GetClassCount(Card.GetRace,c,SUMMON_TYPE_LINK,tp)==3 and g:GetClassCount(Card.GetAttribute,c,SUMMON_TYPE_LINK,tp)==3 then
-		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD-RESET_LEAVE-RESET_TEMP_REMOVE,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,0))
+		c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD-RESET_TOFIELD-RESET_LEAVE-RESET_TEMP_REMOVE,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,0))
 	end
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
@@ -85,7 +85,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.spcfilter,1,nil,tp)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0xfe) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_WORLD_LEGACY) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -100,4 +100,3 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-

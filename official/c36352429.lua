@@ -1,4 +1,5 @@
 --ヴァンパイア・ドラゴン
+--Vampire Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--search
@@ -15,7 +16,7 @@ function s.initial_effect(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
-		and e:GetHandler():IsSummonType(SUMMON_TYPE_TRIBUTE)
+		and e:GetHandler():IsTributeSummoned()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

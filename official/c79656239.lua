@@ -44,7 +44,7 @@ function s.initial_effect(c)
 end
 s.listed_names={28265983,92266279,15177750}
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
+	return e:GetHandler():IsSynchroSummoned()
 end
 function s.thfilter(c)
 	return c:IsCode(28265983,92266279,15177750) and c:IsAbleToHand()

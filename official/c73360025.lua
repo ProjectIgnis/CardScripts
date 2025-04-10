@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_DAMAGE)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
-	e3:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e3:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetCountLimit(1)
 	e3:SetCondition(function(_,tp) return Duel.IsTurnPlayer(tp) end)
@@ -30,12 +30,12 @@ function s.initial_effect(c)
 	e3:SetOperation(s.damop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xaf}
+s.listed_series={SET_DD}
 function s.checkmat(tp,sg,fc)
-	return fc:IsSetCard(0xaf) or not sg:IsExists(Card.IsLocation,1,nil,LOCATION_GRAVE)
+	return fc:IsSetCard(SET_DD) or not sg:IsExists(Card.IsLocation,1,nil,LOCATION_GRAVE)
 end
 function s.fextra(e,tp,mg)
-	if not Duel.IsPlayerAffectedByEffect(tp,69832741) then
+	if not Duel.IsPlayerAffectedByEffect(tp,CARD_SPIRIT_ELIMINATION) then
 		return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsAbleToRemove),tp,LOCATION_GRAVE,0,nil),s.checkmat
 	end
 	return nil

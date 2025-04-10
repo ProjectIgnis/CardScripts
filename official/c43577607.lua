@@ -1,4 +1,5 @@
 --竜星の気脈
+--Yang Zing Prana
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -56,25 +57,25 @@ function s.initial_effect(c)
 	e6:SetType(EFFECT_TYPE_IGNITION)
 	e6:SetRange(LOCATION_SZONE)
 	e6:SetCondition(s.effcon)
-	e6:SetCost(s.descost)
+	e6:SetCost(Cost.SelfToGrave)
 	e6:SetTarget(s.destg)
 	e6:SetOperation(s.desop)
 	e6:SetLabel(5)
 	c:RegisterEffect(e6)
 end
-s.listed_series={0x9e}
+s.listed_series={SET_YANG_ZING}
 function s.confilter(c)
-	return c:IsSetCard(0x9e) and c:IsMonster()
+	return c:IsSetCard(SET_YANG_ZING) and c:IsMonster()
 end
 function s.effcon(e)
 	local g=Duel.GetMatchingGroup(s.confilter,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil)
 	return g:GetClassCount(Card.GetAttribute)>=e:GetLabel()
 end
 function s.atktg(e,c)
-	return c:IsSetCard(0x9e)
+	return c:IsSetCard(SET_YANG_ZING)
 end
 function s.repfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x9e) and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) 
+	return c:IsFaceup() and c:IsSetCard(SET_YANG_ZING) and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) 
 		and not c:IsReason(REASON_REPLACE)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -86,10 +87,6 @@ function s.repval(e,c)
 end
 function s.repop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoGrave(e:GetHandler(),REASON_EFFECT)
-end
-function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,e:GetHandler()) end

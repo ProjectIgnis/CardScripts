@@ -1,4 +1,5 @@
 --古神クトグア
+--Old Entity Cthugua
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -35,7 +36,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
+	return e:GetHandler():IsSynchroSummoned()
 end
 function s.filter(c)
 	return c:IsType(TYPE_XYZ) and c:GetRank()==4 and c:IsAbleToExtra()
@@ -48,7 +49,7 @@ end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	if #g>0 then
-		Duel.SendtoDeck(g,nil,0,REASON_EFFECT)
+		Duel.SendtoDeck(g,nil,SEQ_DECKTOP,REASON_EFFECT)
 	end
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
@@ -79,17 +80,17 @@ function s.efop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCondition(s.drcon2)
 	e1:SetTarget(s.drtg)
 	e1:SetOperation(s.drop)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	rc:RegisterEffect(e1,true)
 	if not rc:IsType(TYPE_EFFECT) then
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_ADD_TYPE)
 		e2:SetValue(TYPE_EFFECT)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		rc:RegisterEffect(e2,true)
 	end
 end
 function s.drcon2(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ)
+	return e:GetHandler():IsXyzSummoned()
 end

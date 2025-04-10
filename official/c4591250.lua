@@ -1,8 +1,9 @@
 --アマゾネス女帝
+--Amazoness Empress
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	Fusion.AddProcMix(c,true,true,15951532,aux.FilterBoolFunctionEx(Card.IsSetCard,0x4))
+	Fusion.AddProcMix(c,true,true,15951532,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_AMAZONESS))
 	--indes
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -21,7 +22,7 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_PIERCE)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetTargetRange(LOCATION_MZONE,0)
-	e3:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x4))
+	e3:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_AMAZONESS))
 	c:RegisterEffect(e3)
 	--special summon
 	local e4=Effect.CreateEffect(c)
@@ -35,15 +36,15 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x4}
+s.listed_series={SET_AMAZONESS}
 s.listed_names={15951532}
-s.material_setcode=0x4
+s.material_setcode=SET_AMAZONESS
 function s.indtg(e,c)
-	return c:IsSetCard(0x4) and c~=e:GetHandler()
+	return c:IsSetCard(SET_AMAZONESS) and c~=e:GetHandler()
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsSummonType(SUMMON_TYPE_FUSION)
+	return c:IsFusionSummoned()
 		and (c:IsReason(REASON_BATTLE) or (c:GetReasonPlayer()~=tp and c:IsReason(REASON_EFFECT)))
 		and c:IsPreviousPosition(POS_FACEUP)
 end
@@ -52,13 +53,13 @@ function s.filter(c,e,tp)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,nil,e,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE)
+		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND|LOCATION_DECK|LOCATION_GRAVE,0,1,nil,e,tp) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND|LOCATION_DECK|LOCATION_GRAVE)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.filter),tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,e,tp)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.filter),tp,LOCATION_HAND|LOCATION_DECK|LOCATION_GRAVE,0,1,1,nil,e,tp)
 	if #g>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end

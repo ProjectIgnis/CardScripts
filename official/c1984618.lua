@@ -14,18 +14,18 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x146}
+s.listed_series={SET_DOGMATIKA}
 s.listed_names={CARD_ALBAZ}
 function s.tgfilter(c,tp,necro)
-	return c:IsAbleToGrave() and Duel.IsExistingMatchingCard(necro and aux.NecroValleyFilter(s.thfilter) or s.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,c:GetAttack())
+	return c:IsAbleToGrave() and Duel.IsExistingMatchingCard(necro and aux.NecroValleyFilter(s.thfilter) or s.thfilter,tp,LOCATION_DECK|LOCATION_GRAVE,0,1,nil,c:GetAttack())
 end
 function s.thfilter(c,atk)
-	return (c:IsCode(CARD_ALBAZ) or (c:IsMonster() and c:IsSetCard(0x146))) and c:GetAttack()<=atk and c:IsAbleToHand()
+	return (c:IsCode(CARD_ALBAZ) or (c:IsMonster() and c:IsSetCard(SET_DOGMATIKA))) and c:GetAttack()<=atk and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_EXTRA,0,1,nil,tp,false) end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_EXTRA)
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE)
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK|LOCATION_GRAVE)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
@@ -34,7 +34,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local og=Duel.GetOperatedGroup()
 		if og:GetFirst():IsLocation(LOCATION_GRAVE) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-			local g2=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.thfilter),tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,g1:GetFirst():GetAttack())
+			local g2=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.thfilter),tp,LOCATION_DECK|LOCATION_GRAVE,0,1,1,nil,g1:GetFirst():GetAttack())
 			if #g2>0 then
 				Duel.BreakEffect()
 				Duel.SendtoHand(g2,nil,REASON_EFFECT)
@@ -49,7 +49,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	aux.RegisterClientHint(e:GetHandler(),EFFECT_FLAG_OATH,tp,1,0,aux.Stringid(id,1),nil)
 end

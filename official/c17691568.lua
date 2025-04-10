@@ -1,5 +1,5 @@
 --ガガク－パンククラッシュ・ビート
---Gagaku-P.U.N.K. Crusher Beat
+--Gagaku-P.U.N.K. Crash Beat
 --scripted by Rundas
 local s,id=GetID()
 function s.initial_effect(c)
@@ -31,10 +31,10 @@ function s.initial_effect(c)
 	e3:SetOperation(s.pop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x173}
+s.listed_series={SET_PUNK}
 --Pop on being target
 function s.filter(c,tp)
-	return c:IsControler(tp) and c:IsMonster() and c:IsFaceup() and c:IsSetCard(0x173)
+	return c:IsControler(tp) and c:IsMonster() and c:IsFaceup() and c:IsSetCard(SET_PUNK)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
@@ -66,9 +66,9 @@ function s.pop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	e1:SetTargetRange(LOCATION_MZONE,0)
-	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x173))
+	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_PUNK))
 	e1:SetValue(aux.indoval)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)

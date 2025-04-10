@@ -18,12 +18,12 @@ function s.initial_effect(c)
 end
 s.material={71971554}
 s.listed_names={71971554}
-s.material_setcode=0x1017
+s.material_setcode=SET_SYNCHRON
 function s.tfilter(c,scard,sumtype,tp)
 	return c:IsSummonCode(scard,sumtype,tp,71971554) or c:IsHasEffect(20932152)
 end
 function s.filter(c,e,tp)
-	return c:IsLevelBelow(2) and c:IsRace(RACE_WARRIOR+RACE_MACHINE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsLevelBelow(2) and c:IsRace(RACE_WARRIOR|RACE_MACHINE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

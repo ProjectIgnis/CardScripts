@@ -38,7 +38,7 @@ function s.cfilter(c)
 	return c:IsRace(RACE_INSECT) and c:IsMonster() and aux.SpElimFilter(c,true)
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil)
+	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,nil)
 	if chk==0 then return #g>0 and g:FilterCount(Card.IsAbleToRemoveAsCost,nil)==#g end
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
@@ -57,7 +57,7 @@ function s.op(tc,c,atk)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(atk)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	tc:RegisterEffect(e1)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_UPDATE_DEFENSE)
@@ -65,7 +65,7 @@ function s.op(tc,c,atk)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return rp==1-tp and c:IsSummonType(SUMMON_TYPE_SYNCHRO)
+	return rp==1-tp and c:IsSynchroSummoned()
 end
 function s.spfilter(c,e,tp)
 	return c:IsFaceup() and c:IsLevelBelow(11) and c:IsRace(RACE_INSECT) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

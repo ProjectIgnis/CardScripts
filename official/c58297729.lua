@@ -1,4 +1,5 @@
 --変則ギア
+--Transmission Gear
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate

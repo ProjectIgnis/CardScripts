@@ -1,4 +1,5 @@
 --リゾネーター・エンジン
+--Resonator Engine
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,9 +12,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x57}
+s.listed_series={SET_RESONATOR}
 function s.filter(c)
-	return c:IsSetCard(0x57) and c:IsMonster() and c:IsAbleToDeck()
+	return c:IsSetCard(SET_RESONATOR) and c:IsMonster() and c:IsAbleToDeck()
 end
 function s.filter2(c)
 	return c:GetLevel()==4 and c:IsAbleToHand()
@@ -36,6 +37,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 	local g=Duel.GetTargetCards(e)
 	if #g~=0 then
-		Duel.SendtoDeck(g,nil,0,REASON_EFFECT)
+		Duel.SendtoDeck(g,nil,SEQ_DECKTOP,REASON_EFFECT)
 	end
 end

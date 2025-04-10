@@ -1,5 +1,5 @@
 --ボーン・テンプル・ブロック
---Thunder King, the Lightningstrike Kaiju
+--Bone Temple Block
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,7 +12,6 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.counter_list={0x37}
 function s.filter(c,e,tp)
 	return c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
@@ -36,7 +35,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	e:SetLabelObject(sc)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_EFFECT+REASON_DISCARD)==0 then return end
+	if Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_EFFECT|REASON_DISCARD)==0 then return end
 	local sc=e:GetLabelObject()
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	local oc=g:GetFirst()
@@ -50,7 +49,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EVENT_PHASE+PHASE_END)
 		e1:SetCondition(s.descon)
 		e1:SetOperation(s.desop)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,2)
+		e1:SetReset(RESETS_STANDARD_PHASE_END,2)
 		e1:SetCountLimit(1)
 		e1:SetLabel(Duel.GetTurnCount())
 		sc:RegisterEffect(e1,true)
@@ -64,7 +63,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EVENT_PHASE+PHASE_END)
 		e1:SetCondition(s.descon)
 		e1:SetOperation(s.desop)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,2)
+		e1:SetReset(RESETS_STANDARD_PHASE_END,2)
 		e1:SetCountLimit(1)
 		e1:SetLabel(Duel.GetTurnCount())
 		oc:RegisterEffect(e1,true)

@@ -1,12 +1,12 @@
--- ダイノルフィア・ステルスベギア
--- Dinoruffia Stealthbegia
--- Scripted by Hatter
+--ダイノルフィア・ステルスベギア
+--Dinomorphia Stealthbergia
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	-- 2 “Dinoruffia” monsters with different names
+	--2 “Dinoruffia” monsters with different names
 	Fusion.AddProcMixN(c,true,true,s.ffilter,2)
-	-- No LP Cost
+	--No LP Cost
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_LPCOST_CHANGE)
@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetCondition(function(e) return Duel.GetLP(e:GetHandlerPlayer())<=2000 end)
 	e1:SetValue(s.lpcostval)
 	c:RegisterEffect(e1)
-	-- Damage
+	--Damage
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DAMAGE)
@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.damtg)
 	e1:SetOperation(s.damop)
 	c:RegisterEffect(e1)
-	-- Special Summon
+	--Special Summon
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -41,9 +41,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x175}
+s.listed_series={SET_DINOMORPHIA}
 function s.ffilter(c,fc,sumtype,tp,sub,mg,sg)
-	return c:IsSetCard(0x175,fc,sumtype,tp) and (not sg or not sg:IsExists(s.fusfilter,1,c,c:GetCode(fc,sumtype,tp),fc,sumtype,tp))
+	return c:IsSetCard(SET_DINOMORPHIA,fc,sumtype,tp) and (not sg or not sg:IsExists(s.fusfilter,1,c,c:GetCode(fc,sumtype,tp),fc,sumtype,tp))
 end
 function s.fusfilter(c,code,fc,sumtype,tp)
 	return c:IsSummonCode(fc,sumtype,tp,code) and not c:IsHasEffect(511002961)
@@ -52,11 +52,11 @@ function s.lpcostval(e,re,rp,val)
 	if not re then return val end
 	local rc=re:GetHandler()
 	if re:IsHasType(EFFECT_TYPE_ACTIVATE) and rc:IsTrap() then return 0 end
-	if re:IsActiveType(TYPE_MONSTER) and rc:IsSetCard(0x175) then return 0 end
+	if re:IsMonsterEffect() and rc:IsSetCard(SET_DINOMORPHIA) then return 0 end
 	return val
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return rp==1-tp and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():GetBaseAttack()>0
+	return rp==1-tp and re:IsMonsterEffect() and re:GetHandler():GetBaseAttack()>0
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -73,7 +73,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return (r&REASON_EFFECT+REASON_BATTLE)~=0
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x175) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_DINOMORPHIA) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

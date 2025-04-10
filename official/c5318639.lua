@@ -7,14 +7,14 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(0,TIMING_END_PHASE+TIMING_EQUIP)
+	e1:SetHintTiming(0,TIMING_END_PHASE|TIMING_EQUIP)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
 function s.filter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsSpellTrap()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and s.filter(chkc) and chkc~=e:GetHandler() end

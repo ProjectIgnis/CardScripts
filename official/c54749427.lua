@@ -1,4 +1,5 @@
 --D－HERO ディフェンドガイ
+--Destiny HERO - Defender
 local s,id=GetID()
 function s.initial_effect(c)
 	--draw
@@ -7,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_DRAW)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e1:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e1:SetCountLimit(1)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCondition(s.condition)
@@ -16,7 +17,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return tp~=Duel.GetTurnPlayer()
+	return Duel.IsTurnPlayer(1-tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsDefensePos() end

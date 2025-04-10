@@ -1,4 +1,5 @@
 --Subterror Nemesis Archer
+--Subterror Nemesis Archer
 local s,id=GetID()
 function s.initial_effect(c)
 	--to deck
@@ -25,9 +26,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xed}
+s.listed_series={SET_SUBTERROR}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xed)
+	return c:IsFaceup() and c:IsSetCard(SET_SUBTERROR)
 end
 function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -43,15 +44,15 @@ end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local d=Duel.GetAttackTarget()
 	if d:IsRelateToBattle() and d:IsPosition(POS_FACEDOWN_DEFENSE) then
-		Duel.SendtoDeck(d,nil,2,REASON_EFFECT)
+		Duel.SendtoDeck(d,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsReason(REASON_DESTROY) and c:IsReason(REASON_BATTLE+REASON_EFFECT)
+	return c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsReason(REASON_DESTROY) and c:IsReason(REASON_BATTLE|REASON_EFFECT)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0xed) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_DEFENSE)
+	return c:IsSetCard(SET_SUBTERROR) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_DEFENSE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

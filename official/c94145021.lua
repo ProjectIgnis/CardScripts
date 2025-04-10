@@ -27,7 +27,7 @@ function s.cfilter(c,tp)
 	return c:IsControler(tp) and c:IsPreviousLocation(LOCATION_DECK)
 end
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetCurrentPhase()==PHASE_DRAW or Duel.GetCurrentPhase()==PHASE_DAMAGE then return false end
+	if Duel.IsPhase(PHASE_DRAW) or Duel.IsPhase(PHASE_DAMAGE) then return false end
 	local v=0
 	if eg:IsExists(s.cfilter,1,nil,0) then v=v+1 end
 	if eg:IsExists(s.cfilter,1,nil,1) then v=v+2 end
@@ -51,19 +51,19 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_TO_HAND)
 	e1:SetTargetRange(LOCATION_DECK,LOCATION_DECK)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	local e2=Effect.CreateEffect(e:GetHandler())
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetCode(EFFECT_CANNOT_DRAW)
-	e2:SetReset(RESET_PHASE+PHASE_END)
+	e2:SetReset(RESET_PHASE|PHASE_END)
 	e2:SetTargetRange(1,1)
 	Duel.RegisterEffect(e2,tp)
 	local e3=Effect.CreateEffect(e:GetHandler())
 	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e3:SetDescription(aux.Stringid(id,1))
-	e3:SetReset(RESET_PHASE+PHASE_END)
+	e3:SetReset(RESET_PHASE|PHASE_END)
 	e3:SetTargetRange(1,1)
 	Duel.RegisterEffect(e3,tp)
 end

@@ -1,8 +1,9 @@
 --No.36 先史遺産－超機関フォーク＝ヒューク
+--Number 36: Chronomaly Chateau Huyuk
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
-	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x70),4,2)
+	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_CHRONOMALY),4,2)
 	c:EnableReviveLimit()
 	--atkdown
 	local e1=Effect.CreateEffect(c)
@@ -14,8 +15,8 @@ function s.initial_effect(c)
 	e1:SetHintTiming(TIMING_DAMAGE_STEP)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
-	e1:SetCondition(s.condition)
-	e1:SetCost(s.cost)
+	e1:SetCondition(aux.StatChangeDamageStepCondition)
+	e1:SetCost(Cost.Detach(1))
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
@@ -31,15 +32,8 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x70}
+s.listed_series={SET_CHRONOMALY}
 s.xyz_number=36
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
-end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
-end
 function s.filter(c)
 	return c:IsFaceup() and c:GetAttack()>0
 end
@@ -56,12 +50,12 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetValue(0)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x70)
+	return c:IsSetCard(SET_CHRONOMALY)
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local dg=Duel.GetMatchingGroup(s.filter2,tp,0,LOCATION_MZONE,nil,e)

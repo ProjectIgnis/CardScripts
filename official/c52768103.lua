@@ -1,4 +1,5 @@
 --KA－２ デス・シザース
+--KA-2 Des Scissors
 local s,id=GetID()
 function s.initial_effect(c)
 	--damage

@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e2:SetCost(s.tdcost)
+	e2:SetCost(Cost.Detach(1))
 	e2:SetTarget(s.tdtg)
 	e2:SetOperation(s.tdop)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
@@ -40,10 +40,6 @@ function s.xyzop(e,tp,chk,mc)
 	mc:RemoveOverlayCard(tp,2,2,REASON_COST)
 	return true
 end
-function s.tdcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
-end
 function s.tdfilter(c)
 	return c:IsPosition(POS_DEFENSE) and c:IsAbleToDeck()
 end
@@ -57,7 +53,7 @@ end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
-		Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)
+		Duel.SendtoDeck(tc,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	end
 end
 function s.cfilter(c)

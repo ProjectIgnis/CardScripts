@@ -1,4 +1,5 @@
 --彼岸の旅人 ダンテ
+--Dante, Traveler of the Burning Abyss
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -17,7 +18,7 @@ function s.initial_effect(c)
 	--to defense
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e2:SetCode(EVENT_PHASE+PHASE_BATTLE)
+	e2:SetCode(EVENT_PHASE|PHASE_BATTLE)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
 	e2:SetCondition(s.poscon)
@@ -34,7 +35,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xb1}
+s.listed_series={SET_BURNING_ABYSS}
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeckAsCost(tp,1) and e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
@@ -61,7 +62,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_DISABLE_PHASE_END)
 		e1:SetValue(ct*500)
 		c:RegisterEffect(e1)
 	end
@@ -76,7 +77,7 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter(c)
-	return c:IsSetCard(0xb1) and c:IsAbleToHand()
+	return c:IsSetCard(SET_BURNING_ABYSS) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc) end

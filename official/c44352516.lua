@@ -1,5 +1,5 @@
 --サイバーダーク・インフェルノ
---c44352516.lua
+--Cyberdark Inferno
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -43,15 +43,15 @@ function s.initial_effect(c)
 	e5:SetOperation(s.thop)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x4093,0x46}
+s.listed_series={SET_CYBERDARK,SET_FUSION}
 function s.indestg(e,c)
-	return c:IsSetCard(0x4093) and c:IsType(TYPE_EFFECT) and c:GetEquipCount()>0
+	return c:IsSetCard(SET_CYBERDARK) and c:IsType(TYPE_EFFECT) and c:GetEquipCount()>0
 end
 function s.filter(c)
-	return c:IsSetCard(0x4093) and c:IsFaceup() and c:IsAbleToHand()
+	return c:IsSetCard(SET_CYBERDARK) and c:IsFaceup() and c:IsAbleToHand()
 end
 function s.filter2(c)
-	return c:IsSetCard(0x4093) and c:IsSummonable(true,nil)
+	return c:IsSetCard(SET_CYBERDARK) and c:IsSummonable(true,nil)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -79,7 +79,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 		and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x46) and c:IsSpell() and c:IsAbleToHand()
+	return c:IsSetCard(SET_FUSION) and c:IsSpell() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

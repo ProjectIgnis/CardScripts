@@ -16,7 +16,7 @@ function s.initial_effect(c)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,e:GetHandler()) end
-	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST|REASON_DISCARD)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() and chkc:IsAbleToRemove() end
@@ -32,7 +32,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) and Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)>0 then
-		local rg=Duel.GetMatchingGroup(s.rfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,tc,tc:GetCode())
+		local rg=Duel.GetMatchingGroup(s.rfilter,tp,0,LOCATION_MZONE|LOCATION_GRAVE,tc,tc:GetCode())
 		if Duel.GetOperatedGroup():GetFirst():IsLocation(LOCATION_REMOVED) and #rg>0 then
 			Duel.BreakEffect()
 			Duel.Remove(rg,POS_FACEUP,REASON_EFFECT)

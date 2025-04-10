@@ -11,11 +11,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsHasEffect,tp,0x3f,0x3f,1,nil,id) end
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsHasEffect,tp,LOCATION_ALL,LOCATION_ALL,1,nil,id) end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,0))
-	local g=Duel.SelectMatchingCard(tp,Card.IsHasEffect,tp,0x3f,0x3f,1,1,nil,id)
+	local g=Duel.SelectMatchingCard(tp,Card.IsHasEffect,tp,LOCATION_ALL,LOCATION_ALL,1,1,nil,id)
 	local tc=g:GetFirst()
 	local eff={tc:GetCardEffect(id)}
 	local sel={}

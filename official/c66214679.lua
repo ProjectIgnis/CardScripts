@@ -17,8 +17,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp and Duel.IsMainPhase()
-		and re:IsActiveType(TYPE_SPELL) and re:IsHasType(EFFECT_TYPE_ACTIVATE)
+	return Duel.IsTurnPlayer(1-tp) and Duel.IsMainPhase()
+		and re:IsSpellEffect() and re:IsHasType(EFFECT_TYPE_ACTIVATE)
 end
 function s.filter(c,e,tp)
 	return c:GetLevel()==4 and c:IsAttribute(ATTRIBUTE_DARK) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

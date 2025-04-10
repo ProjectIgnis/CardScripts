@@ -24,14 +24,14 @@ function s.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetCountLimit(1)
-	e3:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e3:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e3:SetCondition(s.descon)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x135}
+s.listed_series={SET_IGNISTER}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x135)
+	return c:IsFaceup() and c:IsSetCard(SET_IGNISTER)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
@@ -50,7 +50,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetAbsoluteRange(0,1-p,p)
 		e1:SetRange(LOCATION_SZONE)
 		e1:SetTarget(s.splimit)
-		e1:SetReset(RESET_PHASE+PHASE_END+RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_PHASE|PHASE_END|RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e1)
 	end
 end
@@ -65,7 +65,7 @@ function s.splimit(e,c,sump,sumtype,sumpos,targetp)
 	return sumtype&SUMMON_TYPE_LINK==SUMMON_TYPE_LINK
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.desfilter(c)
 	return c:IsReleasableByEffect() and c:IsType(TYPE_LINK)
@@ -78,4 +78,3 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Release(g,REASON_COST)
 	else Duel.Destroy(c,REASON_COST) end
 end
-

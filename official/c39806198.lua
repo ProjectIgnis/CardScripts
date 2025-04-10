@@ -1,4 +1,5 @@
 --ギミック・パペット－マグネ・ドール
+--Gimmick Puppet Magnet Doll
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -10,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.spcon)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x1083}
+s.listed_series={SET_GIMMICK_PUPPET}
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
@@ -20,5 +21,5 @@ function s.spcon(e,c)
 		and not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.cfilter(c)
-	return c:IsFacedown() or not c:IsSetCard(0x1083)
+	return c:IsFacedown() or not c:IsSetCard(SET_GIMMICK_PUPPET)
 end

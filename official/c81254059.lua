@@ -16,17 +16,17 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x3e}
+s.listed_series={SET_WORM}
 function s.otfilter(c,tp)
-	return c:IsSetCard(0x3e) and c:IsRace(RACE_REPTILE) and (c:IsControler(tp) or c:IsFaceup())
+	return c:IsSetCard(SET_WORM) and c:IsRace(RACE_REPTILE) and (c:IsControler(tp) or c:IsFaceup())
 end
 function s.costfilter(c,e,tp,ft)
-	return c:IsSetCard(0x3e) and c:IsRace(RACE_REPTILE)
+	return c:IsSetCard(SET_WORM) and c:IsRace(RACE_REPTILE)
 		and (ft>0 or (c:IsControler(tp) and c:GetSequence()<5)) and (c:IsControler(tp) or c:IsFaceup())
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetLevel())
 end
 function s.spfilter(c,e,tp,lv)
-	return c:IsSetCard(0x3e) and c:IsRace(RACE_REPTILE) and c:IsLevelBelow(lv)
+	return c:IsSetCard(SET_WORM) and c:IsRace(RACE_REPTILE) and c:IsLevelBelow(lv)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)

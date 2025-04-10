@@ -1,4 +1,5 @@
 --バスター・モード
+--Assault Mode Activate
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x104f}
+s.listed_series={SET_ASSAULT_MODE}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(1)
 	return true
@@ -22,7 +23,7 @@ function s.filter1(c,e,tp,ft)
 		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_DECK,0,1,nil,c:GetCode(),e,tp)
 end
 function s.filter2(c,tcode,e,tp)
-	return c:IsSetCard(0x104f) and c.assault_mode and c.assault_mode==tcode and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+	return c:IsSetCard(SET_ASSAULT_MODE) and c.assault_mode and c.assault_mode==tcode and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)

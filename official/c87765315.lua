@@ -12,15 +12,15 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0xc7,0xda}
+s.listed_series={SET_DRACOSLAYER,SET_DRACOVERLORD}
 function s.filter2(c)
-	return c:IsFaceup() and c:IsSetCard(0xc7) and not c:IsType(TYPE_PENDULUM)
+	return c:IsFaceup() and c:IsSetCard(SET_DRACOSLAYER) and not c:IsType(TYPE_PENDULUM)
 end
 function s.filter3(c,e,tp)
-	return (c:IsSetCard(0xda) or c:IsSetCard(0xc7)) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+	return (c:IsSetCard(SET_DRACOVERLORD) or c:IsSetCard(SET_DRACOSLAYER)) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0xda),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_DRACOVERLORD),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

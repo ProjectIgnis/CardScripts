@@ -22,18 +22,18 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCountLimit(1,id)
-	e2:SetCost(s.cpcost)
+	e2:SetCost(Cost.PayLP(1000))
 	e2:SetTarget(s.cptg)
 	e2:SetOperation(s.cpop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xef}
+s.listed_series={SET_DARKLORD}
 function s.cfilter(c)
-	return c:IsSetCard(0xef) and c:IsDiscardable()
+	return c:IsSetCard(SET_DARKLORD) and c:IsDiscardable()
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,2,e:GetHandler()) end
-	Duel.DiscardHand(tp,s.cfilter,2,2,REASON_COST+REASON_DISCARD,e:GetHandler())
+	Duel.DiscardHand(tp,s.cfilter,2,2,REASON_COST|REASON_DISCARD,e:GetHandler())
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -45,12 +45,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
-function s.cpcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,1000) end
-	Duel.PayLPCost(tp,1000)
-end
 function s.cpfilter(c)
-	return c:IsSetCard(0xef) and c:IsSpellTrap() and c:IsAbleToDeck() and c:CheckActivateEffect(false,true,false)~=nil
+	return c:IsSetCard(SET_DARKLORD) and c:IsSpellTrap() and c:IsAbleToDeck() and c:CheckActivateEffect(false,true,false)~=nil
 end
 function s.cptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.cpfilter(chkc) end
@@ -80,5 +76,5 @@ function s.cpop(e,tp,eg,ep,ev,re,r,rp)
 		etc:ReleaseEffectRelation(te)
 	end
 	Duel.BreakEffect()
-	Duel.SendtoDeck(te:GetHandler(),nil,2,REASON_EFFECT)
+	Duel.SendtoDeck(te:GetHandler(),nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 end

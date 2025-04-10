@@ -1,4 +1,5 @@
 --閃光を吸い込むマジック・ミラー
+--Light-Imprisoning Mirror
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -16,7 +17,7 @@ function s.initial_effect(c)
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
-	if re:IsActiveType(TYPE_MONSTER) and (loc==LOCATION_MZONE or loc==LOCATION_GRAVE)
+	if re:IsMonsterEffect() and (loc==LOCATION_MZONE or loc==LOCATION_GRAVE)
 		and re:GetHandler():IsAttribute(ATTRIBUTE_LIGHT) then
 		Duel.NegateEffect(ev)
 	end

@@ -1,4 +1,5 @@
 --インフェルニティ・アーチャー
+--Infernity Archer
 local s,id=GetID()
 function s.initial_effect(c)
 	--direct attack

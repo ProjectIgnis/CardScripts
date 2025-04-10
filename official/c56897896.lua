@@ -1,4 +1,5 @@
 --モノ・シンクロン
+--Mono Synchron
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro custom
@@ -16,7 +17,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function s.synfilter(e,c)
-	return c:IsLevelBelow(4) and c:IsRace(RACE_WARRIOR+RACE_MACHINE)
+	return c:IsLevelBelow(4) and c:IsRace(RACE_WARRIOR|RACE_MACHINE)
 end
 function s.synop(e,tg,ntg,sg,lv,sc,tp)
 	return #sg-1+e:GetHandler():GetLevel()==lv,true

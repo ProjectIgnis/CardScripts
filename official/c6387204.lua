@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.lpop)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
 end
-s.listed_series={0x48}
+s.listed_series={SET_NUMBER}
 s.xyz_number=6
 s.listed_names={9161357}
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -43,7 +43,7 @@ function s.equipop(c,e,tp,tc)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_EQUIP)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 	e2:SetValue(1000)
 	tc:RegisterEffect(e2)
 end
@@ -59,18 +59,18 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e3:SetTargetRange(0,1)
 	e3:SetValue(0)
-	e3:SetReset(RESET_PHASE+PHASE_END)
+	e3:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e3,tp)
 	local e4=e3:Clone()
 	e4:SetCode(EFFECT_NO_EFFECT_DAMAGE)
-	e4:SetReset(RESET_PHASE+PHASE_END)
+	e4:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e4,tp)
 end
 function s.lpcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetLP(1-tp)~=100 and e:GetHandler():GetOverlayGroup():IsExists(Card.IsCode,1,nil,9161357)
 end
 function s.filter(c)
-	return c:GetFlagEffect(id)~=0 and c:IsSetCard(0x48) and c:IsFaceup() and c:IsAbleToGraveAsCost()
+	return c:GetFlagEffect(id)~=0 and c:IsSetCard(SET_NUMBER) and c:IsFaceup() and c:IsAbleToGraveAsCost()
 end
 function s.lpcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,3,REASON_COST)
@@ -87,6 +87,6 @@ function s.lpop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(0,1)
 	e1:SetValue(0)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end

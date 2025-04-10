@@ -1,4 +1,5 @@
 --おジャマ・キング
+--Ojama King
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -12,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.disop)
 	c:RegisterEffect(e1)
 end
-s.material_setcode=0xf
+s.material_setcode=SET_OJAMA
 function s.disop(e,tp)
 	local c=Duel.GetLocationCount(1-tp,LOCATION_MZONE,PLAYER_NONE,0)
 	if c==0 then return end

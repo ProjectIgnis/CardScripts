@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCountLimit(1)
-	e2:SetCost(s.descost)
+	e2:SetCost(Cost.Detach(1))
 	e2:SetTarget(s.destg)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
@@ -36,14 +36,10 @@ function s.initial_effect(c)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x107b}
+s.listed_series={SET_GALAXY_EYES}
 s.listed_names={18963306}
 function s.ovfilter(c,tp,lc)
-	return c:IsFaceup() and c:IsSetCard(0x107b,lc,SUMMON_TYPE_XYZ,tp) and c:IsType(TYPE_XYZ,lc,SUMMON_TYPE_XYZ,tp) and c:GetRank()==8
-end
-function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
+	return c:IsFaceup() and c:IsSetCard(SET_GALAXY_EYES,lc,SUMMON_TYPE_XYZ,tp) and c:IsType(TYPE_XYZ,lc,SUMMON_TYPE_XYZ,tp) and c:GetRank()==8
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() end
@@ -62,7 +58,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return rp==1-tp and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE)
 		and c:IsReason(REASON_DESTROY) and (c:IsReason(REASON_EFFECT) or (c:IsReason(REASON_BATTLE) and Duel.GetAttacker():IsControler(1-tp)))
-		and c:IsSummonType(SUMMON_TYPE_XYZ)
+		and c:IsXyzSummoned()
 end
 function s.filter(c,e,tp)
 	return c:IsCode(18963306) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

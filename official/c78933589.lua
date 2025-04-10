@@ -19,9 +19,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.activate)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x604e}
+s.listed_series={SET_EVOLSAUR}
 function s.filter(c)
-	return c:IsSetCard(0x604e) and c:IsAbleToDeck()
+	return c:IsSetCard(SET_EVOLSAUR) and c:IsAbleToDeck()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1)

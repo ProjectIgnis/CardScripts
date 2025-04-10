@@ -55,6 +55,6 @@ function s.rctop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.BreakEffect()
 	if Duel.SSet(tp,sc)>0 and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)<=1 then
 		Duel.BreakEffect()
-		Duel.Win(tp,0x59)
+		Duel.Win(tp,WIN_REASON_SUMMER_SCHOOLWORK)
 	end
 end

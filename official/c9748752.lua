@@ -1,4 +1,5 @@
 --邪帝ガイウス
+--Caius the Shadow Monarch
 local s,id=GetID()
 function s.initial_effect(c)
 	--remove
@@ -14,7 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_TRIBUTE)
+	return e:GetHandler():IsTributeSummoned()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() end

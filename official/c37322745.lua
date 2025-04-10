@@ -1,4 +1,5 @@
 --ナチュルの森
+--Naturia Forest
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -18,12 +19,12 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x2a}
+s.listed_series={SET_NATURIA}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp
 end
 function s.filter(c)
-	return c:IsLevelBelow(3) and c:IsSetCard(0x2a) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsLevelBelow(3) and c:IsSetCard(SET_NATURIA) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not e:GetHandler():IsStatus(STATUS_CHAINING)

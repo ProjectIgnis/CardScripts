@@ -3,7 +3,7 @@
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
-	c:EnableCounterPermit(0x1)
+	c:EnableCounterPermit(COUNTER_SPELL)
 	Pendulum.AddProcedure(c)
 	--Special summon from the pendulum zone
 	local e1=Effect.CreateEffect(c)
@@ -88,7 +88,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
-	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and Duel.IsChainNegatable(ev)
+	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and re:IsSpellTrapEffect() and Duel.IsChainNegatable(ev)
 end
 function s.negfilter(c)
 	return c:GetCounter(COUNTER_SPELL)>0 and c:IsAbleToHand()
@@ -126,7 +126,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e:SetLabel(ct)
 end
 function s.thfilter(c)
-	return c:GetType()==TYPE_SPELL and c:IsAbleToHand()
+	return c:IsNormalSpell() and c:IsAbleToHand()
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

@@ -1,4 +1,5 @@
 --不退の荒武者
+--Driven Daredevil
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon

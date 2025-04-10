@@ -1,4 +1,5 @@
 --EMオッドアイズ・ライトフェニックス
+--Performapal Odd-Eyes Light Phoenix
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -23,13 +24,13 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetHintTiming(TIMING_DAMAGE_STEP)
-	e2:SetCondition(s.atkcon)
-	e2:SetCost(s.atkcost)
+	e2:SetCondition(aux.StatChangeDamageStepCondition)
+	e2:SetCost(Cost.SelfTribute)
 	e2:SetTarget(s.atktg)
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x9f}
+s.listed_series={SET_PERFORMAPAL}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttacker()
 	return at:GetControler()~=tp and Duel.GetAttackTarget()==nil
@@ -50,15 +51,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
-end
-function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() end
-	Duel.Release(e:GetHandler(),REASON_COST)
-end
 function s.atkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x9f)
+	return c:IsFaceup() and c:IsSetCard(SET_PERFORMAPAL)
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.atkfilter(chkc) end
@@ -75,6 +69,6 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e1:SetValue(1000)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESETS_STANDARD_PHASE_END)
 	tc:RegisterEffect(e1)
 end

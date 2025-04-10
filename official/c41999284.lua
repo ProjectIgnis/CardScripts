@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCondition(s.atkcon)
-	e1:SetCost(s.atkcost)
+	e1:SetCost(Cost.SelfTribute)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
 	--Special Summon itself from the GY
@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_GRAVE)
-	e2:SetHintTiming(0,TIMING_BATTLE_START+TIMING_END_PHASE)
+	e2:SetHintTiming(0,TIMING_BATTLE_START|TIMING_END_PHASE)
 	e2:SetCountLimit(1,id)
 	e2:SetCost(s.spcost)
 	e2:SetTarget(s.sptg)
@@ -32,10 +32,6 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttacker()
 	return at and Duel.IsTurnPlayer(1-tp) and at:HasNonZeroAttack()
 end
-function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() end
-	Duel.Release(e:GetHandler(),REASON_COST)
-end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
 	if tc:IsRelateToBattle() and tc:IsFaceup() then
@@ -43,7 +39,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetValue(0)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end

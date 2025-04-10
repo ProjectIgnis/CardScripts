@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSequence()>4 and Duel.GetTurnPlayer()==1-tp
+	return e:GetHandler():GetSequence()>4 and Duel.IsTurnPlayer(1-tp)
 end
 function s.thcfilter(c,tp)
 	return c:IsMonster() and c:IsReleasable()
@@ -60,12 +60,12 @@ function s.spfilter(c,e,tp)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND|LOCATION_DECK)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,e,tp)
+	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND|LOCATION_DECK,0,1,1,nil,e,tp)
 	local tc=g:GetFirst()
 	if not tc then return end
 	if Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
@@ -73,7 +73,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK)
 		e1:SetValue(0)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_SET_DEFENSE)

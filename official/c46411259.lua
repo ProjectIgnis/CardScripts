@@ -1,4 +1,5 @@
 --突然変異
+--Metamorphosis
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

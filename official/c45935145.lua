@@ -1,5 +1,5 @@
 --死祖の隷竜ウォロー
---Volo, the Doom-Originator Vassal Dragon
+--Wollow, Founder of the Drudge Dragons
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

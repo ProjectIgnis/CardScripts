@@ -1,7 +1,6 @@
 --聖蔓の播種
 --Sunvine Sowing
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -26,17 +25,16 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 	--Lists "Sunseed" and "Sunavalon" archetypes
-s.listed_series={0x4157,0x1157}
+s.listed_series={SET_SUNSEED,SET_SUNAVALON}
 	--Specifically lists "Sunseed Genius Loci"
 s.listed_names={27520594}
-
 	--Check for a "Sunavalon" link monster
 function s.linkchk(c)
-	return c:IsLinkMonster() and c:IsSetCard(0x1157)
+	return c:IsLinkMonster() and c:IsSetCard(SET_SUNAVALON)
 end
 	--Check for "Sunseed Genius Loci" or a "Sunseed" monster
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x4157) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_SUNSEED) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and (Duel.IsExistingMatchingCard(s.linkchk,tp,LOCATION_MZONE,0,1,nil) or c:IsCode(27520594))
 end
 	--Activation legality
@@ -64,7 +62,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	--Lizard check
 	aux.addTempLizardCheck(e:GetHandler(),tp,s.lizfilter)

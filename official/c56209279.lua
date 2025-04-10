@@ -1,4 +1,5 @@
 --インフェルニティ・ネクロマンサー
+--Infernity Necromancer
 local s,id=GetID()
 function s.initial_effect(c)
 	--to defense
@@ -23,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xb}
+s.listed_series={SET_INFERNITY}
 function s.potg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return e:GetHandler():IsAttackPos() end
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,e:GetHandler(),1,0,0)
@@ -38,7 +39,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsDisabled() and Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)==0
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0xb) and c:GetCode()~=id and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_INFERNITY) and c:GetCode()~=id and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.filter(chkc,e,tp) end

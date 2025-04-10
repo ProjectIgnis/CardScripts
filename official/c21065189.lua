@@ -1,5 +1,5 @@
 --ファイアウォール・X・ドラゴン
---Firewall X Dragon
+--Firewall eXceed Dragon
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -21,13 +21,13 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCost(s.spcost)
+	e2:SetCost(Cost.Detach(2))
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ)
+	return e:GetHandler():IsXyzSummoned()
 end
 function s.atkfilter(c,xc)
 	return c:IsFaceup() and c:IsLinkMonster() and c:GetLinkedGroup():IsContains(xc)
@@ -35,10 +35,6 @@ end
 function s.atkval(e,c)
 	local g=Duel.GetMatchingGroup(s.atkfilter,e:GetHandlerPlayer(),LOCATION_MZONE,LOCATION_MZONE,nil,c)
 	return g:GetSum(Card.GetLink)*500
-end
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,2,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,2,2,REASON_COST)
 end
 function s.spfilter(c,e,tp,ec)
 	local zone=ec:GetToBeLinkedZone(c,tp)
@@ -68,13 +64,13 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetTargetRange(1,0)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
 	e2:SetProperty(EFFECT_FLAG_OATH+EFFECT_FLAG_IGNORE_IMMUNE)
 	e2:SetTargetRange(LOCATION_MZONE,0)
-	e2:SetReset(RESET_PHASE+PHASE_END)
+	e2:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e2,tp)
 end

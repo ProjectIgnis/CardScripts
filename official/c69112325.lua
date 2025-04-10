@@ -1,4 +1,5 @@
 --神聖なる森
+--Spiritual Forest
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -18,7 +19,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.indtg(e,c)
-	return c:IsRace(RACE_PLANT+RACE_BEAST+RACE_BEASTWARRIOR)
+	return c:IsRace(RACE_PLANT|RACE_BEAST|RACE_BEASTWARRIOR)
 end
 function s.valcon(e,re,r,rp)
 	return (r&REASON_BATTLE)~=0

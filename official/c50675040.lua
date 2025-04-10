@@ -1,5 +1,5 @@
 --獣王無塵
---As the Master of Beasts Pleases
+--Beast King Unleashed
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

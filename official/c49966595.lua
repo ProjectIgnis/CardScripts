@@ -32,12 +32,12 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop2)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xd1}
+s.listed_series={SET_GRAYDLE}
 function s.spcon1(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker():IsControler(1-tp) and Duel.GetAttackTarget()==nil
 end
 function s.spfilter1(c,e,tp)
-	return c:IsSetCard(0xd1) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
+	return c:IsSetCard(SET_GRAYDLE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
 end
 function s.sptg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0
@@ -57,7 +57,7 @@ function s.spop1(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
 	local c=Duel.GetAttacker()
-	return c:IsControler(tp) and c:IsSetCard(0xd1) and Duel.GetAttackTarget()==nil
+	return c:IsControler(tp) and c:IsSetCard(SET_GRAYDLE) and Duel.GetAttackTarget()==nil
 end
 function s.spfilter2(c,e,tp)
 	return c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,1-tp)

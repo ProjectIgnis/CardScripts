@@ -1,14 +1,14 @@
--- 壱世壊を劈く弦声
--- Tearalaments Scream
--- Scripted by Hatter
+--壱世壊を劈く弦声
+--Tearlaments Scream
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Activate
+	--Activate
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_ACTIVATE)
 	e0:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e0)
-	-- Mill 3 cards
+	--Mill 3 cards
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DECKDES+CATEGORY_ATKCHANGE)
@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	local e2=e1:Clone()
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
-	-- Add 1 "Tearalaments" Trap to the hand
+	--Add 1 "Tearalaments" Trap to the hand
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
@@ -37,9 +37,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={CARD_VISAS_STARFROST}
-s.listed_series={0x182}
+s.listed_series={SET_TEARLAMENTS}
 function s.cfilter(c)
-	return c:IsFaceup() and (c:IsCode(CARD_VISAS_STARFROST) or (c:IsSetCard(0x182) and c:IsMonster()))
+	return c:IsFaceup() and (c:IsCode(CARD_VISAS_STARFROST) or (c:IsSetCard(SET_TEARLAMENTS) and c:IsMonster()))
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,3)
@@ -50,17 +50,17 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	Duel.DiscardDeck(tp,3,REASON_EFFECT)
-	-- Reduce ATK
+	--Reduce ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetTargetRange(0,LOCATION_MZONE)
 	e1:SetValue(-500)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x182) and c:IsTrap() and c:IsAbleToHand()
+	return c:IsSetCard(SET_TEARLAMENTS) and c:IsTrap() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

@@ -1,6 +1,5 @@
 --竜魔人 クィーンドラグーン
 --Queen Dragun Djinn
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -24,17 +23,13 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
-	e2:SetCost(s.spcost)
+	e2:SetCost(Cost.Detach(1))
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
 end
 function s.indtg(e,c)
 	return c:IsRace(RACE_DRAGON) and c:GetCode()~=id
-end
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.spfilter(c,e,tp)
 	return c:IsLevelAbove(5) and c:IsRace(RACE_DRAGON) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -54,12 +49,12 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1,true)
 		local e2=Effect.CreateEffect(e:GetHandler())
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e2,true)
 		--Cannot attack this turn
 		local e3=Effect.CreateEffect(e:GetHandler())
@@ -67,7 +62,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e3:SetType(EFFECT_TYPE_SINGLE)
 		e3:SetCode(EFFECT_CANNOT_ATTACK)
-		e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e3:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e3,true)
 	end
 	Duel.SpecialSummonComplete()

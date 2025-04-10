@@ -14,12 +14,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x35}
+s.listed_series={SET_FABLED}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetPreviousLocation()==LOCATION_HAND and (r&REASON_DISCARD)~=0
 end
 function s.filter(c,e,tp)
-	return c:IsLevelBelow(4) and c:IsSetCard(0x35) and c:IsMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsLevelBelow(4) and c:IsSetCard(SET_FABLED) and c:IsMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc,e,tp) and chkc~=e:GetHandler() end

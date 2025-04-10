@@ -29,10 +29,10 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xda}
+s.listed_series={SET_DRACOVERLORD}
 s.listed_names={23160024,id}
 function s.skipcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_RITUAL)
+	return e:GetHandler():IsRitualSummoned()
 end
 function s.skipop(e,tp,eg,ep,ev,re,r,rp)
 	--Skip the MP1 of the opponent's next turn
@@ -44,7 +44,7 @@ function s.skipop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCondition(function(e) return Duel.GetTurnCount()~=e:GetLabel() end)
 	e1:SetLabel(Duel.GetTurnCount())
 	local ct=Duel.IsTurnPlayer(tp) and 1 or 2
-	e1:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN,ct)
+	e1:SetReset(RESET_PHASE|PHASE_END|RESET_OPPO_TURN,ct)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.distg(e,c)
@@ -54,7 +54,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0xda) and not c:IsCode(id) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_DRACOVERLORD) and not c:IsCode(id) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

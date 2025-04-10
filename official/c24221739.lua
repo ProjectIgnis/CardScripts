@@ -1,4 +1,5 @@
 --神殿を守る者
+--Protector of the Sanctuary
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot draw

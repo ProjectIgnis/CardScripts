@@ -1,5 +1,5 @@
 --怪蹴一色
---The Stomping of the Normal
+--The Return to the Normal
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

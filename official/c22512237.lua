@@ -1,4 +1,5 @@
 --メカニカル・ハウンド
+--Mechanical Hound
 local s,id=GetID()
 function s.initial_effect(c)
 	--act limit
@@ -16,5 +17,5 @@ function s.condition(e)
 	return Duel.GetFieldGroupCount(e:GetHandlerPlayer(),LOCATION_HAND,0)==0
 end
 function s.aclimit(e,re,tp)
-	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL)
+	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsSpellEffect()
 end

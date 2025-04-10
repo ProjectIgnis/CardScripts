@@ -1,4 +1,5 @@
 --怨霊の湿地帯
+--Vengeful Bog Spirit
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

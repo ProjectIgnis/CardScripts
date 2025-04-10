@@ -52,9 +52,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 	local e6=e5:Clone()
 	e6:SetCode(EVENT_SPSUMMON_SUCCESS)
-	c:RegisterEffect(e6)	
+	c:RegisterEffect(e6)
 end
-s.listed_series={0x18b}
+s.listed_series={SET_GHOTI}
 function s.filter(c)
 	return c:IsFaceup() and c:IsRace(RACE_FISH) and c:IsType(TYPE_SYNCHRO)
 end
@@ -65,13 +65,13 @@ function s.cfilter(c)
 	return c:IsRace(RACE_FISH) and c:IsAbleToRemoveAsCost() and (c:IsLocation(LOCATION_HAND) or aux.SpElimFilter(c,true))
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND|LOCATION_MZONE|LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND|LOCATION_MZONE|LOCATION_GRAVE,0,1,1,nil)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x18b) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_GHOTI) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

@@ -36,7 +36,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e3:SetCountLimit(1,{id,2})
 	e3:SetCondition(function(e) return e:GetHandler():IsPendulumSummoned() end)
-	e3:SetCost(Cost.Discard(Card.IsSetCard({SET_DD,SET_DARK_CONTRACT})))
+	e3:SetCost(Cost.Discard(function(c) return c:IsSetCard({SET_DD,SET_DARK_CONTRACT}) end))
 	e3:SetTarget(s.drtg)
 	e3:SetOperation(s.drop)
 	c:RegisterEffect(e3)
@@ -67,11 +67,11 @@ function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,e:GetHandler(),1,tp,0)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() and not tc:IsImmuneToEffect(e) then
 		local g=Duel.GetMatchingGroup(s.atkctfilter,tp,LOCATION_ONFIELD|LOCATION_GRAVE,0,nil)
 		if #g==0 then return end
+		local c=e:GetHandler()
 		--It gains 500 ATK (until the end of this turn) for each "Dark Contract" Spell/Trap with different names currently on your field or in your GY
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)

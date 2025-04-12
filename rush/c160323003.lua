@@ -3,6 +3,8 @@
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)
+	--Ritual
+	c:EnableReviveLimit()
 	-- Increase self ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_ATKCHANGE)

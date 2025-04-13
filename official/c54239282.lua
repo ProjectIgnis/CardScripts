@@ -36,6 +36,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		op=Duel.SelectOption(tp,aux.Stringid(id,1))+1
 	end
 	if op==0 then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
 		local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND,0,1,1,nil,oc:GetMainCardType())
 		g:AddCard(oc)
 		if Duel.SendtoGrave(g,REASON_EFFECT|REASON_DISCARD)==2 then

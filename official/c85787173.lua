@@ -31,6 +31,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local lp=Duel.GetLP(1-tp)-Duel.GetLP(tp)
 	if lp<=0 then return end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SELF)
 	local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.filter),tp,LOCATION_DECK|LOCATION_GRAVE,0,1,1,nil,e,tp,Duel.GetLocationCount(tp,LOCATION_MZONE),lp):GetFirst()
 	if tc then
 		aux.ToHandOrElse(tc,tp,

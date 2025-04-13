@@ -7,7 +7,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--Detach cost replacement
+	--If a "Zoodiac" Xyz Monster you control would detach its Xyz Material(s) you can detach from another Xyz Monster(s) you control instead
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
@@ -17,8 +17,9 @@ function s.initial_effect(c)
 	e2:SetCondition(s.rcon)
 	e2:SetOperation(s.rop)
 	c:RegisterEffect(e2)
-	--Attach
+	--Attach 1 "Zoodiac" Xyz monster to another
 	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -42,6 +43,7 @@ end
 function s.rop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=(ev&0xffff)
 	local rc=re:GetHandler()
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DEATTACHFROM)
 	local tg=Duel.SelectMatchingCard(tp,s.rfilter,tp,LOCATION_MZONE,0,1,1,rc,tp,ct)
 	tg:GetFirst():RemoveOverlayCard(tp,ct,ct,REASON_COST)
 	return ct

@@ -16,6 +16,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return ep==1-tp
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SELF)
 	local tc=Duel.SelectMatchingCard(tp,Card.IsCode,tp,LOCATION_DECK,0,1,1,nil,27911549):GetFirst()
 	if tc then
 		Duel.ShuffleDeck(tp)

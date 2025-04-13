@@ -48,11 +48,11 @@ s.listed_names={CARD_POLYMERIZATION}
 function s.valcheck(e,c)
 	local g=c:GetMaterial()
 	if c:IsType(TYPE_FUSION) and g:IsExists(Card.IsType,1,nil,TYPE_PENDULUM) then
-		c:RegisterFlagEffect(id,RESET_EVENT|RESET_TODECK|RESET_TOHAND|RESET_TOGRAVE|RESET_REMOVE|RESET_TEMP_REMOVE|RESET_TURN_SET|RESET_PHASE|PHASE_END,0,1)
+		c:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 	elseif c:IsType(TYPE_SYNCHRO) and g:IsExists(Card.IsType,1,nil,TYPE_PENDULUM) then
-		c:RegisterFlagEffect(id,RESET_EVENT|RESET_TODECK|RESET_TOHAND|RESET_TOGRAVE|RESET_REMOVE|RESET_TEMP_REMOVE|RESET_TURN_SET|RESET_PHASE|PHASE_END,0,1)
+		c:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 	elseif c:IsType(TYPE_XYZ) and g:IsExists(Card.IsType,1,nil,TYPE_PENDULUM) then
-		c:RegisterFlagEffect(id,RESET_EVENT|RESET_TODECK|RESET_TOHAND|RESET_TOGRAVE|RESET_REMOVE|RESET_TEMP_REMOVE|RESET_TURN_SET|RESET_PHASE|PHASE_END,0,1)
+		c:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 	end
 end
 function s.cfilter(c,e,tp)
@@ -75,8 +75,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFlagEffect(tp,id)~=0 then return end
 	local c=e:GetHandler()
 	if eg:GetFirst():IsFaceup() and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
-		local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp,eg:GetFirst():GetOriginalLevel())
-		local tc=g:GetFirst()
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+		local tc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp,eg:GetFirst():GetOriginalLevel()):GetFirst()
 		if tc and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE) then
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)

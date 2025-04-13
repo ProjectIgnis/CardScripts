@@ -2,7 +2,7 @@
 --Cipher Bit
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Attach this card to 1 "Galaxy-Eyes" or "Cipher" Xyz Monster you control
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -32,8 +32,9 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Overlay(tc,c)
 		--The next time it would be destroyed by battle or card effect this turn, it is not destroyed
 		local e1=Effect.CreateEffect(c)
+		e1:SetDescription(aux.Stringid(id,1))
 		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_COUNT)
 		e1:SetCountLimit(1)
 		e1:SetValue(function(e,re,r,rp) return (r&REASON_BATTLE|REASON_EFFECT)>0 end)

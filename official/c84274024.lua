@@ -46,13 +46,8 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_POLYMERIZATION}
 function s.valcheck(e,c)
-	local g=c:GetMaterial()
-	if c:IsType(TYPE_FUSION) and g:IsExists(Card.IsType,1,nil,TYPE_PENDULUM) then
-		c:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
-	elseif c:IsType(TYPE_SYNCHRO) and g:IsExists(Card.IsType,1,nil,TYPE_PENDULUM) then
-		c:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
-	elseif c:IsType(TYPE_XYZ) and g:IsExists(Card.IsType,1,nil,TYPE_PENDULUM) then
-		c:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
+	if c:IsType(TYPE_FUSION|TYPE_SYNCHRO|TYPE_XYZ) and c:GetMaterial():IsExists(Card.IsType,1,nil,TYPE_PENDULUM) then
+		c:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END&~(RESET_LEAVE|RESET_TOFIELD),0,1)
 	end
 end
 function s.cfilter(c,e,tp)

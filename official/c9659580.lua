@@ -8,18 +8,20 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetTarget(s.target)
 	c:RegisterEffect(e1)
-	--lp halve
+	--Send this card to the Graveyard, and if you do, halve your opponent's LP
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,1))
+	e2:SetDescription(aux.Stringid(id,0))
+	e2:SetCategory(CATEGORY_TOGRAVE)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCondition(s.lpcon)
+	e2:SetTarget(s.lptg)
 	e2:SetOperation(s.lpop)
 	c:RegisterEffect(e2)
-	--to hand
+	--Add 1 "Cubic" monster from your Deck to your hand
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(id,2))
+	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_GRAVE)
@@ -40,10 +42,11 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return true end
 	if Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,nil)
 		and Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_HAND|LOCATION_DECK,0,1,nil)
-		and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+		and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 		e:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_TOGRAVE)
 		e:SetProperty(EFFECT_FLAG_CARD_TARGET)
 		e:SetOperation(s.activate)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATKDEF)
 		Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil)
 		Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 	else
@@ -53,7 +56,6 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_HAND|LOCATION_DECK,0,1,99,nil)
 	if Duel.SendtoGrave(g,REASON_EFFECT)~=0 then
@@ -75,6 +77,10 @@ function s.lpcon(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
 	return Duel.IsTurnPlayer(1-tp) and re:IsMonsterEffect() and rc and rc:IsSetCard(SET_CUBIC)
 		and eg:IsExists(Card.IsCode,1,nil,CARD_VIJAM)
+end
+function s.lptg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,e:GetHandler(),1,tp,0)
 end
 function s.lpop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

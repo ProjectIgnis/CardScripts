@@ -3,10 +3,10 @@
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	--link summon
-	Link.AddProcedure(c,aux.NOT(aux.FilterBoolFunctionEx(Card.IsType,TYPE_TOKEN)),2)
 	c:EnableReviveLimit()
-	--atk up
+	--Link Summon procedure: 2+ monsters, except Tokens
+	Link.AddProcedure(c,aux.NOT(aux.FilterBoolFunctionEx(Card.IsType,TYPE_TOKEN)),2)
+	--This card gains ATK equal to the ATK of 1 Link Monster in either GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_ATKCHANGE)
@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.atktg)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
-	--destroy
+	--Destroy a number of cards on the field equal to the number of cards tributed
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DESTROY)
@@ -35,6 +35,7 @@ end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and s.atkfilter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(s.atkfilter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	Duel.SelectTarget(tp,s.atkfilter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,1,nil)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
@@ -54,7 +55,7 @@ function s.cfilter(c,e)
 	return g:IsContains(c) 
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
+	local g=Duel.GetMatchingGroup(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.cfilter,1,false,false,nil,e) end 
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
 	local cg=Duel.SelectReleaseGroupCost(tp,s.cfilter,1,#g,false,false,nil,e)
@@ -62,12 +63,12 @@ function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(cg,REASON_COST)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end 
-	local g=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
+	if chk==0 then return true end
+	local g=Duel.GetMatchingGroup(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,e:GetLabel(),0,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
+	local g=Duel.GetMatchingGroup(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
 	local n=e:GetLabel()
 	if n>#g then n=#g end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)

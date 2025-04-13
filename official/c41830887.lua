@@ -35,15 +35,16 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and Duel.IsExistingTarget(aux.FaceupFilter(Card.IsSetCard,SET_APPLIANCER),tp,LOCATION_MZONE,0,1,nil,c) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	Duel.SelectTarget(tp,aux.FaceupFilter(Card.IsSetCard,SET_APPLIANCER),tp,LOCATION_MZONE,0,1,1,nil,c)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,LOCATION_HAND)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,tp,0)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if not (c:IsRelateToEffect(e) and tc and tc:IsRelateToEffect(e)) then return end
+	if not (c:IsRelateToEffect(e) and tc:IsRelateToEffect(e)) then return end
 	if Duel.SpecialSummonStep(c,0,tp,tp,false,false,POS_FACEUP) then
-		--Change name
+		--This card's name becomes that monster's name until the End Phase
 		local code=tc:GetOriginalCode()
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -57,9 +58,9 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.filter(c,e,tp)
 	return c:IsFaceup() and c:IsSetCard(SET_APPLIANCER)
-		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_HAND|LOCATION_GRAVE,0,1,e:GetHandler(),e,tp,c:GetCode())
+		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND|LOCATION_GRAVE,0,1,e:GetHandler(),e,tp,c:GetCode())
 end
-function s.filter2(c,e,tp,code)
+function s.spfilter(c,e,tp,code)
 	return c:IsCode(code) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -72,9 +73,9 @@ function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
+	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local g=Duel.SelectMatchingCard(tp,s.filter2,tp,LOCATION_HAND|LOCATION_GRAVE,0,1,1,nil,e,tp,tc:GetCode())
+		local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter),tp,LOCATION_HAND|LOCATION_GRAVE,0,1,1,nil,e,tp,tc:GetCode())
 		if #g>0 then
 			Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 		end

@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_SZONE)
 	e1:SetTargetRange(LOCATION_ALL,0)
 	e1:SetValue(LOCATION_REMOVED)
-	e1:SetTarget(function(e,c) return c:IsOwner(e:GetHandlerPlayer()) end)
+	e1:SetTarget(function(e,c) return c:IsOwner(e:GetHandlerPlayer()) and Duel.IsPlayerCanRemove(e:GetHandlerPlayer(),c) end)
 	c:RegisterEffect(e1)
 	--Activate 1 of these effects
 	local e2=Effect.CreateEffect(c)

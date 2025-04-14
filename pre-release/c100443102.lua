@@ -11,11 +11,12 @@ function s.initial_effect(c)
 	--Any card sent to your GY is banished instead
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetProperty(EFFECT_FLAG_SET_AVAILABLE+EFFECT_FLAG_IGNORE_IMMUNE)
+	e1:SetProperty(EFFECT_FLAG_SET_AVAILABLE+EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_IGNORE_RANGE)
 	e1:SetCode(EFFECT_TO_GRAVE_REDIRECT)
 	e1:SetRange(LOCATION_SZONE)
 	e1:SetTargetRange(LOCATION_ALL,0)
 	e1:SetValue(LOCATION_REMOVED)
+	e1:SetTarget(function(e,c) return c:IsOwner(e:GetHandlerPlayer()) end)
 	c:RegisterEffect(e1)
 	--Activate 1 of these effects
 	local e2=Effect.CreateEffect(c)

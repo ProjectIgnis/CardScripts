@@ -49,9 +49,11 @@ end
 function s.gytg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.gyfilter,tp,LOCATION_DECK|LOCATION_EXTRA,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK|LOCATION_EXTRA)
+	Duel.SetOperationInfo(0,CATEGORY_ATKCHANGE,e:GetHandler(),1,tp,2500)
 end
 function s.gyop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local tc=Duel.SelectMatchingCard(tp,s.gyfilter,tp,LOCATION_DECK|LOCATION_EXTRA,0,1,1,nil):GetFirst()
 	if tc and Duel.SendtoGrave(tc,REASON_EFFECT)>0 and tc:IsLocation(LOCATION_GRAVE)
 		and c:IsRelateToEffect(e) and c:IsFaceup() then
@@ -76,11 +78,7 @@ function s.gyop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.raval(e,c)
-	local att=e:GetHandler():GetAttribute()
-	local ct=0
-	while att~=0 do
-		if (att&0x1)~=0 then ct=ct+1 end
-		att=(att>>1)
-	end
-	return ct-1
+	local g=Group.CreateGroup()
+	g:AddCard(e:GetHandler())
+	return g:GetBinClassCount(Card.GetAttribute)-1
 end

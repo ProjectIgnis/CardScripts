@@ -50,7 +50,7 @@ function s.ntop(e,tp,eg,ep,ev,re,r,rp,c)
 end
 function s.lvfilter(c,tp)
 	return c:IsFaceup() and c:IsType(TYPE_NORMAL) and c:IsRace(RACE_DRAGON)
-		and Duel.IsExistingMatchingCard(s.hieraticfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,c:GetLevel())
+		and Duel.IsExistingMatchingCard(s.hieraticfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,c:GetLevel())
 end
 function s.hieraticfilter(c,lvl)
 	return c:IsSetCard(SET_HIERATIC) and c:HasLevel() and c:IsFaceup() and not c:IsLevel(lvl)
@@ -66,7 +66,7 @@ end
 function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not tc:IsRelateToEffect(e) or tc:IsFacedown() then return end
-	local g=Duel.GetMatchingGroup(s.hieraticfilter,tp,LOCATION_MZONE,LOCATION_MZONE,tc:GetLevel())
+	local g=Duel.GetMatchingGroup(s.hieraticfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,tc:GetLevel())
 	if #g==0 then return end
 	local lv=tc:GetLevel()
 	for lc in g:Iter() do

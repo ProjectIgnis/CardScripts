@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--Your monsters gain 300 ATK per different attribute you control
+	--Monsters you control gain 300 ATK for each different Attribute you control
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e2:SetTargetRange(LOCATION_MZONE,0)
 	e2:SetValue(s.atkval)
 	c:RegisterEffect(e2)
-	--Your "Charmer" and "Familiar-Possessed" monsters cannot be destroyed by card effects
+	--"Charmer" and "Familiar-Possessed" monsters you control cannot be destroyed by card effects
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
@@ -43,18 +43,8 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_CHARMER,SET_FAMILIAR_POSSESSED}
 function s.atkval(e,c)
-	local tp=e:GetHandlerPlayer()
-	local att=0
-	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
-	for tc in aux.Next(g) do
-		att=(att|tc:GetAttribute())
-	end
-	local ct=0
-	while att~=0 do
-		if (att&0x1)~=0 then ct=ct+1 end
-		att=(att>>1)
-	end
-	return ct*300
+	local g=Duel.GetMatchingGroup(Card.IsFaceup,e:GetHandlerPlayer(),LOCATION_MZONE,0,nil)
+	return 300*g:GetBinClassCount(Card.GetAttribute)
 end
 function s.indtg(e,c)
 	return c:IsFaceup() and c:IsSetCard({SET_CHARMER,SET_FAMILIAR_POSSESSED})
@@ -72,7 +62,6 @@ function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
 function s.drop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Draw(p,d,REASON_EFFECT)
 end

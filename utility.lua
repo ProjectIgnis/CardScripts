@@ -344,9 +344,15 @@ end
 function Card.IsPreviousTypeOnField(c,card_type)
 	return c:GetPreviousTypeOnField()&card_type>0
 end
-function Card.IsPreviousCodeOnField(c,code)
+function Card.IsPreviousCodeOnField(c,...)
 	local code1,code2=c:GetPreviousCodeOnField()
-	return code1==code or code2==code
+	local codes={...}
+	for _,code in ipairs(codes) do
+		if code1==code or code2==code then
+			return true
+		end
+	end
+	return false
 end
 function Card.IsPreviousSequence(c,seq)
 	return c:GetPreviousSequence()==seq
@@ -1585,7 +1591,7 @@ Cost.SelfToDeck=aux.SelfToDeckCost
 Cost.SelfToExtra=aux.SelfToExtraCost
 Cost.SelfDiscard=aux.SelfDiscardCost
 Cost.SelfDiscardToGrave=aux.SelfDiscardToGraveCost
-Cost.SelfRevealCost=aux.SelfRevealCost
+Cost.SelfReveal=aux.SelfRevealCost
 
 Cost.Detach=aux.dxmcostgen
 Cost.Discard=aux.DiscardCost

@@ -564,7 +564,8 @@ function Fusion.ShuffleMaterial(e,tc,tp,sg)
 	local hg=sg:Filter(Card.IsLocation,nil,LOCATION_GRAVE|LOCATION_REMOVED)
 	if #rg>0 then Duel.ConfirmCards(1-tp,rg) end
 	if #hg>0 then Duel.HintSelection(hg,true) end
-	Duel.SendtoDeck(sg,nil,2,REASON_EFFECT|REASON_MATERIAL|REASON_FUSION)
+	local tg=sg:AddMaximumCheck()
+	Duel.SendtoDeck(tg,nil,2,REASON_EFFECT|REASON_MATERIAL|REASON_FUSION)
 	sg:Clear()
 end
 function Fusion.OnFieldMat(filter,...)

@@ -1,55 +1,6 @@
 --Utilities to be added to the core
 
 --[[
-	A monster that is temporarily banished shouldn't be treated as a monster that was Normal, Flip, or Special Summoned that turn, or as a monster that has already changed its battle position, after it returns to the field.
-	Manually sets the relevant statuses to "false" before returning the monster to the field.
---]]
-Duel.ReturnToField=(function()
-	local oldfunc=Duel.ReturnToField
-	return function(card,pos,zone,...)
-		if not card:IsReason(REASON_TEMPORARY) then return false end
-		card:SetStatus(STATUS_FORM_CHANGED,false)
-		card:SetStatus(STATUS_SUMMON_TURN,false)
-		card:SetStatus(STATUS_FLIP_SUMMON_TURN,false)
-		card:SetStatus(STATUS_SPSUMMON_TURN,false)
-		pos=pos or card:GetPreviousPosition()
-		zone=zone or 0xff
-		return oldfunc(card,pos,zone,...)
-	end
-end)()
-
---[[
-	Places a hint that says "Added to the hand by a currently resolving effect" (string 225) on any cards added to the hand for the duration of that Chain's/effect's resolution.
-	Used to differentiate which card(s) were just added to the hand and which ones were already there for cases of multiple copies of the same card being present.
-	The card ID used for the flag effect (30336082) belongs to "Brimming Sangen Manor", the card that initially needed this workaround.
---]]
-Duel.SendtoHand=(function()
-	local oldfunc=Duel.SendtoHand
-	return function(card_or_group,dest_player,reason,reason_player,...)
-		local res=oldfunc(card_or_group,dest_player,reason,reason_player,...)
-		if res==0 then return res end
-		if type(card_or_group)=="Group" then
-			local hand_group=card_or_group:Filter(Card.IsLocation,nil,LOCATION_HAND)
-			for tc in hand_group:Iter() do
-				tc:RegisterFlagEffect(30336082,RESET_EVENT|RESETS_STANDARD|RESET_CHAIN,EFFECT_FLAG_CLIENT_HINT,1,0,225)
-			end
-		elseif type(card_or_group)=="Card" and card_or_group:IsLocation(LOCATION_HAND) then
-			card_or_group:RegisterFlagEffect(30336082,RESET_EVENT|RESETS_STANDARD|RESET_CHAIN,EFFECT_FLAG_CLIENT_HINT,1,0,225)
-		end
-		return res
-	end
-end)()
-
---Use the "selected" string by default. Pass "false" as the boolean to use the "targeted" string instead.
-Duel.HintSelection=(function()
-	local oldfunc=Duel.HintSelection
-	return function(card_or_group,log_as_selection,...)
-		if log_as_selection==nil then log_as_selection=true end
-		return oldfunc(card_or_group,log_as_selection,...)
-	end
-end)()
-
---[[
 	If called while an effect isn't resolving (e.g. a regular Xyz Summon or through an effect like "Wonder Xyz") then proceed as usual with the attaching.
 	If called while an effect is resolving treat it as attaching by card effect and handle the relevant rulings.
 	Attaching by card effect is ruled to affect both the Xyz Monster and the cards that are to be attached.
@@ -73,18 +24,6 @@ Duel.Overlay=(function()
 	end
 end)()
 --]]
-
---Remove counter from only 1 card if it is the only card with counter
-local p_rem=Duel.RemoveCounter
-function Duel.RemoveCounter(tp,s,o,counter,...)
-	local ex_params={...}
-	local s,o=s>0 and LOCATION_ONFIELD or 0,o>0 and LOCATION_ONFIELD or 0
-	local cg=Duel.GetFieldGroup(tp,s,o):Match(function(c) return c:GetCounter(counter)>0 end,nil)
-	if #cg==1 then
-		return cg:GetFirst():RemoveCounter(tp,counter,table.unpack(ex_params))
-	end
-	return p_rem(tp,s,o,counter,table.unpack(ex_params))
-end
 
 function Auxiliary.ReleaseNonSumCheck(c,tp,e)
 	if c:IsControler(tp) then return false end

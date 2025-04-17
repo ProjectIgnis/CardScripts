@@ -1607,8 +1607,8 @@ end
 
 function Cost.HardOncePerChain(flag)
 	return function(e,tp,eg,ep,ev,re,r,rp,chk)
-		if chk==0 then return not Duel.HasFlagEffect(tp,id) end
-		Duel.RegisterFlagEffect(tp,id,RESET_CHAIN,0,1)
+		if chk==0 then return not Duel.HasFlagEffect(tp,flag) end
+		Duel.RegisterFlagEffect(flag,id,RESET_CHAIN,0,1)
 	end
 end
 

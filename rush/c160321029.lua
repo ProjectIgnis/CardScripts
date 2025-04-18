@@ -21,6 +21,7 @@ function s.fextra(e,tp,mg)
 end
 function s.stage2(e,tc,tp,mg,chk)
 	if chk==0 then
+		Duel.SpecialSummonComplete()
 		local sg=Duel.GetMatchingGroup(Card.IsNotMaximumModeSide,tp,LOCATION_MZONE,0,tc)
 		if #sg>0 then
 			Duel.Destroy(sg,REASON_EFFECT)

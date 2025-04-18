@@ -21,8 +21,8 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetPossibleOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,0)
 end
-function s.cfilter(c)
-	return c:IsSpellTrap() and c:IsSSetable()
+function s.cfilter(c,tp)
+	return c:IsSpellTrap() and c:IsSSetable(false, 1-tp)
 end
 function s.rescon(ft)
 	return function(sg,e,tp,mg)
@@ -36,7 +36,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #hg>0 then
 		Duel.ConfirmCards(tp,hg)
 		local ft=Duel.GetLocationCount(1-tp,LOCATION_SZONE)
-		local g=hg:Filter(s.cfilter,nil)
+		local g=hg:Filter(s.cfilter,nil,tp)
 		local ct=math.min(#g,ft+1,3)
 		local sg=aux.SelectUnselectGroup(g,e,tp,1,ct,s.rescon(ft),1,tp,HINTMSG_SET)
 		if #sg>0 then

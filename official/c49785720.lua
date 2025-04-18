@@ -1,4 +1,5 @@
 --機炎星－ゴヨウテ
+--Brotherhood of the Fire Fist - Coyote
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -10,9 +11,9 @@ function s.initial_effect(c)
 	e1:SetCondition(s.spcon)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x7c}
+s.listed_series={SET_FIRE_FORMATION}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x7c) and c:IsSpellTrap()
+	return c:IsFaceup() and c:IsSetCard(SET_FIRE_FORMATION) and c:IsSpellTrap()
 end
 function s.spcon(e,c)
 	if c==nil then return true end

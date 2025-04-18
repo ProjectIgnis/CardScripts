@@ -1,4 +1,5 @@
 --平穏の賢者
+--Sage of Stillness
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy
@@ -23,12 +24,12 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCondition(s.accon)
 	e1:SetValue(s.aclimit)
 	e1:SetLabel(Duel.GetTurnCount())
-	e1:SetReset(RESET_PHASE+PHASE_END,2)
+	e1:SetReset(RESET_PHASE|PHASE_END,2)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.accon(e)
 	return e:GetLabel()~=Duel.GetTurnCount()
 end
 function s.aclimit(e,re,tp)
-	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_TRAP)
+	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsTrapEffect()
 end

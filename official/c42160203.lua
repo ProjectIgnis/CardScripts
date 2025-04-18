@@ -1,4 +1,5 @@
 --覇王眷竜ダーク・リベリオン
+--Supreme King Dragon Dark Rebellion
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -11,24 +12,24 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_BATTLE_CONFIRM)
 	e1:SetCountLimit(1)
 	e1:SetCondition(s.atkcon)
-	e1:SetCost(s.atkcost)
+	e1:SetCost(Cost.Detach(1))
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
 	--special summon
-	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(id,1))
-	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e4:SetType(EFFECT_TYPE_QUICK_O)
-	e4:SetCode(EVENT_FREE_CHAIN)
-	e4:SetRange(LOCATION_MZONE)
-	e4:SetHintTiming(0,TIMING_BATTLE_START)
-	e4:SetCondition(s.spcon)
-	e4:SetCost(s.spcost)
-	e4:SetTarget(s.sptg)
-	e4:SetOperation(s.spop)
-	c:RegisterEffect(e4)
+	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,1))
+	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e2:SetType(EFFECT_TYPE_QUICK_O)
+	e2:SetCode(EVENT_FREE_CHAIN)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetHintTiming(0,TIMING_BATTLE_START)
+	e2:SetCondition(s.spcon)
+	e2:SetCost(s.spcost)
+	e2:SetTarget(s.sptg)
+	e2:SetOperation(s.spop)
+	c:RegisterEffect(e2)
 end
-s.listed_series={0x10f8,0x20f8}
+s.listed_series={SET_SUPREME_KING_GATE,SET_SUPREME_KING_DRAGON}
 function s.matfilter(c,xyz,sumtype,tp)
 	return c:IsType(TYPE_PENDULUM,xyz,sumtype,tp) and c:IsAttribute(ATTRIBUTE_DARK,xyz,sumtype,tp)
 end
@@ -36,10 +37,6 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
 	return c:IsRelateToBattle() and bc and bc:IsFaceup() and bc:IsRelateToBattle() and bc:GetAttack()>0
-end
-function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -49,7 +46,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		e1:SetValue(0)
 		tc:RegisterEffect(e1)
 		if c:IsRelateToEffect(e) and c:IsFaceup() then
@@ -57,22 +54,22 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetType(EFFECT_TYPE_SINGLE)
 			e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 			e2:SetCode(EFFECT_UPDATE_ATTACK)
-			e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e2:SetReset(RESETS_STANDARD_PHASE_END)
 			e2:SetValue(atk)
 			c:RegisterEffect(e2)
 		end
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE
+	return Duel.IsBattlePhase()
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsAbleToExtraAsCost() end
-	Duel.SendtoDeck(c,nil,0,REASON_COST)
+	Duel.SendtoDeck(c,nil,SEQ_DECKTOP,REASON_COST)
 end
 function s.spfilter(c,e,tp)
-	return c:IsFaceup() and (c:IsSetCard(0x10f8) or c:IsSetCard(0x20f8))
+	return c:IsFaceup() and c:IsSetCard({SET_SUPREME_KING_GATE,SET_SUPREME_KING_DRAGON})
 		and c:IsType(TYPE_PENDULUM) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

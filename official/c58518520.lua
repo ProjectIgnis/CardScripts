@@ -1,6 +1,5 @@
 --クリア・エフェクター
 --Clear Effector
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--If sent to GY as synchro material, draw 1
@@ -49,6 +48,6 @@ function s.indop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	e1:SetValue(1)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	rc:RegisterEffect(e1)
 end

@@ -1,12 +1,12 @@
--- ティアラメンツ・ルルカルス
--- Tearalaments Lulucaros
--- Scripted by Hatter
+--ティアラメンツ・ルルカルス
+--Tearlaments Rulkallos
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	-- "Tearalaments Chaetocaros" + 1 "Tearalaments" monster
-	Fusion.AddProcMix(c,true,true,92731385,aux.FilterBoolFunctionEx(Card.IsSetCard,0x182))
-	-- Battle protection
+	--"Tearalaments Chaetocaros" + 1 "Tearalaments" monster
+	Fusion.AddProcMix(c,true,true,92731385,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_TEARLAMENTS))
+	--Battle protection
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetTarget(function(e,c) return c~=e:GetHandler() and c:IsRace(RACE_AQUA) end)
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
-	-- Negate effect activation
+	--Negate effect activation
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY+CATEGORY_TOGRAVE)
@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.negtg)
 	e2:SetOperation(s.negop)
 	c:RegisterEffect(e2)
-	-- Special Summon this card
+	--Special Summon this card
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -41,27 +41,27 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x182}
+s.listed_series={SET_TEARLAMENTS}
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp and re:IsHasCategory(CATEGORY_SPECIAL_SUMMON) and Duel.IsChainNegatable(ev)
 end
 function s.tgfilter(c)
-	return c:IsSetCard(0x182) and (c:IsFaceup() or c:IsLocation(LOCATION_HAND)) and c:IsAbleToGrave()
+	return c:IsSetCard(SET_TEARLAMENTS) and (c:IsFaceup() or c:IsLocation(LOCATION_HAND)) and c:IsAbleToGrave()
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_HAND|LOCATION_ONFIELD,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
 	local rc=re:GetHandler()
 	if rc:IsDestructable() and rc:IsRelateToEffect(re) then
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,1,0,0)
-		Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_HAND+LOCATION_ONFIELD)
+		Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_HAND|LOCATION_ONFIELD)
 	end
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	if not (Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re))
 		or Duel.Destroy(eg,REASON_EFFECT)<1 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_HAND|LOCATION_ONFIELD,0,1,1,nil)
 	if #g>0 then
 		Duel.BreakEffect()
 		Duel.SendtoGrave(g,REASON_EFFECT)
@@ -69,7 +69,7 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsSummonType(SUMMON_TYPE_FUSION) and c:IsReason(REASON_EFFECT)
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsFusionSummoned() and c:IsReason(REASON_EFFECT)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

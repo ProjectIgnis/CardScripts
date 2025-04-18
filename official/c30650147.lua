@@ -13,10 +13,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={30650148}
-s.listed_series={0x106}
+s.listed_series={SET_VENDREAD}
 function s.filter(c,tp)
 	return c:IsFaceup() and c:GetOriginalLevel()>0 and c:IsReleasableByEffect()
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0x106,TYPES_TOKEN,0,0,c:GetLevel(),RACE_ZOMBIE,ATTRIBUTE_DARK)
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,SET_VENDREAD,TYPES_TOKEN,0,0,c:GetLevel(),RACE_ZOMBIE,ATTRIBUTE_DARK)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc,tp) end
@@ -39,7 +39,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 		e1:SetRange(LOCATION_MZONE)
 		e1:SetTargetRange(1,0)
-		e1:SetTarget(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,0x106)))
+		e1:SetTarget(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,SET_VENDREAD)))
 		token:RegisterEffect(e1,true)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_CANNOT_SUMMON)
@@ -48,7 +48,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetType(EFFECT_TYPE_SINGLE)
 		e3:SetCode(EFFECT_CHANGE_LEVEL)
 		e3:SetValue(tc:GetOriginalLevel())
-		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e3:SetReset(RESET_EVENT|RESETS_STANDARD)
 		token:RegisterEffect(e3,true)
 	end
 	Duel.SpecialSummonComplete()

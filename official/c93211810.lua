@@ -1,6 +1,5 @@
 --超音速波
 --Sonic Boom
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Apply various effects
@@ -29,24 +28,23 @@ function s.initial_effect(c)
 		end)
 	end)
 end
-s.listed_series={0x101b}
-
+s.listed_series={SET_MECHA_PHANTOM_BEAST}
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	if tc:GetFlagEffect(id)==0 then
 		s[ep]=s[ep]+1
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+		tc:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 	end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
-	return Duel.GetTurnPlayer()==tp and ph<PHASE_MAIN2 and (ph~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
+	return Duel.IsTurnPlayer(tp) and ph<PHASE_MAIN2 and aux.StatChangeDamageStepCondition()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return s[tp]<2 end
 end
 function s.filter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x101b) and (s[tp]==0 or c:GetFlagEffect(id)~=0)
+	return c:IsFaceup() and c:IsSetCard(SET_MECHA_PHANTOM_BEAST) and (s[tp]==0 or c:GetFlagEffect(id)~=0)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc,tp) end
@@ -60,7 +58,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	e1:SetTargetRange(LOCATION_MZONE,0)
 	e1:SetTarget(s.ftarget)
 	e1:SetLabel(g:GetFirst():GetFieldID())
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.ftarget(e,c)
@@ -75,7 +73,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetValue(tc:GetBaseAttack()*2)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 		--Inflict piercing damage
 		local e2=Effect.CreateEffect(c)
@@ -83,7 +81,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_PIERCE)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e2:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e2)
 		--Unaffected by spell/trap effects
 		local e3=Effect.CreateEffect(c)
@@ -93,7 +91,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetRange(LOCATION_MZONE)
 		e3:SetCode(EFFECT_IMMUNE_EFFECT)
 		e3:SetValue(s.efilter)
-		e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e3:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e3)
 		--Destroy all your machine monsters during end phase
 		local e4=Effect.CreateEffect(c)
@@ -102,12 +100,12 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e4:SetCountLimit(1)
 		e4:SetCondition(s.descon)
 		e4:SetOperation(s.desop)
-		e4:SetReset(RESET_PHASE+PHASE_END)
+		e4:SetReset(RESET_PHASE|PHASE_END)
 		Duel.RegisterEffect(e4,tp)
 	end
 end
 function s.efilter(e,te)
-	return te:IsActiveType(TYPE_SPELL+TYPE_TRAP) and te:GetOwner()~=e:GetOwner()
+	return te:IsSpellTrapEffect() and te:GetOwner()~=e:GetOwner()
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsRace,RACE_MACHINE),tp,LOCATION_MZONE,0,1,nil)

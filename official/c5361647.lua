@@ -1,4 +1,5 @@
 --BK グラスジョー
+--Battlin' Boxer Glassjaw
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy
@@ -22,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x84}
+s.listed_series={SET_BATTLIN_BOXER}
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,e:GetHandler(),1,0,0)
@@ -36,7 +37,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsReason(REASON_EFFECT)
 end
 function s.filter(c)
-	return c:IsSetCard(0x84) and c:GetCode()~=id and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_BATTLIN_BOXER) and c:GetCode()~=id and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.filter(chkc) end

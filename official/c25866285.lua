@@ -9,21 +9,17 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_BE_BATTLE_TARGET)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCondition(s.condition)
-	e1:SetCost(s.cost)
+	e1:SetCost(Cost.SelfToGrave)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x2a}
+s.listed_series={SET_NATURIA}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local ec=eg:GetFirst()
-	return ec:IsFaceup() and ec:IsControler(tp) and ec:IsSetCard(0x2a)
-end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
+	return ec:IsFaceup() and ec:IsControler(tp) and ec:IsSetCard(SET_NATURIA)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.NegateAttack() then
-		Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
+		Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE|PHASE_BATTLE_STEP,1)
 	end
 end

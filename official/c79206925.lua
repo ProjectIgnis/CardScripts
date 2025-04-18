@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--Fusion procedure
-	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0x2e),2)
+	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_GRAVEKEEPERS),2)
 	--Increase ATK/DEF
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -33,9 +33,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.regop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x2e,0x91}
+s.listed_series={SET_GRAVEKEEPERS,SET_NECROVALLEY}
 s.listed_names={CARD_NECROVALLEY}
-s.material_setcode=0x2e
+s.material_setcode=SET_GRAVEKEEPERS
 function s.matcheck(e,c)
 	local lv=c:GetMaterial():GetSum(Card.GetOriginalLevel)
 	if lv==0 then return end
@@ -46,7 +46,7 @@ function s.matcheck(e,c)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetValue(lv*100)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE-RESET_TOFIELD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE-RESET_TOFIELD)
 	c:RegisterEffect(e1)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_UPDATE_DEFENSE)
@@ -69,11 +69,11 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCountLimit(1)
 	e1:SetCondition(s.thcon)
 	e1:SetOperation(s.thop)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.thfilter(c)
-	return ((c:IsSetCard(0x2e) and c:IsMonster()) or c:IsSetCard(0x91)) and c:IsAbleToHand()
+	return ((c:IsSetCard(SET_GRAVEKEEPERS) and c:IsMonster()) or c:IsSetCard(SET_NECROVALLEY)) and c:IsAbleToHand()
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil)

@@ -48,21 +48,21 @@ function s.initial_effect(c)
 	c:RegisterEffect(e8)
 end
 function s.aclimit1(e,tp,eg,ep,ev,re,r,rp)
-	if ep~=tp or not re:IsActiveType(TYPE_MONSTER) then return end
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_CONTROL+RESET_PHASE+PHASE_END,0,1)
+	if ep~=tp or not re:IsMonsterEffect() then return end
+	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD_DISABLE|RESET_CONTROL|RESET_PHASE|PHASE_END,0,1)
 end
 function s.econ1(e)
 	return e:GetHandler():GetFlagEffect(id)~=0
 end
 function s.aclimit3(e,tp,eg,ep,ev,re,r,rp)
-	if ep==tp or not re:IsActiveType(TYPE_MONSTER) then return end
-	e:GetHandler():RegisterFlagEffect(id+1,RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_CONTROL+RESET_PHASE+PHASE_END,0,1)
+	if ep==tp or not re:IsMonsterEffect() then return end
+	e:GetHandler():RegisterFlagEffect(id+1,RESET_EVENT|RESETS_STANDARD_DISABLE|RESET_CONTROL|RESET_PHASE|PHASE_END,0,1)
 end
 function s.econ2(e)
 	return e:GetHandler():GetFlagEffect(id+1)~=0
 end
 function s.elimit(e,re,tp)
-	return re:IsActiveType(TYPE_MONSTER)
+	return re:IsMonsterEffect()
 end
 function s.atkcon(e)
 	return e:GetHandler():GetFlagEffect(id+2)~=0
@@ -73,6 +73,6 @@ end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():GetFlagEffect(id+2)~=0 then return end
 	local fid=eg:GetFirst():GetFieldID()
-	e:GetHandler():RegisterFlagEffect(id+2,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+	e:GetHandler():RegisterFlagEffect(id+2,RESETS_STANDARD_PHASE_END,0,1)
 	e:GetLabelObject():SetLabel(fid)
 end

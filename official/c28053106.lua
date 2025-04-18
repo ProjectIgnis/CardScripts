@@ -1,9 +1,9 @@
---サイバー・エッグ・エンジェル--
+--サイバー・エッグ・エンジェル
 --Cyber Egg Angel
 --scripted by unknow
 local s,id=GetID()
 function s.initial_effect(c)
-	--add a machine ritual from deck to hand when normal/flip/special summoned
+	--Add 1 "Machine Angel" Spell or 1 "Ritual Sanctuary" from your Deck to your hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -21,10 +21,10 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x124}
-s.listed_names={95658967}
+s.listed_series={SET_MACHINE_ANGEL}
+s.listed_names={95658967} --"Ritual Sanctuary"
 function s.thfilter(c)
-	return ((c:IsSetCard(0x124) and c:IsSpell()) or c:IsCode(95658967)) and c:IsAbleToHand()
+	return ((c:IsSetCard(SET_MACHINE_ANGEL) and c:IsSpell()) or c:IsCode(95658967)) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -38,4 +38,3 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-

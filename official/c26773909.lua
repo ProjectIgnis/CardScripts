@@ -1,7 +1,6 @@
 --才呼粉身
 --Psychic Fervor
 --Scripted by Hatter
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -27,12 +26,11 @@ end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	if tc:GetFlagEffect(id)==0 and Duel.GetAttackTarget()==nil then
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+		tc:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 	end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	local ph=Duel.GetCurrentPhase()
-	return ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE and (ph~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
+	return Duel.IsBattlePhase() and aux.StatChangeDamageStepCondition()
 end
 function s.filter(c,tp)
 	return c:IsFaceup() and c:GetAttack()<Duel.GetLP(tp) and c:GetFlagEffect(id)==0
@@ -45,14 +43,14 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) then
 		Duel.SetLP(tp,Duel.GetLP(tp)-tc:GetAttack())
 		local c=e:GetHandler()
 		--Double its ATK
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		e1:SetValue(tc:GetAttack()*2)
 		tc:RegisterEffect(e1)
 		--Cannot attack directly
@@ -61,7 +59,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e2:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e2)
 	end
 end

@@ -1,4 +1,5 @@
 --アーティファクト－フェイルノート
+--Artifact Failnaught
 local s,id=GetID()
 function s.initial_effect(c)
 	--set
@@ -28,7 +29,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.setop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x97}
+s.listed_series={SET_ARTIFACT}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsPreviousLocation(LOCATION_SZONE) and c:IsPreviousPosition(POS_FACEDOWN)
@@ -44,10 +45,10 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.setcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return Duel.IsTurnPlayer(1-tp)
 end
 function s.filter(c)
-	return c:IsSetCard(0x97) and c:IsMonster() and c:IsSSetable()
+	return c:IsSetCard(SET_ARTIFACT) and c:IsMonster() and c:IsSSetable()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.filter(chkc) end

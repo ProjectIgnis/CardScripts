@@ -1,5 +1,5 @@
 --Danger! Response Team
---scripted by Naim
+--Danger! Response Team
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -24,9 +24,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tdop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x11e}
+s.listed_series={SET_DANGER}
 function s.filter1(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x11e) and c:IsAbleToHand()
+	return c:IsFaceup() and c:IsSetCard(SET_DANGER) and c:IsAbleToHand()
 	and Duel.IsExistingTarget(s.filter2,tp,LOCATION_MZONE,LOCATION_MZONE,1,c)
 end
 function s.filter2(c)
@@ -49,11 +49,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.costfilter(c)
-	return c:IsSetCard(0x11e) and c:IsMonster() and c:IsDiscardable()
+	return c:IsSetCard(SET_DANGER) and c:IsMonster() and c:IsDiscardable()
 end
 function s.tdcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,s.costfilter,1,1,REASON_COST+REASON_DISCARD,nil)
+	Duel.DiscardHand(tp,s.costfilter,1,1,REASON_COST|REASON_DISCARD,nil)
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToDeck() and Duel.IsPlayerCanDraw(tp,1) end
@@ -62,9 +62,8 @@ function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) and Duel.SendtoDeck(c,nil,1,REASON_EFFECT)~=0 and c:IsLocation(LOCATION_DECK) then
+	if c:IsRelateToEffect(e) and Duel.SendtoDeck(c,nil,SEQ_DECKBOTTOM,REASON_EFFECT)~=0 and c:IsLocation(LOCATION_DECK) then
 		Duel.BreakEffect()
 		Duel.Draw(tp,1,REASON_EFFECT)
 	end
 end
-

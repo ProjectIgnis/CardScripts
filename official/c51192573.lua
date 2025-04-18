@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e4:SetCode(EFFECT_UPDATE_DEFENSE)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0xc}
+s.listed_series={SET_ALIEN}
 s.counter_place_list={COUNTER_A}
 function s.otfilter(c,tp)
 	return c:GetOwner()==1-tp
@@ -47,11 +47,11 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.adcon(e)
-	return Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL and Duel.GetAttackTarget()
+	return Duel.IsPhase(PHASE_DAMAGE_CAL) and Duel.GetAttackTarget()
 end
 function s.adtg(e,c)
 	local bc=c:GetBattleTarget()
-	return bc and c:GetCounter(COUNTER_A)~=0 and bc:IsSetCard(0xc)
+	return bc and c:GetCounter(COUNTER_A)~=0 and bc:IsSetCard(SET_ALIEN)
 end
 function s.adval(e,c)
 	return c:GetCounter(COUNTER_A)*-300

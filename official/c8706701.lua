@@ -1,4 +1,5 @@
 --レッド・ミラー
+--Red Mirror
 local s,id=GetID()
 function s.initial_effect(c)
 	--to hand
@@ -10,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(s.condition)
-	e1:SetCost(s.cost)
+	e1:SetCost(Cost.SelfToGrave)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
@@ -30,10 +31,6 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker():GetControler()~=tp
 end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
-end
 function s.filter(c)
 	return c:IsRace(RACE_FIEND) and c:IsAttribute(ATTRIBUTE_FIRE) and not c:IsCode(id) and c:IsAbleToHand()
 end
@@ -51,7 +48,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c,tp)
-	return c:IsSummonType(SUMMON_TYPE_SYNCHRO) and c:IsSummonPlayer(tp)
+	return c:IsSynchroSummoned() and c:IsSummonPlayer(tp)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp) and aux.exccon(e)

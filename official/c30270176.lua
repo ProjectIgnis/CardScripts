@@ -1,6 +1,5 @@
 --暗黒方界神クリムゾン・ノヴァ
 --Crimson Nova the Dark Cubic Lord
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -52,10 +51,9 @@ function s.initial_effect(c)
 	e5:SetOperation(s.damop)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0xe3}
-
+s.listed_series={SET_CUBIC}
 function s.spcfilter(c)
-	return c:IsSetCard(0xe3) and not c:IsPublic()
+	return c:IsSetCard(SET_CUBIC) and not c:IsPublic()
 end
 function s.rescon(sg,e,tp,mg)
 	return aux.ChkfMMZ(1)(sg,e,tp,mg) and sg:GetClassCount(Card.GetCode)==#sg,sg:GetClassCount(Card.GetCode)~=#sg
@@ -86,7 +84,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	g:DeleteGroup()
 end
 function s.immval(e,te)
-	return te:GetOwner()~=e:GetHandler() and te:IsActiveType(TYPE_MONSTER) and te:IsActivated()
+	return te:GetOwner()~=e:GetHandler() and te:IsMonsterEffect() and te:IsActivated()
 		and te:GetOwner():GetBaseAttack()<=3000 and te:GetOwner():GetBaseAttack()>=0
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
@@ -105,11 +103,11 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetCode(EFFECT_EXTRA_ATTACK)
 	e1:SetValue(1)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_BATTLE)
 	c:RegisterEffect(e1)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

@@ -1,7 +1,6 @@
 --キリビ・レディ
 --Fire Flint Lady
 --Scripted by Naim
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon itself from hand
@@ -65,7 +64,7 @@ function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 		e0:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
 		e0:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e0:SetValue(aux.tgoval)
-		e0:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e0:SetReset(RESETS_STANDARD_PHASE_END)
 		g:GetFirst():RegisterEffect(e0)
 	end
 end

@@ -1,4 +1,5 @@
 --超銀河眼の光子龍
+--Neo Galaxy-Eyes Photon Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -25,7 +26,7 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetCountLimit(1)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetCost(s.atcost)
+	e3:SetCost(Cost.Detach(1))
 	e3:SetTarget(s.attg)
 	e3:SetOperation(s.atop)
 	c:RegisterEffect(e3,false,REGISTER_FLAG_DETACH_XMAT)
@@ -40,7 +41,7 @@ function s.valcheck(e,c)
 	end
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ) and e:GetLabel()==1
+	return e:GetHandler():IsXyzSummoned() and e:GetLabel()==1
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -50,25 +51,21 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e2)
 		if tc:IsType(TYPE_TRAPMONSTER) then
 			local e3=Effect.CreateEffect(c)
 			e3:SetType(EFFECT_TYPE_SINGLE)
 			e3:SetCode(EFFECT_DISABLE_TRAPMONSTER)
-			e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e3:SetReset(RESET_EVENT|RESETS_STANDARD)
 			tc:RegisterEffect(e3)
 		end
 	end
-end
-function s.atcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.attg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetOverlayCount(tp,0,1)~=0 end
@@ -84,13 +81,13 @@ function s.atop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(#g*500)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESETS_STANDARD_DISABLE_PHASE_END)
 	c:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e2:SetCode(EFFECT_EXTRA_ATTACK)
 	e2:SetValue(#g-1)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e2:SetReset(RESETS_STANDARD_PHASE_END)
 	c:RegisterEffect(e2)
 end

@@ -1,10 +1,10 @@
--- 竜剣士マジェスティＰ
--- Majesty Pegasus, the Dracoslayer
--- Scripted by Hatter
+--竜剣士マジェスティＰ
+--Majesty Pegasus, the Dracoslayer
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	Pendulum.AddProcedure(c)
-	-- Search 1 "Dracoslayer" Pendulum Monster
+	--Search 1 "Dracoslayer" Pendulum Monster
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_DESTROY)
@@ -14,18 +14,18 @@ function s.initial_effect(c)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
-	-- Protect "Dracoslayer" monsters
+	--Protect "Dracoslayer" monsters
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_HAND)
 	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER)
-	e2:SetCost(s.ptcost)
+	e2:SetCost(Cost.SelfDiscard)
 	e2:SetTarget(s.pttg)
 	e2:SetOperation(s.ptop)
 	c:RegisterEffect(e2)
-	-- Search 1 Field Spell
+	--Search 1 Field Spell
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_HANDES)
@@ -38,14 +38,14 @@ function s.initial_effect(c)
 	e3:SetOperation(s.fthop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xc7,0xd0}
+s.listed_series={SET_DRACOSLAYER,SET_MAJESPECTER}
 function s.thfilter(c,code)
-	return c:IsSetCard(0xc7) and c:IsType(TYPE_PENDULUM) and c:IsAbleToHand() and not c:IsCode(code)
+	return c:IsSetCard(SET_DRACOSLAYER) and c:IsType(TYPE_PENDULUM) and c:IsAbleToHand() and not c:IsCode(code)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local pc=Duel.GetFirstMatchingCard(nil,tp,LOCATION_PZONE,0,e:GetHandler())
-		return pc and (pc:IsSetCard(0xc7) or pc:IsSetCard(0xd0))
+		return pc and (pc:IsSetCard(SET_DRACOSLAYER) or pc:IsSetCard(SET_MAJESPECTER))
 			and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,pc:GetOriginalCode())
 	end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
@@ -68,37 +68,32 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(dg,REASON_EFFECT)
 	end
 end
-function s.ptcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsDiscardable() end
-	Duel.SendtoGrave(c,REASON_COST+REASON_DISCARD)
-end
 function s.pttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 end
 end
 function s.ptop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+	Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1)
 	local c=e:GetHandler()
-	-- "Dracoslayer" monsters target protection
+	--"Dracoslayer" monsters target protection
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e1:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
 	e1:SetTargetRange(LOCATION_MZONE,0)
-	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0xc7))
+	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_DRACOSLAYER))
 	e1:SetValue(aux.tgoval)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
-	-- "Dracoslayer" monsters destruction protection
+	--"Dracoslayer" monsters destruction protection
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	e2:SetProperty(0)
 	e2:SetValue(aux.indoval)
 	Duel.RegisterEffect(e2,tp)
-	aux.RegisterClientHint(c,0,tp,1,0,aux.Stringid(id,4),RESET_PHASE+PHASE_END,1)
+	aux.RegisterClientHint(c,0,tp,1,0,aux.Stringid(id,4),RESET_PHASE|PHASE_END,1)
 end
 function s.fthcon(e,tp,eg,ep,ev,re,r,rp)
-	return re and re:GetHandler():IsSetCard(0xc7) or e:GetHandler():IsSummonType(SUMMON_TYPE_PENDULUM)
+	return re and re:GetHandler():IsSetCard(SET_DRACOSLAYER) or e:GetHandler():IsPendulumSummoned()
 end
 function s.fthfilter(c)
 	return c:IsType(TYPE_FIELD) and c:IsSpell() and c:IsAbleToHand()
@@ -114,6 +109,6 @@ function s.fthop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 		Duel.ShuffleHand(tp)
 		Duel.BreakEffect()
-		Duel.DiscardHand(tp,nil,1,1,REASON_EFFECT+REASON_DISCARD,nil)
+		Duel.DiscardHand(tp,nil,1,1,REASON_EFFECT|REASON_DISCARD,nil)
 	end
 end

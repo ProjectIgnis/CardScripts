@@ -1,4 +1,5 @@
 --妨害電波
+--Intercept Wave
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -25,7 +26,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_PHASE+PHASE_END)
 		e1:SetCountLimit(1)
-		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_PHASE|PHASE_END)
 		e1:SetCondition(s.tdcon)
 		e1:SetOperation(s.tdop)
 		Duel.RegisterEffect(e1,tp)
@@ -39,5 +40,5 @@ function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.tdfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-	Duel.SendtoDeck(g,nil,0,REASON_EFFECT)
+	Duel.SendtoDeck(g,nil,SEQ_DECKTOP,REASON_EFFECT)
 end

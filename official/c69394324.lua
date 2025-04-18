@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Fusion Summon procedure
 	c:EnableReviveLimit()
-	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0xc008),3)
+	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_DESTINY_HERO),3)
 	--Rearrange the top 5 cards of a player's Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -40,8 +40,8 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xc008}
-s.material_setcode={0x8,0xc008}
+s.listed_series={SET_DESTINY_HERO}
+s.material_setcode={SET_HERO,SET_DESTINY_HERO}
 function s.sttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>4
 		or Duel.GetFieldGroupCount(tp,0,LOCATION_DECK)>4 end
@@ -67,10 +67,10 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsSummonType(SUMMON_TYPE_FUSION) and c:IsReason(REASON_BATTLE+REASON_EFFECT)
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsFusionSummoned() and c:IsReason(REASON_BATTLE|REASON_EFFECT)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0xc008) and c:IsLevelBelow(9) and c:IsCanBeEffectTarget(e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_DESTINY_HERO) and c:IsLevelBelow(9) and c:IsCanBeEffectTarget(e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

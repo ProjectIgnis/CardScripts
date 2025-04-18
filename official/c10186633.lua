@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,{id,1})
-	e2:SetCost(aux.SelfBanishCost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.drtg)
 	e2:SetOperation(s.drop)
 	c:RegisterEffect(e2)
@@ -75,7 +75,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.HintSelection(sg,true)
 	if Duel.SendtoDeck(sg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)==#sg then
 		local og=Duel.GetOperatedGroup()
-		if og:FilterCount(Card.IsLocation,nil,LOCATION_DECK+LOCATION_EXTRA)~=#sg then return end
+		if og:FilterCount(Card.IsLocation,nil,LOCATION_DECK|LOCATION_EXTRA)~=#sg then return end
 		Duel.ShuffleDeck(tp)
 		Duel.BreakEffect()
 		Duel.Draw(tp,1,REASON_EFFECT)

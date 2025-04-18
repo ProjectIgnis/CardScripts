@@ -1,4 +1,5 @@
 --弦魔人ムズムズリズム
+--Muzurhythm the String Djinn
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -15,20 +16,16 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(s.atkcon)
-	e1:SetCost(s.atkcost)
+	e1:SetCost(Cost.Detach(1))
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
 end
-s.listed_series={0x6d}
+s.listed_series={SET_DJINN}
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
 	if ph~=PHASE_DAMAGE or Duel.IsDamageCalculated() then return false end
 	local tc=Duel.GetAttacker()
-	return tc:IsControler(tp) and tc:IsRelateToBattle() and tc:IsSetCard(0x6d) and tc:IsType(TYPE_XYZ) and Duel.GetAttackTarget()~=nil
-end
-function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
+	return tc:IsControler(tp) and tc:IsRelateToBattle() and tc:IsSetCard(SET_DJINN) and tc:IsType(TYPE_XYZ) and Duel.GetAttackTarget()~=nil
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
@@ -37,7 +34,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		e1:SetValue(tc:GetAttack()*2)
 		tc:RegisterEffect(e1)
 	end

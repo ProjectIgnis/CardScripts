@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,id)
-	e1:SetCondition(s.atkcon1)
+	e1:SetCondition(aux.StatChangeDamageStepCondition)
 	e1:SetTarget(s.atktg1)
 	e1:SetOperation(s.atkop1)
 	c:RegisterEffect(e1)
@@ -23,17 +23,14 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetCondition(s.atkcon2)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.atktg2)
 	e2:SetOperation(s.atkop2)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xf7}
-function s.atkcon1(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
-end
+s.listed_series={SET_LYRILUSC}
 function s.atkfilter1(c)
-	return c:IsFaceup() and c:IsSetCard(0xf7)
+	return c:IsFaceup() and c:IsSetCard(SET_LYRILUSC)
 end
 function s.atktg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.atkfilter1(chkc) end
@@ -47,19 +44,19 @@ function s.atkop1(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not (tc:IsRelateToEffect(e) and tc:IsFaceup()) then return end
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
-	for oc in aux.Next(g) do
+	for oc in g:Iter() do
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetValue(tc:GetAttack())
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		oc:RegisterEffect(e1)
 		if oc:HasLevel() then
 			local e2=Effect.CreateEffect(c)
 			e2:SetType(EFFECT_TYPE_SINGLE)
 			e2:SetCode(EFFECT_CHANGE_LEVEL)
 			e2:SetValue(1)
-			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 			oc:RegisterEffect(e2)
 		end
 		if oc:IsType(TYPE_XYZ) then
@@ -67,7 +64,7 @@ function s.atkop1(e,tp,eg,ep,ev,re,r,rp)
 			e3:SetType(EFFECT_TYPE_SINGLE)
 			e3:SetCode(EFFECT_CHANGE_RANK)
 			e3:SetValue(1)
-			e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e3:SetReset(RESET_EVENT|RESETS_STANDARD)
 			oc:RegisterEffect(e3)
 		end
 	end
@@ -75,7 +72,7 @@ end
 function s.atkcon2(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
-	return a:IsControler(1-tp) and d and d:IsControler(tp) and d:IsFaceup() and d:IsSetCard(0xf7)
+	return a:IsControler(1-tp) and d and d:IsControler(tp) and d:IsFaceup() and d:IsSetCard(SET_LYRILUSC)
 end
 function s.atktg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -91,7 +88,7 @@ function s.atkop2(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetValue(a:GetAttack())
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		d:RegisterEffect(e1)
 	end
 end

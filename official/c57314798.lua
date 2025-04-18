@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
-	e1:SetCost(aux.dxmcostgen(1,1,nil))
+	e1:SetCost(Cost.Detach(1,1,nil))
 	e1:SetTarget(s.atktg)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
@@ -40,7 +40,7 @@ function s.initial_effect(c)
 end
 s.xyz_number=100
 function s.xyzfilter(c,xyz,sumtype,tp)
-	return c:IsType(TYPE_XYZ,xyz,sumtype,tp) and c:IsSetCard(0x48,xyz,sumtype,tp)
+	return c:IsType(TYPE_XYZ,xyz,sumtype,tp) and c:IsSetCard(SET_NUMBER,xyz,sumtype,tp)
 end
 function s.xyzcheck(g,tp,xyz)
 	local mg=g:Filter(function(c) return not c:IsHasEffect(511001175) end,nil)
@@ -63,7 +63,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(atk*1000)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
+	e1:SetReset(RESETS_STANDARD_DISABLE_PHASE_END|RESET_OPPO_TURN)
 	c:RegisterEffect(e1)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
@@ -99,14 +99,12 @@ function s.spfilter(c)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker():IsControler(1-tp) and Duel.GetAttackTarget()==nil
-		and not Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_ONFIELD+LOCATION_HAND,0,1,nil)
+		and not Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_ONFIELD|LOCATION_HAND,0,1,nil)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then
-		return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and
-		       c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-	end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)

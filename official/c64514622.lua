@@ -10,20 +10,15 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCondition(Gemini.EffectStatusCondition)
-	e1:SetCost(s.cost)
+	e1:SetCost(Cost.SelfTribute)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x69}
+s.listed_series={SET_HIERATIC}
 s.listed_names={id}
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsReleasable() end
-	Duel.Release(c,REASON_COST)
-end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x69) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return c:IsSetCard(SET_HIERATIC) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetMZoneCount(tp,e:GetHandler())>0

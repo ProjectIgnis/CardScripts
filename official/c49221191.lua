@@ -1,4 +1,5 @@
 --CNo.32 海咬龍シャーク・ドレイク・バイス
+--Number C32: Shark Drake Veiss
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -25,7 +26,7 @@ function s.ovfilter(c,tp,lc)
 	return c:IsFaceup() and c:IsSummonCode(lc,SUMMON_TYPE_XYZ,tp,65676461)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetLP(tp)<=1000 and (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
+	return Duel.GetLP(tp)<=1000 and aux.StatChangeDamageStepCondition()
 end
 function s.rfilter(c)
 	return c:IsMonster() and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c) 
@@ -33,10 +34,10 @@ function s.rfilter(c)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST)
-		and Duel.IsExistingMatchingCard(s.rfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil) end
+		and Duel.IsExistingMatchingCard(s.rfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,nil) end
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.rfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.rfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,1,nil)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.filter(c)
@@ -56,10 +57,10 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetValue(0)
-		if Duel.GetTurnPlayer()~=tp then
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,2)
+		if Duel.IsTurnPlayer(1-tp) then
+			e1:SetReset(RESETS_STANDARD_PHASE_END,2)
 		else
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,1)
+			e1:SetReset(RESETS_STANDARD_PHASE_END,1)
 		end
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()

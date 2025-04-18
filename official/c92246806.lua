@@ -32,10 +32,10 @@ function s.initial_effect(c)
 	e4:SetOperation(s.regop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0xb3}
+s.listed_series={SET_YOSENJU}
 s.listed_names={id}
 function s.filter(c)
-	return c:IsSetCard(0xb3) and not c:IsCode(id) and c:IsSummonable(true,nil)
+	return c:IsSetCard(SET_YOSENJU) and not c:IsCode(id) and c:IsSummonable(true,nil)
 end
 function s.sumtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,nil) end
@@ -63,7 +63,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EVENT_PHASE+PHASE_END)
 	e1:SetTarget(s.rettg)
 	e1:SetOperation(s.retop)
-	e1:SetReset(RESET_EVENT|RESETS_STANDARD&~(RESET_TEMP_REMOVE|RESET_TURN_SET)|RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD&~(RESET_TEMP_REMOVE|RESET_TURN_SET)|RESET_PHASE|PHASE_END)
 	c:RegisterEffect(e1)
 end
 function s.rettg(e,tp,eg,ep,ev,re,r,rp,chk)

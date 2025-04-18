@@ -1,4 +1,5 @@
 --妖仙獣 左鎌神柱
+--Yosenju Shinchu L
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -32,10 +33,10 @@ function s.initial_effect(c)
 	e4:SetValue(aux.tgoval)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0xb3}
+s.listed_series={SET_YOSENJU}
 function s.filter(c,tp)
 	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE)
-		and c:IsSetCard(0xb3) and not c:IsReason(REASON_REPLACE)
+		and c:IsSetCard(SET_YOSENJU) and not c:IsReason(REASON_REPLACE)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -47,7 +48,7 @@ function s.repval(e,c)
 	return s.filter(c,e:GetHandlerPlayer())
 end
 function s.repop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Destroy(e:GetHandler(),REASON_EFFECT+REASON_REPLACE)
+	Duel.Destroy(e:GetHandler(),REASON_EFFECT|REASON_REPLACE)
 end
 function s.postg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAttackPos() end
@@ -60,5 +61,5 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tgtg(e,c)
-	return c~=e:GetHandler() and c:IsSetCard(0xb3)
+	return c~=e:GetHandler() and c:IsSetCard(SET_YOSENJU)
 end

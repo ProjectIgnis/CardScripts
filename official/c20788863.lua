@@ -31,16 +31,16 @@ function s.initial_effect(c)
 	e3:SetOperation(s.drop2)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x119}
+s.listed_series={SET_SALAMANGREAT}
 function s.cfilter(c)
-	return c:IsMonster() and c:IsSetCard(0x119) and c:IsDiscardable()
+	return c:IsMonster() and c:IsSetCard(SET_SALAMANGREAT) and c:IsDiscardable()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_COST+REASON_DISCARD,nil)
+	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_COST|REASON_DISCARD,nil)
 end
 function s.gyfilter(c)
-	return c:IsMonster() and c:IsSetCard(0x119) and c:IsAbleToGrave()
+	return c:IsMonster() and c:IsSetCard(SET_SALAMANGREAT) and c:IsAbleToGrave()
 end
 function s.drtg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1)
@@ -59,7 +59,7 @@ function s.drop1(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.lkfilter(c)
-	return c:IsSetCard(0x119) and c:IsLinkMonster() and c:IsReincarnationSummoned()
+	return c:IsSetCard(SET_SALAMANGREAT) and c:IsLinkMonster() and c:IsReincarnationSummoned()
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.lkfilter,tp,LOCATION_MZONE,0,1,nil)

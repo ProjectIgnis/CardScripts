@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x20f2}
+s.listed_series={SET_PENDULUMGRAPH}
 function s.dbcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsAbleToEnterBP()
 end
@@ -45,13 +45,13 @@ function s.dbop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if c:IsRelateToEffect(e) and tc and tc:IsRelateToEffect(e) then
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,0)
+		tc:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,0)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
 		e1:SetCondition(s.damcon)
 		e1:SetValue(aux.ChangeBattleDamage(1,DOUBLE_DAMAGE))
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 		Duel.BreakEffect()
 		Duel.Destroy(c,REASON_EFFECT)
@@ -64,7 +64,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return r&REASON_EFFECT+REASON_BATTLE~=0
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x20f2) and c:IsAbleToHand()
+	return c:IsSetCard(SET_PENDULUMGRAPH) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

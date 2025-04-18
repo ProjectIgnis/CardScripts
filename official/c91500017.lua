@@ -1,7 +1,6 @@
 --トゥーンのしおり
 --Toon Bookmark
 --Scripted by Hel
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Add 1 "Toon World" or 1 card that specifically lists "Toon World" from deck 
@@ -26,7 +25,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={15259703,id}
-
 function s.filter(c)
 	return (c:ListsCode(15259703) or c:IsCode(15259703)) and not c:IsCode(id) and c:IsAbleToHand() 
 end
@@ -49,7 +47,7 @@ end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 and e:GetHandler():IsAbleToRemove() and eg:IsExists(s.repfilter,1,nil,tp) end
 	if Duel.SelectEffectYesNo(tp,e:GetHandler(),96) then
-		Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+		Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1)
 		return true
 	else
 		return false

@@ -1,5 +1,5 @@
 --絶神鳥シムルグ
---Simorgh, Bird of Extermination
+--Simorgh, Bird of Perfection
 --Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
@@ -41,7 +41,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x12d}
+s.listed_series={SET_SIMORGH}
 function s.cfilter(c,tp)
 	return c:IsRace(RACE_WINGEDBEAST) and c:IsFaceup() and c:IsSummonPlayer(tp)
 end
@@ -54,22 +54,22 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.ShuffleHand(tp)
 end
 function s.sumfilter(c)
-	return c:IsSetCard(0x12d) and c:IsSummonable(true,nil)
+	return c:IsSetCard(SET_SIMORGH) and c:IsSummonable(true,nil)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.sumfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil) end
-	local g=Duel.GetMatchingGroup(s.sumfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.sumfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,1,nil) end
+	local g=Duel.GetMatchingGroup(s.sumfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,nil)
 	Duel.SetOperationInfo(0,CATEGORY_SUMMON,g,1,0,0)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SUMMON)
-	local tc=Duel.SelectMatchingCard(tp,s.sumfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,nil):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,s.sumfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,1,1,nil):GetFirst()
 	if tc then
 		Duel.Summon(tp,tc,true,nil)
 	end
 end
 function s.costfilter(c)
-	return c:IsSetCard(0x12d) and c:IsMonster() and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(SET_SIMORGH) and c:IsMonster() and c:IsAbleToGraveAsCost()
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -78,7 +78,7 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x12d) and c:IsSpellTrap() and c:IsAbleToHand()
+	return c:IsSetCard(SET_SIMORGH) and c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

@@ -1,4 +1,5 @@
 --壺魔神
+--Avatar of The Pot
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

@@ -1,9 +1,9 @@
--- ダイノルフィア・テリジア
--- Dinoruffia Therizia
--- Scripted by Hatter
+--ダイノルフィア・テリジア
+--Dinomorphia Therizia
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Set
+	--Set
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_ATKCHANGE)
@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	local e2=e1:Clone()
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
-	-- Special Summon
+	--Special Summon
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -32,9 +32,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={id}
-s.listed_series={0x175}
+s.listed_series={SET_DINOMORPHIA}
 function s.setfilter(c)
-	return c:IsSetCard(0x175) and c:IsTrap() and c:IsSSetable()
+	return c:IsSetCard(SET_DINOMORPHIA) and c:IsTrap() and c:IsSSetable()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -46,12 +46,12 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	if tc and Duel.SSet(tp,tc)>0 and Duel.GetLP(tp)<=2000 and c:IsFaceup()
 		and c:IsRelateToEffect(e) then
 		Duel.BreakEffect()
-		-- Gain ATK
+		--Gain ATK
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(500)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		c:RegisterEffect(e1)
 	end
 end
@@ -68,7 +68,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(tg,POS_FACEUP,REASON_COST)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x175) and c:IsLevelBelow(4) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_DINOMORPHIA) and c:IsLevelBelow(4) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

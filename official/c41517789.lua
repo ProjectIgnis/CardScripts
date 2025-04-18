@@ -1,4 +1,5 @@
 --星態龍
+--Star Eater
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -30,7 +31,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function s.sumsuc(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO) then return end
+	if not e:GetHandler():IsSynchroSummoned() then return end
 	Duel.SetChainLimitTillChainEnd(aux.FALSE)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
@@ -40,7 +41,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCode(EFFECT_IMMUNE_EFFECT)
 	e1:SetValue(s.efilter)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_DAMAGE)
 	e:GetHandler():RegisterEffect(e1)
 	Duel.AdjustInstantly(e:GetHandler())
 end

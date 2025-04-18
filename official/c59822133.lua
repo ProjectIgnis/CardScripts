@@ -1,8 +1,9 @@
 --青眼の精霊龍
+--Blue-Eyes Spirit Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
-	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTunerEx(Card.IsSetCard,0xdd),1,99)
+	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTunerEx(Card.IsSetCard,SET_BLUE_EYES),1,99)
 	c:EnableReviveLimit()
 	--special summon limit
 	local e1=Effect.CreateEffect(c)
@@ -34,12 +35,12 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetCondition(s.spcon)
-	e3:SetCost(s.spcost)
+	e3:SetCost(Cost.SelfTribute)
 	e3:SetTarget(s.sptg)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xdd}
+s.listed_series={SET_BLUE_EYES}
 s.listed_names={id}
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return re:GetActivateLocation()==LOCATION_GRAVE and Duel.IsChainNegatable(ev)
@@ -52,11 +53,7 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateActivation(ev)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
-end
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() end
-	Duel.Release(e:GetHandler(),REASON_COST)
+	return e:GetHandler():IsSynchroSummoned()
 end
 function s.spfilter(c,e,tp)
 	return c:IsRace(RACE_DRAGON) and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsType(TYPE_SYNCHRO) and Duel.GetLocationCountFromEx(tp,tp,e:GetHandler(),c)>0
@@ -72,7 +69,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=g:GetFirst()
 	if tc and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE)~=0 then
 		local fid=e:GetHandler():GetFieldID()
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1,fid)
+		tc:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1,fid)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_PHASE+PHASE_END)
@@ -80,7 +77,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 		e1:SetLabel(fid)
 		e1:SetLabelObject(tc)
-		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_PHASE|PHASE_END)
 		e1:SetCondition(s.descon)
 		e1:SetOperation(s.desop)
 		Duel.RegisterEffect(e1,tp)

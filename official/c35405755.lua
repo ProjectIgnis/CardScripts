@@ -1,5 +1,5 @@
 --倶利伽羅天童
---Kurikara the Immovable Avatar
+--Kurikara Divincarnate
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -45,8 +45,8 @@ end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local loc,p=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION,CHAININFO_TRIGGERING_CONTROLER)
 	local tc=re:GetHandler()
-	if re:IsActiveType(TYPE_MONSTER) and tc:IsRelateToEffect(re) and loc==LOCATION_MZONE and p==1-Duel.GetTurnPlayer() then
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+	if re:IsMonsterEffect() and tc:IsRelateToEffect(re) and loc==LOCATION_MZONE and p==1-Duel.GetTurnPlayer() then
+		tc:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 	end
 end
 function s.tfilter(c)
@@ -68,7 +68,7 @@ function s.spprocop(e,tp,eg,ep,ev,re,r,rp,c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(atk)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE-RESET_TOFIELD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE-RESET_TOFIELD)
 	c:RegisterEffect(e1)
 end
 function s.spfilter(c,e,tp)

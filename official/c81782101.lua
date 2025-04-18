@@ -20,9 +20,9 @@ function s.initial_effect(c)
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e3:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e3:SetCondition(s.spcon)
-	e3:SetCost(s.spcost)
+	e3:SetCost(Cost.SelfTribute)
 	e3:SetTarget(s.sptg)
 	e3:SetOperation(s.spop)
 	e3:SetLabelObject(e2)
@@ -30,27 +30,23 @@ function s.initial_effect(c)
 end
 function s.nsreg(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if Duel.GetTurnPlayer()==tp and Duel.GetCurrentPhase()==PHASE_STANDBY then
+	if Duel.IsTurnPlayer(tp) and Duel.IsPhase(PHASE_STANDBY) then
 		e:SetLabel(Duel.GetTurnCount())
-		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN,0,2)
+		c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_STANDBY|RESET_SELF_TURN,0,2)
 	else
 		e:SetLabel(0)
-		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN,0,1)
+		c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_STANDBY|RESET_SELF_TURN,0,1)
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetLabelObject():GetLabel()~=Duel.GetTurnCount() and Duel.IsTurnPlayer(tp) and e:GetHandler():GetFlagEffect(id)>0
 end
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() end
-	Duel.Release(e:GetHandler(),REASON_COST)
-end
 function s.filter(c,e,tp)
-	return c:IsLevelBelow(4) and c:IsRace(RACE_ROCK+RACE_REPTILE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsLevelBelow(4) and c:IsRace(RACE_ROCK|RACE_REPTILE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK+LOCATION_HAND,0,1,nil,e,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK+LOCATION_HAND)
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK|LOCATION_HAND,0,1,nil,e,tp) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK|LOCATION_HAND)
 end
 function s.rescon(sg,e,tp,mg)
 	return sg:GetClassCount(Card.GetCode)==1
@@ -60,13 +56,13 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if ft<=0 then return end
 	if ft>3 then ft=3 end
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
-	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK+LOCATION_HAND,0,nil,e,tp)
+	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK|LOCATION_HAND,0,nil,e,tp)
 	local sg=aux.SelectUnselectGroup(g,e,tp,1,ft,s.rescon,1,tp,HINTMSG_SPSUMMON)
 	if #sg>0 then
 		local fid=e:GetHandler():GetFieldID()
 		for tc in aux.Next(sg) do
 			Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
-			tc:RegisterFlagEffect(id+1,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1,fid)
+			tc:RegisterFlagEffect(id+1,RESETS_STANDARD_PHASE_END,0,1,fid)
 		end
 		Duel.SpecialSummonComplete()
 		sg:KeepAlive()

@@ -1,6 +1,5 @@
 --薔薇恋人
 --Rose Lover
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon 1 plant monster from hand
@@ -9,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_GRAVE)
 	e1:SetCountLimit(1,id)
-	e1:SetCost(aux.bfgcost)
+	e1:SetCost(Cost.SelfBanish)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
@@ -37,11 +36,11 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_IMMUNE_EFFECT)
 		e1:SetValue(s.efilter)
 		e1:SetOwnerPlayer(tp)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1,true)
 	end
 	Duel.SpecialSummonComplete()
 end
 function s.efilter(e,re)
-	return e:GetOwnerPlayer()~=re:GetOwnerPlayer() and re:IsActiveType(TYPE_TRAP)
+	return e:GetOwnerPlayer()~=re:GetOwnerPlayer() and re:IsTrapEffect()
 end

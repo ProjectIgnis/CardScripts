@@ -1,5 +1,5 @@
 --オルフェゴール・バベル
---Orphegel Babel
+--Orcustrated Babel
 --AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
@@ -42,4 +42,3 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(e:GetHandler(),nil,REASON_EFFECT)
 	end
 end
-

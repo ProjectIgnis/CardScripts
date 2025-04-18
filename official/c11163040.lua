@@ -2,8 +2,8 @@
 --The Kaiju Files
 local s,id=GetID()
 function s.initial_effect(c)
-	c:EnableCounterPermit(0x37)
-	c:SetCounterLimit(0x37,5)
+	c:EnableCounterPermit(COUNTER_KAIJU)
+	c:SetCounterLimit(COUNTER_KAIJU,5)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -34,32 +34,32 @@ function s.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_IGNITION)
 	e4:SetRange(LOCATION_SZONE)
 	e4:SetCondition(s.thcon)
-	e4:SetCost(s.thcost)
+	e4:SetCost(Cost.SelfToGrave)
 	e4:SetTarget(s.thtg)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
 end
-s.counter_place_list={0x37}
-s.listed_series={0xd3}
+s.counter_place_list={COUNTER_KAIJU}
+s.listed_series={SET_KAIJU}
 s.listed_names={id}
 function s.cfilter(c)
-	return c:IsSetCard(0xd3) and c:IsPreviousLocation(LOCATION_HAND+LOCATION_GRAVE)
+	return c:IsSetCard(SET_KAIJU) and c:IsPreviousLocation(LOCATION_HAND|LOCATION_GRAVE)
 end
 function s.counter(e,tp,eg,ep,ev,re,r,rp)
 	if eg:IsExists(s.cfilter,1,nil) then
-		e:GetHandler():AddCounter(0x37,1)
+		e:GetHandler():AddCounter(COUNTER_KAIJU,1)
 	end
 end
 function s.filter(c,e,tp)
-	return c:IsFaceup() and c:IsSetCard(0xd3)
+	return c:IsFaceup() and c:IsSetCard(SET_KAIJU)
 		and Duel.IsExistingMatchingCard(s.chkfilter,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetControler(),c:GetOriginalCode())
 end
 function s.chkfilter(c,e,tp,cc,code)
-	return c:IsSetCard(0xd3) and c:GetOriginalCode()~=code and
+	return c:IsSetCard(SET_KAIJU) and c:GetOriginalCode()~=code and
 		not c:IsHasEffect(EFFECT_REVIVE_LIMIT) and Duel.IsPlayerCanSpecialSummon(tp,0,POS_FACEUP,cc,c)
 end
 function s.spfilter(c,e,tp,cc,code)
-	return c:IsSetCard(0xd3) and not c:IsOriginalCode(code) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,cc)
+	return c:IsSetCard(SET_KAIJU) and not c:IsOriginalCode(code) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,cc)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc,e,tp) end
@@ -90,14 +90,10 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetCounter(0x37)>=3
-end
-function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
+	return e:GetHandler():GetCounter(COUNTER_KAIJU)>=3
 end
 function s.thfilter(c)
-	return c:IsSetCard(0xd3) and c:IsSpellTrap() and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(SET_KAIJU) and c:IsSpellTrap() and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

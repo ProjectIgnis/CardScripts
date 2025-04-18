@@ -66,11 +66,10 @@ function s.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local tg=c:GetEquipTarget()
 	if chk==0 then return tg 
-		and tg:IsReason(REASON_BATTLE+REASON_EFFECT)
+		and tg:IsReason(REASON_BATTLE|REASON_EFFECT)
 		and Duel.IsCanRemoveCounter(tp,1,0,COUNTER_SPELL,1,REASON_EFFECT) end
 	return Duel.SelectEffectYesNo(tp,c,96)
 end
 function s.desrepop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.RemoveCounter(tp,1,0,COUNTER_SPELL,1,REASON_EFFECT+REASON_REPLACE)
+	Duel.RemoveCounter(tp,1,0,COUNTER_SPELL,1,REASON_EFFECT|REASON_REPLACE)
 end
-

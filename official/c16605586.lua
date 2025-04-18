@@ -1,7 +1,6 @@
 --Ｄ－ＨＥＲＯ ディナイアルガイ
 --Destiny HERO - Denier
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -32,22 +31,21 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 	--Lists "Destiny HERO" archetype
-s.listed_series={0xc008}
+s.listed_series={SET_DESTINY_HERO}
 	--Specifically lists itself
 s.listed_names={id}
-
 	--Check for a "Destiny HERO" monster
 function s.filter(c)
-	return c:IsSetCard(0xc008) and c:IsMonster() and (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE+LOCATION_DECK))
+	return c:IsSetCard(SET_DESTINY_HERO) and c:IsMonster() and (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE|LOCATION_DECK))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK+LOCATION_GRAVE+LOCATION_REMOVED,0,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,0,LOCATION_DECK+LOCATION_GRAVE+LOCATION_REMOVED)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK|LOCATION_GRAVE|LOCATION_REMOVED,0,1,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,0,LOCATION_DECK|LOCATION_GRAVE|LOCATION_REMOVED)
 end
 	--Place on top of your Deck, 1 of your "Destiny HERO" monsters that is banished, in GY, or Deck
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.filter),tp,LOCATION_DECK+LOCATION_GRAVE+LOCATION_REMOVED,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.filter),tp,LOCATION_DECK|LOCATION_GRAVE|LOCATION_REMOVED,0,1,1,nil)
 	local tc=g:GetFirst()
 	if not tc then return end
 	if tc:IsLocation(LOCATION_DECK) then
@@ -63,10 +61,10 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for a "Destiny HERO" monster
 function s.spfilter(c)
-	return c:IsFaceup() and c:IsMonster() and c:IsSetCard(0xc008) and not c:IsCode(id)
+	return c:IsFaceup() and c:IsMonster() and c:IsSetCard(SET_DESTINY_HERO) and not c:IsCode(id)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,1,nil)
+	return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_ONFIELD|LOCATION_GRAVE,0,1,nil)
 end
 	--Activation legality
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

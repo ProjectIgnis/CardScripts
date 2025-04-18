@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,{id,1})
-	e2:SetCost(aux.dxmcostgen(1,1,nil))
+	e2:SetCost(Cost.Detach(1,1,nil))
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
 	--Add 1 "A.I." Trap from your Deck to your hand
 	local e3=Effect.CreateEffect(c)

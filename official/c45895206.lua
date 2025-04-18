@@ -1,4 +1,5 @@
 --闇をかき消す光
+--Dark-Piercing Light
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e1:SetHintTiming(0,TIMING_END_PHASE+TIMING_EQUIP)
+	e1:SetHintTiming(0,TIMING_END_PHASE|TIMING_EQUIP)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
@@ -22,12 +22,12 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x97}
+s.listed_series={SET_ARTIFACT}
 function s.filter(c)
-	return c:IsSetCard(0x97) and c:IsMonster() and c:IsSSetable(true)
+	return c:IsSetCard(SET_ARTIFACT) and c:IsMonster() and c:IsSSetable(true)
 end
 function s.desfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsSpellTrap()
 end
 function s.desfilter2(c)
 	return c:IsSpellTrap() and c:GetSequence()<5
@@ -70,18 +70,17 @@ function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp and e:GetHandler():IsPreviousControler(tp)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	local ph=Duel.GetCurrentPhase()
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_SKIP_BP)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(0,1)
-	if Duel.GetTurnPlayer()~=tp and ph>PHASE_MAIN1 and ph<PHASE_MAIN2 then
+	if Duel.IsTurnPlayer(1-tp) and Duel.IsBattlePhase() then
 		e1:SetLabel(Duel.GetTurnCount())
 		e1:SetCondition(s.skipcon)
-		e1:SetReset(RESET_PHASE+PHASE_BATTLE+RESET_OPPO_TURN,2)
+		e1:SetReset(RESET_PHASE|PHASE_BATTLE|RESET_OPPO_TURN,2)
 	else
-		e1:SetReset(RESET_PHASE+PHASE_BATTLE+RESET_OPPO_TURN,1)
+		e1:SetReset(RESET_PHASE|PHASE_BATTLE|RESET_OPPO_TURN,1)
 	end
 	Duel.RegisterEffect(e1,tp)
 end

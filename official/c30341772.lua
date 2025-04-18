@@ -1,4 +1,5 @@
 --ホープ・バスター
+--Utopia Buster
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,9 +12,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x107f}
+s.listed_series={SET_UTOPIA}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x107f)
+	return c:IsFaceup() and c:IsSetCard(SET_UTOPIA)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)

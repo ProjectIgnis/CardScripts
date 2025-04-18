@@ -23,13 +23,13 @@ function s.initial_effect(c)
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
-		and (re:IsActiveType(TYPE_MONSTER) or re:IsHasType(EFFECT_TYPE_ACTIVATE)) and Duel.IsChainNegatable(ev)
+		and (re:IsMonsterEffect() or re:IsHasType(EFFECT_TYPE_ACTIVATE)) and Duel.IsChainNegatable(ev)
 end
 function s.cfilter(c,rtype)
 	return c:IsType(rtype) and c:IsAbleToGraveAsCost()
 end
 function s.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local rtype=(re:GetActiveType()&0x7)
+	local rtype=(re:GetActiveType()&(TYPE_MONSTER|TYPE_SPELL|TYPE_TRAP))
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil,rtype) end
 	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_COST,nil,rtype)
 end

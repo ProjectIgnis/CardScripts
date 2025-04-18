@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCategory(CATEGORY_EQUIP)
-	e1:SetRange(LOCATION_HAND+LOCATION_MZONE)
+	e1:SetRange(LOCATION_HAND|LOCATION_MZONE)
 	e1:SetTarget(s.eqtg)
 	e1:SetOperation(s.eqop)
 	c:RegisterEffect(e1)
@@ -30,9 +30,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.atkop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x5048}
+s.listed_series={SET_NUMBER_C39}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x5048)
+	return c:IsFaceup() and c:IsSetCard(SET_NUMBER_C39)
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -66,7 +66,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetValue(0)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		at:RegisterEffect(e1)
 		Duel.ChainAttack(at)
 	end

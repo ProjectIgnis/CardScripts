@@ -1,7 +1,6 @@
 --ホーリーナイツ・アステル
---Holy Knight Astel
+--Starry Knight Astel
 --LUA by Kohana Sonogami
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Tribute 1 LIGHT monster; Special Summon from hand
@@ -24,12 +23,12 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCountLimit(1,{id,1})
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.atktg)
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x15b}
+s.listed_series={SET_STARRY_KNIGHT}
 function s.ldlv7filter(c)
 	return c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsRace(RACE_DRAGON) and c:IsLevel(7)
 end
@@ -72,7 +71,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(1000)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,2)
+		e1:SetReset(RESETS_STANDARD_PHASE_END,2)
 		tc:RegisterEffect(e1)
 	end
 end

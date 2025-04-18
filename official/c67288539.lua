@@ -1,5 +1,5 @@
--- ヴァレルコード・ドラゴン
--- Borrelcode Dragon
+--ヴァレルコード・ドラゴン
+--Borrelcode Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--Link Summon
@@ -38,7 +38,7 @@ function s.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_IGNITION)
 	e4:SetRange(LOCATION_GRAVE)
 	e4:SetCountLimit(1,{id,1})
-	e4:SetCost(aux.bfgcost)
+	e4:SetCost(Cost.SelfBanish)
 	e4:SetTarget(s.sptg)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
@@ -54,7 +54,7 @@ end
 --destroy all
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:HasFlagEffect(id) and c:IsSummonType(SUMMON_TYPE_LINK) and c:GetBattleTarget()
+	return c:HasFlagEffect(id) and c:IsLinkSummoned() and c:GetBattleTarget()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(nil,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end

@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	if not (re:IsHasType(EFFECT_TYPE_ACTIVATE) or re:IsActiveType(TYPE_MONSTER)) or
+	if not (re:IsHasType(EFFECT_TYPE_ACTIVATE) or re:IsMonsterEffect()) or
 		not Duel.IsChainNegatable(ev) then return false end
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 	if not g or #g~=1 then return false end

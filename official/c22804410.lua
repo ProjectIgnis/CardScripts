@@ -1,4 +1,5 @@
 --ディープアイズ・ホワイト・ドラゴン
+--Deep-Eyes White Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -37,7 +38,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function s.spfilter(c,tp)
-	return c:IsPreviousSetCard(0xdd) and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
+	return c:IsPreviousSetCard(SET_BLUE_EYES) and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
 		and (c:IsReason(REASON_BATTLE) or c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()~=tp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
@@ -77,7 +78,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetValue(atk)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		c:RegisterEffect(e1)
 	end
 end

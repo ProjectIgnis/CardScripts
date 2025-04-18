@@ -1,4 +1,5 @@
 --愚鈍の斧
+--Axe of Fools
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c)
@@ -18,7 +19,7 @@ function s.initial_effect(c)
 	e5:SetDescription(aux.Stringid(id,0))
 	e5:SetCategory(CATEGORY_DAMAGE)
 	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
-	e5:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e5:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e5:SetRange(LOCATION_SZONE)
 	e5:SetCountLimit(1)
 	e5:SetCondition(s.damcon)

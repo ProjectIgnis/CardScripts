@@ -1,7 +1,6 @@
 --弑逆の魔轟神
---Fabled Regicide
+--Fabled Treason
 --Scripted by Naim
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon 1 "Fabled" monster from GY, destroy 1 card on the field
@@ -15,10 +14,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x35}
-
+s.listed_series={SET_FABLED}
 function s.spfilter(c,e,tp)
-	return c:IsMonster() and c:IsSetCard(0x35) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsMonster() and c:IsSetCard(SET_FABLED) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
@@ -36,10 +34,10 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_HANDES,nil,0,tp,1)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.DiscardHand(tp,nil,1,1,REASON_EFFECT+REASON_DISCARD)==0 then return end
+	if Duel.DiscardHand(tp,nil,1,1,REASON_EFFECT|REASON_DISCARD)==0 then return end
 	local ex1,tg1=Duel.GetOperationInfo(0,CATEGORY_SPECIAL_SUMMON)
 	local ex2,tg2=Duel.GetOperationInfo(0,CATEGORY_DESTROY)
-	if tg1 and tg1:GetFirst():IsRelateToEffect(e) and  Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.SpecialSummon(tg1,0,tp,tp,false,false,POS_FACEUP)~=0 then
+	if tg1 and tg1:GetFirst():IsRelateToEffect(e) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.SpecialSummon(tg1,0,tp,tp,false,false,POS_FACEUP)~=0 then
 		if tg2 and tg2:GetFirst():IsRelateToEffect(e) then
 			Duel.Destroy(tg2,REASON_EFFECT)
 		end

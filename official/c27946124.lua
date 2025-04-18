@@ -1,6 +1,5 @@
 --聖蔓の社
 --Sunvine Shrine
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -40,15 +39,14 @@ function s.initial_effect(c)
 	e4:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e4:SetCountLimit(1)
 	e4:SetCondition(s.setcon)
-	e4:SetCost(s.setcost)
+	e4:SetCost(Cost.SelfToGrave)
 	e4:SetTarget(s.settg)
 	e4:SetOperation(s.setop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x1157}
-
+s.listed_series={SET_SUNAVALON}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x1157) and c:IsType(TYPE_LINK)
+	return c:IsFaceup() and c:IsSetCard(SET_SUNAVALON) and c:IsType(TYPE_LINK)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
@@ -84,14 +82,10 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 --set
 function s.setcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
-end
-function s.setcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
+	return Duel.IsTurnPlayer(1-tp)
 end
 function s.setfilter(c)
-	return c:GetType()&0x20004==0x20004 and c:IsSSetable(true)
+	return c:IsContinuousTrap() and c:IsSSetable(true)
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.setfilter(chkc) end

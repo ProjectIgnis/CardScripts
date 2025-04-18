@@ -1,4 +1,5 @@
 --ナチュル・パイナポー
+--Naturia Pineapple
 local s,id=GetID()
 function s.initial_effect(c)
 	--Change race
@@ -14,7 +15,7 @@ function s.initial_effect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_FIELD)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e2:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e2:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1)
 	e2:SetCondition(s.condition)
@@ -23,10 +24,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.filter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) or (c:IsCode(id) and c:IsFaceup())
+	return c:IsSpellTrap() or (c:IsCode(id) and c:IsFaceup())
 end
 function s.filter2(c)
-	return c:IsMonster() and not c:IsRace(RACE_PLANT+RACE_BEAST)
+	return c:IsMonster() and not c:IsRace(RACE_PLANT|RACE_BEAST)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return tp==Duel.GetTurnPlayer() and not Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_ONFIELD,0,1,nil) 

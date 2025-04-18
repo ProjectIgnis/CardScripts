@@ -1,7 +1,6 @@
 --煌めく聖夜
---Holy Night Sky
+--Starry Knight Sky
 --Scripted by The Razgriz
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -15,7 +14,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_EXTRA_SUMMON_COUNT)
 	e2:SetRange(LOCATION_FZONE)
-	e2:SetTargetRange(LOCATION_HAND+LOCATION_MZONE,0)
+	e2:SetTargetRange(LOCATION_HAND|LOCATION_MZONE,0)
 	e2:SetTarget(s.extg)
 	c:RegisterEffect(e2)
 	--Draw if a Level 7 Dragon monster(s) returns to hand
@@ -31,19 +30,18 @@ function s.initial_effect(c)
 	e3:SetOperation(s.dop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x15b}
-
+s.listed_series={SET_STARRY_KNIGHT}
 function s.ldlv7filter(c)
 	return c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsRace(RACE_DRAGON) and c:IsLevel(7)
 end
 function s.extg(e,c)
-	return (c:IsSetCard(0x15b) and c:IsMonster()) or s.ldlv7filter(c)
+	return (c:IsSetCard(SET_STARRY_KNIGHT) and c:IsMonster()) or s.ldlv7filter(c)
 end
 function s.filter(c,tp)
 	return c:IsControler(tp) and c:IsPreviousLocation(LOCATION_MZONE) and s.ldlv7filter(c)
 end
 function s.dcon(e,tp,eg,ev,ep,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and eg:IsExists(s.filter,1,nil,tp)
+	return Duel.IsTurnPlayer(tp) and eg:IsExists(s.filter,1,nil,tp)
 end
 function s.dtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end

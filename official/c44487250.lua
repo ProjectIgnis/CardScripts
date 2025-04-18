@@ -1,4 +1,5 @@
 --エクシーズ・ブロック
+--Xyz Block
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -13,7 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev)
+	return rp~=tp and re:IsMonsterEffect() and Duel.IsChainNegatable(ev)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckRemoveOverlayCard(tp,1,0,1,REASON_COST) end

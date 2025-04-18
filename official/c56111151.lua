@@ -2,8 +2,8 @@
 --Kyoutou Waterfront
 local s,id=GetID()
 function s.initial_effect(c)
-	c:EnableCounterPermit(0x37)
-	c:SetCounterLimit(0x37,5)
+	c:EnableCounterPermit(COUNTER_KAIJU)
+	c:SetCounterLimit(COUNTER_KAIJU,5)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -36,22 +36,22 @@ function s.initial_effect(c)
 	e4:SetOperation(s.desrepop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0xd3}
-s.counter_place_list={0x37}
+s.listed_series={SET_KAIJU}
+s.counter_place_list={COUNTER_KAIJU}
 function s.cfilter(c)
 	return c:IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.counter(e,tp,eg,ep,ev,re,r,rp)
 	local ct=eg:FilterCount(s.cfilter,nil)
 	if ct>0 then
-		e:GetHandler():AddCounter(0x37,ct,true)
+		e:GetHandler():AddCounter(COUNTER_KAIJU,ct,true)
 	end
 end
 function s.thfilter(c)
-	return c:IsSetCard(0xd3) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_KAIJU) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetCounter(0x37)>=3
+	return e:GetHandler():GetCounter(COUNTER_KAIJU)>=3
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -68,9 +68,9 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not e:GetHandler():IsReason(REASON_REPLACE+REASON_RULE)
-		and e:GetHandler():IsCanRemoveCounter(tp,0x37,1,REASON_EFFECT) end
+		and e:GetHandler():IsCanRemoveCounter(tp,COUNTER_KAIJU,1,REASON_EFFECT) end
 	return Duel.SelectEffectYesNo(tp,e:GetHandler(),96)
 end
 function s.desrepop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():RemoveCounter(tp,0x37,1,REASON_EFFECT)
+	e:GetHandler():RemoveCounter(tp,COUNTER_KAIJU,1,REASON_EFFECT)
 end

@@ -1,4 +1,5 @@
 --D・ラジオン
+--Morphtronic Radion
 local s,id=GetID()
 function s.initial_effect(c)
 	--atk
@@ -8,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetTargetRange(LOCATION_MZONE,0)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetCondition(s.cona)
-	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x26))
+	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_MORPHTRONIC))
 	e1:SetValue(800)
 	c:RegisterEffect(e1)
 	--def
@@ -18,7 +19,7 @@ function s.initial_effect(c)
 	e2:SetValue(1000)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x26}
+s.listed_series={SET_MORPHTRONIC}
 function s.cona(e)
 	return e:GetHandler():IsAttackPos()
 end

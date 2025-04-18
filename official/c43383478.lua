@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e1:SetHintTiming(0,TIMING_DESTROY+TIMING_END_PHASE)
+	e1:SetHintTiming(0,TIMING_DESTROY|TIMING_END_PHASE)
 	e1:SetCondition(s.condition)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
@@ -21,31 +21,31 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge1,0)
 	end)
 end
-s.listed_series={0xba}
+s.listed_series={SET_RAIDRAPTOR}
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	local p1=false
 	local p2=false
 	for tc in aux.Next(eg) do
-		if tc:IsSetCard(0xba) and tc:IsType(TYPE_XYZ) and tc:IsReason(REASON_DESTROY) then
+		if tc:IsSetCard(SET_RAIDRAPTOR) and tc:IsType(TYPE_XYZ) and tc:IsReason(REASON_DESTROY) then
 			if tc:IsPreviousControler(0) then p1=true else p2=true end
 		end
 	end
-	if p1 then Duel.RegisterFlagEffect(0,id,RESET_PHASE+PHASE_END,0,1) end
-	if p2 then Duel.RegisterFlagEffect(1,id,RESET_PHASE+PHASE_END,0,1) end
+	if p1 then Duel.RegisterFlagEffect(0,id,RESET_PHASE|PHASE_END,0,1) end
+	if p2 then Duel.RegisterFlagEffect(1,id,RESET_PHASE|PHASE_END,0,1) end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFlagEffect(tp,id)~=0
 end
 function s.filter1(c,e,tp)
 	local pg=aux.GetMustBeMaterialGroup(tp,Group.FromCards(c),tp,nil,nil,REASON_XYZ)
-	return (#pg<=0 or (#pg==1 and pg:IsContains(c))) and c:IsSetCard(0xba) and c:IsType(TYPE_XYZ) and (c:GetRank()>0 or c:IsStatus(STATUS_NO_LEVEL)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return (#pg<=0 or (#pg==1 and pg:IsContains(c))) and c:IsSetCard(SET_RAIDRAPTOR) and c:IsType(TYPE_XYZ) and (c:GetRank()>0 or c:IsStatus(STATUS_NO_LEVEL)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,c,c:GetRank()+1,pg)
 end
 function s.filter2(c,e,tp,mc,rk,pg)
 	if c.rum_limit and not c.rum_limit(mc,e) then return false end
 	return c:IsType(TYPE_XYZ) and mc:IsType(TYPE_XYZ,c,SUMMON_TYPE_XYZ,tp)
-		and c:IsRank(rk) and c:IsSetCard(0xba) and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0
+		and c:IsRank(rk) and c:IsSetCard(SET_RAIDRAPTOR) and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0
 		and mc:IsCanBeXyzMaterial(c,tp) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

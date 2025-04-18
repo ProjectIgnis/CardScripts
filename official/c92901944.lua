@@ -1,4 +1,5 @@
 --スクラップ・サーチャー
+--Scrap Searcher
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -22,9 +23,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x24}
+s.listed_series={SET_SCRAP}
 function s.cfilter(c,tp)
-	return c:IsSetCard(0x24) and c:GetCode()~=id and c:IsReason(REASON_DESTROY) and c:IsPreviousControler(tp)
+	return c:IsSetCard(SET_SCRAP) and c:GetCode()~=id and c:IsReason(REASON_DESTROY) and c:IsPreviousControler(tp)
 		and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
@@ -41,7 +42,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.desfilter(c)
-	return c:IsFaceup() and not c:IsSetCard(0x24)
+	return c:IsFaceup() and not c:IsSetCard(SET_SCRAP)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

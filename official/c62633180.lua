@@ -1,4 +1,5 @@
 --本陣強襲
+--Assault on GHQ
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

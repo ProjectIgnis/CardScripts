@@ -1,4 +1,5 @@
 --A・O・J D.D.チェッカー
+--Ally of Justice Quarantine
 local s,id=GetID()
 function s.initial_effect(c)
 	--disable spsummon

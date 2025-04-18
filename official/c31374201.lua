@@ -1,7 +1,6 @@
 --海造賊－白髭の機関士
 --Whitebeard, the Plunder Patroll Helm
 --Scripted by Larry126
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon 1 "Plunder Patroll" monster from extra deck
@@ -30,14 +29,13 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x13f}
+s.listed_series={SET_PLUNDER_PATROLL}
 s.listed_names={id}
-
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return Duel.IsTurnPlayer(1-tp)
 end
 function s.filter(c,e,tp,att)
-	return c:IsSetCard(0x13f) and c:IsAttribute(att) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_PLUNDER_PATROLL) and c:IsAttribute(att) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
 end
 function s.cfilter(c)
@@ -45,7 +43,7 @@ function s.cfilter(c)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local att=0
-	for gc in aux.Next(Duel.GetMatchingGroup(s.cfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,nil)) do
+	for gc in aux.Next(Duel.GetMatchingGroup(s.cfilter,tp,0,LOCATION_MZONE|LOCATION_GRAVE,nil)) do
 		att=att|gc:GetAttribute()
 	end
 	if chk==0 then return att>0 and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
@@ -55,7 +53,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local att=0
-	for gc in aux.Next(Duel.GetMatchingGroup(s.cfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,nil)) do
+	for gc in aux.Next(Duel.GetMatchingGroup(s.cfilter,tp,0,LOCATION_MZONE|LOCATION_GRAVE,nil)) do
 		att=att|gc:GetAttribute()
 	end
 	if att==0 then return end
@@ -68,7 +66,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_EQUIP_LIMIT)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e1:SetValue(s.eqlimit)
 		e1:SetLabelObject(tc)
 		c:RegisterEffect(e1)
@@ -78,10 +76,10 @@ function s.eqlimit(e,c)
 	return c==e:GetLabelObject()
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsPreviousLocation(LOCATION_HAND+LOCATION_MZONE)
+	return e:GetHandler():IsPreviousLocation(LOCATION_HAND|LOCATION_MZONE)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x13f) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP) and not c:IsCode(id)
+	return c:IsSetCard(SET_PLUNDER_PATROLL) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP) and not c:IsCode(id)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
@@ -103,9 +101,9 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.splimit(e,c)
-	return not c:IsSetCard(0x13f)
+	return not c:IsSetCard(SET_PLUNDER_PATROLL)
 end

@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e1:SetRange(LOCATION_HAND+LOCATION_GRAVE)
+	e1:SetRange(LOCATION_HAND|LOCATION_GRAVE)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(s.spcon)
@@ -62,11 +62,10 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(ct*400)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		c:RegisterEffect(e1)
 	end
 end
 function s.sumlimit(e,c,sump,sumtype,sumpos,targetp)
 	return c:IsType(TYPE_TOKEN)
 end
-

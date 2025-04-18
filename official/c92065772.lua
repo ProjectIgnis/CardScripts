@@ -1,4 +1,5 @@
 --氷結界に住む魔酔虫
+--Numbing Grub in the Ice Barrier
 local s,id=GetID()
 function s.initial_effect(c)
 	--dis field
@@ -17,7 +18,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCode(EFFECT_DISABLE_FIELD)
 	e1:SetOperation(s.disop)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 	e:GetHandler():RegisterEffect(e1)
 end
 function s.disop(e,tp)

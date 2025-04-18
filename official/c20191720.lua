@@ -26,13 +26,13 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tdop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xfc}
+s.listed_series={SET_GOUKI}
 s.listed_names={20191720}
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not e:GetHandler():IsPublic() end
 end
 function s.spfilter(c)
-	return c:IsSetCard(0xfc) and c:IsFaceup() and c:IsAbleToHand() and not c:IsCode(id)
+	return c:IsSetCard(SET_GOUKI) and c:IsFaceup() and c:IsAbleToHand() and not c:IsCode(id)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.spfilter(chkc) end
@@ -56,7 +56,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tdfilter(c)
-	return c:IsSetCard(0xfc) and c:IsLinkMonster() and c:IsAbleToExtra()
+	return c:IsSetCard(SET_GOUKI) and c:IsLinkMonster() and c:IsAbleToExtra()
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.tdfilter(chkc) end
@@ -67,11 +67,11 @@ function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_GRAVE)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0xfc) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_GOUKI) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_EXTRA) then
+	if tc:IsRelateToEffect(e) and Duel.SendtoDeck(tc,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_EXTRA) then
 		local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.thfilter),tp,LOCATION_GRAVE,0,nil)
 		if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 			Duel.BreakEffect()

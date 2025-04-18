@@ -18,7 +18,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_NEPHTHYS}
 function s.condition(e)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
+	return e:GetHandler():IsLinkSummoned()
 end
 function s.thfilter1(c)
 	return c:IsLevel(8) and c:IsRace(RACE_WINGEDBEAST) and c:IsAbleToHand()

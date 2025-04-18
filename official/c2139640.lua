@@ -1,7 +1,6 @@
 --あまびえさん
---Amabie-San
+--Amabie
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -10,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetCategory(CATEGORY_RECOVER)
 	e1:SetRange(LOCATION_HAND)
-	e1:SetCondition(function(e,tp,eg,ep,ev,re,r,rp)return Duel.GetCurrentPhase()==PHASE_MAIN1 and not Duel.CheckPhaseActivity() end)
+	e1:SetCondition(function(e,tp,eg,ep,ev,re,r,rp)return Duel.IsPhase(PHASE_MAIN1) and not Duel.CheckPhaseActivity() end)
 	e1:SetCost(function(e,tp,eg,ep,ev,re,r,rp,chk)if chk==0 then return not e:GetHandler():IsPublic()end end)
 	e1:SetTarget(function(e,tp,eg,ep,ev,re,r,rp,chk)if chk==0 then return true end
 		Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,PLAYER_ALL,300)end)

@@ -1,4 +1,5 @@
 --ギミック・パペット－シザー・アーム
+--Gimmick Puppet Scissor Arms
 local s,id=GetID()
 function s.initial_effect(c)
 	--send to grave
@@ -12,9 +13,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x1083}
+s.listed_series={SET_GIMMICK_PUPPET}
 function s.tgfilter(c)
-	return c:IsMonster() and c:IsSetCard(0x1083) and c:IsAbleToGrave()
+	return c:IsMonster() and c:IsSetCard(SET_GIMMICK_PUPPET) and c:IsAbleToGrave()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil) end

@@ -1,4 +1,5 @@
 --リチュア・キラー
+--Gishki Reliever
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -16,9 +17,9 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x3a}
+s.listed_series={SET_GISHKI}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x3a)
+	return c:IsFaceup() and c:IsSetCard(SET_GISHKI)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,e:GetHandler())

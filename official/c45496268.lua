@@ -1,4 +1,5 @@
 --SDロボ・エレファン
+--Super Defense Robot Elephan
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -28,10 +29,10 @@ function s.initial_effect(c)
 	e3:SetValue(s.xyzlimit)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x85}
+s.listed_series={SET_SUPER_DEFENSE_ROBOT}
 s.listed_names={71071546}
 function s.filter(c,e,tp)
-	return (c:IsSetCard(0x85) or c:IsCode(71071546)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return (c:IsSetCard(SET_SUPER_DEFENSE_ROBOT) or c:IsCode(71071546)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sumtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -48,7 +49,7 @@ function s.sumop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.lvfilter(c)
-	return c:IsFaceup() and (c:IsSetCard(0x85) or c:IsCode(71071546)) and c:GetLevel()~=8
+	return c:IsFaceup() and (c:IsSetCard(SET_SUPER_DEFENSE_ROBOT) or c:IsCode(71071546)) and c:GetLevel()~=8
 end
 function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.lvfilter(chkc) end
@@ -64,7 +65,7 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetCode(EFFECT_CHANGE_LEVEL)
 		e1:SetValue(8)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end

@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={id}
-s.listed_series={0x140}
+s.listed_series={SET_ADAMANCIPATOR}
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsRace(RACE_ROCK) and not c:IsCode(id)
 end

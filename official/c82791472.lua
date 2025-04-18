@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1)
-	e3:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END)
+	e3:SetHintTiming(0,TIMINGS_CHECK_MONSTER|TIMING_MAIN_END)
 	e3:SetCondition(s.descon)
 	e3:SetCost(s.descost)
 	e3:SetTarget(s.destg)
@@ -49,16 +49,15 @@ function s.initial_effect(c)
 	e4:SetOperation(s.ctop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x137}
-
+s.listed_series={SET_ANCIENT_WARRIORS}
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,0x137),tp,LOCATION_MZONE,LOCATION_MZONE,nil):GetMaxGroup(Card.GetAttack)
+	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,SET_ANCIENT_WARRIORS),tp,LOCATION_MZONE,LOCATION_MZONE,nil):GetMaxGroup(Card.GetAttack)
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and g and g:IsExists(Card.IsControler,1,nil,tp)
 end
 function s.chainfilter(re,tp,cid)
-	return not (re:IsActiveType(TYPE_MONSTER) and not re:GetHandler():IsSetCard(0x137))
+	return not (re:IsMonsterEffect() and not re:GetHandler():IsSetCard(SET_ANCIENT_WARRIORS))
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsMainPhase()
@@ -73,11 +72,11 @@ function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetCode(EFFECT_CANNOT_ACTIVATE)
 	e1:SetTargetRange(1,0)
 	e1:SetValue(s.aclimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.aclimit(e,re,tp)
-	return re:IsActiveType(TYPE_MONSTER) and not re:GetHandler():IsSetCard(0x137)
+	return re:IsMonsterEffect() and not re:GetHandler():IsSetCard(SET_ANCIENT_WARRIORS)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) end

@@ -1,4 +1,5 @@
 --生贄の祭壇
+--Altar for Tribute
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

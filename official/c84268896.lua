@@ -1,4 +1,5 @@
 --アーティファクト－カドケウス
+--Artifact Caduceus
 local s,id=GetID()
 function s.initial_effect(c)
 	c:SetUniqueOnField(1,0,id)
@@ -30,7 +31,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.drop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x97}
+s.listed_series={SET_ARTIFACT}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsPreviousLocation(LOCATION_SZONE) and c:IsPreviousPosition(POS_FACEDOWN)
@@ -46,7 +47,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp and not eg:IsContains(e:GetHandler()) and eg:IsExists(aux.FaceupFilter(Card.IsSetCard,0x97),1,nil)
+	return Duel.IsTurnPlayer(1-tp) and not eg:IsContains(e:GetHandler()) and eg:IsExists(aux.FaceupFilter(Card.IsSetCard,SET_ARTIFACT),1,nil)
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsRelateToEffect(e) and e:GetHandler():IsFaceup() end

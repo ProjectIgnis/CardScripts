@@ -1,10 +1,9 @@
 --ドラグニティナイト－ゴルムファバル
---Dragunity Knight – Gormfabal
-
+--Dragunity Knight - Gormfaobhar
 local s,id=GetID()
 function s.initial_effect(c)
 	--Synchro summon procedure
-	Synchro.AddProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x29),1,1,Synchro.NonTuner(nil),1,99)
+	Synchro.AddProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,SET_DRAGUNITY),1,1,Synchro.NonTuner(nil),1,99)
 	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
 	--Equip 1 "Dragunity" tuner from GY to this card
@@ -34,16 +33,15 @@ function s.initial_effect(c)
 	e2:SetOperation(s.rmop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x29}
-
+s.listed_series={SET_DRAGUNITY}
 function s.eqval(ec,c,tp)
-	return ec:IsControler(tp) and ec:IsSetCard(0x29) 
+	return ec:IsControler(tp) and ec:IsSetCard(SET_DRAGUNITY) 
 end
 function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
+	return e:GetHandler():IsSynchroSummoned()
 end
 function s.filter(c)
-	return c:IsSetCard(0x29) and c:IsMonster() and c:IsType(TYPE_TUNER) and not c:IsForbidden()
+	return c:IsSetCard(SET_DRAGUNITY) and c:IsMonster() and c:IsType(TYPE_TUNER) and not c:IsForbidden()
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -78,10 +76,10 @@ function s.rmfilter(c)
 	return c:IsAbleToRemove() and aux.SpElimFilter(c)
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE+LOCATION_GRAVE) and chkc:IsControler(1-tp) and s.rmfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(s.rmfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,1,nil) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE|LOCATION_GRAVE) and chkc:IsControler(1-tp) and s.rmfilter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(s.rmfilter,tp,0,LOCATION_MZONE|LOCATION_GRAVE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectTarget(tp,s.rmfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,1,2,nil)
+	local g=Duel.SelectTarget(tp,s.rmfilter,tp,0,LOCATION_MZONE|LOCATION_GRAVE,1,2,nil)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,#g,0,0)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)

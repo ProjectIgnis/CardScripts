@@ -1,4 +1,5 @@
 --魔導化士 マット
+--Fool of Prophecy
 local s,id=GetID()
 function s.initial_effect(c)
 	--to grave
@@ -19,19 +20,19 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_PHASE+PHASE_END)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCondition(s.spcon)
-	e2:SetCost(s.spcost)
+	e2:SetCost(Cost.SelfTribute)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x106e}
+s.listed_series={SET_SPELLBOOK}
 function s.filter(c)
-	return c:IsSetCard(0x106e) and c:IsSpell() and c:IsAbleToGrave()
+	return c:IsSetCard(SET_SPELLBOOK) and c:IsSpell() and c:IsAbleToGrave()
 end
 function s.sgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+	e:GetHandler():RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 end
 function s.sgop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
@@ -41,16 +42,12 @@ function s.sgop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x106e) and c:IsSpell()
+	return c:IsSetCard(SET_SPELLBOOK) and c:IsSpell()
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():GetFlagEffect(id)==0 then return false end
 	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_GRAVE,0,nil)
 	return g:GetClassCount(Card.GetCode)>=5
-end
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() end
-	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function s.spfilter(c,e,tp)
 	return c:IsRace(RACE_SPELLCASTER) and c:IsAttribute(ATTRIBUTE_DARK)

@@ -1,5 +1,5 @@
 --Vendread Anima
---scripted by Naim
+--Vendread Anima
 local s,id=GetID()
 function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_GRAVE)
-	e1:SetCost(aux.bfgcost)
+	e1:SetCost(Cost.SelfBanish)
 	e1:SetCountLimit(1,id)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
@@ -24,9 +24,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={id}
-s.listed_series={0x106}
+s.listed_series={SET_VENDREAD}
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x106) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp)
+	return c:IsSetCard(SET_VENDREAD) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_REMOVED) and s.spfilter(chkc,e,tp) end
@@ -48,19 +48,19 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetDescription(aux.Stringid(id,2))
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.splimit(e,c)
 	return not c:IsRace(RACE_ZOMBIE)
 end
 function s.mtcon(e,tp,eg,ep,ev,re,r,rp)
-	return r==REASON_RITUAL and eg:IsExists(Card.IsSetCard,1,nil,0x106)
+	return r==REASON_RITUAL and eg:IsExists(Card.IsSetCard,1,nil,SET_VENDREAD)
 		and e:GetHandler():IsPreviousLocation(LOCATION_MZONE)
 end
 function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local g=eg:Filter(Card.IsSetCard,nil,0x106)
+	local g=eg:Filter(Card.IsSetCard,nil,SET_VENDREAD)
 	local rc=g:GetFirst()
 	if not rc then return end
 	local e1=Effect.CreateEffect(c)
@@ -75,9 +75,8 @@ function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_ADD_TYPE)
 		e2:SetValue(TYPE_EFFECT)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		rc:RegisterEffect(e2,true)
 	end
-	rc:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,1))
+	rc:RegisterFlagEffect(0,RESET_EVENT|RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,1))
 end
-

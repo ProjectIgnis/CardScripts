@@ -1,4 +1,5 @@
 --フィッシュボーグ－アーチャー
+--Fishborg Archer
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -22,7 +23,7 @@ function s.cfilter(c)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_COST|REASON_DISCARD)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -34,10 +35,10 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)>0 then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e1:SetCode(EVENT_PHASE+PHASE_BATTLE_START)
+		e1:SetCode(EVENT_PHASE|PHASE_BATTLE_START)
 		e1:SetCountLimit(1)
 		e1:SetOperation(s.desop)
-		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_PHASE|PHASE_END)
 		Duel.RegisterEffect(e1,tp)
 	end
 end

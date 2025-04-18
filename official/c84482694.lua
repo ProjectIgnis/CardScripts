@@ -1,10 +1,8 @@
 --顕現する紋章
 --Charged-Up Heraldry
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
-
 function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -17,7 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 	--Part of "Heraldry" archetype
-s.listed_series={0x76}
+s.listed_series={SET_HERALDIC_BEAST}
 	--Cost filter
 function s.cfilter(c,ft,tp)
 	return ft>1 or (c:IsControler(tp) and c:GetSequence()<5 and ft>0)
@@ -31,7 +29,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 	--Check for "Heraldic Beast" monster
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x76) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return c:IsSetCard(SET_HERALDIC_BEAST) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 	--Activation legality
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -48,7 +46,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<2 or Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
@@ -61,9 +59,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Locked into machine and psychic monsters for extra deck
 function s.splimit(e,c)
-	return not c:IsRace(RACE_MACHINE+RACE_PSYCHIC) and c:IsLocation(LOCATION_EXTRA)
+	return not c:IsRace(RACE_MACHINE|RACE_PSYCHIC) and c:IsLocation(LOCATION_EXTRA)
 end
 function s.lizfilter(e,c)
-	return not c:IsOriginalRace(RACE_MACHINE+RACE_PSYCHIC)
+	return not c:IsOriginalRace(RACE_MACHINE|RACE_PSYCHIC)
 end
-

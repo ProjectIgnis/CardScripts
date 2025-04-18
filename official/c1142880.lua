@@ -1,5 +1,5 @@
 --サイバー・ドラゴン・ネクステア
---Cyber Dragon Nächster
+--Cyber Dragon Nachster
 --Scripted by ahtelel
 local s,id=GetID()
 function s.initial_effect(c)
@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetCode(EFFECT_CHANGE_CODE)
-	e1:SetRange(LOCATION_MZONE+LOCATION_GRAVE)
+	e1:SetRange(LOCATION_MZONE|LOCATION_GRAVE)
 	e1:SetValue(CARD_CYBER_DRAGON)
 	c:RegisterEffect(e1)
 	--special summon
@@ -43,7 +43,7 @@ function s.cfilter(c)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,e:GetHandler()) end
-	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_COST+REASON_DISCARD,e:GetHandler())
+	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_COST|REASON_DISCARD,e:GetHandler())
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -79,7 +79,7 @@ function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	aux.RegisterClientHint(c,nil,tp,1,0,aux.Stringid(id,2),nil)
 end

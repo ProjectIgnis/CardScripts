@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e4:SetLabelObject(e3)
 	c:RegisterEffect(e4)
 end
-local LOCATION_HAND_DECK_EXTRA_GRAVE=LOCATION_HAND+LOCATION_DECK+LOCATION_EXTRA+LOCATION_GRAVE
+local LOCATION_HAND_DECK_EXTRA_GRAVE=LOCATION_HAND|LOCATION_DECK|LOCATION_EXTRA|LOCATION_GRAVE
 function s.otfilter(c)
 	return (c:GetSummonType()&SUMMON_TYPE_TRIBUTE)==SUMMON_TYPE_TRIBUTE
 end
@@ -42,7 +42,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_REMOVE,nil,1,g:GetFirst():GetControler(),LOCATION_HAND_DECK_EXTRA_GRAVE)
 end
 function s.rmfilter(c,code)
-	return c:IsCode(code) and (c:IsLocation(0x43) or aux.SpElimFilter(c,true))
+	return c:IsCode(code) and (c:IsLocation(LOCATION_HAND|LOCATION_DECK|LOCATION_EXTRA) or aux.SpElimFilter(c,true))
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetTargetCards(e)

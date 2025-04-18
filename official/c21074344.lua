@@ -1,4 +1,5 @@
 --緑光の宣告者
+--Herald of Green Light
 local s,id=GetID()
 function s.initial_effect(c)
 	--Negate
@@ -16,7 +17,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and re:IsActiveType(TYPE_SPELL) and re:IsHasType(EFFECT_TYPE_ACTIVATE)
+	return ep~=tp and re:IsSpellEffect() and re:IsHasType(EFFECT_TYPE_ACTIVATE)
 		and Duel.IsChainNegatable(ev)
 end
 function s.costfilter(c)

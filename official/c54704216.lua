@@ -1,7 +1,8 @@
 --拷問車輪
+--Nightmare Wheel
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddPersistentProcedure(c,1,nil,CATEGORY_DISABLE,nil,TIMING_STANDBY_PHASE,0x1c0,nil,nil,nil,nil,true)
+	aux.AddPersistentProcedure(c,1,nil,CATEGORY_DISABLE,nil,TIMING_STANDBY_PHASE,TIMINGS_CHECK_MONSTER,nil,nil,nil,nil,true)
 	--eff
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -19,7 +20,7 @@ function s.initial_effect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e3:SetCategory(CATEGORY_DAMAGE)
-	e3:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e3:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetCountLimit(1)
 	e3:SetCondition(s.damcon)

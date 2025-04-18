@@ -1,4 +1,5 @@
 --墓守の大筒持ち
+--Gravekeeper's Cannonholder
 local s,id=GetID()
 function s.initial_effect(c)
 	--damage
@@ -13,9 +14,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x2e}
+s.listed_series={SET_GRAVEKEEPERS}
 function s.costfilter(c)
-	return c:IsSetCard(0x2e) and c:GetCode()~=id
+	return c:IsSetCard(SET_GRAVEKEEPERS) and c:GetCode()~=id
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.costfilter,1,false,nil,nil) end

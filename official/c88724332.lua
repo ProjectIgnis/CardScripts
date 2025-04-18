@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.target(e,c)
-	return c:IsFaceup() and not c:IsRace(RACE_WYRM) and c:IsSummonType(SUMMON_TYPE_SPECIAL) and (c:GetSummonLocation()&LOCATION_DECK+LOCATION_EXTRA)~=0
+	return c:IsFaceup() and not c:IsRace(RACE_WYRM) and c:IsSpecialSummoned() and (c:GetSummonLocation()&LOCATION_DECK|LOCATION_EXTRA)~=0
 end
 function s.defval(e,c)
 	return -c:GetBaseDefense()

@@ -20,9 +20,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={16178681}
-s.material_setcode={0x99,0xf2,0x10f2}
+s.material_setcode={SET_ODD_EYES,SET_PENDULUM,SET_PENDULUM_DRAGON}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)
+	return e:GetHandler():IsFusionSummoned()
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -39,7 +39,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetDescription(aux.Stringid(id,1))
 			e1:SetValue(2)
 		end
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e1)
 	end
 	if (flag&0x4)~=0 then
@@ -48,7 +48,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e4:SetCode(EFFECT_IMMUNE_EFFECT)
 		e4:SetValue(s.efilter)
 		e4:SetOwnerPlayer(tp)
-		e4:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e4:SetReset(RESETS_STANDARD_PHASE_END)
 		c:RegisterEffect(e4)
 	end
 end
@@ -59,7 +59,7 @@ function s.lvfilter(c,fc)
 	return c:IsCode(16178681) or c:CheckFusionSubstitute(fc)
 end
 function s.imfilter(c)
-	return c:IsLocation(LOCATION_MZONE) and c:IsSummonType(SUMMON_TYPE_PENDULUM)
+	return c:IsLocation(LOCATION_MZONE) and c:IsPendulumSummoned()
 end
 function s.valcheck(e,c)
 	local g=c:GetMaterial()

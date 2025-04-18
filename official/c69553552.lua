@@ -29,9 +29,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.rmop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x107}
+s.listed_series={SET_FA}
 function s.indcon(e)
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x107),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_FA),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function s.indval(e,re,tp)
 	return tp~=e:GetHandlerPlayer()
@@ -41,21 +41,21 @@ function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	local d=a:GetBattleTarget()
 	if not d then return false end
 	if not a:IsControler(tp) then a,d=d,a end
-	return a:IsControler(tp) and a:IsSetCard(0x107) and a:GetLevel()-a:GetOriginalLevel()>=5 and ep~=tp
+	return a:IsControler(tp) and a:IsSetCard(SET_FA) and a:GetLevel()-a:GetOriginalLevel()>=5 and ep~=tp
 end
 function s.rmfilter(c)
 	return c:IsAbleToRemove() and (c:IsLocation(LOCATION_ONFIELD) or aux.SpElimFilter(c,false,true))
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.rmfilter,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE,0,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.rmfilter,tp,LOCATION_HAND|LOCATION_ONFIELD|LOCATION_GRAVE,0,1,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,tp,LOCATION_HAND|LOCATION_ONFIELD|LOCATION_GRAVE)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local tc=Duel.SelectMatchingCard(tp,s.rmfilter,tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE,0,1,1,nil):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,s.rmfilter,tp,LOCATION_HAND|LOCATION_ONFIELD|LOCATION_GRAVE,0,1,1,nil):GetFirst()
 	if tc and Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)~=0 then
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+		tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1)
 		local g=Duel.GetMatchingGroup(s.winfilter,tp,LOCATION_REMOVED,0,nil)
 		if g:GetClassCount(Card.GetCode)>=3 then
 			Duel.Win(tp,WIN_REASON_FA_WINNERS)
@@ -63,5 +63,5 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.winfilter(c)
-	return c:IsSetCard(0x107) and c:IsType(TYPE_FIELD) and c:GetFlagEffect(id)~=0
+	return c:IsSetCard(SET_FA) and c:IsType(TYPE_FIELD) and c:GetFlagEffect(id)~=0
 end

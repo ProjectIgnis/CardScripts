@@ -30,16 +30,16 @@ function s.initial_effect(c)
 	e4:SetOperation(s.plop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x1034}
+s.listed_series={SET_CRYSTAL_BEAST}
 s.counter_place_list={0x6}
 function s.ctfilter(c)
-	return c:IsLocation(LOCATION_SZONE) and not c:IsPreviousLocation(LOCATION_SZONE) and c:IsSetCard(0x1034) and c:IsFaceup()
+	return c:IsLocation(LOCATION_SZONE) and not c:IsPreviousLocation(LOCATION_SZONE) and c:IsSetCard(SET_CRYSTAL_BEAST) and c:IsFaceup()
 		and c:IsOriginalType(TYPE_MONSTER)
 end
 function s.ctcon1(e,tp,eg,ep,ev,re,r,rp)
 	if not eg:IsExists(s.ctfilter,1,nil) then return end
 	if Duel.GetCurrentChain()>0 then
-		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_CHAIN,0,1)
+		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_CHAIN,0,1)
 		return false
 	end
 	return true
@@ -63,7 +63,7 @@ function s.plcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(c,REASON_COST)
 end
 function s.plfilter(c)
-	return c:IsSetCard(0x1034) and c:IsMonster() and not c:IsForbidden()
+	return c:IsSetCard(SET_CRYSTAL_BEAST) and c:IsMonster() and not c:IsForbidden()
 end
 function s.pltg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=e:GetHandler():GetCounter(0x6)
@@ -84,7 +84,7 @@ function s.plop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_TYPE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD-RESET_TURN_SET)
 		e1:SetValue(TYPE_SPELL+TYPE_CONTINUOUS)
 		tc:RegisterEffect(e1)
 	end

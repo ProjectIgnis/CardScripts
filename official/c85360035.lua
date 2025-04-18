@@ -1,5 +1,5 @@
 --双天拳の熊羆
---Yuuhi of the Souten Fists
+--Dual Avatar Fists - Yuhi
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -28,13 +28,13 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x14e}
+s.listed_series={SET_DUAL_AVATAR}
 s.listed_names={id}
 function s.desfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x14e)
+	return c:IsFaceup() and c:IsSetCard(SET_DUAL_AVATAR)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x14e) and c:IsSpell() and c:IsAbleToHand()
+	return c:IsSetCard(SET_DUAL_AVATAR) and c:IsSpell() and c:IsAbleToHand()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(tp) and s.desfilter(chkc) end
@@ -58,8 +58,8 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.cfilter(c,tp,rp)
 	return (c:IsReason(REASON_BATTLE) or (c:IsReason(REASON_EFFECT) and rp==1-tp)) and c:IsReason(REASON_DESTROY)
-		and c:IsSetCard(0x14e) and c:IsMonster() and c:IsType(TYPE_FUSION)
-		and c:IsSummonType(SUMMON_TYPE_FUSION) and c:GetMaterial():IsExists(Card.IsType,1,nil,TYPE_EFFECT)
+		and c:IsSetCard(SET_DUAL_AVATAR) and c:IsMonster() and c:IsType(TYPE_FUSION)
+		and c:IsFusionSummoned() and c:GetMaterial():IsExists(Card.IsType,1,nil,TYPE_EFFECT)
 		and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)

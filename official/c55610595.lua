@@ -1,4 +1,5 @@
 --BF－上弦のピナーカ
+--Blackwing - Pinaki the Waxing Moon
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro limit
@@ -16,11 +17,11 @@ function s.initial_effect(c)
 	e2:SetOperation(s.regop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x33}
+s.listed_series={SET_BLACKWING}
 s.listed_names={id}
 function s.synlimit(e,c)
 	if not c then return false end
-	return not c:IsSetCard(0x33)
+	return not c:IsSetCard(SET_BLACKWING)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -33,12 +34,12 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCountLimit(1,id)
 		e1:SetTarget(s.thtg)
 		e1:SetOperation(s.thop)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		c:RegisterEffect(e1)
 	end
 end
 function s.filter(c)
-	return c:IsSetCard(0x33) and c:IsMonster() and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(SET_BLACKWING) and c:IsMonster() and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

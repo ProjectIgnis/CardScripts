@@ -1,4 +1,5 @@
 --リボーンリボン
+--Ribbon of Rebirth
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c,nil,s.filter)
@@ -31,9 +32,9 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	e1:SetLabelObject(ec)
-	e1:SetReset(RESET_EVENT+0x16c0000+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_EVENT|RESET_TOGRAVE|RESET_REMOVE|RESET_TOHAND|RESET_TODECK|RESET_TOFIELD|RESET_PHASE|PHASE_END)
 	e:GetHandler():RegisterEffect(e1)
-	ec:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+	ec:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ec=e:GetHandler():GetPreviousEquipTarget()

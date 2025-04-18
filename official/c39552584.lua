@@ -44,7 +44,7 @@ end
 function s.repop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(tp,0,LOCATION_HAND)
 	if #g>0 then
-		Duel.DiscardHand(1-tp,nil,1,1,REASON_EFFECT+REASON_DISCARD)
+		Duel.DiscardHand(1-tp,nil,1,1,REASON_EFFECT|REASON_DISCARD)
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
@@ -68,7 +68,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		and (Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)>0 or Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)>0) then
 		local turn_pl=Duel.GetTurnPlayer()
 		Duel.BreakEffect()
-		Duel.DiscardHand(turn_pl,nil,1,1,REASON_EFFECT+REASON_DISCARD)
-		Duel.DiscardHand(1-turn_pl,nil,1,1,REASON_EFFECT+REASON_DISCARD)
+		Duel.DiscardHand(turn_pl,nil,1,1,REASON_EFFECT|REASON_DISCARD)
+		Duel.DiscardHand(1-turn_pl,nil,1,1,REASON_EFFECT|REASON_DISCARD)
 	end
 end

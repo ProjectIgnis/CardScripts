@@ -1,7 +1,6 @@
 --紺碧の機界騎士
 --Mekk-Knight Indigo Eclipse
 --Scripted by Eerie Code
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special Summon itself from hand
@@ -25,8 +24,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.seqop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x10c}
-
+s.listed_series={SET_MEKK_KNIGHT}
 function s.cfilter(c)
 	return c:GetColumnGroupCount()>0
 end
@@ -40,7 +38,7 @@ function s.hspval(e,c)
 	return 0,zone
 end
 function s.seqfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x10c)
+	return c:IsFaceup() and c:IsSetCard(SET_MEKK_KNIGHT)
 end
 function s.seqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.seqfilter(chkc) end

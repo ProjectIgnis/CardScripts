@@ -1,5 +1,5 @@
 --アポクリフォート・キラー
---Apoqliporth Towers
+--Apoqliphort Towers
 local s,id=GetID()
 function s.initial_effect(c)
 	--Cannot be Special Summoned
@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e5:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_UNCOPYABLE)
 	e5:SetRange(LOCATION_MZONE)
 	e5:SetCode(EFFECT_IMMUNE_EFFECT)
-	e5:SetCondition(function(e) return e:GetHandler():IsSummonType(SUMMON_TYPE_NORMAL) end)
+	e5:SetCondition(function(e) return e:GetHandler():IsNormalSummoned() end)
 	e5:SetValue(s.efilter)
 	c:RegisterEffect(e5)
 	--Decrease the ATK/DEF of Special Summoned monsters by 500
@@ -61,7 +61,7 @@ function s.efilter(e,te)
 	end
 end
 function s.adtg(e,c)
-	return c:IsSummonType(SUMMON_TYPE_SPECIAL)
+	return c:IsSpecialSummoned()
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE|LOCATION_HAND)>0 end

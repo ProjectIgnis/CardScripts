@@ -1,4 +1,5 @@
 --Emミラー・コンダクター
+--Performage Mirror Conductor
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -21,14 +22,14 @@ function s.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
 	e3:SetHintTiming(TIMING_DAMAGE_STEP)
 	e3:SetCountLimit(1)
-	e3:SetCondition(s.swcon)
+	e3:SetCondition(aux.StatChangeDamageStepCondition)
 	e3:SetTarget(s.swtg)
 	e3:SetOperation(s.swop)
 	c:RegisterEffect(e3)
 end
 function s.filter(c)
 	return c:IsFaceup() and c:GetAttack()~=c:GetDefense() and c:IsDefenseAbove(0)
-		and c:IsSummonType(SUMMON_TYPE_SPECIAL)
+		and c:IsSpecialSummoned()
 end
 function s.adtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) end
@@ -44,16 +45,13 @@ function s.adop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		e1:SetValue(val)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_SET_DEFENSE_FINAL)
 		tc:RegisterEffect(e2)
 	end
-end
-function s.swcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end
 function s.swfilter(c)
 	return c:IsFaceup() and c:IsDefenseAbove(0)
@@ -75,7 +73,7 @@ function s.swop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_SWAP_ATTACK_FINAL)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetValue(def)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_SWAP_DEFENSE_FINAL)

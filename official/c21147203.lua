@@ -1,4 +1,4 @@
---Japanese name
+--ミニマリアン
 --Minimalian
 --scripted by Naim
 local s,id=GetID()
@@ -42,7 +42,7 @@ end
 function s.selfspop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then
-	   Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
+		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
 function s.deckspcostfilter(c,e,tp)

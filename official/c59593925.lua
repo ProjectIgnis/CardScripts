@@ -1,4 +1,5 @@
 --共鳴破
+--Resonant Destruction
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -29,13 +30,13 @@ function s.initial_effect(c)
 	e3:SetOperation(s.sdesop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x57}
+s.listed_series={SET_RESONATOR}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	e:GetHandler():SetTurnCounter(0)
 end
 function s.cfilter(c)
-	return c:IsLocation(LOCATION_GRAVE) and c:IsSetCard(0x57)
+	return c:IsLocation(LOCATION_GRAVE) and c:IsSetCard(SET_RESONATOR)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return r==REASON_SYNCHRO and eg:IsExists(s.cfilter,1,nil)
@@ -55,7 +56,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.sdescon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.sdesop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

@@ -1,4 +1,5 @@
 --魔犬オクトロス
+--Doomdog Octhros
 local s,id=GetID()
 function s.initial_effect(c)
 	--search

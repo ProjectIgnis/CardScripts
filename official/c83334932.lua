@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(s.thcon)
-	e1:SetCost(s.thcost)
+	e1:SetCost(Cost.SelfDiscard)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
@@ -31,11 +31,6 @@ s.listed_series={SET_SUPERHEAVY_SAMURAI}
 s.listed_names={id}
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return not Duel.IsExistingMatchingCard(Card.IsSpellTrap,tp,LOCATION_GRAVE,0,1,nil)
-end
-function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsDiscardable() end
-	Duel.SendtoGrave(c,REASON_COST+REASON_DISCARD)
 end
 function s.thfilter(c)
 	return c:IsSetCard(SET_SUPERHEAVY_SAMURAI) and c:IsMonster() and not c:IsCode(id) and c:IsAbleToHand()

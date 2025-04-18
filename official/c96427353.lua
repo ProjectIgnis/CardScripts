@@ -1,4 +1,5 @@
 --機甲忍者アクア
+--Aqua Armor Ninja
 local s,id=GetID()
 function s.initial_effect(c)
 	--disable attack
@@ -9,17 +10,17 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e1:SetRange(LOCATION_GRAVE)
 	e1:SetCondition(s.condition)
-	e1:SetCost(aux.bfgcost)
+	e1:SetCost(Cost.SelfBanish)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x2b}
+s.listed_series={SET_NINJA}
 function s.cfilter(c)
-	return c:IsSetCard(0x2b) and c:IsMonster()
+	return c:IsSetCard(SET_NINJA) and c:IsMonster()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp and Duel.GetAttackTarget()==nil
+	return Duel.IsTurnPlayer(1-tp) and Duel.GetAttackTarget()==nil
 		and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,1,e:GetHandler())
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

@@ -14,18 +14,18 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0xfe}
+s.listed_series={SET_WORLD_LEGACY}
 function s.cfilter(c,ft)
-	return c:IsSetCard(0xfe) and c:IsMonster() and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(SET_WORLD_LEGACY) and c:IsMonster() and c:IsAbleToRemoveAsCost()
 		and (c:IsFaceup() or c:IsLocation(LOCATION_HAND))
 		and (ft>1 or (c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5 and ft>0))
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	e:SetLabel(1)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil,ft) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,1,nil,ft) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,nil,ft)
+	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,1,1,nil,ft)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.filter(c,e,tp)
@@ -65,7 +65,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 	Duel.SpecialSummonComplete()

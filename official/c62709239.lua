@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
-	e1:SetCost(s.descost)
+	e1:SetCost(Cost.Detach(1))
 	e1:SetTarget(s.destg)
 	e1:SetOperation(s.desop)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
@@ -29,11 +29,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x10db}
-function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
-end
+s.listed_series={SET_THE_PHANTOM_KNIGHTS}
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	if chk==0 then return Duel.IsExistingTarget(aux.TRUE,tp,LOCATION_ONFIELD,0,1,nil)
@@ -54,14 +50,14 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsSummonType(SUMMON_TYPE_XYZ)
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsXyzSummoned()
 end
 function s.spfilter1(c,e,tp)
-	return c:HasLevel() and c:IsSetCard(0x10db) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:HasLevel() and c:IsSetCard(SET_THE_PHANTOM_KNIGHTS) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and Duel.IsExistingTarget(s.spfilter2,tp,LOCATION_GRAVE,0,1,c,c:GetLevel(),e,tp)
 end
 function s.spfilter2(c,lv,e,tp)
-	return c:GetLevel()==lv and c:IsSetCard(0x10db) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:GetLevel()==lv and c:IsSetCard(SET_THE_PHANTOM_KNIGHTS) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
@@ -88,7 +84,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_LEVEL)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			e1:SetValue(1)
 			tc:RegisterEffect(e1)
 		end
@@ -101,7 +97,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetDescription(aux.Stringid(id,2))
 	e2:SetTargetRange(1,0)
 	e2:SetTarget(s.splimit)
-	e2:SetReset(RESET_PHASE+PHASE_END)
+	e2:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e2,tp)
 end
 function s.splimit(e,c)

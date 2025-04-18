@@ -10,18 +10,14 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_TO_GRAVE)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCost(s.spcost)
+	e1:SetCost(Cost.SelfTribute)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x35}
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() end
-	Duel.Release(e:GetHandler(),REASON_COST)
-end
+s.listed_series={SET_FABLED}
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x35) and c:IsMonster() and c:IsPreviousLocation(LOCATION_HAND) and c:IsControler(tp)
+	return c:IsSetCard(SET_FABLED) and c:IsMonster() and c:IsPreviousLocation(LOCATION_HAND) and c:IsControler(tp)
 		and c:IsCanBeEffectTarget(e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

@@ -1,4 +1,5 @@
 --インヴェルズ・モース
+--Steelswarm Moth
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon success
@@ -9,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
 	e1:SetCondition(s.condition)
-	e1:SetCost(s.cost)
+	e1:SetCost(Cost.PayLP(1000))
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
@@ -21,21 +22,17 @@ function s.initial_effect(c)
 	e2:SetLabelObject(e1)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x100a}
+s.listed_series={SET_STEELSWARM}
 function s.valcheck(e,c)
 	local g=c:GetMaterial()
-	if g:IsExists(Card.IsSetCard,1,nil,0x100a) then
+	if g:IsExists(Card.IsSetCard,1,nil,SET_STEELSWARM) then
 		e:GetLabelObject():SetLabel(1)
 	else
 		e:GetLabelObject():SetLabel(0)
 	end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_TRIBUTE) and e:GetLabel()==1
-end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,1000) end
-	Duel.PayLPCost(tp,1000)
+	return e:GetHandler():IsTributeSummoned() and e:GetLabel()==1
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) and chkc:IsAbleToHand() end

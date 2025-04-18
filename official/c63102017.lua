@@ -1,4 +1,5 @@
 --『守備』封じ
+--Stop Defense
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

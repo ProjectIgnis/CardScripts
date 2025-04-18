@@ -1,4 +1,5 @@
 --アームズ・エイド
+--Armory Arm
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -22,7 +23,7 @@ function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 	local g=Duel.SelectTarget(tp,Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,e:GetHandler())
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,g,1,0,0)
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+0x7e0000+RESET_PHASE+PHASE_END,0,1)
+	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_REDIRECT-RESET_OVERLAY|RESET_PHASE|PHASE_END,0,1)
 end
 function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -41,14 +42,14 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetRange(LOCATION_SZONE)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	c:RegisterEffect(e1)
 	--Atk up
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_EQUIP)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetValue(1000)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 	c:RegisterEffect(e2)
 	--damage
 	local e3=Effect.CreateEffect(c)
@@ -61,7 +62,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	e3:SetCondition(s.damcon)
 	e3:SetTarget(s.damtg)
 	e3:SetOperation(s.damop)
-	e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e3:SetReset(RESET_EVENT|RESETS_STANDARD)
 	c:RegisterEffect(e3)
 	--eqlimit
 	local e4=Effect.CreateEffect(c)
@@ -69,7 +70,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	e4:SetCode(EFFECT_EQUIP_LIMIT)
 	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e4:SetValue(s.eqlimit)
-	e4:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e4:SetReset(RESET_EVENT|RESETS_STANDARD)
 	e4:SetLabelObject(tc)
 	c:RegisterEffect(e4)
 end
@@ -80,7 +81,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetFlagEffect(id)==0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,true,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+0x7e0000+RESET_PHASE+PHASE_END,0,1)
+	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_REDIRECT-RESET_OVERLAY|RESET_PHASE|PHASE_END,0,1)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

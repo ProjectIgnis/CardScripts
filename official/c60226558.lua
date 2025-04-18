@@ -2,9 +2,9 @@
 --Nephe Shaddoll Fusion
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsSetCard,0x9d),nil,nil,s.target,s.operation)
+	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsSetCard,SET_SHADDOLL),nil,nil,s.target,s.operation)
 	--spsummon
-	local params = {aux.FilterBoolFunction(Card.IsSetCard,0x9d),nil,nil,nil,s.forcedmat}
+	local params = {aux.FilterBoolFunction(Card.IsSetCard,SET_SHADDOLL),nil,nil,nil,s.forcedmat}
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
 	e3:SetType(EFFECT_TYPE_IGNITION)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e3:SetOperation(Fusion.SummonEffOP(table.unpack(params)))
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x9d}
+s.listed_series={SET_SHADDOLL}
 function s.target(e,tp,eg,ep,ev,re,r,rp,tc,chk)
 	if chk==0 then return true end
 	local att=tc:AnnounceAnotherAttribute(tp)
@@ -30,7 +30,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_EQUIP)
 		e1:SetCode(EFFECT_CHANGE_ATTRIBUTE)
 		e1:SetValue(att)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e1)
 		c:SetHint(CHINT_ATTRIBUTE,att)
 	end

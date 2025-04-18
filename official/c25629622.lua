@@ -1,4 +1,5 @@
 --魔界劇団－ビッグ・スター
+--Abyss Actor - Superstar
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -38,14 +39,14 @@ function s.initial_effect(c)
 	e4:SetOperation(s.setop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x20ec}
+s.listed_series={SET_ABYSS_SCRIPT}
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsSetCard,1,false,nil,nil,0x10ec) end
-	local g=Duel.SelectReleaseGroupCost(tp,Card.IsSetCard,1,1,false,nil,nil,0x10ec)
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsSetCard,1,false,nil,nil,SET_ABYSS_ACTOR) end
+	local g=Duel.SelectReleaseGroupCost(tp,Card.IsSetCard,1,1,false,nil,nil,SET_ABYSS_ACTOR)
 	Duel.Release(g,REASON_COST)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x20ec) and c:IsSpell() and c:IsAbleToHand()
+	return c:IsSetCard(SET_ABYSS_SCRIPT) and c:IsSpell() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc) end
@@ -64,11 +65,11 @@ function s.limop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetCurrentChain()==0 then
 		Duel.SetChainLimitTillChainEnd(s.chlimit)
 	elseif Duel.GetCurrentChain()==1 then
-		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+		e:GetHandler():RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 	end
 end
 function s.chlimit(e,rp,tp)
-	return tp==rp or e:IsActiveType(TYPE_MONSTER)
+	return tp==rp or e:IsMonsterEffect()
 end
 function s.limop2(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():GetFlagEffect(id)~=0 then
@@ -77,7 +78,7 @@ function s.limop2(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():ResetFlagEffect(id)
 end
 function s.setfilter(c)
-	return c:IsSetCard(0x20ec) and c:IsSpell() and c:IsSSetable()
+	return c:IsSetCard(SET_ABYSS_SCRIPT) and c:IsSpell() and c:IsSSetable()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -90,7 +91,7 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 		local tc=g:GetFirst()
 		local fid=c:GetFieldID()
 		Duel.SSet(tp,tc)
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,fid)
+		tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1,fid)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_PHASE+PHASE_END)
@@ -100,7 +101,7 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetLabelObject(tc)
 		e1:SetCondition(s.tgcon)
 		e1:SetOperation(s.tgop)
-		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_PHASE|PHASE_END)
 		Duel.RegisterEffect(e1,tp)
 	end
 end

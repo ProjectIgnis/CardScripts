@@ -1,4 +1,5 @@
 --光神機－桜火
+--Majestic Mech - Ohka
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon with no tribute

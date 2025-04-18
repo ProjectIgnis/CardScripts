@@ -1,4 +1,5 @@
 --マンモ・フォッシル
+--Fossil Tusker
 local s,id=GetID()
 function s.initial_effect(c)
 	--damage

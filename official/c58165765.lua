@@ -1,4 +1,5 @@
 --赤竜の忍者
+--Red Dragon Ninja
 local s,id=GetID()
 function s.initial_effect(c)
 	--todeck
@@ -20,14 +21,14 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x2b,0x61}
+s.listed_series={SET_NINJA,SET_NINJITSU_ART}
 function s.cfilter(c)
-	return (c:IsSetCard(0x2b) or c:IsSetCard(0x61)) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
+	return c:IsSetCard({SET_NINJA,SET_NINJITSU_ART}) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,1,nil)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.filter(c)
@@ -48,15 +49,15 @@ function s.limit(c)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and tc:IsFacedown() then
+	if tc:IsRelateToEffect(e) and tc:IsFacedown() then
 		Duel.ConfirmCards(tp,tc)
 		Duel.BreakEffect()
 		if tc:IsAbleToDeck() then
 			local opt=Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2))
 			if opt==0 then
-				Duel.SendtoDeck(tc,nil,0,REASON_EFFECT)
+				Duel.SendtoDeck(tc,nil,SEQ_DECKTOP,REASON_EFFECT)
 			else
-				Duel.SendtoDeck(tc,nil,1,REASON_EFFECT)
+				Duel.SendtoDeck(tc,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
 			end
 		end
 	end

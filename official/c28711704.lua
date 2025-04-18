@@ -1,7 +1,6 @@
 --トゥーン・カオス・ソルジャー
 --Toon Black Luster Soldier
 --Scripted by pyrQ
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -37,7 +36,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={15259703}
-
 function s.spfilter(c)
 	return c:IsMonster() and c:IsType(TYPE_TOON) and c:HasLevel() and c:IsLevelAbove(1) and c:IsReleasable()
 end
@@ -51,14 +49,14 @@ end
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	local rg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,e:GetHandler())
+	local rg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,e:GetHandler())
 	return aux.SelectUnselectGroup(rg,e,tp,1,99,s.rescon,0)
 end
 function s.breakcon(sg,e,tp,mg)
 	return sg:GetSum(Card.GetLevel)>=8
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
-	local rg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,e:GetHandler())
+	local rg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,e:GetHandler())
 	local mg=aux.SelectUnselectGroup(rg,e,tp,1,99,s.rescon,1,tp,HINTMSG_RELEASE,s.breakcon,s.breakcon,true)
 	if #mg>0 then
 		mg:KeepAlive()
@@ -90,7 +88,7 @@ function s.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_OATH+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetCode(EFFECT_CANNOT_ATTACK)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESETS_STANDARD_PHASE_END)
 	c:RegisterEffect(e1,true)
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

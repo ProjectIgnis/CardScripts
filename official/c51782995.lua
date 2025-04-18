@@ -1,5 +1,5 @@
 --ネフティスの護り手
---Protector of Nephthys
+--Defender of Nephthys
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -25,17 +25,17 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetRange(LOCATION_GRAVE)
 	e3:SetCountLimit(1,{id,1})
-	e3:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e3:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e3:SetCondition(s.descon)
 	e3:SetTarget(s.destg)
 	e3:SetOperation(s.desop)
 	e3:SetLabelObject(e2)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x11f}
+s.listed_series={SET_NEPHTHYS}
 s.listed_names={id}
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x11f) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsCode(id)
+	return c:IsSetCard(SET_NEPHTHYS) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsCode(id)
 end
 function s.filter(c,e,tp,chk,sp)
 	return ((chk==0 or sp) and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND,0,1,c,e,tp))
@@ -62,13 +62,13 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spr(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if (r&0x41)~=0x41 then return end
-	if Duel.GetTurnPlayer()==tp and Duel.GetCurrentPhase()==PHASE_STANDBY then
+	if (r&(REASON_DESTROY|REASON_EFFECT)~=(REASON_DESTROY|REASON_EFFECT)) then return end
+	if Duel.IsTurnPlayer(tp) and Duel.IsPhase(PHASE_STANDBY) then
 		e:SetLabel(Duel.GetTurnCount())
-		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN,0,2)
+		c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_STANDBY|RESET_SELF_TURN,0,2)
 	else
 		e:SetLabel(0)
-		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN,0,1)
+		c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_STANDBY|RESET_SELF_TURN,0,1)
 	end
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
@@ -76,7 +76,7 @@ function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetLabelObject():GetLabel()~=Duel.GetTurnCount() and tp==Duel.GetTurnPlayer() and c:GetFlagEffect(id)>0
 end
 function s.desfilter(c)
-	return c:IsSetCard(0x11f) and c:IsMonster() and not c:IsCode(id)
+	return c:IsSetCard(SET_NEPHTHYS) and c:IsMonster() and not c:IsCode(id)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -92,4 +92,3 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(g,REASON_EFFECT)
 	end
 end
-

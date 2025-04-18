@@ -1,4 +1,5 @@
 --暗黒大要塞鯱
+--Orca Mega-Fortress of Darkness
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy
@@ -16,7 +17,7 @@ function s.rfilter(c)
 	return c:IsCode(90337190,95614612)
 end
 function s.dfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsSpellTrap()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then

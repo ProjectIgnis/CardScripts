@@ -1,4 +1,5 @@
 --ダーク砂バク
+--Dark Desertapir
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon

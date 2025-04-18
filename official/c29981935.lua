@@ -1,7 +1,6 @@
 --武神－トリフネ
 --Bujin Torifune
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -12,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1,id)
-	e1:SetCost(s.spcost)
+	e1:SetCost(Cost.SelfTribute)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
@@ -35,16 +34,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 	--Lists "Bujin" archetype
-s.listed_series={0x88}
-
-	--Tribute itself as cost
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() end
-	Duel.Release(e:GetHandler(),REASON_COST)
-end
+s.listed_series={SET_BUJIN}
 	--Check for "Bujin" monsters, except "Bujin Torifune"
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x88) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return c:IsSetCard(SET_BUJIN) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 	--The 2 "Bujin" monsters have different types from each other
 function s.spcheck(sg,e,tp,mg)
@@ -75,12 +68,11 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check if a "Bujin" Xyz mosnter was Xyz summoned
 function s.eqcfilter(c,tp)
-	return c:IsSetCard(0x88) and c:IsType(TYPE_XYZ) and c:IsSummonType(SUMMON_TYPE_XYZ) and c:IsSummonPlayer(tp)
+	return c:IsSetCard(SET_BUJIN) and c:IsType(TYPE_XYZ) and c:IsXyzSummoned() and c:IsSummonPlayer(tp)
 end
 	--If it ever happened
 function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.eqcfilter,1,nil,tp)
-
 end
 	--Activation legality
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -101,7 +93,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_EQUIP_LIMIT)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e1:SetValue(s.eqlimit)
 		e1:SetLabelObject(tc)
 		c:RegisterEffect(e1)

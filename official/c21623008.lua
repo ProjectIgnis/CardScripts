@@ -32,6 +32,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		and Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,nil)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		local g=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_MZONE,nil)
-		Duel.SendtoDeck(g,nil,0,REASON_EFFECT)
+		Duel.SendtoDeck(g,nil,SEQ_DECKTOP,REASON_EFFECT)
 	end
 end

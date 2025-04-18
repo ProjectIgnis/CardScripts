@@ -1,7 +1,6 @@
 --ＷＷ－フリーズ・ベル
 --Windwitch - Freeze Bell
 --Scripted by ahtelel
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special Summon itself from hand
@@ -33,10 +32,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.efop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xf0}
-
+s.listed_series={SET_WINDWITCH}
 function s.cfilter(c)
-	return c:IsFacedown() or not c:IsSetCard(0xf0)
+	return c:IsFacedown() or not c:IsSetCard(SET_WINDWITCH)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)>0 and not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
@@ -60,7 +58,7 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_LEVEL)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		e1:SetValue(1)
 		c:RegisterEffect(e1)
 	end
@@ -78,6 +76,6 @@ function s.efop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e1:SetValue(1)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	rc:RegisterEffect(e1)
 end

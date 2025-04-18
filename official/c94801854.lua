@@ -1,4 +1,5 @@
 --不知火の隠者
+--Shiranui Solitaire
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -24,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xd9}
+s.listed_series={SET_SHIRANUI}
 s.listed_names={40005099}
 function s.spcfilter(c,ft,tp)
 	return c:IsRace(RACE_ZOMBIE)
@@ -52,7 +53,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spfilter2(c,e,tp)
-	return c:IsFaceup() and c:IsSetCard(0xd9) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsFaceup() and c:IsSetCard(SET_SHIRANUI) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and s.spfilter2(chkc,e,tp) end

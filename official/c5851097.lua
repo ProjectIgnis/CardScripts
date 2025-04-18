@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.filter(c,tp)
-	return c:IsPreviousLocation(LOCATION_DECK+LOCATION_ONFIELD) and c:IsLocation(LOCATION_GRAVE) and c:IsControler(tp)
+	return c:IsPreviousLocation(LOCATION_DECK|LOCATION_ONFIELD) and c:IsLocation(LOCATION_GRAVE) and c:IsControler(tp)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.filter,1,nil,tp)

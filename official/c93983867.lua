@@ -1,4 +1,5 @@
 --トリック・ボックス
+--Trick Box
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -12,16 +13,16 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0xc6}
+s.listed_series={SET_PERFORMAGE}
 function s.cfilter(c,tp)
-	return c:IsSetCard(0xc6) and c:IsReason(REASON_DESTROY) and c:IsPreviousPosition(POS_FACEUP)
+	return c:IsSetCard(SET_PERFORMAGE) and c:IsReason(REASON_DESTROY) and c:IsPreviousPosition(POS_FACEUP)
 		and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0xc6) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_PERFORMAGE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsControlerCanBeChanged() end
@@ -48,7 +49,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 			e1:SetCountLimit(1)
 			e1:SetOperation(s.retop)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e1:SetReset(RESETS_STANDARD_PHASE_END)
 			tc:RegisterEffect(e1)
 		end
 	end
@@ -60,6 +61,6 @@ function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_SET_CONTROL)
 	e1:SetValue(c:GetOwner())
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD-(RESET_TOFIELD+RESET_TEMP_REMOVE+RESET_TURN_SET))
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD-(RESET_TOFIELD|RESET_TEMP_REMOVE|RESET_TURN_SET))
 	c:RegisterEffect(e1)
 end

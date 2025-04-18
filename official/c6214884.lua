@@ -1,4 +1,5 @@
 --暗黒界の狂王 ブロン
+--Brron, Mad King of Dark World
 local s,id=GetID()
 function s.initial_effect(c)
 	--discard
@@ -20,5 +21,5 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_HANDES,nil,0,tp,1)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	Duel.DiscardHand(tp,aux.TRUE,1,1,REASON_EFFECT+REASON_DISCARD)
+	Duel.DiscardHand(tp,aux.TRUE,1,1,REASON_EFFECT|REASON_DISCARD)
 end

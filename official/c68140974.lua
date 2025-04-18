@@ -59,7 +59,7 @@ function s.eqval(ec,c,tp)
 	return ec:IsControler(1-tp) and ec:IsType(TYPE_SYNCHRO)
 end
 function s.filter(c,tp)
-	return c:IsMonster() and (c:GetReason()&0x41)==0x41 and c:IsPreviousControler(tp)
+	return c:IsMonster() and (c:GetReason()&(REASON_DESTROY|REASON_EFFECT))==(REASON_DESTROY|REASON_EFFECT) and c:IsPreviousControler(tp)
 		and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
@@ -100,7 +100,7 @@ function s.equipop(c,e,tp,tc)
 		e2:SetType(EFFECT_TYPE_EQUIP)
 		e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_OWNER_RELATE)
 		e2:SetCode(EFFECT_UPDATE_ATTACK)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e2:SetValue(atk)
 		tc:RegisterEffect(e2)
 	end
@@ -114,7 +114,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) then return false end
-	return ep~=tp and re:IsActiveType(TYPE_SPELL) and re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)
+	return ep~=tp and re:IsSpellEffect() and re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

@@ -1,5 +1,5 @@
 --Ｓ－Ｆｏｒｃｅ グラビティーノ
---Security Force Gravitino
+--S-Force Gravitino
 --Scripted by edo9300
 local s,id=GetID()
 function s.initial_effect(c)

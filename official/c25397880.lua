@@ -1,5 +1,5 @@
 --ネフティスの語り手
---Speaker of Nephthys
+--Chronicler of Nephthys
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -26,17 +26,17 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetRange(LOCATION_GRAVE)
 	e3:SetCountLimit(1,{id,1})
-	e3:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e3:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e3:SetCondition(s.thcon2)
 	e3:SetTarget(s.thtg2)
 	e3:SetOperation(s.thop2)
 	e3:SetLabelObject(e2)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x11f}
+s.listed_series={SET_NEPHTHYS}
 s.listed_names={}
 function s.filter(c)
-	return c:IsSetCard(0x11f) and c:IsAbleToHand() and not c:IsCode(id)
+	return c:IsSetCard(SET_NEPHTHYS) and c:IsAbleToHand() and not c:IsCode(id)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -58,13 +58,13 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spr(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if (r&0x41)~=0x41 then return end
-	if Duel.GetTurnPlayer()==tp and Duel.GetCurrentPhase()==PHASE_STANDBY then
+	if (r&(REASON_DESTROY|REASON_EFFECT)~=(REASON_DESTROY|REASON_EFFECT)) then return end
+	if Duel.IsTurnPlayer(tp) and Duel.IsPhase(PHASE_STANDBY) then
 		e:SetLabel(Duel.GetTurnCount())
-		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN,0,2)
+		c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_STANDBY|RESET_SELF_TURN,0,2)
 	else
 		e:SetLabel(0)
-		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN,0,1)
+		c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_STANDBY|RESET_SELF_TURN,0,1)
 	end
 end
 function s.thcon2(e,tp,eg,ep,ev,re,r,rp)
@@ -85,4 +85,3 @@ function s.thop2(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-

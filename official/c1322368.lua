@@ -4,13 +4,13 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Link Summon
 	c:EnableReviveLimit()
-	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0xee),2,2)
+	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_SPYRAL),2,2)
 	--Change name to "SPYRAL Super Agent"
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetCode(EFFECT_CHANGE_CODE)
-	e1:SetRange(LOCATION_MZONE+LOCATION_GRAVE)
+	e1:SetRange(LOCATION_MZONE|LOCATION_GRAVE)
 	e1:SetValue(41091257)
 	c:RegisterEffect(e1)
 	--Special summon or add to hand 1 "SPYRAL" monster
@@ -24,19 +24,19 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xee}
+s.listed_series={SET_SPYRAL}
 s.listed_names={41091257}
 function s.spfilter(c,e,tp,zone)
-	return c:IsSetCard(0xee) and c:IsMonster() and (c:IsAbleToHand() or (zone~=0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)))
+	return c:IsSetCard(SET_SPYRAL) and c:IsMonster() and (c:IsAbleToHand() or (zone~=0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)))
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local zone=e:GetHandler():GetLinkedZone(tp)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,0,LOCATION_DECK)>0
-		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,e,tp,zone) end
+		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK|LOCATION_GRAVE,0,1,nil,e,tp,zone) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CARDTYPE)
 	e:SetLabel(Duel.SelectOption(tp,70,71,72))
-	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE)
-	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK|LOCATION_GRAVE)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK|LOCATION_GRAVE)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFieldGroupCount(tp,0,LOCATION_DECK)==0 then return end
@@ -47,7 +47,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if (opt==0 and tc:IsMonster()) or (opt==1 and tc:IsSpell()) or (opt==2 and tc:IsTrap()) then
 		local zone=e:GetHandler():GetLinkedZone(tp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local sg=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter),tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,e,tp,zone)
+		local sg=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter),tp,LOCATION_DECK|LOCATION_GRAVE,0,1,1,nil,e,tp,zone)
 		local sc=sg:GetFirst()
 		if sc then
 			if zone~=0 then

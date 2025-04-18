@@ -1,4 +1,5 @@
 --聖珖神竜 スターダスト・シフル
+--Stardust Sifr Divine Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -39,12 +40,12 @@ function s.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_IGNITION)
 	e4:SetRange(LOCATION_GRAVE)
 	e4:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e4:SetCost(aux.bfgcost)
+	e4:SetCost(Cost.SelfBanish)
 	e4:SetTarget(s.sptg)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0xa3}
+s.listed_series={SET_STARDUST}
 s.synchro_tuner_required=1
 s.synchro_nt_required=2
 function s.indct(e,re,r,rp)
@@ -53,7 +54,7 @@ function s.indct(e,re,r,rp)
 	else return 0 end
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
-	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and rp~=tp and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainDisablable(ev)
+	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and rp~=tp and re:IsMonsterEffect() and Duel.IsChainDisablable(ev)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -71,7 +72,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0xa3) and c:IsLevelBelow(8) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_STARDUST) and c:IsLevelBelow(8) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.spfilter(chkc,e,tp) end

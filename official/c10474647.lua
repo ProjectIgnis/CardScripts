@@ -63,7 +63,7 @@ function s.atk2500op(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetValue(2500)
-		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE|RESET_PHASE|PHASE_END,ct)
+		e1:SetReset(RESETS_STANDARD_DISABLE_PHASE_END,ct)
 		c:RegisterEffect(e1)
 	end
 end

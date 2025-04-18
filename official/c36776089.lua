@@ -1,4 +1,5 @@
 --神騎セイントレア
+--Sky Cavalry Centaurea
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -20,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_DAMAGE_STEP_END)
 	e2:SetCondition(s.retcon)
-	e2:SetCost(s.retcost)
+	e2:SetCost(Cost.Detach(1))
 	e2:SetTarget(s.rettg)
 	e2:SetOperation(s.retop)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
@@ -32,10 +33,6 @@ function s.retcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
 	return bc and c:IsRelateToBattle() and bc:IsRelateToBattle()
-end
-function s.retcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.rettg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

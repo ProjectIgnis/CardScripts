@@ -1,5 +1,5 @@
 --ドドレミコード・クーリア
---Dodoremichord Coeuria
+--DoSolfachord Coolia
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -45,9 +45,9 @@ function s.initial_effect(c)
 	e4:SetOperation(s.desop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x164}
+s.listed_series={SET_SOLFACHORD}
 function s.sucfilter(c,tp)
-	return c:IsSetCard(0x164) and c:IsType(TYPE_PENDULUM) and c:IsControler(tp) and c:IsSummonType(SUMMON_TYPE_PENDULUM)
+	return c:IsSetCard(SET_SOLFACHORD) and c:IsType(TYPE_PENDULUM) and c:IsControler(tp) and c:IsPendulumSummoned()
 end
 function s.sucop(e,tp,eg,ep,ev,re,r,rp)
 	if eg:IsExists(s.sucfilter,1,nil,tp) then
@@ -55,7 +55,7 @@ function s.sucop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.chainlm(e,rp,tp)
-	return tp==rp or (e:IsActiveType(TYPE_SPELL+TYPE_TRAP) and not e:IsHasType(EFFECT_TYPE_ACTIVATE))
+	return tp==rp or (e:IsSpellTrapEffect() and not e:IsHasType(EFFECT_TYPE_ACTIVATE))
 end
 function s.spcon(e,c)
 	if c==nil then return true end
@@ -98,21 +98,21 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 			e1:SetCode(EFFECT_DISABLE)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,2)
+			e1:SetReset(RESETS_STANDARD_PHASE_END,2)
 			tc:RegisterEffect(e1)
 			local e2=Effect.CreateEffect(c)
 			e2:SetType(EFFECT_TYPE_SINGLE)
 			e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 			e2:SetCode(EFFECT_DISABLE_EFFECT)
 			e2:SetValue(RESET_TURN_SET)
-			e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,2)
+			e2:SetReset(RESETS_STANDARD_PHASE_END,2)
 			tc:RegisterEffect(e2)
 			if tc:IsType(TYPE_TRAPMONSTER) then
 				local e2=Effect.CreateEffect(c)
 				e2:SetType(EFFECT_TYPE_SINGLE)
 				e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 				e2:SetCode(EFFECT_DISABLE_TRAPMONSTER)
-				e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,2)
+				e2:SetReset(RESETS_STANDARD_PHASE_END,2)
 				tc:RegisterEffect(e2)
 			end
 		end
@@ -123,7 +123,7 @@ function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
 	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsType,TYPE_PENDULUM),tp,LOCATION_PZONE,0,nil)
 	local _,sc=g:GetMaxGroup(function(c) return c:GetScale() end)
-	return sc and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and re:IsActiveType(TYPE_MONSTER) and rc:IsAttackBelow(sc*300)
+	return sc and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and re:IsMonsterEffect() and rc:IsAttackBelow(sc*300)
 		and rc:IsOnField() and rc:IsDestructable()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)

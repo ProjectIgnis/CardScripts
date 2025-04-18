@@ -1,4 +1,5 @@
 --SRベイゴマックス
+--Speedroid Terrortop
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -24,7 +25,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x2016}
+s.listed_series={SET_SPEEDROID}
 s.listed_names={id}
 function s.spcon(e,c)
 	if c==nil then return true end
@@ -32,7 +33,7 @@ function s.spcon(e,c)
 		and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x2016) and not c:IsCode(id) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_SPEEDROID) and not c:IsCode(id) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

@@ -52,7 +52,7 @@ function s.costfilter(c)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,e:GetHandler()) end
-	Duel.DiscardHand(tp,s.costfilter,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,s.costfilter,1,1,REASON_COST|REASON_DISCARD)
 end
 function s.filter(c,e,tp)
 	return c:GetLevel()==4 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -72,7 +72,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end

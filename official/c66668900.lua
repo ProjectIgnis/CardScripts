@@ -1,4 +1,5 @@
 --アクアアクトレス・グッピー
+--Aquaactress Guppy
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -11,9 +12,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x10cd}
+s.listed_series={SET_AQUAACTRESS}
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x10cd) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_AQUAACTRESS) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

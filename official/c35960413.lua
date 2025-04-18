@@ -1,5 +1,5 @@
 --コウ・キューピット
---Cupid Archery
+--Cupid Fore
 --Scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END)
+	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER|TIMING_MAIN_END)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetCost(s.lvcst)
 	e2:SetTarget(s.lvtg)
@@ -50,7 +50,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.lvcst(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD,nil)
+	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST|REASON_DISCARD,nil)
 end
 function s.filter1(c,tp)
 	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsRace(RACE_FAIRY) and c:HasLevel()
@@ -80,7 +80,7 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_LEVEL)
 		e1:SetValue(tc:GetLevel())
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		c1:RegisterEffect(e1)
 	end
 end

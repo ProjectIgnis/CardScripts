@@ -1,4 +1,5 @@
 --秘術の書
+--Book of Secret Arts
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsRace,RACE_SPELLCASTER))

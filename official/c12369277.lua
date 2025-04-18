@@ -1,4 +1,5 @@
 --超量士ブルーレイヤー
+--Super Quantum Blue Layer
 local s,id=GetID()
 function s.initial_effect(c)
 	--search
@@ -26,10 +27,10 @@ function s.initial_effect(c)
 	e3:SetOperation(s.tdop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xdc}
+s.listed_series={SET_SUPER_QUANT}
 s.listed_names={id}
 function s.thfilter(c)
-	return c:IsSetCard(0xdc) and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(SET_SUPER_QUANT) and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -44,7 +45,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tdfilter(c)
-	return c:IsSetCard(0xdc) and c:IsAbleToDeck()
+	return c:IsSetCard(SET_SUPER_QUANT) and c:IsAbleToDeck()
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.tdfilter(chkc) end

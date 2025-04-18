@@ -1,4 +1,5 @@
 --サイレント・バーニング
+--Silent Burning
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -18,20 +19,20 @@ function s.initial_effect(c)
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xe8}
+s.listed_series={SET_SILENT_MAGICIAN}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xe8)
+	return c:IsFaceup() and c:IsSetCard(SET_SILENT_MAGICIAN)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local ct1=Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)
 	local ct2=Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)
 	local ph=Duel.GetCurrentPhase()
-	return ct1>ct2 and ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE
+	return ct1>ct2 and Duel.IsBattlePhase()
 		and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -53,7 +54,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thfilter(c)
-	return c:IsSetCard(0xe8) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_SILENT_MAGICIAN) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

@@ -1,4 +1,5 @@
 --切り盛り隊長
+--Marmiting Captain
 local s,id=GetID()
 function s.initial_effect(c)
 	--todeck
@@ -20,7 +21,7 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToDeck,tp,LOCATION_HAND,0,1,1,nil)
-	if #g>0 and Duel.SendtoDeck(g,nil,1,REASON_EFFECT)~=0 then
+	if #g>0 and Duel.SendtoDeck(g,nil,SEQ_DECKBOTTOM,REASON_EFFECT)~=0 then
 		Duel.ShuffleDeck(tp)
 		Duel.BreakEffect()
 		if Duel.Draw(tp,1,REASON_EFFECT)==0 then return end

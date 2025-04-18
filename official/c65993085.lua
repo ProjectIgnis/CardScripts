@@ -1,4 +1,5 @@
 --やりすぎた埋葬
+--Overdone Burial
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -40,7 +41,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
 	local cg=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
-	Duel.SendtoGrave(cg,REASON_DISCARD+REASON_COST)
+	Duel.SendtoGrave(cg,REASON_DISCARD|REASON_COST)
 	local lv=cg:GetFirst():GetLevel()
 	e:SetLabel(lv)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
@@ -59,7 +60,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_EQUIP_LIMIT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e1:SetValue(s.eqlimit)
 		e1:SetLabelObject(tc)
 		c:RegisterEffect(e1)

@@ -1,4 +1,5 @@
 --炎星皇－チョウライオ
+--Brotherhood of the Fire Fist - Lion Emperor
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -12,14 +13,10 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
-	e1:SetCost(s.thcost)
+	e1:SetCost(Cost.Detach(1))
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
-end
-function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.filter(c)
 	return c:IsAttribute(ATTRIBUTE_FIRE) and c:IsAbleToHand()
@@ -38,7 +35,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_FIELD)
 		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 		e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_PHASE|PHASE_END)
 		e1:SetTargetRange(1,0)
 		e1:SetTarget(s.sumlimit)
 		e1:SetLabel(tc:GetCode())

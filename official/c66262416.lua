@@ -1,6 +1,5 @@
 --Ｄ－ＨＥＲＯ ドリームガイ
 --Destiny HERO - Dreamer
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon itself from GY
@@ -16,13 +15,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0xc008}
-
+s.listed_series={SET_DESTINY_HERO}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
 	if tc:IsControler(1-tp) then tc=Duel.GetAttackTarget() end
 	e:SetLabelObject(tc)
-	return tc and tc:IsControler(tp) and tc:IsSetCard(0xc008)
+	return tc and tc:IsControler(tp) and tc:IsSetCard(SET_DESTINY_HERO)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -39,7 +37,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 			e1:SetValue(1)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_DAMAGE)
 			tc:RegisterEffect(e1)
 		end
 		--Banish it if it leaves the field
@@ -48,7 +46,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
-		e2:SetReset(RESET_EVENT+RESETS_REDIRECT)
+		e2:SetReset(RESET_EVENT|RESETS_REDIRECT)
 		e2:SetValue(LOCATION_REMOVED)
 		c:RegisterEffect(e2,true)
 		--Take no battle damage from this battle
@@ -57,7 +55,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
 		e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 		e3:SetTargetRange(1,0)
-		e3:SetReset(RESET_PHASE+PHASE_DAMAGE)
+		e3:SetReset(RESET_PHASE|PHASE_DAMAGE)
 		Duel.RegisterEffect(e3,tp)
 	end
 end

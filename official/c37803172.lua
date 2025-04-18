@@ -1,4 +1,5 @@
 --陽炎獣 ペリュトン
+--Hazy Flame Peryton
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot be target
@@ -28,9 +29,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x107d}
+s.listed_series={SET_HAZY_FLAME}
 function s.splimit(e,se,sp,st)
-	return se:GetHandler():IsSetCard(0x107d)
+	return se:GetHandler():IsSetCard(SET_HAZY_FLAME)
 end
 function s.cfilter(c)
 	return c:IsAttribute(ATTRIBUTE_FIRE) and c:IsAbleToGraveAsCost()
@@ -42,7 +43,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x107d) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_HAZY_FLAME) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)

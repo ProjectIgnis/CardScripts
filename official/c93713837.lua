@@ -1,4 +1,5 @@
 --No.24 竜血鬼ドラギュラス
+--Number 24: Dragulas the Vampiric Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -13,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
-	e1:SetCost(s.poscost)
+	e1:SetCost(Cost.Detach(1))
 	e1:SetTarget(s.postg)
 	e1:SetOperation(s.posop)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
@@ -42,10 +43,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.xyz_number=24
-function s.poscost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
-end
 function s.posfilter(c)
 	return c:IsFaceup() and c:IsSummonLocation(LOCATION_EXTRA) and c:IsCanTurnSet()
 end

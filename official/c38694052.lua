@@ -1,5 +1,5 @@
 --黒熔龍騎ヴォルニゲシュ
---Volnigesh the Black Lava Dragoon
+--Voloferniges, the Darkest Dragon Doomrider
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
-	e2:SetHintTiming(TIMING_DAMAGE_STEP,TIMING_DAMAGE_STEP+TIMINGS_CHECK_MONSTER_E)
+	e2:SetHintTiming(TIMING_DAMAGE_STEP,TIMING_DAMAGE_STEP|TIMINGS_CHECK_MONSTER_E)
 	e2:SetCondition(s.condition2)
 	c:RegisterEffect(e2)
 end
@@ -32,7 +32,7 @@ function s.condition1(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.condition2(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetOverlayGroup():IsExists(Card.IsRace,1,nil,RACE_DRAGON)
-		and (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
+		and aux.StatChangeDamageStepCondition()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -44,10 +44,10 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_CANNOT_ATTACK)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESETS_STANDARD_PHASE_END)
 	c:RegisterEffect(e1,true)
 	c:RemoveOverlayCard(tp,2,2,REASON_COST)
-	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+	c:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsFaceup() end
@@ -71,7 +71,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(lv*300)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,2)
+		e1:SetReset(RESETS_STANDARD_PHASE_END,2)
 		sc:RegisterEffect(e1)
 	end
 end

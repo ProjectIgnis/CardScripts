@@ -1,4 +1,5 @@
 --漆黒の豹戦士パンサーウォリアー
+--Panther Warrior
 local s,id=GetID()
 function s.initial_effect(c)
 	--attack cost

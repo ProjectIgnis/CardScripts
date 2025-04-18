@@ -1,4 +1,5 @@
 --クロス・ポーター
+--Cross Porter
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -21,12 +22,12 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x1f}
+s.listed_series={SET_NEO_SPACIAN}
 function s.cfilter(c,ft)
 	return ft>0 or c:GetSequence()<5
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x1f) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_NEO_SPACIAN) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
@@ -50,7 +51,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.sfilter(c)
-	return c:IsSetCard(0x1f) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_NEO_SPACIAN) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.sfilter,tp,LOCATION_DECK,0,1,nil) end

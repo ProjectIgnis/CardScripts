@@ -28,14 +28,14 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x10cd}
+s.listed_series={SET_AQUAACTRESS}
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
 	local bc=Duel.GetAttackTarget()
 	if not bc then return false end
 	if bc:IsControler(1-tp) then bc=tc end
 	e:SetLabelObject(bc)
-	return bc:IsFaceup() and bc:IsSetCard(0x10cd)
+	return bc:IsFaceup() and bc:IsSetCard(SET_AQUAACTRESS)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
@@ -45,7 +45,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetValue(tc:GetAttack()*2)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE_CAL)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_DAMAGE_CAL)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_SET_DEFENSE_FINAL)
@@ -79,7 +79,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)

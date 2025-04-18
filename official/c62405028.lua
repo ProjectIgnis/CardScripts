@@ -1,5 +1,5 @@
 --冥界の淳一ナイア
---Nihil, Dreg of the Abhyss
+--Nauya, the Ogdoadic Remnant
 --scripted by Xylen5967
 local s,id=GetID()
 function s.initial_effect(c)
@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,id)
-	e1:SetCost(s.tgcost)
+	e1:SetCost(Cost.SelfToGrave)
 	e1:SetTarget(s.tgtg)
 	e1:SetOperation(s.tgop)
 	c:RegisterEffect(e1)
@@ -29,12 +29,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x163}
-function s.tgcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(c,REASON_COST)
-end
+s.listed_series={SET_OGDOADIC}
 function s.tgfilter(c)
 	return c:IsRace(RACE_REPTILE) and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsAbleToGrave()
 end
@@ -50,7 +45,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thfilter(c)
-	return c:IsSpellTrap() and c:IsSetCard(0x163) and c:IsAbleToHand()
+	return c:IsSpellTrap() and c:IsSetCard(SET_OGDOADIC) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

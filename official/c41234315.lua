@@ -1,4 +1,5 @@
 --フェイク・エクスプロージョン・ペンタ
+--Fake Explosion
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -22,7 +23,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 		e1:SetValue(1)
-		e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
+		e1:SetReset(RESET_PHASE|PHASE_DAMAGE)
 		a:RegisterEffect(e1)
 	end
 	if d then
@@ -30,7 +31,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 		e2:SetValue(1)
-		e2:SetReset(RESET_PHASE+PHASE_DAMAGE)
+		e2:SetReset(RESET_PHASE|PHASE_DAMAGE)
 		d:RegisterEffect(e2)
 	end
 	local e3=Effect.CreateEffect(e:GetHandler())
@@ -39,7 +40,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e3:SetCode(EVENT_BATTLED)
 	e3:SetOperation(s.spop)
-	e3:SetReset(RESET_PHASE+PHASE_DAMAGE)
+	e3:SetReset(RESET_PHASE|PHASE_DAMAGE)
 	Duel.RegisterEffect(e3,tp)
 end
 function s.spfilter(c,e,tp)
@@ -48,7 +49,7 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter),tp,0x12,0,1,1,nil,e,tp)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter),tp,LOCATION_HAND|LOCATION_GRAVE,0,1,1,nil,e,tp)
 	if #g>0 then
 		Duel.SpecialSummon(g,0,tp,tp,true,true,POS_FACEUP)
 	end

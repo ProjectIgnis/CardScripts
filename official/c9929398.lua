@@ -1,6 +1,5 @@
 --ＢＦ－朧影のゴウフウ
 --Blackwing - Gofu the Vague Shadow
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -35,8 +34,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={9929399}
-s.listed_series={0x33}
-
+s.listed_series={SET_BLACKWING}
 function s.spcon(e,c)
 	if c==nil then return true end
 	return Duel.GetFieldGroupCount(c:GetControler(),LOCATION_MZONE,0,nil)==0
@@ -65,7 +63,7 @@ function s.tknop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UNRELEASABLE_SUM)
 			e1:SetValue(1)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			token:RegisterEffect(e1,true)
 			local e2=e1:Clone()
 			e2:SetCode(EFFECT_UNRELEASABLE_NONSUM)
@@ -86,7 +84,7 @@ function s.spfilter(c,e,tp,ct)
 	local rlv=c:GetLevel()-e:GetHandler():GetLevel()
 	if rlv<1 then return false end
 	local rg=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE,0,e:GetHandler())
-	return c:IsType(TYPE_SYNCHRO) and c:IsSetCard(0x33) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsType(TYPE_SYNCHRO) and c:IsSetCard(SET_BLACKWING) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and rg:CheckWithSumEqual(Card.GetLevel,rlv,ct,63)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -109,7 +107,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_ADD_TYPE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e1:SetValue(TYPE_TUNER)
 		tc:RegisterEffect(e1)
 	end

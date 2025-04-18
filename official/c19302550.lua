@@ -29,33 +29,29 @@ function s.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetRange(LOCATION_HAND)
 	e3:SetCountLimit(1,id)
-	e3:SetCost(s.thcost)
+	e3:SetCost(Cost.SelfDiscard)
 	e3:SetTarget(s.thtg)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
-	aux.DoubleSnareValidity(c,LOCATION_PZONE+LOCATION_MZONE)
+	aux.DoubleSnareValidity(c,LOCATION_PZONE|LOCATION_MZONE)
 end
-s.listed_series={0xaf,0xae}
+s.listed_series={SET_DD,SET_DARK_CONTRACT}
 s.listed_names={id}
 function s.splimit(e,c,sump,sumtype,sumpos,targetp)
-	return not c:IsSetCard(0xaf) and (sumtype&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
+	return not c:IsSetCard(SET_DD) and (sumtype&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsChainDisablable(ev) and re:IsActiveType(TYPE_TRAP) and aux.damcon1(e,tp,eg,ep,ev,re,r,rp) and e:GetHandler():GetFlagEffect(id)==0
+	return Duel.IsChainDisablable(ev) and re:IsTrapEffect() and aux.damcon1(e,tp,eg,ep,ev,re,r,rp) and e:GetHandler():GetFlagEffect(id)==0
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.SelectEffectYesNo(tp,e:GetHandler()) then return end
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1)
 	if not Duel.NegateEffect(ev) then return end
 	Duel.BreakEffect()
 	Duel.Destroy(e:GetHandler(),REASON_EFFECT)
 end
-function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsDiscardable() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
-end
 function s.thfilter(c)
-	return (c:IsSetCard(0xaf) or c:IsSetCard(0xae)) and not c:IsCode(id) and c:IsAbleToHand()
+	return (c:IsSetCard(SET_DD) or c:IsSetCard(SET_DARK_CONTRACT)) and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc) end

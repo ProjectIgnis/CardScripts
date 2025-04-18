@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetCountLimit(1,id)
-	e1:SetCondition(function(e) return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK) end)
+	e1:SetCondition(function(e) return e:GetHandler():IsLinkSummoned() end)
 	e1:SetCost(s.thcost)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
@@ -47,7 +47,7 @@ function s.lcheck(g,lc,sumtype,tp)
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST|REASON_DISCARD)
 end
 function s.thfilter(c)
 	return c:PlacesCounter(COUNTER_BUSHIDO) and c:IsAbleToHand()

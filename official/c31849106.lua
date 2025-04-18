@@ -21,10 +21,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTarget(s.rmtarget)
 	e1:SetTargetRange(0xff,0xff)
 	e1:SetValue(LOCATION_REMOVED)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+	Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1)
 end
 function s.rmtarget(e,c)
-	return not c:IsLocation(0x80) and not c:IsSpellTrap() and Duel.IsPlayerCanRemove(e:GetHandlerPlayer(),c)
+	return not c:IsLocation(LOCATION_OVERLAY) and not c:IsSpellTrap() and Duel.IsPlayerCanRemove(e:GetHandlerPlayer(),c)
 end

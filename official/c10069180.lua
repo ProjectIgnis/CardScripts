@@ -1,4 +1,5 @@
 --魔力終了宣告
+--Spell-Stopping Statute
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

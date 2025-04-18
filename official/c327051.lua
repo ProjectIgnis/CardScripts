@@ -24,9 +24,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.repop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x152}
+s.listed_series={SET_MAGISTUS}
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x152) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_MAGISTUS) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.spfilter(chkc,e,tp) end
@@ -43,7 +43,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.repfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x152) and c:IsLocation(LOCATION_SZONE) and c:IsControler(tp)
+	return c:IsFaceup() and c:IsSetCard(SET_MAGISTUS) and c:IsLocation(LOCATION_SZONE) and c:IsControler(tp)
 		and not c:IsReason(REASON_REPLACE) and c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()==1-tp
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)

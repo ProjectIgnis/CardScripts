@@ -1,5 +1,5 @@
 --無限起動トレンチャー
---Infinite Ignition Trencher
+--Infinitrack Trencher
 --Scripted by ahtelel
 local s,id=GetID()
 function s.initial_effect(c)
@@ -22,13 +22,13 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,{id,1})
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.sptg2)
 	e2:SetOperation(s.spop2)
 	c:RegisterEffect(e2)
 end
 s.listed_names={id}
-s.listed_series={0x127}
+s.listed_series={SET_INFINITRACK}
 function s.cfilter(c,tp)
 	return c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_EARTH)
 		and (Duel.GetMZoneCount(tp,c,tp)>0 or (c:IsControler(tp) and c:GetSequence()<5)) and (c:IsControler(tp) or c:IsFaceup())
@@ -50,7 +50,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x127) and c:IsLevelBelow(5) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE) and not c:IsCode(id)
+	return c:IsSetCard(SET_INFINITRACK) and c:IsLevelBelow(5) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE) and not c:IsCode(id)
 end
 function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.spfilter(chkc,e,tp) end

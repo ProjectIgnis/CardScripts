@@ -1,4 +1,5 @@
 --RR－リターン
+--Raidraptor - Return
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -20,20 +21,20 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCountLimit(1,id)
 	e2:SetCondition(s.thcon)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xba}
+s.listed_series={SET_RAIDRAPTOR}
 function s.cfilter1(c,tp)
-	return c:IsSetCard(0xba) and c:IsPreviousControler(tp)
+	return c:IsSetCard(SET_RAIDRAPTOR) and c:IsPreviousControler(tp)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter1,1,nil,tp)
 end
 function s.filter(c)
-	return c:IsSetCard(0xba) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_RAIDRAPTOR) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -49,7 +50,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter2(c,tp)
-	return c:IsSetCard(0xba) and c:IsReason(REASON_EFFECT) and c:IsPreviousLocation(LOCATION_MZONE)
+	return c:IsSetCard(SET_RAIDRAPTOR) and c:IsReason(REASON_EFFECT) and c:IsPreviousLocation(LOCATION_MZONE)
 		and c:IsPreviousControler(tp) and c:IsPreviousPosition(POS_FACEUP)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
@@ -57,7 +58,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter2,1,nil,tp)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0xba) and c:IsAbleToHand()
+	return c:IsSetCard(SET_RAIDRAPTOR) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

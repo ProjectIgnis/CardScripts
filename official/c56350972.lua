@@ -1,4 +1,5 @@
 --竜姫神サフィラ
+--Saffira, Queen of Dragons
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -23,10 +24,10 @@ function s.initial_effect(c)
 end
 s.listed_names={80566312}
 function s.regcon1(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_RITUAL)
+	return e:GetHandler():IsRitualSummoned()
 end
 function s.regfilter(c)
-	return c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsPreviousLocation(LOCATION_HAND+LOCATION_DECK)
+	return c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsPreviousLocation(LOCATION_HAND|LOCATION_DECK)
 end
 function s.regcon2(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.regfilter,1,nil)
@@ -41,7 +42,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESETS_STANDARD_PHASE_END)
 	c:RegisterEffect(e1)
 end
 function s.filter(c)
@@ -91,12 +92,12 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Draw(tp,2,REASON_EFFECT)
 		Duel.ShuffleHand(tp)
 		Duel.BreakEffect()
-		Duel.DiscardHand(tp,nil,1,1,REASON_EFFECT+REASON_DISCARD)
+		Duel.DiscardHand(tp,nil,1,1,REASON_EFFECT|REASON_DISCARD)
 	elseif sel==2 then
 		local g=Duel.GetFieldGroup(tp,0,LOCATION_HAND)
 		if #g==0 then return end
 		local sg=g:RandomSelect(tp,1)
-		Duel.SendtoGrave(sg,REASON_EFFECT+REASON_DISCARD)
+		Duel.SendtoGrave(sg,REASON_EFFECT|REASON_DISCARD)
 	else
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_GRAVE,0,1,1,nil)

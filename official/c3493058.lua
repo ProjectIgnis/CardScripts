@@ -14,7 +14,7 @@ function s.initial_effect(c)
 end
 s.roll_dice=true
 function s.filter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsSpellTrap()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return true end

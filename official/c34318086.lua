@@ -1,4 +1,5 @@
 --レモン・マジシャン・ガール
+--Lemon Magician Girl
 local s,id=GetID()
 function s.initial_effect(c)
 	--search
@@ -24,10 +25,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x20a2}
+s.listed_series={SET_MAGICIAN_GIRL}
 s.listed_names={id}
 function s.cfilter(c)
-	return c:IsSetCard(0x20a2) and not c:IsCode(id)
+	return c:IsSetCard(SET_MAGICIAN_GIRL) and not c:IsCode(id)
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.cfilter,1,false,nil,nil) end
@@ -67,12 +68,12 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e2)
 		local at=Duel.GetAttacker()
 		if at and not at:IsImmuneToEffect(e) and Duel.ChangeAttackTarget(tc) then
@@ -80,7 +81,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			local e3=Effect.CreateEffect(c)
 			e3:SetType(EFFECT_TYPE_SINGLE)
 			e3:SetCode(EFFECT_SET_ATTACK_FINAL)
-			e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e3:SetReset(RESET_EVENT|RESETS_STANDARD)
 			e3:SetValue(math.ceil(at:GetAttack()/2))
 			at:RegisterEffect(e3)
 		end

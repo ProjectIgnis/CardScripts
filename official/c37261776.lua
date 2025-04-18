@@ -63,7 +63,7 @@ function s.sumop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetRange(LOCATION_MZONE)
 		e1:SetValue(e:GetLabel()/2)
-		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE|RESET_PHASE|PHASE_END)
+		e1:SetReset(RESETS_STANDARD_DISABLE_PHASE_END)
 		c:RegisterEffect(e1)
 	end
 end
@@ -99,5 +99,5 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.zeroatkcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsReincarnationSummoned() and c:IsFusionSummoned() and Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL
+	return c:IsReincarnationSummoned() and c:IsFusionSummoned() and Duel.IsPhase(PHASE_DAMAGE_CAL)
 end

@@ -4,7 +4,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0x8),aux.FilterBoolFunctionEx(Card.IsAttribute,ATTRIBUTE_WATER))
+	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_HERO),aux.FilterBoolFunctionEx(Card.IsAttribute,ATTRIBUTE_WATER))
 	--spsummon condition
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -31,8 +31,8 @@ function s.initial_effect(c)
 	e3:SetValue(s.atkup)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x8}
-s.material_setcode={0x8}
+s.listed_series={SET_HERO}
+s.material_setcode={SET_HERO}
 function s.atkfilter(c)
 	return c:IsFaceup() and c:GetCode()~=id and c:IsAttribute(ATTRIBUTE_WATER)
 end

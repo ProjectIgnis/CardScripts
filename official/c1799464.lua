@@ -38,12 +38,12 @@ function s.tkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 		e1:SetAbsoluteRange(tp,1,0)
 		e1:SetTarget(s.splimit)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		token:RegisterEffect(e1,true)
 		--Lizard check
 		local e2=aux.createContinuousLizardCheck(e:GetHandler(),LOCATION_MZONE,s.lizfilter)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
-		token:RegisterEffect(e2,true)		
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
+		token:RegisterEffect(e2,true)
 	end
 	Duel.SpecialSummonComplete()
 end

@@ -1,10 +1,10 @@
 --水精鱗－サラキアビス
---Mermail Abyssaraki
+--Mermail Abyssalacia
 --
 local s,id=GetID()
 function s.initial_effect(c)
 	--link summon
-	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_AQUA+RACE_FISH+RACE_SEASERPENT),2,2)
+	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_AQUA|RACE_FISH|RACE_SEASERPENT),2,2)
 	c:EnableReviveLimit()
 	--atk/def
 	local e1=Effect.CreateEffect(c)
@@ -46,12 +46,12 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x74}
+s.listed_series={SET_MERMAIL}
 function s.indtg(e,c)
 	return e:GetHandler():GetLinkedGroup():IsContains(c)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return Duel.IsTurnPlayer(1-tp)
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,1,nil) end
@@ -60,7 +60,7 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x74) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_MERMAIL) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -104,4 +104,3 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 	end
 end
-

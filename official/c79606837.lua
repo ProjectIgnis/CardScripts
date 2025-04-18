@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_TO_GRAVE_REDIRECT)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetTarget(s.rmtarget)
-	e1:SetTargetRange(LOCATION_HAND+LOCATION_DECK,LOCATION_HAND+LOCATION_DECK)
+	e1:SetTargetRange(LOCATION_HAND|LOCATION_DECK,LOCATION_HAND|LOCATION_DECK)
 	e1:SetValue(LOCATION_REMOVED)
 	c:RegisterEffect(e1)
 	--Negate activation
@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCondition(s.discon)
-	e2:SetCost(s.discost)
+	e2:SetCost(Cost.SelfTribute)
 	e2:SetTarget(s.distg)
 	e2:SetOperation(s.disop)
 	c:RegisterEffect(e2)
@@ -46,11 +46,7 @@ end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsStatus(STATUS_BATTLE_DESTROYED) then return false end
-	return (re:IsActiveType(TYPE_MONSTER) or re:IsHasType(EFFECT_TYPE_ACTIVATE)) and Duel.IsChainNegatable(ev)
-end
-function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() end
-	Duel.Release(e:GetHandler(),REASON_COST)
+	return (re:IsMonsterEffect() or re:IsHasType(EFFECT_TYPE_ACTIVATE)) and Duel.IsChainNegatable(ev)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

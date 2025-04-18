@@ -1,4 +1,5 @@
 --コアキメイル・フルバリア
+--Koa'ki Meiru Hydro Barrier
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy
@@ -11,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x1d}
+s.listed_series={SET_KOAKI_MEIRU}
 s.listed_names={36623431}
 function s.cfilter(c)
 	return c:IsCode(36623431) and c:IsAbleToDeckAsCost()
@@ -20,10 +21,10 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND,0,1,1,nil)
-	Duel.SendtoDeck(g,nil,0,REASON_COST)
+	Duel.SendtoDeck(g,nil,SEQ_DECKTOP,REASON_COST)
 end
 function s.filter(e,c)
-	return c:IsType(TYPE_EFFECT) and not c:IsSetCard(0x1d)
+	return c:IsType(TYPE_EFFECT) and not c:IsSetCard(SET_KOAKI_MEIRU)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
@@ -31,6 +32,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e1:SetTarget(s.filter)
 	e1:SetCode(EFFECT_DISABLE)
-	e1:SetReset(RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN)
+	e1:SetReset(RESET_PHASE|PHASE_STANDBY|RESET_SELF_TURN)
 	Duel.RegisterEffect(e1,tp)
 end

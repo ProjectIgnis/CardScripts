@@ -1,7 +1,6 @@
 --リンク・デス・ターレット
 --Link Turret
 --Scripted by Eerie Code
-
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(0x48)
@@ -37,8 +36,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
 end
-s.listed_series={0x102}
-
+s.listed_series={SET_ROKKET}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc) end
 	local c=e:GetHandler()
@@ -68,7 +66,7 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():AddCounter(0x48,1)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and Duel.GetCurrentPhase()==PHASE_MAIN2
+	return Duel.IsTurnPlayer(tp) and Duel.IsPhase(PHASE_MAIN2)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,0x48,1,REASON_EFFECT)
@@ -80,7 +78,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,2),nil)
 end
@@ -88,7 +86,7 @@ function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return not (c:IsLinkMonster() and c:IsAttribute(ATTRIBUTE_DARK)) and c:IsLocation(LOCATION_EXTRA)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x102) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_ROKKET) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.spfilter(chkc,e,tp) end
@@ -106,19 +104,19 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD-RESET_TOFIELD)
 		tc:RegisterEffect(e1,true)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD-RESET_TOFIELD)
 		tc:RegisterEffect(e2,true)
 		local e3=Effect.CreateEffect(c)
 		e3:SetDescription(3300)
 		e3:SetType(EFFECT_TYPE_SINGLE)
 		e3:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 		e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
-		e3:SetReset(RESET_EVENT+RESETS_REDIRECT)
+		e3:SetReset(RESET_EVENT|RESETS_REDIRECT)
 		e3:SetValue(LOCATION_REMOVED)
 		tc:RegisterEffect(e3,true)
 	end

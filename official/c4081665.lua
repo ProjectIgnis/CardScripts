@@ -20,12 +20,12 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetCountLimit(1,id)
 	e2:SetCondition(s.damcon)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.damtg)
 	e2:SetOperation(s.damop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xc6}
+s.listed_series={SET_PERFORMAGE}
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
@@ -37,7 +37,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_SUMMON)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	e1:SetTargetRange(1,0)
 	Duel.RegisterEffect(e1,tp)
 	local e2=e1:Clone()
@@ -46,7 +46,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,1),nil)
 end
 function s.cfilter(c)
-	return c:IsSetCard(0xc6) and c:IsMonster()
+	return c:IsSetCard(SET_PERFORMAGE) and c:IsMonster()
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,1,e:GetHandler()) and aux.damcon1(e,1-tp,eg,ep,ev,re,r,rp)

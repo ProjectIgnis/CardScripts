@@ -1,4 +1,5 @@
 --RR－インペイル・レイニアス
+--Raidraptor - Sharp Lanius
 local s,id=GetID()
 function s.initial_effect(c)
 	--pos
@@ -39,7 +40,7 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge2,0)
 	end)
 end
-s.listed_series={0xba}
+s.listed_series={SET_RAIDRAPTOR}
 function s.poscon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(id)>0
 end
@@ -60,10 +61,10 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetAttackedCount()>0 and Duel.GetCurrentPhase()==PHASE_MAIN2
+	return e:GetHandler():GetAttackedCount()>0 and Duel.IsPhase(PHASE_MAIN2)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0xba) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_RAIDRAPTOR) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.spfilter(chkc,e,tp) end

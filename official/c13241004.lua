@@ -26,10 +26,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.drop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xa9,0xad}
+s.listed_series={SET_FLUFFAL,SET_FRIGHTFUR}
 s.listed_names={id}
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0xa9) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_FLUFFAL) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -46,7 +46,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsLocation(LOCATION_GRAVE) and r==REASON_FUSION and c:GetReasonCard():IsOriginalSetCard(0xad)
+	return c:IsLocation(LOCATION_GRAVE) and r==REASON_FUSION and c:GetReasonCard():IsOriginalSetCard(SET_FRIGHTFUR)
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,2) end
@@ -60,6 +60,6 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.Draw(p,d,REASON_EFFECT)==2 then
 		Duel.ShuffleHand(p)
 		Duel.BreakEffect()
-		Duel.DiscardHand(p,nil,1,1,REASON_EFFECT+REASON_DISCARD)
+		Duel.DiscardHand(p,nil,1,1,REASON_EFFECT|REASON_DISCARD)
 	end
 end

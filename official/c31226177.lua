@@ -12,8 +12,8 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_EXTRA_SUMMON_COUNT)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetTargetRange(LOCATION_HAND+LOCATION_MZONE,0)
-	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0xfd))
+	e1:SetTargetRange(LOCATION_HAND|LOCATION_MZONE,0)
+	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_WORLD_CHALICE))
 	c:RegisterEffect(e1)
 	--destroy
 	local e2=Effect.CreateEffect(c)
@@ -36,7 +36,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop2)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xfd}
+s.listed_series={SET_WORLD_CHALICE}
 function s.matfilter(c,lc,sumtype,tp)
 	return c:IsType(TYPE_NORMAL,lc,sumtype,tp) and not c:IsType(TYPE_TOKEN,lc,sumtype,tp)
 end
@@ -57,7 +57,7 @@ function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.spfilter2(c,e,tp)
-	return c:IsSetCard(0xfd) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_WORLD_CHALICE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

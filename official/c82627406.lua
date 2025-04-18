@@ -1,4 +1,5 @@
 --キウイ・マジシャン・ガール
+--Kiwi Magician Girl
 local s,id=GetID()
 function s.initial_effect(c)
 	--atk up
@@ -10,8 +11,8 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetHintTiming(TIMING_DAMAGE_STEP)
-	e1:SetCondition(s.condition)
-	e1:SetCost(s.cost)
+	e1:SetCondition(aux.StatChangeDamageStepCondition)
+	e1:SetCost(Cost.SelfDiscard)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
@@ -31,32 +32,23 @@ function s.initial_effect(c)
 	e3:SetValue(aux.tgoval)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x20a2}
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
-end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsDiscardable() end
-	Duel.SendtoGrave(c,REASON_COST+REASON_DISCARD)
-end
+s.listed_series={SET_MAGICIAN_GIRL}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x20a2),tp,LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_MAGICIAN_GIRL),tp,LOCATION_MZONE,0,1,nil) end
 end
 function s.ctfilter(c)
-	return (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup()) and c:IsMonster() and c:IsSetCard(0x20a2)
+	return (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup()) and c:IsMonster() and c:IsSetCard(SET_MAGICIAN_GIRL)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local tg=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,0x20a2),tp,LOCATION_MZONE,0,nil)
-	local g=Duel.GetMatchingGroup(s.ctfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE,nil)
+	local tg=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,SET_MAGICIAN_GIRL),tp,LOCATION_MZONE,0,nil)
+	local g=Duel.GetMatchingGroup(s.ctfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,LOCATION_MZONE|LOCATION_GRAVE,nil)
 	if #tg>0 and #g>0 then
 		local d=g:GetClassCount(Card.GetCode)*300
-		local sc=tg:GetFirst()
-		for sc in aux.Next(tg) do
+		for sc in tg:Iter() do
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e1:SetReset(RESETS_STANDARD_PHASE_END)
 			e1:SetValue(d)
 			sc:RegisterEffect(e1)
 			local e2=e1:Clone()

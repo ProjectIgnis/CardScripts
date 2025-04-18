@@ -64,18 +64,18 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(e:GetHandler())
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e2:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e2)
 		if tc:IsType(TYPE_TRAPMONSTER) then
 			local e3=Effect.CreateEffect(e:GetHandler())
 			e3:SetType(EFFECT_TYPE_SINGLE)
 			e3:SetCode(EFFECT_DISABLE_TRAPMONSTER)
-			e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e3:SetReset(RESETS_STANDARD_PHASE_END)
 			tc:RegisterEffect(e3)
 		end
 	end
@@ -107,9 +107,9 @@ function s.thcostfilter(c)
 		and (c:IsLocation(LOCATION_HAND) or c:IsFaceup())
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.thcostfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,1,e:GetHandler()) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.thcostfilter,tp,LOCATION_MZONE|LOCATION_HAND,0,1,e:GetHandler()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,s.thcostfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,1,1,e:GetHandler())
+	local g=Duel.SelectMatchingCard(tp,s.thcostfilter,tp,LOCATION_MZONE|LOCATION_HAND,0,1,1,e:GetHandler())
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -54,10 +54,10 @@ function s.initial_effect(c)
 	e6:SetValue(s.damlimit)
 	c:RegisterEffect(e6)
 end
-s.listed_series={0x10af}
+s.listed_series={SET_DDD}
 s.listed_names={}
 function s.thfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x10af) and c:IsType(TYPE_PENDULUM) and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsFaceup() and c:IsSetCard(SET_DDD) and c:IsType(TYPE_PENDULUM) and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_EXTRA,0,1,nil) end
@@ -74,11 +74,11 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.hspcon(e,c)
 	if c==nil then return true end
-	return Duel.CheckReleaseGroup(c:GetControler(),Card.IsSetCard,1,false,1,true,c,c:GetControler(),nil,false,nil,0x10af)
+	return Duel.CheckReleaseGroup(c:GetControler(),Card.IsSetCard,1,false,1,true,c,c:GetControler(),nil,false,nil,SET_DDD)
 end
 function s.hsptg(e,tp,eg,ep,ev,re,r,rp,c)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local g=Duel.SelectReleaseGroup(tp,Card.IsSetCard,1,1,false,true,true,c,nil,nil,false,nil,0x10af)
+	local g=Duel.SelectReleaseGroup(tp,Card.IsSetCard,1,1,false,true,true,c,nil,nil,false,nil,SET_DDD)
 	if g then
 		g:KeepAlive()
 		e:SetLabelObject(g)
@@ -105,13 +105,13 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetValue(bc:GetBaseAttack()*2)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE_CAL)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_DAMAGE_CAL)
 		c:RegisterEffect(e1)
 	end
 end
 function s.valcon(e,re,r,rp)
 	if (r&REASON_BATTLE)~=0 then
-		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+		e:GetHandler():RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 		return true
 	else return false end
 end

@@ -1,4 +1,5 @@
 --エンシェント・ゴッド・フレムベル
+--Ancient Flamvell Deity
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -16,12 +17,12 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.remcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
+	return e:GetHandler():IsSynchroSummoned()
 end
 function s.remtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	if Duel.IsPlayerAffectedByEffect(1-tp,69832741) then
-		Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,1-tp,LOCATION_MZONE+LOCATION_GRAVE)
+	if Duel.IsPlayerAffectedByEffect(1-tp,CARD_SPIRIT_ELIMINATION) then
+		Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,1-tp,LOCATION_MZONE|LOCATION_GRAVE)
 	else
 		Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,1-tp,LOCATION_GRAVE)
 	end
@@ -33,7 +34,7 @@ function s.remop(e,tp,eg,ep,ev,re,r,rp)
 	local ht=Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)
 	if ht==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local rg=Duel.SelectMatchingCard(tp,s.rmfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,1,ht,nil)
+	local rg=Duel.SelectMatchingCard(tp,s.rmfilter,tp,0,LOCATION_MZONE|LOCATION_GRAVE,1,ht,nil)
 	local c=e:GetHandler()
 	if #rg>0 then
 		Duel.Remove(rg,POS_FACEUP,REASON_EFFECT)
@@ -42,7 +43,7 @@ function s.remop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(#rg*200)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		c:RegisterEffect(e1)
 	end
 end

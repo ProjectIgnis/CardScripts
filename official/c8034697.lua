@@ -2,7 +2,7 @@
 --Magical Marionette
 local s,id=GetID()
 function s.initial_effect(c)
-	c:EnableCounterPermit(0x1)
+	c:EnableCounterPermit(COUNTER_SPELL)
 	--add counter
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
@@ -38,7 +38,7 @@ function s.initial_effect(c)
 end
 s.counter_place_list={COUNTER_SPELL}
 function s.acop(e,tp,eg,ep,ev,re,r,rp)
-	if re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL) and e:GetHandler():GetFlagEffect(1)>0 then
+	if re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsSpellEffect() and e:GetHandler():GetFlagEffect(1)>0 then
 		e:GetHandler():AddCounter(COUNTER_SPELL,1)
 	end
 end

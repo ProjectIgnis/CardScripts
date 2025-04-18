@@ -29,9 +29,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.tgop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xa9,0xc3,0xad}
+s.listed_series={SET_FLUFFAL,SET_EDGE_IMP,SET_FRIGHTFUR}
 function s.thfilter(c)
-	return (c:IsSetCard(0xa9) or c:IsSetCard(0xc3)) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard({SET_FLUFFAL,SET_EDGE_IMP}) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc) end
@@ -48,7 +48,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsLocation(LOCATION_GRAVE) and r==REASON_FUSION and c:GetReasonCard():IsOriginalSetCard(0xad)
+	return c:IsLocation(LOCATION_GRAVE) and r==REASON_FUSION and c:GetReasonCard():IsOriginalSetCard(SET_FRIGHTFUR)
 end
 function s.tgfilter(c)
 	return c:IsFaceup() and c:IsMonster()
@@ -64,6 +64,6 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	local sg=tg:Filter(Card.IsRelateToEffect,nil,e)
 	if #sg>0 then
-		Duel.SendtoGrave(sg,REASON_EFFECT+REASON_RETURN)
+		Duel.SendtoGrave(sg,REASON_EFFECT|REASON_RETURN)
 	end
 end

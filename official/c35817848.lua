@@ -1,3 +1,4 @@
+--シンクロ・トランスミッション
 --Synchro Transmission
 local s,id=GetID()
 function s.initial_effect(c)
@@ -22,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetCondition(s.tdcon)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.tdtg)
 	e2:SetOperation(s.tdop)
 	c:RegisterEffect(e2)
@@ -58,7 +59,7 @@ function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and Duel.SendtoDeck(tc,nil,0,REASON_EFFECT)>0 and Duel.GetOperatedGroup():GetFirst():IsLocation(LOCATION_EXTRA) then
+	if tc:IsRelateToEffect(e) and Duel.SendtoDeck(tc,nil,SEQ_DECKTOP,REASON_EFFECT)>0 and Duel.GetOperatedGroup():GetFirst():IsLocation(LOCATION_EXTRA) then
 		Duel.BreakEffect()
 		Duel.Draw(tp,1,REASON_EFFECT)
 	end

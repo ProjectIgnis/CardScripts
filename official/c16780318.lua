@@ -1,5 +1,5 @@
 --超勝負！
---Super All-In!
+--Super All In!
 --Logical Nonsense
 --Substitute ID
 local s,id=GetID()
@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 	--Lists the "Flower Cardian" archetype
-s.listed_series={0xe6}
+s.listed_series={SET_FLOWER_CARDIAN}
 	--Check for synchro monster
 function s.exfilter(c,tp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
@@ -31,7 +31,7 @@ function s.exfilter(c,tp)
 end
 	--Check for "Flower Cardian" monsters that can be special summoned
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0xe6) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
+	return c:IsSetCard(SET_FLOWER_CARDIAN) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
 end
 	--Activation legality
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -60,7 +60,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			if Duel.Draw(tp,1,REASON_EFFECT)==0 then return end
 			local tc=Duel.GetOperatedGroup():GetFirst()
 			Duel.ConfirmCards(1-tp,tc)
-			if tc:IsMonster() and tc:IsSetCard(0xe6) then
+			if tc:IsMonster() and tc:IsSetCard(SET_FLOWER_CARDIAN) then
 				if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 					Duel.SpecialSummon(tc,0,tp,tp,true,false,POS_FACEUP)
 				end
@@ -83,7 +83,7 @@ end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	if not re then return false end
 	local rc=re:GetHandler()
-	return e:GetHandler():IsReason(REASON_EFFECT) and rc:IsSetCard(0xe6) and rc:IsMonster()
+	return e:GetHandler():IsReason(REASON_EFFECT) and rc:IsSetCard(SET_FLOWER_CARDIAN) and rc:IsMonster()
 end
 	--Add 1 spell/trap card from GY to hand
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
@@ -97,7 +97,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCountLimit(1)
 	e1:SetTarget(s.addtg)
 	e1:SetOperation(s.addop)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESETS_STANDARD_PHASE_END)
 	c:RegisterEffect(e1)
 end
 	--Activation legality

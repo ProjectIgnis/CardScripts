@@ -1,4 +1,5 @@
 --バラに棲む悪霊
+--Rose Spectre of Dunn
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material

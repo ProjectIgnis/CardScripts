@@ -14,7 +14,7 @@ function s.initial_effect(c)
 end
 function s.costfilter(c,e,tp)
 	return c:IsMonster() and c:IsAbleToGraveAsCost()
-		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND+LOCATION_DECK,0,1,c,e,tp)
+		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND|LOCATION_DECK,0,1,c,e,tp)
 end
 function s.filter(c,e,tp)
 	return c:GetLevel()==1 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -30,7 +30,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 			e:SetLabel(0)
 			return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil,e,tp)
 		else
-			return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e,tp)
+			return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND|LOCATION_DECK,0,1,nil,e,tp)
 		end
 	end
 	if e:GetLabel()~=0 then
@@ -39,11 +39,11 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
 		Duel.SendtoGrave(g,REASON_COST)
 	end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND|LOCATION_DECK)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,e,tp)
+	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND|LOCATION_DECK,0,1,1,nil,e,tp)
 	Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 end

@@ -12,10 +12,10 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x1f}
+s.listed_series={SET_NEO_SPACIAN}
 function s.filter1(c,e,tp)
 	local code=c:GetCode()
-	return c:IsFaceup() and c:IsSetCard(0x1f)
+	return c:IsFaceup() and c:IsSetCard(SET_NEO_SPACIAN)
 		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_EXTRA,0,1,nil,code,e,tp,c)
 end
 function s.filter2(c,code,e,tp,mc)

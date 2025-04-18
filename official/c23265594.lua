@@ -1,4 +1,5 @@
 --強化支援メカ・ヘビーウェポン
+--Heavy Mech Support Platform
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddUnionProcedure(c,aux.FilterBoolFunction(Card.IsRace,RACE_MACHINE))

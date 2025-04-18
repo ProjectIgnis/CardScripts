@@ -1,7 +1,8 @@
 --機殻の生贄
+--Saqlifice
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsSetCard,0xaa))
+	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsSetCard,SET_QLI))
 	--Atk up
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_EQUIP)
@@ -32,15 +33,15 @@ function s.initial_effect(c)
 	e6:SetOperation(s.thop)
 	c:RegisterEffect(e6)
 end
-s.listed_series={0xaa}
+s.listed_series={SET_QLI}
 function s.effcon(e,c)
-	return c:IsSetCard(0xaa)
+	return c:IsSetCard(SET_QLI)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0xaa) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_QLI) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

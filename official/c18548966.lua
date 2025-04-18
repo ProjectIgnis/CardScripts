@@ -1,7 +1,6 @@
 --Ｈ・Ｃ モーニング・スター
 --Heroic Challenger - Morning Star
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -43,8 +42,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 	--Lists "Heroic" archetype
-s.listed_series={0x6f}
-
+s.listed_series={SET_HEROIC}
 	--Check for 2+ Warriors
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsRace,RACE_WARRIOR),tp,LOCATION_MZONE,0,2,nil)
@@ -65,7 +63,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for "Heroic" Spell/Trap
 function s.thfilter(c)
-	return c:IsSetCard(0x6f) and c:IsSpellTrap() and c:IsAbleToHand()
+	return c:IsSetCard(SET_HEROIC) and c:IsSpellTrap() and c:IsAbleToHand()
 end
 	--Activation legality
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -90,14 +88,14 @@ function s.ssop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
 		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e2:SetValue(RESET_TURN_SET)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e2)
 	end
 	Duel.SpecialSummonComplete()

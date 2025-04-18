@@ -34,10 +34,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.eqval(ec,c,tp)
-	return ec:IsControler(tp) and ec:IsRace(RACE_FISH+RACE_AQUA+RACE_SEASERPENT)
+	return ec:IsControler(tp) and ec:IsRace(RACE_FISH|RACE_AQUA|RACE_SEASERPENT)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsRace(RACE_FISH+RACE_AQUA+RACE_SEASERPENT) and not c:IsForbidden()
+	return c:IsFaceup() and c:IsRace(RACE_FISH|RACE_AQUA|RACE_SEASERPENT) and not c:IsForbidden()
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -51,12 +51,12 @@ end
 function s.equipop(c,e,tp,tc,chk)
 	local eff=false or chk
 	Duel.Equip(tp,tc,c,false,eff)
-	tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,0)
+	tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,0)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_OWNER_RELATE)
 	e1:SetCode(EFFECT_EQUIP_LIMIT)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	e1:SetValue(Card.EquipByEffectLimit)
 	e1:SetLabelObject(e:GetLabelObject())
 	tc:RegisterEffect(e1)
@@ -104,7 +104,7 @@ end
 function s.desrepop(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetLabelObject()
 	g:SetStatus(STATUS_DESTROY_CONFIRMED,false)
-	Duel.Destroy(g,REASON_EFFECT+REASON_REPLACE)
+	Duel.Destroy(g,REASON_EFFECT|REASON_REPLACE)
 end
 function s.atcon(e)
 	return Duel.IsExistingMatchingCard(s.eqfilter,e:GetHandlerPlayer(),LOCATION_SZONE,LOCATION_SZONE,1,nil,e:GetHandler())

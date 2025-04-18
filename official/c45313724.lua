@@ -31,22 +31,22 @@ function s.dsdlv8filter(c)
 	return c:IsRace(RACE_DRAGON) and c:IsAttribute(ATTRIBUTE_DARK) and c:IsType(TYPE_SYNCHRO)
 end
 function s.dfilter(c,tp)
-	return (s.dsdlv8filter(c) or (c:IsSetCard(0xb) and c:IsMonster())) and c:IsControler(tp) and c:IsReason(REASON_EFFECT)
+	return (s.dsdlv8filter(c) or (c:IsSetCard(SET_INFERNITY) and c:IsMonster())) and c:IsControler(tp) and c:IsReason(REASON_EFFECT)
 end
 function s.repfilter(c)
-	return c:IsSetCard(0xb) and c:IsAbleToRemove() and aux.SpElimFilter(c,true)
+	return c:IsSetCard(SET_INFERNITY) and c:IsAbleToRemove() and aux.SpElimFilter(c,true)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return eg:IsExists(s.dfilter,1,nil,tp)
-		and Duel.IsExistingMatchingCard(s.repfilter,tp,LOCATION_GRAVE+LOCATION_MZONE,0,1,nil) end
+		and Duel.IsExistingMatchingCard(s.repfilter,tp,LOCATION_GRAVE|LOCATION_MZONE,0,1,nil) end
 	return Duel.SelectEffectYesNo(tp,e:GetHandler(),96)
 end
 function s.repval(e,c)
-	return c:IsControler(e:GetHandlerPlayer()) and (s.dsdlv8filter(c) or (c:IsSetCard(0xb) and c:IsMonster())) and c:IsReason(REASON_EFFECT)
+	return c:IsControler(e:GetHandlerPlayer()) and (s.dsdlv8filter(c) or (c:IsSetCard(SET_INFERNITY) and c:IsMonster())) and c:IsReason(REASON_EFFECT)
 end
 function s.repop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.repfilter,tp,LOCATION_GRAVE+LOCATION_MZONE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.repfilter,tp,LOCATION_GRAVE|LOCATION_MZONE,0,1,1,nil)
 	Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 end
 function s.sdcon(e)

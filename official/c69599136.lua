@@ -1,6 +1,5 @@
 --底なし落とし穴
 --Floodgate Trap Hole
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--When opponent summons a monster(s), change it to face-down defense position
@@ -44,7 +43,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_CANNOT_CHANGE_POSITION)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			tc:RegisterEffect(e1)
 		end
 	end

@@ -1,4 +1,5 @@
 --進入禁止！No Entry！！
+--No Entry!!
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

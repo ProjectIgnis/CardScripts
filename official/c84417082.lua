@@ -1,4 +1,5 @@
 --No.91 サンダー・スパーク・ドラゴン
+--Number 91: Thunder Spark Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon

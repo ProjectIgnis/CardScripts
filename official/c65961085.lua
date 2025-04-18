@@ -1,4 +1,5 @@
 --魔導獣士 ルード
+--Wheel of Prophecy
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -14,12 +15,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.retop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x106e}
+s.listed_series={SET_SPELLBOOK}
 function s.retcon(e,tp,eg,ep,ev,re,r,rp)
 	return re and re:GetHandler():IsRace(RACE_SPELLCASTER)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x106e) and c:IsSpell() and c:IsAbleToDeck()
+	return c:IsFaceup() and c:IsSetCard(SET_SPELLBOOK) and c:IsSpell() and c:IsAbleToDeck()
 end
 function s.rettg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -29,7 +30,7 @@ function s.rettg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,#g,0,0)
 end
 function s.filter2(c)
-	return c:IsFaceup() and c:IsSetCard(0x106e) and c:IsSpell()
+	return c:IsFaceup() and c:IsSetCard(SET_SPELLBOOK) and c:IsSpell()
 end
 function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetTargetCards(e)
@@ -38,6 +39,6 @@ function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	local g2=Duel.GetMatchingGroup(s.filter2,tp,LOCATION_REMOVED,0,nil)
 	if #g2>0 then
-		Duel.SendtoGrave(g2,REASON_EFFECT+REASON_RETURN)
+		Duel.SendtoGrave(g2,REASON_EFFECT|REASON_RETURN)
 	end
 end

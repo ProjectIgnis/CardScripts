@@ -1,7 +1,6 @@
 --スプリガンズ・ブラザーズ
---Sprigguns Brothers
+--Springans Brothers
 --Scripted by Hel
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon 1 "Sprigguns" monster from GY
@@ -21,20 +20,19 @@ function s.initial_effect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e2:SetRange(LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE)
+	e2:SetRange(LOCATION_HAND|LOCATION_MZONE|LOCATION_GRAVE)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetTarget(s.mattg)
 	e2:SetOperation(s.matop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x158}
-
+s.listed_series={SET_SPRINGANS}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local loc=e:GetHandler():GetPreviousLocation()
 	return (loc==LOCATION_HAND or loc==LOCATION_DECK)
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x158) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE) and not c:IsCode(id)
+	return c:IsSetCard(SET_SPRINGANS) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE) and not c:IsCode(id)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end
@@ -51,7 +49,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.matfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x158) and c:IsType(TYPE_XYZ)
+	return c:IsFaceup() and c:IsSetCard(SET_SPRINGANS) and c:IsType(TYPE_XYZ)
 end
 function s.mattg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.matfilter(chkc) and chkc~=e:GetHandler() end

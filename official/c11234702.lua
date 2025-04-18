@@ -22,15 +22,15 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_GRAVE)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetCountLimit(1,{id,1})
-	e3:SetCost(aux.bfgcost)
+	e3:SetCost(Cost.SelfBanish)
 	e3:SetTarget(s.lvtg)
 	e3:SetOperation(s.lvop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x27}
+s.listed_series={SET_TG}
 s.listed_names={11234702}
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x27) and c:IsLevelBelow(4) and not c:IsCode(11234702) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_TG) and c:IsLevelBelow(4) and not c:IsCode(11234702) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.spfilter(chkc,e,tp) end
@@ -47,18 +47,18 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_DISABLE)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			tc:RegisterEffect(e1)
 			local e2=Effect.CreateEffect(c)
 			e2:SetType(EFFECT_TYPE_SINGLE)
 			e2:SetCode(EFFECT_DISABLE_EFFECT)
-			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 			tc:RegisterEffect(e2)
 		end
 		Duel.SpecialSummonComplete()
 end
 function s.filter(c)
-	return c:IsSetCard(0x27) and c:IsFaceup() and c:HasLevel()
+	return c:IsSetCard(SET_TG) and c:IsFaceup() and c:HasLevel()
 end
 function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -82,7 +82,7 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_LEVEL)
 		e1:SetValue(lvl)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end

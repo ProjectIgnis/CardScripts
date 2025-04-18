@@ -1,4 +1,5 @@
 --No.71 リバリアン・シャーク
+--Number 71: Rebarian Shark
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -25,14 +26,14 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tdop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x48,0x95}
+s.listed_series={SET_NUMBER,SET_RANK_UP_MAGIC}
 s.listed_names={id}
 s.xyz_number=71
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetOverlayCount()>0
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x48) and c:IsType(TYPE_XYZ) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_NUMBER) and c:IsType(TYPE_XYZ) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.spfilter(chkc,e,tp) end
@@ -55,7 +56,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tdfilter(c)
-	return c:IsSpell() and c:IsSetCard(0x95)
+	return c:IsSpell() and c:IsSetCard(SET_RANK_UP_MAGIC)
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tdfilter,tp,LOCATION_DECK,0,1,nil)

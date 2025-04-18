@@ -9,21 +9,17 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCondition(s.con)
-	e1:SetCost(s.cost)
+	e1:SetCost(Cost.SelfToGrave)
 	e1:SetTarget(s.tg)
 	e1:SetOperation(s.op)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x35}
+s.listed_series={SET_FABLED}
 function s.con(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x35),tp,LOCATION_MZONE,0,1,nil)
-end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_FABLED),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.filter(c)
-	return c:IsSetCard(0x35) and c:IsMonster() and c:GetCode()~=id and c:IsAbleToHand()
+	return c:IsSetCard(SET_FABLED) and c:IsMonster() and c:GetCode()~=id and c:IsAbleToHand()
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

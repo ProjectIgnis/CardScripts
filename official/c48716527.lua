@@ -1,4 +1,5 @@
 --帝王の溶撃
+--The Monarchs Erupt
 local s,id=GetID()
 function s.initial_effect(c)
 	Duel.EnableGlobalFlag(GLOBALFLAG_SELF_TOGRAVE)
@@ -26,17 +27,17 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.cfilter(c)
-	return c:IsSummonType(SUMMON_TYPE_TRIBUTE)
+	return c:IsTributeSummoned()
 end
 function s.actcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_EXTRA,0)==0
 		and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.distg(e,c)
-	return not c:IsSummonType(SUMMON_TYPE_TRIBUTE)
+	return not c:IsTributeSummoned()
 end
 function s.tgcon(e)
 	local tp=e:GetHandlerPlayer()
-	return Duel.GetTurnPlayer()==tp and Duel.GetCurrentPhase()==PHASE_END
+	return Duel.IsTurnPlayer(tp) and Duel.IsPhase(PHASE_END)
 		and not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end

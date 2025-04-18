@@ -1,4 +1,5 @@
 --リトル・ウィンガード
+--Little-Winguard
 local s,id=GetID()
 function s.initial_effect(c)
 	--pos change

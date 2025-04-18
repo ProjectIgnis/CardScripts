@@ -1,8 +1,8 @@
+--ロード・オブ・ドラゴン－ドラゴンの統制者－
 --The King of D.
---Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
-	--change name
+	--This card's name becomes "Lord of D." while on the field
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetValue(17985575)
 	c:RegisterEffect(e1)
-	--search
+	--Add 1 "The Flute of Summoning Dragon", "The Melody of Awakening Dragon", or "Dragon Revival Rhapsody" from your Deck to your hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -21,12 +21,13 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
+s.listed_names={17985575,71867500,43973174,48800175} -- "Lord of D.", "The Flute of Summoning Dragon", "The Melody of Awakening Dragon", or "Dragon Revival Rhapsody"
 function s.cfilter(c)
 	return c:IsSpellTrap() and c:IsDiscardable()
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_COST|REASON_DISCARD)
 end
 function s.thfilter(c)
 	return c:IsCode(71867500,43973174,48800175) and c:IsAbleToHand()

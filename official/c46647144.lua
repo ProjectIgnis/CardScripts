@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(s.atkcon)
-	e1:SetCost(s.atkcost)
+	e1:SetCost(Cost.SelfDiscard)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
 	--cannot target
@@ -37,7 +37,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={TOKEN_WORLD_LEGACY}
-s.listed_series={0xfe}
+s.listed_series={SET_WORLD_LEGACY}
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
@@ -47,11 +47,6 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local g=Group.FromCards(a,d)
 	return a and d and a:IsRelateToBattle() and d:IsRelateToBattle() and g:IsExists(Card.IsType,1,nil,TYPE_LINK)
 end
-function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsDiscardable() end
-	Duel.SendtoGrave(c,REASON_COST+REASON_DISCARD)
-end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=e:GetLabelObject()
 	if tc and tc:IsFaceup() and tc:IsRelateToBattle() then
@@ -59,12 +54,12 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp,chk)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(-3000)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 	end
 end
 function s.atktg(e,c)
-	return c:IsFaceup() and c:IsSetCard(0xfe) and c~=e:GetHandler()
+	return c:IsFaceup() and c:IsSetCard(SET_WORLD_LEGACY) and c~=e:GetHandler()
 end
 function s.tkcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(Card.IsSummonLocation,1,nil,LOCATION_EXTRA)
@@ -76,8 +71,8 @@ function s.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.tkop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0 and not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0xfe,TYPES_TOKEN,0,0,1,RACE_MACHINE,ATTRIBUTE_DARK,POS_FACEUP_DEFENSE)
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0xfe,TYPES_TOKEN,0,0,1,RACE_MACHINE,ATTRIBUTE_DARK,POS_FACEUP_DEFENSE,1-tp) then
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,SET_WORLD_LEGACY,TYPES_TOKEN,0,0,1,RACE_MACHINE,ATTRIBUTE_DARK,POS_FACEUP_DEFENSE)
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,SET_WORLD_LEGACY,TYPES_TOKEN,0,0,1,RACE_MACHINE,ATTRIBUTE_DARK,POS_FACEUP_DEFENSE,1-tp) then
 		local t1=Duel.CreateToken(tp,id+1)
 		local t2=Duel.CreateToken(tp,id+1)
 		Duel.SpecialSummonStep(t1,0,tp,tp,false,false,POS_FACEUP_DEFENSE)

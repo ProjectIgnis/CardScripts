@@ -58,7 +58,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tdcfilter(c,tp)
-	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp)
+	return c:IsReason(REASON_BATTLE|REASON_EFFECT) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp)
 		and c:IsType(TYPE_XYZ) and c:IsAttribute(ATTRIBUTE_WATER)
 end
 function s.tdcon(e,tp,eg,ep,ev,re,r,rp)

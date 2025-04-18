@@ -18,15 +18,15 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCondition(aux.exccon)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xc}
+s.listed_series={SET_ALIEN}
 s.counter_place_list={COUNTER_A}
 function s.filter(c)
-	return c:GetLevel()>0 and c:IsSetCard(0xc) and c:IsAbleToGrave()
+	return c:GetLevel()>0 and c:IsSetCard(SET_ALIEN) and c:IsAbleToGrave()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() end 
@@ -51,7 +51,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thfilter(c)
-	return c:IsSetCard(0xc) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_ALIEN) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

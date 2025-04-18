@@ -1,4 +1,5 @@
 --強烈なはたき落とし
+--Drastic Drop Off
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -29,10 +30,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local sg=eg:Filter(s.filter,nil,e,1-tp)
 	if #sg==0 then
 	elseif #sg==1 then
-		Duel.SendtoGrave(sg,REASON_EFFECT+REASON_DISCARD)
+		Duel.SendtoGrave(sg,REASON_EFFECT|REASON_DISCARD)
 	else
 		Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_DISCARD)
 		local dg=sg:Select(1-tp,1,1,nil)
-		Duel.SendtoGrave(dg,REASON_EFFECT+REASON_DISCARD)
+		Duel.SendtoGrave(dg,REASON_EFFECT|REASON_DISCARD)
 	end
 end

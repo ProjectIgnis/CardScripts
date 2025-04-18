@@ -7,7 +7,7 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(0,TIMING_SUMMON+TIMING_SPSUMMON)
+	e1:SetHintTiming(0,TIMING_SUMMON|TIMING_SPSUMMON)
 	c:RegisterEffect(e1)
 	--Send the top card in the Deck to the GY
 	local e2=Effect.CreateEffect(c)
@@ -78,9 +78,9 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(s.aclimit)
 		e1:SetLabelObject(tc)
 		if Duel.IsTurnPlayer(tp) then
-			e1:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN,2)
+			e1:SetReset(RESET_PHASE|PHASE_END|RESET_SELF_TURN,2)
 		else
-			e1:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN)
+			e1:SetReset(RESET_PHASE|PHASE_END|RESET_SELF_TURN)
 		end
 		Duel.RegisterEffect(e1,tp)
 	end

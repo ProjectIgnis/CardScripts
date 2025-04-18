@@ -1,5 +1,5 @@
 --魔弾－ダンシング・ニードル
---Magibullet - Dancing Needle
+--Magical Musket - Dancing Needle
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -15,9 +15,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x108}
+s.listed_series={SET_MAGICAL_MUSKET}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x108)
+	return c:IsFaceup() and c:IsSetCard(SET_MAGICAL_MUSKET)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)

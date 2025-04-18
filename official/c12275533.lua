@@ -1,6 +1,5 @@
 --機動要犀 トリケライナー
 --Trifortressops
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon itself from hand
@@ -33,7 +32,7 @@ end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	for tc in aux.Next(eg) do
-		Duel.RegisterFlagEffect(tc:GetSummonPlayer(),id,RESET_PHASE+PHASE_END,0,1)
+		Duel.RegisterFlagEffect(tc:GetSummonPlayer(),id,RESET_PHASE|PHASE_END,0,1)
 	end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
@@ -55,7 +54,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetRange(LOCATION_MZONE)
 		e1:SetCode(EFFECT_IMMUNE_EFFECT)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e1:SetValue(s.efilter)
 		c:RegisterEffect(e1)
 		--Loses 500 DEF during each standby phase
@@ -64,8 +63,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e2:SetRange(LOCATION_MZONE)
 		e2:SetCountLimit(1)
-		e2:SetCode(EVENT_PHASE+PHASE_STANDBY)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetCode(EVENT_PHASE|PHASE_STANDBY)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e2:SetOperation(s.adjustop)
 		c:RegisterEffect(e2)
 	end
@@ -78,7 +77,7 @@ function s.adjustop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 	e1:SetCode(EFFECT_UPDATE_DEFENSE)
 	e1:SetValue(-500)
 	c:RegisterEffect(e1)

@@ -14,11 +14,11 @@ function s.initial_effect(c)
 	e1:SetOperation(s.desop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x2a}
+s.listed_series={SET_NATURIA}
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,aux.FaceupFilter(Card.IsSetCard,0x2a),1,false,nil,c) end
-	local g=Duel.SelectReleaseGroupCost(tp,aux.FaceupFilter(Card.IsSetCard,0x2a),1,1,false,nil,c)
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,aux.FaceupFilter(Card.IsSetCard,SET_NATURIA),1,false,nil,c) end
+	local g=Duel.SelectReleaseGroupCost(tp,aux.FaceupFilter(Card.IsSetCard,SET_NATURIA),1,1,false,nil,c)
 	Duel.Release(g,REASON_COST)
 end
 function s.desfilter(c,e,tp)

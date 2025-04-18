@@ -48,7 +48,7 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	local g=e:GetLabelObject()
 	if not g then return end
-	Duel.SendtoGrave(g,REASON_DISCARD+REASON_COST)
+	Duel.SendtoGrave(g,REASON_DISCARD|REASON_COST)
 	g:DeleteGroup()
 end
 function s.costfilter(c)
@@ -56,7 +56,7 @@ function s.costfilter(c)
 end
 function s.sgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,s.costfilter,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,s.costfilter,1,1,REASON_COST|REASON_DISCARD)
 end
 function s.filter(c)
 	return c:IsAttribute(ATTRIBUTE_DARK) and c:IsAbleToGrave()

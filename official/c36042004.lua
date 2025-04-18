@@ -1,4 +1,5 @@
 --ベビケラサウルス
+--Babycerasaurus
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -14,7 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return (r&0x41)==0x41
+	return (r&(REASON_DESTROY|REASON_EFFECT))==(REASON_DESTROY|REASON_EFFECT)
 end
 function s.filter(c,e,tp)
 	return c:IsLevelBelow(4) and c:IsRace(RACE_DINOSAUR)

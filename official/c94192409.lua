@@ -1,4 +1,5 @@
 --強制脱出装置
+--Compulsory Evacuation Device
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

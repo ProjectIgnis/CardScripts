@@ -1,7 +1,6 @@
 --昇華騎士－エクスパラディン
 --Sublimation Knight
 --Scripted by Hel
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Equip 1 FIRE warrior or gemini monster from hand or deck to this card
@@ -49,8 +48,8 @@ function s.filter(c)
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
-		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e:GetHandler()) end
-	Duel.SetOperationInfo(0,CATEGORY_EQUIP,nil,1,tp,LOCATION_HAND+LOCATION_DECK)
+		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND|LOCATION_DECK,0,1,nil,e:GetHandler()) end
+	Duel.SetOperationInfo(0,CATEGORY_EQUIP,nil,1,tp,LOCATION_HAND|LOCATION_DECK)
 end
 function s.equipop(c,e,tp,tc)
 	if not c:EquipByEffectAndLimitRegister(e,tp,tc,nil,true) then return end
@@ -58,7 +57,7 @@ function s.equipop(c,e,tp,tc)
 	e1:SetType(EFFECT_TYPE_EQUIP)
 	e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_OWNER_RELATE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	e1:SetValue(500)
 	tc:RegisterEffect(e1)
 end
@@ -66,7 +65,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 or c:IsFacedown() or not c:IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK+LOCATION_HAND,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK|LOCATION_HAND,0,1,1,nil)
 	local tc=g:GetFirst()
 	if c:IsFaceup() and c:IsRelateToEffect(e) then
 		s.equipop(c,e,tp,tc)
@@ -110,7 +109,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	for tc in g:Iter() do
 		if Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
 			tc:EnableGeminiStatus()
-			tc:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,64)
+			tc:RegisterFlagEffect(0,RESET_EVENT|RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,64)
 		end
 	end
 	Duel.SpecialSummonComplete()

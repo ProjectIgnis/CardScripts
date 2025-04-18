@@ -37,7 +37,7 @@ function s.initial_effect(c)
 	e5:SetValue(s.damval)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x8d}
+s.listed_series={SET_GHOSTRICK}
 function s.dirtg(e,c)
 	return not Duel.IsExistingMatchingCard(Card.IsFaceup,c:GetControler(),0,LOCATION_MZONE,1,nil)
 end
@@ -49,6 +49,6 @@ function s.val(e,re,dam,r,rp,rc)
 	end
 end
 function s.damval(e,rc)
-	if rc:IsSetCard(0x8d) then return -1 end
+	if rc:IsSetCard(SET_GHOSTRICK) then return -1 end
 	return HALF_DAMAGE
 end

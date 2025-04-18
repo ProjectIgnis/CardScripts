@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e3:SetOperation(Fusion.SummonEffOP(table.unpack(params)))
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x99}
+s.listed_series={SET_ODD_EYES}
 function s.cfilter(c,tp)
 	return c:IsFaceup() and c:IsType(TYPE_FUSION) and c:IsControler(tp)
 end
@@ -34,7 +34,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)
 end
 function s.spfilter(c,e,tp)
-	return c:IsFaceup() and c:IsSetCard(0x99) and c:IsType(TYPE_PENDULUM)
+	return c:IsFaceup() and c:IsSetCard(SET_ODD_EYES) and c:IsType(TYPE_PENDULUM)
 		and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

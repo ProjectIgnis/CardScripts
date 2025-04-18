@@ -1,4 +1,5 @@
 --アマゾネスの弩弓隊
+--Amazoness Archers
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,12 +12,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x4}
+s.listed_series={SET_AMAZONESS}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x4)
+	return c:IsFaceup() and c:IsSetCard(SET_AMAZONESS)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return tp~=Duel.GetTurnPlayer() and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsTurnPlayer(1-tp) and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.filter(c)
 	return not c:IsPosition(POS_FACEUP_ATTACK)
@@ -36,12 +37,12 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(-500)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(e:GetHandler())
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_MUST_ATTACK)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e2:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e2)
 	end
 end

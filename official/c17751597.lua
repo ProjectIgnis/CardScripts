@@ -1,5 +1,5 @@
 --烙印断罪
---Branded Condemnation
+--Branded Retribution
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
@@ -25,16 +25,16 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetHintTiming(0,TIMING_END_PHASE)
 	e2:SetCountLimit(1,id)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
 s.listed_names={CARD_ALBAZ,id}
-s.listed_series={0x160}
+s.listed_series={SET_BRANDED}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsChainNegatable(ev) then return false end
-	if not re or (not re:IsActiveType(TYPE_MONSTER) and not re:IsHasType(EFFECT_TYPE_ACTIVATE)) then return false end
+	if not re or (not re:IsMonsterEffect() and not re:IsHasType(EFFECT_TYPE_ACTIVATE)) then return false end
 	return re:IsHasCategory(CATEGORY_SPECIAL_SUMMON)
 end
 function s.texfilter(c)
@@ -46,7 +46,7 @@ function s.rescon(sg,e,tp,mg)
 		or (#sg==2 and sg:IsExists(Card.IsLocation,2,nil,LOCATION_GRAVE))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local rg=Duel.GetMatchingGroup(s.texfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil)
+	local rg=Duel.GetMatchingGroup(s.texfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,nil)
 	if chk==0 then return #rg>0 and aux.SelectUnselectGroup(rg,e,tp,1,2,s.rescon,0) end
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
 	if re:GetHandler():IsDestructable() and re:GetHandler():IsRelateToEffect(re) then
@@ -55,18 +55,18 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOEXTRA,rg,1,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local rg=Duel.GetMatchingGroup(s.texfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil)
+	local rg=Duel.GetMatchingGroup(s.texfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,nil)
 	if #rg==0 then return end
 	local sg=aux.SelectUnselectGroup(rg,e,tp,1,2,s.rescon,1,tp,HINTMSG_TODECK,s.rescon)
 	if #sg==0 then return end
 	Duel.HintSelection(sg,true)
-	if Duel.SendtoDeck(sg,nil,0,REASON_EFFECT)>0 and sg:IsExists(Card.IsLocation,1,nil,LOCATION_EXTRA)
+	if Duel.SendtoDeck(sg,nil,SEQ_DECKTOP,REASON_EFFECT)>0 and sg:IsExists(Card.IsLocation,1,nil,LOCATION_EXTRA)
 		and Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then
 		Duel.Destroy(eg,REASON_EFFECT)
 	end
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x160) and c:IsSpellTrap() and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(SET_BRANDED) and c:IsSpellTrap() and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc) end

@@ -1,12 +1,11 @@
 --デストーイ・ホイールソウ・ライオ
 --Frightfur Leo
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
 	--Fusion summon procedure
-	Fusion.AddProcMix(c,true,true,34688023,aux.FilterBoolFunctionEx(Card.IsSetCard,0xa9))
+	Fusion.AddProcMix(c,true,true,34688023,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_FLUFFAL))
 	--Must be fusion summoned
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -26,9 +25,8 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xa9}
-s.material_setcode={0xa9,0xc3}
-
+s.listed_series={SET_FLUFFAL}
+s.material_setcode={SET_FLUFFAL,SET_EDGE_IMP}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not e:GetHandler():IsDirectAttacked() end
 	--Cannot attack directly
@@ -37,7 +35,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_OATH+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESETS_STANDARD_PHASE_END)
 	e:GetHandler():RegisterEffect(e1)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

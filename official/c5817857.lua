@@ -1,4 +1,5 @@
 --コアキメイル・グールズスレイブ
+--Koa'ki Meiru Ghoulungulate
 local s,id=GetID()
 function s.initial_effect(c)
 	--cost
@@ -23,7 +24,7 @@ function s.initial_effect(c)
 end
 s.listed_names={36623431}
 function s.mtcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.cfilter1(c)
 	return c:IsCode(36623431) and c:IsAbleToGraveAsCost()
@@ -62,20 +63,20 @@ function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.rfilter(c)
-	return c:IsMonster() and c:IsSetCard(0x1d) and c:IsAbleToRemove() and aux.SpElimFilter(c,true)
+	return c:IsMonster() and c:IsSetCard(SET_KOAKI_MEIRU) and c:IsAbleToRemove() and aux.SpElimFilter(c,true)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		if #eg~=1 then return false end
 		local tc=eg:GetFirst()
-		return tc:IsFaceup() and tc:IsLocation(LOCATION_MZONE) and tc:IsSetCard(0x1d) 
-			and not tc:IsReason(REASON_REPLACE) and tc:IsReason(REASON_BATTLE+REASON_EFFECT)
-			and Duel.IsExistingMatchingCard(s.rfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil)
+		return tc:IsFaceup() and tc:IsLocation(LOCATION_MZONE) and tc:IsSetCard(SET_KOAKI_MEIRU) 
+			and not tc:IsReason(REASON_REPLACE) and tc:IsReason(REASON_BATTLE|REASON_EFFECT)
+			and Duel.IsExistingMatchingCard(s.rfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,nil)
 	end
 	return Duel.SelectEffectYesNo(tp,e:GetHandler(),96)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.rfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.rfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,1,nil)
 	Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 end

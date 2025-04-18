@@ -38,7 +38,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x137}
+s.listed_series={SET_ANCIENT_WARRIORS}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local c=e:GetHandler()
@@ -46,17 +46,17 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e1:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e1:SetCountLimit(1)
 	e1:SetRange(LOCATION_SZONE)
 	e1:SetCondition(s.scon)
 	e1:SetOperation(s.sop)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN,2)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_STANDBY|RESET_SELF_TURN,2)
 	c:SetTurnCounter(0)
 	c:RegisterEffect(e1)
 end
 function s.scon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.sop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -68,15 +68,15 @@ function s.sop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and (Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2)
+	return Duel.IsTurnPlayer(tp) and Duel.IsMainPhase()
 end
 function s.thcfilter(c,e,tp)
 	local code=c:GetCode()
-	return c:IsSetCard(0x137) and c:IsSummonPlayer(tp) and c:IsLocation(LOCATION_MZONE) and c:IsCanBeEffectTarget(e)
+	return c:IsSetCard(SET_ANCIENT_WARRIORS) and c:IsSummonPlayer(tp) and c:IsLocation(LOCATION_MZONE) and c:IsCanBeEffectTarget(e)
 		and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,code)
 end
 function s.thfilter(c,code)
-	return c:IsSetCard(0x137) and c:IsMonster() and c:IsAbleToHand() and not c:IsCode(code)
+	return c:IsSetCard(SET_ANCIENT_WARRIORS) and c:IsMonster() and c:IsAbleToHand() and not c:IsCode(code)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return eg:IsContains(chkc) and s.thcfilter(chkc,e,tp) end
@@ -105,7 +105,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x137) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_ANCIENT_WARRIORS) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_SZONE)

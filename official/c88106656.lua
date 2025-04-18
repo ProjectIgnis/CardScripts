@@ -45,25 +45,25 @@ function s.initial_effect(c)
 	e4:SetOperation(s.atkop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x17d}
+s.listed_series={SET_LIBROMANCER}
 function s.matcheck(e,c)
 	if c:GetMaterial():IsExists(Card.IsLocation,1,nil,LOCATION_MZONE) then
-		local reset=RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD
+		local reset=RESET_EVENT|RESETS_STANDARD-RESET_TOFIELD
 		c:RegisterFlagEffect(id,reset,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,0))
 	end
 end
 function s.matcon(e)
 	local c=e:GetHandler()
-	return c:IsSummonType(SUMMON_TYPE_RITUAL) and c:GetFlagEffect(id)>0
+	return c:IsRitualSummoned() and c:GetFlagEffect(id)>0
 end
 function s.atkcfilter(c)
-	return c:IsRitualMonster() and c:IsSetCard(0x17d) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
+	return c:IsRitualMonster() and c:IsSetCard(SET_LIBROMANCER) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return Duel.IsExistingMatchingCard(s.atkcfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,c) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.atkcfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,c) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.atkcfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,c)
+	local g=Duel.SelectMatchingCard(tp,s.atkcfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,1,c)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
@@ -74,7 +74,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(200)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		c:RegisterEffect(e1)
 	end
 end

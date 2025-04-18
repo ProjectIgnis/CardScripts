@@ -1,4 +1,5 @@
 --XX－セイバー ボガーナイト
+--XX-Saber Boggart Knight
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon success
@@ -20,10 +21,10 @@ function s.initial_effect(c)
 end
 function s.synlimit(e,c)
 	if not c then return false end
-	return not c:IsSetCard(0x100d)
+	return not c:IsSetCard(SET_X_SABER)
 end
 function s.filter(c,e,tp)
-	return c:GetLevel()<=4 and c:IsSetCard(0x100d) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:GetLevel()<=4 and c:IsSetCard(SET_X_SABER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sumtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

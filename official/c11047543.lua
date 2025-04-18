@@ -1,4 +1,5 @@
 --サイコ・フィール・ゾーン
+--Psychic Feel Zone
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -43,7 +44,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if not tc1:IsRelateToEffect(e) or not tc2:IsRelateToEffect(e) then return end
 	local sg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_EXTRA,0,nil,e,tp,tc1:GetLevel()+tc2:GetLevel())
 	if #sg==0 then return end
-	Duel.SendtoGrave(g,REASON_EFFECT+REASON_RETURN)
+	Duel.SendtoGrave(g,REASON_EFFECT|REASON_RETURN)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local ssg=sg:Select(tp,1,1,nil)
 	Duel.SpecialSummon(ssg,0,tp,tp,false,false,POS_FACEUP_DEFENSE)

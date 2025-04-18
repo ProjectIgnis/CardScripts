@@ -1,6 +1,5 @@
 --武神－アラスダ
 --Bujin Arasuda
-
 local s,id=GetID()
 function s.initial_effect(c)
 	c:SetUniqueOnField(1,0,id)
@@ -37,11 +36,10 @@ function s.initial_effect(c)
 	e3:SetOperation(s.drop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x88}
-
+s.listed_series={SET_BUJIN}
 function s.cfilter(c,tp)
-	return c:IsSetCard(0x88) and c:IsPreviousControler(tp)
-		and c:IsPreviousLocation(LOCATION_MZONE+LOCATION_GRAVE) and c:IsPreviousPosition(POS_FACEUP)
+	return c:IsSetCard(SET_BUJIN) and c:IsPreviousControler(tp)
+		and c:IsPreviousLocation(LOCATION_MZONE|LOCATION_GRAVE) and c:IsPreviousPosition(POS_FACEUP)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)
@@ -58,14 +56,14 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.regfilter(c,tp)
-	return c:IsSetCard(0x88) and c:IsControler(tp) and c:IsPreviousControler(tp)
+	return c:IsSetCard(SET_BUJIN) and c:IsControler(tp) and c:IsPreviousControler(tp)
 		and c:IsPreviousLocation(LOCATION_DECK) and not c:IsReason(REASON_DRAW)
 end
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.regfilter,1,nil,tp)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+	e:GetHandler():RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(id)>0
@@ -82,6 +80,6 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.Draw(p,d,REASON_EFFECT)~=0 then
 		Duel.ShuffleHand(tp)
 		Duel.BreakEffect()
-		Duel.DiscardHand(tp,nil,1,1,REASON_EFFECT+REASON_DISCARD)
+		Duel.DiscardHand(tp,nil,1,1,REASON_EFFECT|REASON_DISCARD)
 	end
 end

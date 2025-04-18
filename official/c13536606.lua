@@ -35,10 +35,10 @@ end
 function s.rfilter(c,tp,g)
 	local lk=c:GetLink()
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	if c:GetControler()==tp then
+	if c:IsControler(tp) then
 		return c:IsFaceup() and c:IsLinkMonster() and c:IsLinkBelow(3) and c:IsReleasableByEffect() and g:IsContains(c)
 			and ((c:GetSequence()>4 and ft>=lk) or (c:GetSequence()<=4 and (ft+1)>=lk)) and (ft==1 or not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT))
-	elseif c:GetControler()==1-tp then
+	elseif c:IsControler(1-tp) then
 		return c:IsFaceup() and c:IsLinkMonster() and c:IsLinkBelow(3) and c:IsReleasableByEffect() and g:IsContains(c)
 			and ft>=lk and (ft==1 or not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT))
 	else return false
@@ -74,7 +74,7 @@ function s.tkop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	e1:SetTargetRange(1,0)
 	e1:SetLabel(ct)
 	e1:SetTarget(s.splimit)

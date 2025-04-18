@@ -54,7 +54,7 @@ function s.upop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.dncond(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_END
+	return Duel.IsPhase(PHASE_END)
 end
 function s.dntg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsCanTurnSet,tp,LOCATION_MZONE,0,1,nil) end

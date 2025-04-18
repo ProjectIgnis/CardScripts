@@ -1,8 +1,9 @@
 --幻獣機ヤクルスラーン
+--Mecha Phantom Beast Jaculuslan
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
-	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x101b),1,1,Synchro.NonTunerEx(Card.IsSetCard,0x101b),1,99)
+	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_MECHA_PHANTOM_BEAST),1,1,Synchro.NonTunerEx(Card.IsSetCard,SET_MECHA_PHANTOM_BEAST),1,99)
 	c:EnableReviveLimit()
 	--handes
 	local e1=Effect.CreateEffect(c)
@@ -38,10 +39,10 @@ function s.initial_effect(c)
 	e4:SetOperation(s.setop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x101b}
+s.listed_series={SET_MECHA_PHANTOM_BEAST}
 s.listed_names={TOKEN_MECHA_PHANTOM_BEAST}
 function s.hdcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
+	return e:GetHandler():IsSynchroSummoned()
 end
 function s.hdcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsCode,1,false,nil,nil,TOKEN_MECHA_PHANTOM_BEAST)
@@ -59,17 +60,17 @@ function s.hdop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(tp,0,LOCATION_HAND)
 	if #g>0 then
 		local sg=g:RandomSelect(1-tp,e:GetLabel())
-		Duel.SendtoGrave(sg,REASON_DISCARD+REASON_EFFECT)
+		Duel.SendtoGrave(sg,REASON_DISCARD|REASON_EFFECT)
 	end
 end
 function s.indtg(e,c)
-	return c:IsSetCard(0x101b) and c~=e:GetHandler()
+	return c:IsSetCard(SET_MECHA_PHANTOM_BEAST) and c~=e:GetHandler()
 end
 function s.setcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp~=tp and e:GetHandler():IsPreviousControler(tp)
 end
 function s.filter(c)
-	return c:GetType()==TYPE_SPELL+TYPE_QUICKPLAY and c:IsSSetable()
+	return c:IsQuickPlaySpell() and c:IsSSetable()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0

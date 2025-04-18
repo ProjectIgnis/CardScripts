@@ -1,4 +1,5 @@
 --苦渋の選択
+--Painful Choice
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

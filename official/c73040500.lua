@@ -1,4 +1,5 @@
 --魔轟神ウルストス
+--Fabled Urustos
 local s,id=GetID()
 function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
@@ -11,10 +12,10 @@ function s.initial_effect(c)
 	e1:SetValue(400)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x35}
+s.listed_series={SET_FABLED}
 function s.con(e)
 	return Duel.GetFieldGroupCount(e:GetHandler():GetControler(),LOCATION_HAND,0)<=2
 end
 function s.tg(e,c)
-	return c:IsFaceup() and c:IsSetCard(0x35)
+	return c:IsFaceup() and c:IsSetCard(SET_FABLED)
 end

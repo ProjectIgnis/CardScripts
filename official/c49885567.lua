@@ -1,4 +1,5 @@
 --精霊獣 カンナホーク
+--Spiritual Beast Cannahawk
 local s,id=GetID()
 function s.initial_effect(c)
 	c:SetSPSummonOnce(id)
@@ -12,9 +13,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0xb5}
+s.listed_series={SET_RITUAL_BEAST}
 function s.filter(c)
-	return c:IsSetCard(0xb5) and c:IsAbleToRemove()
+	return c:IsSetCard(SET_RITUAL_BEAST) and c:IsAbleToRemove()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end
@@ -29,9 +30,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetRange(LOCATION_REMOVED)
-		e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
+		e1:SetCode(EVENT_PHASE|PHASE_STANDBY)
 		e1:SetCountLimit(1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN,2)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_STANDBY|RESET_SELF_TURN,2)
 		e1:SetCondition(s.thcon)
 		e1:SetOperation(s.thop)
 		e1:SetLabel(0)
@@ -39,7 +40,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=e:GetLabel()

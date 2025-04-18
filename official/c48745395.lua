@@ -45,7 +45,7 @@ function s.initial_effect(c)
 end
 s.listed_names={id}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_TRAP)
+	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsTrapEffect()
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -60,7 +60,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.setfilter(c)
-	return c:GetType()==TYPE_TRAP and c:IsSSetable() and not c:IsForbidden() and c:GetActivateEffect()
+	return c:IsNormalTrap() and c:IsSSetable() and not c:IsForbidden() and c:GetActivateEffect()
 		and c:GetActivateEffect():GetCode()==EVENT_ATTACK_ANNOUNCE
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -75,7 +75,7 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.trapval(c)
-	return c:GetType()==TYPE_TRAP
+	return c:IsNormalTrap() 
 end
 function s.atkval(e,c)
 	local tp=e:GetHandlerPlayer()

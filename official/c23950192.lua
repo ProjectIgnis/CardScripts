@@ -1,4 +1,5 @@
 --氷結界の術者
+--Cryomancer of the Ice Barrier
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot attack
@@ -11,9 +12,9 @@ function s.initial_effect(c)
 	e2:SetCondition(s.con)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x2f}
+s.listed_series={SET_ICE_BARRIER}
 function s.con(e)
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x2f),e:GetHandler():GetControler(),LOCATION_MZONE,0,1,e:GetHandler())
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_ICE_BARRIER),e:GetHandler():GetControler(),LOCATION_MZONE,0,1,e:GetHandler())
 end
 function s.tg(e,c)
 	return c:GetLevel()>=4

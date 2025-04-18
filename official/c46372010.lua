@@ -1,4 +1,5 @@
 --地獄門の契約書
+--Dark Contract with the Gate
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -21,16 +22,16 @@ function s.initial_effect(c)
 	e3:SetCategory(CATEGORY_DAMAGE)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e3:SetRange(LOCATION_SZONE)
-	e3:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e3:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e3:SetCountLimit(1)
 	e3:SetCondition(s.damcon)
 	e3:SetTarget(s.damtg)
 	e3:SetOperation(s.damop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xaf}
+s.listed_series={SET_DD}
 function s.filter(c)
-	return c:IsSetCard(0xaf) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_DD) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end
@@ -46,7 +47,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

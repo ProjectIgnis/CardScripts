@@ -27,10 +27,10 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xc}
+s.listed_series={SET_ALIEN}
 s.counter_place_list={COUNTER_A}
 function s.ctfilter(c)
-	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousSetCard(0xc)
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousSetCard(SET_ALIEN)
 end
 function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.ctfilter,1,nil)
@@ -43,7 +43,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RemoveCounter(tp,1,1,COUNTER_A,2,REASON_COST)
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0xc) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_ALIEN) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end

@@ -1,5 +1,5 @@
 --ドレミコード・スケール
---Doremichord Scale
+--Solfachord Scale
 --Scripted by the Razgriz
 local s,id=GetID()
 function s.initial_effect(c)
@@ -14,15 +14,15 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x164}
+s.listed_series={SET_SOLFACHORD}
 function s.filter(c)
-	return c:IsFaceup() and c:IsOriginalType(TYPE_PENDULUM) and c:IsOriginalType(TYPE_MONSTER) and c:IsSetCard(0x164)
+	return c:IsFaceup() and c:IsOriginalType(TYPE_PENDULUM) and c:IsOriginalType(TYPE_MONSTER) and c:IsSetCard(SET_SOLFACHORD)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetMatchingGroupCount(s.filter,tp,LOCATION_ONFIELD,0,nil)>2
 end
 function s.spfilter(c,e,tp)
-	return c:IsType(TYPE_PENDULUM) and c:IsSetCard(0x164) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsType(TYPE_PENDULUM) and c:IsSetCard(SET_SOLFACHORD) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_ONFIELD,0,nil)

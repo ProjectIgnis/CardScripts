@@ -1,4 +1,5 @@
 --融合体駆除装置
+--Anti-Fusion Device
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

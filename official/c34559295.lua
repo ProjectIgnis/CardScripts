@@ -1,5 +1,5 @@
 --Iron Draw
---scripted by unknow guest
+--Iron Draw
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -39,7 +39,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.limittg)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	e1:SetLabel(spc)
 	Duel.RegisterEffect(e1,tp)
 	local e2=e1:Clone()
@@ -56,4 +56,3 @@ function s.countval(e,re,tp)
 	local sp=Duel.GetActivityCount(tp,ACTIVITY_SPSUMMON)
 	if sp-e:GetLabel()>=1 then return 0 else return 1-sp+e:GetLabel() end
 end
-

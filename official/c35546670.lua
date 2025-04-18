@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetRange(LOCATION_FZONE)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x10c))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_MEKK_KNIGHT))
 	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e2:SetValue(300)
 	c:RegisterEffect(e2)
@@ -41,14 +41,14 @@ function s.initial_effect(c)
 	e5:SetOperation(s.tgop)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x10c,0xfe}
+s.listed_series={SET_MEKK_KNIGHT,SET_WORLD_LEGACY}
 function s.costfilter1(c)
-	return ((c:IsSetCard(0x10c) and c:IsMonster()) or c:IsSetCard(0xfe)) and c:IsDiscardable()
+	return ((c:IsSetCard(SET_MEKK_KNIGHT) and c:IsMonster()) or c:IsSetCard(SET_WORLD_LEGACY)) and c:IsDiscardable()
 end
 function s.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter1,tp,LOCATION_HAND,0,1,nil) end
 	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
-	Duel.DiscardHand(tp,s.costfilter1,1,1,REASON_DISCARD+REASON_COST)
+	Duel.DiscardHand(tp,s.costfilter1,1,1,REASON_DISCARD|REASON_COST)
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
@@ -62,10 +62,10 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Draw(p,d,REASON_EFFECT)
 end
 function s.costfilter2(c)
-	return c:IsSetCard(0x10c) and c:IsMonster() and (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup()) and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(SET_MEKK_KNIGHT) and c:IsMonster() and (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup()) and c:IsAbleToRemoveAsCost()
 end
 function s.tgcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(s.costfilter2,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,nil)
+	local g=Duel.GetMatchingGroup(s.costfilter2,tp,LOCATION_ONFIELD|LOCATION_GRAVE,0,nil)
 	if chk==0 then return aux.SelectUnselectGroup(g,e,tp,8,8,aux.dncheck,0) end
 	local rg=aux.SelectUnselectGroup(g,e,tp,8,8,aux.dncheck,1,tp,HINTMSG_REMOVE)
 	if rg then
@@ -73,13 +73,12 @@ function s.tgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGrave,tp,0,LOCATION_HAND+LOCATION_EXTRA,1,nil) end
-	local g=Duel.GetMatchingGroup(Card.IsAbleToGrave,tp,0,LOCATION_HAND+LOCATION_EXTRA,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGrave,tp,0,LOCATION_HAND|LOCATION_EXTRA,1,nil) end
+	local g=Duel.GetMatchingGroup(Card.IsAbleToGrave,tp,0,LOCATION_HAND|LOCATION_EXTRA,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,g,#g,0,0)
 end
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
-	local g=Duel.GetMatchingGroup(Card.IsAbleToGrave,tp,0,LOCATION_HAND+LOCATION_EXTRA,nil)
+	local g=Duel.GetMatchingGroup(Card.IsAbleToGrave,tp,0,LOCATION_HAND|LOCATION_EXTRA,nil)
 	Duel.SendtoGrave(g,REASON_EFFECT)
 end
-

@@ -1,5 +1,5 @@
 --転生炎獣の再起
---Salamangreat Recurrence
+--Salamangreat Recureance
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -25,9 +25,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x119}
+s.listed_series={SET_SALAMANGREAT}
 function s.filter(c,e)
-	return c:IsSetCard(0x119) and c:IsMonster() 
+	return c:IsSetCard(SET_SALAMANGREAT) and c:IsMonster() 
 		and c:IsCanBeEffectTarget(e) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -50,7 +50,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 		and (e:GetHandler():GetPreviousPosition()&POS_FACEDOWN)~=0
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x119) and c:IsSpellTrap() and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(SET_SALAMANGREAT) and c:IsSpellTrap() and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -64,4 +64,3 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-

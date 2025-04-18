@@ -1,4 +1,5 @@
 --導爆線
+--Fuse Line
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate

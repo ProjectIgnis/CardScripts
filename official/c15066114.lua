@@ -39,7 +39,7 @@ function s.ntop(e,tp,eg,ep,ev,re,r,rp,c)
 	e1:SetCode(EFFECT_SET_BASE_ATTACK)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetValue(1300)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD+RESET_DISABLE)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD-RESET_TOFIELD|RESET_DISABLE)
 	c:RegisterEffect(e1)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_SET_BASE_DEFENSE)
@@ -47,7 +47,7 @@ function s.ntop(e,tp,eg,ep,ev,re,r,rp,c)
 	c:RegisterEffect(e2)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_NORMAL)
+	return e:GetHandler():IsNormalSummoned()
 end
 function s.desfilter(c,atk)
 	return c:IsFaceup() and c:IsAttackBelow(atk) and c:GetSequence()<5

@@ -32,7 +32,7 @@ function s.contactfil(tp)
 	return Duel.GetMatchingGroup(Card.IsAbleToGraveAsCost,tp,LOCATION_MZONE,0,nil)
 end
 function s.contactop(g)
-	Duel.SendtoGrave(g,REASON_COST+REASON_MATERIAL)
+	Duel.SendtoGrave(g,REASON_COST|REASON_MATERIAL)
 end
 function s.spfilter(c,e,tp)
 	return c:GetLevel()==4 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

@@ -1,4 +1,5 @@
 --黒・魔・導・爆・裂・破
+--Dark Burning Attack
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,9 +12,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x30a2}
+s.listed_series={SET_DARK_MAGICIAN_GIRL}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x30a2)
+	return c:IsFaceup() and c:IsSetCard(SET_DARK_MAGICIAN_GIRL)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)

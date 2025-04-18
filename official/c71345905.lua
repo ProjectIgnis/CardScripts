@@ -1,4 +1,5 @@
 --RDM－ヌメロン・フォール
+--Rank-Down-Magic Numeron Fall
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,15 +12,15 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x107f}
+s.listed_series={SET_UTOPIA}
 function s.filter1(c,e,tp)
 	local rk=c:GetRank()
 	local pg=aux.GetMustBeMaterialGroup(tp,Group.FromCards(c),tp,nil,nil,REASON_XYZ)
-	return (#pg<=0 or (#pg==1 and pg:IsContains(c))) and rk>1 and c:IsFaceup() and c:IsSetCard(0x107f)
+	return (#pg<=0 or (#pg==1 and pg:IsContains(c))) and rk>1 and c:IsFaceup() and c:IsSetCard(SET_UTOPIA)
 		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,c,rk,pg)
 end
 function s.filter2(c,e,tp,mc,rk,pg)
-	return c:IsRankBelow(rk-1) and c:IsSetCard(0x107f) and mc:IsCanBeXyzMaterial(c,tp)
+	return c:IsRankBelow(rk-1) and c:IsSetCard(SET_UTOPIA) and mc:IsCanBeXyzMaterial(c,tp)
 		and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0 and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -46,12 +47,12 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_ATTACK_ANNOUNCE)
 		e1:SetOperation(s.disop)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		sc:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EVENT_BE_BATTLE_TARGET)
 		sc:RegisterEffect(e2)
-		sc:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,0))
+		sc:RegisterFlagEffect(0,RESET_EVENT|RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,0))
 	end
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
@@ -61,12 +62,12 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_BATTLE)
 		bc:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_BATTLE)
 		bc:RegisterEffect(e2)
 	end
 end

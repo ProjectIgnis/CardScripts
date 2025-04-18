@@ -1,5 +1,5 @@
 --妖仙獣 侍郎風
---Yosenju Saburokaze
+--Yosenju Sabu
 --scripted by AlphaKreitn
 local s,id=GetID()
 function s.initial_effect(c)
@@ -33,13 +33,13 @@ function s.initial_effect(c)
 	e3:SetOperation(s.regop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xb3}
+s.listed_series={SET_YOSENJU}
 s.listed_names={62681049,79861914}
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0xb3),tp,LOCATION_ONFIELD,0,1,e:GetHandler())
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_YOSENJU),tp,LOCATION_ONFIELD,0,1,e:GetHandler())
 end
 function s.thfilter(c)
-	return c:IsSetCard(0xb3) and c:IsType(TYPE_PENDULUM) and c:IsAbleToHand()
+	return c:IsSetCard(SET_YOSENJU) and c:IsType(TYPE_PENDULUM) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -54,7 +54,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tgfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xb3) and c:IsAbleToDeck()
+	return c:IsFaceup() and c:IsSetCard(SET_YOSENJU) and c:IsAbleToDeck()
 end
 function s.acfilter(c,tp)
 	return c:IsCode(62681049,79861914) and not c:IsForbidden() --and c:GetActivateEffect():IsActivatable(tp)
@@ -82,7 +82,7 @@ function s.acop(e,tp,eg,ep,ev,re,r,rp)
 			--]]
 			local tc=Duel.GetFirstTarget()
 			if tc:IsRelateToEffect(e) then
-				Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)
+				Duel.SendtoDeck(tc,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 			end
 		end
 	end

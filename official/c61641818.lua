@@ -1,5 +1,5 @@
 --電脳堺龍－龍々
---Datascape Dragon - Longlong
+--Virtual World Dragon - Longlong
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,id)
 	e2:SetCondition(s.discon)
-	e2:SetCost(s.discost)
+	e2:SetCost(Cost.Detach(2))
 	e2:SetTarget(s.distg)
 	e2:SetOperation(s.disop)
 	c:RegisterEffect(e2)
@@ -37,16 +37,11 @@ function s.ntcon(e)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	if rp==tp or e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) 
-		or not re:IsActiveType(TYPE_MONSTER) or not Duel.IsChainNegatable(ev) then return false end
+		or not re:IsMonsterEffect() or not Duel.IsChainNegatable(ev) then return false end
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
 	if #g==0 then return false end
 	local rc=re:GetHandler()
 	return not g:IsExists(Card.IsAttribute,1,nil,rc:GetAttribute())
-end
-function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:CheckRemoveOverlayCard(tp,2,REASON_COST) end
-	c:RemoveOverlayCard(tp,2,2,REASON_COST)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

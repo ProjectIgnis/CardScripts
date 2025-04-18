@@ -1,4 +1,4 @@
---Japanese name
+--魔剣達士－タルワール・デーモン
 --Beast of Talwar - The Sword Summit
 --scripted by Naim
 local s,id=GetID()

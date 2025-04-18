@@ -1,4 +1,5 @@
 --TG ラッシュ・ライノ
+--T.G. Rush Rhino
 local s,id=GetID()
 function s.initial_effect(c)
 	--atkup
@@ -18,7 +19,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.regop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x27}
+s.listed_series={SET_TG}
 function s.atcon(e)
 	local ph=Duel.GetCurrentPhase()
 	return (ph==PHASE_DAMAGE or ph==PHASE_DAMAGE_CAL) and e:GetHandler()==Duel.GetAttacker()
@@ -35,12 +36,12 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetRange(LOCATION_GRAVE)
 		e1:SetTarget(s.thtg)
 		e1:SetOperation(s.thop)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		c:RegisterEffect(e1)
 	end
 end
 function s.filter(c)
-	return c:IsSetCard(0x27) and c:GetCode()~=id and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_TG) and c:GetCode()~=id and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

@@ -1,22 +1,22 @@
--- 肆世壊からの天跨
--- Scareclaw Straddle
--- Scripted by Hatter
+--肆世壊からの天跨
+--Scareclaw Straddle
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Boost ATK of 1 "Scareclaw" monster or "Visas Stafrost"
+	--Boost ATK of 1 "Scareclaw" monster or "Visas Stafrost"
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DEFCHANGE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E+TIMING_MAIN_END)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E|TIMING_MAIN_END)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
-	e1:SetCondition(s.atkcon)
+	e1:SetCondition(aux.StatChangeDamageStepCondition)
 	e1:SetTarget(s.atktg)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
-	-- Negate an effect that targets "Scareclaw" monster(s) and/or "Visas Stafrost"
+	--Negate an effect that targets "Scareclaw" monster(s) and/or "Visas Stafrost"
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DISABLE)
@@ -29,16 +29,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={CARD_VISAS_STARFROST}
-s.listed_series={0x17c}
-function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
-end
+s.listed_series={SET_SCARECLAW}
 function s.atkfilter(c,e,tp)
 	return c:IsFaceup() and c:IsCanBeEffectTarget(e) 
-		and (c:IsSetCard(0x17c) or c:IsCode(CARD_VISAS_STARFROST) or c:IsControler(1-tp))
+		and (c:IsSetCard(SET_SCARECLAW) or c:IsCode(CARD_VISAS_STARFROST) or c:IsControler(1-tp))
 end
 function s.atkrescon(sg,e,tp,mg)
-    return sg:GetClassCount(Card.GetControler)==2
+	return sg:GetClassCount(Card.GetControler)==2
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
@@ -57,7 +54,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e1:SetValue(math.max(ac:GetAttack(),ac:GetDefense()))
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()
@@ -67,7 +64,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.disconfilter(c,tp)
 	return c:IsFaceup() and c:IsOnField() and c:IsControler(tp)
-		and ((c:IsSetCard(0x17c) and c:IsMonster()) or c:IsCode(CARD_VISAS_STARFROST))
+		and ((c:IsSetCard(SET_SCARECLAW) and c:IsMonster()) or c:IsCode(CARD_VISAS_STARFROST))
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end

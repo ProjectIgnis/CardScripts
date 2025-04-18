@@ -22,13 +22,13 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xab}
+s.listed_series={SET_DESKBOT}
 s.listed_names={id}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetBattleTarget()~=nil
 end
 function s.tgfilter(c)
-	return c:IsSetCard(0xab) and c:IsMonster() and not c:IsCode(id) and c:IsAbleToGrave()
+	return c:IsSetCard(SET_DESKBOT) and c:IsMonster() and not c:IsCode(id) and c:IsAbleToGrave()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetFlagEffect(id)==0
@@ -48,7 +48,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(lv*500)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE_CAL)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_DAMAGE_CAL)
 		c:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_UPDATE_DEFENSE)
@@ -61,33 +61,33 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetTargetRange(0,1)
 	e3:SetValue(1)
-	e3:SetReset(RESET_PHASE+PHASE_END)
+	e3:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e3,tp)
 end
 function s.spfilter1(c,e,tp)
-	return c:IsSetCard(0xab) and c:IsMonster()
+	return c:IsSetCard(SET_DESKBOT) and c:IsMonster()
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
-		and Duel.IsExistingMatchingCard(s.spfilter2,tp,LOCATION_GRAVE+LOCATION_HAND,0,1,c,e,tp,c:GetLevel())
+		and Duel.IsExistingMatchingCard(s.spfilter2,tp,LOCATION_GRAVE|LOCATION_HAND,0,1,c,e,tp,c:GetLevel())
 end
 function s.spfilter2(c,e,tp,lv)
-	return c:IsSetCard(0xab) and c:IsMonster() and c:GetLevel()~=lv
+	return c:IsSetCard(SET_DESKBOT) and c:IsMonster() and c:GetLevel()~=lv
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>1
-		and Duel.IsExistingMatchingCard(s.spfilter1,tp,LOCATION_GRAVE+LOCATION_HAND,0,1,nil,e,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,tp,LOCATION_GRAVE+LOCATION_HAND)
+		and Duel.IsExistingMatchingCard(s.spfilter1,tp,LOCATION_GRAVE|LOCATION_HAND,0,1,nil,e,tp) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,tp,LOCATION_GRAVE|LOCATION_HAND)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then return end
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<2 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g1=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter1),tp,LOCATION_GRAVE+LOCATION_HAND,0,1,1,nil,e,tp)
+	local g1=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter1),tp,LOCATION_GRAVE|LOCATION_HAND,0,1,1,nil,e,tp)
 	if #g1>0 then
 		local tc=g1:GetFirst()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local g2=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter2),tp,LOCATION_GRAVE+LOCATION_HAND,0,1,1,tc,e,tp,tc:GetLevel())
+		local g2=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter2),tp,LOCATION_GRAVE|LOCATION_HAND,0,1,1,tc,e,tp,tc:GetLevel())
 		g1:Merge(g2)
 		Duel.SpecialSummon(g1,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 	end

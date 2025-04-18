@@ -1,4 +1,5 @@
 --ウェポンチェンジ
+--Weapon Change
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -15,20 +16,16 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCountLimit(1)
 	e2:SetCondition(s.adcon)
-	e2:SetCost(s.adcost)
+	e2:SetCost(Cost.PayLP(700))
 	e2:SetTarget(s.adtg)
 	e2:SetOperation(s.adop)
 	c:RegisterEffect(e2)
 end
 function s.adcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
-end
-function s.adcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,700) end
-	Duel.PayLPCost(tp,700)
+	return Duel.IsTurnPlayer(tp)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsRace(RACE_MACHINE+RACE_WARRIOR) and c:IsDefenseAbove(0)
+	return c:IsFaceup() and c:IsRace(RACE_MACHINE|RACE_WARRIOR) and c:IsDefenseAbove(0)
 end
 function s.adtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) end
@@ -46,13 +43,13 @@ function s.adop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetValue(def)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,2)
+		e1:SetReset(RESETS_STANDARD_PHASE_END,2)
 		tc:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(e:GetHandler())
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_SET_DEFENSE_FINAL)
 		e2:SetValue(atk)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,2)
+		e2:SetReset(RESETS_STANDARD_PHASE_END,2)
 		tc:RegisterEffect(e2)
 	end
 end

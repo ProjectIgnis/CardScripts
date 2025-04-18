@@ -1,7 +1,6 @@
 --ノクトビジョン・ドラゴン
 --Noctovision Dragon
 --Adapted from anime version by Messoras
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Negate opponent's card/effect that targets your set card(s)
@@ -11,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_CHAINING)
 	e1:SetRange(LOCATION_GRAVE)
 	e1:SetCondition(s.discon)
-	e1:SetCost(aux.bfgcost)
+	e1:SetCost(Cost.SelfBanish)
 	e1:SetTarget(s.distg)
 	e1:SetOperation(s.disop)
 	c:RegisterEffect(e1)
@@ -65,7 +64,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
 		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetValue(aux.tgoval)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end

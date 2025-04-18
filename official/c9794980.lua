@@ -1,5 +1,5 @@
 --夢幻転星イドリース
---Astroknightmare Idlee
+--Knightmare Incarnation Idlee
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -67,4 +67,3 @@ function s.gyop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoGrave(g,REASON_EFFECT)
 	end
 end
-

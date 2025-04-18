@@ -30,9 +30,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.posop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x39}
+s.listed_series={SET_LAVAL}
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
+	return e:GetHandler():IsSynchroSummoned()
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,2) end
@@ -62,18 +62,18 @@ function s.costfilter(c)
 	return c:IsAttribute(ATTRIBUTE_FIRE) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end
 function s.poscost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,1,nil)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.postg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local sc=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,0x39),tp,LOCATION_MZONE,0,nil)
+	local sc=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,SET_LAVAL),tp,LOCATION_MZONE,0,nil)
 	if chk==0 then return sc>0 and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCanTurnSet),tp,0,LOCATION_MZONE,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,1,1,0,0)
 end
 function s.posop(e,tp,eg,ep,ev,re,r,rp)
-	local ct=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,0x39),tp,LOCATION_MZONE,0,nil)
+	local ct=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,SET_LAVAL),tp,LOCATION_MZONE,0,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
 	local g=Duel.SelectMatchingCard(tp,aux.FaceupFilter(Card.IsCanTurnSet),tp,0,LOCATION_MZONE,1,ct,nil)
 	if #g>0 then

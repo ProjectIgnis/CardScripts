@@ -1,4 +1,5 @@
 --EMパートナーガ
+--Performapal Partnaga
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -34,7 +35,7 @@ function s.initial_effect(c)
 	e5:SetTarget(aux.TargetBoolFunction(Card.IsLevelBelow,5))
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x9f}
+s.listed_series={SET_PERFORMAPAL}
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and chkc:IsFaceup() end
 	if chk==0 then return Duel.IsExistingTarget(Card.IsFaceup,tp,LOCATION_MZONE,0,1,nil) end
@@ -42,7 +43,7 @@ function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SelectTarget(tp,Card.IsFaceup,tp,LOCATION_MZONE,0,1,1,nil)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x9f)
+	return c:IsFaceup() and c:IsSetCard(SET_PERFORMAPAL)
 end
 function s.atkop1(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -54,7 +55,7 @@ function s.atkop1(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(ct*300)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end
@@ -67,7 +68,7 @@ function s.atkop2(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetValue(ct*300)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 	end
 end

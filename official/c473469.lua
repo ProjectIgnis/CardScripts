@@ -15,13 +15,13 @@ function s.initial_effect(c)
 end
 function s.filter(c,tp)
 	return c:IsTrap() and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousControler(tp)
-		and (c:GetReason()&0x41)==0x41
+		and (c:GetReason()&(REASON_DESTROY|REASON_EFFECT))==(REASON_DESTROY|REASON_EFFECT)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return rp~=tp and eg:IsExists(s.filter,1,nil,tp)
 end
 function s.desfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsSpellTrap()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and s.desfilter(chkc) and chkc~=e:GetHandler() end

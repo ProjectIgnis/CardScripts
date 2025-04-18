@@ -1,5 +1,5 @@
 --剛鬼ヘルトレーナー
---Gouki Hell Trainer 
+--Gouki Ringtrainer
 --
 local s,id=GetID()
 function s.initial_effect(c)
@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetValue(1)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xfc}
+s.listed_series={SET_GOUKI}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0
 end
@@ -33,7 +33,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not e:GetHandler():IsPublic() end
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0xfc) and c:IsLinkMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_GOUKI) and c:IsLinkMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
@@ -58,16 +58,15 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetValue(-500)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			tc:RegisterEffect(e1)
 			Duel.SpecialSummonComplete()
 		end
 	end
 end
 function s.indfilter(c)
-	return c:IsFaceup() and c:IsLinkMonster() and c:IsSetCard(0xfc)
+	return c:IsFaceup() and c:IsLinkMonster() and c:IsSetCard(SET_GOUKI)
 end
 function s.indcon(e)
 	return Duel.IsExistingMatchingCard(s.indfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
-

@@ -1,8 +1,9 @@
 --DDD神託王ダルク
+--D/D/D Oracle King d'Arc
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
-	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0xaf),2)
+	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_DD),2)
 	c:EnableReviveLimit()
 	--damage conversion
 	local e2=Effect.CreateEffect(c)
@@ -14,8 +15,8 @@ function s.initial_effect(c)
 	e2:SetValue(s.rev)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xaf}
-s.material_setcode=0xaf
+s.listed_series={SET_DD}
+s.material_setcode=SET_DD
 function s.rev(e,re,r,rp,rc)
 	return (r&REASON_EFFECT)~=0
 end

@@ -31,24 +31,24 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x107a,0x207a}
+s.listed_series={SET_NOBLE_KNIGHT,SET_NOBLE_ARMS}
 function s.filter(c)
-	return ((c:IsSetCard(0x107a) and c:IsMonster()) or c:IsSetCard(0x207a)) and c:IsAbleToHand()
+	return ((c:IsSetCard(SET_NOBLE_KNIGHT) and c:IsMonster()) or c:IsSetCard(SET_NOBLE_ARMS)) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK|LOCATION_GRAVE,0,1,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK|LOCATION_GRAVE)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.filter),tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.filter),tp,LOCATION_DECK|LOCATION_GRAVE,0,1,1,nil)
 	if #g>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
 function s.checkfilter(c,tp)
-	return c:IsSetCard(0x107a) and c:IsReason(REASON_BATTLE) and c:GetEquipCount()>0 and c:GetEquipGroup():IsExists(Card.IsSetCard,1,nil,0x207a) and c:IsControler(tp)
+	return c:IsSetCard(SET_NOBLE_KNIGHT) and c:IsReason(REASON_BATTLE) and c:GetEquipCount()>0 and c:GetEquipGroup():IsExists(Card.IsSetCard,1,nil,SET_NOBLE_ARMS) and c:IsControler(tp)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	if eg:IsExists(s.checkfilter,1,nil,tp) then Duel.RaiseSingleEvent(e:GetHandler(),EVENT_CUSTOM+id,nil,0,rp,ep,ev) end

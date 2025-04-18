@@ -1,5 +1,5 @@
 --魔鍵錠－解－
---Magikey Lock - Unlock
+--Magikey Unlocking
 --scripted by XyleN5967
 local s,id=GetID()
 function s.initial_effect(c)
@@ -14,13 +14,13 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x167}
+s.listed_series={SET_MAGIKEY}
 function s.cfilter(c) 
-	return c:IsFaceup() and c:IsSetCard(0x167) and (c:IsType(TYPE_RITUAL) or c:IsSummonLocation(LOCATION_EXTRA))
+	return c:IsFaceup() and c:IsSetCard(SET_MAGIKEY) and (c:IsType(TYPE_RITUAL) or c:IsSummonLocation(LOCATION_EXTRA))
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil) then return false end
-	return ep~=tp and re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)
+	return ep~=tp and re:IsSpellTrapEffect() and re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -42,7 +42,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_CHANGE_ATTRIBUTE)
 		e1:SetTargetRange(0,LOCATION_MZONE)
 		e1:SetValue(attr)
-		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_PHASE|PHASE_END)
 		Duel.RegisterEffect(e1,tp)
 	end
 end

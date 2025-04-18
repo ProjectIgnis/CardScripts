@@ -12,9 +12,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x35}
+s.listed_series={SET_FABLED}
 function s.disfilter(c)
-	return c:IsSetCard(0x35) and c:IsMonster() and c:IsDiscardable()
+	return c:IsSetCard(SET_FABLED) and c:IsMonster() and c:IsDiscardable()
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -27,11 +27,11 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.disfilter,tp,LOCATION_HAND,0,nil)
 	if #g==0 then return end
 	if #g==1 then
-		Duel.SendtoGrave(g,REASON_EFFECT+REASON_DISCARD)
+		Duel.SendtoGrave(g,REASON_EFFECT|REASON_DISCARD)
 	else
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
 		local sg=g:Select(tp,1,1,e:GetHandler())
-		Duel.SendtoGrave(sg,REASON_EFFECT+REASON_DISCARD)
+		Duel.SendtoGrave(sg,REASON_EFFECT|REASON_DISCARD)
 	end
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end

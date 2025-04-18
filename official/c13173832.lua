@@ -1,7 +1,6 @@
 --転生炎獣ウルヴィー
 --Salamangreat Wolvie
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -45,7 +44,7 @@ function s.lkop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e1:SetValue(1)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESETS_STANDARD_PHASE_END)
 	rc:RegisterEffect(e1)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)

@@ -51,7 +51,7 @@ function s.turnop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local ct=c:GetTurnCounter()
 	c:SetTurnCounter(ct+1)
-	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,0)
+	c:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,0)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetTurnCounter()==2 and e:GetHandler():GetFlagEffect(id)>0

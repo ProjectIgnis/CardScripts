@@ -1,4 +1,5 @@
 --E・HERO シャドー・ミスト
+--Elemental HERO Shadow Mist
 local s,id=GetID()
 function s.initial_effect(c)
 	--search
@@ -20,14 +21,14 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tgop2)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xa5,0x8}
+s.listed_series={SET_CHANGE,SET_HERO}
 s.listed_names={id}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 end
 function s.thfilter1(c)
-	return c:IsSetCard(0xa5) and c:IsType(TYPE_QUICKPLAY) and c:IsAbleToHand()
+	return c:IsSetCard(SET_CHANGE) and c:IsType(TYPE_QUICKPLAY) and c:IsAbleToHand()
 end
 function s.thtg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter1,tp,LOCATION_DECK,0,1,nil) end
@@ -42,7 +43,7 @@ function s.tgop1(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thfilter2(c)
-	return c:IsSetCard(0x8) and c:IsMonster() and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(SET_HERO) and c:IsMonster() and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thtg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter2,tp,LOCATION_DECK,0,1,nil) end

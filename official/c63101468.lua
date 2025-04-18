@@ -1,5 +1,5 @@
 --マスターフレア・ヒュペリオン
---Master Flare Hyperion
+--Masterflare Hyperion
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -30,14 +30,14 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={CARD_SANCTUARY_SKY}
-s.listed_series={0x44}
+s.listed_series={SET_THE_AGENT}
 function s.cpfilter(c)
-	return c:IsMonster() and (c:IsSetCard(0x44) or c:ListsCode(CARD_SANCTUARY_SKY)) and c:IsAbleToGraveAsCost()
+	return c:IsMonster() and (c:IsSetCard(SET_THE_AGENT) or c:ListsCode(CARD_SANCTUARY_SKY)) and c:IsAbleToGraveAsCost()
 end
 function s.cpcost(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.cpfilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_EXTRA,0,1,e:GetHandler()) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.cpfilter,tp,LOCATION_HAND|LOCATION_DECK|LOCATION_EXTRA,0,1,e:GetHandler()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,s.cpfilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_EXTRA,0,1,1,e:GetHandler())
+	local g=Duel.SelectMatchingCard(tp,s.cpfilter,tp,LOCATION_HAND|LOCATION_DECK|LOCATION_EXTRA,0,1,1,e:GetHandler())
 	Duel.SendtoGrave(g,REASON_COST)
 	e:SetLabel(g:GetFirst():GetOriginalCode())
 end
@@ -49,11 +49,11 @@ function s.cpop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		e1:SetCode(EFFECT_CHANGE_CODE)
 		e1:SetValue(code)
 		c:RegisterEffect(e1)
-		c:CopyEffect(code,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,1)
+		c:CopyEffect(code,RESETS_STANDARD_PHASE_END,1)
 	end
 end
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
@@ -65,9 +65,9 @@ function s.cfilter(c,tp)
 		and Duel.IsExistingTarget(Card.IsAbleToRemove,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c)
 end
 function s.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE,0,1,nil,tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND|LOCATION_MZONE|LOCATION_GRAVE,0,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil,tp)
+	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND|LOCATION_MZONE|LOCATION_GRAVE,0,1,1,nil,tp)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

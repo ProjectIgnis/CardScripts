@@ -1,5 +1,5 @@
 --毒の魔妖－束脛
---Tsukahagi,the Poisonous Mayakashi
+--Tsukahagi, the Poisonous Mayakashi
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
@@ -21,12 +21,12 @@ function s.initial_effect(c)
 	--Lizard check
 	aux.addContinuousLizardCheck(c,LOCATION_MZONE,s.lizfilter)
 end
-s.listed_series={0x121}
+s.listed_series={SET_MAYAKASHI}
 function s.counterfilter(c)
-	return not c:IsSummonLocation(LOCATION_EXTRA) or c:IsSetCard(0x121)
+	return not c:IsSummonLocation(LOCATION_EXTRA) or c:IsSetCard(SET_MAYAKASHI)
 end
 function s.cfilter(c,tp)
-	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsSetCard(0x121) and not c:IsCode(id)
+	return c:IsReason(REASON_BATTLE|REASON_EFFECT) and c:IsSetCard(SET_MAYAKASHI) and not c:IsCode(id)
 		and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp) and rp~=tp
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
@@ -40,7 +40,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,1),nil)
 end
@@ -56,8 +56,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp)
-	return c:IsLocation(LOCATION_EXTRA) and not c:IsSetCard(0x121)
+	return c:IsLocation(LOCATION_EXTRA) and not c:IsSetCard(SET_MAYAKASHI)
 end
 function s.lizfilter(e,c)
-	return not c:IsOriginalSetCard(0x121)
+	return not c:IsOriginalSetCard(SET_MAYAKASHI)
 end

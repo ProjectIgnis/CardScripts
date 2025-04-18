@@ -1,7 +1,6 @@
 --紫宵の機界騎士
 --Mekk-Knight Purple Nightfall
 --Scripted by Eerie Code
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special Summon itself from hand
@@ -27,9 +26,8 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x10c}
+s.listed_series={SET_MEKK_KNIGHT}
 s.listed_names={id}
-
 function s.cfilter(c)
 	return c:GetColumnGroupCount()>0
 end
@@ -43,10 +41,10 @@ function s.hspval(e,c)
 	return 0,zone
 end
 function s.rmfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x10c) and c:IsAbleToRemove()
+	return c:IsFaceup() and c:IsSetCard(SET_MEKK_KNIGHT) and c:IsAbleToRemove()
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x10c) and c:IsMonster() and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(SET_MEKK_KNIGHT) and c:IsMonster() and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.rmfilter(chkc) end
@@ -59,20 +57,20 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and Duel.Remove(tc,POS_FACEUP,REASON_EFFECT+REASON_TEMPORARY)~=0
+	if tc and tc:IsRelateToEffect(e) and Duel.Remove(tc,POS_FACEUP,REASON_EFFECT|REASON_TEMPORARY)~=0
 		and tc:IsLocation(LOCATION_REMOVED) then
-		local ct=(Duel.GetTurnPlayer()==tp and Duel.GetCurrentPhase()<=PHASE_STANDBY) and 2 or 1
-		local val=(Duel.GetTurnPlayer()==tp and Duel.GetCurrentPhase()<=PHASE_STANDBY) and Duel.GetTurnCount() or (Duel.GetTurnCount()-1)
+		local ct=(Duel.IsTurnPlayer(tp) and Duel.GetCurrentPhase()<=PHASE_STANDBY) and 2 or 1
+		local val=(Duel.IsTurnPlayer(tp) and Duel.GetCurrentPhase()<=PHASE_STANDBY) and Duel.GetTurnCount() or (Duel.GetTurnCount()-1)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetDescription(aux.Stringid(id,1))
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
+		e1:SetCode(EVENT_PHASE|PHASE_STANDBY)
 		e1:SetLabelObject(tc)
 		e1:SetCountLimit(1)
 		e1:SetCondition(s.retcon)
 		e1:SetOperation(s.retop)
 		e1:SetLabel(val)
-		e1:SetReset(RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN,ct)
+		e1:SetReset(RESET_PHASE|PHASE_STANDBY|RESET_SELF_TURN,ct)
 		Duel.RegisterEffect(e1,tp)
 		tc:CreateEffectRelation(e1)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
@@ -84,7 +82,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.retcon(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetTurnPlayer()~=tp or Duel.GetTurnCount()==e:GetLabel() then return false end
+	if Duel.IsTurnPlayer(1-tp) or Duel.GetTurnCount()==e:GetLabel() then return false end
 	local tc=e:GetLabelObject()
 	return tc:IsRelateToEffect(e)
 end

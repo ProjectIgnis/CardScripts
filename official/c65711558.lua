@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetTargetRange(LOCATION_MZONE,0)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x137))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_ANCIENT_WARRIORS))
 	e2:SetValue(500)
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
@@ -45,18 +45,18 @@ function s.initial_effect(c)
 	e4:SetOperation(s.operation)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x137}
+s.listed_series={SET_ANCIENT_WARRIORS}
 function s.lfilter(c,lc,sumtype,tp)
-	return c:IsSetCard(0x137,lc,sumtype,tp) and c:IsAttribute(ATTRIBUTE_WIND,lc,sumtype,tp)
+	return c:IsSetCard(SET_ANCIENT_WARRIORS,lc,sumtype,tp) and c:IsAttribute(ATTRIBUTE_WIND,lc,sumtype,tp)
 end
 function s.lcheck(g,lc,sumtype,tp)
 	return g:IsExists(s.lfilter,1,nil,lc,sumtype,tp)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x137) and c:IsAbleToHand()
+	return c:IsSetCard(SET_ANCIENT_WARRIORS) and c:IsAbleToHand()
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
+	return e:GetHandler():IsLinkSummoned()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -71,9 +71,9 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_HAND|LOCATION_ONFIELD,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToGraveAsCost,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToGraveAsCost,tp,LOCATION_HAND|LOCATION_ONFIELD,0,1,1,nil)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function s.filter(c)

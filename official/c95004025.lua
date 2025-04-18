@@ -1,4 +1,5 @@
 --真竜導士マジェスティM
+--Majesty Maiden, the True Dracocaster
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon with s/t
@@ -23,12 +24,12 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xf9}
+s.listed_series={SET_TRUE_DRACO_KING}
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_TRIBUTE) and rp~=tp
+	return e:GetHandler():IsTributeSummoned() and rp~=tp
 end
 function s.thfilter(c)
-	return c:IsSetCard(0xf9) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_TRUE_DRACO_KING) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

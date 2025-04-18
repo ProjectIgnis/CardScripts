@@ -14,7 +14,7 @@ function s.cfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_SYNCHRO)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_MAIN1 and not Duel.CheckPhaseActivity()
+	return Duel.IsPhase(PHASE_MAIN1) and not Duel.CheckPhaseActivity()
 		and not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
@@ -25,7 +25,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetTargetRange(1,1)
 	e1:SetTarget(s.sumlimit)
-	e1:SetReset(RESET_PHASE+PHASE_END,2)
+	e1:SetReset(RESET_PHASE|PHASE_END,2)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.sumlimit(e,c,sump,sumtype,sumpos,targetp)

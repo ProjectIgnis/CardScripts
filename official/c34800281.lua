@@ -1,5 +1,5 @@
 --メルフィー・ラッシィ
---Melffy Sealy
+--Melffy Pinny
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_HAND)
-	e1:SetHintTiming(0,TIMING_MAIN_END+TIMINGS_CHECK_MONSTER_E)
+	e1:SetHintTiming(0,TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(function(_,tp) return Duel.GetFlagEffect(tp,id)>0 end)
 	e1:SetTarget(s.sptg)
@@ -38,11 +38,11 @@ function s.initial_effect(c)
 	end)
 end
 s.listed_names={id}
-s.listed_series={0x147}
+s.listed_series={SET_MELFFY}
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	for tc in eg:Iter() do
 		if tc:IsPreviousLocation(LOCATION_MZONE) and tc:IsPreviousPosition(POS_FACEUP) and tc:GetPreviousRaceOnField()&RACE_BEAST~=0 then
-			Duel.RegisterFlagEffect(tc:GetPreviousControler(),id,RESET_PHASE+PHASE_END,0,1)
+			Duel.RegisterFlagEffect(tc:GetPreviousControler(),id,RESET_PHASE|PHASE_END,0,1)
 		end
 	end
 end
@@ -58,7 +58,7 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)>0 then
-		local mg=Duel.GetMatchingGroup(Card.IsSetCard,tp,LOCATION_HAND,0,nil,0x147)
+		local mg=Duel.GetMatchingGroup(Card.IsSetCard,tp,LOCATION_HAND,0,nil,SET_MELFFY)
 		local syng=Duel.GetMatchingGroup(s.scfilter,tp,LOCATION_EXTRA,0,nil,c,mg+c)
 		if #mg>0 and #syng>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 			Duel.BreakEffect()

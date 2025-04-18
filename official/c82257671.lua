@@ -1,7 +1,6 @@
 --ガッチリ＠イグニスター
 --Gatchiri @Ignister
 --Scripted by Eerie Code, anime version by Larry126
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Each cyberse monster get protected once, each turn
@@ -61,12 +60,12 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e2)
 		if tc:IsImmuneToEffect(e1) or tc:IsImmuneToEffect(e2) or not c:IsRelateToEffect(e) or Duel.GetLocationCount(tp,LOCATION_MZONE)<1 then return end
 		Duel.AdjustInstantly(tc)
@@ -92,7 +91,7 @@ function s.immop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_IMMUNE_EFFECT)
 		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetValue(s.efilter)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
+		e1:SetReset(RESETS_STANDARD_DISABLE_PHASE_END|RESET_OPPO_TURN)
 		e1:SetOwnerPlayer(tp)
 		tc:RegisterEffect(e1)
 	end

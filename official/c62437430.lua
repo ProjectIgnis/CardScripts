@@ -1,4 +1,5 @@
 --異次元海溝
+--Different Dimension Deepsea Trench
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -26,16 +27,16 @@ function s.filter(c)
 		and (c:IsLocation(LOCATION_HAND) or aux.SpElimFilter(c,true,true))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,0x16,0,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,tp,0x16)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND|LOCATION_GRAVE|LOCATION_MZONE,0,1,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,tp,LOCATION_HAND|LOCATION_GRAVE|LOCATION_MZONE)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.filter),tp,0x16,0,1,1,nil):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.filter),tp,LOCATION_HAND|LOCATION_GRAVE|LOCATION_MZONE,0,1,1,nil):GetFirst()
 	if tc and Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_REMOVED) then
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,0)
+		tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,0)
 		e:GetLabelObject():SetLabelObject(tc)
 	end
 end

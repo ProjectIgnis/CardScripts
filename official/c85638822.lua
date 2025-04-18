@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e3:SetCode(EVENT_PHASE+PHASE_BATTLE)
+	e3:SetCode(EVENT_PHASE|PHASE_BATTLE)
 	e3:SetRange(LOCATION_FZONE)
 	e3:SetCountLimit(1)
 	e3:SetCondition(s.spcon)
@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xfc}
+s.listed_series={SET_GOUKI}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsCanAddCounter(tp,0x46,3,e:GetHandler()) end
 	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,3,0,0x146)
@@ -48,13 +48,13 @@ function s.rccon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local rc=eg:GetFirst()
 	return rc:IsRelateToBattle() and rc:IsStatus(STATUS_OPPO_BATTLE)
-		and rc:IsFaceup() and rc:IsSetCard(0xfc) and rc:IsControler(tp)
+		and rc:IsFaceup() and rc:IsSetCard(SET_GOUKI) and rc:IsControler(tp)
 end
 function s.rcop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then
 		c:RemoveCounter(tp,0x46,1,REASON_EFFECT)
-		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,0)
+		c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,0)
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
@@ -62,18 +62,18 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:GetCounter(0x46)==0 and c:GetFlagEffect(id)>2
 end
 function s.spfilter(c,e,sp)
-	return c:IsSetCard(0xfc) and c:IsCanBeSpecialSummoned(e,0,sp,false,false)
+	return c:IsSetCard(SET_GOUKI) and c:IsCanBeSpecialSummoned(e,0,sp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,LOCATION_HAND+LOCATION_DECK)
+		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND|LOCATION_DECK,0,1,nil,e,tp) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,LOCATION_HAND|LOCATION_DECK)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local tg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,nil,e,tp)
+	local tg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_HAND|LOCATION_DECK,0,nil,e,tp)
 	if #tg==0 or ft<=0 then return end
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
 	local g=aux.SelectUnselectGroup(tg,e,tp,1,ft,aux.dncheck,1,tp,HINTMSG_SPSUMMON)
@@ -82,4 +82,3 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		c:ResetFlagEffect(id)
 	end
 end
-

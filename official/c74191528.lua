@@ -1,5 +1,5 @@
 --運命の一枚
---Card of Spirit
+--Card of Fate
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)

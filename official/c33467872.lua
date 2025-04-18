@@ -1,5 +1,5 @@
 --深海のコレペティ
---Deep Sea Répétiteur
+--Deep Sea Repetiteur
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
@@ -42,7 +42,7 @@ function s.atkcfilter(c)
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.atkcfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,s.atkcfilter,1,1,REASON_COST+REASON_DISCARD,nil)
+	Duel.DiscardHand(tp,s.atkcfilter,1,1,REASON_COST|REASON_DISCARD,nil)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -51,12 +51,12 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(800)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESETS_STANDARD_PHASE_END)
 	c:RegisterEffect(e1)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsSummonType(SUMMON_TYPE_SYNCHRO)
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsSynchroSummoned()
 end
 function s.spfilter(c,e,tp)
 	return c:IsAttribute(ATTRIBUTE_WATER) and c:IsLevelAbove(5) and
@@ -80,7 +80,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetTargetRange(1,0)
-		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_PHASE|PHASE_END)
 		e1:SetTarget(s.splimit)
 		Duel.RegisterEffect(e1,tp)
 	end

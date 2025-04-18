@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetRange(LOCATION_SZONE)
-	e2:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e2:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e2:SetCountLimit(1)
 	e2:SetCondition(s.spcon)
 	e2:SetTarget(s.sptg)
@@ -41,12 +41,12 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local tc=Duel.SelectMatchingCard(tp,Card.IsAbleToGrave,tp,LOCATION_MZONE,loc,1,1,nil):GetFirst()
 	if tc and Duel.SendtoGrave(tc,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_GRAVE) then
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,0)
+		tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,0)
 		e:SetLabelObject(tc)
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.filter(c,e,tp)
 	return c==e:GetLabelObject():GetLabelObject() and c:GetFlagEffect(id)>0

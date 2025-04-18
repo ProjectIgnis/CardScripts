@@ -23,9 +23,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xe6}
+s.listed_series={SET_FLOWER_CARDIAN}
 function s.filter(c,e,tp)
-	return c:IsSetCard(0xe6) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+	return c:IsSetCard(SET_FLOWER_CARDIAN) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,30459350)
@@ -57,18 +57,18 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 						e1:SetType(EFFECT_TYPE_SINGLE)
 						e1:SetCode(EFFECT_CHANGE_LEVEL)
 						e1:SetValue(2)
-						e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+						e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 						tc:RegisterEffect(e1)
 					end
 					local e2=Effect.CreateEffect(c)
 					e2:SetType(EFFECT_TYPE_SINGLE)
 					e2:SetCode(EFFECT_DISABLE)
-					e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+					e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 					tc:RegisterEffect(e2)
 					local e3=Effect.CreateEffect(c)
 					e3:SetType(EFFECT_TYPE_SINGLE)
 					e3:SetCode(EFFECT_DISABLE_EFFECT)
-					e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+					e3:SetReset(RESET_EVENT|RESETS_STANDARD)
 					tc:RegisterEffect(e3)
 				end
 			end

@@ -13,18 +13,15 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetHintTiming(TIMING_DAMAGE_STEP+TIMINGS_CHECK_MONSTER)
+	e1:SetHintTiming(TIMING_DAMAGE_STEP|TIMINGS_CHECK_MONSTER)
 	e1:SetCountLimit(1)
-	e1:SetCondition(s.atkcon)
-	e1:SetCost(aux.dxmcostgen(1,1,nil))
+	e1:SetCondition(aux.StatChangeDamageStepCondition)
+	e1:SetCost(Cost.Detach(1,1,nil))
 	e1:SetTarget(s.atktg)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
 end
 s.listed_series={SET_DJINN}
-function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
-end
 function s.filter(c,tp)
 	return c:CheckRemoveOverlayCard(tp,1,REASON_EFFECT)
 end

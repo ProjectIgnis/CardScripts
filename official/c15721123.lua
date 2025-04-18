@@ -1,4 +1,5 @@
 --対峙するG
+--Confronting the "C"
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -34,12 +35,12 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetRange(LOCATION_MZONE)
 		e1:SetCode(EFFECT_IMMUNE_EFFECT)
 		e1:SetValue(s.efilter)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e1)
 	end
 end
 function s.efilter(e,te)
-	if not te:IsActiveType(TYPE_MONSTER) then return false end
+	if not te:IsMonsterEffect() then return false end
 	local c=e:GetHandler()
 	local ec=te:GetHandler()
 	if ec:IsHasCardTarget(c) then return true end

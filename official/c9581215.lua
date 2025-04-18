@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and rp~=tp and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainDisablable(ev) and Duel.GetCurrentChain(true)>1
+	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and rp~=tp and re:IsMonsterEffect() and Duel.IsChainDisablable(ev) and Duel.GetCurrentChain(true)>1
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -25,7 +25,7 @@ function s.filter(c,cd)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.NegateEffect(ev) then return end
-	local g=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_HAND+LOCATION_DECK,nil,re:GetHandler():GetOriginalCode())
+	local g=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_HAND|LOCATION_DECK,nil,re:GetHandler():GetOriginalCode())
 	local hg=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,0,LOCATION_HAND,nil)
 	local rc=0
 	if #g>0 and Duel.SelectYesNo(1-tp,aux.Stringid(id,0)) then
@@ -41,4 +41,3 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Remove(sg,POS_FACEUP,REASON_EFFECT)
 	end
 end
-

@@ -1,4 +1,5 @@
 --魔霧雨
+--Makiu, the Magical Mist
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -14,13 +15,13 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_SUMMONED_SKULL}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetCurrentPhase()==PHASE_MAIN1 end
+	if chk==0 then return Duel.IsPhase(PHASE_MAIN1) end
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_BP)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
 	e1:SetTargetRange(1,0)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.filter(c,tp)

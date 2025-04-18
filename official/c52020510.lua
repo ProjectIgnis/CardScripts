@@ -1,5 +1,5 @@
 --ダイノルフィア・アラート
---Dinoruffia Alert
+--Dinomorphia Alert
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
@@ -22,17 +22,17 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_CHAINING)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCondition(s.nodamcon)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetOperation(s.nodamop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x175}
+s.listed_series={SET_DINOMORPHIA}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.PayLPCost(tp,Duel.GetLP(tp)//2)
 end
 function s.spfilter(c,e,tp)
-	return c:IsMonster() and c:HasLevel() and c:IsSetCard(0x175) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsMonster() and c:HasLevel() and c:IsSetCard(SET_DINOMORPHIA) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.rescon(sg,e,tp,mg)
 	return sg:GetSum(Card.GetLevel)<=8
@@ -55,7 +55,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_CANNOT_ATTACK_ANNOUNCE)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e1:SetReset(RESETS_STANDARD_PHASE_END)
 			tc:RegisterEffect(e1,true)
 		end
 	end
@@ -67,11 +67,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
-	return not c:IsSetCard(0x175)
+	return not c:IsSetCard(SET_DINOMORPHIA)
 end
 function s.nodamcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp and Duel.GetLP(tp)<=2000
@@ -84,11 +84,11 @@ function s.nodamop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(1,0)
 	e1:SetValue(s.damval)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_NO_EFFECT_DAMAGE)
-	e2:SetReset(RESET_PHASE+PHASE_END)
+	e2:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e2,tp)
 end
 function s.damval(e,re,val,r,rp,rc)

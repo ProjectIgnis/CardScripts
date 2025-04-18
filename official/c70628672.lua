@@ -21,23 +21,23 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,id)
-	e2:SetCost(s.thcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x16}
+s.listed_series={SET_ROID}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x16) and c:IsType(TYPE_FUSION)
+	return c:IsFaceup() and c:IsSetCard(SET_ROID) and c:IsType(TYPE_FUSION)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
-		and (re:IsActiveType(TYPE_MONSTER) or re:IsHasType(EFFECT_TYPE_ACTIVATE)) and Duel.IsChainNegatable(ev)
+		and (re:IsMonsterEffect() or re:IsHasType(EFFECT_TYPE_ACTIVATE)) and Duel.IsChainNegatable(ev)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,0,rp,LOCATION_DECK+LOCATION_EXTRA)
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,0,rp,LOCATION_DECK|LOCATION_EXTRA)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.NegateActivation(ev) then
@@ -45,18 +45,14 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.SendtoGrave(eg,REASON_EFFECT)
 		end
 		local cd=re:GetHandler():GetCode()
-		local g=Duel.GetMatchingGroup(Card.IsCode,rp,LOCATION_DECK+LOCATION_EXTRA,0,nil,cd)
+		local g=Duel.GetMatchingGroup(Card.IsCode,rp,LOCATION_DECK|LOCATION_EXTRA,0,nil,cd)
 		if #g>0 then
 			Duel.SendtoGrave(g,REASON_EFFECT)
 		end
 	end
 end
-function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() end
-	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
-end
 function s.thfilter(c)
-	return c:IsMonster() and c:IsSetCard(0x16) and c:IsAbleToHand()
+	return c:IsMonster() and c:IsSetCard(SET_ROID) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc) end
@@ -67,7 +63,7 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) then
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 	end
 end

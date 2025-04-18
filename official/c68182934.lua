@@ -1,4 +1,5 @@
 --ドラコニアの翼竜騎兵
+--Sky Dragoons of Draconia
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon

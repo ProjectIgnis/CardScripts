@@ -31,4 +31,3 @@ s.listed_names={CARD_STROMBERG,78527720}
 function s.indtg(e,c)
 	return c:IsFaceup() and c:IsCode(CARD_STROMBERG)
 end
-

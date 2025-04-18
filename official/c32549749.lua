@@ -24,7 +24,7 @@ function s.eqtfilter(c,ec,tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local phase=Duel.GetCurrentPhase()
-	local b1=Duel.IsExistingTarget(Card.IsFaceup,tp,LOCATION_MZONE,0,1,nil) and (phase~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
+	local b1=Duel.IsExistingTarget(Card.IsFaceup,tp,LOCATION_MZONE,0,1,nil) and aux.StatChangeDamageStepCondition()
 	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
 	if e:GetHandler():IsLocation(LOCATION_HAND) then ft=ft-1 end
 	local b2=ft>0 and Duel.IsExistingTarget(s.eqcfilter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil,tp) and phase~=PHASE_DAMAGE

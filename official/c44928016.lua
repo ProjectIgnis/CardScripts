@@ -1,4 +1,5 @@
 --にん人
+--World Carrotweight Champion
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -20,7 +21,7 @@ function s.cfilter(c,ft)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local loc=LOCATION_MZONE+LOCATION_HAND
+	local loc=LOCATION_MZONE|LOCATION_HAND
 	if ft==0 then loc=LOCATION_MZONE end
 	if chk==0 then return ft>-1 and Duel.IsExistingMatchingCard(s.cfilter,tp,loc,0,1,nil,ft) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)

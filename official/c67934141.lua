@@ -1,4 +1,5 @@
 --超熱血球児
+--Ultimate Baseball Kid
 local s,id=GetID()
 function s.initial_effect(c)
 	--atkup

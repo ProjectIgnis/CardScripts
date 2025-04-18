@@ -1,4 +1,5 @@
 --侵略の炎
+--Invasion of Flames
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon success

@@ -1,4 +1,5 @@
 --最古式念導
+--Psychokinesis
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x120),2,2)
+	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_PRANK_KIDS),2,2)
 	--Add from Deck to hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -25,17 +25,17 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCountLimit(1,{id,1})
-	e2:SetCost(s.thcost)
+	e2:SetCost(Cost.SelfTribute)
 	e2:SetTarget(s.thtg2)
 	e2:SetOperation(s.thop2)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x120}
+s.listed_series={SET_PRANK_KIDS}
 function s.thcon(e)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
+	return e:GetHandler():IsLinkSummoned()
 end
 function s.thfilter1(c)
-	return c:IsSetCard(0x120) and c:IsSpellTrap() and c:IsAbleToHand()
+	return c:IsSetCard(SET_PRANK_KIDS) and c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.thtg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter1,tp,LOCATION_DECK,0,1,nil) end
@@ -49,12 +49,8 @@ function s.thop1(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() end
-	Duel.Release(e:GetHandler(),REASON_COST)
-end
 function s.thfilter2(c,e)
-	return c:IsSetCard(0x120) and not c:IsLinkMonster() and c:IsCanBeEffectTarget(e) and c:IsAbleToHand()
+	return c:IsSetCard(SET_PRANK_KIDS) and not c:IsLinkMonster() and c:IsCanBeEffectTarget(e) and c:IsAbleToHand()
 end
 function s.thcheck(sg,e,tp)
 	return sg:GetClassCount(Card.GetCode)==2

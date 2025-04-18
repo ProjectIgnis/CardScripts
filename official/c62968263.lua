@@ -30,10 +30,10 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_REMOVE)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x107b,0x48}
+s.listed_series={SET_GALAXY_EYES,SET_NUMBER}
 s.listed_names={CARD_GALAXYEYES_P_DRAGON}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x107b),tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_GALAXY_EYES),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -59,17 +59,17 @@ function s.attfilter(c,e)
 end
 function s.attg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.gepdfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,nil,e,tp,ft) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.gepdfilter,tp,LOCATION_DECK|LOCATION_HAND,0,1,nil,e,tp,ft) end
 	e:SetLabel(Duel.IsBattlePhase() and 1 or 0)
-	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK+LOCATION_HAND)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK|LOCATION_HAND)
 end
 function s.numbfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsSetCard(0x48)
+	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsSetCard(SET_NUMBER)
 end
 function s.atop(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,2))
-	local tc=Duel.SelectMatchingCard(tp,s.gepdfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,1,nil,e,tp,ft):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,s.gepdfilter,tp,LOCATION_DECK|LOCATION_HAND,0,1,1,nil,e,tp,ft):GetFirst()
 	if not tc then return end
 	local spchk=ft>0 and tc:IsCanBeSpecialSummoned(e,0,tp,false,false)
 	local attchk=Duel.IsExistingMatchingCard(s.attfilter,tp,LOCATION_MZONE,0,1,nil,e)
@@ -98,7 +98,7 @@ function s.atop(e,tp,eg,ep,ev,re,r,rp)
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_SET_ATTACK_FINAL)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			e1:SetValue(sc:GetAttack()*2)
 			sc:RegisterEffect(e1)
 		end

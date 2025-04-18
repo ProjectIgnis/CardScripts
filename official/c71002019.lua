@@ -1,7 +1,6 @@
 --六花精ボタン
 --Mudan the Rikka Fairy
 --Scripted by ahtelel
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon itself from GY
@@ -29,7 +28,7 @@ function s.initial_effect(c)
 	e3:SetCondition(s.thcon)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x141}
+s.listed_series={SET_RIKKA}
 function s.cfilter(c,tp)
 	return c:IsRikkaReleasable(tp) and Duel.GetMZoneCount(tp,c)>0
 end
@@ -49,7 +48,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(e) then Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP) end
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x141) and c:IsSpellTrap() and c:IsAbleToHand()
+	return c:IsSetCard(SET_RIKKA) and c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -65,5 +64,5 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	if not re then return false end
-	return re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsRace(RACE_PLANT)
+	return re:IsMonsterEffect() and re:GetHandler():IsRace(RACE_PLANT)
 end

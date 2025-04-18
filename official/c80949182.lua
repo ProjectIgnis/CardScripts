@@ -1,6 +1,5 @@
 --Ｂ・Ｆ－降魔弓のハマ
---Battlewasp – Hama the Conquering Bow
-
+--Battlewasp - Hama the Conquering Bow
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -39,7 +38,7 @@ function s.initial_effect(c)
 	e4:SetCategory(CATEGORY_DAMAGE)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e4:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e4:SetCode(EVENT_PHASE+PHASE_BATTLE)
+	e4:SetCode(EVENT_PHASE|PHASE_BATTLE)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetCountLimit(1,{id,1})
 	e4:SetCondition(s.damcon)
@@ -62,8 +61,7 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge2,0)
 	end)
 end
-s.listed_series={0x12f}
-
+s.listed_series={SET_BATTLEWASP}
 function s.valcheck(e,c)
 	local g=c:GetMaterial()
 	if g:IsExists(Card.IsType,1,nil,TYPE_SYNCHRO) then
@@ -73,7 +71,7 @@ function s.valcheck(e,c)
 	end
 end
 function s.tncon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO) and e:GetLabel()==1
+	return e:GetHandler():IsSynchroSummoned() and e:GetLabel()==1
 end
 function s.tnop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -84,7 +82,7 @@ function s.tnop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_EXTRA_ATTACK)
 	e1:SetValue(1)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	c:RegisterEffect(e1)
 end
 function s.atcon(e,tp,eg,ep,ev,re,r,rp)
@@ -100,7 +98,7 @@ function s.atop(e,tp,eg,ep,ev,re,r,rp)
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			e1:SetValue(-1000)
 			sc:RegisterEffect(e1)
 			local e2=e1:Clone()
@@ -109,10 +107,10 @@ function s.atop(e,tp,eg,ep,ev,re,r,rp)
 		end
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp,chk)
-	return Duel.GetTurnPlayer()==tp and s[0]
+	return Duel.IsTurnPlayer(tp) and s[0]
 end
 function s.filter(c)
-	return c:IsSetCard(0x12f) and c:IsMonster()
+	return c:IsSetCard(SET_BATTLEWASP) and c:IsMonster()
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,1,nil) end

@@ -1,7 +1,6 @@
 --海霊賊
 --Piwraithe the Ghost Pirate
 --Scripted by pyrQ
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon itself from GY
@@ -19,9 +18,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={id}
-
 function s.confilter(c,tp)
-	return c:IsReason(REASON_BATTLE+REASON_EFFECT)
+	return c:IsReason(REASON_BATTLE|REASON_EFFECT)
 		and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE) and not c:IsCode(id)
 		and c:IsPreviousPosition(POS_FACEUP) and (c:GetPreviousAttributeOnField()&ATTRIBUTE_WATER)==ATTRIBUTE_WATER
 end
@@ -41,7 +39,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
-		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
+		e1:SetReset(RESET_EVENT|RESETS_REDIRECT)
 		e1:SetValue(LOCATION_REMOVED)
 		c:RegisterEffect(e1,true)
 	end
@@ -51,7 +49,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_UPDATE_ATTACK)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END,2)
+		e2:SetReset(RESETS_STANDARD_DISABLE_PHASE_END,2)
 		e2:SetValue(ct*100)
 		c:RegisterEffect(e2)
 	end

@@ -1,4 +1,5 @@
 --マジック・ガードナー
+--Magic Reflector
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy rep
@@ -29,7 +30,7 @@ function s.addc(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_DESTROY_REPLACE)
 		e1:SetTarget(s.reptg)
 		e1:SetOperation(s.repop)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 	end
 end

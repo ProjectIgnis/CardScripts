@@ -1,11 +1,11 @@
--- ミドレミコード・エリーティア
--- Midoremichord Elitea
--- scripted by Hatter
+--ミドレミコード・エリーティア
+--MiSolfachord Eliteia
+--scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- pendulum summon
+	--pendulum summon
 	Pendulum.AddProcedure(c)
-	-- cannot disable pendulum summon
+	--cannot disable pendulum summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_DISABLE_SPSUMMON)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.target)
 	c:RegisterEffect(e1)
-	-- return target to hand
+	--return target to hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_TOHAND)
@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	local e3=e2:Clone()
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
-	-- no battle damage
+	--no battle damage
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD)
 	e4:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
@@ -40,9 +40,9 @@ function s.initial_effect(c)
 	e4:SetValue(1)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x164}
+s.listed_series={SET_SOLFACHORD}
 function s.target(e,c)
-	return c:IsSummonType(SUMMON_TYPE_PENDULUM) and c:IsSetCard(0x164) and c:IsType(TYPE_PENDULUM)
+	return c:IsPendulumSummoned() and c:IsSetCard(SET_SOLFACHORD) and c:IsType(TYPE_PENDULUM)
 end
 function s.thfilter(c)
 	return c:IsSpellTrap() and c:IsAbleToHand()
@@ -64,5 +64,5 @@ function s.damcon(e)
 	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsEvenScale),e:GetHandlerPlayer(),LOCATION_PZONE,0,1,nil)
 end
 function s.efilter(e,c)
-	return c:IsSetCard(0x164) and c:IsType(TYPE_PENDULUM)
+	return c:IsSetCard(SET_SOLFACHORD) and c:IsType(TYPE_PENDULUM)
 end

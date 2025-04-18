@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={id}
-s.listed_series={0x132}
+s.listed_series={SET_MATHMECH}
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler():GetEquipTarget()
 	if not c then return false end
@@ -38,7 +38,7 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return bc and bc:IsFaceup()
 end
 function s.atkcfilter(c)
-	return c:IsSetCard(0x132) and c:IsMonster() and c:IsAttackAbove(1) and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(SET_MATHMECH) and c:IsMonster() and c:IsAttackAbove(1) and c:IsAbleToGraveAsCost()
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.atkcfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -56,7 +56,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(ct)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end
@@ -64,7 +64,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_SZONE)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x132) and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(SET_MATHMECH) and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc) end

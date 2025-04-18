@@ -1,4 +1,5 @@
 --ナチュル・ドラゴンフライ
+--Naturia Dragonfly
 local s,id=GetID()
 function s.initial_effect(c)
 	--indes
@@ -16,12 +17,12 @@ function s.initial_effect(c)
 	e1:SetValue(s.atkval)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x2a}
+s.listed_series={SET_NATURIA}
 function s.indes(e,c)
 	return c:GetAttack()>=2000
 end
 function s.filter(c)
-	return c:IsSetCard(0x2a) and c:IsMonster()
+	return c:IsSetCard(SET_NATURIA) and c:IsMonster()
 end
 function s.atkval(e,c)
 	return Duel.GetMatchingGroupCount(s.filter,c:GetControler(),LOCATION_GRAVE,0,nil)*200

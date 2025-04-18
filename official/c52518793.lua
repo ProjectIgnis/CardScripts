@@ -1,4 +1,5 @@
 --剣闘獣の檻－コロッセウム
+--Colosseum - Cage of the Gladiator Beasts
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(0x7)
@@ -22,7 +23,7 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_UPDATE_ATTACK)
 	e3:SetRange(LOCATION_FZONE)
 	e3:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e3:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x19))
+	e3:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_GLADIATOR))
 	e3:SetValue(s.atkval)
 	c:RegisterEffect(e3)
 	local e4=e3:Clone()
@@ -38,7 +39,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.desrepop)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x19}
+s.listed_series={SET_GLADIATOR}
 function s.atkval(e,c)
 	return e:GetHandler():GetCounter(0x7)*100
 end
@@ -57,5 +58,5 @@ function s.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	return Duel.SelectEffectYesNo(tp,e:GetHandler(),96)
 end
 function s.desrepop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.DiscardHand(tp,Card.IsCode,1,1,REASON_EFFECT+REASON_DISCARD,nil,id)
+	Duel.DiscardHand(tp,Card.IsCode,1,1,REASON_EFFECT|REASON_DISCARD,nil,id)
 end

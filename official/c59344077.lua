@@ -1,4 +1,5 @@
 --マジック・ドレイン
+--Magic Drain
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,7 +12,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp and re:IsActiveType(TYPE_SPELL) and re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)
+	return rp~=tp and re:IsSpellEffect() and re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsChainDisablable(0) then
@@ -26,7 +27,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		if sel==0 then
 			Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_DISCARD)
 			local sg=g:Select(1-tp,1,1,nil)
-			Duel.SendtoGrave(sg,REASON_EFFECT+REASON_DISCARD)
+			Duel.SendtoGrave(sg,REASON_EFFECT|REASON_DISCARD)
 			Duel.NegateEffect(0)
 			return
 		end

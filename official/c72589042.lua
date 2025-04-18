@@ -10,18 +10,13 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCondition(s.condition)
-	e1:SetCost(s.cost)
+	e1:SetCost(Cost.SelfDiscard)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetAttacker():IsControler(1-tp) and Duel.GetMatchingGroupCount(nil,tp,LOCATION_ONFIELD+LOCATION_HAND,0,e:GetHandler())==0
-end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsDiscardable() end
-	Duel.SendtoGrave(c,REASON_COST+REASON_DISCARD)
+	return Duel.GetAttacker():IsControler(1-tp) and Duel.GetMatchingGroupCount(nil,tp,LOCATION_ONFIELD|LOCATION_HAND,0,e:GetHandler())==0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local sg=Duel.GetMatchingGroup(nil,tp,0,LOCATION_ONFIELD,nil)
@@ -29,14 +24,15 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,sg,#sg,0,0)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
-function s.filter(c,e,tp)
+function s.spfilter(c,e,tp)
 	return c:IsMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local sg=Duel.GetMatchingGroup(nil,tp,0,LOCATION_ONFIELD,nil)
 	if #sg>0 and Duel.Destroy(sg,REASON_EFFECT)>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,e,tp) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
-		local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
+		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+		local tc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 		Duel.BreakEffect()
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end

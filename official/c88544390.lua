@@ -23,15 +23,15 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,{id,1})
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.sptg2)
 	e2:SetOperation(s.spop2)
 	c:RegisterEffect(e2)
 end
 s.listed_names={id}
-s.listed_series={0x10db}
+s.listed_series={SET_THE_PHANTOM_KNIGHTS}
 function s.cfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x10db) and c:IsControler(tp)
+	return c:IsFaceup() and c:IsSetCard(SET_THE_PHANTOM_KNIGHTS) and c:IsControler(tp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)
@@ -48,13 +48,13 @@ function s.spop1(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_LEVEL)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		e1:SetValue(1)
 		c:RegisterEffect(e1)
 	end
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x10db) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_THE_PHANTOM_KNIGHTS) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -71,7 +71,7 @@ function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_LEVEL)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e1:SetValue(1)
 		tc:RegisterEffect(e1)
 	end

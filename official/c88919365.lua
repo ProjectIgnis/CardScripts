@@ -1,10 +1,10 @@
--- ヴァリアンツの武者－北条
--- Hojo, Warrior of the Valiants
--- Scripted by Hatter
+--ヴァリアンツの武者－北条
+--Hojo the Vaylantz Warrior
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	Pendulum.AddProcedure(c)
-	-- Special Summon self
+	--Special Summon self
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	-- Return 1 face-up Spell/Trap to hand
+	--Return 1 face-up Spell/Trap to hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TOHAND)
@@ -26,8 +26,8 @@ function s.initial_effect(c)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
-	-- Fusion Summon 1 "Valiants" monster
-	local fusparams={aux.FilterBoolFunction(Card.IsSetCard,0x17e),nil,s.fextra}
+	--Fusion Summon 1 "Valiants" monster
+	local fusparams={aux.FilterBoolFunction(Card.IsSetCard,SET_VAYLANTZ),nil,s.fextra}
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
@@ -41,9 +41,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={CARD_VALIANTS_SHINRABANSHO}
-s.listed_series={0x17e}
+s.listed_series={SET_VAYLANTZ}
 function s.spconfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x17e) and c:IsAttribute(ATTRIBUTE_WATER)
+	return c:IsFaceup() and c:IsSetCard(SET_VAYLANTZ) and c:IsAttribute(ATTRIBUTE_WATER)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsEnvironment(CARD_VALIANTS_SHINRABANSHO,PLAYER_ALL,LOCATION_FZONE)
@@ -52,7 +52,7 @@ end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then
-		local zone=(1<<c:GetSequence())&0x1f
+		local zone=(1<<c:GetSequence())&ZONES_MMZ
 		return zone~=0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
@@ -60,7 +60,7 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	local zone=(1<<c:GetSequence())&0x1f
+	local zone=(1<<c:GetSequence())&ZONES_MMZ
 	if zone~=0 then
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP,zone)
 	end

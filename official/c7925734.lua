@@ -45,7 +45,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	else
 		Duel.BreakEffect()
-		if Duel.SendtoGrave(c,REASON_EFFECT+REASON_DISCARD)>0 then
+		if Duel.SendtoGrave(c,REASON_EFFECT|REASON_DISCARD)>0 then
 			Duel.Draw(tp,1,REASON_EFFECT)
 		end
 	end

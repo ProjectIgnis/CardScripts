@@ -22,14 +22,14 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCountLimit(1)
-	e2:SetCost(s.atkcost)
+	e2:SetCost(Cost.Detach(1))
 	e2:SetTarget(s.atktg)
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
 end
-s.listed_series={0x6d}
+s.listed_series={SET_DJINN}
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x6d) and c:IsType(TYPE_XYZ) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_DJINN) and c:IsType(TYPE_XYZ) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end
@@ -50,12 +50,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
-end
 function s.atkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x6d) and c:IsType(TYPE_XYZ) and not c:IsHasEffect(EFFECT_DIRECT_ATTACK)
+	return c:IsFaceup() and c:IsSetCard(SET_DJINN) and c:IsType(TYPE_XYZ) and not c:IsHasEffect(EFFECT_DIRECT_ATTACK)
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.atkfilter(chkc) end
@@ -69,7 +65,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DIRECT_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end

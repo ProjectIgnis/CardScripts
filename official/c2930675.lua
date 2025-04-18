@@ -1,5 +1,5 @@
 --星遺物へと至る鍵
---Key to World Legacy
+--World Legacy Key
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -18,9 +18,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	aux.DoubleSnareValidity(c,LOCATION_SZONE)
 end
-s.listed_series={0x10c,0xfe}
+s.listed_series={SET_MEKK_KNIGHT,SET_WORLD_LEGACY}
 function s.thfilter(c)
-	return ((c:IsSetCard(0x10c) and c:IsMonster()) or c:IsSetCard(0xfe)) and c:IsFaceup() and c:IsAbleToHand()
+	return ((c:IsSetCard(SET_MEKK_KNIGHT) and c:IsMonster()) or c:IsSetCard(SET_WORLD_LEGACY)) and c:IsFaceup() and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and s.thfilter(chkc) end
@@ -47,10 +47,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c,seq,p)
-	return c:IsFaceup() and c:IsSetCard(0x10c) and c:IsColumn(seq,p,LOCATION_SZONE)
+	return c:IsFaceup() and c:IsSetCard(SET_MEKK_KNIGHT) and c:IsColumn(seq,p,LOCATION_SZONE)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
-	if rp==tp or not re:IsActiveType(TYPE_TRAP) then return false end
+	if rp==tp or not re:IsTrapEffect() then return false end
 	local rc=re:GetHandler()
 	local p,loc,seq=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_CONTROLER,CHAININFO_TRIGGERING_LOCATION,CHAININFO_TRIGGERING_SEQUENCE)
 	if re:IsHasType(EFFECT_TYPE_ACTIVATE) and (loc&LOCATION_SZONE==0 or rc:IsControler(1-p)) then

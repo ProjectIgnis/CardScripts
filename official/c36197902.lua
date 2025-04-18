@@ -31,12 +31,12 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_GRAVE)
 	e3:SetCountLimit(1,id)
 	e3:SetCondition(s.spcon)
-	e3:SetCost(aux.bfgcost)
+	e3:SetCost(Cost.SelfBanish)
 	e3:SetTarget(s.sptg)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xfe}
+s.listed_series={SET_WORLD_LEGACY}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc) end
 	if chk==0 then return true end
@@ -53,7 +53,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	end
 end
 function s.atkcfilter(c,tp)
-	return c:IsMonster() and c:IsSetCard(0xfe) and c:GetBaseAttack()>0
+	return c:IsMonster() and c:IsSetCard(SET_WORLD_LEGACY) and c:GetBaseAttack()>0
 		and c:IsAbleToRemoveAsCost() and (aux.SpElimFilter(c,true,true) or c:IsLocation(LOCATION_HAND))
 		and Duel.IsExistingTarget(s.atkfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,c)
 end
@@ -61,12 +61,12 @@ function s.atkfilter(c)
 	return c:IsFaceup() and c:IsLinkMonster()
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.atkcfilter,tp,LOCATION_MZONE+LOCATION_HAND+LOCATION_GRAVE,0,1,nil,tp) and Duel.GetFlagEffect(tp,id)==0 end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.atkcfilter,tp,LOCATION_MZONE|LOCATION_HAND|LOCATION_GRAVE,0,1,nil,tp) and Duel.GetFlagEffect(tp,id)==0 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local tc=Duel.SelectMatchingCard(tp,s.atkcfilter,tp,LOCATION_MZONE+LOCATION_HAND+LOCATION_GRAVE,0,1,1,nil,tp):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,s.atkcfilter,tp,LOCATION_MZONE|LOCATION_HAND|LOCATION_GRAVE,0,1,1,nil,tp):GetFirst()
 	Duel.Remove(tc,POS_FACEUP,REASON_COST)
 	e:SetLabel(tc:GetBaseAttack())
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+	Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1)
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.atkfilter(chkc) end
@@ -82,7 +82,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(e:GetLabel())
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 	end
 end
@@ -109,4 +109,3 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-

@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Link Summon
 	c:EnableReviveLimit()
-	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x14a),1)
+	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_APPLIANCER),1)
 	--cannot be Link Material
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,id)
 	e2:SetCondition(s.spcon)
-	e2:SetCost(s.spcost)
+	e2:SetCost(Cost.SelfTribute)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	e2:SetLabel(1)
@@ -35,21 +35,17 @@ function s.initial_effect(c)
 	e3:SetLabel(0)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x14a}
+s.listed_series={SET_APPLIANCER}
 s.listed_names={id}
 function s.lkcon(e)
 	local c=e:GetHandler()
-	return c:IsStatus(STATUS_SPSUMMON_TURN) and c:IsSummonType(SUMMON_TYPE_LINK)
+	return c:IsStatus(STATUS_SPSUMMON_TURN) and c:IsLinkSummoned()
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetMutualLinkedGroupCount()>0
 end
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() end
-	Duel.Release(e:GetHandler(),REASON_COST)
-end
 function s.spfilter(c,e,tp,colinked)
-	return c:IsSetCard(0x14a) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP) and not c:IsCode(id)
+	return c:IsSetCard(SET_APPLIANCER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP) and not c:IsCode(id)
 		and ((c:IsType(TYPE_LINK) and colinked) or (c:IsLevelBelow(4) and not colinked))
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

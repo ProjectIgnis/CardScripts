@@ -19,14 +19,14 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,{id,1})
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x10db,0xdb}
+s.listed_series={SET_THE_PHANTOM_KNIGHTS,SET_PHANTOM_KNIGHTS}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x10db)
+	return c:IsFaceup() and c:IsSetCard(SET_THE_PHANTOM_KNIGHTS)
 end
 function s.spcon(e,c)
 	if c==nil then return true end
@@ -34,7 +34,7 @@ function s.spcon(e,c)
 		and Duel.IsExistingMatchingCard(s.filter,c:GetControler(),LOCATION_MZONE,0,1,nil)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0xdb) and c:IsSpellTrap() and c:IsAbleToHand()
+	return c:IsSetCard(SET_PHANTOM_KNIGHTS) and c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

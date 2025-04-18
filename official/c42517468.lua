@@ -1,7 +1,6 @@
 --ジャマ・ピンク
 --Ojama Pink
 --Scripted by The Razgriz
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Draw and discard
@@ -16,8 +15,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0xf}
-
+s.listed_series={SET_OJAMA}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD) or e:GetHandler():IsPreviousLocation(LOCATION_HAND)
 end
@@ -34,14 +32,14 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local sealbool=false
 	if h1>0 then
 		Duel.ShuffleHand(tp)
-		if Duel.DiscardHand(tp,aux.TRUE,1,1,REASON_EFFECT+REASON_DISCARD)>0 then
+		if Duel.DiscardHand(tp,aux.TRUE,1,1,REASON_EFFECT|REASON_DISCARD)>0 then
 			local dc=Duel.GetOperatedGroup():GetFirst()
-			if dc:IsSetCard(0xf) then sealbool=true end
+			if dc:IsSetCard(SET_OJAMA) then sealbool=true end
 		end
 	end
 	if h2>0 then 
 		Duel.ShuffleHand(1-tp)
-		Duel.DiscardHand(1-tp,aux.TRUE,1,1,REASON_EFFECT+REASON_DISCARD)
+		Duel.DiscardHand(1-tp,aux.TRUE,1,1,REASON_EFFECT|REASON_DISCARD)
 	end
 	if sealbool and Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0
 	and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
@@ -54,7 +52,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_FIELD)
 		e1:SetCode(EFFECT_DISABLE_FIELD)
 		e1:SetValue(zone)
-		e1:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
+		e1:SetReset(RESET_PHASE|PHASE_END|RESET_OPPO_TURN)
 		Duel.RegisterEffect(e1,tp)
 	end
 end

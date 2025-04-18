@@ -37,7 +37,7 @@ function s.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetCountLimit(1,{id,1})
-	e3:SetCost(s.retcost)
+	e3:SetCost(Cost.SelfToGrave)
 	e3:SetTarget(s.rettg)
 	e3:SetOperation(s.retop)
 	c:RegisterEffect(e3)
@@ -80,11 +80,6 @@ function s.rmvop(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsRelateToEffect(e) then
 		Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
 	end
-end
-function s.retcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(c,REASON_COST)
 end
 function s.retfilter(c)
 	return c:IsType(TYPE_NORMAL) and c:IsLevelAbove(7) and (c:IsAbleToHand() or c:IsAbleToDeck())

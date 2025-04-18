@@ -35,7 +35,7 @@ function s.valcheck(e,c)
 	e:SetLabel(flag)
 end
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_TRIBUTE)
+	return e:GetHandler():IsTributeSummoned()
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local flag=e:GetLabelObject():GetLabel()
@@ -45,7 +45,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(300)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e1)
 	end
 	if (flag&0x2)~=0 then
@@ -58,7 +58,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCondition(s.damcon1)
 		e1:SetTarget(s.damtg1)
 		e1:SetOperation(s.damop)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e1)
 	end
 	if (flag&0x4)~=0 then
@@ -69,7 +69,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EVENT_BATTLE_DESTROYING)
 		e1:SetTarget(s.damtg2)
 		e1:SetOperation(s.damop)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e1)
 	end
 end

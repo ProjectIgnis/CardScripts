@@ -1,4 +1,5 @@
 --ライフ・コーディネイター
+--Lifeforce Harmonizer
 local s,id=GetID()
 function s.initial_effect(c)
 	--Negate
@@ -10,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCondition(s.discon)
-	e1:SetCost(s.discost)
+	e1:SetCost(Cost.SelfDiscard)
 	e1:SetTarget(s.distg)
 	e1:SetOperation(s.disop)
 	c:RegisterEffect(e1)
@@ -22,10 +23,6 @@ function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	ex,cg,ct,cp,cv=Duel.GetOperationInfo(ev,CATEGORY_RECOVER)
 	return ex and ((cp~=PLAYER_ALL and Duel.IsPlayerAffectedByEffect(cp,EFFECT_REVERSE_RECOVER)) or
 		(cp==PLAYER_ALL and (Duel.IsPlayerAffectedByEffect(0,EFFECT_REVERSE_RECOVER) or Duel.IsPlayerAffectedByEffect(1,EFFECT_REVERSE_RECOVER))))
-end
-function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsDiscardable() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

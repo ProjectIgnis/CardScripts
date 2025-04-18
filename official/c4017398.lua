@@ -1,5 +1,5 @@
 --ゼアル・エントラスト
---ZEXAL Entrust
+--Zexal Entrust
 --Logical Nonsense
 --Substitute ID
 local s,id=GetID()
@@ -23,20 +23,19 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCountLimit(1,{id,1})
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetCondition(s.thcon)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
 	--Lists "Utopia", "ZW -", "ZS -", and "ZEXAL" archetypes
-s.listed_series={0x107f,0x7e,0x107e,0x207e}
+s.listed_series={SET_UTOPIA,SET_ZEXAL,SET_ZW,SET_ZS}
 	--Specifically lists itself
 s.listed_names={id}
-
 	--Check for a "Utopia", "ZW -", or "ZS -" monster
 function s.ssfilter(c,ft,e,tp)
-	return (c:IsSetCard(0x107f) or c:IsSetCard(0x107e) or c:IsSetCard(0x207e)) and c:IsMonster() and ((ft>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)) or c:IsAbleToHand())
+	return (c:IsSetCard(SET_UTOPIA) or c:IsSetCard(SET_ZW) or c:IsSetCard(SET_ZS)) and c:IsMonster() and ((ft>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)) or c:IsAbleToHand())
 end
 	--Activation legality
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -72,7 +71,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for "ZEXAL" spell/trap, except "ZEXAL Entrust"
 function s.thfilter(c)
-	return c:IsSpellTrap() and c:IsSetCard(0x7e) and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSpellTrap() and c:IsSetCard(SET_ZEXAL) and not c:IsCode(id) and c:IsAbleToHand()
 end
 	--Activation legality
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

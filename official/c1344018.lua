@@ -32,19 +32,19 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x98}
+s.listed_series={SET_MAGICIAN}
 function s.evalue(e,re,rp)
-	return re:IsActiveType(TYPE_TRAP) and rp==1-e:GetHandlerPlayer()
+	return re:IsTrapEffect() and rp==1-e:GetHandlerPlayer()
 end
 function s.desfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x98) and c:IsType(TYPE_PENDULUM)
+	return c:IsFaceup() and c:IsSetCard(SET_MAGICIAN) and c:IsType(TYPE_PENDULUM)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	if chk==0 then return Duel.IsExistingTarget(s.desfilter,tp,LOCATION_MZONE+LOCATION_PZONE,0,1,nil)
+	if chk==0 then return Duel.IsExistingTarget(s.desfilter,tp,LOCATION_MZONE|LOCATION_PZONE,0,1,nil)
 		and Duel.IsExistingTarget(nil,tp,0,LOCATION_ONFIELD,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g1=Duel.SelectTarget(tp,s.desfilter,tp,LOCATION_MZONE+LOCATION_PZONE,0,1,1,nil)
+	local g1=Duel.SelectTarget(tp,s.desfilter,tp,LOCATION_MZONE|LOCATION_PZONE,0,1,1,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g2=Duel.SelectTarget(tp,nil,tp,0,LOCATION_ONFIELD,1,1,nil)
 	g1:Merge(g2)

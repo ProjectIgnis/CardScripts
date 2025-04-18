@@ -1,5 +1,5 @@
 --見切りの極意
---Critical Timing
+--Showdown of the Secret Sense Scroll Techniques
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp and (re:IsActiveType(TYPE_MONSTER) or re:IsHasType(EFFECT_TYPE_ACTIVATE))
+	return rp~=tp and (re:IsMonsterEffect() or re:IsHasType(EFFECT_TYPE_ACTIVATE))
 		and Duel.IsExistingMatchingCard(Card.IsCode,tp,0,LOCATION_GRAVE,1,nil,re:GetHandler():GetCode())
 		and Duel.IsChainNegatable(ev)
 end
@@ -30,4 +30,3 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(eg,REASON_EFFECT)
 	end
 end
-

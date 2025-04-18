@@ -1,7 +1,6 @@
 --マッドマーダー
---Crazy Clown
+--Mad Mauler
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -10,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetCode(EFFECT_CHANGE_CODE)
-	e1:SetRange(LOCATION_MZONE+LOCATION_GRAVE)
+	e1:SetRange(LOCATION_MZONE|LOCATION_GRAVE)
 	e1:SetValue(33420078)
 	c:RegisterEffect(e1)
 	--Reduce targeted monster's level by 2, Special Summon this card from GY
@@ -27,7 +26,6 @@ function s.initial_effect(c)
 end
 	--Specifically lists "Plaguespreader Zombie"
 s.listed_names={33420078}
-
 	--Check for a level 6+ monster
 function s.filter(c)
 	return c:IsFaceup() and c:IsLevelAbove(6)
@@ -51,7 +49,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_LEVEL)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	e1:SetValue(-2)
 	tc:RegisterEffect(e1)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
@@ -65,7 +63,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetAbsoluteRange(tp,1,0)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 	e2:SetTarget(function(_,c)return not c:IsRace(RACE_ZOMBIE)end)
 	c:RegisterEffect(e2)
 end

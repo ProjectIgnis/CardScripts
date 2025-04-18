@@ -1,5 +1,5 @@
 --竜嵐還帰
---Dragonstorm Return
+--Storm Dragon's Return
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -31,7 +31,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
 		local fid=c:GetFieldID()
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,fid)
+		tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1,fid)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)

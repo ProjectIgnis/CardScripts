@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
-	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x3d),4,2)
+	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_SIX_SAMURAI),4,2)
 	c:EnableReviveLimit()
 	--attack up
 	local e1=Effect.CreateEffect(c)
@@ -15,18 +15,14 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(TIMING_DAMAGE_STEP)
-	e1:SetCost(s.cost)
+	e1:SetCost(Cost.Detach(1))
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
 end
-s.listed_series={0x3d}
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
-end
+s.listed_series={SET_SIX_SAMURAI}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x3d) and c:GetAttack()<2000
+	return c:IsFaceup() and c:IsSetCard(SET_SIX_SAMURAI) and c:GetAttack()<2000
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -42,7 +38,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetCode(EFFECT_SET_BASE_ATTACK)
 		e1:SetValue(2000)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end

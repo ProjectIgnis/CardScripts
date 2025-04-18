@@ -23,10 +23,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.counterop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xe3}
+s.listed_series={SET_CUBIC}
 s.counter_place_list={0x1038}
 function s.atkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xe3)
+	return c:IsFaceup() and c:IsSetCard(SET_CUBIC)
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
@@ -48,7 +48,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetValue(tc:GetAttack()*2)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		if hc:IsFaceup() and hc:IsRelateToEffect(e) then
 			Duel.BreakEffect()
@@ -56,13 +56,13 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetType(EFFECT_TYPE_SINGLE)
 			e2:SetCode(EFFECT_SET_ATTACK_FINAL)
 			e2:SetValue(hc:GetAttack()/2)
-			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 			hc:RegisterEffect(e2)
 		end
 	end
 end
 function s.cfilter(c)
-	return c:IsSetCard(0xe3) and c:IsMonster() and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(SET_CUBIC) and c:IsMonster() and c:IsAbleToRemoveAsCost()
 end
 function s.tgfilter(c,e)
 	return c:IsFaceup() and c:IsCanBeEffectTarget(e)
@@ -90,7 +90,7 @@ function s.counterop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_ATTACK)
 		e1:SetCondition(s.disable)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_DISABLE)

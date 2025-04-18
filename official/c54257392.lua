@@ -21,24 +21,23 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetCondition(s.drcon)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.drtg)
 	e2:SetOperation(s.drop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x154,0x155}
-
+s.listed_series={SET_LIL_LA,SET_EVIL_TWIN}
 function s.spcon(e,c)
 	if c==nil then return true end
 	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x154),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_LIL_LA),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function s.cfilter(c,tp)
 	return c:IsControler(tp) and c:IsPreviousLocation(LOCATION_DECK) and c:IsReason(REASON_EFFECT)
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,1-tp) and
-			Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x155),tp,LOCATION_MZONE,0,1,nil)
+			Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_EVIL_TWIN),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end

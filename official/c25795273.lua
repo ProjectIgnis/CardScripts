@@ -1,4 +1,5 @@
 --イルミラージュ
+--Al-Lumi'raj
 local s,id=GetID()
 function s.initial_effect(c)
 	--atk down

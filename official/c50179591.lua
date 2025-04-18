@@ -23,9 +23,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.rmop2)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x10ec}
+s.listed_series={SET_ABYSS_ACTOR}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x10ec)
+	return c:IsFaceup() and c:IsSetCard(SET_ABYSS_ACTOR)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -44,7 +44,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetLabelObject(tc)
 		e1:SetCondition(s.rmcon1)
 		e1:SetOperation(s.rmop1)
-		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_PHASE|PHASE_END)
 		Duel.RegisterEffect(e1,tp)
 	end
 end

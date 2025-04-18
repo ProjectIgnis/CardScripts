@@ -41,16 +41,16 @@ function s.initial_effect(c)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetHintTiming(0,TIMING_BATTLE_START)
 	e4:SetCondition(s.spcon)
-	e4:SetCost(s.spcost)
+	e4:SetCost(Cost.SelfTribute)
 	e4:SetTarget(s.sptg)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x10f8,0x20f8}
+s.listed_series={SET_SUPREME_KING_GATE,SET_SUPREME_KING_DRAGON}
 s.listed_names={id}
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsSetCard,1,false,nil,nil,0x20f8) end
-	local sg=Duel.SelectReleaseGroupCost(tp,Card.IsSetCard,1,1,false,nil,nil,0x20f8)
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsSetCard,1,false,nil,nil,SET_SUPREME_KING_DRAGON) end
+	local sg=Duel.SelectReleaseGroupCost(tp,Card.IsSetCard,1,1,false,nil,nil,SET_SUPREME_KING_DRAGON)
 	Duel.Release(sg,REASON_COST)
 end
 function s.thfilter(c)
@@ -72,8 +72,8 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.hspcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsSetCard,2,false,aux.ReleaseCheckMMZ,nil,0x20f8) end
-	local g=Duel.SelectReleaseGroupCost(tp,Card.IsSetCard,2,2,false,aux.ReleaseCheckMMZ,nil,0x20f8)
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsSetCard,2,false,aux.ReleaseCheckMMZ,nil,SET_SUPREME_KING_DRAGON) end
+	local g=Duel.SelectReleaseGroupCost(tp,Card.IsSetCard,2,2,false,aux.ReleaseCheckMMZ,nil,SET_SUPREME_KING_DRAGON)
 	Duel.Release(g,REASON_COST)
 end
 function s.hsptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -91,15 +91,10 @@ function s.damtg(e,c)
 	return c:IsType(TYPE_PENDULUM) and c:GetBattleTarget()~=nil
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE
-end
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsReleasable() end
-	Duel.Release(c,REASON_COST)
+	return Duel.IsBattlePhase()
 end
 function s.spfilter(c,e,tp)
-	return c:IsFaceup() and (c:IsSetCard(0x10f8) or c:IsSetCard(0x20f8))
+	return c:IsFaceup() and (c:IsSetCard(SET_SUPREME_KING_GATE) or c:IsSetCard(SET_SUPREME_KING_DRAGON))
 		and c:IsType(TYPE_PENDULUM) and not c:IsCode(id)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end

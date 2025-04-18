@@ -28,9 +28,9 @@ function s.initial_effect(c)
 		end)
 	end)
 end
-s.listed_series={0x10b}
+s.listed_series={SET_TINDANGLE}
 function s.cfilter(c,tp)
-	return c:IsSetCard(0x10b) and c:IsDiscardable(REASON_EFFECT) and not s.name_list[tp][c:GetCode()]
+	return c:IsSetCard(SET_TINDANGLE) and c:IsDiscardable(REASON_EFFECT) and not s.name_list[tp][c:GetCode()]
 end
 function s.posfilter(c)
 	return c:IsCanChangePosition() and (c:IsPosition(POS_FACEUP_ATTACK) or c:IsPosition(POS_FACEDOWN_DEFENSE))
@@ -45,7 +45,7 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local dc=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND,0,1,1,nil,tp):GetFirst()
-	if not dc or Duel.SendtoGrave(dc,REASON_DISCARD+REASON_EFFECT)==0 then return end
+	if not dc or Duel.SendtoGrave(dc,REASON_DISCARD|REASON_EFFECT)==0 then return end
 	s.name_list[tp][dc:GetCode()]=true
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
 	local g=Duel.SelectMatchingCard(tp,s.posfilter,tp,LOCATION_MZONE,0,1,1,nil)

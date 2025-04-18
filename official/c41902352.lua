@@ -1,4 +1,5 @@
 --BF－東雲のコチ
+--Blackwing - Kochi the Daybreak
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro limit
@@ -17,7 +18,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.synlimit(e)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_SPECIAL)
+	return e:GetHandler():IsSpecialSummoned()
 end
 function s.spcost(e,c,tp,sumtype)
 	return sumtype~=SUMMON_TYPE_SPECIAL+182

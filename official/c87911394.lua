@@ -1,4 +1,5 @@
 --CNo.39 希望皇ホープレイ・ヴィクトリー
+--Number C39: Utopia Ray Victory
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -20,12 +21,12 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e2:SetCondition(s.atkcon)
-	e2:SetCost(s.atkcost)
+	e2:SetCost(Cost.Detach(1))
 	e2:SetTarget(s.atktg)
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
 end
-s.listed_series={0x107f}
+s.listed_series={SET_UTOPIA}
 s.xyz_number=39
 function s.aclimit(e,re,tp)
 	return re:IsHasType(EFFECT_TYPE_ACTIVATE)
@@ -35,11 +36,7 @@ function s.actcon(e)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttackTarget()
-	return at and at:IsFaceup() and e:GetHandler():GetOverlayGroup():IsExists(Card.IsSetCard,1,nil,0x107f)
-end
-function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
+	return at and at:IsFaceup() and e:GetHandler():GetOverlayGroup():IsExists(Card.IsSetCard,1,nil,SET_UTOPIA)
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -52,13 +49,13 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
 		e2:SetValue(RESET_TURN_SET)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e2:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e2)
 		Duel.AdjustInstantly(tc)
 		local atk=tc:GetAttack()
@@ -68,7 +65,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 			e1:SetValue(atk)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e1:SetReset(RESETS_STANDARD_PHASE_END)
 			c:RegisterEffect(e1)
 		end
 	end

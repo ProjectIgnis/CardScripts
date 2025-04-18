@@ -1,5 +1,5 @@
--- 破滅の美神ルイン
--- Ruin, Supreme Queen of Oblivion
+--破滅の美神ルイン
+--Ruin, Supreme Queen of Oblivion
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetCode(EFFECT_CHANGE_CODE)
-	e1:SetRange(LOCATION_MZONE+LOCATION_HAND)
+	e1:SetRange(LOCATION_MZONE|LOCATION_HAND)
 	e1:SetValue(46427957)
 	c:RegisterEffect(e1)
 	--indes
@@ -42,7 +42,7 @@ end
 s.listed_names={32828635,46427957}
 function s.indcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsSummonType(SUMMON_TYPE_RITUAL)
+	return c:IsRitualSummoned()
 end
 function s.indtg(e,c)
 	return c:IsType(TYPE_RITUAL)

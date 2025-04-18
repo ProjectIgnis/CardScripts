@@ -36,7 +36,7 @@ function s.initial_effect(c)
 	e4:SetRange(LOCATION_SZONE)
 	e4:SetCountLimit(1,id)
 	e4:SetCondition(s.thcon)
-	e4:SetCost(s.thcost)
+	e4:SetCost(Cost.SelfToGrave)
 	e4:SetTarget(s.thtg)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
@@ -48,16 +48,12 @@ end
 function s.acop(e,tp,eg,ep,ev,re,r,rp)
 	local p=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_PLAYER)
 	local c=e:GetHandler()
-	if re:IsActiveType(TYPE_MONSTER) and p~=tp and c:GetFlagEffect(1)>0 then
+	if re:IsMonsterEffect() and p~=tp and c:GetFlagEffect(1)>0 then
 		c:AddCounter(COUNTER_SPELL,1)
 	end
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetCounter(COUNTER_SPELL)>=6
-end
-function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
 function s.thfilter(c)
 	return c:IsSpell() and c:IsAbleToHand()

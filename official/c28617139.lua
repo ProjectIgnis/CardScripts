@@ -1,5 +1,5 @@
 --神鳥の来寇
---Simorgh Arrival
+--Simorgh Onslaught
 --scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
@@ -18,21 +18,21 @@ function s.initial_effect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.rvtg)
 	e2:SetOperation(s.rvop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x12d}
+s.listed_series={SET_SIMORGH}
 function s.cfilter(c)
 	return c:IsDiscardable() and c:IsRace(RACE_WINGEDBEAST)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,e:GetHandler()) end
-	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_COST|REASON_DISCARD)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x12d) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_SIMORGH) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
@@ -71,13 +71,13 @@ function s.rvop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_LEVEL)
 		e1:SetValue(-1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD-RESET_TOFIELD|RESET_PHASE|PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EVENT_TO_HAND)
-	e2:SetReset(RESET_PHASE+PHASE_END)
+	e2:SetReset(RESET_PHASE|PHASE_END)
 	e2:SetLabel(g:GetFirst():GetCode())
 	e2:SetOperation(s.hlvop)
 	Duel.RegisterEffect(e2,tp)
@@ -93,7 +93,7 @@ function s.hlvop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_LEVEL)
 		e1:SetValue(-1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD-RESET_TOFIELD|RESET_PHASE|PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end

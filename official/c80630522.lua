@@ -21,10 +21,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xe6}
-
+s.listed_series={SET_FLOWER_CARDIAN}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xe6) and c:IsLevelBelow(11)
+	return c:IsFaceup() and c:IsSetCard(SET_FLOWER_CARDIAN) and c:IsLevelBelow(11)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
@@ -45,7 +44,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_CANNOT_SUMMON)
@@ -53,7 +52,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,2),nil)
 end
 function s.splimit(e,c)
-	return not c:IsSetCard(0xe6)
+	return not c:IsSetCard(SET_FLOWER_CARDIAN)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
@@ -61,7 +60,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.NegateAttack() then
-		Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
+		Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE|PHASE_BATTLE_STEP,1)
 		Duel.BreakEffect()
 		Duel.Draw(tp,1,REASON_EFFECT)
 	end

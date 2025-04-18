@@ -28,10 +28,10 @@ function s.rmfilter(c)
 	return c:IsAbleToRemove() and aux.SpElimFilter(c)
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE+LOCATION_GRAVE) and chkc:IsControler(1-tp) and s.rmfilter(chkc) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE|LOCATION_GRAVE) and chkc:IsControler(1-tp) and s.rmfilter(chkc) end
 	if chk==0 then return true end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectTarget(tp,s.rmfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,1,1,nil)
+	local g=Duel.SelectTarget(tp,s.rmfilter,tp,0,LOCATION_MZONE|LOCATION_GRAVE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,#g,0,0)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
@@ -41,7 +41,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return (e:GetHandler():GetReason()&0x41)==0x41
+	return (e:GetHandler():GetReason()&REASON_DESTROY|REASON_EFFECT)==(REASON_DESTROY|REASON_EFFECT)
 end
 function s.filter(c)
 	local def=c:GetDefense()

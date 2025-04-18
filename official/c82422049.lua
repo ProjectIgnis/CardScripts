@@ -1,4 +1,5 @@
 --ガスタへの祈り
+--Blessings for Gusto
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,12 +13,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x10}
+s.listed_series={SET_GUSTO}
 function s.filter1(c)
-	return c:IsSetCard(0x10) and c:IsMonster() and c:IsAbleToDeck()
+	return c:IsSetCard(SET_GUSTO) and c:IsMonster() and c:IsAbleToDeck()
 end
 function s.filter2(c,e,tp)
-	return c:IsSetCard(0x10) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_GUSTO) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and Duel.IsExistingTarget(s.filter1,tp,LOCATION_GRAVE,0,2,c)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -35,7 +36,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local ex,g1=Duel.GetOperationInfo(0,CATEGORY_TODECK)
 	local ex,g2=Duel.GetOperationInfo(0,CATEGORY_SPECIAL_SUMMON)
 	if g1:GetFirst():IsRelateToEffect(e) and g1:GetNext():IsRelateToEffect(e) then
-		Duel.SendtoDeck(g1,nil,2,REASON_EFFECT)
+		Duel.SendtoDeck(g1,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 		if g2:GetFirst():IsRelateToEffect(e) then
 			Duel.BreakEffect()
 			Duel.SpecialSummon(g2,0,tp,tp,false,false,POS_FACEUP)

@@ -30,9 +30,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.counter_place_list={0x1038}
-s.listed_series={0xe3}
+s.listed_series={SET_CUBIC}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0xe3),tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_CUBIC),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.spfilter(c,e,tp,tid)
 	return c:IsReason(REASON_DESTROY) and c:IsMonster() and c:GetTurnID()==tid
@@ -68,7 +68,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 			e1:SetValue(0)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			sc:RegisterEffect(e1)
 		end
 	end
@@ -81,7 +81,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_CANNOT_ATTACK)
 		e2:SetCondition(s.disable)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		oc:RegisterEffect(e2)
 		local e3=e2:Clone()
 		e3:SetCode(EFFECT_DISABLE)
@@ -96,7 +96,7 @@ function s.dfilter(c,g)
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetHandler():GetCardTarget()
-	if re:IsActiveType(TYPE_MONSTER) and rp~=tp
+	if re:IsMonsterEffect() and rp~=tp
 		and Duel.IsExistingMatchingCard(s.dfilter,tp,0,LOCATION_MZONE,1,nil,g) then
 		Duel.NegateEffect(ev)
 	end

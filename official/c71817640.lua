@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0xc7))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_DRACOSLAYER))
 	e2:SetValue(300)
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
@@ -46,11 +46,11 @@ function s.initial_effect(c)
 	e5:SetOperation(s.thop)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0xc7,0xda}
+s.listed_series={SET_DRACOSLAYER,SET_DRACOVERLORD}
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
 	local cont,loc,race=Duel.GetChainInfo(0,CHAININFO_TRIGGERING_CONTROLER,CHAININFO_TRIGGERING_LOCATION,CHAININFO_TRIGGERING_RACE)
-	return re:IsActiveType(TYPE_MONSTER) and rc:IsSetCard(0xc7) and cont==tp and loc==LOCATION_MZONE and race==RACE_DRAGON
+	return re:IsMonsterEffect() and rc:IsSetCard(SET_DRACOSLAYER) and cont==tp and loc==LOCATION_MZONE and race==RACE_DRAGON
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() end
@@ -66,7 +66,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.filter(c,e,tp)
-	return (c:IsSetCard(0xc7) or c:IsSetCard(0xda)) and c:IsMonster() and (c:IsAbleToHand() or c:IsCanBeSpecialSummoned(e,0,tp,false,false))
+	return (c:IsSetCard(SET_DRACOSLAYER) or c:IsSetCard(SET_DRACOVERLORD)) and c:IsMonster() and (c:IsAbleToHand() or c:IsCanBeSpecialSummoned(e,0,tp,false,false))
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,e,tp) end

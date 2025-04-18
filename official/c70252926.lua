@@ -1,5 +1,5 @@
 --フォーチュンレディ・エヴァリー
---Fortune Lady Ever
+--Fortune Lady Every
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e3:SetCategory(CATEGORY_REMOVE)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1)
-	e3:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e3:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e3:SetCondition(s.lvcon)
 	e3:SetOperation(s.lvop)
 	c:RegisterEffect(e3)
@@ -44,7 +44,7 @@ function s.value(e,c)
 	return c:GetLevel()*400
 end
 function s.lvcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and e:GetHandler():IsLevelAbove(1) and e:GetHandler():IsLevelBelow(11)
+	return Duel.IsTurnPlayer(tp) and e:GetHandler():IsLevelAbove(1) and e:GetHandler():IsLevelBelow(11)
 end
 function s.filter(c)
 	return c:IsMonster() and c:IsFaceup() and c:IsAbleToRemove()
@@ -64,7 +64,7 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_LEVEL)
 	e1:SetValue(1)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 	c:RegisterEffect(e1)
 	local g=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_MZONE,nil)
 	if c:GetLevel()==lvl+1 and #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
@@ -77,7 +77,7 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp 
+	return Duel.IsTurnPlayer(1-tp) 
 end
 function s.rmfilter(c)
 	return c:IsAbleToRemoveAsCost() and c:IsRace(RACE_SPELLCASTER)

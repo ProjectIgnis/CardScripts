@@ -22,25 +22,21 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
-	e2:SetCost(s.atkcost)
+	e2:SetCost(Cost.Detach(1))
 	e2:SetTarget(s.atktg)
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
 end
-s.listed_series={0x10f}
+s.listed_series={SET_BORREL}
 function s.mfilter(c,lc,sumtype,tp)
 	return c:IsRace(RACE_DRAGON,lc,sumtype,tp) and c:IsAttribute(ATTRIBUTE_DARK,lc,sumtype,tp)
 end
 function s.tgcon(e)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ)
+	return e:GetHandler():IsXyzSummoned()
 end
 function s.tgval(e,re,rp)
 	local rc=re:GetHandler()
-	return re:IsActiveType(TYPE_MONSTER) and e:GetHandler()~=rc
-end
-function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
+	return re:IsMonsterEffect() and e:GetHandler()~=rc
 end
 function s.atkfilter(c)
 	return c:IsFaceup() and (c:GetAttack()>0 or c:GetDefense()>0)
@@ -53,7 +49,7 @@ function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x10f) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_BORREL) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -63,7 +59,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(-600)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_UPDATE_DEFENSE)
@@ -74,7 +70,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 			local sc=g:Select(tp,1,1,nil):GetFirst()
 			if Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP)~=0 then
-				sc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+				sc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1)
 				local e3=Effect.CreateEffect(c)
 				e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 				e3:SetCode(EVENT_PHASE+PHASE_END)
@@ -92,14 +88,14 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	ge1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	ge1:SetProperty(EFFECT_FLAG_OATH+EFFECT_FLAG_PLAYER_TARGET)
 	ge1:SetTargetRange(1,0)
-	ge1:SetReset(RESET_PHASE+PHASE_END)
+	ge1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(ge1,tp)
 	local ge2=Effect.CreateEffect(c)
 	ge2:SetType(EFFECT_TYPE_FIELD)
 	ge2:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
 	ge2:SetProperty(EFFECT_FLAG_OATH+EFFECT_FLAG_IGNORE_IMMUNE)
 	ge2:SetTargetRange(LOCATION_MZONE,0)
-	ge2:SetReset(RESET_PHASE+PHASE_END)
+	ge2:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(ge2,tp)
 	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,2),nil)
 end

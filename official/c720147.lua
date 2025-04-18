@@ -13,22 +13,22 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x134}
+s.listed_series={SET_GENERAIDER}
 function s.check(sg,tp,exg)
 	return Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,sg,sg,tp)
 end
 function s.filter(c,sg,tp)
 	return c:IsFaceup() and c:IsType(TYPE_XYZ)
-		and Duel.IsExistingMatchingCard(s.matfilter,tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE,0,#sg,sg,c)
+		and Duel.IsExistingMatchingCard(s.matfilter,tp,LOCATION_HAND|LOCATION_MZONE|LOCATION_GRAVE,0,#sg,sg,c)
 end
 function s.matfilter(c,tc)
-	return c:IsSetCard(0x134) and c:IsMonster() and not c:IsType(TYPE_TOKEN)
+	return c:IsSetCard(SET_GENERAIDER) and c:IsMonster() and not c:IsType(TYPE_TOKEN)
 		and (c:IsFaceup() or not c:IsLocation(LOCATION_MZONE)) and c~=tc
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsSetCard,1,false,s.check,nil,0x134) end
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsSetCard,1,false,s.check,nil,SET_GENERAIDER) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-	local g=Duel.SelectReleaseGroupCost(tp,Card.IsSetCard,1,99,false,s.check,nil,0x134)
+	local g=Duel.SelectReleaseGroupCost(tp,Card.IsSetCard,1,99,false,s.check,nil,SET_GENERAIDER)
 	Duel.Release(g,REASON_COST)
 	local og=Duel.GetOperatedGroup()
 	og:KeepAlive()
@@ -46,7 +46,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) and rg and #rg>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,0))
-		local g=Duel.SelectMatchingCard(tp,s.matfilter,tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE,0,#rg,#rg,rg,tc)
+		local g=Duel.SelectMatchingCard(tp,s.matfilter,tp,LOCATION_HAND|LOCATION_MZONE|LOCATION_GRAVE,0,#rg,#rg,rg,tc)
 		if #g>0 then
 			g:ForEach(Card.CancelToGrave)
 			Duel.Overlay(tc,g,true)

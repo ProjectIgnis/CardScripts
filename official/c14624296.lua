@@ -1,4 +1,5 @@
 --超重武者装留ダブル・ホーン
+--Superheavy Samurai Soulhorns
 local s,id=GetID()
 function s.initial_effect(c)
 	--equip
@@ -6,14 +7,14 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_EQUIP)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e1:SetRange(LOCATION_HAND+LOCATION_MZONE)
+	e1:SetRange(LOCATION_HAND|LOCATION_MZONE)
 	e1:SetTarget(s.eqtg)
 	e1:SetOperation(s.eqop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x9a}
+s.listed_series={SET_SUPERHEAVY_SAMURAI}
 function s.eqfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x9a)
+	return c:IsFaceup() and c:IsSetCard(SET_SUPERHEAVY_SAMURAI)
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.eqfilter(chkc) end
@@ -36,14 +37,14 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_EQUIP_LIMIT)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	e1:SetValue(s.eqlimit)
 	e1:SetLabelObject(tc)
 	c:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_EQUIP)
 	e2:SetCode(EFFECT_EXTRA_ATTACK)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 	e2:SetValue(1)
 	c:RegisterEffect(e2)
 	local e3=Effect.CreateEffect(c)
@@ -53,7 +54,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	e3:SetCountLimit(1,id)
 	e3:SetTarget(s.sptg)
 	e3:SetOperation(s.spop)
-	e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e3:SetReset(RESET_EVENT|RESETS_STANDARD)
 	c:RegisterEffect(e3)
 end
 function s.eqlimit(e,c)

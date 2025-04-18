@@ -1,4 +1,5 @@
 --トラパート
+--Torapart
 local s,id=GetID()
 function s.initial_effect(c)
 	--effect gain
@@ -26,7 +27,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e1:SetOperation(s.atkop)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	sync:RegisterEffect(e1)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
@@ -36,7 +37,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_CANNOT_ACTIVATE)
 	e1:SetTargetRange(0,1)
 	e1:SetValue(s.aclimit)
-	e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
+	e1:SetReset(RESET_PHASE|PHASE_DAMAGE)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.aclimit(e,re,tp)

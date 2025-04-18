@@ -53,13 +53,13 @@ function s.initial_effect(c)
 	e5:SetOperation(s.thop)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0xd2}
+s.listed_series={SET_KOZMO}
 function s.rescon(sg,e,tp,mg)
 	Duel.SetSelectedCard(sg)
 	return (sg:CheckWithSumGreater(Card.GetLevel,10))
 end
 function s.spfilter(c)
-	return c:IsSetCard(0xd2) and c:IsMonster() and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(SET_KOZMO) and c:IsMonster() and c:IsAbleToRemoveAsCost()
 end
 function s.spcon(e,c)
 	if c==nil then return true end
@@ -85,7 +85,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
-		and re:IsActiveType(TYPE_SPELL) and re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)
+		and re:IsSpellEffect() and re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)
 end
 function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_GRAVE,0,1,nil) end
@@ -107,14 +107,14 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsReason(REASON_DESTROY) and c:IsReason(REASON_BATTLE+REASON_EFFECT)
+	return c:IsReason(REASON_DESTROY) and c:IsReason(REASON_BATTLE|REASON_EFFECT)
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() and e:GetHandler():IsLocation(LOCATION_GRAVE) end
 	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0xd2) and c:IsLevelBelow(9) and c:IsAbleToHand()
+	return c:IsSetCard(SET_KOZMO) and c:IsLevelBelow(9) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

@@ -1,4 +1,5 @@
 --疾走の暗黒騎士ガイア
+--Charging Gaia the Fierce Knight
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon with no tribute
@@ -42,11 +43,11 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCondition(s.atkcon)
 	e1:SetValue(1900)
-	e1:SetReset(RESET_EVENT+0xff0000)
+	e1:SetReset(RESET_EVENT|RESET_DISABLE|RESET_TURN_SET|RESET_TOGRAVE|RESET_REMOVE|RESET_TEMP_REMOVE|RESET_TOHAND|RESET_TODECK|RESET_LEAVE)
 	c:RegisterEffect(e1)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x10cf) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_BLACK_LUSTER_SOLDIER) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

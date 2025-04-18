@@ -1,4 +1,5 @@
 --悪魔の偵察者
+--Hiro's Shadow Scout
 local s,id=GetID()
 function s.initial_effect(c)
 	--flip
@@ -24,6 +25,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetOperatedGroup()
 	Duel.ConfirmCards(1-p,g)
 	local dg=g:Filter(Card.IsSpell,nil)
-	Duel.SendtoGrave(dg,REASON_EFFECT+REASON_DISCARD)
+	Duel.SendtoGrave(dg,REASON_EFFECT|REASON_DISCARD)
 	Duel.ShuffleHand(p)
 end

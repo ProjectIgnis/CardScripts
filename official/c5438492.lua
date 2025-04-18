@@ -1,4 +1,5 @@
 --荒野の女戦士
+--Warrior Lady of the Wasteland
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon

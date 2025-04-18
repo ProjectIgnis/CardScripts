@@ -1,4 +1,5 @@
 --サイコ・ショックウェーブ
+--Psychic Shockwave
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -13,14 +14,14 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and re:IsActiveType(TYPE_TRAP) and re:IsHasType(EFFECT_TYPE_ACTIVATE)
+	return ep~=tp and re:IsTrapEffect() and re:IsHasType(EFFECT_TYPE_ACTIVATE)
 end
 function s.cfilter(c)
 	return c:IsSpellTrap() and c:IsDiscardable()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,e:GetHandler()) end
-	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_COST|REASON_DISCARD)
 end
 function s.spfilter(c,e,tp)
 	return c:GetLevel()==6 and c:IsAttribute(ATTRIBUTE_DARK) and c:IsRace(RACE_MACHINE)

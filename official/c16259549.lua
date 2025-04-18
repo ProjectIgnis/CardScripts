@@ -1,4 +1,5 @@
 --No.49 秘鳥フォーチュンチュン
+--Number 49: Fortune Tune
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -10,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e1:SetCategory(CATEGORY_RECOVER)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e1:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
 	e1:SetCondition(s.reccon)
@@ -48,7 +49,7 @@ function s.initial_effect(c)
 end
 s.xyz_number=49
 function s.reccon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.rectg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -93,6 +94,6 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoDeck(tg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then
-		Duel.SendtoDeck(c,nil,2,REASON_EFFECT)
+		Duel.SendtoDeck(c,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	end
 end

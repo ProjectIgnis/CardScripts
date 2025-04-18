@@ -1,4 +1,5 @@
 --ガガガガードナー
+--Gagaga Gardna
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -38,7 +39,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.indcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST|REASON_DISCARD)
 end
 function s.indop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -47,7 +48,7 @@ function s.indop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 		e1:SetValue(1)
-		e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
+		e1:SetReset(RESET_PHASE|PHASE_DAMAGE)
 		c:RegisterEffect(e1)
 	end
 end

@@ -22,9 +22,9 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_PIERCE)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xc008}
+s.listed_series={SET_DESTINY_HERO}
 function s.filter(c,e,tp,atk)
-	return c:IsSetCard(0xc008) and c:IsAttackBelow(atk) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_DESTINY_HERO) and c:IsAttackBelow(atk) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

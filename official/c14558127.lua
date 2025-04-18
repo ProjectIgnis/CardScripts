@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(s.discon)
-	e1:SetCost(s.discost)
+	e1:SetCost(Cost.SelfDiscard)
 	e1:SetTarget(s.distg)
 	e1:SetOperation(s.disop)
 	c:RegisterEffect(e1)
@@ -35,11 +35,6 @@ function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	return checkfunc(CATEGORY_TOHAND,true) or checkfunc(CATEGORY_SPECIAL_SUMMON,true)
 		or checkfunc(CATEGORY_TOGRAVE,true) or checkfunc(CATEGORY_DRAW,true) or checkfunc(CATEGORY_DRAW,false)
 		or checkfunc(CATEGORY_SEARCH,false) or checkfunc(CATEGORY_DECKDES,true) or checkfunc(CATEGORY_DECKDES,false)
-end
-function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsDiscardable() end
-	Duel.SendtoGrave(c,REASON_COST+REASON_DISCARD)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not re:GetHandler():IsStatus(STATUS_DISABLED) end

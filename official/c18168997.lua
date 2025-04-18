@@ -23,21 +23,17 @@ function s.initial_effect(c)
 	e2:SetHintTiming(0,TIMING_END_PHASE)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCountLimit(1,id)
-	e2:SetCost(s.cpcost)
+	e2:SetCost(Cost.PayLP(1000))
 	e2:SetTarget(s.cptg)
 	e2:SetOperation(s.cpop)
 	c:RegisterEffect(e2)
 end
 	--Lists "Darklord" archetype
-s.listed_series={0xef}
+s.listed_series={SET_DARKLORD}
 	--Pay 1000 LP
-function s.cpcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,1000) end
-	Duel.PayLPCost(tp,1000)
-end
 	--Check for "Darklord" spell/trap
 function s.cpfilter(c)
-	return c:IsSetCard(0xef) and c:IsSpellTrap() and c:IsAbleToDeck() and c:CheckActivateEffect(false,true,false)~=nil
+	return c:IsSetCard(SET_DARKLORD) and c:IsSpellTrap() and c:IsAbleToDeck() and c:CheckActivateEffect(false,true,false)~=nil
 end
 	--Activation legality
 function s.cptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -69,5 +65,5 @@ function s.cpop(e,tp,eg,ep,ev,re,r,rp)
 		etc:ReleaseEffectRelation(te)
 	end
 	Duel.BreakEffect()
-	Duel.SendtoDeck(te:GetHandler(),nil,2,REASON_EFFECT)
+	Duel.SendtoDeck(te:GetHandler(),nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 end

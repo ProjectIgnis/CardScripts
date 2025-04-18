@@ -1,4 +1,5 @@
 --ツーマンセルバトル
+--Two-Man Cell Battle
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -21,7 +22,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.spfilter(c,e,tp)
 	return c:IsType(TYPE_NORMAL) and c:GetLevel()==4 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

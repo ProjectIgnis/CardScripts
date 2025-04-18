@@ -1,4 +1,5 @@
 --極戦機王ヴァルバロイド
+--Barbaroid, the Ultimate Battle Machine
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -35,9 +36,9 @@ function s.initial_effect(c)
 	e4:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
 	c:RegisterEffect(e4)
 end
-s.material_setcode=0x16
+s.material_setcode=SET_ROID
 function s.ffilter(c,fc,sumtype,tp)
-	return c:IsSetCard(0x16,fc,sumtype,tp) and c:IsRace(RACE_MACHINE,fc,sumtype,tp)
+	return c:IsSetCard(SET_ROID,fc,sumtype,tp) and c:IsRace(RACE_MACHINE,fc,sumtype,tp)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttackTarget() and e:GetHandler()==Duel.GetAttacker()

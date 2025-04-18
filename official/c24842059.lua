@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1,id)
 	e1:SetCode(EVENT_CHAINING)
 	e1:SetCondition(s.discon)
-	e1:SetCost(s.discost)
+	e1:SetCost(Cost.SelfTribute)
 	e1:SetTarget(s.distg)
 	e1:SetOperation(s.disop)
 	c:RegisterEffect(e1)
@@ -33,17 +33,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
-s.listed_series={0x135}
+s.listed_series={SET_IGNISTER}
 function s.matfilter(c,lc,sumtype,tp)
 	return c:IsLevelBelow(4) and c:IsRace(RACE_CYBERSE,lc,sumtype,tp)
 end
-function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() end
-	Duel.Release(e:GetHandler(),REASON_COST)
-end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) then return false end
-	return ep==1-tp and re:IsActiveType(TYPE_TRAP) and re:IsHasType(EFFECT_TYPE_ACTIVATE)
+	return ep==1-tp and re:IsTrapEffect() and re:IsHasType(EFFECT_TYPE_ACTIVATE)
 		and Duel.IsChainDisablable(ev)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -59,7 +55,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c,ft,tp)
-	return c:IsSetCard(0x135) and c:IsControler(tp) and c:GetSummonLocation()==LOCATION_EXTRA
+	return c:IsSetCard(SET_IGNISTER) and c:IsControler(tp) and c:GetSummonLocation()==LOCATION_EXTRA
 		and (ft>0 or c:GetSequence()<5)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)

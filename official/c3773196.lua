@@ -1,4 +1,5 @@
 --異次元の偵察機
+--D.D. Scout Plane
 local s,id=GetID()
 function s.initial_effect(c)
 	--removed
@@ -21,7 +22,7 @@ function s.initial_effect(c)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsFacedown() then return end
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+	e:GetHandler():RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(id)~=0
@@ -29,7 +30,7 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetFlagEffect(id+1)==0 end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
-	e:GetHandler():RegisterFlagEffect(id+1,RESET_EVENT+0x4760000+RESET_PHASE+PHASE_END,0,1)
+	e:GetHandler():RegisterFlagEffect(id+1,RESET_EVENT|RESET_TURN_SET|RESET_TOGRAVE|RESET_TEMP_REMOVE|RESET_TOHAND|RESET_TODECK|RESET_OVERLAY|RESET_PHASE|PHASE_END,0,1)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

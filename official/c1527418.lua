@@ -1,5 +1,5 @@
 --空牙団の叡智 ウィズ
---Wiz, Sage of the Skyfang Brigade
+--Wiz, Sage Fur Hire
 local s,id=GetID()
 function s.initial_effect(c)
 	--Recover
@@ -29,10 +29,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
-s.listed_series={0x114}
+s.listed_series={SET_FUR_HIRE}
 s.listed_names={id}
 function s.recfilter(c)
-	return not c:IsCode(id) and c:IsFaceup() and c:IsSetCard(0x114)
+	return not c:IsCode(id) and c:IsFaceup() and c:IsSetCard(SET_FUR_HIRE)
 end
 function s.rectg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.recfilter,tp,LOCATION_MZONE,0,1,nil) end
@@ -47,14 +47,14 @@ function s.recop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
-		and ep==1-tp and re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and Duel.IsChainNegatable(ev)
+		and ep==1-tp and re:IsSpellTrapEffect() and Duel.IsChainNegatable(ev)
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x114) and c:IsDiscardable()
+	return c:IsSetCard(SET_FUR_HIRE) and c:IsDiscardable()
 end
 function s.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_COST+REASON_DISCARD,nil)
+	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_COST|REASON_DISCARD,nil)
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

@@ -1,4 +1,5 @@
 --RR－サテライト・キャノン・ファルコン
+--Raidraptor - Satellite Cannon Falcon
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -29,18 +30,18 @@ function s.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetCondition(s.atkcon)
-	e3:SetCost(s.atkcost)
+	e3:SetCondition(aux.StatChangeDamageStepCondition)
+	e3:SetCost(Cost.Detach(1))
 	e3:SetTarget(s.atktg)
 	e3:SetOperation(s.atkop)
 	c:RegisterEffect(e3,false,REGISTER_FLAG_DETACH_XMAT)
 end
-s.listed_series={0xba}
+s.listed_series={SET_RAIDRAPTOR}
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ) and e:GetLabel()==1
+	return e:GetHandler():IsXyzSummoned() and e:GetLabel()==1
 end
 function s.desfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsSpellTrap()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.desfilter,tp,0,LOCATION_ONFIELD,1,nil) end
@@ -59,21 +60,14 @@ function s.chainlm(e,rp,tp)
 end
 function s.valcheck(e,c)
 	local g=c:GetMaterial()
-	if g:IsExists(Card.IsSetCard,1,nil,0xba) then
+	if g:IsExists(Card.IsSetCard,1,nil,SET_RAIDRAPTOR) then
 		e:GetLabelObject():SetLabel(1)
 	else
 		e:GetLabelObject():SetLabel(0)
 	end
 end
-function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
-end
-function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
-end
 function s.atkfilter(c)
-	return c:IsSetCard(0xba) and c:IsMonster()
+	return c:IsSetCard(SET_RAIDRAPTOR) and c:IsMonster()
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsFaceup() end
@@ -89,7 +83,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e1:SetValue(ct*-800)
 		tc:RegisterEffect(e1)
 	end

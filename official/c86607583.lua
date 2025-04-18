@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.rcop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x101}
+s.listed_series={SET_CODE_TALKER}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local c=e:GetHandler()
@@ -55,7 +55,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetOwner():CancelToGrave(false)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x101) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
+	return c:IsSetCard(SET_CODE_TALKER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
 end
 function s.cfilter(c)
 	return c:IsRace(RACE_CYBERSE) and c:IsLinkMonster()
@@ -87,7 +87,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_EQUIP_LIMIT)
 			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			e1:SetValue(s.eqlimit)
 			e1:SetLabelObject(tc)
 			c:RegisterEffect(e1)
@@ -104,7 +104,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.rccon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.rcop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

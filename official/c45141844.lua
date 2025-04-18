@@ -1,4 +1,5 @@
 --執念深き老魔術師
+--Old Vindictive Magician
 local s,id=GetID()
 function s.initial_effect(c)
 	--flip

@@ -1,4 +1,5 @@
 --フレムベル・アーチャー
+--Flamvell Archer
 local s,id=GetID()
 function s.initial_effect(c)
 	--atkup
@@ -12,13 +13,13 @@ function s.initial_effect(c)
 	e1:SetOperation(s.atop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x2c}
+s.listed_series={SET_FLAMVELL}
 function s.cfilter(c,tp)
 	return c:IsFaceup() and c:IsRace(RACE_PYRO)
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,c)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x2c)
+	return c:IsFaceup() and c:IsSetCard(SET_FLAMVELL)
 end
 function s.attg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.cfilter,1,false,nil,nil,tp) end
@@ -35,7 +36,7 @@ function s.atop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetValue(800)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end

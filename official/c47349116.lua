@@ -1,4 +1,5 @@
 --星刻の魔術師
+--Timestar Magician
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -17,7 +18,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
-	e2:SetCost(s.thcost)
+	e2:SetCost(Cost.Detach(1))
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
@@ -32,34 +33,30 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.matfilter(c,xyz,sumtype,tp)
-	return c:IsSetCard(0x98,xyz,sumtype,tp) and c:IsType(TYPE_PENDULUM,xyz,sumtype,tp)
+	return c:IsSetCard(SET_MAGICIAN,xyz,sumtype,tp) and c:IsType(TYPE_PENDULUM,xyz,sumtype,tp)
 end
 function s.splimit(e,se,sp,st)
 	return not e:GetHandler():IsLocation(LOCATION_EXTRA) or ((st&SUMMON_TYPE_XYZ)==SUMMON_TYPE_XYZ and not se)
-end
-function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.thfilter(c)
 	return c:IsRace(RACE_SPELLCASTER) and c:IsAttribute(ATTRIBUTE_DARK)
 		and (c:IsFaceup() or not c:IsLocation(LOCATION_EXTRA)) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE+LOCATION_EXTRA,0,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE+LOCATION_EXTRA)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK|LOCATION_GRAVE|LOCATION_EXTRA,0,1,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK|LOCATION_GRAVE|LOCATION_EXTRA)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.thfilter),tp,LOCATION_DECK+LOCATION_GRAVE+LOCATION_EXTRA,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.thfilter),tp,LOCATION_DECK|LOCATION_GRAVE|LOCATION_EXTRA,0,1,1,nil)
 	local tc=g:GetFirst()
 	if not tc then return end
 	Duel.SendtoHand(tc,nil,REASON_EFFECT)
 	Duel.ConfirmCards(1-tp,tc)
 end
 function s.repfilter(c,tp)
-	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE+LOCATION_PZONE)
-		and c:IsType(TYPE_PENDULUM) and c:IsReason(REASON_BATTLE+REASON_EFFECT)
+	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE|LOCATION_PZONE)
+		and c:IsType(TYPE_PENDULUM) and c:IsReason(REASON_BATTLE|REASON_EFFECT)
 		and not c:IsReason(REASON_REPLACE)
 end
 function s.tgfilter(c)

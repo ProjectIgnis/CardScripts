@@ -1,5 +1,5 @@
 --閃刀機構－ハーキュリーベース
---Brandish Mechanoid Hercules Base
+--Sky Striker Mecharmory - Hercules Base
 --
 local s,id=GetID()
 function s.initial_effect(c)
@@ -41,7 +41,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 s.listed_names={id}
-s.listed_series={0x115}
+s.listed_series={SET_SKY_STRIKER}
 function s.cfilter(c)
 	return c:GetSequence()<5
 end
@@ -67,7 +67,7 @@ function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsReason(REASON_EFFECT) and c:IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.tdfilter(c)
-	return c:IsSetCard(0x115) and not c:IsCode(id) and c:IsAbleToDeck()
+	return c:IsSetCard(SET_SKY_STRIKER) and not c:IsCode(id) and c:IsAbleToDeck()
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.tdfilter(chkc) end
@@ -82,4 +82,3 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	end
 end
-

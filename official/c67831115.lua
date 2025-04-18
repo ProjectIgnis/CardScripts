@@ -1,4 +1,5 @@
 --星遺物に差す影
+--World Legacy in Shadow
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -12,7 +13,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x104))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_KRAWLER))
 	e2:SetValue(300)
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
@@ -40,7 +41,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.tgop)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x104}
+s.listed_series={SET_KRAWLER}
 function s.spfilter(c,e,tp)
 	return c:IsLevelBelow(2) and c:IsRace(RACE_INSECT) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_DEFENSE)
 end

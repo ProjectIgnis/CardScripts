@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
 	e2:SetCondition(function(e) return e:GetHandler():GetOverlayGroup():IsExists(Card.IsCode,1,nil,CARD_CRYSTAL_GOD_TISTINA) end)
-	e2:SetCost(aux.dxmcostgen(1,1,nil))
+	e2:SetCost(Cost.Detach(1,1,nil))
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
 	--Special Summon 1 "Tistina" monster from the GY

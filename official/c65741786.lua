@@ -1,7 +1,6 @@
 --Ｉ：Ｐマスカレーナ
 --I:P Masquerena
 --Scripted by Eerie Code
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -14,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER|TIMING_MAIN_END)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(s.spcon)
@@ -34,7 +33,7 @@ function s.matfilter(c,lc,st,tp)
 	return not c:IsType(TYPE_LINK,lc,st,tp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==1-tp and Duel.IsMainPhase()
+	return Duel.IsTurnPlayer(1-tp) and Duel.IsMainPhase()
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsLinkSummonable,tp,LOCATION_EXTRA,0,1,nil,e:GetHandler()) end
@@ -64,7 +63,7 @@ function s.indop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	e1:SetValue(s.indval)
 	e1:SetOwnerPlayer(ep)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	rc:RegisterEffect(e1,true)
 end
 function s.indval(e,re,rp)

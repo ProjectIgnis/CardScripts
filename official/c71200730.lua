@@ -1,4 +1,5 @@
 --闇より出でし絶望
+--Despair from the Dark
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon

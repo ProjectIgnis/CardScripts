@@ -4,7 +4,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0xad),3)
+	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_FRIGHTFUR),3)
 	--spsummon condition
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -41,8 +41,8 @@ function s.initial_effect(c)
 	e4:SetValue(s.atkval)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0xad}
-s.material_setcode=0xad
+s.listed_series={SET_FRIGHTFUR}
+s.material_setcode=SET_FRIGHTFUR
 function s.actcon(e)
 	return Duel.GetAttacker()==e:GetHandler() or Duel.GetAttackTarget()==e:GetHandler()
 end
@@ -67,7 +67,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 		e1:SetCode(EFFECT_SET_ATTACK)
 		e1:SetValue(atk/2)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1,true)
 	end
 	Duel.SpecialSummonComplete()

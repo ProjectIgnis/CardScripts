@@ -1,4 +1,5 @@
 --ヴォルカニック・クイーン
+--Volcanic Queen
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -53,7 +54,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Damage(p,d,REASON_EFFECT)
 end
 function s.phcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.phop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.CheckReleaseGroup(tp,aux.TRUE,1,e:GetHandler()) and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
@@ -69,7 +70,7 @@ function s.spcop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_SUMMON)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	e1:SetTargetRange(1,0)
 	Duel.RegisterEffect(e1,tp)
 	local e2=e1:Clone()

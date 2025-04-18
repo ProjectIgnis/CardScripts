@@ -32,16 +32,16 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={id}
-s.listed_series={0x137}
+s.listed_series={SET_ANCIENT_WARRIORS}
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	if chk==0 then return Duel.IsExistingTarget(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil)
-		and Duel.IsExistingTarget(aux.FaceupFilter(Card.IsSetCard,0x137),tp,LOCATION_MZONE,0,1,nil) end
+		and Duel.IsExistingTarget(aux.FaceupFilter(Card.IsSetCard,SET_ANCIENT_WARRIORS),tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPPO)
 	local g=Duel.SelectTarget(tp,Card.IsFaceup,tp,0,LOCATION_MZONE,1,1,nil)
 	e:SetLabelObject(g:GetFirst())
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SELF)
-	Duel.SelectTarget(tp,aux.FaceupFilter(Card.IsSetCard,0x137),tp,LOCATION_MZONE,0,1,1,nil)
+	Duel.SelectTarget(tp,aux.FaceupFilter(Card.IsSetCard,SET_ANCIENT_WARRIORS),tp,LOCATION_MZONE,0,1,1,nil)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -55,7 +55,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		e1:SetValue(math.ceil(atk/2))
 		oc:RegisterEffect(e1)
 		if sc:IsRelateToEffect(e) and sc:IsFaceup() then
@@ -63,27 +63,27 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetType(EFFECT_TYPE_SINGLE)
 			e2:SetCode(EFFECT_UPDATE_ATTACK)
 			e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-			e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e2:SetReset(RESETS_STANDARD_PHASE_END)
 			e2:SetValue(math.ceil(atk/2))
 			sc:RegisterEffect(e2)
 		end
 	end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,0x137),tp,LOCATION_MZONE,0,nil):GetClassCount(Card.GetAttribute)>1
+	return Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,SET_ANCIENT_WARRIORS),tp,LOCATION_MZONE,0,nil):GetClassCount(Card.GetAttribute)>1
 end
 function s.filter(c,tp)
-	return c:IsType(TYPE_CONTINUOUS) and c:IsSetCard(0x137) and not c:IsForbidden()
+	return c:IsType(TYPE_CONTINUOUS) and c:IsSetCard(SET_ANCIENT_WARRIORS) and not c:IsForbidden()
 		and c:CheckUniqueOnField(tp) and not c:IsCode(id)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
-		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK+LOCATION_HAND,0,1,nil,tp) end
+		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK|LOCATION_HAND,0,1,nil,tp) end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
-	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK+LOCATION_HAND,0,1,1,nil,tp):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK|LOCATION_HAND,0,1,1,nil,tp):GetFirst()
 	if tc then
 		Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
 	end

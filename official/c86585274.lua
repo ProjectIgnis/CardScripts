@@ -1,4 +1,5 @@
 --魔導法士 ジュノン
+--High Priestess of Prophecy
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -24,9 +25,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x106e}
+s.listed_series={SET_SPELLBOOK}
 function s.cffilter(c)
-	return c:IsSetCard(0x106e) and c:IsSpell() and not c:IsPublic()
+	return c:IsSetCard(SET_SPELLBOOK) and c:IsSpell() and not c:IsPublic()
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cffilter,tp,LOCATION_HAND,0,3,nil) end
@@ -46,12 +47,12 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x106e) and c:IsSpell() and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(SET_SPELLBOOK) and c:IsSpell() and c:IsAbleToRemoveAsCost()
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND|LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND|LOCATION_GRAVE,0,1,1,nil)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

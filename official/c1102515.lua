@@ -16,7 +16,7 @@ function s.initial_effect(c)
 end
 s.listed_names={74713516}
 s.LVnum=3
-s.LVset=0x53
+--s.LVset=0x53 --This is incorrect, 0x53 is "Constellar"
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():GetSummonType()==SUMMON_TYPE_SPECIAL+1 then e:SetLabel(2)
 	else e:SetLabel(1) end

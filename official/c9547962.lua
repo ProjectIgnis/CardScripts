@@ -1,5 +1,5 @@
 --オイラーサーキット
---Euler Circuit
+--Euler's Circuit
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_CONTROL)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e3:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e3:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetRange(LOCATION_FZONE)
 	e3:SetCountLimit(1)
@@ -40,15 +40,15 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 s.listed_names={id}
-s.listed_series={0x10b}
+s.listed_series={SET_TINDANGLE}
 function s.atkcon(e)
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x10b),e:GetHandlerPlayer(),LOCATION_MZONE,0,3,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_TINDANGLE),e:GetHandlerPlayer(),LOCATION_MZONE,0,3,nil)
 end
 function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.ctfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x10b) and c:IsControlerCanBeChanged()
+	return c:IsFaceup() and c:IsSetCard(SET_TINDANGLE) and c:IsControlerCanBeChanged()
 end
 function s.cttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.ctfilter(chkc) end
@@ -65,13 +65,13 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x10b) and c:IsDiscardable()
+	return c:IsSetCard(SET_TINDANGLE) and c:IsDiscardable()
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost()
 		and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end
 	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
-	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_COST|REASON_DISCARD)
 end
 function s.filter(c)
 	return c:IsCode(id) and c:IsAbleToHand()

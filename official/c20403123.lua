@@ -25,9 +25,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x9f}
+s.listed_series={SET_PERFORMAPAL}
 function s.hspfilter(c,ft,tp)
-	return c:IsSetCard(0x9f) and not c:IsType(TYPE_PENDULUM)
+	return c:IsSetCard(SET_PERFORMAPAL) and not c:IsType(TYPE_PENDULUM)
 end
 function s.hspcon(e,c)
 	if c==nil then return true end
@@ -50,7 +50,7 @@ function s.hspop(e,tp,eg,ep,ev,re,r,rp,c)
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST|REASON_DISCARD)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsFaceup() end

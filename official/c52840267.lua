@@ -24,14 +24,14 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCountLimit(1,{id,1})
-	e2:SetCost(s.cpcost)
+	e2:SetCost(Cost.PayLP(1000))
 	e2:SetTarget(s.cptg)
 	e2:SetOperation(s.cpop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xef}
+s.listed_series={SET_DARKLORD}
 function s.cfilter(c)
-	return c:IsSetCard(0xef) and c:IsDiscardable()
+	return c:IsSetCard(SET_DARKLORD) and c:IsDiscardable()
 end
 function s.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsDiscardable()
@@ -39,7 +39,7 @@ function s.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
 	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND,0,1,1,e:GetHandler())
 	g:AddCard(e:GetHandler())
-	Duel.SendtoGrave(g,REASON_DISCARD+REASON_COST)
+	Duel.SendtoGrave(g,REASON_DISCARD|REASON_COST)
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,2) end
@@ -51,12 +51,8 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Draw(p,d,REASON_EFFECT)
 end
-function s.cpcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,1000) end
-	Duel.PayLPCost(tp,1000)
-end
 function s.cpfilter(c)
-	return c:IsSetCard(0xef) and c:IsSpellTrap() and c:IsAbleToDeck() and c:CheckActivateEffect(false,true,false)~=nil
+	return c:IsSetCard(SET_DARKLORD) and c:IsSpellTrap() and c:IsAbleToDeck() and c:CheckActivateEffect(false,true,false)~=nil
 end
 function s.cptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.cpfilter(chkc) end
@@ -86,5 +82,5 @@ function s.cpop(e,tp,eg,ep,ev,re,r,rp)
 		etc:ReleaseEffectRelation(te)
 	end
 	Duel.BreakEffect()
-	Duel.SendtoDeck(te:GetHandler(),nil,2,REASON_EFFECT)
+	Duel.SendtoDeck(te:GetHandler(),nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 end

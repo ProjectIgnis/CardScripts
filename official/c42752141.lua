@@ -14,14 +14,14 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCode(EVENT_CHAINING)
 	e1:SetCondition(s.condition)
-	e1:SetCost(aux.dxmcostgen(1,1,nil))
+	e1:SetCost(Cost.Detach(1,1,nil))
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp,chk)
 	return re~=e and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
-		and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev)
+		and re:IsMonsterEffect() and Duel.IsChainNegatable(ev)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

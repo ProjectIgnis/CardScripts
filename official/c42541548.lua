@@ -1,4 +1,5 @@
 --鬼ゴブリン
+--Coach Goblin
 local s,id=GetID()
 function s.initial_effect(c)
 	--draw
@@ -17,7 +18,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.cfilter(c)
 	return c:IsType(TYPE_NORMAL) and c:IsAbleToDeckAsCost()
@@ -27,7 +28,7 @@ function s.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND,0,1,1,nil)
 	Duel.ConfirmCards(1-tp,g)
-	Duel.SendtoDeck(g,nil,1,REASON_COST)
+	Duel.SendtoDeck(g,nil,SEQ_DECKBOTTOM,REASON_COST)
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end

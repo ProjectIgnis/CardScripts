@@ -1,4 +1,5 @@
 --超重武者ジシャ－Q
+--Superheavy Samurai Magnet
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -19,9 +20,9 @@ function s.initial_effect(c)
 	e2:SetValue(s.atlimit)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x9a}
+s.listed_series={SET_SUPERHEAVY_SAMURAI}
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x9a) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_SUPERHEAVY_SAMURAI) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sumtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

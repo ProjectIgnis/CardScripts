@@ -1,4 +1,5 @@
 --EMチアモール
+--Performapal Cheermole
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -50,7 +51,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		else
 			e1:SetValue(-1000)
 		end
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 	end
 end

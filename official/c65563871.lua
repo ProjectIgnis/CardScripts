@@ -39,12 +39,12 @@ function s.initial_effect(c)
 	e3:SetOperation(s.recop2)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x1157}
+s.listed_series={SET_SUNAVALON}
 function s.matfilter(c,lc,st,tp)
 	return c:IsRace(RACE_PLANT,lc,st,tp) and c:IsType(TYPE_NORMAL,lc,st,tp)
 end
 function s.cfilter(c,tp,rp)
-	return c:IsPreviousPosition(POS_FACEUP) and c:IsSetCard(0x1157) and c:IsType(TYPE_LINK) and c:GetPreviousControler()==tp and c:IsReason(REASON_EFFECT)
+	return c:IsPreviousPosition(POS_FACEUP) and c:IsSetCard(SET_SUNAVALON) and c:IsType(TYPE_LINK) and c:GetPreviousControler()==tp and c:IsReason(REASON_EFFECT)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp,rp)
@@ -59,7 +59,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.recfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x1157) and c:IsType(TYPE_LINK)
+	return c:IsFaceup() and c:IsSetCard(SET_SUNAVALON) and c:IsType(TYPE_LINK)
 end
 function s.rectg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.recfilter(chkc) end

@@ -43,7 +43,7 @@ end
 s.listed_names={id,CARD_RA}
 	--If player took battle or effect damage
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep==tp and r&(REASON_BATTLE+REASON_EFFECT)~=0
+	return ep==tp and r&(REASON_BATTLE|REASON_EFFECT)~=0
 end
 	--Activation legality
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -69,14 +69,14 @@ function s.defop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_DEFENSE)
-		e1:SetReset(RESET_PHASE+PHASE_DAMAGE_CAL)
+		e1:SetReset(RESET_PHASE|PHASE_DAMAGE_CAL)
 		e1:SetValue(val)
 		c:RegisterEffect(e1)
 	end
 end
 	--Check if it was sent from the hand or field
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsPreviousLocation(LOCATION_HAND+LOCATION_ONFIELD)
+	return e:GetHandler():IsPreviousLocation(LOCATION_HAND|LOCATION_ONFIELD)
 end
 	--Check for 1 spell/trap that specifically lists "The Winged Dragon of Ra"
 function s.thfilter(c)

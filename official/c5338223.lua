@@ -12,9 +12,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x304e,0x604e}
+s.listed_series={SET_EVOLTILE,SET_EVOLSAUR}
 function s.cfilter(c,ft,tp)
-	return c:IsSetCard(0x304e)
+	return c:IsSetCard(SET_EVOLTILE)
 		and (ft>0 or (c:IsControler(tp) and c:GetSequence()<5)) and (c:IsControler(tp) or c:IsFaceup())
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -25,7 +25,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(rg,REASON_COST)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x604e) and c:IsCanBeSpecialSummoned(e,170,tp,false,false)
+	return c:IsSetCard(SET_EVOLSAUR) and c:IsCanBeSpecialSummoned(e,170,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then

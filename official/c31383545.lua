@@ -1,4 +1,5 @@
 --XX－セイバー ダークソウル
+--XX-Saber Darksoul
 local s,id=GetID()
 function s.initial_effect(c)
 	--to grave
@@ -9,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.regop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x100d}
+s.listed_series={SET_X_SABER}
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_ONFIELD) then
@@ -22,12 +23,12 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetRange(LOCATION_GRAVE)
 		e1:SetTarget(s.thtg)
 		e1:SetOperation(s.thop)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		c:RegisterEffect(e1)
 	end
 end
 function s.filter(c)
-	return c:IsSetCard(0x100d) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_X_SABER) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

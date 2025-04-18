@@ -1,4 +1,5 @@
 --儀水鏡の反魂術
+--Aquamirror Cycle
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -32,7 +33,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local ex,g1=Duel.GetOperationInfo(0,CATEGORY_TODECK)
 	local ex,g2=Duel.GetOperationInfo(0,CATEGORY_TOHAND)
 	local tc1=g1:GetFirst()
-	if tc1:IsRelateToEffect(e) and Duel.SendtoDeck(tc1,nil,2,REASON_EFFECT)~=0 then
+	if tc1:IsRelateToEffect(e) and Duel.SendtoDeck(tc1,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)~=0 then
 		local hg=g2:Filter(Card.IsRelateToEffect,nil,e)
 		Duel.SendtoHand(hg,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,hg)

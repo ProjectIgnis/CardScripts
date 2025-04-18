@@ -1,4 +1,5 @@
 --痛魂の呪術
+--Spell of Pain
 local s,id=GetID()
 function s.initial_effect(c)
 	--reflect

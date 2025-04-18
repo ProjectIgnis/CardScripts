@@ -1,4 +1,5 @@
 --青竜の召喚士
+--Blue Dragon Summoner
 local s,id=GetID()
 function s.initial_effect(c)
 	--tohand
@@ -17,7 +18,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.filter(c)
-	return c:IsType(TYPE_NORMAL) and c:IsRace(RACE_DRAGON+RACE_WARRIOR+RACE_SPELLCASTER) and c:IsAbleToHand()
+	return c:IsType(TYPE_NORMAL) and c:IsRace(RACE_DRAGON|RACE_WARRIOR|RACE_SPELLCASTER) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

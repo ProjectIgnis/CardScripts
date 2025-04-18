@@ -1,4 +1,5 @@
 --幸運の鉄斧
+--Lucky Iron Axe
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c)
@@ -22,7 +23,7 @@ function s.initial_effect(c)
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return (r&0x41)==0x41 and rp~=tp and c:IsPreviousControler(tp)
+	return (r&(REASON_DESTROY|REASON_EFFECT))==(REASON_DESTROY|REASON_EFFECT) and rp~=tp and c:IsPreviousControler(tp)
 		and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEUP)
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -1,4 +1,5 @@
 --女忍者ヤエ
+--Lady Ninja Yae
 local s,id=GetID()
 function s.initial_effect(c)
 	--to hand
@@ -19,7 +20,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,e:GetHandler()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
 	local cg=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_HAND,0,1,1,nil)
-	Duel.SendtoGrave(cg,REASON_COST+REASON_DISCARD)
+	Duel.SendtoGrave(cg,REASON_COST|REASON_DISCARD)
 end
 function s.filter(c)
 	return c:IsSpellTrap() and c:IsAbleToHand()

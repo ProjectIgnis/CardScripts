@@ -1,4 +1,4 @@
---Japanese name
+--アヌビスの審判
 --Verdict of Anubis
 --Scripted by The Razgriz
 local s,id=GetID()

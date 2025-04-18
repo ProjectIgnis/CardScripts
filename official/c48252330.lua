@@ -1,4 +1,5 @@
 --マドルチェ・バトラスク
+--Madolche Butlerusk
 local s,id=GetID()
 function s.initial_effect(c)
 	--to deck
@@ -22,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.shop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x71}
+s.listed_series={SET_MADOLCHE}
 function s.retcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsReason(REASON_DESTROY) and e:GetHandler():GetReasonPlayer()~=tp
 		and e:GetHandler():IsPreviousControler(tp)
@@ -33,11 +34,11 @@ function s.rettg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsRelateToEffect(e) then
-		Duel.SendtoDeck(e:GetHandler(),nil,2,REASON_EFFECT)
+		Duel.SendtoDeck(e:GetHandler(),nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	end
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x71)
+	return c:IsFaceup() and c:IsSetCard(SET_MADOLCHE)
 end
 function s.shcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler())

@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e2:SetCategory(CATEGORY_DRAW)
-	e2:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e2:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCountLimit(1)
 	e2:SetCondition(s.condition)
@@ -32,9 +32,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local dice=Duel.TossDice(tp,1)
 	if dice==1 then
-		Duel.DiscardHand(tp,nil,1,1,REASON_EFFECT+REASON_DISCARD)
+		Duel.DiscardHand(tp,nil,1,1,REASON_EFFECT|REASON_DISCARD)
 	elseif dice==2 then
-		Duel.DiscardHand(1-tp,nil,1,1,REASON_EFFECT+REASON_DISCARD)
+		Duel.DiscardHand(1-tp,nil,1,1,REASON_EFFECT|REASON_DISCARD)
 	elseif dice==3 then
 		Duel.Draw(tp,1,REASON_EFFECT)
 	elseif dice==4 then

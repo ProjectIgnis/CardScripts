@@ -1,4 +1,5 @@
 --コアキメイル・シーパンサー
+--Koa'ki Meiru Sea Panther
 local s,id=GetID()
 function s.initial_effect(c)
 	--cost
@@ -26,7 +27,7 @@ function s.initial_effect(c)
 end
 s.listed_names={36623431}
 function s.mtcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.cfilter1(c)
 	return c:IsCode(36623431) and c:IsAbleToGraveAsCost()
@@ -83,6 +84,6 @@ end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
-		Duel.SendtoDeck(tc,nil,0,REASON_EFFECT)
+		Duel.SendtoDeck(tc,nil,SEQ_DECKTOP,REASON_EFFECT)
 	end
 end

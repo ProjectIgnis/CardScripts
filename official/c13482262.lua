@@ -27,14 +27,14 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x117}
+s.listed_series={SET_IMPCANTATION}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,tp,LOCATION_DECK)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_TODECK,nil,1,tp,LOCATION_HAND)
 end
 function s.revfilter(c,e,tp)
-	return c:IsSetCard(0x117) and c:IsMonster() and c:IsAbleToDeck() and not c:IsPublic()
+	return c:IsSetCard(SET_IMPCANTATION) and c:IsMonster() and c:IsAbleToDeck() and not c:IsPublic()
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,2,nil,e,tp,c:GetCode())
 end
 function s.spfilter(c,e,tp,cd)

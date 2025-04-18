@@ -1,6 +1,5 @@
 --ＤＤ魔導賢者ニコラ
 --D/D Savant Nikola
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Enable pendulum summon
@@ -38,20 +37,19 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xaf,0x10af}
-
+s.listed_series={SET_DD,SET_DDD}
 function s.splimit(e,c,sump,sumtype,sumpos,targetp)
-	return not c:IsSetCard(0xaf) and (sumtype&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
+	return not c:IsSetCard(SET_DD) and (sumtype&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
 end
 function s.atkcfilter(c)
-	return c:IsSetCard(0x10af) and c:IsMonster() and c:IsDiscardable()
+	return c:IsSetCard(SET_DDD) and c:IsMonster() and c:IsDiscardable()
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.atkcfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,s.atkcfilter,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,s.atkcfilter,1,1,REASON_COST|REASON_DISCARD)
 end
 function s.atkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xaf) and c:IsLevelBelow(6)
+	return c:IsFaceup() and c:IsSetCard(SET_DD) and c:IsLevelBelow(6)
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.atkfilter(chkc) end
@@ -68,7 +66,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(2000)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_UPDATE_DEFENSE)
@@ -80,10 +78,10 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsPreviousLocation(LOCATION_PZONE)
 end
 function s.thfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x10af) and c:IsAbleToHand()
+	return c:IsFaceup() and c:IsSetCard(SET_DDD) and c:IsAbleToHand()
 end
 function s.pfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xaf) and c:IsType(TYPE_PENDULUM) and not c:IsForbidden()
+	return c:IsFaceup() and c:IsSetCard(SET_DD) and c:IsType(TYPE_PENDULUM) and not c:IsForbidden()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.thfilter(chkc) end
@@ -112,7 +110,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_CANNOT_TRIGGER)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e1:SetReset(RESETS_STANDARD_PHASE_END)
 			pc:RegisterEffect(e1)
 		end
 	end

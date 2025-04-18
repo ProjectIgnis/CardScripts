@@ -15,10 +15,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return tp~=Duel.GetTurnPlayer()
+	return Duel.IsTurnPlayer(1-tp)
 end
 function s.costfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x1034) and c:IsAbleToGraveAsCost()
+	return c:IsFaceup() and c:IsSetCard(SET_CRYSTAL_BEAST) and c:IsAbleToGraveAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_SZONE,0,1,nil) end
@@ -34,7 +34,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.filter(c)
-	return c:IsSetCard(0x2034) and c:IsAbleToHand()
+	return c:IsSetCard(SET_ULTIMATE_CRYSTAL) and c:IsAbleToHand()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetAttacker()

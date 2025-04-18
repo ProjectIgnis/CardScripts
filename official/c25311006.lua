@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_CHAIN,s.chainfilter)
 end
 function s.chainfilter(re,tp,cid)
-	return not (re:IsActiveType(TYPE_MONSTER) and Duel.IsMainPhase())
+	return not (re:IsMonsterEffect() and Duel.IsMainPhase())
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCustomActivityCount(id,1-tp,ACTIVITY_CHAIN)~=0
@@ -79,7 +79,7 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(p,g)
 		Duel.Hint(HINT_SELECTMSG,p,HINTMSG_TODECK)
 		local sg=g:Select(p,1,1,nil)
-		Duel.SendtoDeck(sg,nil,2,REASON_EFFECT)
+		Duel.SendtoDeck(sg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 		Duel.ShuffleHand(1-p)
 	end
 end

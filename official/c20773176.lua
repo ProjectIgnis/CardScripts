@@ -1,4 +1,5 @@
 --炎獣の影霊衣－セフィラエグザ
+--Zefraxa, Flame Beast of the Nekroz
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -17,7 +18,7 @@ function s.initial_effect(c)
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
-	e3:SetRange(LOCATION_HAND+LOCATION_GRAVE)
+	e3:SetRange(LOCATION_HAND|LOCATION_GRAVE)
 	e3:SetCode(EVENT_DESTROYED)
 	e3:SetCountLimit(1,id)
 	e3:SetCondition(s.condition)
@@ -25,15 +26,15 @@ function s.initial_effect(c)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xb4,0xc4}
+s.listed_series={SET_NEKROZ,SET_ZEFRA}
 s.listed_names={id}
 function s.splimit(e,c,sump,sumtype,sumpos,targetp)
-	if c:IsSetCard(0xb4) or c:IsSetCard(0xc4) then return false end
+	if c:IsSetCard({SET_NEKROZ,SET_ZEFRA}) then return false end
 	return (sumtype&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
 end
 function s.filter(c,tp)
-	return c:IsReason(REASON_BATTLE+REASON_EFFECT)
-		and (c:IsSetCard(0xb4) or c:IsSetCard(0xc4)) and not c:IsCode(id)
+	return c:IsReason(REASON_BATTLE|REASON_EFFECT)
+		and c:IsSetCard({SET_NEKROZ,SET_ZEFRA}) and not c:IsCode(id)
 		and c:IsPreviousControler(tp)
 		and ((c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP))
 		or c:IsPreviousLocation(LOCATION_PZONE))

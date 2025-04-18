@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER)
-	e2:SetCost(aux.SelfBanishCost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(Fusion.SummonEffTG(params))
 	e2:SetOperation(Fusion.SummonEffOP(params))
 	c:RegisterEffect(e2)
@@ -33,7 +33,7 @@ function s.costfilter(c)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,s.costfilter,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,s.costfilter,1,1,REASON_COST|REASON_DISCARD)
 end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(SET_BUSTER_BLADER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

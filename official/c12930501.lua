@@ -54,10 +54,10 @@ function s.costfilter(c,tp)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return aux.bfgcost(e,tp,eg,ep,ev,re,r,rp,chk)
-		and Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,nil,tp) end
+		and Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND|LOCATION_ONFIELD,0,1,nil,tp) end
 	aux.bfgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,1,nil,tp)
+	local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_HAND|LOCATION_ONFIELD,0,1,1,nil,tp)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function s.spfilter(c,e,tp)
@@ -73,8 +73,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 	if #g<1 or Duel.SpecialSummon(g,0,tp,tp,true,false,POS_FACEUP)<1 then return end
 	local tc=g:GetFirst()
-	tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,3))
-	-- Send to GY in the End Phase
+	tc:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,3))
+	--Send to GY in the End Phase
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
@@ -83,7 +83,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetLabelObject(tc)
 	e1:SetCondition(s.descon)
 	e1:SetOperation(s.desop)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	if Duel.IsExistingMatchingCard(Card.IsAbleToGrave,tp,0,LOCATION_MZONE,1,nil)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then

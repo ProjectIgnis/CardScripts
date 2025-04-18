@@ -1,9 +1,9 @@
--- 悪醒師ナイトメルト
--- Nightmell the Dark Bonder
--- Scripted by Hatter
+--悪醒師ナイトメルト
+--Nightmell the Dark Bonder
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Special Summon
+	--Special Summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)

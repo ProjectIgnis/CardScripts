@@ -1,4 +1,5 @@
 --マジックアーム・シールド
+--Magical Arm Shield
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -13,7 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return tp~=Duel.GetTurnPlayer() and Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)>0
+	return Duel.IsTurnPlayer(1-tp) and Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)>0
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsControlerCanBeChanged()

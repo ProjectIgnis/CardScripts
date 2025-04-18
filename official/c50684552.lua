@@ -1,4 +1,5 @@
 --ワンダーガレージ
+--Wonder Garage
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -12,14 +13,14 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x16}
+s.listed_series={SET_ROID}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return (r&REASON_DESTROY)~=0
 		and e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 		and e:GetHandler():IsPreviousPosition(POS_FACEDOWN)
 end
 function s.spfilter(c,e,tp)
-	return c:IsLevelBelow(4) and c:IsSetCard(0x16) and c:IsRace(RACE_MACHINE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsLevelBelow(4) and c:IsSetCard(SET_ROID) and c:IsRace(RACE_MACHINE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

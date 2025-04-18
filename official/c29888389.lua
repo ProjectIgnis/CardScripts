@@ -1,4 +1,5 @@
 --シャドウ・リチュア
+--Gishki Shadow
 local s,id=GetID()
 function s.initial_effect(c)
 	--search
@@ -7,21 +8,16 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_HAND)
-	e1:SetCost(s.cost)
+	e1:SetCost(Cost.SelfDiscard)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 	--ritual level
 	Ritual.AddWholeLevelTribute(c,aux.FilterBoolFunction(Card.IsAttribute,ATTRIBUTE_WATER))
 end
-s.listed_series={0x3a}
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsDiscardable() end
-	Duel.SendtoGrave(c,REASON_COST+REASON_DISCARD)
-end
+s.listed_series={SET_GISHKI}
 function s.filter(c)
-	return c:IsSetCard(0x3a) and c:GetType()==TYPE_SPELL+TYPE_RITUAL and c:IsAbleToHand()
+	return c:IsSetCard(SET_GISHKI) and c:IsRitualSpell() and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

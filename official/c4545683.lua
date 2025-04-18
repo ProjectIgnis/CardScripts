@@ -1,5 +1,5 @@
 --機皇帝グランエル∞
---c4545683
+--Meklord Emperor Granel
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -59,7 +59,7 @@ function s.eqval(ec,c,tp)
 	return ec:IsControler(1-tp) and ec:IsType(TYPE_SYNCHRO)
 end
 function s.filter(c,tp)
-	return c:IsMonster() and (c:GetReason()&0x41)==0x41 and c:IsPreviousControler(tp)
+	return c:IsMonster() and (c:GetReason()&(REASON_DESTROY|REASON_EFFECT))==(REASON_DESTROY|REASON_EFFECT) and c:IsPreviousControler(tp)
 		and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
@@ -100,7 +100,7 @@ function s.equipop(c,e,tp,tc)
 		e2:SetType(EFFECT_TYPE_EQUIP)
 		e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_OWNER_RELATE)
 		e2:SetCode(EFFECT_UPDATE_ATTACK)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e2:SetValue(atk)
 		tc:RegisterEffect(e2)
 	end

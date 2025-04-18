@@ -35,9 +35,9 @@ function s.initial_effect(c)
 	e4:SetOperation(s.damop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x33}
+s.listed_series={SET_BLACKWING}
 function s.filter(c)
-	return c:IsFaceup() and c:HasLevel() and c:IsSetCard(0x33)
+	return c:IsFaceup() and c:HasLevel() and c:IsSetCard(SET_BLACKWING)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -61,7 +61,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_LEVEL)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		if e:GetLabel()==0 then
 			e1:SetValue(1)
 		else
@@ -72,7 +72,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+	c:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(id)>0

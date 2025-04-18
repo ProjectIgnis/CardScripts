@@ -1,4 +1,5 @@
 --白虎の召喚士
+--White Tiger Summoner
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon

@@ -20,12 +20,12 @@ function s.initial_effect(c)
 	e2:SetOperation(s.efop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x56}
+s.listed_series={SET_INZEKTOR}
 function s.filter1(c)
-	return c:IsFaceup() and c:IsSetCard(0x56)
+	return c:IsFaceup() and c:IsSetCard(SET_INZEKTOR)
 end
 function s.filter2(c,e,tp)
-	return c:IsFaceup() and c:IsSetCard(0x56) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return c:IsFaceup() and c:IsSetCard(SET_INZEKTOR) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.select(e,tp,b1,b2)
 	local op=0
@@ -72,7 +72,7 @@ function s.efop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_EQUIP_LIMIT)
 			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			e1:SetValue(s.eqlimit)
 			e1:SetLabelObject(tc2)
 			tc1:RegisterEffect(e1)

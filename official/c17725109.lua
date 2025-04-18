@@ -1,5 +1,5 @@
 --青眼龍轟臨
---Saga of the Blue-Eyed Dragon
+--Roar of the Blue-Eyed Dragons
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,id)
-	e2:SetCost(aux.SelfBanishCost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(Fusion.SummonEffTG(params))
 	e2:SetOperation(Fusion.SummonEffOP(params))
 	c:RegisterEffect(e2)

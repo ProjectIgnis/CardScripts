@@ -1,6 +1,5 @@
 --おもちゃ箱
 --Box of Friends
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon 2 normal monsters, with 0 ATK or DEF and different names, from deck
@@ -41,8 +40,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		local tc2=sg:GetNext()
 		Duel.SpecialSummonStep(tc1,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 		Duel.SpecialSummonStep(tc2,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
-		tc1:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
-		tc2:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+		tc1:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1)
+		tc2:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1)
 		--Cannot be used as synchro material
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetDescription(3310)
@@ -50,7 +49,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_BE_SYNCHRO_MATERIAL)
 		e1:SetValue(1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc1:RegisterEffect(e1)
 		local e2=e1:Clone()
 		tc2:RegisterEffect(e2)
@@ -64,12 +63,12 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		de:SetLabelObject(sg)
 		de:SetCondition(s.descon)
 		de:SetOperation(s.desop)
-		if Duel.GetTurnPlayer()==tp and Duel.GetCurrentPhase()==PHASE_END then
+		if Duel.IsTurnPlayer(tp) and Duel.IsPhase(PHASE_END) then
 			de:SetLabel(Duel.GetTurnCount())
-			de:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN,2)
+			de:SetReset(RESET_PHASE|PHASE_END|RESET_SELF_TURN,2)
 		else
 			de:SetLabel(0)
-			de:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN)
+			de:SetReset(RESET_PHASE|PHASE_END|RESET_SELF_TURN)
 		end
 		Duel.RegisterEffect(de,tp)
 	end
@@ -81,7 +80,7 @@ function s.descon(e,tp,eg,ep,ev,re,r,rp)
 		e:Reset()
 		return false
 	end
-	return Duel.GetTurnPlayer()==tp and Duel.GetTurnCount()~=e:GetLabel()
+	return Duel.IsTurnPlayer(tp) and Duel.GetTurnCount()~=e:GetLabel()
 end
 function s.desfilter(c)
 	return c:GetFlagEffect(id)>0

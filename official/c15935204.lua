@@ -1,4 +1,5 @@
 --ストーム・サモナー
+--Storm Caller
 local s,id=GetID()
 function s.initial_effect(c)
 	--to deck
@@ -32,7 +33,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 		e1:SetTarget(s.reptg)
 		e1:SetOperation(s.repop)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_DAMAGE)
 		a:RegisterEffect(e1)
 	end
 	if b2 then
@@ -41,7 +42,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 		e1:SetTarget(s.reptg)
 		e1:SetOperation(s.repop)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_DAMAGE)
 		d:RegisterEffect(e1)
 	end
 end
@@ -51,7 +52,7 @@ function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	return true
 end
 function s.repop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.SendtoDeck(e:GetHandler(),nil,0,REASON_EFFECT)
+	Duel.SendtoDeck(e:GetHandler(),nil,SEQ_DECKTOP,REASON_EFFECT)
 end
 function s.dmcon(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsReason(REASON_BATTLE)

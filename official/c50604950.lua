@@ -1,4 +1,5 @@
 --X－セイバー ガラハド
+--X-Saber Galahad
 local s,id=GetID()
 function s.initial_effect(c)
 	--atk
@@ -26,8 +27,8 @@ function s.atkval(e,c)
 	return 0
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsSetCard,1,false,nil,e:GetHandler(),0xd) end
-	local g=Duel.SelectReleaseGroupCost(tp,Card.IsSetCard,1,1,false,nil,e:GetHandler(),0xd)
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsSetCard,1,false,nil,e:GetHandler(),SET_SABER) end
+	local g=Duel.SelectReleaseGroupCost(tp,Card.IsSetCard,1,1,false,nil,e:GetHandler(),SET_SABER)
 	Duel.Release(g,REASON_COST)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)

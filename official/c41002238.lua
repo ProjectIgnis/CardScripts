@@ -1,9 +1,9 @@
--- カイザー・グライダー－ゴルデン・バースト
--- Kaiser Glider - Golden Burst
--- scripted by Hatter
+--カイザー・グライダー－ゴルデン・バースト
+--Kaiser Glider - Golden Burst
+--scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Special Summon this card from your hand
+	--Special Summon this card from your hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	-- Copy the targeted monster's ATK
+	--Copy the targeted monster's ATK
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_ATKCHANGE)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -64,12 +64,12 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	if not (c:IsRelateToEffect(e) and c:IsFaceup()) then return end
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
-		-- Change ATK
+		--Change ATK
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetValue(tc:GetAttack())
-		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE|RESET_PHASE|PHASE_END)
+		e1:SetReset(RESETS_STANDARD_DISABLE_PHASE_END)
 		c:RegisterEffect(e1)
 	end
 end

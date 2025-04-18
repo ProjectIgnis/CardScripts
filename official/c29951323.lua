@@ -1,4 +1,5 @@
 --放電ムスタンガン
+--Zap Mustung
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableUnsummonable()
@@ -44,13 +45,13 @@ function s.initial_effect(c)
 end
 function s.splimit(e,se,sp,st)
 	return se:IsHasType(EFFECT_TYPE_ACTIONS) and Duel.GetActivityCount(e:GetHandlerPlayer(),ACTIVITY_SPSUMMON)==0
-		and Duel.GetCurrentPhase()==PHASE_MAIN1 and Duel.GetTurnPlayer()==e:GetHandlerPlayer()
+		and Duel.IsPhase(PHASE_MAIN1) and Duel.GetTurnPlayer()==e:GetHandlerPlayer()
 end
 function s.valcon(e,re,r,rp)
 	return (r&REASON_BATTLE)~=0
 end
 function s.limittg(e,c,tp)
-	return Duel.GetTurnPlayer()==tp and Duel.GetActivityCount(tp,ACTIVITY_SPSUMMON)>=Duel.GetBattledCount(tp)
+	return Duel.IsTurnPlayer(tp) and Duel.GetActivityCount(tp,ACTIVITY_SPSUMMON)>=Duel.GetBattledCount(tp)
 end
 function s.countcon1(e)
 	return Duel.GetTurnPlayer()==e:GetHandlerPlayer()

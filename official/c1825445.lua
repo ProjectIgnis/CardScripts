@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e2:SetTargetRange(LOCATION_ONFIELD,LOCATION_ONFIELD)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0xdc))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_SUPER_QUANT))
 	e2:SetCondition(s.tgcon)
 	e2:SetValue(aux.tgoval)
 	c:RegisterEffect(e2)
@@ -32,17 +32,17 @@ function s.initial_effect(c)
 	e3:SetOperation(s.matop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xdc}
+s.listed_series={SET_SUPER_QUANT}
 --Check if it's your main phase
 function s.tgcon(e)
-	return Duel.GetTurnPlayer()==e:GetHandlerPlayer() and Duel.GetCurrentPhase()==PHASE_MAIN1
+	return Duel.GetTurnPlayer()==e:GetHandlerPlayer() and Duel.IsPhase(PHASE_MAIN1)
 end
 --Check for "Super Quant" Xyz monster
 function s.filter2(c)
 	return c:IsFaceup() and not c:IsType(TYPE_TOKEN)
 end
 function s.filter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0xdc) and c:IsType(TYPE_XYZ)
+	return c:IsFaceup() and c:IsSetCard(SET_SUPER_QUANT) and c:IsType(TYPE_XYZ)
 		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_MZONE,0,1,c)
 end
 --Activation legality
@@ -64,4 +64,3 @@ function s.matop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-

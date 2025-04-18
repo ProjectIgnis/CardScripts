@@ -1,5 +1,5 @@
 --告天子竜パイレン
---Pairen the Skylark Dragon
+--Dragonlark Pairen
 --Scripted by The Razgriz
 local s,id=GetID()
 function s.initial_effect(c)
@@ -25,10 +25,10 @@ function s.initial_effect(c)
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e3:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e3:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1,id)
-	e3:SetCost(s.spcost)
+	e3:SetCost(Cost.Detach(1))
 	e3:SetTarget(s.sptg)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3,false,REGISTER_FLAG_DETACH_XMAT)
@@ -43,10 +43,6 @@ function s.indescon(e)
 	return Duel.IsExistingMatchingCard(s.indesfil,0,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 end
 	--Detach 1 material as cost
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
-end
 	--filter for Level 5 or lower monsters
 function s.spfilter(c,e,tp)
 	return c:IsLevelBelow(5) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

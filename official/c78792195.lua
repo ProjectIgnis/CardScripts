@@ -1,4 +1,5 @@
 --六武衆の露払い
+--Hand of the Six Samurai
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy
@@ -14,15 +15,15 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x3d}
+s.listed_series={SET_SIX_SAMURAI}
 function s.confilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x3d)
+	return c:IsFaceup() and c:IsSetCard(SET_SIX_SAMURAI)
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.confilter,tp,LOCATION_MZONE,0,1,e:GetHandler())
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x3d)
+	return c:IsSetCard(SET_SIX_SAMURAI)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local dg=Duel.GetMatchingGroup(Card.IsCanBeEffectTarget,tp,LOCATION_MZONE,LOCATION_MZONE,nil,e)

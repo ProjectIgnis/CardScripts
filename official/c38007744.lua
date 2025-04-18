@@ -1,4 +1,5 @@
 --先史遺産モアイキャリア
+--Chronomaly Moai Carrier
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon

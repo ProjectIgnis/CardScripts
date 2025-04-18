@@ -1,4 +1,5 @@
 --攻通規制
+--Attraffic Control
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate

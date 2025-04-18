@@ -36,7 +36,7 @@ function s.filter(c)
 end
 function s.lkcon(e)
 	local c=e:GetHandler()
-	return c:IsStatus(STATUS_SPSUMMON_TURN) and c:IsSummonType(SUMMON_TYPE_LINK)
+	return c:IsStatus(STATUS_SPSUMMON_TURN) and c:IsLinkSummoned()
 end
 function s.indescon(e)
 	return e:GetHandler():GetSequence()>4
@@ -58,7 +58,6 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=c:GetBattleTarget()
 	if c:IsRelateToBattle() and tc:IsRelateToBattle() then
-		Duel.SendtoDeck(Group.FromCards(c,tc),nil,2,REASON_EFFECT)
+		Duel.SendtoDeck(Group.FromCards(c,tc),nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	end
 end
-

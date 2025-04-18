@@ -1,4 +1,5 @@
 --デーモン・イーター
+--Nefarious Archfiend Eater of Nefariousness
 local s,id=GetID()
 function s.initial_effect(c)
 	c:SetUniqueOnField(1,0,id)
@@ -33,7 +34,7 @@ function s.spcon(e,c)
 		and Duel.IsExistingMatchingCard(s.cfilter,c:GetControler(),LOCATION_MZONE,0,1,nil)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return Duel.IsTurnPlayer(1-tp)
 end
 function s.filter(c,ft)
 	return c:IsFaceup() and (ft>0 or c:GetSequence()<5)

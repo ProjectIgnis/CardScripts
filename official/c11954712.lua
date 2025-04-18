@@ -1,4 +1,5 @@
 --フライファング
+--Flyfang
 local s,id=GetID()
 function s.initial_effect(c)
 	--reg
@@ -18,7 +19,7 @@ function s.initial_effect(c)
 	e3:SetCategory(CATEGORY_REMOVE)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetCode(EVENT_PHASE+PHASE_BATTLE)
+	e3:SetCode(EVENT_PHASE|PHASE_BATTLE)
 	e3:SetCountLimit(1)
 	e3:SetCondition(s.rmcon)
 	e3:SetTarget(s.rmtg)
@@ -26,7 +27,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE,0,1)
+	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_BATTLE,0,1)
 end
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(id)~=0
@@ -38,20 +39,20 @@ end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then
-		if Duel.Remove(c,0,REASON_EFFECT+REASON_TEMPORARY)==0 then return end
+		if Duel.Remove(c,0,REASON_EFFECT|REASON_TEMPORARY)==0 then return end
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
+		e1:SetCode(EVENT_PHASE|PHASE_STANDBY)
 		e1:SetCountLimit(1)
 		e1:SetLabelObject(c)
 		e1:SetCondition(s.retcon)
 		e1:SetOperation(s.retop)
-		e1:SetReset(RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN)
+		e1:SetReset(RESET_PHASE|PHASE_STANDBY|RESET_SELF_TURN)
 		Duel.RegisterEffect(e1,tp)
 	end
 end
 function s.retcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ReturnToField(e:GetLabelObject())

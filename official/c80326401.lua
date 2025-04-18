@@ -1,5 +1,5 @@
 --青き眼の祈り
---Prayers with Eyes of Blue
+--Wishes for Eyes of Blue
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,{id,1})
-	e2:SetCost(aux.SelfBanishCost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.eqtg)
 	e2:SetOperation(s.eqop)
 	c:RegisterEffect(e2)

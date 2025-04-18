@@ -1,4 +1,5 @@
 --ガジェット・アームズ
+--Gadget Arms
 local s,id=GetID()
 function s.initial_effect(c)
 	--flip
@@ -11,9 +12,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x26}
+s.listed_series={SET_MORPHTRONIC}
 function s.filter(c)
-	return c:IsSetCard(0x26) and c:IsSpellTrap() and c:IsAbleToHand()
+	return c:IsSetCard(SET_MORPHTRONIC) and c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc) end

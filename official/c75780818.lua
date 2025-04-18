@@ -1,12 +1,12 @@
--- ダイナ・タンク
--- Dyna Tank
--- Scripted by Hatter
+--ダイナ・タンク
+--Dyna Tank
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	-- 1 Machine monster + 1 Dinosaur monster
+	--1 Machine monster + 1 Dinosaur monster
 	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsRace,RACE_MACHINE),aux.FilterBoolFunctionEx(Card.IsRace,RACE_DINOSAUR))
-	-- Gain ATK
+	--Gain ATK
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_SINGLE)
 	e0:SetCode(EFFECT_MATERIAL_CHECK)
@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.atkcon)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
-	-- Replace target
+	--Replace target
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_QUICK_O)
@@ -31,7 +31,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.tartg)
 	e2:SetOperation(s.tarop)
 	c:RegisterEffect(e2)
-	-- Special Summon 1 Dinosaur monster
+	--Special Summon 1 Dinosaur monster
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -49,18 +49,18 @@ function s.atkval(e,c)
 	e:SetLabel(#g==1 and g:GetFirst():GetBaseAttack() or 0)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)
+	return e:GetHandler():IsFusionSummoned()
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local atk=e:GetLabelObject():GetLabel()
 	if atk>0 then
 		local c=e:GetHandler()
-		-- Increase ATK
+		--Increase ATK
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(atk)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		c:RegisterEffect(e1)
 	end
 end

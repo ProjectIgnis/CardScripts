@@ -1,4 +1,5 @@
 --コアキメイル・スピード
+--Koa'ki Meiru Speeder
 local s,id=GetID()
 function s.initial_effect(c)
 	--cost
@@ -26,7 +27,7 @@ function s.initial_effect(c)
 end
 s.listed_names={36623431}
 function s.mtcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.cfilter1(c)
 	return c:IsCode(36623431) and c:IsAbleToGraveAsCost()
@@ -68,7 +69,7 @@ function s.filter(c)
 	return c:IsCode(36623431) and not c:IsPublic()
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep==tp and Duel.GetTurnPlayer()==tp and Duel.GetCurrentPhase()==PHASE_DRAW
+	return ep==tp and Duel.IsTurnPlayer(tp) and Duel.IsPhase(PHASE_DRAW)
 end
 function s.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return eg:IsExists(s.filter,1,nil) end

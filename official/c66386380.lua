@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e3:SetCode(EFFECT_CHANGE_CODE)
-	e3:SetRange(LOCATION_MZONE+LOCATION_GRAVE)
+	e3:SetRange(LOCATION_MZONE|LOCATION_GRAVE)
 	e3:SetValue(CARD_HARPIE_LADY)
 	c:RegisterEffect(e3)
 	--Special Summon
@@ -36,7 +36,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.ssop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x64}
+s.listed_series={SET_HARPIE}
 s.listed_names={CARD_HARPIE_LADY,CARD_HARPIE_LADY_SISTERS}
 function s.regtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -49,7 +49,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCountLimit(1)
 	e1:SetCondition(s.thcon)
 	e1:SetOperation(s.thop)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.thfilter(c)
@@ -68,7 +68,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x64) and c:IsLevelAbove(5)
+	return c:IsFaceup() and c:IsSetCard(SET_HARPIE) and c:IsLevelAbove(5)
 end
 function s.sscon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil)

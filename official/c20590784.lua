@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0xa3}
+s.listed_series={SET_STARDUST}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttacker()
 	return at:GetControler()~=tp and Duel.GetAttackTarget()==nil
@@ -22,12 +22,12 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local at=Duel.GetAttacker()
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1)
 		and at:IsOnField() and at:GetAttack()>=Duel.GetLP(tp)
-		and at:IsSummonType(SUMMON_TYPE_SPECIAL) end
+		and at:IsSpecialSummoned() end
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
-	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA+LOCATION_GRAVE)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA|LOCATION_GRAVE)
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0xa3) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_STARDUST) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 	and ((c:IsLocation(LOCATION_GRAVE) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0)
 	or (c:IsLocation(LOCATION_EXTRA) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0))
 end

@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
 	e1:SetHintTiming(0,TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E)
-	e1:SetCost(s.rmcost)
+	e1:SetCost(Cost.PayLP(2000))
 	e1:SetTarget(s.rmtg)
 	e1:SetOperation(s.rmop)
 	c:RegisterEffect(e1)
@@ -62,10 +62,6 @@ function s.contactfil(tp)
 end
 function s.contactop(g)
 	Duel.Remove(g,POS_FACEUP,REASON_COST|REASON_MATERIAL)
-end
-function s.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,2000) end
-	Duel.PayLPCost(tp,2000)
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,LOCATION_ONFIELD|LOCATION_GRAVE,LOCATION_ONFIELD|LOCATION_GRAVE,1,e:GetHandler()) end

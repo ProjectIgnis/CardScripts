@@ -36,7 +36,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.damop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x8}
+s.listed_series={SET_HERO}
 function s.atlimit(e,c)
 	local tp=e:GetHandlerPlayer()
 	return c:IsControler(1-tp) and c:IsLevelAbove(6) and not c:IsImmuneToEffect(e)
@@ -52,11 +52,11 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCountLimit(1)
 	e1:SetCondition(s.thcon)
 	e1:SetOperation(s.thop)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x8) and c:IsAbleToHand()
+	return c:IsSetCard(SET_HERO) and c:IsAbleToHand()
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_GRAVE,0,1,nil)

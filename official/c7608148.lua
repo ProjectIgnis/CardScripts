@@ -62,7 +62,7 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
-		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
+		e1:SetReset(RESET_EVENT|RESETS_REDIRECT)
 		e1:SetValue(LOCATION_REMOVED)
 		c:RegisterEffect(e1)
 		if tc:IsRelateToEffect(e) and tc:IsFaceup() and Duel.SendtoHand(tc,nil,REASON_EFFECT)>0
@@ -75,7 +75,7 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetTargetRange(1,0)
 			e2:SetValue(s.aclimit)
 			e2:SetLabel(tc:GetCode())
-			e2:SetReset(RESET_PHASE+PHASE_END)
+			e2:SetReset(RESET_PHASE|PHASE_END)
 			Duel.RegisterEffect(e2,tp)
 		end
 	end

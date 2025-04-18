@@ -1,7 +1,6 @@
 --奇跡のマジック・ゲート
 --Magic Gate of Miracles
 --Updated by Larry126
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Change 1 of opponent's attack positions to defense position, then take control of it
@@ -39,7 +38,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetRange(LOCATION_MZONE)
 			e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 			e1:SetValue(1)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			g:GetFirst():RegisterEffect(e1)
 		end
 	end

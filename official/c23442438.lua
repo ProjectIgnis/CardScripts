@@ -31,7 +31,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_WARRIOR,SET_SYNCHRON,SET_STARDUST}
 function s.cfilter(c,e,tp)
-	return c:IsFaceup() and c:IsType(TYPE_SYNCHRO) and c:IsSummonType(SUMMON_TYPE_SYNCHRO)
+	return c:IsFaceup() and c:IsType(TYPE_SYNCHRO) and c:IsSynchroSummoned()
 		and c:IsSetCard({SET_WARRIOR,SET_SYNCHRON,SET_STARDUST}) and c:IsControler(tp)
 		and c:GetMaterial():IsExists(s.spfilter,1,nil,e,tp,c)
 end

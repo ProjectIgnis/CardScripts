@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1)
 	e3:SetCondition(s.dacon)
-	e3:SetCost(s.dacost)
+	e3:SetCost(Cost.Detach(1))
 	e3:SetOperation(s.daop)
 	c:RegisterEffect(e3,false,REGISTER_FLAG_DETACH_XMAT)
 end
@@ -46,7 +46,7 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetFlagEffect(id)==0 end
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE,0,1)
+	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_DAMAGE,0,1)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateAttack()
@@ -75,12 +75,8 @@ function s.dafilter(c,atk)
 	return c:IsFaceup() and c:GetAttack()>atk
 end
 function s.dacon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_MAIN1
+	return Duel.IsPhase(PHASE_MAIN1)
 		and Duel.IsExistingMatchingCard(s.dafilter,tp,0,LOCATION_MZONE,1,nil,e:GetHandler():GetAttack())
-end
-function s.dacost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.daop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -91,7 +87,7 @@ function s.daop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT+EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DIRECT_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		c:RegisterEffect(e1)
 	end
 end

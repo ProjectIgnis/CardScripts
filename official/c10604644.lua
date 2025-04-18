@@ -1,9 +1,9 @@
--- セリオンズ“キング”レギュラス
--- Therions' "King" Regulus
--- Scripted by Hatter
+--セリオンズ“キング”レギュラス
+--Therion "King" Regulus
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Special Summon self
+	--Special Summon self
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_EQUIP)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 	aux.AddEREquipLimit(c,nil,s.eqval,Card.EquipByEffectAndLimitRegister,e1)
-	-- Negate effect
+	--Negate effect
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DISABLE)
@@ -28,25 +28,25 @@ function s.initial_effect(c)
 	e2:SetTarget(s.distg)
 	e2:SetOperation(s.disop)
 	c:RegisterEffect(e2)
-	-- Equipped monster gains ATK
+	--Equipped monster gains ATK
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_EQUIP)
 	e3:SetCode(EFFECT_UPDATE_ATTACK)
-	e3:SetCondition(function(e) return e:GetHandler():GetEquipTarget():IsSetCard(0x17b) end)
+	e3:SetCondition(function(e) return e:GetHandler():GetEquipTarget():IsSetCard(SET_THERION) end)
 	e3:SetValue(700)
 	c:RegisterEffect(e3)
-	-- Equipped monster gains effect
+	--Equipped monster gains effect
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_GRANT)
 	e4:SetRange(LOCATION_SZONE)
 	e4:SetTargetRange(LOCATION_MZONE,0)
-	e4:SetTarget(function(e,c) return c==e:GetHandler():GetEquipTarget() and c:IsSetCard(0x17b) end)
+	e4:SetTarget(function(e,c) return c==e:GetHandler():GetEquipTarget() and c:IsSetCard(SET_THERION) end)
 	e4:SetLabelObject(e2)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x17b}
+s.listed_series={SET_THERION}
 function s.eqfilter(c)
-	return c:IsMonster() and (c:IsSetCard(0x17b) or c:IsRace(RACE_MACHINE))
+	return c:IsMonster() and (c:IsSetCard(SET_THERION) or c:IsRace(RACE_MACHINE))
 end
 function s.eqval(ec,c,tp)
 	return ec:IsControler(tp) and s.eqfilter(ec)
@@ -78,14 +78,14 @@ function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp and Duel.IsChainDisablable(ev)
 end
 function s.discostfilter(c)
-	return c:IsSetCard(0x17b) and c:IsOriginalType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(SET_THERION) and c:IsOriginalType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
 		and (c:IsFaceup() or c:IsLocation(LOCATION_HAND))
 end
 function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.discostfilter,tp,LOCATION_ONFIELD+LOCATION_HAND,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.discostfilter,tp,LOCATION_ONFIELD|LOCATION_HAND,0,1,nil) end
 	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,s.discostfilter,tp,LOCATION_ONFIELD+LOCATION_HAND,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.discostfilter,tp,LOCATION_ONFIELD|LOCATION_HAND,0,1,1,nil)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)

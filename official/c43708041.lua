@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_DECREASE_TRIBUTE)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTargetRange(LOCATION_HAND,0)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x107d))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_HAZY_FLAME))
 	e2:SetValue(0x1)
 	c:RegisterEffect(e2)
 	--salvage
@@ -29,14 +29,14 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x7d,0x107d}
+s.listed_series={SET_HAZY,SET_HAZY_FLAME}
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsAbleToGraveAsCost() and c:IsStatus(STATUS_EFFECT_ENABLED) end
 	Duel.SendtoGrave(c,REASON_COST)
 end
 function s.filter(c)
-	return c:IsSetCard(0x7d) and c:GetCode()~=id and c:IsAbleToHand()
+	return c:IsSetCard(SET_HAZY) and c:GetCode()~=id and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.filter(chkc) end

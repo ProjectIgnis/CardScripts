@@ -1,9 +1,10 @@
 --EMガトリングール
+--Performapal Gatlinghoul
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	Fusion.AddProcFun2(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x9f),s.ffilter,true)
+	Fusion.AddProcFun2(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_PERFORMAPAL),s.ffilter,true)
 	--destroy
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -23,13 +24,13 @@ function s.initial_effect(c)
 	e2:SetLabelObject(e1)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x9f}
-s.material_setcode=0x9f
+s.listed_series={SET_PERFORMAPAL}
+s.material_setcode=SET_PERFORMAPAL
 function s.ffilter(c,fc,sumtype,tp)
 	return c:IsAttribute(ATTRIBUTE_DARK,fc,sumtype,tp) and c:IsLevelAbove(5)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)
+	return e:GetHandler():IsFusionSummoned()
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD,LOCATION_ONFIELD)>0 end

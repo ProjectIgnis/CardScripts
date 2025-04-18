@@ -1,4 +1,5 @@
 --戦線復帰
+--Back to the Front
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

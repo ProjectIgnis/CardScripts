@@ -1,4 +1,5 @@
 --セキュリティー・ボール
+--Security Orb
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -24,7 +25,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return tp~=Duel.GetTurnPlayer()
+	return Duel.IsTurnPlayer(1-tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local tg=Duel.GetAttacker()
@@ -40,7 +41,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return (r&REASON_DESTROY)~=0 and rp~=tp and re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
+	return (r&REASON_DESTROY)~=0 and rp~=tp and re:IsSpellTrapEffect()
 		and e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 		and e:GetHandler():IsPreviousPosition(POS_FACEDOWN)
 end

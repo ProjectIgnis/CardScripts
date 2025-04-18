@@ -4,7 +4,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0x7),4)
+	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_ANCIENT_GEAR),4)
 	--special summon condition
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -42,15 +42,15 @@ function s.initial_effect(c)
 	e5:SetCode(EFFECT_PIERCE)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x7}
-s.material_setcode=0x7
+s.listed_series={SET_ANCIENT_GEAR}
+s.material_setcode=SET_ANCIENT_GEAR
 function s.efilter(e,te)
-	return te:IsActiveType(TYPE_SPELL+TYPE_TRAP)
+	return te:IsSpellTrapEffect()
 end
 function s.actcon(e)
 	local ph=Duel.GetCurrentPhase()
-	return ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE
+	return Duel.IsBattlePhase()
 end
 function s.actlimit(e,re,tp)
-	return re:IsActiveType(TYPE_MONSTER)
+	return re:IsMonsterEffect()
 end

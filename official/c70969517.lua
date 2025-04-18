@@ -26,9 +26,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.damop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x1b}
+s.listed_series={SET_PHANTOM_BEAST}
 function s.otfilter(c,tp)
-	return c:IsSetCard(0x1b) and (c:IsControler(tp) or c:IsFaceup())
+	return c:IsSetCard(SET_PHANTOM_BEAST) and (c:IsControler(tp) or c:IsFaceup())
 end
 function s.damtg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -37,7 +37,7 @@ function s.damtg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,500)
 end
 function s.damcon2(e,tp,eg,ep,ev,re,r,rp)
-	return (r&0x41)==0x41 and rp~=tp and e:GetHandler():IsPreviousControler(tp)
+	return (r&(REASON_DESTROY|REASON_EFFECT))==(REASON_DESTROY|REASON_EFFECT) and rp~=tp and e:GetHandler():IsPreviousControler(tp)
 end
 function s.damtg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

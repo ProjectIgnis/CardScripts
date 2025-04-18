@@ -1,4 +1,5 @@
 --Kozmo－エピローグ
+--Kozmourning
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -20,13 +21,13 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetRange(LOCATION_GRAVE)
-	e3:SetCost(aux.bfgcost)
+	e3:SetCost(Cost.SelfBanish)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xd2}
+s.listed_series={SET_KOZMO}
 function s.tdtg(e,c)
-	return c:IsSetCard(0xd2)
+	return c:IsSetCard(SET_KOZMO)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
@@ -35,16 +36,16 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_REVERSE_DAMAGE)
 	e1:SetTargetRange(1,0)
 	e1:SetValue(s.valcon)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.valcon(e,re,r,rp,rc)
 	if (r&REASON_BATTLE)~=0 then
 		local tp=e:GetHandlerPlayer()
 		local bc=rc:GetBattleTarget()
-		if bc and bc:IsSetCard(0xd2) and bc:IsControler(tp)
+		if bc and bc:IsSetCard(SET_KOZMO) and bc:IsControler(tp)
 			and Duel.GetFlagEffect(tp,id)==0 then
-			Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+			Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1)
 			return true
 		end
 	end

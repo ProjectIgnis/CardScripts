@@ -1,5 +1,5 @@
 --リンケージ・ホール
---Linkage Hole
+--Link Hole
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -32,4 +32,3 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(g,REASON_EFFECT)
 	end
 end
-

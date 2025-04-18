@@ -1,7 +1,6 @@
 --機塊リユース
 --Appliancer Reuse
 --Anime version scripted by pyrQ, updated by Larry126
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon 1 "Appliancer" from GY
@@ -14,10 +13,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x14a}
-
+s.listed_series={SET_APPLIANCER}
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x14a) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_APPLIANCER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.spfilter(chkc,e,tp) end
@@ -36,7 +34,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
-		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
+		e1:SetReset(RESET_EVENT|RESETS_REDIRECT)
 		e1:SetValue(LOCATION_DECKBOT)
 		tc:RegisterEffect(e1)
 		Duel.SpecialSummonComplete()

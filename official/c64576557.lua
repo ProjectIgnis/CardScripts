@@ -38,7 +38,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0xe2}
+s.listed_series={SET_TRIAMID}
 s.listed_names={id}
 function s.thconfilter(c)
 	return c:IsFaceup() and c:IsLocation(LOCATION_FZONE) and c:IsSpell() and c:IsType(TYPE_FIELD)
@@ -51,7 +51,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thfilter(c)
-	return c:IsSetCard(0xe2) and c:IsSpellTrap() and c:IsAbleToHand() and not c:IsCode(id)
+	return c:IsSetCard(SET_TRIAMID) and c:IsSpellTrap() and c:IsAbleToHand() and not c:IsCode(id)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -73,7 +73,7 @@ function s.spconfilter(c,e,tp,eg)
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,eg)
 end
 function s.spfilter(c,e,tp,eg)
-	return c:IsSetCard(0xe2) and c:IsMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_TRIAMID) and c:IsMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and not eg:IsExists(Card.IsCode,1,nil,c:GetCode())
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)

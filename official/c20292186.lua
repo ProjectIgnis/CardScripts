@@ -42,7 +42,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.dcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return Duel.IsTurnPlayer(1-tp)
 end
 function s.dop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
@@ -50,13 +50,12 @@ function s.dop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e1:SetDescription(aux.Stringid(id,2))
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	e1:SetTargetRange(0,1)
 	e1:SetTarget(s.sumlimit)
 	Duel.RegisterEffect(e1,tp)
 	--lizard check
-	aux.addTempLizardCheck(e:GetHandler(),tp,aux.TRUE,RESET_PHASE+PHASE_END,0,0xff)
-
+	aux.addTempLizardCheck(e:GetHandler(),tp,aux.TRUE,RESET_PHASE|PHASE_END,0,0xff)
 end
 function s.sumlimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return c:IsLocation(LOCATION_EXTRA)

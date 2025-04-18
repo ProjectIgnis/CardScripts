@@ -1,4 +1,5 @@
 --神樹の守護獣－牙王
+--Leo, the Keeper of the Sacred Tree
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon

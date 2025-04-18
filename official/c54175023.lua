@@ -1,4 +1,5 @@
 --ディメンション・ガーディアン
+--Dimension Guardian
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddPersistentProcedure(c,0,aux.FilterBoolFunction(Card.IsPosition,POS_FACEUP_ATTACK))

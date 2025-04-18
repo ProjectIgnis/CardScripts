@@ -1,4 +1,5 @@
 --氷結界の破術師
+--Warlock of the Ice Barrier
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot activate
@@ -19,18 +20,17 @@ function s.initial_effect(c)
 	e3:SetOperation(s.aclimset)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x2f}
+s.listed_series={SET_ICE_BARRIER}
 function s.con(e)
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x2f),e:GetHandler():GetControler(),LOCATION_MZONE,0,1,e:GetHandler())
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_ICE_BARRIER),e:GetHandler():GetControler(),LOCATION_MZONE,0,1,e:GetHandler())
 end
 function s.aclimit(e,re,tp)
-	if not re:IsHasType(EFFECT_TYPE_ACTIVATE) or not re:IsActiveType(TYPE_SPELL) then return false end
+	if not re:IsHasType(EFFECT_TYPE_ACTIVATE) or not re:IsSpellEffect() then return false end
 	local c=re:GetHandler()
 	return not c:IsLocation(LOCATION_SZONE) or c:GetFlagEffect(id)>0
 end
 function s.aclimset(e,tp,eg,ep,ev,re,r,rp)
-	local tc=eg:GetFirst()
-	for tc in aux.Next(eg) do
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN,0,1)
+	for tc in eg:Iter() do
+		tc:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END|RESET_OPPO_TURN,0,1)
 	end
 end

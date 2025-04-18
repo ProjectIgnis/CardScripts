@@ -45,7 +45,7 @@ function s.lcheck(g,lc,sumtype,tp)
 end
 function s.lkcon(e)
 	local c=e:GetHandler()
-	return c:IsStatus(STATUS_SPSUMMON_TURN) and c:IsSummonType(SUMMON_TYPE_LINK)
+	return c:IsStatus(STATUS_SPSUMMON_TURN) and c:IsLinkSummoned()
 end
 function s.spfilter(c,e,tp,ex)
 	return c:IsCanBeSpecialSummoned(e,0,tp,false,false) and (c:IsLevel(2) or (ex and (c:IsRank(2) or c:IsLink(2))))

@@ -21,18 +21,18 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e2:SetCode(EVENT_CHAINING)
 	e2:SetCondition(s.discon)
-	e2:SetCost(aux.dxmcostgen(1,1,nil))
+	e2:SetCost(Cost.Detach(1,1,nil))
 	e2:SetTarget(s.distg)
 	e2:SetOperation(s.disop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xf1}
+s.listed_series={SET_ZOODIAC}
 s.listed_names={id}
 function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
 	return (r&REASON_EFFECT+REASON_BATTLE)~=0
 end
 function s.tdfilter(c)
-	return c:IsSetCard(0xf1) and not c:IsCode(id) and c:IsAbleToDeck()
+	return c:IsSetCard(SET_ZOODIAC) and not c:IsCode(id) and c:IsAbleToDeck()
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.tdfilter(chkc) end
@@ -51,7 +51,7 @@ function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:GetOriginalRace()==RACE_BEASTWARRIOR
 		and not c:IsStatus(STATUS_BATTLE_DESTROYED) and ep==1-tp
-		and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev)
+		and re:IsMonsterEffect() and Duel.IsChainNegatable(ev)
 		and re:IsHasProperty(EFFECT_FLAG_CARD_TARGET)
 		and Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS) and Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS):IsContains(c)
 end

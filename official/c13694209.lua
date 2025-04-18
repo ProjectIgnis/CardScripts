@@ -1,5 +1,5 @@
 --教導の神徒
---Dogmatika Hashashiyan
+--Dogmatika Ashiyan
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -41,7 +41,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.atkop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x146}
+s.listed_series={SET_DOGMATIKA}
 s.listed_names={id}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(Card.IsType,1,nil,TYPE_EXTRA)
@@ -62,7 +62,7 @@ function s.thcond(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonLocation(LOCATION_HAND)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x146) and c:IsAbleToHand() and not c:IsCode(id)
+	return c:IsSetCard(SET_DOGMATIKA) and c:IsAbleToHand() and not c:IsCode(id)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.thfilter(chkc) end
@@ -81,17 +81,17 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker():IsControler(1-tp)
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x146),tp,LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_DOGMATIKA),tp,LOCATION_MZONE,0,1,nil) end
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,0x146),tp,LOCATION_MZONE,0,nil)
+	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,SET_DOGMATIKA),tp,LOCATION_MZONE,0,nil)
 	for tc in aux.Next(g) do
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(500)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 	end
 end

@@ -1,4 +1,5 @@
 --帝王の凍気
+--Frost Blast of the Monarchs
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -24,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xbe}
+s.listed_series={SET_MONARCH}
 function s.mfilter(c)
 	return c:IsFaceup() and c:IsAttackAbove(2400) and c:GetDefense()==1000
 end
@@ -48,7 +49,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c)
-	return c:IsSetCard(0xbe) and c:IsSpellTrap() and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(SET_MONARCH) and c:IsSpellTrap() and c:IsAbleToRemoveAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost()

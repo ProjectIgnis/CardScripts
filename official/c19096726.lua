@@ -1,22 +1,22 @@
--- 鉄獣鳥 メルクーリエ
--- Tri-Brigade Mercourier
--- Scripted by Hatter
+--鉄獣鳥 メルクーリエ
+--Tri-Brigade Mercourier
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Negate
+	--Negate
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DISABLE)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_CHAINING)
-	e1:SetRange(LOCATION_HAND+LOCATION_MZONE)
+	e1:SetRange(LOCATION_HAND|LOCATION_MZONE)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(s.negcon)
-	e1:SetCost(s.negcost)
+	e1:SetCost(Cost.SelfToGrave)
 	e1:SetTarget(s.negtg)
 	e1:SetOperation(s.negop)
 	c:RegisterEffect(e1)
-	-- Search
+	--Search
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
@@ -33,13 +33,8 @@ function s.negconfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_FUSION) and c:ListsCodeAsMaterial(CARD_ALBAZ)
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
-	return rp==1-tp and re:IsActiveType(TYPE_MONSTER)
+	return rp==1-tp and re:IsMonsterEffect()
 		and Duel.IsExistingMatchingCard(s.negconfilter,tp,LOCATION_MZONE,0,1,nil,tp)
-end
-function s.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(c,REASON_COST)
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsChainDisablable(ev) and not re:GetHandler():IsStatus(STATUS_DISABLED) end

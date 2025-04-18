@@ -1,8 +1,9 @@
 --RR－デビル・イーグル
+--Raidraptor - Fiend Eagle
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
-	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0xba),3,2)
+	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_RAIDRAPTOR),3,2)
 	c:EnableReviveLimit()
 	--damage
 	local e1=Effect.CreateEffect(c)
@@ -11,19 +12,15 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCountLimit(1,id)
-	e1:SetCost(s.cost)
+	e1:SetCost(Cost.Detach(1))
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
 end
-s.listed_series={0xba}
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
-end
+s.listed_series={SET_RAIDRAPTOR}
 function s.filter(c)
 	return c:IsFaceup() and c:GetBaseAttack()>0
-		and c:IsSummonType(SUMMON_TYPE_SPECIAL)
+		and c:IsSpecialSummoned()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) end

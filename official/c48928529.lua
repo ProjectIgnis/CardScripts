@@ -1,6 +1,5 @@
 --Ｎｏ．８３ ギャラクシー・クィーン
 --Number 83: Galaxy Queen
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -13,16 +12,11 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetCountLimit(1)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCost(s.cost)
+	e1:SetCost(Cost.Detach(1))
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
 end
 s.xyz_number=83
-
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
-end
 function s.operation(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetFieldGroup(tp,LOCATION_MZONE,0)
 	local tc=g:GetFirst()
@@ -33,7 +27,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp,chk)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,2)
+		e1:SetReset(RESETS_STANDARD_PHASE_END,2)
 		e1:SetValue(1)
 		tc:RegisterEffect(e1)
 		--Inflict piercing damage
@@ -42,7 +36,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp,chk)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e2:SetCode(EFFECT_PIERCE)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,2)
+		e2:SetReset(RESETS_STANDARD_PHASE_END,2)
 		tc:RegisterEffect(e2)
 	end
 end

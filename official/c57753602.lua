@@ -1,4 +1,5 @@
 --ジェムフラッシュエナジー
+--Gem Flash Energy
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -15,7 +16,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCountLimit(1)
-	e2:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e2:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e2:SetCondition(s.damcon)
 	e2:SetTarget(s.damtg)
 	e2:SetOperation(s.damop)
@@ -25,7 +26,7 @@ function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return tp==Duel.GetTurnPlayer()
 end
 function s.filter(c)
-	return c:IsFaceup() and (c:GetType()&0x20002)==0x20002
+	return c:IsFaceup() and c:IsContinuousSpell()
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

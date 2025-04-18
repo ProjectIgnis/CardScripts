@@ -7,7 +7,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_CHAINING)
 	e1:SetCondition(s.condition)
-	e1:SetCost(s.cost)
+	e1:SetCost(Cost.PayLP(1000))
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
@@ -15,10 +15,6 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
 	return ep==1-tp and rc:IsNormalSpell() and re:IsHasType(EFFECT_TYPE_ACTIVATE)
 		and Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)>0
-end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,1000) end
-	Duel.PayLPCost(tp,1000)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Group.CreateGroup()
@@ -30,6 +26,6 @@ function s.repop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(tp,0,LOCATION_HAND)
 	if #g>0 then
 		local sg=g:RandomSelect(1-tp,1,nil)
-		Duel.SendtoGrave(sg,REASON_EFFECT+REASON_DISCARD)
+		Duel.SendtoGrave(sg,REASON_EFFECT|REASON_DISCARD)
 	end
 end

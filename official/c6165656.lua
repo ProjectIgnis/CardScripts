@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1)
 	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e3:SetCost(s.cost)
+	e3:SetCost(Cost.Detach(1))
 	e3:SetTarget(s.target)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3,false,REGISTER_FLAG_DETACH_XMAT)
@@ -42,7 +42,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.winop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x95}
+s.listed_series={SET_RANK_UP_MAGIC}
 s.listed_names={48995978}
 s.xyz_number=88
 s.rum_limit=function(c,e)
@@ -65,11 +65,7 @@ s.rum_xyzsummon=function(c)
 end
 --target check is in RUM magic cards
 function s.splimit(e,se,sp,st)
-	return se:GetHandler():IsSetCard(0x95) and se:GetHandler():IsSpell()
-end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
+	return se:GetHandler():IsSetCard(SET_RANK_UP_MAGIC) and se:GetHandler():IsSpell()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -82,7 +78,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Damage(p,d,REASON_EFFECT)
 end
 function s.wincon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and Duel.GetLP(1-tp)<=2000 and e:GetHandler():GetOverlayCount()==0
+	return Duel.IsTurnPlayer(tp) and Duel.GetLP(1-tp)<=2000 and e:GetHandler():GetOverlayCount()==0
 end
 function s.winop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Win(tp,WIN_REASON_DISASTER_LEO)

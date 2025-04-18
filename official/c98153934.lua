@@ -25,9 +25,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.repop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x10db}
+s.listed_series={SET_THE_PHANTOM_KNIGHTS}
 function s.filter(c,p)
-	return c:IsFaceup() and c:IsLocation(LOCATION_MZONE) and c:IsSetCard(0x10db) and c:IsControler(p)
+	return c:IsFaceup() and c:IsLocation(LOCATION_MZONE) and c:IsSetCard(SET_THE_PHANTOM_KNIGHTS) and c:IsControler(p)
 end
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
 	if not re or not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
@@ -42,7 +42,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetRange(LOCATION_SZONE)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetLabelObject(re)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET+RESET_CHAIN)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD-RESET_TURN_SET|RESET_CHAIN)
 	e1:SetCondition(s.damcon)
 	e1:SetOperation(s.damop)
 	c:RegisterEffect(e1)

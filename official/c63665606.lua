@@ -1,4 +1,5 @@
 --虚無の波動
+--Wave-Motion Inferno
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -13,7 +14,7 @@ function s.initial_effect(c)
 	e2:SetTargetRange(LOCATION_MZONE,0)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetCondition(s.atcon)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0xb))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_INFERNITY))
 	e2:SetValue(400)
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
@@ -25,18 +26,14 @@ function s.initial_effect(c)
 	e4:SetCategory(CATEGORY_TOGRAVE)
 	e4:SetType(EFFECT_TYPE_IGNITION)
 	e4:SetRange(LOCATION_SZONE)
-	e4:SetCost(s.discost)
+	e4:SetCost(Cost.SelfToGrave)
 	e4:SetTarget(s.distg)
 	e4:SetOperation(s.disop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0xb}
+s.listed_series={SET_INFERNITY}
 function s.atcon(e)
 	return Duel.GetFieldGroupCount(e:GetHandlerPlayer(),LOCATION_HAND,0)==0
-end
-function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)>0 end

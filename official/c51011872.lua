@@ -1,9 +1,9 @@
 --トリックスター・ブラッディマリー
---Trickstar Bloody Mary
+--Trickstar Crimson Heart
 local s,id=GetID()
 function s.initial_effect(c)
 	--link summon
-	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0xfb),2,2)
+	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_TRICKSTAR),2,2)
 	c:EnableReviveLimit()
 	--recover
 	local e1=Effect.CreateEffect(c)
@@ -28,9 +28,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.drop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xfb}
+s.listed_series={SET_TRICKSTAR}
 function s.cfilter(c,g)
-	return c:IsSetCard(0xfb) and g:IsContains(c)
+	return c:IsSetCard(SET_TRICKSTAR) and g:IsContains(c)
 end
 function s.reccon(e,tp,eg,ep,ev,re,r,rp)
 	local lg=e:GetHandler():GetLinkedGroup()
@@ -41,11 +41,11 @@ function s.recop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Recover(tp,200,REASON_EFFECT)
 end
 function s.costfilter(c)
-	return c:IsDiscardable() and c:IsSetCard(0xfb)
+	return c:IsDiscardable() and c:IsSetCard(SET_TRICKSTAR)
 end
 function s.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,s.costfilter,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,s.costfilter,1,1,REASON_COST|REASON_DISCARD)
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=1

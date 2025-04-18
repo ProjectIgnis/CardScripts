@@ -37,7 +37,7 @@ function s.initial_effect(c)
 end
 function s.reg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	e:GetHandler():RegisterFlagEffect(id,RESET_PHASE+PHASE_END,EFFECT_FLAG_OATH,1)
+	e:GetHandler():RegisterFlagEffect(id,RESET_PHASE|PHASE_END,EFFECT_FLAG_OATH,1)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(id)~=0
@@ -71,7 +71,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCost(s.cost)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
-	e1:SetReset(RESET_EVENT+0x16c0000+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_EVENT|RESET_TOGRAVE|RESET_REMOVE|RESET_TOHAND|RESET_TODECK|RESET_TOFIELD|RESET_PHASE|PHASE_END)
 	e:GetHandler():RegisterEffect(e1)
 end
 function s.cfilter(c)
@@ -79,7 +79,7 @@ function s.cfilter(c)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_COST|REASON_DISCARD)
 end
 function s.filter(c)
 	return c:IsRace(RACE_PLANT) and c:IsLevelBelow(4) and c:IsAbleToHand()

@@ -1,4 +1,5 @@
 --Kozmo－エメラルドポリス
+--Kozmotown
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -39,9 +40,9 @@ function s.initial_effect(c)
 	e4:SetOperation(s.thop2)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0xd2}
+s.listed_series={SET_KOZMO}
 function s.thfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xd2) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsFaceup() and c:IsSetCard(SET_KOZMO) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_REMOVED) and s.thfilter(chkc) end
@@ -62,7 +63,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.drfilter(c)
-	return c:IsSetCard(0xd2) and c:IsMonster() and c:IsAbleToDeck()
+	return c:IsSetCard(SET_KOZMO) and c:IsMonster() and c:IsAbleToDeck()
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp)
@@ -88,7 +89,7 @@ function s.thcon2(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsReason(REASON_EFFECT) and c:IsPreviousLocation(LOCATION_FZONE)
 end
 function s.thfilter2(c)
-	return c:IsSetCard(0xd2) and c:IsAbleToHand()
+	return c:IsSetCard(SET_KOZMO) and c:IsAbleToHand()
 end
 function s.thtg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter2,tp,LOCATION_DECK,0,1,nil) end

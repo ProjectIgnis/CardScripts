@@ -1,4 +1,5 @@
 --霞の谷の神風
+--Divine Wind of Mist Valley
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

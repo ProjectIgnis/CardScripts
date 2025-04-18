@@ -2,7 +2,7 @@
 --Super Anti-Kaiju War Machine Mecha-Thunder-King
 local s,id=GetID()
 function s.initial_effect(c)
-	c:SetUniqueOnField(1,0,aux.FilterBoolFunction(Card.IsSetCard,0xd3),LOCATION_MZONE)
+	c:SetUniqueOnField(1,0,aux.FilterBoolFunction(Card.IsSetCard,SET_KAIJU),LOCATION_MZONE)
 	--Banish 1 "Kaiju" monster and Special Summon 1 monster from the GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetHintTiming(0,TIMING_MAIN_END)
 	e1:SetCondition(s.spcon)
-	e1:SetCost(s.spcost)
+	e1:SetCost(Cost.SelfDiscard)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-	e2:SetValue(function (e,c) return c:IsSetCard(0xd3) end)
+	e2:SetValue(function (e,c) return c:IsSetCard(SET_KAIJU) end)
 	c:RegisterEffect(e2)
 	--Unnaffected by other "Kaiju" cards' effects
 	local e3=Effect.CreateEffect(c)
@@ -43,16 +43,12 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop2)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0xd3}
+s.listed_series={SET_KAIJU}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2
-end
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsDiscardable() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
+	return Duel.IsMainPhase()
 end
 function s.rmfilter(c,e)
-	return c:IsFaceup() and c:IsSetCard(0xd3) and c:IsAbleToRemove() and c:GetOwner()~=e:GetHandler():GetControler()
+	return c:IsFaceup() and c:IsSetCard(SET_KAIJU) and c:IsAbleToRemove() and c:GetOwner()~=e:GetHandler():GetControler()
 end
 function s.spfilter(c,e,tp)
 	return c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
@@ -76,7 +72,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.efilter(e,te)
-	return te:GetHandler():IsSetCard(0xd3)
+	return te:GetHandler():IsSetCard(SET_KAIJU)
 end
 function s.spcond2(e,tp,eg,ep,ev,re,r,rp)
 	return tp==Duel.GetTurnPlayer()

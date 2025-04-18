@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={CARD_MONSTER_REBORN,10000000}
+s.listed_names={CARD_MONSTER_REBORN,CARD_OBELISK}
 function s.setcon(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttacker()
 	return at:IsControler(1-tp)
@@ -54,14 +54,14 @@ function s.spcfilter(c,tp)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return aux.bfgcost(e,tp,eg,ep,ev,re,r,rp,chk)
-		and Duel.IsExistingMatchingCard(s.spcfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,nil,tp) end
+		and Duel.IsExistingMatchingCard(s.spcfilter,tp,LOCATION_HAND|LOCATION_ONFIELD,0,1,nil,tp) end
 	aux.bfgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,s.spcfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,1,nil,tp)
+	local g=Duel.SelectMatchingCard(tp,s.spcfilter,tp,LOCATION_HAND|LOCATION_ONFIELD,0,1,1,nil,tp)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function s.spfilter(c,e,tp)
-	return c:IsCode(10000000) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return c:IsCode(CARD_OBELISK) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
@@ -81,7 +81,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetTargetRange(0,LOCATION_MZONE)
 		e1:SetCondition(s.effcon)
 		e1:SetOwnerPlayer(tp)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_MUST_ATTACK_MONSTER)

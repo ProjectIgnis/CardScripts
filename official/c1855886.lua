@@ -1,5 +1,5 @@
 --スカー・ヴェンデット
---Scar Vendread
+--Scar of the Vendread
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -29,9 +29,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x106}
+s.listed_series={SET_VENDREAD}
 function s.thfilter(c)
-	return c:IsSetCard(0x106) and c:IsSpellTrap() and c:IsAbleToHand()
+	return c:IsSetCard(SET_VENDREAD) and c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -53,9 +53,9 @@ function s.cfilter(c,tp)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,c,tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,c,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,c,tp)
+	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,1,c,tp)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -73,8 +73,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 		e1:SetRange(LOCATION_MZONE)
 		e1:SetAbsoluteRange(tp,1,0)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-		e1:SetTarget(function(_,c) return not c:IsSetCard(0x106) end)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
+		e1:SetTarget(function(_,c) return not c:IsSetCard(SET_VENDREAD) end)
 		c:RegisterEffect(e1)
 	end
 end

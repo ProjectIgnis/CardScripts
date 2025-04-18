@@ -1,4 +1,5 @@
 --森の聖獣 カラントーサ
+--Kalantosa, Mystical Beast of the Forest
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy
@@ -14,7 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return re and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsRace(RACE_BEAST)
+	return re and re:IsMonsterEffect() and re:GetHandler():IsRace(RACE_BEAST)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() end

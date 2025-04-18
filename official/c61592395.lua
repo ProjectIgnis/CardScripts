@@ -1,4 +1,5 @@
 --アルマの魔導書
+--Spellbook of Eternity
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,9 +13,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x106e}
+s.listed_series={SET_SPELLBOOK}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x106e) and c:IsSpell() and c:GetCode()~=id and c:IsAbleToHand()
+	return c:IsFaceup() and c:IsSetCard(SET_SPELLBOOK) and c:IsSpell() and c:GetCode()~=id and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and s.filter(chkc) end

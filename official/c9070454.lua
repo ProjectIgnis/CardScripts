@@ -1,5 +1,5 @@
 --龍皇の波動
---Dragon King's Aura
+--Draco-Utopian Aura
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -17,7 +17,7 @@ function s.initial_effect(c)
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	local loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
-	return Duel.IsChainNegatable(ev) and re:IsActiveType(TYPE_MONSTER) and (loc&LOCATION_MZONE)~=0 and ep==1-tp
+	return Duel.IsChainNegatable(ev) and re:IsMonsterEffect() and (loc&LOCATION_MZONE)~=0 and ep==1-tp
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -48,13 +48,13 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 				local e1=Effect.CreateEffect(c)
 				e1:SetType(EFFECT_TYPE_SINGLE)
 				e1:SetCode(EFFECT_DISABLE)
-				e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+				e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 				oc:RegisterEffect(e1)
 				local e2=Effect.CreateEffect(c)
 				e2:SetType(EFFECT_TYPE_SINGLE)
 				e2:SetCode(EFFECT_DISABLE_EFFECT)
 				e2:SetValue(RESET_TURN_SET)
-				e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+				e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 				oc:RegisterEffect(e2)
 			end
 			Duel.SpecialSummonComplete()

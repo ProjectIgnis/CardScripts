@@ -26,9 +26,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x3b}
+s.listed_series={SET_RED_EYES}
 function s.filter(c)
-	return c:IsSetCard(0x3b) and c:IsFaceup()
+	return c:IsSetCard(SET_RED_EYES) and c:IsFaceup()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return s.filter(chkc) and chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) end
@@ -47,7 +47,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_EQUIP)
 		e1:SetCode(EFFECT_EXTRA_ATTACK_MONSTER)
 		e1:SetValue(1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e1)
 		--Equip limit
 		local e3=Effect.CreateEffect(c)
@@ -55,17 +55,17 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetCode(EFFECT_EQUIP_LIMIT)
 		e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e3:SetValue(s.eqlimit)
-		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e3:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e3)
 	else
 		c:CancelToGrave(false)
 	end
 end
 function s.eqlimit(e,c)
-	return c:IsSetCard(0x3b)
+	return c:IsSetCard(SET_RED_EYES)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetEquipTarget() and (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
+	return e:GetHandler():GetEquipTarget() and aux.StatChangeDamageStepCondition()
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
@@ -86,7 +86,7 @@ end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local ec=e:GetLabelObject()
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) then
 		if ec and ec:IsLocation(LOCATION_MZONE) and ec:IsFaceup() then
 			Duel.Equip(tp,tc,ec)
 			--Atk
@@ -94,7 +94,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_EQUIP)
 			e1:SetCode(EFFECT_SET_ATTACK)
 			e1:SetValue(tc:GetAttack())
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			tc:RegisterEffect(e1)
 			--Def
 			if not tc:IsOriginalType(TYPE_LINK) then
@@ -102,7 +102,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetType(EFFECT_TYPE_EQUIP)
 			e2:SetCode(EFFECT_SET_DEFENSE)
 			e2:SetValue(tc:GetDefense())
-			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 			tc:RegisterEffect(e2)
 			end
 			--Equip limit
@@ -111,10 +111,11 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 			e3:SetCode(EFFECT_EQUIP_LIMIT)
 			e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 			e3:SetValue(s.eqlimit2)
-			e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e3:SetReset(RESET_EVENT|RESETS_STANDARD)
 			e3:SetLabelObject(ec)
 			tc:RegisterEffect(e3)
-		else Duel.SendtoGrave(tc,REASON_RULE)
+		else
+			Duel.SendtoGrave(tc,REASON_RULE)
 		end
 	end
 end

@@ -1,4 +1,5 @@
 --マドルチェ・メッセンジェラート
+--Madolche Messengelato
 local s,id=GetID()
 function s.initial_effect(c)
 	--to deck
@@ -23,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.shop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x71}
+s.listed_series={SET_MADOLCHE}
 function s.retcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsReason(REASON_DESTROY) and e:GetHandler():GetReasonPlayer()~=tp
 		and e:GetHandler():IsPreviousControler(tp)
@@ -34,17 +35,17 @@ function s.rettg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsRelateToEffect(e) then
-		Duel.SendtoDeck(e:GetHandler(),nil,2,REASON_EFFECT)
+		Duel.SendtoDeck(e:GetHandler(),nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	end
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x71) and c:IsRace(RACE_BEAST)
+	return c:IsFaceup() and c:IsSetCard(SET_MADOLCHE) and c:IsRace(RACE_BEAST)
 end
 function s.shcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,e:GetHandler())
 end
 function s.filter(c)
-	return c:IsSetCard(0x71) and c:IsSpellTrap() and c:IsAbleToHand()
+	return c:IsSetCard(SET_MADOLCHE) and c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.shtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

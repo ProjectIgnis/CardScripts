@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetCode(EFFECT_CHANGE_CODE)
-	e1:SetRange(LOCATION_MZONE+LOCATION_GRAVE)
+	e1:SetRange(LOCATION_MZONE|LOCATION_GRAVE)
 	e1:SetValue(CARD_DARK_MAGICIAN)
 	c:RegisterEffect(e1)
 	--Prevent effect target
@@ -31,5 +31,5 @@ function s.initial_effect(c)
 	e4:SetValue(aux.tgoval)
 	c:RegisterEffect(e4)
 end
-s.material_setcode=0x10a2
+s.material_setcode=SET_DARK_MAGICIAN
 s.listed_names={CARD_DARK_MAGICIAN}

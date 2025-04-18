@@ -1,4 +1,5 @@
 --火霊術－「紅」
+--Spiritual Fire Art - Kurenai
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

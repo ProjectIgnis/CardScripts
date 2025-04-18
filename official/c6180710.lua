@@ -36,7 +36,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.damop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x6f}
+s.listed_series={SET_HEROIC}
 function s.valcon(e,re,r,rp)
 	return (r&REASON_BATTLE)~=0
 end
@@ -72,7 +72,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetCode(EFFECT_UPDATE_DEFENSE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e1:SetValue(-1000)
 		c:RegisterEffect(e1,true)
 		--Banish it if it leaves the field
@@ -82,7 +82,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e2:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 		e2:SetValue(LOCATION_REMOVED)
-		e2:SetReset(RESET_EVENT+RESETS_REDIRECT)
+		e2:SetReset(RESET_EVENT|RESETS_REDIRECT)
 		c:RegisterEffect(e2,true)
 		--Take no damage from the activated effect
 		local cid=Duel.GetChainInfo(ev,CHAININFO_CHAIN_ID)

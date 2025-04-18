@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Equip procedure
-	aux.AddPersistentProcedure(c,0,s.filter,CATEGORY_ATKCHANGE,EFFECT_FLAG_DAMAGE_STEP,nil,TIMING_DAMAGE_STEP,s.condition,nil,nil,s.operation)
+	aux.AddPersistentProcedure(c,0,s.filter,CATEGORY_ATKCHANGE,EFFECT_FLAG_DAMAGE_STEP,nil,TIMING_DAMAGE_STEP,aux.StatChangeDamageStepCondition,nil,nil,s.operation)
 	--Increase ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -21,9 +21,6 @@ function s.initial_effect(c)
 	e2:SetCondition(s.selfdescond)
 	e2:SetOperation(s.selfdesop)
 	c:RegisterEffect(e2)
-end
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsRace(RACE_MACHINE)
@@ -44,7 +41,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetHandler():GetFirstCardTarget()
-	if not tc or not re:IsActiveType(TYPE_SPELL) or not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
+	if not tc or not re:IsSpellEffect() or not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 	return g:IsContains(tc)
 end

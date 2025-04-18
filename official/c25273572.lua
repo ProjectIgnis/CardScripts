@@ -31,7 +31,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={id}
-s.listed_series={0x187}
+s.listed_series={SET_G_GOLEM}
 function s.thfilter(c,e,tp,ft)
 	return c:IsCode(id) and (c:IsAbleToHand() or (ft>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
 end
@@ -59,8 +59,8 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
-	Duel.RegisterEffect(e1,tp)  
+	e1:SetReset(RESET_PHASE|PHASE_END)
+	Duel.RegisterEffect(e1,tp)
 end
 function s.splimit(e,c)
 	return not c:IsRace(RACE_CYBERSE)
@@ -69,7 +69,7 @@ function s.thcon2(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_HAND)
 end
 function s.thfilter2(c)
-	return c:IsSetCard(0x187) and c:IsAbleToHand()
+	return c:IsSetCard(SET_G_GOLEM) and c:IsAbleToHand()
 end
 function s.thtg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter2,tp,LOCATION_DECK,0,1,nil) end

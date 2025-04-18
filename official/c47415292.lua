@@ -1,4 +1,5 @@
 --漆黒の闘龍
+--Pitch-Dark Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddUnionProcedure(c,aux.FilterBoolFunction(Card.IsCode,11321183),true)

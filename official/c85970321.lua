@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,id)
-	e1:SetCost(s.crcost)
+	e1:SetCost(Cost.SelfDiscard)
 	e1:SetOperation(s.crop)
 	c:RegisterEffect(e1)
 	--draw
@@ -32,11 +32,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.regop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xb3}
-function s.crcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsDiscardable() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
-end
+s.listed_series={SET_YOSENJU}
 function s.crop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	--activate limit
@@ -44,7 +40,7 @@ function s.crop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
 	e1:SetOperation(s.cedop)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	local e2=e1:Clone()
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
@@ -53,10 +49,10 @@ function s.crop(e,tp,eg,ep,ev,re,r,rp)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e3:SetCode(EVENT_CHAIN_END)
 	e3:SetOperation(s.cedop2)
-	e3:SetReset(RESET_PHASE+PHASE_END)
+	e3:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e3,tp)
 end
-s.cfilter=aux.FaceupFilter(Card.IsSetCard,0xb3)
+s.cfilter=aux.FaceupFilter(Card.IsSetCard,SET_YOSENJU)
 function s.cedop(e,tp,eg,ep,ev,re,r,rp)
 	if eg and eg:IsExists(s.cfilter,1,nil) then
 		Duel.SetChainLimitTillChainEnd(s.chlimit)
@@ -95,7 +91,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EVENT_PHASE+PHASE_END)
 	e1:SetTarget(s.rettg)
 	e1:SetOperation(s.retop)
-	e1:SetReset(RESET_EVENT|RESETS_STANDARD&~(RESET_TEMP_REMOVE|RESET_TURN_SET)|RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD&~(RESET_TEMP_REMOVE|RESET_TURN_SET)|RESET_PHASE|PHASE_END)
 	c:RegisterEffect(e1)
 end
 function s.rettg(e,tp,eg,ep,ev,re,r,rp,chk)

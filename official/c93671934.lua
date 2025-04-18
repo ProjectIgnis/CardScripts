@@ -1,4 +1,5 @@
 --士気高揚
+--Morale Boost
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

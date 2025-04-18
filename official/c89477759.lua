@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E)
 	e1:SetCountLimit(1)
-	e1:SetCost(aux.dxmcostgen(1,1,nil))
+	e1:SetCost(Cost.Detach(1,1,nil))
 	e1:SetTarget(s.destg)
 	e1:SetOperation(s.desop)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
-	e2:SetCode(EVENT_PHASE+PHASE_BATTLE)
+	e2:SetCode(EVENT_PHASE|PHASE_BATTLE)
 	e2:SetTarget(s.bptg)
 	e2:SetOperation(s.bpop)
 	c:RegisterEffect(e2)
@@ -44,10 +44,6 @@ function s.initial_effect(c)
 end
 s.listed_names={15862758}
 s.xyz_number=1000
-function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
-end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingMatchingCard(nil,tp,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler()) end
 	local g=Duel.GetMatchingGroup(nil,tp,LOCATION_MZONE,LOCATION_MZONE,e:GetHandler())

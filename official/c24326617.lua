@@ -1,4 +1,5 @@
 --氷帝家臣エッシャー
+--Escher the Frost Vassal
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon

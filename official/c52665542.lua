@@ -39,10 +39,10 @@ function s.initial_effect(c)
 	e4:SetOperation(s.desop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x38}
+s.listed_series={SET_LIGHTSWORN}
 s.counter_place_list={0x5}
 function s.costfilter(c)
-	return c:IsMonster() and c:IsSetCard(0x38) and c:IsAbleToGraveAsCost()
+	return c:IsMonster() and c:IsSetCard(SET_LIGHTSWORN) and c:IsAbleToGraveAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,e:GetHandler()) end
@@ -53,7 +53,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(sg,REASON_COST)
 end
 function s.tgfilter(c)
-	return c:IsMonster() and c:IsSetCard(0x38) and c:IsAbleToHand()
+	return c:IsMonster() and c:IsSetCard(SET_LIGHTSWORN) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local cc=e:GetLabelObject()
@@ -81,7 +81,7 @@ function s.acop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.dfilter(c,tp)
 	return c:IsFaceup() and c:IsLocation(LOCATION_ONFIELD) and not c:IsReason(REASON_REPLACE) 
-		and c:IsSetCard(0x38) and c:IsControler(tp) and c:IsReason(REASON_EFFECT)
+		and c:IsSetCard(SET_LIGHTSWORN) and c:IsControler(tp) and c:IsReason(REASON_EFFECT)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
@@ -93,7 +93,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.value(e,c)
 	return c:IsFaceup() and c:IsLocation(LOCATION_ONFIELD)
-		and c:IsSetCard(0x38) and c:IsControler(e:GetHandlerPlayer()) and c:IsReason(REASON_EFFECT)
+		and c:IsSetCard(SET_LIGHTSWORN) and c:IsControler(e:GetHandlerPlayer()) and c:IsReason(REASON_EFFECT)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local count=e:GetLabel()

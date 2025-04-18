@@ -1,5 +1,5 @@
 --深淵の青眼龍
---Deep of Blue-Eyes
+--Blue-Eyes Abyss Dragon
 --Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_GRAVE)
 	e3:SetCountLimit(1,{id,2})
 	e3:SetCondition(s.condition)
-	e3:SetCost(aux.bfgcost)
+	e3:SetCost(Cost.SelfBanish)
 	e3:SetTarget(s.target)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
@@ -45,7 +45,7 @@ function s.cfilter(c)
 	return c:IsCode(CARD_BLUEEYES_W_DRAGON) and (c:IsLocation(LOCATION_GRAVE) or c:IsOnField() and c:IsFaceup())
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,1,nil)
+	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD|LOCATION_GRAVE,0,1,nil)
 end
 function s.thfilter1(c)
 	return (c:IsCode(CARD_POLYMERIZATION) or c:IsRitualSpell()) and c:IsAbleToHand()
@@ -63,7 +63,7 @@ function s.thop1(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and s.condition(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.IsTurnPlayer(tp) and s.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.thfilter2(c)
 	return c:IsLevelAbove(8) and c:IsRace(RACE_DRAGON) and c:IsAbleToHand()
@@ -94,7 +94,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(1000)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 	end
 end

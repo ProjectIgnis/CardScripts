@@ -12,9 +12,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x88}
+s.listed_series={SET_BUJIN}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x88) and c:IsType(TYPE_XYZ) and c:IsAbleToRemove()
+	return c:IsFaceup() and c:IsSetCard(SET_BUJIN) and c:IsType(TYPE_XYZ) and c:IsAbleToRemove()
 		and Duel.IsExistingMatchingCard(Card.IsAbleToHand,0,LOCATION_MZONE,LOCATION_MZONE,1,c)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -32,7 +32,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local rct=Duel.GetTurnCount(tp)+1
 	if Duel.IsTurnPlayer(1-tp) then rct=rct+1 end
 	if tc:IsRelateToEffect(e) and Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)>0 then
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,0)
+		tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,0)
 		local g=Duel.GetMatchingGroup(Card.IsAbleToHand,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 		if #g>0 then Duel.SendtoHand(g,nil,REASON_EFFECT) end
 		--trigger effect
@@ -48,7 +48,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetOperation(s.spop)
 		e1:SetLabel(rct)
 		e1:SetLabelObject(tc)
-		e1:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN,2)
+		e1:SetReset(RESET_PHASE|PHASE_END|RESET_SELF_TURN,2)
 		Duel.RegisterEffect(e1,tp)
 	end
 	--cannot summon/flip summon/sp summon
@@ -57,7 +57,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetCode(EFFECT_CANNOT_SUMMON)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetTargetRange(1,1)
-	e2:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN,2)
+	e2:SetReset(RESET_PHASE|PHASE_END|RESET_SELF_TURN,2)
 	Duel.RegisterEffect(e2,tp)
 	local e3=e2:Clone()
 	e3:SetCode(EFFECT_CANNOT_FLIP_SUMMON)
@@ -72,17 +72,17 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e5:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e5:SetTargetRange(1,1)
 	e5:SetValue(0)
-	e5:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN,2)
+	e5:SetReset(RESET_PHASE|PHASE_END|RESET_SELF_TURN,2)
 	Duel.RegisterEffect(e5,tp)
 	local e6=e5:Clone()
 	e6:SetCode(EFFECT_NO_EFFECT_DAMAGE)
-	e6:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN,2)
+	e6:SetReset(RESET_PHASE|PHASE_END|RESET_SELF_TURN,2)
 	Duel.RegisterEffect(e6,tp)
 	--player hint
 	local e7=Effect.CreateEffect(e:GetHandler())
 	e7:SetDescription(aux.Stringid(id,2))
 	e7:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
-	e7:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN,2)
+	e7:SetReset(RESET_PHASE|PHASE_END|RESET_SELF_TURN,2)
 	e7:SetTargetRange(1,1)
 	Duel.RegisterEffect(e7,tp)
 	--reset e2~e7
@@ -96,7 +96,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e8:SetLabel(rct)
 	local reset_eff_table={e2,e3,e4,e5,e6,e7}
 	e8:SetLabelObject(reset_eff_table)
-	e8:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN,2)
+	e8:SetReset(RESET_PHASE|PHASE_END|RESET_SELF_TURN,2)
 	Duel.RegisterEffect(e8,tp)
 end
 function s.resetall(e)
@@ -110,7 +110,7 @@ function s.spresetcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsTurnPlayer(tp) and e:GetLabel()==Duel.GetTurnCount(tp)
 end
 function s.mfilter(c)
-	return c:IsSetCard(0x88) and c:IsMonster()
+	return c:IsSetCard(SET_BUJIN) and c:IsMonster()
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.mfilter(chkc) end

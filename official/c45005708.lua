@@ -29,7 +29,7 @@ end
 s.listed_names={CARD_ALBAZ}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST|REASON_DISCARD)
 end
 function s.tgfilter(c,e,tp,sc)
 	if not (c:IsRace(RACE_DRAGON) and c:IsFaceup()) then return false end

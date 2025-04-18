@@ -1,4 +1,5 @@
 --星遺物－『星鎧』
+--World Legacy - "World Armor"
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -41,7 +42,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0xfe}
+s.listed_series={SET_WORLD_LEGACY}
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
@@ -53,7 +54,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
 function s.filter(c)
-	return c:IsSetCard(0xfe) and c:IsAbleToHand()
+	return c:IsSetCard(SET_WORLD_LEGACY) and c:IsAbleToHand()
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

@@ -1,4 +1,5 @@
 --星霜のペンデュラムグラフ
+--Star Pendulumgraph
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -28,20 +29,20 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x98}
+s.listed_series={SET_MAGICIAN}
 function s.evalue(e,re,rp)
-	return re:IsActiveType(TYPE_SPELL) and rp~=e:GetHandlerPlayer()
+	return re:IsSpellEffect() and rp~=e:GetHandlerPlayer()
 end
 function s.thcfilter(c,tp)
-	return c:IsType(TYPE_PENDULUM) and c:IsPreviousSetCard(0x98)
+	return c:IsType(TYPE_PENDULUM) and c:IsPreviousSetCard(SET_MAGICIAN)
 		and c:IsPreviousControler(tp) and c:IsPreviousPosition(POS_FACEUP)
-		and c:IsPreviousLocation(LOCATION_MZONE+LOCATION_PZONE)
+		and c:IsPreviousLocation(LOCATION_MZONE|LOCATION_PZONE)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.thcfilter,1,nil,tp)
 end
 function s.thfilter(c)
-	return c:IsType(TYPE_PENDULUM) and c:IsSetCard(0x98) and c:IsAbleToHand()
+	return c:IsType(TYPE_PENDULUM) and c:IsSetCard(SET_MAGICIAN) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

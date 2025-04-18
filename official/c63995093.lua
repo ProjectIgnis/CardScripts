@@ -1,4 +1,5 @@
 --機械複製術
+--Machine Duplication
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

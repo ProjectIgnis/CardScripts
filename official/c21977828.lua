@@ -1,4 +1,5 @@
 --甲虫装機 ギガウィービル
+--Inzektor Giga-Weevil
 local s,id=GetID()
 function s.initial_effect(c)
 	--equip
@@ -30,9 +31,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x56}
+s.listed_series={SET_INZEKTOR}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x56)
+	return c:IsFaceup() and c:IsSetCard(SET_INZEKTOR)
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -53,7 +54,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_EQUIP_LIMIT)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	e1:SetValue(s.eqlimit)
 	e1:SetLabelObject(tc)
 	c:RegisterEffect(e1)
@@ -66,7 +67,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:GetPreviousLocation()==LOCATION_SZONE and not c:IsReason(REASON_LOST_TARGET)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x56) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_INZEKTOR) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.spfilter(chkc,e,tp) end

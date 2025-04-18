@@ -28,4 +28,3 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Remove(g,POS_FACEDOWN,REASON_EFFECT)
 	end
 end
-

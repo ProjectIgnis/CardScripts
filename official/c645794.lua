@@ -32,9 +32,9 @@ function s.initial_effect(c)
 	e5:SetValue(s.indval)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0xd0}
+s.listed_series={SET_MAJESPECTER}
 function s.filter(c)
-	return c:IsSetCard(0xd0) and c:IsSpellTrap() and c:IsSSetable()
+	return c:IsSetCard(SET_MAJESPECTER) and c:IsSpellTrap() and c:IsSSetable()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
@@ -50,7 +50,7 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_TRIGGER)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_EXC_GRAVE+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_EXC_GRAVE|RESET_PHASE|PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end

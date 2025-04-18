@@ -1,4 +1,5 @@
 --ダーク・ジェネラル フリード
+--Dark General Freed
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot special summon
@@ -50,7 +51,7 @@ function s.disfilter(c,tp)
 	return c:IsControler(tp) and c:IsFaceup() and c:IsLocation(LOCATION_MZONE) and c:IsAttribute(ATTRIBUTE_DARK)
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
-	if not re:IsActiveType(TYPE_SPELL) then return end
+	if not re:IsSpellEffect() then return end
 	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return end
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 	if not g or #g==0 then return end
@@ -78,7 +79,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 		e1:SetCode(EFFECT_DRAW_COUNT)
 		e1:SetTargetRange(1,0)
-		e1:SetReset(RESET_PHASE+PHASE_DRAW)
+		e1:SetReset(RESET_PHASE|PHASE_DRAW)
 		e1:SetValue(0)
 		Duel.RegisterEffect(e1,tp)
 	end

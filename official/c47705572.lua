@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.splimit)
 	c:RegisterEffect(e1)
 	--Fusion summon
-	local params = {fusfilter=aux.FilterBoolFunction(Card.IsSetCard,0xdf),matfilter=Fusion.OnFieldMat(Card.IsAbleToRemove),
+	local params = {fusfilter=aux.FilterBoolFunction(Card.IsSetCard,SET_LUNALIGHT),matfilter=Fusion.OnFieldMat(Card.IsAbleToRemove),
 					extrafil=s.fextra,extraop=Fusion.BanishMaterial,extratg=s.extratarget}
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
@@ -33,20 +33,20 @@ function s.initial_effect(c)
 	e3:SetTarget(s.ptg)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xdf}
+s.listed_series={SET_LUNALIGHT}
 function s.splimit(e,c,sump,sumtype,sumpos,targetp)
-	return not (c:IsSetCard(0xdf) and c:IsMonster()) and (sumtype&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
+	return not (c:IsSetCard(SET_LUNALIGHT) and c:IsMonster()) and (sumtype&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
 end
 function s.fextra(e,tp,mg)
-	if not Duel.IsPlayerAffectedByEffect(tp,69832741) then
+	if not Duel.IsPlayerAffectedByEffect(tp,CARD_SPIRIT_ELIMINATION) then
 		return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsAbleToRemove),tp,LOCATION_GRAVE,0,nil)
 	end
 	return nil
 end
 function s.extratarget(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,0,tp,LOCATION_MZONE+LOCATION_GRAVE)
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,0,tp,LOCATION_MZONE|LOCATION_GRAVE)
 end
 function s.ptg(e,c)
-	return c:IsSetCard(0xdf) and c:IsMonster()
+	return c:IsSetCard(SET_LUNALIGHT) and c:IsMonster()
 end

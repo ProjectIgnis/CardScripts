@@ -12,13 +12,13 @@ function s.initial_effect(c)
 	e1:SetOperation(s.op)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x3d}
+s.listed_series={SET_SIX_SAMURAI}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLP(tp)>100 end
 	Duel.PayLPCost(tp,Duel.GetLP(tp)-100)
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x3d) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_SIX_SAMURAI) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,c:GetCode()),0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)

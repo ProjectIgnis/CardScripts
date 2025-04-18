@@ -31,7 +31,7 @@ s.synchro_nt_required=1
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local rc=re:GetHandler()
-	return re:IsActiveType(TYPE_MONSTER) and rc~=c and not c:IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev)
+	return re:IsMonsterEffect() and rc~=c and not c:IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -48,7 +48,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_DISABLE_PHASE_END)
 		e1:SetValue(rc:GetBaseAttack())
 		c:RegisterEffect(e1)
 	end
@@ -65,7 +65,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetReset(RESET_PHASE+PHASE_DAMAGE_CAL)
+		e1:SetReset(RESET_PHASE|PHASE_DAMAGE_CAL)
 		e1:SetValue(bc:GetAttack())
 		c:RegisterEffect(e1)
 	end

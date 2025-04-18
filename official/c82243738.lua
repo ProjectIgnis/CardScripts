@@ -35,6 +35,7 @@ function s.spcon(e,c)
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,nil)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND,0,1,1,true,nil)
 	if g then
 		g:KeepAlive()
@@ -51,5 +52,5 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	g:DeleteGroup()
 end
 function s.con(e)
-	return Duel.IsMainPhase() and e:GetHandler():IsSummonType(SUMMON_TYPE_SPECIAL)
+	return Duel.IsMainPhase() and e:GetHandler():IsSpecialSummoned()
 end

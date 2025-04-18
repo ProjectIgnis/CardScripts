@@ -1,4 +1,5 @@
 --スペースタイムポリス
+--Space-Time Police
 local s,id=GetID()
 function s.initial_effect(c)
 	--remove
@@ -37,7 +38,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		if Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)~=0 and e:GetHandler():IsRelateToEffect(e) then
 			e:SetLabelObject(tc)
-			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+			tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1)
 		end
 	end
 end

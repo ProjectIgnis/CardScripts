@@ -1,4 +1,5 @@
 --エレキューブ
+--Wattcube
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsRace,RACE_THUNDER))
@@ -15,17 +16,13 @@ function s.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_IGNITION)
 	e4:SetRange(LOCATION_SZONE)
 	e4:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e4:SetCost(s.atkcost)
+	e4:SetCost(Cost.SelfToGrave)
 	e4:SetTarget(s.atktg)
 	e4:SetOperation(s.atkop)
 	c:RegisterEffect(e4)
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsRace(RACE_THUNDER)
-end
-function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
 function s.val(e,c)
 	return Duel.GetMatchingGroupCount(Card.IsRace,c:GetControler(),LOCATION_GRAVE,0,nil,RACE_THUNDER)*100
@@ -42,7 +39,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e1:SetValue(1000)
 		tc:RegisterEffect(e1)
 	end

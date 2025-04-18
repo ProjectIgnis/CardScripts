@@ -1,4 +1,5 @@
 --悪魂邪苦止
+--T.A.D.P.O.L.E.
 local s,id=GetID()
 function s.initial_effect(c)
 	--add

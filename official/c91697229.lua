@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e5:SetDescription(aux.Stringid(id,1))
 	e5:SetCategory(CATEGORY_POSITION)
 	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
-	e5:SetCode(EVENT_PHASE+PHASE_BATTLE_START)
+	e5:SetCode(EVENT_PHASE|PHASE_BATTLE_START)
 	e5:SetRange(LOCATION_MZONE)
 	e5:SetCountLimit(1)
 	e5:SetCondition(s.poscon)
@@ -39,18 +39,18 @@ function s.initial_effect(c)
 	e6:SetCode(EFFECT_BOTH_BATTLE_DAMAGE)
 	c:RegisterEffect(e6)
 end
-s.listed_series={0x4b}
+s.listed_series={SET_AESIR}
 function s.spcon(e,c)
-	if c==nil then return Duel.GetCurrentPhase()==PHASE_MAIN2 end
+	if c==nil then return Duel.IsPhase(PHASE_MAIN2) end
 	local tp=c:GetControler()
 	return Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x4b),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_AESIR),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 end
 function s.descon(e)
-	return not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x4b),0,LOCATION_MZONE,LOCATION_MZONE,1,nil)
+	return not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_AESIR),0,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 end
 function s.poscon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.postg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

@@ -13,11 +13,11 @@ function s.initial_effect(c)
 	if not s.ritual_matching_function then
 		s.ritual_matching_function={}
 	end
-	s.ritual_matching_function[c]=aux.FilterEqualFunction(Card.IsSetCard,0x3a)
+	s.ritual_matching_function[c]=aux.FilterEqualFunction(Card.IsSetCard,SET_GISHKI)
 end
-s.listed_series={0x3a}
+s.listed_series={SET_GISHKI}
 function s.filter(c,e,tp,lp)
-	if not c:IsRitualMonster() or not c:IsSetCard(0x3a) or not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,true,false) then
+	if not c:IsRitualMonster() or not c:IsSetCard(SET_GISHKI) or not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,true,false) then
 		return false
 	end
 	return lp>c:GetLevel()*500

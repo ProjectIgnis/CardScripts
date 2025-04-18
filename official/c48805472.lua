@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,{id,1})
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.tdtg)
 	e2:SetOperation(s.tdop)
 	c:RegisterEffect(e2)
@@ -34,7 +34,7 @@ end
 s.drcostfilter=aux.AND(s.filter,Card.IsDiscardable)
 function s.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.drcostfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,s.drcostfilter,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,s.drcostfilter,1,1,REASON_COST|REASON_DISCARD)
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,2) end

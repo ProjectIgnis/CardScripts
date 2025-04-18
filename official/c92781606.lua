@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--link summon
 	c:EnableReviveLimit()
-	Link.AddProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x104),2,2)
+	Link.AddProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,SET_KRAWLER),2,2)
 	--special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -51,14 +51,14 @@ function s.initial_effect(c)
 	e5:SetCondition(s.effcon)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x104}
+s.listed_series={SET_KRAWLER}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return (c:IsReason(REASON_BATTLE) or (c:GetReasonPlayer()~=tp and c:IsReason(REASON_EFFECT)))
 		and c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousControler()==tp
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x104) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
+	return c:IsSetCard(SET_KRAWLER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
@@ -85,12 +85,12 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.effilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x104)
+	return c:IsFaceup() and c:IsSetCard(SET_KRAWLER)
 end
 function s.effcon(e)
 	return Duel.GetMatchingGroupCount(s.effilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,nil)>=e:GetLabel()
 end
 function s.actcon(e)
 	local ph=Duel.GetCurrentPhase()
-	return s.effcon(e) and ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE
+	return s.effcon(e) and Duel.IsBattlePhase()
 end

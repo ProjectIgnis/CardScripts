@@ -1,5 +1,5 @@
 --エクソシスター・アーメント
---Exorsister Amento
+--Exosister Arment
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -12,26 +12,22 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E)
 	e1:SetCondition(s.condition)
-	e1:SetCost(s.cost)
+	e1:SetCost(Cost.PayLP(800))
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x174}
+s.listed_series={SET_EXOSISTER}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsTurnPlayer(1-tp) or Duel.IsExistingMatchingCard(Card.IsSummonLocation,tp,0,LOCATION_MZONE,1,nil,LOCATION_GRAVE)
 end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,800) end
-	Duel.PayLPCost(tp,800)
-end
 function s.filter1(c,e,tp)
 	local pg=aux.GetMustBeMaterialGroup(tp,Group.FromCards(c),tp,nil,nil,REASON_XYZ)
-	return (#pg<=0 or (#pg==1 and pg:IsContains(c))) and c:IsFaceup() and c:IsSetCard(0x174)
+	return (#pg<=0 or (#pg==1 and pg:IsContains(c))) and c:IsFaceup() and c:IsSetCard(SET_EXOSISTER)
 		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,c,pg)
 end
 function s.filter2(c,e,tp,mc,pg)
-	return c:IsType(TYPE_XYZ) and c:IsSetCard(0x174)
+	return c:IsType(TYPE_XYZ) and c:IsSetCard(SET_EXOSISTER)
 		and not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,c:GetCode()),tp,LOCATION_ONFIELD,0,1,nil)
 		and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0 and mc:IsCanBeXyzMaterial(c,tp) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
 end

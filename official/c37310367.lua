@@ -1,6 +1,5 @@
 --ロックアウト・ガードナー
 --Lockout Gardna
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon itself from hand
@@ -45,7 +44,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 		e1:SetValue(1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		c:RegisterEffect(e1)
 	end
 end
@@ -55,7 +54,7 @@ function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	if not g or #g~=1 then return false end
 	local tc=g:GetFirst()
 	e:SetLabelObject(tc)
-	return re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsLocation(LOCATION_MZONE)
+	return re:IsMonsterEffect() and re:GetHandler():IsLocation(LOCATION_MZONE)
 		and tc:IsControler(tp) and tc:IsFaceup() and tc:IsRace(RACE_CYBERSE) and tc:IsLocation(LOCATION_MZONE)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -77,12 +76,12 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e2:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e2)
 	end
 end

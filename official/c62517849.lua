@@ -14,14 +14,14 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1,id)
-	e1:SetCost(aux.dxmcostgen(1,1,nil))
+	e1:SetCost(Cost.Detach(1,1,nil))
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
-	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER|TIMING_END_PHASE)
 	c:RegisterEffect(e1)
 end
 	--Lists "Utopia" archetype
-s.listed_series={0x107f}
+s.listed_series={SET_UTOPIA}
 	--Specifically lists "Double or Nothing!"
 s.listed_names={94770493}
 	--Number 39
@@ -32,7 +32,7 @@ function s.thfilter(c)
 end
 	--Check for "Utopia" Xyz monster, excluding "Number 39: Utopia Double"
 function s.spfilter(c,e,tp,mc,pg)
-	return c:IsType(TYPE_XYZ) and c:IsSetCard(0x107f) and not c:IsCode(id) and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0
+	return c:IsType(TYPE_XYZ) and c:IsSetCard(SET_UTOPIA) and not c:IsCode(id) and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0
 		and mc:IsCanBeXyzMaterial(c,tp) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
 end
 	--Activation legality
@@ -72,13 +72,13 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	sc:RegisterEffect(e1)
 	--Double its ATK
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_SET_ATTACK)
 	e2:SetValue(sc:GetTextAttack()*2)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 	sc:RegisterEffect(e2)
 end

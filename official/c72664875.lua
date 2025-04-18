@@ -51,7 +51,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.damop)
 	c:RegisterEffect(e5)
 end
-s.material_setcode=0xe3
+s.material_setcode=SET_CUBIC
 function s.hvop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SetLP(1-tp,math.ceil(Duel.GetLP(1-tp)/2))
 end
@@ -65,7 +65,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_EXTRA_ATTACK)
 	e1:SetValue(1)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_BATTLE)
 	c:RegisterEffect(e1)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)

@@ -1,4 +1,5 @@
 --ストロング・ウィンド・ドラゴン
+--Strong Wind Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon success
@@ -39,7 +40,7 @@ function s.valcheck(e,c)
 	end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_TRIBUTE) and e:GetLabel()==1
+	return e:GetHandler():IsTributeSummoned() and e:GetLabel()==1
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -51,7 +52,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetValue(atk/2)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 			c:RegisterEffect(e1)
 		end
 	end

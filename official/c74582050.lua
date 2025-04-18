@@ -1,4 +1,5 @@
 --ダイナミスト・エラプション
+--Dinomist Eruption
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -14,7 +15,7 @@ function s.initial_effect(c)
 end
 function s.cfilter(c,tp)
 	return c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE)
-		and c:IsPreviousSetCard(0xd8) and c:IsReason(REASON_BATTLE+REASON_EFFECT)
+		and c:IsPreviousSetCard(SET_DINOMIST) and c:IsReason(REASON_BATTLE|REASON_EFFECT)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)

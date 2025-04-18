@@ -1,7 +1,6 @@
 --トウテツドラゴン
 --Taotie Dragon
 --Scripted by Naim
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -37,7 +36,7 @@ function s.valcheck(e,c)
 	e:SetLabel(typ)
 end
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK) and e:GetLabelObject():GetLabel()~=0
+	return e:GetHandler():IsLinkSummoned() and e:GetLabelObject():GetLabel()~=0
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local typ=e:GetLabelObject():GetLabel()
@@ -51,9 +50,9 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetTargetRange(0,1)
 		e1:SetCondition(s.fuscond)
 		e1:SetValue(s.fuslimit)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e1)
-		c:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,1))
+		c:RegisterFlagEffect(0,RESET_EVENT|RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,1))
 	end
 	if (typ&TYPE_SYNCHRO)~=0 then
 		local e2=Effect.CreateEffect(c)
@@ -64,9 +63,9 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetTargetRange(0,1)
 		e2:SetCondition(s.syncond)
 		e2:SetValue(s.synlimit)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e2)
-		c:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,2))
+		c:RegisterFlagEffect(0,RESET_EVENT|RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,2))
 	end
 	if (typ&TYPE_XYZ)~=0 then
 		local e3=Effect.CreateEffect(c)
@@ -77,22 +76,22 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetTargetRange(0,1)
 		e3:SetCondition(s.xyzcond)
 		e3:SetValue(s.xyzlimit)
-		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e3:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e3)
-		c:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,3))
+		c:RegisterFlagEffect(0,RESET_EVENT|RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,3))
 	end
 end
 function s.fuscond(e)
 	return Duel.IsBattlePhase()
 end
 function s.fuslimit(e,re,tp)
-	return re:IsActiveType(TYPE_MONSTER)
+	return re:IsMonsterEffect()
 end
 function s.syncond(e)
 	return Duel.GetTurnPlayer()==e:GetHandlerPlayer() and Duel.IsMainPhase()
 end
 function s.synlimit(e,re,tp)
-	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
+	return re:IsSpellTrapEffect()
 end
 function s.xyzcond(e)
 	local ph=Duel.GetCurrentPhase()

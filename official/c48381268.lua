@@ -1,4 +1,5 @@
 --D・ボードン
+--Morphtronic Boarden
 local s,id=GetID()
 function s.initial_effect(c)
 	--atk
@@ -8,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetTargetRange(LOCATION_MZONE,0)
 	e1:SetCode(EFFECT_DIRECT_ATTACK)
 	e1:SetCondition(s.cona)
-	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x26))
+	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_MORPHTRONIC))
 	c:RegisterEffect(e1)
 	--def
 	local e2=Effect.CreateEffect(c)
@@ -21,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetValue(1)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x26}
+s.listed_series={SET_MORPHTRONIC}
 function s.cona(e)
 	return e:GetHandler():IsAttackPos()
 end
@@ -29,5 +30,5 @@ function s.cond(e)
 	return e:GetHandler():IsDefensePos()
 end
 function s.tgd(e,c)
-	return c:IsSetCard(0x26) and c~=e:GetHandler()
+	return c:IsSetCard(SET_MORPHTRONIC) and c~=e:GetHandler()
 end

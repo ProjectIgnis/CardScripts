@@ -1,5 +1,5 @@
 --聖邪のステンドグラス
---Stained Glass of the Valiant
+--Stained Glass of Light & Dark
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsType(TYPE_EFFECT) and c:IsRace(RACE_FAIRY+RACE_FIEND)
+	return c:IsFaceup() and c:IsType(TYPE_EFFECT) and c:IsRace(RACE_FAIRY|RACE_FIEND)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil)
@@ -46,10 +46,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		if Duel.Draw(1-tp,1,REASON_EFFECT)>0 then
 			Duel.BreakEffect()
 			local dg=Duel.GetFieldGroup(1-tp,LOCATION_HAND,0):RandomSelect(1-tp,1)
-			if Duel.SendtoGrave(dg,REASON_EFFECT+REASON_DISCARD)>0 and Duel.GetFieldGroupCount(1-tp,LOCATION_HAND,0)>0 then
+			if Duel.SendtoGrave(dg,REASON_EFFECT|REASON_DISCARD)>0 and Duel.GetFieldGroupCount(1-tp,LOCATION_HAND,0)>0 then
 				Duel.BreakEffect()
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
-				Duel.DiscardHand(1-tp,nil,1,1,REASON_EFFECT+REASON_DISCARD,nil)
+				Duel.DiscardHand(1-tp,nil,1,1,REASON_EFFECT|REASON_DISCARD,nil)
 			end
 		end
 	end

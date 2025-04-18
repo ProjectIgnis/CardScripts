@@ -20,12 +20,12 @@ function s.initial_effect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetTargetRange(LOCATION_HAND+LOCATION_MZONE,0)
+	e3:SetTargetRange(LOCATION_HAND|LOCATION_MZONE,0)
 	e3:SetCode(EFFECT_EXTRA_SUMMON_COUNT)
-	e3:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x11))
+	e3:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_KARAKURI))
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x11}
+s.listed_series={SET_KARAKURI}
 function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsFaceup() and c:IsRelateToEffect(e) then

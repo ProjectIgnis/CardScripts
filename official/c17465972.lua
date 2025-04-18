@@ -24,16 +24,16 @@ function s.initial_effect(c)
 	e3:SetCategory(CATEGORY_COUNTER)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_GRAVE)
-	e3:SetCost(aux.bfgcost)
+	e3:SetCost(Cost.SelfBanish)
 	e3:SetTarget(s.cttg)
 	c:RegisterEffect(e3)
 end
-s.counter_place_list={0x1002,0x10}
-s.listed_series={0x33}
-s.listed_names={9012916}
+s.counter_place_list={0x1002,COUNTER_FEATHER}
+s.listed_series={SET_BLACKWING}
+s.listed_names={CARD_BLACK_WINGED_DRAGON}
 function s.spfilter(c,e,tp)
 	return c:IsFaceup() and c:IsLevelBelow(4)
-		and c:IsSetCard(0x33) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+		and c:IsSetCard(SET_BLACKWING) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_REMOVED) and s.spfilter(chkc,e,tp) end
@@ -53,7 +53,7 @@ function s.wcfilter(c)
 	return c:IsFaceup() and c:GetCounter(0x1002)==0
 end
 function s.cttg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local b1=Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,9012916),tp,LOCATION_MZONE,0,1,nil) and Duel.GetFieldGroupCount(tp,0,LOCATION_ONFIELD)>0
+	local b1=Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_BLACK_WINGED_DRAGON),tp,LOCATION_MZONE,0,1,nil) and Duel.GetFieldGroupCount(tp,0,LOCATION_ONFIELD)>0
 	local b2=Duel.IsExistingMatchingCard(s.wcfilter,tp,0,LOCATION_MZONE,1,nil)
 	if chk==0 then return b1 or b2 end
 	local op=0
@@ -72,10 +72,10 @@ function s.cttg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.bwop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	local tc=Duel.SelectMatchingCard(tp,aux.FaceupFilter(Card.IsCode,9012916),tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,aux.FaceupFilter(Card.IsCode,CARD_BLACK_WINGED_DRAGON),tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
 	local ct=Duel.GetFieldGroupCount(tp,0,LOCATION_ONFIELD)
 	if tc and ct>0 then
-		tc:AddCounter(0x10,ct)
+		tc:AddCounter(COUNTER_FEATHER,ct)
 	end
 end
 function s.wcop(e,tp,eg,ep,ev,re,r,rp)

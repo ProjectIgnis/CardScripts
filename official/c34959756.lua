@@ -1,7 +1,6 @@
 --リビング・フォッシル
 --Living Fossil
 --Scripted by Eerie Code
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon 1 level 4 or lower monster from GY
@@ -57,7 +56,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_EQUIP_LIMIT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e1:SetValue(s.eqlimit)
 		c:RegisterEffect(e1)
 		--Banish it if it leaves the field
@@ -65,7 +64,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e2:SetReset(RESET_EVENT+RESETS_REDIRECT)
+		e2:SetReset(RESET_EVENT|RESETS_REDIRECT)
 		e2:SetValue(LOCATION_REMOVED)
 		tc:RegisterEffect(e2)
 	end

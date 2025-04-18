@@ -48,7 +48,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetAbsoluteRange(tp,1,0)
 			e1:SetCondition(s.splimcon)
 			e1:SetTarget(s.splimit)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			sg:GetFirst():RegisterEffect(e1,true)
 		end
 	end

@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCountLimit(1)
-	e2:SetHintTiming(0,TIMING_BATTLE_START+TIMING_BATTLE_END)
+	e2:SetHintTiming(0,TIMING_BATTLE_START|TIMING_BATTLE_END)
 	e2:SetCondition(s.condition)
 	e2:SetTarget(s.target)
 	e2:SetOperation(s.operation)
@@ -42,13 +42,13 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x4}
+s.listed_series={SET_AMAZONESS}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
-	return (ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE)
+	return Duel.IsBattlePhase()
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_AMAZONESS) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -66,13 +66,13 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(500)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 	Duel.SpecialSummonComplete()
 end
 function s.check(c,tp)
-	return c and c:IsControler(tp) and c:IsSetCard(0x4)
+	return c and c:IsControler(tp) and c:IsSetCard(SET_AMAZONESS)
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetAttackTarget()~=nil

@@ -1,4 +1,5 @@
 --魔玩具補綴
+--Frightfur Patchwork
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,13 +12,13 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0xc3}
+s.listed_series={SET_EDGE_IMP}
 s.listed_names={CARD_POLYMERIZATION}
 function s.filter1(c)
 	return c:IsCode(CARD_POLYMERIZATION) and c:IsAbleToHand()
 end
 function s.filter2(c)
-	return c:IsSetCard(0xc3) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_EDGE_IMP) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_DECK,0,1,nil)

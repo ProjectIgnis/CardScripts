@@ -1,4 +1,5 @@
 --カラクリ忍者 参参九
+--Karakuri Ninja mdl 339 "Sazank"
 local s,id=GetID()
 function s.initial_effect(c)
 	--must attack
@@ -58,6 +59,6 @@ function s.dirop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_DIRECT_ATTACK)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESETS_STANDARD_PHASE_END)
 	e:GetHandler():RegisterEffect(e1)
 end

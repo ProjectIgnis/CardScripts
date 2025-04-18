@@ -1018,5 +1018,6 @@ WIN_REASON_DEUCE               = 0x54
 WIN_REASON_DECK_MASTER         = 0x56
 WIN_REASON_DRAW_OF_FATE        = 0x57
 WIN_REASON_MUSICAL_SUMO        = 0x58
+WIN_REASON_SUMMER_SCHOOLWORK   = 0x59
 Duel.LoadScript("card_counter_constants.lua")
 Duel.LoadScript("archetype_setcode_constants.lua")

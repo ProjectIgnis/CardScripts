@@ -1,5 +1,5 @@
 --暗黒界の援軍
---Dark World Reinforcements
+--Charge Into a Dark World
 --Scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -36,7 +36,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local tg=Duel.SelectMatchingCard(tp,Card.IsRace,tp,LOCATION_HAND,0,1,1,nil,RACE_FIEND)
 		if #tg>0 then
 			Duel.BreakEffect()
-			Duel.SendtoGrave(tg,REASON_EFFECT+REASON_DISCARD)
+			Duel.SendtoGrave(tg,REASON_EFFECT|REASON_DISCARD)
 		end
 	end
 end

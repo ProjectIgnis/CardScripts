@@ -1,4 +1,5 @@
 --インフェルニティ・リローダー
+--Infernity Randomizer
 local s,id=GetID()
 function s.initial_effect(c)
 	--draw

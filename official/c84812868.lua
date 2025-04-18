@@ -1,4 +1,5 @@
 --月光白兎
+--Lunalight White Rabbit
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -22,10 +23,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xdf}
+s.listed_series={SET_LUNALIGHT}
 s.listed_names={id}
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0xdf) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return c:IsSetCard(SET_LUNALIGHT) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.spfilter(chkc,e,tp) end
@@ -46,9 +47,9 @@ function s.filter2(c)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) and s.filter2(chkc) end
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0xdf),tp,LOCATION_ONFIELD,0,1,e:GetHandler())
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_LUNALIGHT),tp,LOCATION_ONFIELD,0,1,e:GetHandler())
 		and Duel.IsExistingTarget(s.filter2,tp,0,LOCATION_ONFIELD,1,nil) end
-	local ct=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,0xdf),tp,LOCATION_ONFIELD,0,e:GetHandler())
+	local ct=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,SET_LUNALIGHT),tp,LOCATION_ONFIELD,0,e:GetHandler())
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 	local g=Duel.SelectTarget(tp,s.filter2,tp,0,LOCATION_ONFIELD,1,ct,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,#g,0,0)

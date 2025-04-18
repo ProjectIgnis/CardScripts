@@ -1,4 +1,5 @@
 --BF－黒槍のブラスト
+--Blackwing - Bora the Spear
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -15,9 +16,9 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_PIERCE)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x33}
+s.listed_series={SET_BLACKWING}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x33) and c:GetCode()~=id
+	return c:IsFaceup() and c:IsSetCard(SET_BLACKWING) and c:GetCode()~=id
 end
 function s.spcon(e,c)
 	if c==nil then return true end

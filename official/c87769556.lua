@@ -1,4 +1,5 @@
 --魔術師の右手
+--Magician's Right Hand
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -18,7 +19,7 @@ function s.initial_effect(c)
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsRace,RACE_SPELLCASTER),tp,LOCATION_MZONE,0,1,nil)
-		and rp~=tp and re:IsActiveType(TYPE_SPELL) and Duel.IsChainDisablable(ev) 
+		and rp~=tp and re:IsSpellEffect() and Duel.IsChainDisablable(ev) 
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()

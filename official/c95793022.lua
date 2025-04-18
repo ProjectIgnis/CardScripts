@@ -1,5 +1,5 @@
 --星杯の守護竜アルマドゥーク
---World Chalice Guardragon Almarduk
+--World Chalice Guardragon Almarduke
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -31,7 +31,7 @@ function s.contactfil(tp)
 	return Duel.GetReleaseGroup(tp)
 end
 function s.contactop(g)
-	Duel.Release(g,REASON_COST+REASON_MATERIAL)
+	Duel.Release(g,REASON_COST|REASON_MATERIAL)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -46,9 +46,9 @@ function s.descfilter(c,lk)
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=e:GetHandler():GetBattleTarget()
-	if chk==0 then return tc and tc:IsLinkMonster() and Duel.IsExistingMatchingCard(s.descfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil,tc:GetLink()) end
+	if chk==0 then return tc and tc:IsLinkMonster() and Duel.IsExistingMatchingCard(s.descfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,nil,tc:GetLink()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.descfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil,tc:GetLink())
+	local g=Duel.SelectMatchingCard(tp,s.descfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,1,nil,tc:GetLink())
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -64,4 +64,3 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Damage(1-tp,tc:GetBaseAttack(),REASON_EFFECT)
 	end
 end
-

@@ -1,4 +1,5 @@
 --コアキメイル・デビル
+--Koa'ki Meiru Doom
 local s,id=GetID()
 function s.initial_effect(c)
 	--cost
@@ -21,7 +22,7 @@ function s.initial_effect(c)
 end
 s.listed_names={36623431}
 function s.mtcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.cfilter1(c)
 	return c:IsCode(36623431) and c:IsAbleToGraveAsCost()
@@ -62,7 +63,7 @@ function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
-	if (ph==PHASE_MAIN1 or ph==PHASE_MAIN2) and re:IsActiveType(TYPE_MONSTER)
+	if (Duel.IsMainPhase()) and re:IsMonsterEffect()
 		and re:GetHandler():IsAttribute(ATTRIBUTE_DARK+ATTRIBUTE_LIGHT) then
 		Duel.NegateEffect(ev)
 	end

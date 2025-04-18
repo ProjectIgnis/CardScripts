@@ -1,5 +1,5 @@
 --満天禍コルドー
---Cataclysmic Bellowing Colder
+--Cataclysmic Cryonic Coldo
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -44,7 +44,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 			local sg=g:Select(tp,1,1,nil)
 			Duel.BreakEffect()
-			Duel.SendtoDeck(sg,nil,0,REASON_EFFECT)
+			Duel.SendtoDeck(sg,nil,SEQ_DECKTOP,REASON_EFFECT)
 		end
 	end
 end

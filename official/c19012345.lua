@@ -1,4 +1,5 @@
 --灰塵王 アッシュ・ガッシュ
+--Gash the Dust Lord
 local s,id=GetID()
 function s.initial_effect(c)
 	--lvup
@@ -20,6 +21,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_LEVEL)
 	e1:SetValue(1)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 	c:RegisterEffect(e1)
 end

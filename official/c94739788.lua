@@ -1,4 +1,5 @@
 --洗脳解除
+--Remove Brainwashing
 local s,id=GetID()
 function s.initial_effect(c)
 	Duel.EnableGlobalFlag(GLOBALFLAG_BRAINWASHING_CHECK)

@@ -1,9 +1,9 @@
--- 水晶ドクロ
--- Crystal Skull
--- Scripted by Hatter
+--水晶ドクロ
+--Crystal Skull
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Take 1000 damage
+	--Take 1000 damage
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DAMAGE+CATEGORY_POSITION)
@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	local e3=e1:Clone()
 	e3:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
 	c:RegisterEffect(e3)
-	-- Add to hand or Special Summon 1 Rock monster
+	--Add to hand or Special Summon 1 Rock monster
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_SPECIAL_SUMMON)
@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e4:SetTarget(s.thtg)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
-	-- Register damage events
+	--Register damage events
 	aux.GlobalCheck(s,function()
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -41,7 +41,7 @@ function s.initial_effect(c)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	if r&REASON_EFFECT==REASON_EFFECT then
-		Duel.RegisterFlagEffect(ep,id,RESET_PHASE+PHASE_END,0,1)
+		Duel.RegisterFlagEffect(ep,id,RESET_PHASE|PHASE_END,0,1)
 	end
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -1,5 +1,5 @@
 --炎の王 ナグルファー
---Naglfar, Generaid of Flames
+--Naglfar, Generaider Boss of Fire
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
@@ -15,17 +15,17 @@ function s.initial_effect(c)
 	e1:SetOperation(s.desrepop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x134}
+s.listed_series={SET_GENERAIDER}
 function s.repfilter(c,tp)
 	return c:IsControler(tp) and c:IsLocation(LOCATION_ONFIELD)
-		and c:IsReason(REASON_BATTLE+REASON_EFFECT) and not c:IsReason(REASON_REPLACE)
+		and c:IsReason(REASON_BATTLE|REASON_EFFECT) and not c:IsReason(REASON_REPLACE)
 end
 function s.desfilter(c,e,tp)
 	return c:IsControler(tp) and c:IsMonster() and c:IsDestructable(e)
 		and not c:IsStatus(STATUS_DESTROY_CONFIRMED+STATUS_BATTLE_DESTROYED)
 end
 function s.cfilter(c)
-	return c:IsFaceup() and (c:IsSetCard(0x134) or c:IsRace(RACE_BEASTWARRIOR))
+	return c:IsFaceup() and (c:IsSetCard(SET_GENERAIDER) or c:IsRace(RACE_BEASTWARRIOR))
 end
 function s.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE,0,nil)
@@ -46,5 +46,5 @@ end
 function s.desrepop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
 	tc:SetStatus(STATUS_DESTROY_CONFIRMED,false)
-	Duel.Destroy(tc,REASON_EFFECT+REASON_REPLACE)
+	Duel.Destroy(tc,REASON_EFFECT|REASON_REPLACE)
 end

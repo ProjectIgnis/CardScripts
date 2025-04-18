@@ -6,7 +6,7 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCost(s.cost)
+	e1:SetCost(Cost.PayLP(1000))
 	c:RegisterEffect(e1)
 	--Special Summon
 	local e2=Effect.CreateEffect(c)
@@ -20,10 +20,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={28053764}
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,1000) end
-	Duel.PayLPCost(tp,1000)
-end
 function s.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0,TYPES_TOKEN,300,300,1,RACE_MACHINE,ATTRIBUTE_EARTH,POS_FACEUP_ATTACK) end
@@ -40,11 +36,10 @@ function s.tkop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(aux.TargetBoolFunction(Card.IsLocation,LOCATION_EXTRA))
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	--lizard check
 	aux.addTempLizardCheck(e:GetHandler(),tp)
-
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
 		or not Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0,TYPES_TOKEN,300,300,1,RACE_MACHINE,ATTRIBUTE_EARTH,POS_FACEUP_ATTACK) then return end
 	local token=Duel.CreateToken(tp,id+1)
@@ -56,7 +51,7 @@ function s.tkop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCountLimit(1)
 	e2:SetOperation(s.tkop2)
-	e2:SetReset(RESET_PHASE+PHASE_END)
+	e2:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e2,tp)
 end
 function s.tkop2(e,tp,eg,ep,ev,re,r,rp)

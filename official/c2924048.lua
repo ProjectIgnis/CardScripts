@@ -1,4 +1,5 @@
 --借カラクリ整備蔵
+--Karakuri Cash Shed
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,9 +12,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x11}
+s.listed_series={SET_KARAKURI}
 function s.cfilter(c)
-	return c:IsPosition(POS_FACEUP_DEFENSE) and c:IsSetCard(0x11)
+	return c:IsPosition(POS_FACEUP_DEFENSE) and c:IsSetCard(SET_KARAKURI)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if ep==tp or not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil) then return false end

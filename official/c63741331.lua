@@ -1,5 +1,5 @@
 --フォッグ・コントロール
---Fog COntrol
+--Fog Control
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,10 +12,10 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.counter_place_list={0x1019}
-s.listed_series={0x18}
+s.counter_place_list={COUNTER_FOG}
+s.listed_series={SET_CLOUDIAN}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x18)
+	return c:IsFaceup() and c:IsSetCard(SET_CLOUDIAN)
 end
 function s.filter(c,e)
 	return c:IsFaceup() and c:IsCanBeEffectTarget(e)
@@ -35,6 +35,6 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
-		tc:AddCounter(0x1019,3)
+		tc:AddCounter(COUNTER_FOG,3)
 	end
 end

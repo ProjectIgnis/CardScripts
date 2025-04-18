@@ -1,5 +1,5 @@
 --御巫の誘い輪舞
---Inviting Rondo of the Mikanko
+--Mikanko Reflection Rondo
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -27,12 +27,12 @@ function s.initial_effect(c)
 	e3:SetOperation(s.tgop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x18e}
+s.listed_series={SET_MIKANKO}
 function s.eqlimit(e,c)
 	return e:GetHandler():GetEquipTarget()==c or e:GetHandlerPlayer()~=c:GetControler()
 end
 function s.contcond(e)
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x18e),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_MIKANKO),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function s.actcond(e)
 	local ec=e:GetHandler():GetEquipTarget()

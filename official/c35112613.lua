@@ -1,4 +1,5 @@
 --クリフォトン
+--Kuriphoton
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -21,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x55}
+s.listed_series={SET_PHOTON}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,2000) and e:GetHandler():IsAbleToGraveAsCost() end
 	Duel.PayLPCost(tp,2000)
@@ -34,15 +35,15 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(1,0)
 	e1:SetValue(0)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_NO_EFFECT_DAMAGE)
-	e2:SetReset(RESET_PHASE+PHASE_END)
+	e2:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e2,tp)
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x55) and c:IsMonster() and c:GetCode()~=id and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(SET_PHOTON) and c:IsMonster() and c:GetCode()~=id and c:IsAbleToGraveAsCost()
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end

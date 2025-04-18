@@ -1,5 +1,5 @@
 --影霊衣の万華鏡
---Nekroz Kaliedoscope
+--Nekroz Kaleidoscope
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -24,11 +24,11 @@ function s.initial_effect(c)
 	if not s.ritual_matching_function then
 		s.ritual_matching_function={}
 	end
-	s.ritual_matching_function[c]=aux.FilterEqualFunction(Card.IsSetCard,0xb4)
+	s.ritual_matching_function[c]=aux.FilterEqualFunction(Card.IsSetCard,SET_NEKROZ)
 end
-s.listed_series={0xb4}
+s.listed_series={SET_NEKROZ}
 function s.spfilter(c,e,tp,mc)
-	return c:IsSetCard(0xb4) and c:IsRitualMonster() and (not c.ritual_custom_check or c.ritual_custom_check(e,tp,Group.FromCards(mc),c))
+	return c:IsSetCard(SET_NEKROZ) and c:IsRitualMonster() and (not c.ritual_custom_check or c.ritual_custom_check(e,tp,Group.FromCards(mc),c))
 		and (not c.mat_filter or c.mat_filter(mc,tp)) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true)
 		and mc:IsCanBeRitualMaterial(c)
 end
@@ -123,18 +123,18 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0
 end
 function s.cfilter(c)
-	return c:IsSetCard(0xb4) and c:IsMonster() and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
+	return c:IsSetCard(SET_NEKROZ) and c:IsMonster() and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost()
-		and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil) end
+		and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,1,nil)
 	g:AddCard(e:GetHandler())
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0xb4) and c:IsSpell() and c:IsAbleToHand()
+	return c:IsSetCard(SET_NEKROZ) and c:IsSpell() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

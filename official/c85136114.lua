@@ -1,7 +1,6 @@
 --マシンナーズ・パゼストレージ
 --Machina Possesstorage
 --Scripted by Hel
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--If normal or special summoned, special summon 1 "Machina" monster from GY
@@ -31,10 +30,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={id}
-s.listed_series={0x36}
-
+s.listed_series={SET_MACHINA}
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x36) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE) and not c:IsCode(id)
+	return c:IsSetCard(SET_MACHINA) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE) and not c:IsCode(id)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.spfilter(chkc,e,tp) end
@@ -53,13 +51,13 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_TRIGGER)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 	Duel.SpecialSummonComplete()
 end
 function s.thfilter1(c)
-	return c:IsFaceup() and c:IsSetCard(0x36) and c:IsAbleToHand()
+	return c:IsFaceup() and c:IsSetCard(SET_MACHINA) and c:IsAbleToHand()
 end
 function s.thfilter2(c)
 	return c:IsAbleToHand() and (c:IsSpell() or c:IsTrap())

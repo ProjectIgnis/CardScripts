@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1)
-	e2:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e2:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e2:SetCondition(s.spcon)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
@@ -40,8 +40,8 @@ function s.initial_effect(c)
 end
 function s.spr(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if (r&0x41)~=0x41 or c:IsPreviousLocation(LOCATION_SZONE) then return end
-	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,2)
+	if (r&(REASON_DESTROY|REASON_EFFECT)~=(REASON_DESTROY|REASON_EFFECT)) or c:IsPreviousLocation(LOCATION_SZONE) then return end
+	c:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,2)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

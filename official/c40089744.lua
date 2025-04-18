@@ -31,10 +31,10 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x10cf,0xbd}
+s.listed_series={SET_BLACK_LUSTER_SOLDIER,SET_GAIA_THE_FIERCE_KNIGHT}
 s.counter_place_list={COUNTER_SPELL}
 function s.filter(c)
-	return ((c:IsSetCard(0x10cf) and c:IsType(TYPE_RITUAL)) or c:IsSetCard(0xbd)) and c:IsMonster() and c:IsAbleToHand()
+	return ((c:IsSetCard(SET_BLACK_LUSTER_SOLDIER) and c:IsType(TYPE_RITUAL)) or c:IsSetCard(SET_GAIA_THE_FIERCE_KNIGHT)) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end
@@ -50,7 +50,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c)
-	return c:IsMonster() and c:IsPreviousLocation(LOCATION_HAND+LOCATION_ONFIELD)
+	return c:IsMonster() and c:IsPreviousLocation(LOCATION_HAND|LOCATION_ONFIELD)
 end
 function s.acop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=eg:FilterCount(s.cfilter,nil)
@@ -63,7 +63,7 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:GetHandler():RemoveCounter(tp,COUNTER_SPELL,3,REASON_COST)
 end
 function s.thfilter(c)
-	return c:GetType()==TYPE_SPELL+TYPE_RITUAL and c:IsAbleToHand()
+	return c:IsRitualSpell() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

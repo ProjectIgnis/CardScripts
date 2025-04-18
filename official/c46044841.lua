@@ -1,4 +1,5 @@
 --ガスタ・ファルコ
+--Gusto Falco
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -13,13 +14,13 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x10}
+s.listed_series={SET_GUSTO}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return (r&REASON_BATTLE)==0 and e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 		and e:GetHandler():IsPreviousPosition(POS_FACEUP)
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x10) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
+	return c:IsSetCard(SET_GUSTO) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

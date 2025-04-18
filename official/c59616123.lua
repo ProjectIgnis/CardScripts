@@ -1,4 +1,5 @@
 --トラップ・スタン
+--Trap Stun
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -16,14 +17,14 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_DISABLE)
 	e1:SetTargetRange(LOCATION_SZONE,LOCATION_SZONE)
 	e1:SetTarget(s.distarget)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	--disable effect
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EVENT_CHAIN_SOLVING)
 	e2:SetOperation(s.disoperation)
-	e2:SetReset(RESET_PHASE+PHASE_END)
+	e2:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e2,tp)
 	--disable trap monster
 	local e3=Effect.CreateEffect(c)
@@ -31,7 +32,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e3:SetCode(EFFECT_DISABLE_TRAPMONSTER)
 	e3:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e3:SetTarget(s.distarget)
-	e3:SetReset(RESET_PHASE+PHASE_END)
+	e3:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e3,tp)
 end
 function s.distarget(e,c)
@@ -39,7 +40,7 @@ function s.distarget(e,c)
 end
 function s.disoperation(e,tp,eg,ep,ev,re,r,rp)
 	local tl=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
-	if tl==LOCATION_SZONE and re:IsActiveType(TYPE_TRAP) then
+	if tl==LOCATION_SZONE and re:IsTrapEffect() then
 		Duel.NegateEffect(ev)
 	end
 end

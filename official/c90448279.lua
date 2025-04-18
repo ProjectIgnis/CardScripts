@@ -13,8 +13,8 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
-	e1:SetCost(aux.dxmcostgen(2,2,nil))
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER|TIMING_END_PHASE)
+	e1:SetCost(Cost.Detach(2,2,nil))
 	e1:SetTarget(s.gytg)
 	e1:SetOperation(s.gyop)
 	c:RegisterEffect(e1)
@@ -42,7 +42,7 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
 	if (a and a:IsType(TYPE_XYZ)) or (d and d:IsType(TYPE_XYZ)) then
-		Duel.RegisterFlagEffect(0,id+1,RESET_PHASE+PHASE_END,0,1)
+		Duel.RegisterFlagEffect(0,id+1,RESET_PHASE|PHASE_END,0,1)
 	end
 end
 function s.xyzfilter(c,tp,xyzc)
@@ -50,7 +50,7 @@ function s.xyzfilter(c,tp,xyzc)
 end
 function s.xyzop(e,tp,chk)
 	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 and Duel.GetFlagEffect(0,id+1)>0 end
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+	Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1)
 	return true
 end
 function s.gytg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -73,14 +73,14 @@ function s.attfilter(c,e)
 	return not c:IsImmuneToEffect(e)
 end
 function s.atttg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.attfilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_EXTRA,0,1,nil,e)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.attfilter,tp,LOCATION_HAND|LOCATION_DECK|LOCATION_EXTRA,0,1,nil,e)
 		and e:GetHandler():IsType(TYPE_XYZ) end
 end
 function s.attop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) or c:IsFacedown() then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
-	local tc=Duel.SelectMatchingCard(tp,s.attfilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_EXTRA,0,1,1,nil,e):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,s.attfilter,tp,LOCATION_HAND|LOCATION_DECK|LOCATION_EXTRA,0,1,1,nil,e):GetFirst()
 	if tc then
 		Duel.Overlay(c,tc,true)
 	end

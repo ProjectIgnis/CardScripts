@@ -1,5 +1,5 @@
 --War Rock Ordeal
---scripted by Rundas
+--War Rock Ordeal
 local s,id=GetID()
 function s.initial_effect(c)
 	c:SetUniqueOnField(1,0,id)
@@ -31,7 +31,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={id}
-s.listed_series={0x161}
+s.listed_series={SET_WAR_ROCK}
 s.counter_place_list={0x205}
 --place counters on activation
 function s.actop(e,tp,eg,ep,ev,re,r,rp)
@@ -42,7 +42,7 @@ end
 function s.dcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	local rc=tc:GetReasonCard()
-	return #eg==1 and rc:IsControler(tp) and tc:IsMonster() and tc:IsReason(REASON_BATTLE) and tc:IsLocation(LOCATION_GRAVE) and rc:IsSetCard(0x161)
+	return #eg==1 and rc:IsControler(tp) and tc:IsMonster() and tc:IsReason(REASON_BATTLE) and tc:IsLocation(LOCATION_GRAVE) and rc:IsSetCard(SET_WAR_ROCK)
 end
 function s.dtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) and e:GetHandler():IsCanRemoveCounter(tp,0x205,1,REASON_EFFECT) end

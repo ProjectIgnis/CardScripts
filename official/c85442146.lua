@@ -3,7 +3,7 @@
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
-	--Negate the activation of a Spell/Trap Card, or monster effect,  and if you do, destroy that card.
+	--Negate the activation of a Spell/Trap Card, or monster effect, and if you do, destroy that card.
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetHintTiming(TIMING_END_PHASE,TIMING_STANDBY_PHASE|TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E)
-	e2:SetCost(aux.PayLPCost(2500))
+	e2:SetCost(Cost.PayLP(2500))
 	e2:SetTarget(s.settg)
 	e2:SetOperation(s.setop)
 	c:RegisterEffect(e2)

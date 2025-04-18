@@ -1,4 +1,5 @@
 --オリエント・ドラゴン
+--Orient Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -17,7 +18,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
+	return e:GetHandler():IsSynchroSummoned()
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsType(TYPE_SYNCHRO) and c:IsAbleToRemove()

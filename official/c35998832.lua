@@ -1,5 +1,5 @@
 --溟界の漠－ゾーハ
---Zoha, Haze of the Abhyss
+--Zohah, the Ogdoadic Boundless
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
@@ -38,7 +38,7 @@ function s.drcon2(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonLocation(LOCATION_GRAVE)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x163) and c:IsMonster() and c:IsAbleToHand() and not c:IsCode(id)
+	return c:IsSetCard(SET_OGDOADIC) and c:IsMonster() and c:IsAbleToHand() and not c:IsCode(id)
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(1-tp,1)

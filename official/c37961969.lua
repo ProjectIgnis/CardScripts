@@ -1,9 +1,9 @@
--- ティアラメンツ・ハゥフニス
--- Tearalaments Havnis
--- Scripted by Hatter
+--ティアラメンツ・ハゥフニス
+--Tearlaments Havnis
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Special Summon this card
+	--Special Summon this card
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_DECKDES)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	-- Fusion Summon
+	--Fusion Summon
 	local fusparams = {matfilter=Card.IsAbleToDeck,extrafil=s.extramat,extraop=s.extraop,gc=Fusion.ForcedHandler,extratg=s.extratarget}
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return rp==1-tp and re:IsActiveType(TYPE_MONSTER) and re:GetActivateLocation()==LOCATION_MZONE
+	return rp==1-tp and re:IsMonsterEffect() and re:GetActivateLocation()==LOCATION_MZONE
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -51,10 +51,10 @@ function s.extramat(e,tp,mg)
 end
 function s.extratarget(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,e:GetHandler(),1,tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE)
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,e:GetHandler(),1,tp,LOCATION_HAND|LOCATION_MZONE|LOCATION_GRAVE)
 end
 function s.extraop(e,tc,tp,sg)
-	local gg=sg:Filter(Card.IsLocation,nil,LOCATION_HAND+LOCATION_GRAVE)
+	local gg=sg:Filter(Card.IsLocation,nil,LOCATION_HAND|LOCATION_GRAVE)
 	if #gg>0 then Duel.HintSelection(gg,true) end
 	local rg=sg:Filter(Card.IsFacedown,nil)
 	if #rg>0 then Duel.ConfirmCards(1-tp,rg) end

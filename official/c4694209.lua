@@ -67,9 +67,9 @@ function s.addc2(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_DESTROY_REPLACE)
 		e1:SetTarget(s.reptg)
 		e1:SetOperation(s.repop)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,0)
+		tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,0)
 	end
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)

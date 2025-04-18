@@ -1,4 +1,5 @@
 --スーパイ
+--Supay
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -34,7 +35,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e1:SetValue(tc:GetAttack()*2)
 		tc:RegisterEffect(e1,true)
 		Duel.SpecialSummonComplete()
@@ -43,7 +44,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetRange(LOCATION_MZONE)
 		e2:SetCode(EVENT_PHASE+PHASE_END)
 		e2:SetOperation(s.retop)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e2:SetReset(RESETS_STANDARD_PHASE_END)
 		e2:SetCountLimit(1)
 		tc:RegisterEffect(e2)
 	end

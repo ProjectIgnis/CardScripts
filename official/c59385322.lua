@@ -1,7 +1,8 @@
 --コアバスター
+--Core Blaster
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsSetCard,0x1d))
+	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsSetCard,SET_KOAKI_MEIRU))
 	--destroy
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
@@ -25,7 +26,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x1d}
+s.listed_series={SET_KOAKI_MEIRU}
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local ec=e:GetHandler():GetEquipTarget()
 	if ec~=Duel.GetAttacker() and ec~=Duel.GetAttackTarget() then return false end

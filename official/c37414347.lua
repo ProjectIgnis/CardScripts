@@ -52,16 +52,16 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 s.counter_place_list={0x4a0}
-s.listed_series={0x107}
+s.listed_series={SET_FA}
 function s.atkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x107) and c:GetLevel()>=0
+	return c:IsFaceup() and c:IsSetCard(SET_FA) and c:GetLevel()>=0
 end
 function s.atkval(e,c)
 	local lg=c:GetLinkedGroup():Filter(s.atkfilter,nil)
 	return lg:GetSum(Card.GetLevel)*300
 end
 function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
-	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and re:GetHandler():IsSetCard(0x107)
+	return re:IsSpellTrapEffect() and re:GetHandler():IsSetCard(SET_FA)
 end
 function s.cttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -75,7 +75,7 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return ep==1-tp and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev)
+	return ep==1-tp and re:IsMonsterEffect() and Duel.IsChainNegatable(ev)
 end
 function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

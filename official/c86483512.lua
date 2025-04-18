@@ -14,13 +14,13 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x150}
+s.listed_series={SET_VIRTUAL_WORLD}
 local key=TYPE_MONSTER+TYPE_SPELL+TYPE_TRAP
 function s.togravefilter(c,ctype)
-	return c:IsSetCard(0x150) and not c:IsType(ctype&key) and c:IsAbleToGrave()
+	return c:IsSetCard(SET_VIRTUAL_WORLD) and not c:IsType(ctype&key) and c:IsAbleToGrave()
 end
 function s.tgfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x150) and Duel.IsExistingMatchingCard(s.togravefilter,tp,LOCATION_DECK,0,1,nil,c:GetType())
+	return c:IsFaceup() and c:IsSetCard(SET_VIRTUAL_WORLD) and Duel.IsExistingMatchingCard(s.togravefilter,tp,LOCATION_DECK,0,1,nil,c:GetType())
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_ONFIELD) and chkc:IsControler(tp) and s.tgfilter(chkc,tp) end
@@ -33,7 +33,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 end
 function s.ssummonfilter(c,tgid,e,tp)
-	return c:IsSetCard(0x150) and c:IsMonster() and not c:IsCode(tgid) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return c:IsSetCard(SET_VIRTUAL_WORLD) and c:IsMonster() and not c:IsCode(tgid) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -45,7 +45,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	aux.RegisterClientHint(c,nil,tp,1,0,aux.Stringid(id,1),nil)
 	--Send to GY and Special Summon
@@ -66,12 +66,12 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 						local e2=Effect.CreateEffect(c)
 						e2:SetType(EFFECT_TYPE_SINGLE)
 						e2:SetCode(EFFECT_DISABLE)
-						e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+						e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 						sg:GetFirst():RegisterEffect(e2,true)
 						local e3=Effect.CreateEffect(c)
 						e3:SetType(EFFECT_TYPE_SINGLE)
 						e3:SetCode(EFFECT_DISABLE_EFFECT)
-						e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+						e3:SetReset(RESET_EVENT|RESETS_STANDARD)
 						sg:GetFirst():RegisterEffect(e3,true)
 						Duel.SpecialSummonComplete()
 					end

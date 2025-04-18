@@ -4,7 +4,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	Fusion.AddProcMix(c,true,true,78193831,aux.FilterBoolFunctionEx(Card.IsRace,RACE_DRAGON))
+	Fusion.AddProcMix(c,true,true,CARD_BUSTER_BLADER,aux.FilterBoolFunctionEx(Card.IsRace,RACE_DRAGON))
 	--cannot direct attack
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -52,9 +52,9 @@ function s.initial_effect(c)
 	e7:SetCode(EFFECT_PIERCE)
 	c:RegisterEffect(e7)
 end
-s.material_setcode=0xd7
+s.material_setcode=SET_BUSTER_BLADER
 function s.val(e,c)
-	return Duel.GetMatchingGroupCount(s.filter,c:GetControler(),0,LOCATION_GRAVE+LOCATION_MZONE,nil)*1000
+	return Duel.GetMatchingGroupCount(s.filter,c:GetControler(),0,LOCATION_GRAVE|LOCATION_MZONE,nil)*1000
 end
 function s.filter(c)
 	return c:IsRace(RACE_DRAGON) and (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup())
@@ -63,5 +63,5 @@ function s.target(e,c)
 	return c:IsRace(RACE_DRAGON)
 end
 function s.aclimit(e,re,tp)
-	return re:GetHandler():IsRace(RACE_DRAGON) and re:IsActiveType(TYPE_MONSTER)
+	return re:GetHandler():IsRace(RACE_DRAGON) and re:IsMonsterEffect()
 end

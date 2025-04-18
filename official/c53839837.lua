@@ -1,4 +1,5 @@
 --ヴァンパイア・ロード
+--Vampire Lord
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -13,7 +14,7 @@ function s.initial_effect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e2:SetRange(LOCATION_GRAVE)
-	e2:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e2:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e2:SetCondition(s.spcon)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
@@ -32,13 +33,13 @@ function s.initial_effect(c)
 end
 function s.spr(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if (r&0x41)~=0x41 or rp==tp or not c:IsPreviousControler(tp) then return end
-	if Duel.GetTurnPlayer()==tp and Duel.GetCurrentPhase()==PHASE_STANDBY then
+	if (r&(REASON_DESTROY|REASON_EFFECT)~=(REASON_DESTROY|REASON_EFFECT)) or rp==tp or not c:IsPreviousControler(tp) then return end
+	if Duel.IsTurnPlayer(tp) and Duel.IsPhase(PHASE_STANDBY) then
 		e:SetLabel(Duel.GetTurnCount())
-		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN,0,2)
+		c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_STANDBY|RESET_SELF_TURN,0,2)
 	else
 		e:SetLabel(0)
-		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN,0,1)
+		c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_STANDBY|RESET_SELF_TURN,0,1)
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)

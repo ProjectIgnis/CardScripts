@@ -1,6 +1,5 @@
+--ジョーカーズ・ワイルド
 --Joker's Wild
---Scripted by fiftyfour
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Copy face card spell
@@ -8,7 +7,7 @@ function s.initial_effect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(0,TIMING_MAIN_END+TIMING_BATTLE_START)
+	e1:SetHintTiming(0,TIMING_MAIN_END|TIMING_BATTLE_START)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(s.condition)
 	e1:SetCost(s.cost)
@@ -31,7 +30,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={CARD_JACK_KNIGHT,CARD_KING_KNIGHT,CARD_QUEEN_KNIGHT}
-
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsMainPhase() or Duel.IsBattlePhase()
 end
@@ -74,7 +72,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_END
+	return Duel.IsPhase(PHASE_END)
 end
 function s.tdfilter(c)
 	return c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsRace(RACE_WARRIOR) and c:IsAbleToDeck()
@@ -91,8 +89,8 @@ end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	local c=e:GetHandler()
-	if tc and tc:IsRelateToEffect(e) and Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)~=0
-		and tc:IsLocation(LOCATION_DECK+LOCATION_EXTRA) and c:IsRelateToEffect(e) then
+	if tc and tc:IsRelateToEffect(e) and Duel.SendtoDeck(tc,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)~=0
+		and tc:IsLocation(LOCATION_DECK|LOCATION_EXTRA) and c:IsRelateToEffect(e) then
 		Duel.SendtoHand(c,nil,REASON_EFFECT)
 	end
 end

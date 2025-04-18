@@ -62,7 +62,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsSummonType(SUMMON_TYPE_FUSION) and c:GetReasonPlayer()==1-tp and c:IsPreviousControler(tp)
+	return c:IsFusionSummoned() and c:GetReasonPlayer()==1-tp and c:IsPreviousControler(tp)
 		and c:IsReason(REASON_EFFECT) and c:IsPreviousPosition(POS_FACEUP)
 end
 function s.spfilter(c,e,tp)

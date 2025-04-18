@@ -1,4 +1,5 @@
 --メテオ・ブラック・ドラゴン
+--Meteor Black Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -6,4 +7,4 @@ function s.initial_effect(c)
 	Fusion.AddProcMix(c,true,true,CARD_REDEYES_B_DRAGON,64271667)
 end
 s.listed_names={CARD_REDEYES_B_DRAGON}
-s.material_setcode=0x3b
+s.material_setcode=SET_RED_EYES

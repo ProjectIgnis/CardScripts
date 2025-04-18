@@ -1,6 +1,5 @@
 --風竜星－ホロウ
 --Pulao, Wind of the Yang Zing
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon 1 "Yang Zing" monster from deck
@@ -21,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetHintTiming(0,TIMING_BATTLE_START+TIMING_BATTLE_END)
+	e2:SetHintTiming(0,TIMING_BATTLE_START|TIMING_BATTLE_END)
 	e2:SetCountLimit(1)
 	e2:SetCondition(s.sccon)
 	e2:SetTarget(s.sctg)
@@ -36,16 +35,15 @@ function s.initial_effect(c)
 	e3:SetOperation(s.immop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x9e}
+s.listed_series={SET_YANG_ZING}
 s.listed_names={id}
-
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsReason(REASON_DESTROY) and c:IsReason(REASON_BATTLE+REASON_EFFECT)
+	return c:IsReason(REASON_DESTROY) and c:IsReason(REASON_BATTLE|REASON_EFFECT)
 		and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousControler(tp)
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x9e) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_YANG_ZING) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -59,12 +57,10 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP_ATTACK)
 end
 function s.sccon(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetTurnPlayer()==tp then return false end
-	local ph=Duel.GetCurrentPhase()
-	return ph==PHASE_MAIN1 or (ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE) or ph==PHASE_MAIN2
+	return Duel.IsTurnPlayer(1-tp) and (Duel.IsMainPhase() or Duel.IsBattlePhase())
 end
 function s.mfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x9e)
+	return c:IsFaceup() and c:IsSetCard(SET_YANG_ZING)
 end
 function s.sctg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
@@ -95,9 +91,9 @@ function s.immop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_IMMUNE_EFFECT)
 	e1:SetValue(s.efilter)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	rc:RegisterEffect(e1)
 end
 function s.efilter(e,te)
-	return te:IsActiveType(TYPE_SPELL)
+	return te:IsSpellEffect()
 end

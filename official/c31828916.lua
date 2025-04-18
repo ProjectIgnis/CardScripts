@@ -1,4 +1,5 @@
 --機甲部隊の最前線
+--Machina Armored Unit
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

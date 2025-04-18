@@ -26,10 +26,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tsop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xb2}
+s.listed_series={SET_UA}
 s.listed_names={id}
 function s.spfilter(c,ft)
-	return c:IsFaceup() and c:IsSetCard(0xb2) and not c:IsCode(id) and c:IsAbleToHandAsCost()
+	return c:IsFaceup() and c:IsSetCard(SET_UA) and not c:IsCode(id) and c:IsAbleToHandAsCost()
 		and (ft>0 or c:GetSequence()<5)
 end
 function s.spcon(e,c)
@@ -59,11 +59,11 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	g:DeleteGroup()
 end
 function s.thfilter(c,e,tp,ft)
-	return c:IsFaceup() and c:IsSetCard(0xb2) and c:IsAbleToHand() and (ft>0 or c:GetSequence()<5)
+	return c:IsFaceup() and c:IsSetCard(SET_UA) and c:IsAbleToHand() and (ft>0 or c:GetSequence()<5)
 		and Duel.IsExistingMatchingCard(s.spfilter2,tp,LOCATION_HAND,0,1,nil,e,tp,c:GetCode())
 end
 function s.spfilter2(c,e,tp,code)
-	return c:IsSetCard(0xb2) and not c:IsCode(code) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_UA) and not c:IsCode(code) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.tstg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)

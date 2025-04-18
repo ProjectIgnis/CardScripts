@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x146}
+s.listed_series={SET_DOGMATIKA}
 s.listed_names={id}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSummonLocation,LOCATION_EXTRA),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
@@ -55,7 +55,7 @@ function s.indes(e,c)
 	return c:IsSummonLocation(LOCATION_EXTRA)
 end
 function s.thfilter(c)
-	return not c:IsCode(id) and c:IsSetCard(0x146) and c:IsAbleToHand()
+	return not c:IsCode(id) and c:IsSetCard(SET_DOGMATIKA) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -74,7 +74,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	aux.RegisterClientHint(e:GetHandler(),EFFECT_FLAG_OATH,tp,1,0,aux.Stringid(id,2),nil)
 	--lizard check

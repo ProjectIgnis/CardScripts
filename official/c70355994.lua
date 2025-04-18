@@ -25,14 +25,14 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x7c}
+s.listed_series={SET_FIRE_FORMATION}
 function s.setcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
 	return c:IsRelateToBattle() and bc:IsLocation(LOCATION_GRAVE) and bc:IsReason(REASON_BATTLE)
 end
 function s.filter(c)
-	return c:IsSetCard(0x7c) and c:IsSpell() and c:IsSSetable()
+	return c:IsSetCard(SET_FIRE_FORMATION) and c:IsSpell() and c:IsSSetable()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end
@@ -45,7 +45,7 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter1(c)
-	return c:IsFaceup() and c:IsSetCard(0x7c) and c:IsSpellTrap() and c:IsAbleToGraveAsCost()
+	return c:IsFaceup() and c:IsSetCard(SET_FIRE_FORMATION) and c:IsSpellTrap() and c:IsAbleToGraveAsCost()
 		and Duel.IsExistingTarget(s.filter2,0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c)
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -58,7 +58,7 @@ function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.filter2(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsSpellTrap()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and s.filter2(chkc) end

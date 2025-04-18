@@ -1,4 +1,5 @@
 --ゴゴゴジャイアント
+--Gogogo Giant
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon success
@@ -14,16 +15,16 @@ function s.initial_effect(c)
 	--to defense
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e2:SetCode(EVENT_PHASE+PHASE_BATTLE)
+	e2:SetCode(EVENT_PHASE|PHASE_BATTLE)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
 	e2:SetCondition(s.poscon)
 	e2:SetOperation(s.posop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x59}
+s.listed_series={SET_GOGOGO}
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x59) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return c:IsSetCard(SET_GOGOGO) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end

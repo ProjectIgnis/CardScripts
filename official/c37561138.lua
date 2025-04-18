@@ -11,12 +11,12 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x2e}
+s.listed_series={SET_GRAVEKEEPERS}
 function s.thfilter(c)
-	return c:IsSetCard(0x2e) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_GRAVEKEEPERS) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.nsfilter(c)
-	return c:IsSetCard(0x2e) and c:IsSummonable(true,nil)
+	return c:IsSetCard(SET_GRAVEKEEPERS) and c:IsSummonable(true,nil)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b1=Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil)

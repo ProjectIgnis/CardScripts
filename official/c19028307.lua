@@ -34,8 +34,8 @@ function s.spcon(e,c)
 	local c=e:GetHandler()
 	if c==nil then return true end
 	local tp=c:GetControler()
-	local rg1=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE+LOCATION_GRAVE+LOCATION_HAND,0,c,RACE_MACHINE)
-	local rg2=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE+LOCATION_GRAVE+LOCATION_HAND,0,c,RACE_BEASTWARRIOR)
+	local rg1=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE|LOCATION_GRAVE|LOCATION_HAND,0,c,RACE_MACHINE)
+	local rg2=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE|LOCATION_GRAVE|LOCATION_HAND,0,c,RACE_BEASTWARRIOR)
 	local rg=rg1:Clone()
 	rg:Merge(rg2)
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>-2 and #rg1>0 and #rg2>0 
@@ -43,8 +43,8 @@ function s.spcon(e,c)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
 	local c=e:GetHandler()
-	local rg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE+LOCATION_GRAVE+LOCATION_HAND,0,c,RACE_MACHINE)
-	rg:Merge(Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE+LOCATION_GRAVE+LOCATION_HAND,0,c,RACE_BEASTWARRIOR))
+	local rg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE|LOCATION_GRAVE|LOCATION_HAND,0,c,RACE_MACHINE)
+	rg:Merge(Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE|LOCATION_GRAVE|LOCATION_HAND,0,c,RACE_BEASTWARRIOR))
 	local g=aux.SelectUnselectGroup(rg,e,tp,2,2,s.rescon,1,tp,HINTMSG_REMOVE,nil,nil,true)
 	if #g>0 then
 		g:KeepAlive()

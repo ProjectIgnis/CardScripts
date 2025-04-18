@@ -1,4 +1,5 @@
 --重装甲列車アイアン・ヴォルフ
+--Heavy Armored Train Ironwolf
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -12,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
 	e1:SetCondition(s.dacon)
-	e1:SetCost(s.dacost)
+	e1:SetCost(Cost.Detach(1))
 	e1:SetTarget(s.datg)
 	e1:SetOperation(s.daop)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
@@ -30,10 +31,6 @@ function s.initial_effect(c)
 end
 function s.dacon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsAbleToEnterBP()
-end
-function s.dacost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.dafilter(c)
 	return c:IsFaceup() and c:IsRace(RACE_MACHINE) and not c:IsHasEffect(EFFECT_DIRECT_ATTACK)
@@ -53,14 +50,14 @@ function s.daop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTargetRange(LOCATION_MZONE,0)
 	e1:SetTarget(s.ftarget)
 	e1:SetLabel(tc:GetFieldID())
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	if tc:IsRelateToEffect(e) then
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e2:SetCode(EFFECT_DIRECT_ATTACK)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e2:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e2)
 	end
 end

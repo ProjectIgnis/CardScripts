@@ -1,4 +1,5 @@
 --謙虚な番兵
+--The Humble Sentry
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -25,7 +26,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #g>=1 then
 		Duel.Hint(HINT_SELECTMSG,p,HINTMSG_TODECK)
 		local sg=g:Select(p,1,1,nil)
-		Duel.SendtoDeck(sg,nil,2,REASON_EFFECT)
+		Duel.SendtoDeck(sg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	end
 	Duel.ShuffleHand(p)
 end

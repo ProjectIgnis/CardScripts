@@ -10,14 +10,14 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_GRAVE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCountLimit(1,id)
-	e1:SetCost(aux.bfgcost)
+	e1:SetCost(Cost.SelfBanish)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x9f,0x98}
+s.listed_series={SET_PERFORMAPAL,SET_MAGICIAN}
 function s.thfilter(c)
-	return ((c:IsLocation(LOCATION_PZONE) and (c:IsSetCard(0x9f) or c:IsSetCard(0x98)))
+	return ((c:IsLocation(LOCATION_PZONE) and c:IsSetCard({SET_PERFORMAPAL,SET_MAGICIAN}))
 		or (c:IsFaceup() and c:IsLocation(LOCATION_MZONE) and c:IsType(TYPE_PENDULUM))) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

@@ -34,13 +34,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={}
-s.listed_series={0x10b}
+s.listed_series={SET_TINDANGLE}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsPreviousLocation(LOCATION_DECK) or c:IsPreviousLocation(LOCATION_HAND)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x10b) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE) and not c:IsCode(id)
+	return c:IsSetCard(SET_TINDANGLE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE) and not c:IsCode(id)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.spfilter(chkc,e,tp) end
@@ -72,7 +72,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.lkcon(e,tp,eg,ep,ev,re,r,rp)
 	local rc=e:GetHandler():GetReasonCard()
-	return rc:IsSetCard(0x10b) and r==REASON_LINK
+	return rc:IsSetCard(SET_TINDANGLE) and r==REASON_LINK
 end
 function s.lkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -83,6 +83,6 @@ function s.lkop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetCode(EFFECT_EXTRA_ATTACK)
 	e1:SetValue(2)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	rc:RegisterEffect(e1)
 end

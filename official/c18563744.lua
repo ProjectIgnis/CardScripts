@@ -1,6 +1,5 @@
 --沈黙の剣
 --Silent Sword Slash
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Targeted "Silent Swordsman" gains 1500 ATK/DEF, also unaffected by opponent's card effects
@@ -11,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CANNOT_INACTIVATE+EFFECT_FLAG_CANNOT_NEGATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(TIMING_DAMAGE_STEP)
-	e1:SetCondition(s.condition)
+	e1:SetCondition(aux.StatChangeDamageStepCondition)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
@@ -21,17 +20,14 @@ function s.initial_effect(c)
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xe7}
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
-end
+s.listed_series={SET_SILENT_SWORDSMAN}
 function s.filter(c)
-	return c:IsSetCard(0xe7) and c:IsFaceup()
+	return c:IsSetCard(SET_SILENT_SWORDSMAN) and c:IsFaceup()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -42,12 +38,12 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() and tc:IsControler(tp) then
+	if tc:IsRelateToEffect(e) and tc:IsFaceup() and tc:IsControler(tp) then
 		--Gains 1500 ATK/DEF
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e1:SetValue(1500)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()
@@ -61,7 +57,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CLIENT_HINT)
 		e3:SetRange(LOCATION_MZONE)
 		e3:SetValue(s.efilter)
-		e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e3:SetReset(RESETS_STANDARD_PHASE_END)
 		e3:SetOwnerPlayer(tp)
 		tc:RegisterEffect(e3)
 	end
@@ -70,7 +66,7 @@ function s.efilter(e,re)
 	return e:GetOwnerPlayer()~=re:GetOwnerPlayer()
 end
 function s.thfilter(c)
-	return c:IsSetCard(0xe7) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_SILENT_SWORDSMAN) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

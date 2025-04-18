@@ -24,7 +24,7 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_SANCTUARY_SKY}
 function s.efilter(e,te)
-	return te:IsActiveType(TYPE_SPELL)
+	return te:IsSpellEffect()
 end
 function s.envfilter(c)
 	return c:IsFaceup() and c:IsCode(CARD_SANCTUARY_SKY)

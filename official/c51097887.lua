@@ -1,5 +1,5 @@
 --鉄獣の凶襲
---Tribrigade Airborne
+--Tri-Brigade Airborne Assault
 --Scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -39,7 +39,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e0:SetType(EFFECT_TYPE_FIELD)
 	e0:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e0:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e0:SetReset(RESET_PHASE+PHASE_END)
+	e0:SetReset(RESET_PHASE|PHASE_END)
 	e0:SetTargetRange(1,0)
 	e0:SetTarget(s.splimit)
 	Duel.RegisterEffect(e0,tp)
@@ -53,12 +53,12 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		sc:RegisterEffect(e1,true)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e2:SetReset(RESETS_STANDARD_PHASE_END)
 		sc:RegisterEffect(e2,true)
 	end
 	Duel.SpecialSummonComplete()

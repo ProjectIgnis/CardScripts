@@ -1,5 +1,5 @@
 --ミミックリル
---Mimickuril
+--Mimikuril
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -27,7 +27,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
 		Duel.DisableShuffleCheck()
 		local fid=c:GetFieldID()
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,fid)
+		tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1,fid)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
@@ -39,7 +39,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetOperation(s.tdop)
 		Duel.RegisterEffect(e2,tp)
 		if c:IsRelateToEffect(e) then
-			Duel.SendtoDeck(c,nil,1,REASON_EFFECT)
+			Duel.SendtoDeck(c,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
 		end
 		Duel.SpecialSummonComplete()
 	else
@@ -54,5 +54,5 @@ function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
 	else return true end
 end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.SendtoDeck(e:GetLabelObject(),nil,1,REASON_EFFECT)
+	Duel.SendtoDeck(e:GetLabelObject(),nil,SEQ_DECKBOTTOM,REASON_EFFECT)
 end

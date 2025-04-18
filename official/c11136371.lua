@@ -42,7 +42,7 @@ function s.plop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetValue(TYPE_SPELL+TYPE_CONTINUOUS)
 			tc:RegisterEffect(e1)
 		end
-		Duel.RaiseEvent(g,EVENT_CUSTOM+47408488,e,0,tp,0,0)--Event used by Crystal Tree
+		Duel.RaiseEvent(g,EVENT_CUSTOM+CARD_CRYSTAL_TREE,e,0,tp,0,0)--Event used by Crystal Tree
 	end
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)

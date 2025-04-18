@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetCurrentPhase()==PHASE_MAIN1
+	if chk==0 then return Duel.IsPhase(PHASE_MAIN1)
 		and e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 	local e1=Effect.CreateEffect(e:GetHandler())
@@ -26,7 +26,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetCode(EFFECT_CANNOT_BP)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
 	e1:SetTargetRange(1,0)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,1),nil)
 end

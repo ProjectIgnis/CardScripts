@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Synchro Summon
-	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x33),1,1,Synchro.NonTuner(nil),2,99)
+	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_BLACKWING),1,1,Synchro.NonTuner(nil),2,99)
 	c:EnableReviveLimit()
 	--Destroy up to 2 monsters
 	local e1=Effect.CreateEffect(c)
@@ -25,13 +25,13 @@ function s.initial_effect(c)
 	e2:SetTargetRange(LOCATION_MZONE,0)
 	e2:SetCountLimit(1)
 	e2:SetCondition(function(e) return Duel.IsTurnPlayer(1-e:GetHandlerPlayer()) end)
-	e2:SetTarget(function (e,c) return c:IsSetCard(0x33) end)
+	e2:SetTarget(function (e,c) return c:IsSetCard(SET_BLACKWING) end)
 	e2:SetValue(s.indesval)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x33}
+s.listed_series={SET_BLACKWING}
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
+	return e:GetHandler():IsSynchroSummoned()
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetActivityCount(tp,ACTIVITY_BATTLE_PHASE)==0 end
@@ -40,7 +40,7 @@ function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetCode(EFFECT_CANNOT_BP)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
 	e1:SetTargetRange(1,0)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.filter(c,atk)

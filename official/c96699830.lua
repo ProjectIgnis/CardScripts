@@ -1,7 +1,6 @@
 --ボーン・フロム・ドラコニス
 --Born from Draconis
 --Scripted by ahtelel
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon 1 level 6+ LIGHT machine from hand
@@ -24,7 +23,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
 	e1:SetLabelObject(e)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,2),nil)
 end
@@ -43,17 +42,17 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local mg=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE,0,nil)
-		local gg=not Duel.IsPlayerAffectedByEffect(tp,69832741) and Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_GRAVE,0,nil) 
+		local gg=not Duel.IsPlayerAffectedByEffect(tp,CARD_SPIRIT_ELIMINATION) and Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_GRAVE,0,nil) 
 			or Group.CreateGroup()
 		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 		return ((#mg>0 and mg:FilterCount(s.mzfilter,nil)+ft>0) or (#gg>0 and ft>0)) 
 			and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,nil,e,tp)
 	end
 	local g
-	if Duel.IsPlayerAffectedByEffect(tp,69832741) then
+	if Duel.IsPlayerAffectedByEffect(tp,CARD_SPIRIT_ELIMINATION) then
 		g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE,0,nil)
 	else
-		g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil)
+		g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,nil)
 	end
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 	Duel.SetTargetParam(#g)
@@ -70,7 +69,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_SET_ATTACK)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 			e1:SetValue(ct*500)
 			tc:RegisterEffect(e1)
 			local e2=e1:Clone()
@@ -84,7 +83,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CLIENT_HINT)
 			e3:SetRange(LOCATION_MZONE)
 			e3:SetValue(s.efilter)
-			e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e3:SetReset(RESET_EVENT|RESETS_STANDARD)
 			tc:RegisterEffect(e3)
 		end
 		Duel.SpecialSummonComplete()

@@ -23,7 +23,7 @@ function s.cfilter(c)
 	return ct>0
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep==1-tp and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev) and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
+	return ep==1-tp and re:IsMonsterEffect() and Duel.IsChainNegatable(ev) and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -41,4 +41,3 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.RaiseEvent(c,EVENT_SSET,e,REASON_EFFECT,tp,tp,0)
 	end
 end
-

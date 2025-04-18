@@ -23,7 +23,7 @@ end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	for p=0,1 do
 		if eg:IsExists(s.cfilter,1,nil,p) then
-			Duel.RegisterFlagEffect(p,id,RESET_PHASE+PHASE_END,0,1)
+			Duel.RegisterFlagEffect(p,id,RESET_PHASE|PHASE_END,0,1)
 		end
 	end
 end
@@ -53,7 +53,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCountLimit(1)
 		e1:SetCondition(s.spcon)
 		e1:SetOperation(s.spop)
-		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_PHASE|PHASE_END)
 		Duel.RegisterEffect(e1,tp)
 	end
 end

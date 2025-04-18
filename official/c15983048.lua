@@ -1,5 +1,5 @@
 --大魔鍵－マフテアル
---Greater Magikey - Mafteahl
+--Maginificent Magikey Mafteal
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -35,14 +35,14 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x167}
+s.listed_series={SET_MAGIKEY}
 function s.matlimit(e,c)
 	if not c then return false end
-	return not c:IsSetCard(0x167)
+	return not c:IsSetCard(SET_MAGIKEY)
 end
 function s.sumcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsPlayerCanAdditionalSummon(tp)
-		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x167),tp,LOCATION_MZONE,0,1,nil)
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_MAGIKEY),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.sumcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -58,14 +58,14 @@ function s.sumop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetDescription(aux.Stringid(id,2))
 	e1:SetCode(EFFECT_EXTRA_SUMMON_COUNT)
-	e1:SetTargetRange(LOCATION_HAND+LOCATION_MZONE,0)
-	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x167))
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetTargetRange(LOCATION_HAND|LOCATION_MZONE,0)
+	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_MAGIKEY))
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+	Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1)
 end
 function s.spfilter(c,e,tp)
-	return c:IsLevelBelow(4) and (c:IsType(TYPE_NORMAL) or c:IsSetCard(0x167)) 
+	return c:IsLevelBelow(4) and (c:IsType(TYPE_NORMAL) or c:IsSetCard(SET_MAGIKEY)) 
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

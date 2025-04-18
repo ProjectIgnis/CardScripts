@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_UPDATE_DEFENSE)
 	c:RegisterEffect(e3)
 	local e4=e2:Clone()
-	e4:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x10cd))
+	e4:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_AQUAACTRESS))
 	c:RegisterEffect(e4)
 	local e5=e4:Clone()
 	e5:SetCode(EFFECT_UPDATE_DEFENSE)
@@ -36,7 +36,7 @@ function s.initial_effect(c)
 	e6:SetOperation(s.spop)
 	c:RegisterEffect(e6)
 end
-s.listed_series={0x10cd}
+s.listed_series={SET_AQUAACTRESS}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
@@ -63,7 +63,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)

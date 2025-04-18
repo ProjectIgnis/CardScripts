@@ -11,9 +11,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x4b}
+s.listed_series={SET_AESIR}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x4b) and c:IsControlerCanBeChanged()
+	return c:IsFaceup() and c:IsSetCard(SET_AESIR) and c:IsControlerCanBeChanged()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -25,7 +25,7 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) and Duel.GetControl(tc,1-tp)~=0 then
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,0)
+		tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,0)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_PHASE+PHASE_END)
@@ -33,12 +33,12 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCondition(s.rmcon)
 		e1:SetOperation(s.rmop)
 		e1:SetLabelObject(tc)
-		e1:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN,1)
+		e1:SetReset(RESET_PHASE|PHASE_END|RESET_OPPO_TURN,1)
 		Duel.RegisterEffect(e1,tp)
 	end
 end
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return Duel.IsTurnPlayer(1-tp)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()

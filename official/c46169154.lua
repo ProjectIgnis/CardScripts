@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={id}
-s.listed_names={0x161}
+s.listed_series={SET_WAR_ROCK}
 --Normal Summon without Tributing
 function s.cfilter(c)
 	return c:IsFacedown() or not c:IsRace(RACE_WARRIOR)
@@ -47,7 +47,7 @@ function s.tgfilter(c)
 	return c:IsAttribute(ATTRIBUTE_EARTH) and c:IsRace(RACE_WARRIOR) and not c:IsCode(id) and c:IsAbleToGrave()
 end
 function s.atkfilter(c)
-	return c:IsSetCard(0x161) and c:IsFaceup() and not c:IsStatus(STATUS_BATTLE_DESTROYED)
+	return c:IsSetCard(SET_WAR_ROCK) and c:IsFaceup() and not c:IsStatus(STATUS_BATTLE_DESTROYED)
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil)
@@ -68,7 +68,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
+			e1:SetReset(RESETS_STANDARD_PHASE_END|RESET_OPPO_TURN)
 			e1:SetValue(200)
 			tc:RegisterEffect(e1)
 		end

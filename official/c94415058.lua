@@ -1,4 +1,5 @@
 --星読みの魔術師
+--Stargazer Magician
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -39,7 +40,7 @@ function s.initial_effect(c)
 	e6:SetOperation(s.spop)
 	c:RegisterEffect(e6)
 end
-s.listed_series={0x98,0x99}
+s.listed_series={SET_MAGICIAN,SET_ODD_EYES}
 function s.actcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
 	if tc:IsControler(1-tp) then tc=Duel.GetAttackTarget() end
@@ -52,14 +53,14 @@ function s.actop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_CANNOT_ACTIVATE)
 	e1:SetTargetRange(0,1)
 	e1:SetValue(s.aclimit)
-	e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
+	e1:SetReset(RESET_PHASE|PHASE_DAMAGE)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.aclimit(e,re,tp)
-	return re:IsActiveType(TYPE_SPELL) and re:IsHasType(EFFECT_TYPE_ACTIVATE)
+	return re:IsSpellEffect() and re:IsHasType(EFFECT_TYPE_ACTIVATE)
 end
 function s.scfilter(c)
-	return c:IsSetCard(0x98) or c:IsSetCard(0x99)
+	return c:IsSetCard({SET_MAGICIAN,SET_ODD_EYES})
 end
 function s.sccon(e)
 	return not Duel.IsExistingMatchingCard(s.scfilter,e:GetHandlerPlayer(),LOCATION_PZONE,0,1,e:GetHandler())

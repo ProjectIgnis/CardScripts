@@ -1,4 +1,5 @@
 --姫葵マリーナ
+--Mariña, Princess of Sunflowers
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy
@@ -16,7 +17,7 @@ function s.initial_effect(c)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	return #eg==1 and tc:IsReason(REASON_DESTROY) and tc:IsReason(REASON_BATTLE+REASON_EFFECT)
+	return #eg==1 and tc:IsReason(REASON_DESTROY) and tc:IsReason(REASON_BATTLE|REASON_EFFECT)
 		and tc:IsPreviousLocation(LOCATION_MZONE) and tc:IsPreviousControler(tp)
 		and (tc:GetPreviousRaceOnField()&RACE_PLANT)~=0
 end

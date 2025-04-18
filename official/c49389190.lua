@@ -1,7 +1,6 @@
 --夢魔鏡の乙女－イケロス
 --Ikelos, the Dream Mirror Sprite
 --Scripted by Eerie Code
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Add 1 "Dream Mirror" card from deck
@@ -22,24 +21,23 @@ function s.initial_effect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
-	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END+TIMING_BATTLE_START+TIMING_BATTLE_END)
+	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER|TIMING_MAIN_END|TIMING_BATTLE_START|TIMING_BATTLE_END)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCondition(s.dspcon)
-	e2:SetCost(s.dspcost)
+	e2:SetCost(Cost.SelfTribute)
 	e2:SetTarget(s.dsptg)
 	e2:SetOperation(s.dspop)
 	c:RegisterEffect(e2)
 end
 s.listed_names={75888208,CARD_DREAM_MIRROR_TERROR,id}
-s.listed_series={0x131}
-
+s.listed_series={SET_DREAM_MIRROR}
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	if not re then return false end
-	return re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0x131)
+	return re:IsMonsterEffect() and re:GetHandler():IsSetCard(SET_DREAM_MIRROR)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x131) and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(SET_DREAM_MIRROR) and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -54,13 +52,8 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.dspcon(e,tp,eg,ep,ev,re,r,rp)
-	local ph=Duel.GetCurrentPhase()
 	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_DREAM_MIRROR_TERROR),tp,LOCATION_FZONE,LOCATION_FZONE,1,nil)
-		and (ph==PHASE_MAIN1 or (ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE) or ph==PHASE_MAIN2)
-end
-function s.dspcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() end
-	Duel.Release(e:GetHandler(),REASON_COST)
+		and (Duel.IsMainPhase() or Duel.IsBattlePhase())
 end
 function s.dspfilter(c,e,tp)
 	return c:IsCode(75888208) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

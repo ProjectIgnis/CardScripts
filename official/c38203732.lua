@@ -34,4 +34,3 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoHand(Group.FromCards(tc1,tc2),nil,REASON_EFFECT)
 	Duel.ConfirmCards(1-tp,Group.FromCards(tc1,tc2))
 end
-

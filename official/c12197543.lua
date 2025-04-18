@@ -38,7 +38,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		{b1,aux.Stringid(id,1)},
 		{b2,aux.Stringid(id,2)})
 	if op==1 then
-		Duel.SendtoGrave(rg,REASON_EFFECT+REASON_DISCARD)
+		Duel.SendtoGrave(rg,REASON_EFFECT|REASON_DISCARD)
 	elseif op==2 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 		local dg=g:Select(tp,1,1,nil)

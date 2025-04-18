@@ -1,4 +1,5 @@
 --魔装騎士ドラゴネス
+--Dragoness the Wicked Knight
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material

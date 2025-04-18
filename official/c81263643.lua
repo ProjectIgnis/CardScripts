@@ -20,7 +20,7 @@ function s.initial_effect(c)
 end
 function s.cfilter(c,tp)
 	if not c:IsDiscardable() then return false end
-	local ty=c:GetType() & (TYPE_MONSTER+TYPE_SPELL+TYPE_TRAP)
+	local ty=c:GetMainCardType()
 	local log=math.log(ty)/math.log(2)
 	return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,1,nil,2 ^ ((log+2) % 3))
 end
@@ -31,10 +31,10 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
 	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND,0,1,1,nil,tp)
-	local ty=g:GetFirst():GetType() & (TYPE_MONSTER+TYPE_SPELL+TYPE_TRAP)
+	local ty=g:GetFirst():GetMainCardType()
 	local log=math.log(ty)/math.log(2)
 	e:SetLabel(2 ^ ((log+2) % 3))
-	Duel.SendtoGrave(g,REASON_COST+REASON_DISCARD)
+	Duel.SendtoGrave(g,REASON_COST|REASON_DISCARD)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

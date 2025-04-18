@@ -2,10 +2,10 @@
 --Sunavalon Dryas
 local s,id=GetID()
 function s.initial_effect(c)
-	--link summon
 	c:EnableReviveLimit()
+	--Link Summon procedure: 1 Level 4 or lower Plant monster
 	Link.AddProcedure(c,s.matfilter,1,1)
-	--search	
+	--Add 1 "Sunvine" Spell/Trap from your Deck to your hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetValue(s.valcheck)
 	e2:SetLabelObject(e1)
 	c:RegisterEffect(e2)
-	--cannot be atk
+	--Cannot be targeted for attacks
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetValue(1)
 	c:RegisterEffect(e3)
-	--spsummon
+	--Gain LP equal to the damage you take, and if you do, Special Summon 1 "Sunvine" monster from your Extra Deck
 	local e4=Effect.CreateEffect(c)
 	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -43,7 +43,8 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x2157}
+s.listed_series={SET_SUNVINE}
+s.listed_names={27520594} --"Sunseed Genius Loci" 
 function s.matfilter(c,lc,sumtype,tp)
 	return c:IsRace(RACE_PLANT,lc,sumtype,tp) and c:IsLevelBelow(4)
 end
@@ -56,11 +57,11 @@ function s.valcheck(e,c)
 	end
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSequence()>4 and e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
+	return e:GetHandler():GetSequence()>4 and e:GetHandler():IsLinkSummoned()
 		and e:GetLabel()==1
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x2157) and c:IsSpellTrap() and c:IsAbleToHand()
+	return c:IsSetCard(SET_SUNVINE) and c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -78,7 +79,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==tp and (r&REASON_BATTLE+REASON_EFFECT)~=0
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x2157) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_SUNVINE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCountFromEx(tp)>0

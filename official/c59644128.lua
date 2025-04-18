@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--link summon
 	c:EnableReviveLimit()
-	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0xfc),2,2)
+	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_GOUKI),2,2)
 	--position
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -29,9 +29,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xfc}
+s.listed_series={SET_GOUKI}
 function s.desfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0xfc)
+	return c:IsFaceup() and c:IsSetCard(SET_GOUKI)
 		and Duel.IsExistingMatchingCard(s.posfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,c)
 end
 function s.posfilter(c)
@@ -56,7 +56,7 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.atkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xfc)
+	return c:IsFaceup() and c:IsSetCard(SET_GOUKI)
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.atkfilter,tp,LOCATION_MZONE,0,1,nil) end
@@ -69,8 +69,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(500)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end
-

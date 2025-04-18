@@ -1,4 +1,5 @@
 --呪いのお札
+--Cursed Bill
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c)

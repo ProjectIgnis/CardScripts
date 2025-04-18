@@ -1,4 +1,5 @@
 --シャドール・ファルコン
+--Shaddoll Falco
 local s,id=GetID()
 function s.initial_effect(c)
 	--flip
@@ -24,10 +25,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x9d}
+s.listed_series={SET_SHADDOLL}
 s.listed_names={id}
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x9d) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
+	return c:IsSetCard(SET_SHADDOLL) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end

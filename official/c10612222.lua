@@ -1,5 +1,5 @@
 --妖仙獣の居太刀風
---Yosenju Weaselblade Wind
+--Yosenjus' Sword Sting
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -10,19 +10,19 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
-	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER|TIMING_END_PHASE)
 	e1:SetCondition(s.condition)
 	e1:SetCost(s.cost)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0xb3}
+s.listed_series={SET_YOSENJU}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0
 end
 function s.cfilter(c)
-	return c:IsSetCard(0xb3) and c:IsMonster() and not c:IsPublic()
+	return c:IsSetCard(SET_YOSENJU) and c:IsMonster() and not c:IsPublic()
 end
 function s.filter(c,e)
 	return c:IsFaceup() and c:IsAbleToHand() and c:IsCanBeEffectTarget(e)

@@ -27,5 +27,5 @@ function s.etarget(e,c)
 	return c:GetOwner()==e:GetHandlerPlayer()
 end
 function s.efilter(e,te)
-	return te:IsActiveType(TYPE_TRAP) and te:GetOwner()~=e:GetOwner()
+	return te:IsTrapEffect() and te:GetOwner()~=e:GetOwner()
 end

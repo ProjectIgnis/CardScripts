@@ -1,4 +1,5 @@
 --冥王竜ヴァンダルギオン
+--Van'Dalgyon the Dark Dragon Lord
 local s,id=GetID()
 function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
@@ -55,13 +56,13 @@ function s.initial_effect(c)
 end
 function s.chop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if rp==tp or (not re:IsActiveType(TYPE_MONSTER) and not re:IsHasType(EFFECT_TYPE_ACTIVATE)) then return end
+	if rp==tp or (not re:IsMonsterEffect() and not re:IsHasType(EFFECT_TYPE_ACTIVATE)) then return end
 	local de,dp=Duel.GetChainInfo(ev,CHAININFO_DISABLE_REASON,CHAININFO_DISABLE_PLAYER)
 	if de and dp==tp and de:GetHandler():IsType(TYPE_COUNTER) then
 		local ty=re:GetActiveType()
 		local flag=c:GetFlagEffectLabel(id)
 		if not flag then
-			c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,0,ty)
+			c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,0,ty)
 			e:SetLabelObject(de)
 		elseif de~=e:GetLabelObject() then
 			e:SetLabelObject(de)

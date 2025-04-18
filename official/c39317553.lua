@@ -34,17 +34,17 @@ function s.initial_effect(c)
 end
 function s.altop(e,tp,chk)
 	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 end
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+	Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1)
 	return true
 end
 function s.xyzcon(e)
 	local c=e:GetHandler()
-	return c:IsStatus(STATUS_SPSUMMON_TURN) and c:IsSummonType(SUMMON_TYPE_XYZ)
+	return c:IsStatus(STATUS_SPSUMMON_TURN) and c:IsXyzSummoned()
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return rp==1-tp and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp)
-		and c:IsSummonType(SUMMON_TYPE_XYZ)
+		and c:IsXyzSummoned()
 end
 function s.spfilter(c,e,tp)
 	return c:IsLevelBelow(5) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

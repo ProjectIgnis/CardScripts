@@ -1,4 +1,5 @@
 --トランスターン
+--Transmodify
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -26,12 +27,12 @@ function s.cfilter(c,e,tp,ft)
 		local val=te:GetValue()
 		if val and val(te,c,e,0) then rc=val(te,c,e,1) end
 	end
-	local eff12644061={Duel.GetPlayerEffect(tp,12644061)}
+	local eff12644061={Duel.GetPlayerEffect(tp,CARD_ADVANCED_DARK)}
 	for _,te in ipairs(eff12644061) do
 		local val=te:GetValue()
 		if val and val(te,c,e,0) then att=val(te,c,e,1) end
 	end
-	return c:GetOriginalType()&TYPE_MONSTER~=0 and lv>0 and c:IsFaceup() and c:IsAbleToGraveAsCost() and (ft>0 or c:GetSequence()<5)
+	return c:IsMonsterCard() and lv>0 and c:IsFaceup() and c:IsAbleToGraveAsCost() and (ft>0 or c:GetSequence()<5)
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,lv+1,rc,att,e,tp)
 end
 function s.spfilter(c,lv,rc,att,e,tp)

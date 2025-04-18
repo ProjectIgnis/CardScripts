@@ -1,4 +1,5 @@
 --炎の護封剣
+--Swords of Burning Light
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

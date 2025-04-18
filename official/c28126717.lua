@@ -1,5 +1,5 @@
 --ふわんだりぃずと謎の地図
---Flundereeze and the Mysterious Map
+--Floowandereeze and the Magnificent Map
 --Scripted by Zefile
 local s,id=GetID()
 function s.initial_effect(c)
@@ -30,13 +30,13 @@ function s.initial_effect(c)
 	e3:SetOperation(s.nsop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x16f}
+s.listed_series={SET_FLOOWANDEREEZE}
 function s.filter(c,tp)
-	return c:IsSetCard(0x16f) and c:IsLevel(1) and c:IsSummonable(true,nil) and not c:IsPublic()
+	return c:IsSetCard(SET_FLOOWANDEREEZE) and c:IsLevel(1) and c:IsSummonable(true,nil) and not c:IsPublic()
 		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_DECK,0,1,nil,c:GetCode())
 end
 function s.filter2(c,code)
-	return c:IsSetCard(0x16f) and c:IsAbleToRemove() and not c:IsCode(code)
+	return c:IsSetCard(SET_FLOOWANDEREEZE) and c:IsAbleToRemove() and not c:IsCode(code)
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,nil,tp) end
@@ -61,15 +61,15 @@ function s.nscon(e,tp,eg,ep,ev,re,r,rp)
 	return eg and ep==1-tp
 end
 function s.nsfilter(c)
-	return c:IsSetCard(0x16f) and c:IsSummonable(true,nil)
+	return c:IsSetCard(SET_FLOOWANDEREEZE) and c:IsSummonable(true,nil)
 end
 function s.nstg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.nsfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.nsfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_SUMMON,nil,1,0,0)
 end
 function s.nsop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
-	local g=Duel.SelectMatchingCard(tp,s.nsfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.nsfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,1,1,nil)
 	if #g>0 then
 		local sg=g:GetFirst(tp,1,1,nil)
 		Duel.Summon(tp,sg,true,nil)

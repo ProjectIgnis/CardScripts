@@ -1,5 +1,5 @@
 --ロスライム
---Timewasting
+--Loss Time
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
@@ -19,4 +19,3 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SetLP(tp,Duel.GetLP(1-tp)-1000)
 end
-

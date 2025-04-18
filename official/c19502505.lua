@@ -1,4 +1,5 @@
 --沈黙の魔導剣士－サイレント・パラディン
+--Silent Paladin
 local s,id=GetID()
 function s.initial_effect(c)
 	--search
@@ -35,7 +36,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x41}
+s.listed_series={SET_LV}
 function s.cfilter(c)
 	return c:IsCode(1995985,73665146) and c:IsAbleToHand()
 end
@@ -55,7 +56,7 @@ function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 	return g and #g==1 and g:GetFirst():IsControler(tp) and g:GetFirst():IsLocation(LOCATION_MZONE)
-		and re:IsActiveType(TYPE_SPELL) and re:IsHasType(EFFECT_TYPE_ACTIVATE)
+		and re:IsSpellEffect() and re:IsHasType(EFFECT_TYPE_ACTIVATE)
 		and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev)
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -73,7 +74,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 		and c:IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x41) and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsAbleToHand()
+	return c:IsSetCard(SET_LV) and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc) end

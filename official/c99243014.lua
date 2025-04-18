@@ -27,7 +27,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	--Lizard check
 	aux.addTempLizardCheck(e:GetHandler(),tp,s.lizfilter)
@@ -40,7 +40,7 @@ function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 end
 function s.exfilter(c,e,tp,ft)
 	return c:IsType(TYPE_SYNCHRO) and c.material 
-		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_GRAVE+LOCATION_DECK,0,1,nil,e,tp,c,ft)
+		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_GRAVE|LOCATION_DECK,0,1,nil,e,tp,c,ft)
 end
 function s.spfilter(c,e,tp,sc,ft)
 	return c:IsCode(table.unpack(sc.material))
@@ -48,8 +48,8 @@ function s.spfilter(c,e,tp,sc,ft)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.exfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,Duel.GetLocationCount(tp,LOCATION_MZONE)) end
-	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE)
-	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK|LOCATION_GRAVE)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK|LOCATION_GRAVE)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
@@ -58,7 +58,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #cg==0 then return end
 	Duel.ConfirmCards(1-tp,cg)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter),tp,LOCATION_GRAVE+LOCATION_DECK,0,1,1,nil,e,tp,cg:GetFirst(),ft):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter),tp,LOCATION_GRAVE|LOCATION_DECK,0,1,1,nil,e,tp,cg:GetFirst(),ft):GetFirst()
 	if tc then
 		aux.ToHandOrElse(tc,tp,function(c)
 			return tc:IsCanBeSpecialSummoned(e,0,tp,false,false) and ft>0 end,

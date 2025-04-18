@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetRange(LOCATION_GRAVE)
 	e3:SetCountLimit(1,{id,1})
-	e3:SetCost(aux.bfgcost)
+	e3:SetCost(Cost.SelfBanish)
 	e3:SetTarget(s.destg)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
@@ -74,7 +74,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc1=g:GetFirst()
 	local tc2=g:GetNext()
 	if tc2==e:GetLabelObject() then tc1,tc2=tc2,tc1 end
-	if tc1:IsControler(tp) and tc1:UpdateAttack(-1500,RESET_EVENT+RESETS_STANDARD,e:GetHandler())==-1500
+	if tc1:IsControler(tp) and tc1:UpdateAttack(-1500,RESET_EVENT|RESETS_STANDARD,e:GetHandler())==-1500
 		and tc2 and tc2:IsControler(1-tp) then
 		Duel.Destroy(tc2,REASON_EFFECT)
 	end

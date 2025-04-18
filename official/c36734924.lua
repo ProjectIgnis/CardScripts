@@ -1,4 +1,5 @@
 --青き眼の巫女
+--Priestess with Eyes of Blue
 local s,id=GetID()
 function s.initial_effect(c)
 	--search
@@ -25,7 +26,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xdd}
+s.listed_series={SET_BLUE_EYES}
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsContains(e:GetHandler())
 end
@@ -33,7 +34,7 @@ function s.tgfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_EFFECT) and c:IsAbleToGrave()
 end
 function s.thfilter(c)
-	return c:IsSetCard(0xdd) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_BLUE_EYES) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_MZONE,0,1,nil)
@@ -61,7 +62,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spfilter(c,ft)
-	return c:IsFaceup() and c:IsSetCard(0xdd) and c:IsAbleToDeck() and (ft>0 or c:GetSequence()<5)
+	return c:IsFaceup() and c:IsSetCard(SET_BLUE_EYES) and c:IsAbleToDeck() and (ft>0 or c:GetSequence()<5)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
@@ -76,7 +77,7 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)~=0 and c:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) and Duel.SendtoDeck(tc,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)~=0 and c:IsRelateToEffect(e) then
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end
 end

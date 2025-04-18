@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x3a}
+s.listed_series={SET_GISHKI}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)~=0 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RACE)
@@ -30,6 +30,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ConfirmCards(tp,tc)
 	local rc,at=e:GetLabel()
 	if tc:IsRace(rc) and tc:IsAttribute(at) then
-		Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)
+		Duel.SendtoDeck(tc,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	else Duel.ShuffleHand(1-tp) end
 end

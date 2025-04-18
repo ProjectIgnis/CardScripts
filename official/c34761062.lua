@@ -18,7 +18,7 @@ function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not Gemini.EffectStatusCondition(e) or Duel.GetAttacker()~=e:GetHandler() then return false end
 	local bc=c:GetBattleTarget()
-	return bc and bc:IsSummonType(SUMMON_TYPE_SPECIAL) and bc:IsAbleToRemove()
+	return bc and bc:IsSpecialSummoned() and bc:IsAbleToRemove()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

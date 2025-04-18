@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_MZONE)
-	local timing=TIMING_BATTLE_PHASE+TIMING_BATTLE_END+TIMING_DAMAGE_STEP+TIMING_ATTACK+TIMING_BATTLE_START
+	local timing=TIMING_BATTLE_PHASE|TIMING_BATTLE_END|TIMING_DAMAGE_STEP|TIMING_ATTACK|TIMING_BATTLE_START
 	e1:SetHintTiming(timing,timing)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(s.atkcon)
@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_BATTLE_DESTROYED)
-	e2:SetRange(LOCATION_HAND+LOCATION_GRAVE)
+	e2:SetRange(LOCATION_HAND|LOCATION_GRAVE)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetCondition(s.spcon)
 	e2:SetTarget(s.sptg)
@@ -38,7 +38,7 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge1,0)
 	end)
 end
-s.listed_series={0x161}
+s.listed_series={SET_WAR_ROCK}
 function s.checkfilter(c)
 	return c and c:IsFaceup() and c:IsAttribute(ATTRIBUTE_EARTH) and c:IsRace(RACE_WARRIOR)
 end
@@ -46,18 +46,18 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsDamageCalculated() then return end
 	local bc0,bc1=Duel.GetBattleMonster(0)
 	if s.checkfilter(bc0) then
-		Duel.RegisterFlagEffect(bc0:GetControler(),id,RESET_PHASE+PHASE_END,0,1)
+		Duel.RegisterFlagEffect(bc0:GetControler(),id,RESET_PHASE|PHASE_END,0,1)
 	end
 	if s.checkfilter(bc1) then
-		Duel.RegisterFlagEffect(bc1:GetControler(),id,RESET_PHASE+PHASE_END,0,1)
+		Duel.RegisterFlagEffect(bc1:GetControler(),id,RESET_PHASE|PHASE_END,0,1)
 	end
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsBattlePhase() and Duel.GetFlagEffect(tp,id)>0
-		and (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
+		and aux.StatChangeDamageStepCondition()
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x161),tp,LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_WAR_ROCK),tp,LOCATION_MZONE,0,1,nil) end
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -68,17 +68,17 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DIRECT_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_DISABLE_PHASE_END)
 		c:RegisterEffect(e1)
 	end
-	local atkg=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,0x161),tp,LOCATION_MZONE,0,nil)
-	for tc in aux.Next(atkg) do
+	local atkg=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,SET_WAR_ROCK),tp,LOCATION_MZONE,0,nil)
+	for tc in atkg:Iter() do
 		--Increase ATK
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_UPDATE_ATTACK)
 		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
+		e2:SetReset(RESETS_STANDARD_PHASE_END|RESET_OPPO_TURN)
 		e2:SetValue(200)
 		tc:RegisterEffect(e2)
 	end
@@ -107,7 +107,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 		e1:SetValue(LOCATION_REMOVED)
-		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
+		e1:SetReset(RESET_EVENT|RESETS_REDIRECT)
 		c:RegisterEffect(e1,true)
 	end
 end

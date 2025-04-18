@@ -49,20 +49,20 @@ function s.initial_effect(c)
 	e4:SetOperation(s.desop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0xf9}
+s.listed_series={SET_TRUE_DRACO_KING}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 end
 	Duel.RegisterFlagEffect(tp,id,RESET_CHAIN,0,1)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0xf9) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return c:IsSetCard(SET_TRUE_DRACO_KING) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.spfilter(chkc,e,tp) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingTarget(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp)
 		and Duel.GetFlagEffect(tp,id+1)==0 end
-	Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE+PHASE_END,0,1)
+	Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE|PHASE_END,0,1)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectTarget(tp,s.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
@@ -78,20 +78,20 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	e1:SetTargetRange(1,0)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.sumcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==1-tp and Duel.IsMainPhase()
+	return Duel.IsTurnPlayer(1-tp) and Duel.IsMainPhase()
 end
 function s.sumfilter(c)
-	return c:IsSetCard(0xf9) and c:IsSummonable(true,nil,1)
+	return c:IsSetCard(SET_TRUE_DRACO_KING) and c:IsSummonable(true,nil,1)
 end
 function s.sumtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.sumfilter,tp,LOCATION_HAND,0,1,nil)
 		and Duel.GetFlagEffect(tp,id+2)==0 end
-	Duel.RegisterFlagEffect(tp,id+2,RESET_PHASE+PHASE_END,0,1)
+	Duel.RegisterFlagEffect(tp,id+2,RESET_PHASE|PHASE_END,0,1)
 	Duel.SetOperationInfo(0,CATEGORY_SUMMON,nil,1,0,0)
 end
 function s.sumop(e,tp,eg,ep,ev,re,r,rp)

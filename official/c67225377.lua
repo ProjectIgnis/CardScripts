@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop2)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x119}
+s.listed_series={SET_SALAMANGREAT}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsReason(REASON_RULE)
 end
@@ -47,11 +47,11 @@ function s.spop1(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spcfilter(c)
-	return c:IsSetCard(0x119) and c:IsDiscardable()
+	return c:IsSetCard(SET_SALAMANGREAT) and c:IsDiscardable()
 end
 function s.spcost2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.spcfilter,tp,LOCATION_HAND,0,1,e:GetHandler()) end
-	Duel.DiscardHand(tp,s.spcfilter,1,1,REASON_COST+REASON_DISCARD,e:GetHandler())
+	Duel.DiscardHand(tp,s.spcfilter,1,1,REASON_COST|REASON_DISCARD,e:GetHandler())
 end
 function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()

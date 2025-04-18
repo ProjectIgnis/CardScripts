@@ -1,4 +1,5 @@
 --VWXYZ－ドラゴン・カタパルトキャノン
+--VWXYZ-Dragon Catapult Cannon
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -34,7 +35,7 @@ function s.contactfil(tp)
 	return Duel.GetMatchingGroup(Card.IsAbleToRemoveAsCost,tp,LOCATION_ONFIELD,0,nil)
 end
 function s.contactop(g)
-	Duel.Remove(g,POS_FACEUP,REASON_COST+REASON_MATERIAL)
+	Duel.Remove(g,POS_FACEUP,REASON_COST|REASON_MATERIAL)
 end
  function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) and chkc:IsAbleToRemove() end

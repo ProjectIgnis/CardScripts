@@ -19,14 +19,14 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,id)
 	e2:SetCondition(aux.exccon)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x207a,0x107a}
+s.listed_series={SET_NOBLE_ARMS,SET_NOBLE_KNIGHT}
 function s.filter(c)
-	return c:IsFaceup() and c:IsType(TYPE_EQUIP) and c:IsSetCard(0x207a)
+	return c:IsFaceup() and c:IsType(TYPE_EQUIP) and c:IsSetCard(SET_NOBLE_ARMS)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
@@ -60,8 +60,8 @@ function s.eqfilter(c,cd)
 	return c:IsCode(cd) and (c:IsFaceup() or not c:IsOnField())
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x107a) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and not Duel.IsExistingMatchingCard(s.eqfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,1,nil,c:GetCode())
+	return c:IsSetCard(SET_NOBLE_KNIGHT) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+		and not Duel.IsExistingMatchingCard(s.eqfilter,tp,LOCATION_ONFIELD|LOCATION_GRAVE,0,1,nil,c:GetCode())
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp) end
@@ -75,4 +75,3 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-

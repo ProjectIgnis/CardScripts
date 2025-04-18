@@ -1,8 +1,9 @@
 --機械天使の儀式
+--Machine Angel Ritual
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
-	Ritual.AddProcGreater(c,aux.FilterBoolFunction(Card.IsSetCard,0x2093))
+	Ritual.AddProcGreater(c,aux.FilterBoolFunction(Card.IsSetCard,SET_CYBER_ANGEL))
 	--destroy replace
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -13,10 +14,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.repop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x2093}
+s.listed_series={SET_CYBER_ANGEL}
 function s.repfilter(c,tp)
 	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:IsAttribute(ATTRIBUTE_LIGHT)
-		and not c:IsReason(REASON_REPLACE) and c:IsReason(REASON_EFFECT+REASON_BATTLE)
+		and not c:IsReason(REASON_REPLACE) and c:IsReason(REASON_EFFECT|REASON_BATTLE)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemove() and eg:IsExists(s.repfilter,1,nil,tp) end

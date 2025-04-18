@@ -1,4 +1,5 @@
 --光神機－閃空
+--Majestic Mech - Senku
 local s,id=GetID()
 function s.initial_effect(c)
 	--handes
@@ -49,7 +50,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EVENT_PHASE+PHASE_END)
 	e1:SetTarget(s.tgtg)
 	e1:SetOperation(s.tgop)
-	e1:SetReset(RESET_EVENT+0xc6c0000)
+	e1:SetReset(RESET_EVENT|RESET_TOGRAVE|RESET_REMOVE|RESET_TOHAND|RESET_TODECK|RESET_OVERLAY|RESET_MSCHANGE)
 	c:RegisterEffect(e1)
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)

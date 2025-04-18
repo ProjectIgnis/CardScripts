@@ -1,4 +1,5 @@
 --花札衛-月花見-
+--Flower Cardian Moonflowerviewing
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -22,7 +23,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.synop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xe6}
+s.listed_series={SET_FLOWER_CARDIAN}
 function s.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local e1=Effect.CreateEffect(e:GetHandler())
@@ -30,7 +31,7 @@ function s.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(1,0)
 	e1:SetCode(EFFECT_SKIP_DP)
-	e1:SetReset(RESET_PHASE+PHASE_DRAW+RESET_SELF_TURN)
+	e1:SetReset(RESET_PHASE|PHASE_DRAW|RESET_SELF_TURN)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -45,7 +46,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 		local tc=Duel.GetOperatedGroup():GetFirst()
 		Duel.ConfirmCards(1-tp,tc)
 		Duel.BreakEffect()
-		if tc:IsMonster() and tc:IsSetCard(0xe6) then
+		if tc:IsMonster() and tc:IsSetCard(SET_FLOWER_CARDIAN) then
 			if Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 				and Duel.SelectYesNo(tp,aux.Stringid(id,1))
 				and Duel.SpecialSummonStep(tc,0,tp,tp,true,false,POS_FACEUP) then
@@ -53,7 +54,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 				e1:SetType(EFFECT_TYPE_SINGLE)
 				e1:SetCode(EFFECT_DIRECT_ATTACK)
 				e1:SetValue(1)
-				e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+				e1:SetReset(RESETS_STANDARD_PHASE_END)
 				tc:RegisterEffect(e1,true)
 			end
 			Duel.SpecialSummonComplete()

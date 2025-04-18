@@ -1,4 +1,5 @@
 --カードを狩る死神
+--Reaper of the Cards
 local s,id=GetID()
 function s.initial_effect(c)
 	--flip

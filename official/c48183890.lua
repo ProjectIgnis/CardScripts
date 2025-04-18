@@ -42,7 +42,7 @@ function s.lcheck(g,lc,sumtype,tp)
 	return g:IsExists(Card.IsRace,1,nil,RACE_INSECT|RACE_PLANT,lc,sumtype,tp)
 end
 function s.ntfilter(c)
-	return c:GetType()==TYPE_TRAP
+	return c:IsNormalTrap() 
 end
 function s.atkcon(e)
 	return Duel.IsExistingMatchingCard(s.ntfilter,e:GetHandlerPlayer(),LOCATION_GRAVE,0,1,nil)

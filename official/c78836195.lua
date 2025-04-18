@@ -1,9 +1,9 @@
--- 瑞相剣究
--- Swordsoul Assessment
--- Scripted by Hatter
+--瑞相剣究
+--Swordsoul Assessment
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Banish up to 5 cards and increase the ATK of a monster you control
+	--Banish up to 5 cards and increase the ATK of a monster you control
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_REMOVE+CATEGORY_ATKCHANGE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -11,11 +11,11 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(TIMING_DAMAGE_STEP)
 	e1:SetCountLimit(1,id)
-	e1:SetCondition(s.rmcon)
+	e1:SetCondition(aux.StatChangeDamageStepCondition)
 	e1:SetTarget(s.rmtg)
 	e1:SetOperation(s.rmop)
 	c:RegisterEffect(e1)
-	-- Special Summon 1 "Swordsoul Token"
+	--Special Summon 1 "Swordsoul Token"
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -28,9 +28,6 @@ function s.initial_effect(c)
 end
 s.listed_names={TOKEN_SWORDSOUL}
 s.listed_series={SET_SWORDSOUL}
-function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
-end
 function s.rmfilter(c)
 	return (c:IsSetCard(SET_SWORDSOUL) or (c:IsMonster() and c:IsRace(RACE_WYRM)))
 		and c:IsAbleToRemove() and aux.SpElimFilter(c,true)
@@ -53,7 +50,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 		local sg=g:Select(tp,1,5,tc)
 		local rc=Duel.Remove(sg,POS_FACEUP,REASON_EFFECT)
 		if rc>0 and tc:IsRelateToEffect(e) and tc:IsFaceup() then
-			-- Increase ATK
+			--Increase ATK
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
@@ -75,7 +72,7 @@ function s.tkop(e,tp,eg,ep,ev,re,r,rp)
 		local c=e:GetHandler()
 		local token=Duel.CreateToken(tp,TOKEN_SWORDSOUL)
 		Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)
-		-- Cannot Special Summon non-Synchro monsters from Extra Deck
+		--Cannot Special Summon non-Synchro monsters from Extra Deck
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD)
 		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
@@ -85,7 +82,7 @@ function s.tkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetTarget(function(_,c) return c:IsLocation(LOCATION_EXTRA) and not c:IsType(TYPE_SYNCHRO) end)
 		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		token:RegisterEffect(e1,true)
-		-- Clock Lizard check
+		--Clock Lizard check
 		local e2=aux.createContinuousLizardCheck(c,LOCATION_MZONE,function(_,c) return not c:IsOriginalType(TYPE_SYNCHRO) end)
 		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		token:RegisterEffect(e2,true)

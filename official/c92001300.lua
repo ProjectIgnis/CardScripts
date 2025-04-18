@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x7))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_ANCIENT_GEAR))
 	e2:SetValue(300)
 	c:RegisterEffect(e2)
 	--counter
@@ -42,13 +42,13 @@ function s.initial_effect(c)
 		ge1:SetCode(EFFECT_SUMMON_PROC)
 		ge1:SetTargetRange(LOCATION_HAND,LOCATION_HAND)
 		ge1:SetCondition(s.sumcon)
-		ge1:SetTarget(aux.FieldSummonProcTg(aux.TargetBoolFunction(Card.IsSetCard,0x7),s.sumtg))
+		ge1:SetTarget(aux.FieldSummonProcTg(aux.TargetBoolFunction(Card.IsSetCard,SET_ANCIENT_GEAR),s.sumtg))
 		ge1:SetOperation(s.sumop)
 		ge1:SetValue(SUMMON_TYPE_TRIBUTE)
 		Duel.RegisterEffect(ge1,0)
 	end)
 end
-s.listed_series={0x7}
+s.listed_series={SET_ANCIENT_GEAR}
 function s.addc(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():AddCounter(0xb,1)
 end
@@ -65,6 +65,7 @@ end
 function s.sumtg(e,tp,eg,ep,ev,re,r,rp,chk,c)
 	tp=c:GetControler()
 	local mi,ma=c:GetTributeRequirement()
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
 	local sg=Duel.SelectMatchingCard(tp,s.castlefilter,tp,LOCATION_SZONE,0,1,1,true,nil,tp,mi,ma)
 	if sg then
 		sg:KeepAlive()

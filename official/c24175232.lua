@@ -1,5 +1,5 @@
 --ネフティスの蒼凰神
---Sacred Azure Phoenix of Nephthys
+--Cerulean Sacred Phoenix of Nephthys
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetRange(LOCATION_GRAVE)
-	e3:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e3:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e3:SetCountLimit(1,{id,1})
 	e3:SetCondition(s.spcon)
 	e3:SetTarget(s.sptg)
@@ -33,18 +33,18 @@ function s.initial_effect(c)
 	e3:SetLabelObject(e2)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x11f}
+s.listed_series={SET_NEPHTHYS}
 s.listed_names={23459650}
 function s.desfilter(c)
-	return c:IsSetCard(0x11f) and (c:IsFaceup() or not c:IsOnField())
+	return c:IsSetCard(SET_NEPHTHYS) and (c:IsFaceup() or not c:IsOnField())
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(s.desfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,nil) end
+		and Duel.IsExistingMatchingCard(s.desfilter,tp,LOCATION_HAND|LOCATION_ONFIELD,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,2,0,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,nil)
+	local g=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_HAND|LOCATION_ONFIELD,0,nil)
 	local og=Duel.GetFieldGroup(tp,0,LOCATION_MZONE)
 	if #g*#og==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
@@ -58,12 +58,12 @@ end
 function s.spr(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if r & REASON_DESTROY==0 or r & REASON_BATTLE+REASON_EFFECT ==0 then return end
-	if Duel.GetTurnPlayer()==tp and Duel.GetCurrentPhase()==PHASE_STANDBY then
+	if Duel.IsTurnPlayer(tp) and Duel.IsPhase(PHASE_STANDBY) then
 		e:SetLabel(Duel.GetTurnCount())
-		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN,0,2)
+		c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_STANDBY|RESET_SELF_TURN,0,2)
 	else
 		e:SetLabel(0)
-		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN,0,1)
+		c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_STANDBY|RESET_SELF_TURN,0,1)
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
@@ -82,4 +82,3 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(c,1,tp,tp,false,false,POS_FACEUP)
 	end
 end
-

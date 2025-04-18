@@ -1,4 +1,5 @@
 --マシュマロンのメガネ
+--Marshmallon Glasses
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

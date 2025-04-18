@@ -1,4 +1,5 @@
 --ドラゴン・シールド
+--Dragon Shield
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsRace,RACE_DRAGON))

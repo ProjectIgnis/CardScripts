@@ -29,12 +29,12 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x107f}
+s.listed_series={SET_UTOPIA}
 function s.eqcon(e)
 	return e:GetHandler():CheckUniqueOnField(e:GetHandlerPlayer())
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x107f)
+	return c:IsFaceup() and c:IsSetCard(SET_UTOPIA)
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -60,7 +60,7 @@ function s.equipop(c,e,tp,tc)
 	e1:SetType(EFFECT_TYPE_EQUIP)
 	e1:SetCode(EFFECT_UPDATE_DEFENSE)
 	e1:SetValue(2000)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	c:RegisterEffect(e1)
 end
 function s.spfilter(c,e,tp)

@@ -1,7 +1,6 @@
 --戦華史略－大丈夫之義
 --Ancient Warriors Saga - Chivalrous Path
 --Scripted by DyXel
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -39,24 +38,24 @@ function s.initial_effect(c)
 	e4:SetRange(LOCATION_GRAVE)
 	e4:SetCountLimit(1,{id,1})
 	e4:SetCondition(s.discon)
-	e4:SetCost(aux.bfgcost)
+	e4:SetCost(Cost.SelfBanish)
 	e4:SetTarget(s.distg)
 	e4:SetOperation(function(_,_,_,_,ev)Duel.NegateActivation(ev)end)
 	c:RegisterEffect(e4)
 end
 s.listed_names={82255873}
-s.listed_series={0x137}
+s.listed_series={SET_ANCIENT_WARRIORS}
 function s.repfilter(c,tp)
-	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and
-	       c:IsSetCard(0x137) and c:IsReason(REASON_BATTLE) and not c:IsReason(REASON_REPLACE)
+	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE)
+		and c:IsSetCard(SET_ANCIENT_WARRIORS) and c:IsReason(REASON_BATTLE) and not c:IsReason(REASON_REPLACE)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return eg:IsExists(s.repfilter,1,nil,tp) end
 	return Duel.SelectEffectYesNo(tp,e:GetHandler(),96)
 end
 function s.cansstk(tp)
-	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and
-	       Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0x137,TYPES_TOKEN,500,500,1,RACE_BEAST_WARRIOR,ATTRIBUTE_WIND)
+	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,SET_ANCIENT_WARRIORS,TYPES_TOKEN,500,500,1,RACE_BEAST_WARRIOR,ATTRIBUTE_WIND)
 end
 function s.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return rp~=tp and s.cansstk(tp) end
@@ -70,7 +69,7 @@ function s.tkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tgfilter(c,tp)
-	return c:IsFaceup() and c:IsLocation(LOCATION_MZONE) and c:IsSetCard(0x137)
+	return c:IsFaceup() and c:IsLocation(LOCATION_MZONE) and c:IsSetCard(SET_ANCIENT_WARRIORS)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end

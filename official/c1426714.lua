@@ -13,9 +13,9 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetHintTiming(0,TIMING_BATTLE_START+TIMING_END_PHASE)
+	e1:SetHintTiming(0,TIMING_BATTLE_START|TIMING_END_PHASE)
 	e1:SetCondition(s.spcon)
-	e1:SetCost(s.spcost)
+	e1:SetCost(Cost.Detach(1))
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
@@ -40,11 +40,7 @@ end
 s.listed_names={1426715}
 s.xyz_number=48
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
-end
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
+	return Duel.IsTurnPlayer(1-tp)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

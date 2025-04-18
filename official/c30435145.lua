@@ -10,22 +10,22 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x7}
+s.listed_series={SET_ANCIENT_GEAR}
 function s.filter(c,g)
-	return c:GetLevel()>4 and c:IsSetCard(0x7) and g:CheckWithSumEqual(Card.GetLevel,c:GetLevel()*2,1,99)
+	return c:GetLevel()>4 and c:IsSetCard(SET_ANCIENT_GEAR) and g:CheckWithSumEqual(Card.GetLevel,c:GetLevel()*2,1,99)
 end
 function s.rfilter(c)
-	return c:HasLevel() and c:IsSetCard(0x7) and c:IsAbleToRemove() and aux.SpElimFilter(c,true)
+	return c:HasLevel() and c:IsSetCard(SET_ANCIENT_GEAR) and c:IsAbleToRemove() and aux.SpElimFilter(c,true)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
-		local rg=Duel.GetMatchingGroup(s.rfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil)
+		local rg=Duel.GetMatchingGroup(s.rfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,nil)
 		return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,nil,rg)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,tp,LOCATION_GRAVE)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local rg=Duel.GetMatchingGroup(s.rfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil)
+	local rg=Duel.GetMatchingGroup(s.rfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,1))
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND,0,1,1,nil,rg)
 	local tc=g:GetFirst()
@@ -41,7 +41,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SUMMON_PROC)
 		e1:SetCondition(s.ntcon)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end

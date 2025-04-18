@@ -12,10 +12,10 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0xc}
+s.listed_series={SET_ALIEN}
 s.counter_place_list={COUNTER_A}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0xc) and c:HasLevel()
+	return c:IsFaceup() and c:IsSetCard(SET_ALIEN) and c:HasLevel()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) end 

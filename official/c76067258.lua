@@ -1,4 +1,5 @@
 --No.66 覇鍵甲虫マスター・キー・ビートル
+--Number 66: Master Key Beetle
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -11,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
-	e1:SetCost(s.cost)
+	e1:SetCost(Cost.Detach(1))
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
@@ -25,10 +26,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.xyz_number=66
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
-end
 function s.filter(c,ec)
 	return not ec:IsHasCardTarget(c)
 end
@@ -44,7 +41,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if c:IsFaceup() and c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) then
 		c:SetCardTarget(tc)
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,0)
+		tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,0)
 		--indes
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
@@ -52,7 +49,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetProperty(EFFECT_FLAG_SET_AVAILABLE+EFFECT_FLAG_OWNER_RELATE)
 		e2:SetCondition(s.indcon)
 		e2:SetValue(1)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e2)
 	end
 end

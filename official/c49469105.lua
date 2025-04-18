@@ -1,4 +1,5 @@
 --融合破棄
+--Revoke Fusion
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -17,7 +18,7 @@ function s.cfilter(c)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_COST|REASON_DISCARD)
 end
 function s.filter1(c,g)
 	return c.material and g:IsExists(s.filter2,1,nil,c)
@@ -50,7 +51,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetRange(LOCATION_MZONE)
 		e1:SetCode(EVENT_PHASE+PHASE_END)
 		e1:SetOperation(s.tgop)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		e1:SetCountLimit(1)
 		sg:GetFirst():RegisterEffect(e1,true)
 	end

@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(0,TIMING_MAIN_END|TIMING_BATTLE_START|TIMINGS_CHECK_MONSTER_E)
-	e1:SetCost(s.cost)
+	e1:SetCost(Cost.PayLP(2000))
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
@@ -23,16 +23,12 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_SUMMON_SUCCESS)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCondition(function(e,tp,eg) return eg:IsExists(Card.IsSummonPlayer,1,nil,1-tp) end)
-	e2:SetCost(aux.SelfBanishCost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.rmvtg)
 	e2:SetOperation(s.rmvop)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_PRIMITE}
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,2000) end
-	Duel.PayLPCost(tp,2000)
-end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	s.announce_filter={TYPE_NORMAL,OPCODE_ISTYPE}

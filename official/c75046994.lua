@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e2:SetCountLimit(1,{id,1})
-	e2:SetCost(aux.PayLPCost(600))
+	e2:SetCost(Cost.PayLP(600))
 	e2:SetTarget(s.thsptg)
 	e2:SetOperation(s.thspop)
 	c:RegisterEffect(e2)
@@ -53,23 +53,23 @@ end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-	   and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,tp,0)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then
-	   Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
+		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
 function s.thspfilter(c,e,tp,sp_chk)
 	return c:IsSetCard(SET_PUNK) and c:IsMonster() and not c:IsLevel(8)
-	   and (c:IsAbleToHand() or (sp_chk and c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
+		and (c:IsAbleToHand() or (sp_chk and c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
 end
 function s.thsptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
-	   local sp_chk=Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-	   return Duel.IsExistingMatchingCard(s.thspfilter,tp,LOCATION_DECK|LOCATION_GRAVE,0,1,nil,e,tp,sp_chk)
+		local sp_chk=Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		return Duel.IsExistingMatchingCard(s.thspfilter,tp,LOCATION_DECK|LOCATION_GRAVE,0,1,nil,e,tp,sp_chk)
 	end
 	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK|LOCATION_GRAVE)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK|LOCATION_GRAVE)

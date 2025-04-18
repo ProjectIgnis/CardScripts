@@ -1,5 +1,5 @@
 --土俵間際
---On the Edge of the Ring
+--Edge of the Ring
 --Scripted by ahtelel
 local s,id=GetID()
 function s.initial_effect(c)
@@ -39,12 +39,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 		e1:SetTargetRange(0,1)
 		e1:SetValue(0)
-		e1:SetReset(RESET_PHASE+PHASE_END,2)
+		e1:SetReset(RESET_PHASE|PHASE_END,2)
 		Duel.RegisterEffect(e1,tp)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_NO_EFFECT_DAMAGE)
-		e2:SetReset(RESET_PHASE+PHASE_END,2)
+		e2:SetReset(RESET_PHASE|PHASE_END,2)
 		Duel.RegisterEffect(e2,tp)
 	end
 end
-

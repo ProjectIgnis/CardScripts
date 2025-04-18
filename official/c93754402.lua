@@ -1,7 +1,6 @@
 --炎舞－「洞明」
 --Fire Formation - Domei
 --Scripted by Eerie Code
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--When activated, ritual summon 1 beast-warrior ritual monster from hand
@@ -24,8 +23,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x79}
-
+s.listed_series={SET_FIRE_FIST}
 function s.filter(c)
 	return c:IsRace(RACE_BEASTWARRIOR) and c:IsRitualMonster()
 end
@@ -50,7 +48,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 		and e:GetHandler():IsPreviousLocation(LOCATION_SZONE)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x79) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_FIRE_FIST) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.spfilter(chkc,e,tp) end

@@ -35,7 +35,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local rc=re:GetHandler()
 	local loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
-	return re:IsActiveType(TYPE_MONSTER) and rc~=c and rc:IsLevelAbove(5) and loc==LOCATION_MZONE
+	return re:IsMonsterEffect() and rc~=c and rc:IsLevelAbove(5) and loc==LOCATION_MZONE
 		and not c:IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev)
 end
 function s.condition2(e,tp,eg,ep,ev,re,r,rp)
@@ -44,7 +44,7 @@ function s.condition2(e,tp,eg,ep,ev,re,r,rp)
 	if not g or #g~=1 then return false end
 	local tc=g:GetFirst()
 	local c=e:GetHandler()
-	return re:IsActiveType(TYPE_MONSTER) and tc:IsFaceup() and tc:IsLevelAbove(5) and tc:IsLocation(LOCATION_MZONE)
+	return re:IsMonsterEffect() and tc:IsFaceup() and tc:IsLevelAbove(5) and tc:IsLocation(LOCATION_MZONE)
 		and not c:IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -79,7 +79,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(atk)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_DISABLE_PHASE_END)
 		c:RegisterEffect(e1)
 	end
 end

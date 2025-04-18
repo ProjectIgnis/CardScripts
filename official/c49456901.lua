@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetCountLimit(1)
 	e2:SetCode(EVENT_CHAINING)
 	e2:SetCondition(s.condition)
-	e2:SetCost(s.cost)
+	e2:SetCost(Cost.Detach(1))
 	e2:SetTarget(s.target)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
@@ -34,7 +34,7 @@ end
 s.xyz_number=104
 s.listed_names={2061963}
 function s.desfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsSpellTrap()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and s.desfilter(chkc) end
@@ -52,12 +52,8 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp,chk)
 	local loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and ep==1-tp
-		and loc==LOCATION_MZONE and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev)
+		and loc==LOCATION_MZONE and re:IsMonsterEffect() and Duel.IsChainNegatable(ev)
 		and e:GetHandler():GetOverlayGroup():IsExists(Card.IsCode,1,nil,2061963)
-end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

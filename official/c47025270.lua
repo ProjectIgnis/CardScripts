@@ -23,7 +23,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 		local g=Duel.SelectMatchingCard(tp,nil,tp,LOCATION_HAND,0,1,1,nil)
 		if #g>0 then
 			Duel.BreakEffect()
-			Duel.SendtoDeck(g,nil,1,REASON_EFFECT)
+			Duel.SendtoDeck(g,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
 		end
 	end
 end

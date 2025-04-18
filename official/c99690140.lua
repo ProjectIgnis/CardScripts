@@ -1,4 +1,5 @@
 --墓守の従者
+--Gravekeeper's Vassal
 local s,id=GetID()
 function s.initial_effect(c)
 	--battle damage to effect damage

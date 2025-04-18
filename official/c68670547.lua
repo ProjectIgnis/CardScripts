@@ -1,4 +1,5 @@
 --闇竜の黒騎士
+--Paladin of the Cursed Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon

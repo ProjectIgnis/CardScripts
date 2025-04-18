@@ -1,7 +1,8 @@
 --安全地帯
+--Safe Zone
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddPersistentProcedure(c,nil,s.filter,nil,nil,nil,0x1e0,nil,nil,nil,s.op)
+	aux.AddPersistentProcedure(c,nil,s.filter,nil,nil,nil,TIMINGS_CHECK_MONSTER_E,nil,nil,nil,s.op)
 	--eff
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -53,7 +54,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if c:IsRelateToEffect(e) and tc and tc:IsFaceup() and tc:IsRelateToEffect(e) then
-		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,tp)
+		c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1,tp)
 	end
 end
 function s.acon(e)

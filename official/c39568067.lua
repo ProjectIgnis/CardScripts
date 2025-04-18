@@ -1,14 +1,14 @@
--- 運命の旅路
--- Fateful Adventure
--- Scripted by Hatter
+--運命の旅路
+--Fateful Adventure
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	-- Prevent battle destruction once
+	--Prevent battle destruction once
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_COUNT)
@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	e2:SetValue(function(_,_,r) return r&REASON_BATTLE==REASON_BATTLE end)
 	e2:SetTarget(function(_,c) return c:GetEquipCount()>0 end)
 	c:RegisterEffect(e2)
-	-- Search monster that lists "Adventurer Token"
+	--Search monster that lists "Adventurer Token"
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_HANDES)
@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.mthtg)
 	e3:SetOperation(s.mthop)
 	c:RegisterEffect(e3)
-	-- Search Equip Spell that lists "Adventurer Token"
+	--Search Equip Spell that lists "Adventurer Token"
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_EQUIP)

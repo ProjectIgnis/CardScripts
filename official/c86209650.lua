@@ -1,4 +1,5 @@
 --迷走悪魔
+--Stray Asmodian
 local s,id=GetID()
 function s.initial_effect(c)
 	--battle destroyed

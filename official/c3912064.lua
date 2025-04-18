@@ -1,4 +1,5 @@
 --The tripping Mercury
+--The Tripper Mercury
 local s,id=GetID()
 function s.initial_effect(c)
 	--change position
@@ -32,7 +33,7 @@ function s.posfilter(c)
 	return c:IsDefensePos() or c:IsFacedown()
 end
 function s.poscon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_TRIBUTE)
+	return e:GetHandler():IsTributeSummoned()
 end
 function s.postg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.posfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end

@@ -41,9 +41,9 @@ function s.initial_effect(c)
 	e6:SetValue(s.efilter)
 	c:RegisterEffect(e6)
 end
-s.listed_series={0x48}
+s.listed_series={SET_NUMBER}
 function s.filter(c)
-	return c:IsSetCard(0x48) and c:IsType(TYPE_XYZ) and c:IsAbleToExtra()
+	return c:IsSetCard(SET_NUMBER) and c:IsType(TYPE_XYZ) and c:IsAbleToExtra()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -53,11 +53,11 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	if #g>0 then
-		Duel.SendtoDeck(g,nil,0,REASON_EFFECT)
+		Duel.SendtoDeck(g,nil,SEQ_DECKTOP,REASON_EFFECT)
 	end
 end
 function s.splimit(e,c)
-	if not c:IsSetCard(0x48) then return false end
+	if not c:IsSetCard(SET_NUMBER) then return false end
 	if c:IsMonster() then
 		return c:IsType(TYPE_XYZ)
 	else

@@ -1,4 +1,5 @@
 --コアキメイルの金剛核
+--Diamond Core of Koa'ki Meiru
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -15,13 +16,13 @@ function s.initial_effect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetOperation(s.indop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x1d}
+s.listed_series={SET_KOAKI_MEIRU}
 function s.filter(c)
-	return c:IsSetCard(0x1d) and c:GetCode()~=id and c:IsAbleToHand()
+	return c:IsSetCard(SET_KOAKI_MEIRU) and c:GetCode()~=id and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end
@@ -40,8 +41,8 @@ function s.indop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_INDESTRUCTABLE)
 	e1:SetTargetRange(LOCATION_MZONE,0)
-	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x1d))
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_KOAKI_MEIRU))
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	e1:SetValue(1)
 	Duel.RegisterEffect(e1,tp)
 end

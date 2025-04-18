@@ -26,24 +26,24 @@ function s.rescon(sg,e,tp,mg)
 	if sg:GetClassCount(Card.GetOriginalRace)~=1 or not sg:CheckDifferentPropertyBinary(function(c)return c:GetType()&(TYPES)end) then
 		return false,true
 	end
-	return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE,0,1,nil,e,tp,sg:GetFirst():GetOriginalRace())
+	return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND|LOCATION_MZONE|LOCATION_GRAVE,0,1,nil,e,tp,sg:GetFirst():GetOriginalRace())
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then 
-		local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE,0,nil)
+		local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_HAND|LOCATION_MZONE|LOCATION_GRAVE,0,nil)
 		return aux.SelectUnselectGroup(g,e,tp,6,6,s.rescon,0)
 	end
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,6,tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK+LOCATION_EXTRA)
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,6,tp,LOCATION_HAND|LOCATION_MZONE|LOCATION_GRAVE)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK|LOCATION_EXTRA)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE,0,nil)
+	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_HAND|LOCATION_MZONE|LOCATION_GRAVE,0,nil)
 	local rg=aux.SelectUnselectGroup(g,e,tp,6,6,s.rescon,1,tp,HINTMSG_REMOVE)
 	if #rg==6 and Duel.Remove(rg,POS_FACEUP,REASON_EFFECT)==6 then
 		Duel.BreakEffect()
 		local rc=rg:GetFirst():GetOriginalRace()
 		local loc=LOCATION_EXTRA
-		if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then loc=loc+LOCATION_DECK end
+		if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then loc=loc|LOCATION_DECK end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=Duel.SelectMatchingCard(tp,s.spfilter,tp,loc,0,1,1,nil,e,tp,rc)
 		if #sg>0 then

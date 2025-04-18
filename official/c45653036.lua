@@ -1,4 +1,5 @@
 --暴風雨
+--Rain Storm
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,9 +12,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x18}
+s.listed_series={SET_CLOUDIAN}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x18) and c:IsAttackAbove(1000)
+	return c:IsFaceup() and c:IsSetCard(SET_CLOUDIAN) and c:IsAttackAbove(1000)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.cfilter(chkc) end
@@ -22,7 +23,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SelectTarget(tp,s.cfilter,tp,LOCATION_MZONE,0,1,1,nil)
 end
 function s.filter1(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsSpellTrap()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
@@ -42,7 +43,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetValue(-1000)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			tc:RegisterEffect(e1)
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 			local dg=g1:Select(tp,1,1,nil)
@@ -52,7 +53,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetValue(-2000)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			tc:RegisterEffect(e1)
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 			local dg=g2:Select(tp,2,2,nil)

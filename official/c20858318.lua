@@ -27,14 +27,14 @@ end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetTargetCards(e)
 	for tc in aux.Next(g) do
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+		tc:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 	end
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_DIRECT_ATTACK)
 	e1:SetTargetRange(LOCATION_MZONE,0)
 	e1:SetTarget(s.affected)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	local e2=Effect.CreateEffect(e:GetHandler())
 	e2:SetType(EFFECT_TYPE_FIELD)
@@ -43,7 +43,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetTargetRange(0,1)
 	e2:SetCondition(s.rdcon)
 	e2:SetValue(400)
-	e2:SetReset(RESET_PHASE+PHASE_END)
+	e2:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e2,tp)
 end
 function s.affected(e,c)
@@ -52,4 +52,3 @@ end
 function s.rdcon(e)
 	return Duel.GetAttacker():GetFlagEffect(id)~=0 and Duel.GetAttackTarget()==nil
 end
-

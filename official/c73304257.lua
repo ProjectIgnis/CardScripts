@@ -1,5 +1,5 @@
 --獣王アルファ
---Zoo King Alpha
+--Alpha, the Master of Beasts
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
@@ -56,7 +56,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e1:SetTarget(aux.TargetBoolFunction(Card.IsCode,id))
 	e1:SetTargetRange(LOCATION_MZONE,0)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	local tg=Duel.GetTargetCards(e)
 	if Duel.SendtoHand(tg,nil,REASON_EFFECT)>0 then

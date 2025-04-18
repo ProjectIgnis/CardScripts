@@ -1,6 +1,5 @@
 --フェザー・ショット
 --Feather Shot
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Make 1 "Elemental HERO Avian" be able to attack multiple times
@@ -14,7 +13,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={21844576}
-
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsAbleToEnterBP()
 end
@@ -33,7 +31,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	e1:SetTargetRange(LOCATION_MZONE,0)
 	e1:SetTarget(s.ftarget)
 	e1:SetLabel(g:GetFirst():GetFieldID())
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
@@ -46,7 +44,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_EXTRA_ATTACK)
 			e1:SetValue(ct-1)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e1:SetReset(RESETS_STANDARD_PHASE_END)
 			tc:RegisterEffect(e1)
 			--Cannot attack directly
 			local e2=Effect.CreateEffect(e:GetHandler())
@@ -54,7 +52,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 			e2:SetType(EFFECT_TYPE_SINGLE)
 			e2:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
-			e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e2:SetReset(RESETS_STANDARD_PHASE_END)
 			tc:RegisterEffect(e2)
 		end
 	end

@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
-	e1:SetCost(aux.dxmcostgen(1,1,nil))
+	e1:SetCost(Cost.Detach(1,1,nil))
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
@@ -24,10 +24,10 @@ function s.bansc(tp,loc) --Banish check shortcut
 	return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,loc,1,nil)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.rmfilter,tp,0,LOCATION_ONFIELD+LOCATION_HAND+LOCATION_GRAVE+LOCATION_DECK,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.rmfilter,tp,0,LOCATION_ONFIELD|LOCATION_HAND|LOCATION_GRAVE|LOCATION_DECK,1,nil) end
 	local b1=s.bansc(tp,LOCATION_ONFIELD)
 	local b2=s.bansc(tp,LOCATION_HAND)
-	local b3=(Duel.IsPlayerAffectedByEffect(1-tp,69832741) and s.bansc(tp,LOCATION_MZONE)) or s.bansc(tp,LOCATION_GRAVE)
+	local b3=(Duel.IsPlayerAffectedByEffect(1-tp,CARD_SPIRIT_ELIMINATION) and s.bansc(tp,LOCATION_MZONE)) or s.bansc(tp,LOCATION_GRAVE)
 	local b4=s.bansc(tp,LOCATION_DECK)
 	local op=Duel.SelectEffect(tp,
 		{b1,aux.Stringid(id,1)},
@@ -54,7 +54,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	elseif op==3 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 		local g
-		if Duel.IsPlayerAffectedByEffect(1-tp,69832741) then
+		if Duel.IsPlayerAffectedByEffect(1-tp,CARD_SPIRIT_ELIMINATION) then
 			g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemove,tp,0,LOCATION_MZONE,1,1,nil)
 		else
 			g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemove,tp,0,LOCATION_GRAVE,1,1,nil)

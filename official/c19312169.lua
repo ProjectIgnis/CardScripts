@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_CANNOT_TRIGGER)
 	e3:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
 	e3:SetRange(LOCATION_SZONE)
-	e3:SetTargetRange(0xa,0xa)
+	e3:SetTargetRange(LOCATION_HAND|LOCATION_SZONE,LOCATION_HAND|LOCATION_SZONE)
 	e3:SetTarget(aux.TargetBoolFunction(Card.IsTrap))
 	c:RegisterEffect(e3)
 	--Negate traps
@@ -59,7 +59,7 @@ function s.descon(e)
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local tl=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
-	if tl==LOCATION_SZONE and re:IsActiveType(TYPE_TRAP) then
+	if tl==LOCATION_SZONE and re:IsTrapEffect() then
 		Duel.NegateEffect(ev)
 	end
 end

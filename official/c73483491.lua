@@ -1,8 +1,9 @@
 --レアル・ジェネクス・ヴィンディカイト
+--Vindikite R-Genex
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
-	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x2),1,1,Synchro.NonTunerEx(Card.IsAttribute,ATTRIBUTE_WIND),1,99)
+	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_GENEX),1,1,Synchro.NonTunerEx(Card.IsAttribute,ATTRIBUTE_WIND),1,99)
 	c:EnableReviveLimit()
 	--untargetable
 	local e1=Effect.CreateEffect(c)
@@ -23,13 +24,13 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x2}
+s.listed_series={SET_GENEX}
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsRelateToBattle() and c:GetBattleTarget():IsMonster()
 end
 function s.filter(c)
-	return c:IsSetCard(0x2) and c:IsAbleToHand()
+	return c:IsSetCard(SET_GENEX) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

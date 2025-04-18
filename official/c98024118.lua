@@ -1,4 +1,5 @@
 --ホワイトポータン
+--White Potan
 local s,id=GetID()
 function s.initial_effect(c)
 	--lp damage

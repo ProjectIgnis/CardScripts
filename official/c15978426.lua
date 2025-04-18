@@ -16,10 +16,10 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x9f}
+s.listed_series={SET_PERFORMAPAL}
 s.listed_names={}
 function s.filter(c,tohand)
-	return c:IsSetCard(0x9f) and not c:IsCode(id) and c:IsMonster()
+	return c:IsSetCard(SET_PERFORMAPAL) and not c:IsCode(id) and c:IsMonster()
 		and (c:IsAbleToGrave() or (tohand and c:IsAbleToHand()))
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)

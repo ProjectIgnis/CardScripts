@@ -37,7 +37,7 @@ function s.actop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTargetRange(0,1)
 	e1:SetCondition(s.accon)
 	e1:SetValue(s.actlimit)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_DAMAGE)
 	c:RegisterEffect(e1)
 end
 function s.accon(e)
@@ -45,7 +45,7 @@ function s.accon(e)
 	return Duel.GetLP(tp)>Duel.GetLP(1-tp)
 end
 function s.actlimit(e,re,tp)
-	return re:IsActiveType(TYPE_MONSTER)
+	return re:IsMonsterEffect()
 end
 function s.poscon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==tp

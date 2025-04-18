@@ -1,4 +1,5 @@
 --増幅する悪意
+--Malice Ascendant
 local s,id=GetID()
 function s.initial_effect(c)
 	--discard deck
@@ -6,7 +7,7 @@ function s.initial_effect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e1:SetCategory(CATEGORY_DECKDES)
-	e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e1:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
 	e1:SetCondition(s.discon)
@@ -15,7 +16,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
-	return tp~=Duel.GetTurnPlayer()
+	return Duel.IsTurnPlayer(1-tp)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

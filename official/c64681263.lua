@@ -1,4 +1,5 @@
 --局地的大ハリケーン
+--Localized Tornado
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,11 +12,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_HAND+LOCATION_GRAVE,0)>0 end
-	local g=Duel.GetFieldGroup(tp,LOCATION_HAND+LOCATION_GRAVE,0)
+	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_HAND|LOCATION_GRAVE,0)>0 end
+	local g=Duel.GetFieldGroup(tp,LOCATION_HAND|LOCATION_GRAVE,0)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,#g,0,0)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetFieldGroup(tp,LOCATION_HAND+LOCATION_GRAVE,0)
+	local g=Duel.GetFieldGroup(tp,LOCATION_HAND|LOCATION_GRAVE,0)
 	Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 end

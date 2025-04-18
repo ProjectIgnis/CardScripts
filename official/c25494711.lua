@@ -30,13 +30,13 @@ function s.initial_effect(c)
 	e3:SetOperation(s.repop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xab}
+s.listed_series={SET_DESKBOT}
 s.listed_names={}
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_MAIN1
+	return Duel.IsPhase(PHASE_MAIN1)
 end
 function s.atkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xab) and not c:IsCode(id)
+	return c:IsFaceup() and c:IsSetCard(SET_DESKBOT) and not c:IsCode(id)
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.atkfilter,tp,LOCATION_MZONE,0,1,nil) end
@@ -47,7 +47,7 @@ function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetTargetRange(LOCATION_MZONE,0)
 	e1:SetTarget(s.ftarget)
 	e1:SetLabel(e:GetHandler():GetFieldID())
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
@@ -58,7 +58,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
+		e1:SetReset(RESETS_STANDARD_PHASE_END|RESET_OPPO_TURN)
 		e1:SetValue(atk)
 		tc:RegisterEffect(e1)
 	end
@@ -70,7 +70,7 @@ function s.actcon(e)
 	return Duel.GetAttacker()==e:GetHandler() or Duel.GetAttackTarget()==e:GetHandler()
 end
 function s.repfilter(c,e)
-	return c:IsFaceup() and c:IsSetCard(0xab)
+	return c:IsFaceup() and c:IsSetCard(SET_DESKBOT)
 		and c:IsDestructable(e) and not c:IsStatus(STATUS_DESTROY_CONFIRMED)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -88,5 +88,5 @@ end
 function s.repop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	g:GetFirst():SetStatus(STATUS_DESTROY_CONFIRMED,false)
-	Duel.Destroy(g,REASON_EFFECT+REASON_REPLACE)
+	Duel.Destroy(g,REASON_EFFECT|REASON_REPLACE)
 end

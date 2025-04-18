@@ -16,13 +16,13 @@ function s.initial_effect(c)
 	e1:SetOperation(s.desop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x14e}
+s.listed_series={SET_DUAL_AVATAR}
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	if chk==0 then return Duel.IsExistingTarget(aux.FaceupFilter(Card.IsSetCard,0x14e),tp,LOCATION_MZONE,0,1,nil)
+	if chk==0 then return Duel.IsExistingTarget(aux.FaceupFilter(Card.IsSetCard,SET_DUAL_AVATAR),tp,LOCATION_MZONE,0,1,nil)
 		and Duel.IsExistingTarget(aux.TRUE,tp,0,LOCATION_ONFIELD,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g1=Duel.SelectTarget(tp,aux.FaceupFilter(Card.IsSetCard,0x14e),tp,LOCATION_MZONE,0,1,1,nil)
+	local g1=Duel.SelectTarget(tp,aux.FaceupFilter(Card.IsSetCard,SET_DUAL_AVATAR),tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g2=Duel.SelectTarget(tp,aux.TRUE,tp,0,LOCATION_ONFIELD,1,1,nil)
 	g1:Merge(g2)
@@ -31,7 +31,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_REMOVE,nil,1,1-tp,LOCATION_GRAVE)
 end
 function s.filter(c,tp)
-	return c:IsSetCard(0x14e) and c:IsType(TYPE_FUSION) and c:IsPreviousControler(tp)
+	return c:IsSetCard(SET_DUAL_AVATAR) and c:IsType(TYPE_FUSION) and c:IsPreviousControler(tp)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)

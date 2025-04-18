@@ -41,14 +41,14 @@ function s.ctcheck(sg,e,tp)
 	return sg:GetClassCount(Card.GetCode)==#sg and e:GetHandler():IsCanAddCounter(0x202,#sg)
 end
 function s.cttg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.ctfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.ctfilter,tp,LOCATION_HAND|LOCATION_DECK,0,1,nil)
 		and e:GetHandler():IsCanAddCounter(0x202,1) end
-	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,0,tp,LOCATION_HAND+LOCATION_DECK)
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,0,tp,LOCATION_HAND|LOCATION_DECK)
 	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,0,0,0x202)
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local g=Duel.GetMatchingGroup(s.ctfilter,tp,LOCATION_HAND+LOCATION_DECK,0,nil)
+	local g=Duel.GetMatchingGroup(s.ctfilter,tp,LOCATION_HAND|LOCATION_DECK,0,nil)
 	if #g==0 then return end
 	local sg=aux.SelectUnselectGroup(g,e,tp,1,3,s.ctcheck,1,tp,HINTMSG_TOGRAVE)
 	if #sg>0 and Duel.SendtoGrave(sg,REASON_EFFECT)~=0 then
@@ -62,12 +62,12 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 			e1:SetTargetRange(1,0)
 			e1:SetValue(1)
-			e1:SetReset(RESET_PHASE+PHASE_END)
+			e1:SetReset(RESET_PHASE|PHASE_END)
 			Duel.RegisterEffect(e1,tp)
 			local e2=Effect.CreateEffect(c)
 			e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT+EFFECT_FLAG_OATH)
 			e2:SetDescription(aux.Stringid(id,2))
-			e2:SetReset(RESET_PHASE+PHASE_END)
+			e2:SetReset(RESET_PHASE|PHASE_END)
 			e2:SetTargetRange(1,0)
 			Duel.RegisterEffect(e2,tp)
 		end

@@ -1,5 +1,5 @@
 --サイバーダーク・ワールド
---Cyberdark World
+--Cyberdark Realm
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -30,9 +30,9 @@ function s.initial_effect(c)
 	e3:SetTargetRange(1,0)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x4093}
+s.listed_series={SET_CYBERDARK}
 function s.thfilter(c,tp)
-	return c:IsMonster() and c:IsSetCard(0x4093) and c:IsAbleToHand()
+	return c:IsMonster() and c:IsSetCard(SET_CYBERDARK) and c:IsAbleToHand()
 		and not Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,1,nil,c:GetCode())
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
@@ -46,7 +46,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.nsfilter(c)
-	return c:IsSetCard(0x4093) and c:IsSummonable(true,nil)
+	return c:IsSetCard(SET_CYBERDARK) and c:IsSummonable(true,nil)
 end
 function s.nstg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

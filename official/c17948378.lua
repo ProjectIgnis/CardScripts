@@ -1,4 +1,5 @@
 --ジュラック・デイノ
+--Jurrac Dino
 local s,id=GetID()
 function s.initial_effect(c)
 	--reg
@@ -24,14 +25,14 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+	e:GetHandler():RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(id)~=0
 end
 function s.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsSetCard,1,false,nil,nil,0x22) end
-	local g=Duel.SelectReleaseGroupCost(tp,Card.IsSetCard,1,1,false,nil,nil,0x22)
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsSetCard,1,false,nil,nil,SET_JURRAC) end
+	local g=Duel.SelectReleaseGroupCost(tp,Card.IsSetCard,1,1,false,nil,nil,SET_JURRAC)
 	Duel.Release(g,REASON_COST)
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)

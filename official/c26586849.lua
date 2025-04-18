@@ -1,4 +1,5 @@
 --王宮の牢獄
+--Royal Prison
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

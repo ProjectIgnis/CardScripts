@@ -1,4 +1,5 @@
 --DD魔導賢者ガリレイ
+--D/D Savant Galilei
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -17,7 +18,7 @@ function s.initial_effect(c)
 	e3:SetCategory(CATEGORY_DESTROY)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e3:SetRange(LOCATION_PZONE)
-	e3:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e3:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e3:SetCountLimit(1)
 	e3:SetCondition(s.sccon)
 	e3:SetTarget(s.sctg)
@@ -32,20 +33,20 @@ function s.initial_effect(c)
 	e4:SetRange(LOCATION_HAND)
 	e4:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e4:SetCountLimit(1,id)
-	e4:SetCost(s.thcost)
+	e4:SetCost(Cost.SelfDiscard)
 	e4:SetTarget(s.thtg)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0xaf,0xae}
+s.listed_series={SET_DD,SET_DARK_CONTRACT}
 function s.splimit(e,c,sump,sumtype,sumpos,targetp)
-	return not c:IsSetCard(0xaf) and (sumtype&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
+	return not c:IsSetCard(SET_DD) and (sumtype&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
 end
 function s.sccon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.filter(c,lv)
-	return c:IsFaceup() and not c:IsSetCard(0xaf) and c:IsLevelBelow(lv)
+	return c:IsFaceup() and not c:IsSetCard(SET_DD) and c:IsLevelBelow(lv)
 end
 function s.sctg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -64,7 +65,7 @@ function s.scop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_LSCALE)
 	e1:SetValue(scl)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 	c:RegisterEffect(e1)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_UPDATE_RSCALE)
@@ -75,12 +76,8 @@ function s.scop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(g,REASON_EFFECT)
 	end
 end
-function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsDiscardable() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
-end
 function s.thfilter(c)
-	return c:IsFaceup() and (c:IsSetCard(0xae) or c:IsSetCard(0xaf)) and c:IsAbleToHand()
+	return c:IsFaceup() and (c:IsSetCard(SET_DARK_CONTRACT) or c:IsSetCard(SET_DD)) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(tp) and s.thfilter(chkc) end

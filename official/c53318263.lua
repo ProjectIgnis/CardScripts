@@ -40,7 +40,7 @@ function s.cfilter(c,tp)
 end
 function s.tscon(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
-	return Duel.GetTurnPlayer()~=tp and (ph==PHASE_MAIN1 or ph==PHASE_MAIN2) 
+	return Duel.IsTurnPlayer(1-tp) and (Duel.IsMainPhase()) 
 		and eg:IsExists(s.cfilter,1,nil,1-tp)
 end
 function s.tstg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -81,7 +81,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	if ct>0 and dg:FilterCount(Card.IsAbleToRemove,nil,tp,POS_FACEDOWN)==ct and Duel.Remove(dg,POS_FACEDOWN,REASON_EFFECT)==ct then
 		Duel.BreakEffect()
 		local og=Duel.GetOperatedGroup()
-		if Duel.SendtoDeck(hg,nil,2,REASON_EFFECT)>0 then
+		if Duel.SendtoDeck(hg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>0 then
 			Duel.SendtoHand(og,p,REASON_EFFECT)
 		end
 	end

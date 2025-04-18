@@ -1,4 +1,5 @@
 --D・スコープン
+--Morphtronic Scopen
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -22,9 +23,9 @@ function s.initial_effect(c)
 	e2:SetValue(4)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x26}
+s.listed_series={SET_MORPHTRONIC}
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x26) and c:GetLevel()==4 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_MORPHTRONIC) and c:GetLevel()==4 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.cona(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsDisabled() and e:GetHandler():IsAttackPos()
@@ -42,7 +43,7 @@ function s.opa(e,tp,eg,ep,ev,re,r,rp)
 	if not tc then return end
 	Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	local fid=e:GetHandler():GetFieldID()
-	tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,fid)
+	tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1,fid)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_PHASE+PHASE_END)

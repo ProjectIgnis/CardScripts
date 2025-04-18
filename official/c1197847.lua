@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e4:SetDescription(aux.Stringid(id,0))
 	e4:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_HANDES)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e4:SetCode(EVENT_PHASE+PHASE_BATTLE)
+	e4:SetCode(EVENT_PHASE|PHASE_BATTLE)
 	e4:SetRange(LOCATION_SZONE)
 	e4:SetCountLimit(1,id)
 	e4:SetCondition(s.spcon)
@@ -36,8 +36,8 @@ function s.spfilter(c,e,tp)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,nil,e,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE)
+		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND|LOCATION_DECK|LOCATION_GRAVE,0,1,nil,e,tp) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND|LOCATION_DECK|LOCATION_GRAVE)
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,e:GetHandler(),1,0,0)
 	if Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)>0 then
 		Duel.SetOperationInfo(0,CATEGORY_HANDES,nil,0,1-tp,1)
@@ -48,7 +48,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter),tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,e,tp)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter),tp,LOCATION_HAND|LOCATION_DECK|LOCATION_GRAVE,0,1,1,nil,e,tp)
 	if #g>0 then
 		local tc=g:GetFirst()
 		if Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)~=0 then
@@ -56,7 +56,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.SpecialSummonComplete()
 			if Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)>0 then
 				Duel.BreakEffect()
-				Duel.DiscardHand(1-tp,nil,1,1,REASON_EFFECT+REASON_DISCARD)
+				Duel.DiscardHand(1-tp,nil,1,1,REASON_EFFECT|REASON_DISCARD)
 			end
 		end
 	end

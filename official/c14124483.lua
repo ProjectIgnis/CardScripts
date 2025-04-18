@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetHintTiming(TIMING_DAMAGE_STEP)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(function() return not (Duel.IsPhase(PHASE_DAMAGE) and Duel.IsDamageCalculated()) end)
-	e1:SetCost(s.heroatkcost)
+	e1:SetCost(Cost.SelfDiscard)
 	e1:SetTarget(s.heroatktg)
 	e1:SetOperation(s.heroatkop)
 	c:RegisterEffect(e1)
@@ -33,11 +33,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_HERO}
-function s.heroatkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsDiscardable() end
-	Duel.SendtoGrave(c,REASON_COST|REASON_DISCARD)
-end
 function s.heroatktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsSetCard(SET_HERO) and chkc:IsFaceup() end
 	if chk==0 then return Duel.IsExistingTarget(aux.FaceupFilter(Card.IsSetCard,SET_HERO),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
@@ -75,7 +70,7 @@ function s.selfatkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(e:GetLabel())
-		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE|RESET_PHASE|PHASE_END)
+		e1:SetReset(RESETS_STANDARD_DISABLE_PHASE_END)
 		c:RegisterEffect(e1)
 	end
 end

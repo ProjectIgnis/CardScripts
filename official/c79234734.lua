@@ -1,4 +1,5 @@
 --超戦士の魂
+--Super Soldier Soul
 local s,id=GetID()
 function s.initial_effect(c)
 	--atk
@@ -16,14 +17,14 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,{id,1})
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x10cf}
+s.listed_series={SET_BLACK_LUSTER_SOLDIER}
 function s.cfilter(c)
-	return c:IsSetCard(0x10cf) and c:IsMonster() and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(SET_BLACK_LUSTER_SOLDIER) and c:IsMonster() and c:IsAbleToGraveAsCost()
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end
@@ -36,13 +37,13 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_CODE)
 		e1:SetValue(5405694)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
+		e1:SetReset(RESETS_STANDARD_DISABLE_PHASE_END|RESET_OPPO_TURN)
 		c:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e2:SetValue(3000)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
+		e2:SetReset(RESETS_STANDARD_DISABLE_PHASE_END|RESET_OPPO_TURN)
 		c:RegisterEffect(e2)
 	end
 end

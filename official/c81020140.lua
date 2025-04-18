@@ -1,4 +1,5 @@
 --ヴォルカニック・リボルバー
+--Volcanic Blaster
 local s,id=GetID()
 function s.initial_effect(c)
 	--search
@@ -11,12 +12,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x32}
+s.listed_series={SET_VOLCANIC}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsLocation(LOCATION_GRAVE) and e:GetHandler():IsReason(REASON_BATTLE)
 end
 function s.filter(c)
-	return c:IsSetCard(0x32) and c:IsMonster()
+	return c:IsSetCard(SET_VOLCANIC) and c:IsMonster()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

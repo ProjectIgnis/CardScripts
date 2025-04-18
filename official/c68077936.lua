@@ -1,4 +1,5 @@
 --融爆
+--Induced Explosion
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -19,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_DESTROYED)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCondition(s.descon)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.target)
 	e2:SetOperation(s.activate)
 	c:RegisterEffect(e2)
@@ -28,7 +29,7 @@ function s.cfilter(c,tp)
 	return c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousControler(tp) and c:IsReason(REASON_EFFECT)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.cfilter,1,nil,tp) and re and re:IsActiveType(TYPE_SPELL)
+	return eg:IsExists(s.cfilter,1,nil,tp) and re and re:IsSpellEffect()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsOnField() end
@@ -44,5 +45,5 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.cfilter,1,nil,tp) and re and re:IsActiveType(TYPE_SPELL) and aux.exccon(e)
+	return eg:IsExists(s.cfilter,1,nil,tp) and re and re:IsSpellEffect() and aux.exccon(e)
 end

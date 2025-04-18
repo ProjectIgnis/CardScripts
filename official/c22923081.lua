@@ -56,7 +56,7 @@ function s.addop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.addcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_PENDULUM)
+	return e:GetHandler():IsPendulumSummoned()
 end
 function s.atkval(e,c)
 	return c:GetCounter(COUNTER_SPELL)*400
@@ -66,7 +66,7 @@ function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:GetHandler():RemoveCounter(tp,COUNTER_SPELL,1,REASON_COST)
 end
 function s.filter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsSpellTrap()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and s.filter(chkc) end

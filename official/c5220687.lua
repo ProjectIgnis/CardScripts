@@ -1,4 +1,5 @@
 --素早いビッグハムスター
+--Super-Nimble Mega Hamster
 local s,id=GetID()
 function s.initial_effect(c)
 	--flip

@@ -1,8 +1,8 @@
 --獣湧き肉躍り
---Drumming with Excitement
+--Dances with Beasts
 --Scripted by Eerie Code
 local s,id=GetID()
-local LOCATION_HDG = LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE
+local LOCATION_HDG = LOCATION_HAND|LOCATION_DECK|LOCATION_GRAVE
 function s.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)

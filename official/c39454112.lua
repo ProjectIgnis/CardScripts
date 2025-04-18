@@ -18,7 +18,7 @@ end
 function s.diceop(e,tp,eg,ep,ev,re,r,rp)
 	local cc=Duel.GetCurrentChain()
 	local cid=Duel.GetChainInfo(cc,CHAININFO_CHAIN_ID)
-	if s[0]~=cid  and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+	if s[0]~=cid and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 			local dc={Duel.GetDiceResult()}
 			local ac=1
 			local ct=(ev&0xff)+(ev>>16)

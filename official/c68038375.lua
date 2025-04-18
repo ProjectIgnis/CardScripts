@@ -1,5 +1,5 @@
 --忍法 落葉舞
---Ninjitsu Art of Fallen Leaves' Dance
+--Ninjitsu Art of Dancing Leaves
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -35,13 +35,13 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x2b,0x61}
+s.listed_series={SET_NINJA,SET_NINJITSU_ART}
 function s.releasefilter(c,tp)
-	return ((c:IsFaceup() and c:IsSetCard(0x2b)) or c:IsPosition(POS_FACEDOWN_DEFENSE)) and c:IsReleasableByEffect()
+	return ((c:IsFaceup() and c:IsSetCard(SET_NINJA)) or c:IsPosition(POS_FACEDOWN_DEFENSE)) and c:IsReleasableByEffect()
 		and Duel.GetMZoneCount(tp,c)>0
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x2b) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_NINJA) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.releasefilter(chkc,tp) end
@@ -70,7 +70,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x61) and c:IsSpellTrap() and c:IsType(TYPE_CONTINUOUS) and c:IsFaceup() and c:IsAbleToHand()
+	return c:IsSetCard(SET_NINJITSU_ART) and c:IsSpellTrap() and c:IsType(TYPE_CONTINUOUS) and c:IsFaceup() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_SZONE) and chkc:IsControler(tp) and s.thfilter(chkc) end

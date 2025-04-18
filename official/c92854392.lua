@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return Duel.IsTurnPlayer(1-tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and chkc:IsFaceup() end
@@ -28,7 +28,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_FIELD)
 		e1:SetCode(EFFECT_MUST_ATTACK)
 		e1:SetTargetRange(0,LOCATION_MZONE)
-		e1:SetReset(RESET_PHASE+PHASE_BATTLE)
+		e1:SetReset(RESET_PHASE|PHASE_BATTLE)
 		Duel.RegisterEffect(e1,tp)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_MUST_ATTACK_MONSTER)

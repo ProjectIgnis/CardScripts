@@ -1,4 +1,5 @@
 --彼岸の悪鬼 ドラゴネル
+--Draghig, Malebranche of the Burning Abyss
 local s,id=GetID()
 function s.initial_effect(c)
 	--self destroy
@@ -31,15 +32,15 @@ function s.initial_effect(c)
 	e3:SetOperation(s.dtop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xb1}
+s.listed_series={SET_BURNING_ABYSS}
 function s.sdfilter(c)
-	return not c:IsFaceup() or not c:IsSetCard(0xb1)
+	return not c:IsFaceup() or not c:IsSetCard(SET_BURNING_ABYSS)
 end
 function s.sdcon(e)
 	return Duel.IsExistingMatchingCard(s.sdfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function s.filter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsSpellTrap()
 end
 function s.sscon(e,tp,eg,ep,ev,re,r,rp)
 	return not Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_ONFIELD,0,1,nil)
@@ -55,11 +56,11 @@ function s.ssop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
 function s.dttg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_DECK,0,1,nil,0xb1) end
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_DECK,0,1,nil,SET_BURNING_ABYSS) end
 end
 function s.dtop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,2))
-	local g=Duel.SelectMatchingCard(tp,Card.IsSetCard,tp,LOCATION_DECK,0,1,1,nil,0xb1)
+	local g=Duel.SelectMatchingCard(tp,Card.IsSetCard,tp,LOCATION_DECK,0,1,1,nil,SET_BURNING_ABYSS)
 	local tc=g:GetFirst()
 	if tc then
 		Duel.ShuffleDeck(tp)

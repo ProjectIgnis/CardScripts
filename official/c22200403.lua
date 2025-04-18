@@ -69,7 +69,7 @@ function s.effcon(e)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=e:GetHandler():GetBattleTarget()
-	if chk==0 then return tc and tc:IsFaceup() and tc:IsSummonType(SUMMON_TYPE_PENDULUM) end
+	if chk==0 then return tc and tc:IsFaceup() and tc:IsPendulumSummoned() end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,tc,1,0,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)

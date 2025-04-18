@@ -1,4 +1,5 @@
 --救出劇
+--Dramatic Rescue
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,9 +12,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x4}
+s.listed_series={SET_AMAZONESS}
 function s.cfilter(c,ft)
-	return c:IsLocation(LOCATION_MZONE) and c:IsFaceup() and c:IsSetCard(0x4) and (ft>0 or c:GetSequence()<5)
+	return c:IsLocation(LOCATION_MZONE) and c:IsFaceup() and c:IsSetCard(SET_AMAZONESS) and (ft>0 or c:GetSequence()<5)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,Duel.GetLocationCount(tp,LOCATION_MZONE))

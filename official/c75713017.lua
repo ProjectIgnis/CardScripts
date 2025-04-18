@@ -23,7 +23,7 @@ function s.atcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.atcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_DISCARD+REASON_COST)
+	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_DISCARD|REASON_COST)
 end
 function s.atop(e,tp,eg,ep,ev,re,r,rp)
 	local seq=e:GetLabel()
@@ -33,7 +33,7 @@ function s.atop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_DISABLE_FIELD)
 	e1:SetLabel(0x1<<seq)
 	e1:SetOperation(s.disop)
-	e1:SetReset(RESET_PHASE+PHASE_END,2)
+	e1:SetReset(RESET_PHASE|PHASE_END,2)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.disop(e,tp)

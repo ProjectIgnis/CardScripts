@@ -1,7 +1,6 @@
 --黄金の邪教神
---Golden Idol
+--Golden-Eyes Idol
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -34,7 +33,6 @@ function s.initial_effect(c)
 end
 	--Lists "Relinquished"/"Eyes Restrict" archetype
 s.listed_series={}
-
 	--Activation legality
 function s.looktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetMatchingGroupCount(aux.NOT(Card.IsPublic),tp,0,LOCATION_HAND,nil)>0 end
@@ -52,7 +50,7 @@ function s.lookop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_CODE)
 		e1:SetValue(27125110)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		c:RegisterEffect(e1)
 	end
 end
@@ -76,7 +74,7 @@ function s.equiptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 	--Check for a "Relinquished"/"Eyes Restrict" monster
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x110) and not c:IsSummonableCard()
+	return c:IsFaceup() and c:IsSetCard(SET_RELINQUISHED) and not c:IsSummonableCard()
 end
 	--Equip 1 of opponent's monsters to 1 of your "Relinquished"/"Eyes Restrict" monsters
 function s.equipop(e,tp,eg,ep,ev,re,r,rp)
@@ -102,7 +100,7 @@ function s.eqop(c,e,tp,tc,atk)
 	e1:SetType(EFFECT_TYPE_EQUIP)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(atk)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	tc:RegisterEffect(e1)
 	--Equip limit
 	local e2=Effect.CreateEffect(c)
@@ -110,7 +108,7 @@ function s.eqop(c,e,tp,tc,atk)
 	e2:SetCode(EFFECT_EQUIP_LIMIT)
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e2:SetValue(s.eqlimit)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 	tc:RegisterEffect(e2)
 end
 function s.eqlimit(e,c)

@@ -10,12 +10,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x88}
+s.listed_series={SET_BUJIN}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x88) and c:IsRace(RACE_BEASTWARRIOR)
+	return c:IsFaceup() and c:IsSetCard(SET_BUJIN) and c:IsRace(RACE_BEASTWARRIOR)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_MAIN1 and not Duel.CheckPhaseActivity()
+	return Duel.IsPhase(PHASE_MAIN1) and not Duel.CheckPhaseActivity()
 		and Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)<Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)
 		and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
@@ -27,9 +27,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_CANNOT_ACTIVATE)
 	e1:SetTargetRange(1,1)
 	e1:SetValue(s.aclimit)
-	e1:SetReset(RESET_PHASE+PHASE_END,2)
+	e1:SetReset(RESET_PHASE|PHASE_END,2)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.aclimit(e,re,tp)
-	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
+	return re:IsSpellTrapEffect()
 end

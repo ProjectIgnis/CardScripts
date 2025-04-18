@@ -1,4 +1,5 @@
 --邪気退散
+--Malice Dispersion
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -13,10 +14,10 @@ function s.initial_effect(c)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,e:GetHandler()) end
-	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST|REASON_DISCARD)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:GetType()==TYPE_TRAP+TYPE_CONTINUOUS
+	return c:IsFaceup() and c:IsContinuousTrap()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end

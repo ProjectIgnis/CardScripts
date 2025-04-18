@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,id)
-	e1:SetCost(s.eqcost)
+	e1:SetCost(Cost.SelfDiscard)
 	e1:SetTarget(s.eqtg)
 	e1:SetOperation(s.eqop)
 	c:RegisterEffect(e1)
@@ -27,19 +27,15 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x1110}
+s.listed_series={SET_EYES_RESTRICT}
 s.listed_names={64631466}
-function s.eqcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsDiscardable() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
-end
 function s.filter(c,tp)
 	return c:IsFaceup() and c:IsType(TYPE_EFFECT) and c:IsAbleToChangeControler() 
 		and Duel.IsExistingMatchingCard(s.eqfilter,tp,LOCATION_MZONE,0,1,nil,c,tp)
 end
 function s.eqfilter(c,ec,tp)
 	local eff={c:GetCardEffect(id)}
-	if c:IsFacedown() or ((not c:IsSetCard(0x1110) or not c:IsType(TYPE_FUSION)) and not c:IsCode(64631466)) then return false end
+	if c:IsFacedown() or ((not c:IsSetCard(SET_EYES_RESTRICT) or not c:IsType(TYPE_FUSION)) and not c:IsCode(64631466)) then return false end
 	for _,te in ipairs(eff) do
 		if te:GetValue()(ec,c,tp) then return true end
 	end
@@ -65,7 +61,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thfilter(c,e)
-	return (c:IsSetCard(0x1110) and c:IsType(TYPE_FUSION)) or c:IsCode(64631466)
+	return (c:IsSetCard(SET_EYES_RESTRICT) and c:IsType(TYPE_FUSION)) or c:IsCode(64631466)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.thfilter,1,nil)

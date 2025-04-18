@@ -1,4 +1,5 @@
 --BF－追い風のアリゼ
+--Blackwing - Brisote the Tailwind
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -34,7 +35,7 @@ function s.initial_effect(c)
 		end)
 	end)
 end
-s.listed_series={0x33}
+s.listed_series={SET_BLACKWING}
 function s.spcon(e,c)
 	if c==nil then return true end
 	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0 and s[c:GetControler()]>=2
@@ -43,7 +44,7 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	for tc in aux.Next(eg) do
 		local pos=tc:GetPosition()
-		if tc:IsLocation(LOCATION_MZONE) and tc:IsSetCard(0x33) and (pos&POS_FACEUP)~=0 then
+		if tc:IsLocation(LOCATION_MZONE) and tc:IsSetCard(SET_BLACKWING) and (pos&POS_FACEUP)~=0 then
 			s[tc:GetControler()]=s[tc:GetControler()]+1
 		end
 	end

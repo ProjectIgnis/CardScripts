@@ -33,10 +33,10 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x129}
+s.listed_series={SET_EVIL_EYE}
 s.listed_names={CARD_EVIL_EYE_SELENE}
 function s.thfilter(c)
-	return c:IsMonster() and c:IsSetCard(0x129) and c:IsAbleToHand()
+	return c:IsMonster() and c:IsSetCard(SET_EVIL_EYE) and c:IsAbleToHand()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
@@ -53,7 +53,7 @@ function s.dmgcond(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.dmgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local a=Duel.GetAttackTarget()
-	if chk==0 then return a~=nil and a:IsControler(tp) and a:IsSetCard(0x129) end
+	if chk==0 then return a~=nil and a:IsControler(tp) and a:IsSetCard(SET_EVIL_EYE) end
 end
 function s.dmgop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
@@ -62,14 +62,14 @@ function s.dmgop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_ALSO_BATTLE_DAMAGE)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(1,0)
-	e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
+	e1:SetReset(RESET_PHASE|PHASE_DAMAGE)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return (r&REASON_EFFECT)==REASON_EFFECT and e:GetHandler():IsPreviousLocation(LOCATION_FZONE)
 end
 function s.filter(c)
-	return c:IsSetCard(0x129) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_EVIL_EYE) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc) end

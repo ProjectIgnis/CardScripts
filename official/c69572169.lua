@@ -1,4 +1,5 @@
 --E・HERO フラッシュ
+--Elemental HERO Flash
 local s,id=GetID()
 function s.initial_effect(c)
 	--flip
@@ -14,12 +15,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x3008}
+s.listed_series={SET_ELEMENTAL_HERO}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsLocation(LOCATION_GRAVE) and e:GetHandler():IsReason(REASON_BATTLE)
 end
 function s.rfilter(c)
-	return c:IsSetCard(0x3008) and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(SET_ELEMENTAL_HERO) and c:IsAbleToRemoveAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local rg=Duel.GetMatchingGroup(s.rfilter,tp,LOCATION_GRAVE,0,e:GetHandler())
@@ -28,7 +29,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(sg+e:GetHandler(),POS_FACEUP,REASON_COST)
 end
 function s.filter(c)
-	return c:GetType()==TYPE_SPELL and c:IsAbleToHand()
+	return c:IsNormalSpell() and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc) end

@@ -1,4 +1,5 @@
 --Ninjitsu Art Notebook
+--Ninjitsu Art Notebook
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -17,10 +18,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.setop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x2b,0x61}
+s.listed_series={SET_NINJA,SET_NINJITSU_ART}
 s.listed_names={id}
 function s.costfilter(c)
-	return c:IsSetCard(0x2b) and c:IsMonster() and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(SET_NINJA) and c:IsMonster() and c:IsAbleToGraveAsCost()
 end
 function s.setcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil) end
@@ -29,7 +30,7 @@ function s.setcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function s.setfilter(c)
-	return c:IsSetCard(0x61) and c:IsSpellTrap() and not c:IsCode(id) and c:IsSSetable()
+	return c:IsSetCard(SET_NINJITSU_ART) and c:IsSpellTrap() and not c:IsCode(id) and c:IsSSetable()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_DECK,0,1,nil) end

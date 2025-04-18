@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1,id)
 	e1:SetHintTiming(0,TIMING_MAIN_END)
 	e1:SetCondition(function() return Duel.IsMainPhase() end)
-	e1:SetCost(s.spsetcost)
+	e1:SetCost(Cost.SelfToGrave)
 	e1:SetTarget(s.spsettarget)
 	e1:SetOperation(s.spsetop)
 	c:RegisterEffect(e1)
@@ -32,11 +32,6 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_LABRYNTH}
 s.listed_names={id}
-function s.spsetcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(c,REASON_COST)
-end
 function s.spsetfilter(c,e,tp,ft)
 	return (ft>0 and c:IsSetCard(SET_LABRYNTH) and c:IsCanBeSpecialSummoned(e,0,tp,false,false))
 		or (c:IsNormalTrap() and c:IsSSetable())

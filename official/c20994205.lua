@@ -1,5 +1,5 @@
 --ナンバーズ・エヴァイユ
---Numbers Evaille
+--Numbers Eveil
 --Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
@@ -13,16 +13,16 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x48}
+s.listed_series={SET_NUMBER}
 function s.cfilter(c)
-	return c:IsSummonType(SUMMON_TYPE_SPECIAL) and c:IsSummonLocation(LOCATION_EXTRA)
+	return c:IsSpecialSummoned() and c:IsSummonLocation(LOCATION_EXTRA)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,0,LOCATION_MZONE,1,nil)
 		and Duel.GetMatchingGroupCount(s.cfilter,tp,LOCATION_MZONE,0,nil)==0
 end
 function s.xyzfilter(c)
-	return c:IsSetCard(0x48) and c:IsType(TYPE_XYZ) and c.xyz_number
+	return c:IsSetCard(SET_NUMBER) and c:IsType(TYPE_XYZ) and c.xyz_number
 end
 function s.spfilter(c,e,p,g)
 	return Duel.GetLocationCountFromEx(p,p,g,c)>0 and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,p,false,false)
@@ -53,9 +53,9 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetRange(LOCATION_MZONE)
 		e1:SetTargetRange(1,0)
 		e1:SetCondition(function(e) return e:GetHandler():GetControler()==e:GetLabel() end)
-		e1:SetTarget(function(_,c) return not (c:IsSetCard(0x48) and c:IsType(TYPE_XYZ)) end)
+		e1:SetTarget(function(_,c) return not (c:IsSetCard(SET_NUMBER) and c:IsType(TYPE_XYZ)) end)
 		e1:SetLabel(tp)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		spc:RegisterEffect(e1,true)
 		Duel.SpecialSummonComplete()
 		spc:CompleteProcedure()

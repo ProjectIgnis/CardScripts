@@ -1,4 +1,5 @@
 --トークン謝肉祭
+--Token Feastevil
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

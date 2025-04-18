@@ -1,4 +1,5 @@
 --No.30 破滅のアシッド・ゴーレム
+--Number 30: Acid Golem of Destruction
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -9,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DAMAGE)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
-	e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e1:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
 	e1:SetCondition(s.rmcon)
@@ -36,7 +37,7 @@ function s.atcon(e)
 	return e:GetHandler():GetOverlayCount()==0
 end
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

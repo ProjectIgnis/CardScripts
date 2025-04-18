@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
-	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0xe),1,1,Synchro.NonTunerEx(Card.IsRace,RACE_THUNDER),1,99)
+	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_WATT),1,1,Synchro.NonTunerEx(Card.IsRace,RACE_THUNDER),1,99)
 	c:EnableReviveLimit()
 	--direct attack
 	local e1=Effect.CreateEffect(c)
@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xe}
+s.listed_series={SET_WATT}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp and Duel.GetAttackTarget()==nil
 end
@@ -33,5 +33,5 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(ep,LOCATION_HAND,0,nil)
 	if #g==0 then return end
 	local sg=g:RandomSelect(1-tp,1)
-	Duel.SendtoDeck(sg,nil,0,REASON_EFFECT)
+	Duel.SendtoDeck(sg,nil,SEQ_DECKTOP,REASON_EFFECT)
 end

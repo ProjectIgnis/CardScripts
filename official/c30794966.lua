@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desrepop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x69}
+s.listed_series={SET_HIERATIC}
 function s.spfilter1(c,tp)
 	return c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsRace(RACE_DRAGON) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true) 
 end
@@ -38,16 +38,16 @@ end
 function s.hspcon(e,c)
 	if c==nil then return true end
 	local tp=e:GetHandlerPlayer()
-	local g1=Duel.GetMatchingGroup(s.spfilter1,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil)
-	local g2=Duel.GetMatchingGroup(s.spfilter2,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil)
+	local g1=Duel.GetMatchingGroup(s.spfilter1,tp,LOCATION_MZONE|LOCATION_GRAVE,0,nil)
+	local g2=Duel.GetMatchingGroup(s.spfilter2,tp,LOCATION_MZONE|LOCATION_GRAVE,0,nil)
 	local g=g1:Clone()
 	g:Merge(g2)
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>-2 and #g1>0 and #g2>0 and aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,0)
 end
 function s.hsptg(e,tp,eg,ep,ev,re,r,rp,c)
 	local c=e:GetHandler()
-	local g1=Duel.GetMatchingGroup(s.spfilter1,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil)
-	local g2=Duel.GetMatchingGroup(s.spfilter2,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil)
+	local g1=Duel.GetMatchingGroup(s.spfilter1,tp,LOCATION_MZONE|LOCATION_GRAVE,0,nil)
+	local g2=Duel.GetMatchingGroup(s.spfilter2,tp,LOCATION_MZONE|LOCATION_GRAVE,0,nil)
 	g1:Merge(g2)
 	local g=aux.SelectUnselectGroup(g1,e,tp,2,2,s.rescon,1,tp,HINTMSG_REMOVE,nil,nil,true)
 	if #g>0 then
@@ -64,7 +64,7 @@ function s.hspop(e,tp,eg,ep,ev,re,r,rp,c)
 	g:DeleteGroup()
 end
 function s.repfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x69) and not c:IsStatus(STATUS_DESTROY_CONFIRMED)
+	return c:IsFaceup() and c:IsSetCard(SET_HIERATIC) and not c:IsStatus(STATUS_DESTROY_CONFIRMED)
 end
 function s.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

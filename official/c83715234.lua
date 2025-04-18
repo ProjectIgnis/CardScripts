@@ -1,4 +1,5 @@
 --ムーン・スクレイパー
+--Attack the Moon!
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -29,7 +30,7 @@ function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)
 end
 function s.desfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsSpellTrap()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsOnField() and s.desfilter(chkc) end

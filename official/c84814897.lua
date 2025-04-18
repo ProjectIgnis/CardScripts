@@ -1,4 +1,5 @@
 --騎竜
+--Kiryu
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddUnionProcedure(c,aux.FilterBoolFunction(Card.IsCode,11321183),true)
@@ -39,7 +40,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DIRECT_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end

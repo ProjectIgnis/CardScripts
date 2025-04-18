@@ -15,7 +15,7 @@ function s.initial_effect(c)
 end
 s.listed_card_types={TYPE_GEMINI}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp and re:IsActiveType(TYPE_SPELL) and re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)
+	return rp~=tp and re:IsSpellEffect() and re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsType(TYPE_GEMINI) and c:IsCanTurnSet()

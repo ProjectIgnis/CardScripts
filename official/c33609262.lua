@@ -1,4 +1,5 @@
 --帝王の深怨
+--Tenacity of the Monarchs
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0xbe}
+s.listed_series={SET_MONARCH}
 s.listed_names={id}
 function s.cfilter(c)
 	return (c:GetAttack()==2400 or c:GetAttack()==2800) and c:GetDefense()==1000 and not c:IsPublic()
@@ -25,7 +26,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.ShuffleHand(tp)
 end
 function s.filter(c)
-	return c:IsSetCard(0xbe) and c:IsSpellTrap() and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(SET_MONARCH) and c:IsSpellTrap() and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

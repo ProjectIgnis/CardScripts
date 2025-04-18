@@ -21,19 +21,19 @@ function s.initial_effect(c)
 	aux.EnableNeosReturn(c,CATEGORY_DESTROY,s.desinfo,s.desop)
 end
 s.listed_names={CARD_NEOS}
-s.material_setcode={0x8,0x3008,0x9,0x1f}
+s.material_setcode={SET_HERO,SET_ELEMENTAL_HERO,SET_NEOS,SET_NEO_SPACIAN}
 function s.ffilter(c,fc,sumtype,tp,sub,mg,sg)
-	return c:IsSetCard(0x1f,fc,sumtype,tp)  and c:GetAttribute(fc,sumtype,tp)~=0 and (not sg or not sg:IsExists(s.fusfilter,1,c,c:GetAttribute(fc,sumtype,tp),fc,sumtype,tp))
+	return c:IsSetCard(SET_NEO_SPACIAN,fc,sumtype,tp) and c:GetAttribute(fc,sumtype,tp)~=0 and (not sg or not sg:IsExists(s.fusfilter,1,c,c:GetAttribute(fc,sumtype,tp),fc,sumtype,tp))
 end
 function s.fusfilter(c,attr,fc,sumtype,tp)
-	return c:IsSetCard(0x1f,fc,sumtype,tp) and c:IsAttribute(attr,fc,sumtype,tp) and not c:IsHasEffect(511002961)
+	return c:IsSetCard(SET_NEO_SPACIAN,fc,sumtype,tp) and c:IsAttribute(attr,fc,sumtype,tp) and not c:IsHasEffect(511002961)
 end
 function s.contactfil(tp)
 	return Duel.GetMatchingGroup(Card.IsAbleToDeckOrExtraAsCost,tp,LOCATION_ONFIELD,0,nil)
 end
 function s.contactop(g,tp)
 	Duel.ConfirmCards(1-tp,g)
-	Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST+REASON_MATERIAL)
+	Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST|REASON_MATERIAL)
 end
 function s.splimit(e,se,sp,st)
 	return not e:GetHandler():IsLocation(LOCATION_EXTRA)
@@ -56,7 +56,7 @@ function s.naop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetTargetRange(0,1)
 	e1:SetValue(s.aclimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.aclimit(e,re,tp)
@@ -72,4 +72,3 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(dg,REASON_EFFECT)
 	end
 end
-

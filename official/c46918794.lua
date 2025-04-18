@@ -1,4 +1,5 @@
 --火炎地獄
+--Tremendous Fire
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

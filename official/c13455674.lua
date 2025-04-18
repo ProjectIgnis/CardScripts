@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e1:SetCondition(function(e) return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO) end)
+	e1:SetCondition(function(e) return e:GetHandler():IsSynchroSummoned() end)
 	e1:SetTarget(s.rmtg)
 	e1:SetOperation(s.rmop)
 	c:RegisterEffect(e1)
@@ -53,7 +53,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsSummonType(SUMMON_TYPE_SYNCHRO) and (r&REASON_EFFECT+REASON_BATTLE)~=0
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsSynchroSummoned() and (r&REASON_EFFECT+REASON_BATTLE)~=0
 end
 function s.spfilter(c,e,tp)
 	return c:IsFaceup() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

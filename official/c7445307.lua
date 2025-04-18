@@ -1,4 +1,5 @@
 --デュアル・アセンブルム
+--Dual Assembwurm
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -6,7 +7,7 @@ function s.initial_effect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
-	e1:SetRange(LOCATION_GRAVE+LOCATION_HAND)
+	e1:SetRange(LOCATION_GRAVE|LOCATION_HAND)
 	e1:SetCountLimit(1,id)
 	e1:SetCost(s.spcost)
 	e1:SetTarget(s.sptg)
@@ -32,7 +33,7 @@ function s.mzfilter(c,tp)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	local rg=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,c)
+	local rg=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,c)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local ct=-ft+1
 	if chk==0 then return ft>-2 and #rg>1 and (ft>0 or rg:IsExists(s.mzfilter,ct,nil,tp)) end
@@ -66,7 +67,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetValue(math.ceil(atk/2))
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e1,true)
 	end
 	Duel.SpecialSummonComplete()

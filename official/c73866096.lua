@@ -1,4 +1,5 @@
 --ドドドドロー
+--Dodododraw
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,15 +13,15 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x82}
+s.listed_series={SET_DODODO}
 function s.cfilter(c)
-	return c:IsSetCard(0x82) and c:IsMonster() and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(SET_DODODO) and c:IsMonster() and c:IsAbleToGraveAsCost()
 		and (c:IsLocation(LOCATION_HAND) or c:IsFaceup())
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,1,1,nil)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

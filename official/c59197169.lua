@@ -1,4 +1,5 @@
 --闇
+--Yami
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -21,7 +22,7 @@ function s.initial_effect(c)
 end
 function s.val(e,c)
 	local r=c:GetRace()
-	if (r&RACE_FIEND+RACE_SPELLCASTER)>0 then return 200
+	if (r&RACE_FIEND|RACE_SPELLCASTER)>0 then return 200
 	elseif (r&RACE_FAIRY)>0 then return -200
 	else return 0 end
 end

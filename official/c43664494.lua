@@ -1,7 +1,6 @@
 --プランキッズ・プランク
 --Prank-Kids Pranks
 --Scripted by Eerie Code
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -34,19 +33,18 @@ function s.initial_effect(c)
 	e3:SetOperation(s.drop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x120}
+s.listed_series={SET_PRANK_KIDS}
 s.listed_names={43664495}
-
 function s.cfilter(c)
-	return c:IsSetCard(0x120) and c:IsDiscardable()
+	return c:IsSetCard(SET_PRANK_KIDS) and c:IsDiscardable()
 end
 function s.tkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_COST|REASON_DISCARD)
 end
 function s.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0x120,TYPES_TOKEN,0,0,1,RACE_PYRO,ATTRIBUTE_FIRE,POS_FACEUP) end
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,SET_PRANK_KIDS,TYPES_TOKEN,0,0,1,RACE_PYRO,ATTRIBUTE_FIRE,POS_FACEUP) end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0)
 end
@@ -54,7 +52,7 @@ function s.tkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
-		or not Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0x120,TYPES_TOKEN,0,0,1,RACE_PYRO,ATTRIBUTE_FIRE,POS_FACEUP) then return end
+		or not Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,SET_PRANK_KIDS,TYPES_TOKEN,0,0,1,RACE_PYRO,ATTRIBUTE_FIRE,POS_FACEUP) then return end
 	local token=Duel.CreateToken(tp,id+1)
 	Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)
 	--Cannot be tributed
@@ -64,7 +62,7 @@ function s.tkop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_UNRELEASABLE_SUM)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetValue(1)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	token:RegisterEffect(e1,true)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_UNRELEASABLE_NONSUM)
@@ -72,10 +70,10 @@ function s.tkop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummonComplete()
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.tdfilter(c)
-	return c:IsSetCard(0x120) and not c:IsCode(id) and c:IsAbleToDeck()
+	return c:IsSetCard(SET_PRANK_KIDS) and not c:IsCode(id) and c:IsAbleToDeck()
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.tdfilter(chkc) end
@@ -90,10 +88,10 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tg=Duel.GetTargetCards(e)
 	if not tg or tg:FilterCount(Card.IsRelateToEffect,nil,e)~=3 then return end
-	Duel.SendtoDeck(tg,nil,0,REASON_EFFECT)
+	Duel.SendtoDeck(tg,nil,SEQ_DECKTOP,REASON_EFFECT)
 	local g=Duel.GetOperatedGroup()
 	if g:IsExists(Card.IsLocation,1,nil,LOCATION_DECK) then Duel.ShuffleDeck(tp) end
-	local ct=g:FilterCount(Card.IsLocation,nil,LOCATION_DECK+LOCATION_EXTRA)
+	local ct=g:FilterCount(Card.IsLocation,nil,LOCATION_DECK|LOCATION_EXTRA)
 	if ct>0 then
 		Duel.BreakEffect()
 		Duel.Draw(tp,1,REASON_EFFECT)

@@ -1,5 +1,5 @@
 --機巧蛙－伊服岐雹荒神
---Gizmek Ibuki
+--Gizmek Arakami, the Hailbringer Hog
 --scripted by Rundas
 local s,id=GetID()
 function s.initial_effect(c)
@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,{id,1})
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.tgtg)
 	e2:SetOperation(s.tgop)
 	c:RegisterEffect(e2)
@@ -72,7 +72,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			e1:SetValue(tg:GetLevel()*100)
 			tc:RegisterEffect(e1)
 			local e2=e1:Clone()

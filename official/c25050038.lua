@@ -1,4 +1,5 @@
 --チェーン・ヒーリング
+--Chain Healing
 local s,id=GetID()
 function s.initial_effect(c)
 	--recover
@@ -28,6 +29,6 @@ function s.recop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(c,nil,REASON_EFFECT)
 	elseif ct>1 then
 		c:CancelToGrave()
-		Duel.SendtoDeck(c,nil,2,REASON_EFFECT)
+		Duel.SendtoDeck(c,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	end
 end

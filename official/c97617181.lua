@@ -1,8 +1,10 @@
 --銀河零式
+--Galaxy Zero
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -26,18 +28,18 @@ function s.initial_effect(c)
 	e4:SetTarget(s.desreptg)
 	e4:SetOperation(s.desrepop)
 	c:RegisterEffect(e4)
-	--leave
+	--The equipped monster's ATK becomes 0
 	local e5=Effect.CreateEffect(c)
-	e5:SetDescription(aux.Stringid(id,0))
+	e5:SetDescription(aux.Stringid(id,1))
 	e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e5:SetCode(EVENT_LEAVE_FIELD)
 	e5:SetCondition(s.atkcon)
 	e5:SetOperation(s.atkop)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x55,0x7b}
+s.listed_series={SET_PHOTON,SET_GALAXY}
 function s.spfilter(c,e,tp)
-	return (c:IsSetCard(0x55) or c:IsSetCard(0x7b)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard({SET_PHOTON,SET_GALAXY}) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.spfilter(chkc,e,tp) end
@@ -62,7 +64,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_EQUIP_LIMIT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e1:SetValue(s.eqlimit)
 		e1:SetLabelObject(tc)
 		c:RegisterEffect(e1)
@@ -85,7 +87,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetValue(0)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 	end
 end
@@ -98,5 +100,5 @@ function s.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	return Duel.SelectEffectYesNo(tp,c,96)
 end
 function s.desrepop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Destroy(e:GetHandler(),REASON_EFFECT+REASON_REPLACE)
+	Duel.Destroy(e:GetHandler(),REASON_EFFECT|REASON_REPLACE)
 end

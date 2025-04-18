@@ -1,4 +1,5 @@
 --聖騎士モルドレッド
+--Noble Knight Medraut
 local s,id=GetID()
 function s.initial_effect(c)
 	--normal monster
@@ -39,20 +40,20 @@ function s.initial_effect(c)
 	e5:SetOperation(s.spop)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x107a,0x207a}
+s.listed_series={SET_NOBLE_KNIGHT,SET_NOBLE_ARMS}
 function s.eqcon1(e)
 	local eg=e:GetHandler():GetEquipGroup()
-	return not eg or not eg:IsExists(Card.IsSetCard,1,nil,0x207a)
+	return not eg or not eg:IsExists(Card.IsSetCard,1,nil,SET_NOBLE_ARMS)
 end
 function s.eqcon2(e)
 	local eg=e:GetHandler():GetEquipGroup()
-	return eg and eg:IsExists(Card.IsSetCard,1,nil,0x207a)
+	return eg and eg:IsExists(Card.IsSetCard,1,nil,SET_NOBLE_ARMS)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return s.eqcon2(e) and Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==1
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x107a) and c:GetCode()~=id and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return c:IsSetCard(SET_NOBLE_KNIGHT) and c:GetCode()~=id and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

@@ -20,7 +20,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 		return #g>0 and g:FilterCount(Card.IsDiscardable,nil)==#g
 	end
 	local g=Duel.GetFieldGroup(tp,LOCATION_HAND,0)
-	Duel.SendtoGrave(g,REASON_COST+REASON_DISCARD)
+	Duel.SendtoGrave(g,REASON_COST|REASON_DISCARD)
 end
 function s.filter(c,e,tp)
 	return c:IsLocation(LOCATION_GRAVE) and c:IsControler(tp) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -42,7 +42,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(800)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 	end
 	Duel.SpecialSummonComplete()

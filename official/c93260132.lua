@@ -1,4 +1,5 @@
 --魔法効果の矢
+--Spell Shattering Arrow
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

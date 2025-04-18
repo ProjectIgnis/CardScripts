@@ -30,11 +30,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 		e1:SetTargetRange(1,0)
 		e1:SetCode(EFFECT_CANNOT_DRAW)
-		if Duel.GetTurnPlayer()==p and Duel.GetCurrentPhase()==PHASE_DRAW then
-			e1:SetReset(RESET_PHASE+PHASE_DRAW+RESET_SELF_TURN,2)
+		if Duel.GetTurnPlayer()==p and Duel.IsPhase(PHASE_DRAW) then
+			e1:SetReset(RESET_PHASE|PHASE_DRAW|RESET_SELF_TURN,2)
 			e1:SetLabel(Duel.GetTurnCount())
 		else
-			e1:SetReset(RESET_PHASE+PHASE_DRAW+RESET_SELF_TURN)
+			e1:SetReset(RESET_PHASE|PHASE_DRAW|RESET_SELF_TURN)
 			e1:SetLabel(0)
 		end
 		e1:SetCondition(s.skipcon)
@@ -50,12 +50,12 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_CANNOT_ACTIVATE)
 		e1:SetTargetRange(1,0)
 		e1:SetValue(s.aclimit)
-		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_PHASE|PHASE_END)
 		Duel.RegisterEffect(e1,p)
 	end
 end
 function s.skipcon(e)
-	return Duel.GetTurnCount()~=e:GetLabel() and Duel.GetCurrentPhase()==PHASE_DRAW
+	return Duel.GetTurnCount()~=e:GetLabel() and Duel.IsPhase(PHASE_DRAW)
 end
 function s.aclimit(e,re,tp)
 	return re:IsHasType(EFFECT_TYPE_ACTIVATE)

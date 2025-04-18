@@ -1,4 +1,5 @@
 --ドーピング
+--Stim-Pack
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c)
@@ -20,7 +21,7 @@ function s.initial_effect(c)
 	--atkdown
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e4:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e4:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e4:SetRange(LOCATION_SZONE)
 	e4:SetCountLimit(1)
 	e4:SetLabelObject(e2)
@@ -34,7 +35,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	pe:SetValue(700)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local pe=e:GetLabelObject()

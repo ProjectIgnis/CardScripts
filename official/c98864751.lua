@@ -1,5 +1,5 @@
 --エアークラック・ストーム
---Aircrack Storm
+--Air Cracking Storm
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -33,7 +33,7 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	if tc:GetFlagEffect(id)==0 then
 		s[ep]=s[ep]+1
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+		tc:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 	end
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
@@ -50,7 +50,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetTargetRange(LOCATION_MZONE,0)
 	e1:SetTarget(s.ftarget)
 	e1:SetLabel(c:GetEquipTarget():GetFieldID())
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.ftarget(e,c)
@@ -61,6 +61,6 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_EXTRA_ATTACK)
 	e1:SetValue(1)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_BATTLE)
 	e:GetHandler():GetEquipTarget():RegisterEffect(e1)
 end

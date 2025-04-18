@@ -15,8 +15,8 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_EXTRA_SUMMON_COUNT)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCountLimit(1,id)
-	e2:SetTargetRange(LOCATION_HAND+LOCATION_MZONE,0)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x71))
+	e2:SetTargetRange(LOCATION_HAND|LOCATION_MZONE,0)
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_MADOLCHE))
 	c:RegisterEffect(e2)
 	--Set 1 "Madolche" Spell/Trap from your Deck
 	local e3=Effect.CreateEffect(c)
@@ -33,17 +33,17 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_names={id}
-s.listed_series={0x71}
+s.listed_series={SET_MADOLCHE}
 function s.cfilter(c,tp)
-	return c:IsControler(tp) and c:IsPreviousControler(tp) and c:IsReason(REASON_EFFECT) and c:IsPreviousPosition(POS_FACEUP) and c:IsSetCard(0x71)
-		and (c:IsPreviousLocation(LOCATION_GRAVE) or (c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousSetCard(0x71)))
+	return c:IsControler(tp) and c:IsPreviousControler(tp) and c:IsReason(REASON_EFFECT) and c:IsPreviousPosition(POS_FACEUP) and c:IsSetCard(SET_MADOLCHE)
+		and (c:IsPreviousLocation(LOCATION_GRAVE) or (c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousSetCard(SET_MADOLCHE)))
 		and not c:IsLocation(LOCATION_EXTRA)
 end
 function s.setcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)
 end
 function s.setfilter(c)
-	return c:IsSetCard(0x71) and c:IsSpellTrap() and c:IsSSetable() and not c:IsForbidden() and not c:IsCode(id)
+	return c:IsSetCard(SET_MADOLCHE) and c:IsSpellTrap() and c:IsSSetable() and not c:IsForbidden() and not c:IsCode(id)
 end
 function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)

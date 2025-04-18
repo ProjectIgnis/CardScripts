@@ -1,7 +1,6 @@
 --Ｈ・Ｃ ナックル・ナイフ
---Heroic Challenger – Knuckle Knife
+--Heroic Challenger - Knuckle Sword
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -32,10 +31,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 	--Lists "Heroic" archetype
-s.listed_series={0x6f}
-
+s.listed_series={SET_HEROIC}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x6f) and not c:IsLevel(1)
+	return c:IsFaceup() and c:IsSetCard(SET_HEROIC) and not c:IsLevel(1)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
@@ -82,7 +80,7 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_LEVEL)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e1:SetValue(sg:GetFirst():GetLevel())
 		oc:RegisterEffect(e1)
 	end
@@ -93,7 +91,7 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	ge1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	ge1:SetTargetRange(LOCATION_MZONE,0)
 	ge1:SetTarget(function(e,c) return not c:IsType(TYPE_XYZ) end)
-	ge1:SetReset(RESET_PHASE+PHASE_END)
+	ge1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(ge1,tp)
 	aux.RegisterClientHint(c,nil,tp,1,0,aux.Stringid(id,3),nil)
 end

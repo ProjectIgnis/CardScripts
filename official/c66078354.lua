@@ -1,15 +1,15 @@
--- 遺跡の魔鉱戦士
--- Magicore Warrior of the Relics
--- Scripted by Hatter
+--遺跡の魔鉱戦士
+--Magicore Warrior of the Relics
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Cannot attack unless you control an "Adventurer Token"
+	--Cannot attack unless you control an "Adventurer Token"
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_CANNOT_ATTACK)
 	e1:SetCondition(aux.NOT(s.bravecon))
 	c:RegisterEffect(e1)
-	-- Special Summon itself from the hand
+	--Special Summon itself from the hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -20,11 +20,11 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	-- Set Trap that lists "Adventurer Token" from the Deck
+	--Set Trap that lists "Adventurer Token" from the Deck
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e3:SetCode(EVENT_PHASE+PHASE_BATTLE)
+	e3:SetCode(EVENT_PHASE|PHASE_BATTLE)
 	e3:SetCountLimit(1,{id,1})
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCondition(s.setcon)

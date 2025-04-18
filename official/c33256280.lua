@@ -1,4 +1,5 @@
 --メタルフォーゼ・ゴルドライバー
+--Metalfoes Goldriver
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -14,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0xe1}
+s.listed_series={SET_METALFOES}
 function s.desfilter(c,tp)
 	if c:IsFacedown() then return false end
 	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
@@ -25,7 +26,7 @@ function s.desfilter(c,tp)
 	end
 end
 function s.filter(c,ignore)
-	return c:IsSetCard(0xe1) and c:IsSpellTrap() and c:IsSSetable(ignore)
+	return c:IsSetCard(SET_METALFOES) and c:IsSpellTrap() and c:IsSSetable(ignore)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(tp) and s.desfilter(chkc,tp) and chkc~=e:GetHandler() end

@@ -1,4 +1,5 @@
 --サイコ・リアクター
+--Psychic Reactor
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -16,7 +17,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsRace,RACE_PSYCHIC),tp,LOCATION_MZONE,0,nil)
 	local tc=g:GetFirst()
 	for tc in aux.Next(g) do
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+		tc:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 	end
 	g:KeepAlive()
 	local e1=Effect.CreateEffect(e:GetHandler())
@@ -26,7 +27,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EVENT_BATTLED)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	e1:SetLabelObject(g)
 	Duel.RegisterEffect(e1,tp)
 	local e2=Effect.CreateEffect(e:GetHandler())

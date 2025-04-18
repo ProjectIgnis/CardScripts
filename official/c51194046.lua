@@ -1,4 +1,5 @@
 --クリフォート・アセンブラ
+--Qliphort Monolith
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -50,19 +51,19 @@ function s.initial_effect(c)
 		end)
 	end)
 end
-s.listed_series={0xaa}
+s.listed_series={SET_QLI}
 function s.splimit(e,c)
-	return not c:IsSetCard(0xaa)
+	return not c:IsSetCard(SET_QLI)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	if tc:IsSummonType(SUMMON_TYPE_TRIBUTE) then
+	if tc:IsTributeSummoned() then
 		local p=tc:GetSummonPlayer()
 		s[p]=s[p]+e:GetLabelObject():GetLabel()
 	end
 end
 function s.valcheck(e,c)
-	local ct=c:GetMaterial():FilterCount(Card.IsSetCard,nil,0xaa)
+	local ct=c:GetMaterial():FilterCount(Card.IsSetCard,nil,SET_QLI)
 	e:SetLabel(ct)
 end
 function s.clearop(e,tp,eg,ep,ev,re,r,rp)

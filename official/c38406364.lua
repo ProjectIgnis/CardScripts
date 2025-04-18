@@ -1,5 +1,5 @@
 --常夏のカミナリサマー
---Scripted by Eerie Code
+--Some Summer Summoner
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -20,11 +20,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return Duel.IsTurnPlayer(1-tp)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,nil,1,1,REASON_COST+REASON_DISCARD,nil)
+	Duel.DiscardHand(tp,nil,1,1,REASON_COST|REASON_DISCARD,nil)
 end
 function s.filter(c,e,tp,zone)
 	return c:IsRace(RACE_THUNDER) and not c:IsLinkMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
@@ -46,4 +46,3 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP,zone)
 	end
 end
-

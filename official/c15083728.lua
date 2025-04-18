@@ -1,4 +1,5 @@
 --粘着テープの家
+--House of Adhesive Tape
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

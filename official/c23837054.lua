@@ -1,9 +1,9 @@
--- 溟界の呼び蛟
--- Ogdoadic Calling
--- Scripted by Hatter
+--溟界の呼び蛟
+--Ogdoadic Calling
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Special Summon
+	--Special Summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -15,19 +15,19 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={23837055}
-s.listed_series={0x163}
+s.listed_series={SET_OGDOADIC}
 function s.spfilter(c,e,tp)
 	return c:IsRace(RACE_REPTILE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.setfitler(c)
-	return c:IsSetCard(0x163) and c:IsMonster()
+	return c:IsSetCard(SET_OGDOADIC) and c:IsMonster()
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local sg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_GRAVE,0,nil,e,tp)
-		local g=Duel.GetMatchingGroup(s.setfitler,tp,LOCATION_GRAVE,0,nil,0x163)
+		local g=Duel.GetMatchingGroup(s.setfitler,tp,LOCATION_GRAVE,0,nil)
 		local gysummon=g:GetClassCount(Card.GetCode)>=8 and sg:GetClassCount(Card.GetCode)>=2
-		local tksummon=Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0x163,TYPES_TOKEN,0,0,2,RACE_REPTILE,ATTRIBUTE_DARK)
+		local tksummon=Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,SET_OGDOADIC,TYPES_TOKEN,0,0,2,RACE_REPTILE,ATTRIBUTE_DARK)
 		return not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) and Duel.GetLocationCount(tp,LOCATION_MZONE)>1 and (tksummon or gysummon)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,tp,0)
@@ -37,17 +37,17 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) or Duel.GetLocationCount(tp,LOCATION_MZONE)<2 then return end
 	local sg=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.spfilter),tp,LOCATION_GRAVE,0,nil,e,tp)
-	local g=Duel.GetMatchingGroup(s.setfitler,tp,LOCATION_GRAVE,0,nil,0x163)
+	local g=Duel.GetMatchingGroup(s.setfitler,tp,LOCATION_GRAVE,0,nil)
 	local gysummon=g:GetClassCount(Card.GetCode)>=8 and sg:GetClassCount(Card.GetCode)>=2
-	local tksummon=Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0x163,TYPES_TOKEN,0,0,2,RACE_REPTILE,ATTRIBUTE_DARK)
-	-- Choose option
+	local tksummon=Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,SET_OGDOADIC,TYPES_TOKEN,0,0,2,RACE_REPTILE,ATTRIBUTE_DARK)
+	--Choose option
 	local choice
 	if tksummon and gysummon then
 		choice=Duel.SelectOption(tp,aux.Stringid(id,0),aux.Stringid(id,1))
 	elseif tksummon then choice=0
 	elseif gysummon then choice=1
 	else return end
-	-- Apply effect
+	--Apply effect
 	if choice==0 then
 		for i=1,2 do
 			local token=Duel.CreateToken(tp,id+1)

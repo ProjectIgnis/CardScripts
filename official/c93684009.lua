@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTargetRange(LOCATION_MZONE,0)
 	e2:SetCondition(s.tgcon)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x19))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_GLADIATOR))
 	e2:SetValue(aux.tgoval)
 	c:RegisterEffect(e2)
 	--Summon from deck
@@ -33,19 +33,19 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x19}
+s.listed_series={SET_GLADIATOR}
 function s.tgcon(e)
 	local ph=Duel.GetCurrentPhase()
 	return ph<=PHASE_MAIN1 or ph>=PHASE_MAIN2
 end
 function s.cfilter(c,tp)
-	return c:IsSetCard(0x19) and c:IsSummonLocation(LOCATION_DECK) and c:IsPreviousControler(tp)
+	return c:IsSetCard(SET_GLADIATOR) and c:IsSummonLocation(LOCATION_DECK) and c:IsPreviousControler(tp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x19) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return c:IsSetCard(SET_GLADIATOR) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 		and not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsRace,c:GetRace()),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

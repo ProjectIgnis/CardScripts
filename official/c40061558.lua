@@ -1,4 +1,5 @@
 --アポクリフォート・カーネル
+--Apoqliphort Skybase
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot special summon
@@ -36,15 +37,15 @@ function s.initial_effect(c)
 	e6:SetOperation(s.ctop)
 	c:RegisterEffect(e6)
 end
-s.listed_series={0xaa}
+s.listed_series={SET_QLI}
 function s.tlimit(e,c)
-	return not c:IsSetCard(0xaa)
+	return not c:IsSetCard(SET_QLI)
 end
 function s.immcon(e)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_NORMAL)
+	return e:GetHandler():IsNormalSummoned()
 end
 function s.efilter(e,te)
-	if te:IsActiveType(TYPE_SPELL+TYPE_TRAP) then return true
+	if te:IsSpellTrapEffect() then return true
 	else return aux.qlifilter(e,te) end
 end
 function s.cttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

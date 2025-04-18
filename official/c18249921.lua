@@ -1,7 +1,6 @@
 --電脳堺門－玄武
---Virtual World Gate - Zhuangwoo
+--Virtual World Gate - Xuanwu
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -33,18 +32,17 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,{id,2})
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetCondition(s.spcon)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
 	--Lists "Virtual World" and "Virtual World - Gate" archetypes
-s.listed_series={0x150,0x1150}
-
+s.listed_series={SET_VIRTUAL_WORLD,SET_VIRTUAL_WORLD_GATE}
 	--Check if battle phase and for another "Virtual World - Gate" card
 function s.poscon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsBattlePhase() and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x1150),tp,LOCATION_ONFIELD,0,1,e:GetHandler())
+	return Duel.IsBattlePhase() and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_VIRTUAL_WORLD_GATE),tp,LOCATION_ONFIELD,0,1,e:GetHandler())
 end
 	--Activation legality
 function s.postg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -67,7 +65,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for "Virtual World" monster
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x150) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_VIRTUAL_WORLD) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 	--Activation legality
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -85,12 +83,12 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(e:GetHandler())
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e2)
 		if Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)>0 then
 			Duel.BreakEffect()

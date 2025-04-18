@@ -2,7 +2,7 @@
 --Shien's Dojo
 local s,id=GetID()
 function s.initial_effect(c)
-	c:EnableCounterPermit(0x3)
+	c:EnableCounterPermit(COUNTER_BUSHIDO)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -29,29 +29,29 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x3d,0x20}
-s.counter_place_list={0x3}
+s.listed_series={SET_SIX_SAMURAI,SET_SHIEN}
+s.counter_place_list={COUNTER_BUSHIDO}
 function s.ctfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x3d)
+	return c:IsFaceup() and c:IsSetCard(SET_SIX_SAMURAI)
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	if eg:IsExists(s.ctfilter,1,nil) then
-		e:GetHandler():AddCounter(0x3,1)
+		e:GetHandler():AddCounter(COUNTER_BUSHIDO,1)
 	end
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
-	local ct=e:GetHandler():GetCounter(0x3)
+	local ct=e:GetHandler():GetCounter(COUNTER_BUSHIDO)
 	e:SetLabel(ct)
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
 function s.filter(c,ct,e,tp)
-	return c:IsLevelBelow(ct) and (c:IsSetCard(0x3d) or c:IsSetCard(0x20)) 
+	return c:IsLevelBelow(ct) and (c:IsSetCard(SET_SIX_SAMURAI) or c:IsSetCard(SET_SHIEN)) 
 		and c:IsType(TYPE_EFFECT) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,e:GetHandler():GetCounter(0x3),e,tp) end
+		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,e:GetHandler():GetCounter(COUNTER_BUSHIDO),e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)

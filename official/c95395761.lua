@@ -37,17 +37,17 @@ function s.initial_effect(c)
 	e5:SetOperation(s.repop)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x56}
+s.listed_series={SET_INZEKTOR}
 function s.eqval(ec,c,tp)
-	return ec:IsControler(tp) and ec:IsSetCard(0x56)
+	return ec:IsControler(tp) and ec:IsSetCard(SET_INZEKTOR)
 end
 function s.filter(c)
-	return c:IsSetCard(0x56) and c:IsMonster() and not c:IsForbidden()
+	return c:IsSetCard(SET_INZEKTOR) and c:IsMonster() and not c:IsForbidden()
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
-		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE+LOCATION_HAND,0,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_EQUIP,nil,1,tp,LOCATION_GRAVE+LOCATION_HAND)
+		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE|LOCATION_HAND,0,1,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_EQUIP,nil,1,tp,LOCATION_GRAVE|LOCATION_HAND)
 end
 function s.equipop(c,e,tp,tc)
 	c:EquipByEffectAndLimitRegister(e,tp,tc,nil,true)
@@ -57,7 +57,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
 	if c:IsFacedown() or not c:IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.filter),tp,LOCATION_GRAVE+LOCATION_HAND,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.filter),tp,LOCATION_GRAVE|LOCATION_HAND,0,1,1,nil)
 	local tc=g:GetFirst()
 	if tc then
 		s.equipop(c,e,tp,tc)
@@ -70,5 +70,5 @@ function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	return Duel.SelectEffectYesNo(tp,c,96)
 end
 function s.repop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Destroy(e:GetHandler(),REASON_EFFECT+REASON_REPLACE)
+	Duel.Destroy(e:GetHandler(),REASON_EFFECT|REASON_REPLACE)
 end

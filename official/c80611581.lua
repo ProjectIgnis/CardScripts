@@ -1,5 +1,5 @@
 --ふわんだりぃず×えんぺん
---Flundereeze x Empen
+--Floowandereeze & Empen
 --scripted by XyLeN
 local s,id=GetID()
 function s.initial_effect(c)
@@ -36,12 +36,12 @@ function s.initial_effect(c)
 	e3:SetOperation(s.adop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x16f}
+s.listed_series={SET_FLOOWANDEREEZE}
 function s.trsumcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_TRIBUTE)
+	return e:GetHandler():IsTributeSummoned()
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x16f) and c:IsSpellTrap() and c:IsAbleToHand()
+	return c:IsSetCard(SET_FLOOWANDEREEZE) and c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -57,7 +57,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 		if not g:GetFirst():IsLocation(LOCATION_HAND) then return end
-		local sg=Duel.GetMatchingGroup(s.sumfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,nil)
+		local sg=Duel.GetMatchingGroup(s.sumfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,nil)
 		if #sg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 			Duel.BreakEffect()
 			Duel.ShuffleHand(tp)
@@ -69,8 +69,8 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.actlmtval(e,re,rp)
 	local rc=re:GetHandler()
-	return rc:IsSummonType(SUMMON_TYPE_SPECIAL) and rc:IsAttackPos() and rc:IsLocation(LOCATION_MZONE)
-		and re:IsActiveType(TYPE_MONSTER)
+	return rc:IsSpecialSummoned() and rc:IsAttackPos() and rc:IsLocation(LOCATION_MZONE)
+		and re:IsMonsterEffect()
 end
 function s.adcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetBattleTarget()~=nil
@@ -91,7 +91,7 @@ function s.adop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetValue(bc:GetAttack()/2)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		bc:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_SET_DEFENSE_FINAL)

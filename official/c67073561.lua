@@ -1,5 +1,5 @@
 --ミス・ケープ・バーバ
---Miss Cape Barber
+--Baba Barber
 --scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCode(EVENT_PHASE+PHASE_BATTLE_START)
+	e1:SetCode(EVENT_PHASE|PHASE_BATTLE_START)
 	e1:SetCountLimit(1,id)
 	e1:SetTarget(s.rmtg)
 	e1:SetOperation(s.rmop)
@@ -30,12 +30,12 @@ function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and Duel.Remove(tc,0,REASON_EFFECT+REASON_TEMPORARY)~=0 then
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+	if tc:IsRelateToEffect(e) and Duel.Remove(tc,0,REASON_EFFECT|REASON_TEMPORARY)~=0 then
+		tc:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_PHASE+PHASE_END)
-		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_PHASE|PHASE_END)
 		e1:SetLabelObject(tc)
 		e1:SetCountLimit(1)
 		e1:SetCondition(s.retcon)

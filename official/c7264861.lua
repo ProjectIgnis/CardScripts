@@ -1,4 +1,5 @@
 --インフェルニティ・ビースト
+--Infernity Beast
 local s,id=GetID()
 function s.initial_effect(c)
 	--actlimit

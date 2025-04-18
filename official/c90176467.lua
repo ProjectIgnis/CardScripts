@@ -1,5 +1,5 @@
 --夢魔鏡の逆徒－ネイロイ
---Neiroy, the Dream Mirror Heretic
+--Neiroy, the Dream Mirror Traitor
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_SPECIAL_SUMMON)
-	e3:SetType(EFFECT_TYPE_IGNITION)	
+	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1,{id,1})
 	e3:SetTarget(s.sptg)
@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={18189187,CARD_DREAM_MIRROR_JOY,CARD_DREAM_MIRROR_TERROR}
-s.lsited_series={0x131}
+s.listed_series={SET_DREAM_MIRROR}
 function s.thfilter(c)
 	return c:IsCode(18189187) and c:IsAbleToHand()
 end
@@ -53,17 +53,17 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 			e1:SetRange(LOCATION_MZONE)
 			e1:SetValue(ATTRIBUTE_LIGHT)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			c:RegisterEffect(e1)
 		end
 	end
 end
 function s.spcfilter(c,e,tp)
-	return c:IsSetCard(0x131) and c:HasLevel() and Duel.GetMZoneCount(tp,c)>0
+	return c:IsSetCard(SET_DREAM_MIRROR) and c:HasLevel() and Duel.GetMZoneCount(tp,c)>0
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,c)
 end
 function s.spfilter(c,e,tp,tc)
-	return c:IsSetCard(0x131) and not c:IsLevel(tc:GetLevel())
+	return c:IsSetCard(SET_DREAM_MIRROR) and not c:IsLevel(tc:GetLevel())
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 		and Duel.IsExistingMatchingCard(s.thfilter2,tp,LOCATION_DECK,0,1,nil,c)
 end

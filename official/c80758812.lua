@@ -1,7 +1,6 @@
 --デュアル・アブレーション
 --Gemini Ablation
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -9,7 +8,7 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER|TIMING_MAIN_END)
 	c:RegisterEffect(e1)
 	--Special Summon 1 Gemini monster from the Deck
 	local e2=Effect.CreateEffect(c)
@@ -19,7 +18,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCountLimit(1,id)
-	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END)
+	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER|TIMING_MAIN_END)
 	e2:SetCondition(function() return Duel.IsMainPhase() end)
 	e2:SetCost(s.discost)
 	e2:SetTarget(s.sptg)
@@ -92,7 +91,7 @@ function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 		e:SetLabel(0)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
 		local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
-		Duel.SendtoGrave(g,REASON_COST+REASON_DISCARD)
+		Duel.SendtoGrave(g,REASON_COST|REASON_DISCARD)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND|LOCATION_DECK)
 end
@@ -108,7 +107,7 @@ function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 	local gemini_chk=tc:IsFaceup() and tc:IsGeminiStatus()
 	if Duel.Release(tc,REASON_EFFECT)==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local sg=Duel.SelectMatchingCard(tp,s.spfilter2,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,e,tp)
+	local sg=Duel.SelectMatchingCard(tp,s.spfilter2,tp,LOCATION_HAND|LOCATION_DECK,0,1,1,nil,e,tp)
 	if #sg==0 or Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)==0 or not gemini_chk then return end
 	local dg1=Duel.GetMatchingGroup(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
 	if #dg1==0 or not Duel.SelectYesNo(tp,aux.Stringid(id,2)) then return end

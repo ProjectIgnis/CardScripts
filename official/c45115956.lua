@@ -1,5 +1,5 @@
 --戦華史略－矯詔之叛
---Ancient Warriors Saga – Defying the Warlord's Demands
+--Ancient Warriors Saga - Deception and Betrayal
 --Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
@@ -26,14 +26,14 @@ function s.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetCountLimit(1,{id,1})
-	e3:SetCost(s.atcost)
+	e3:SetCost(Cost.SelfToGrave)
 	e3:SetTarget(s.attg)
 	e3:SetOperation(s.atop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x137}
+s.listed_series={SET_ANCIENT_WARRIORS}
 function s.spfilter(c,e,sp)
-	return c:IsSetCard(0x137) and c:IsCanBeSpecialSummoned(e,0,sp,false,false)
+	return c:IsSetCard(SET_ANCIENT_WARRIORS) and c:IsCanBeSpecialSummoned(e,0,sp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -51,17 +51,12 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Damage(tp,tc:GetLevel()*100,REASON_EFFECT)
 	end
 end
-function s.atcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(c,REASON_COST)
-end
 function s.attg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() and chkc:IsSetCard(0x137) end
-	if chk==0 then return Duel.IsExistingTarget(aux.FaceupFilter(Card.IsSetCard,0x137),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() and chkc:IsSetCard(SET_ANCIENT_WARRIORS) end
+	if chk==0 then return Duel.IsExistingTarget(aux.FaceupFilter(Card.IsSetCard,SET_ANCIENT_WARRIORS),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	local tc=Duel.SelectTarget(tp,aux.FaceupFilter(Card.IsSetCard,0x137),tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil):GetFirst()
+	local tc=Duel.SelectTarget(tp,aux.FaceupFilter(Card.IsSetCard,SET_ANCIENT_WARRIORS),tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil):GetFirst()
 	if tc:IsControler(1-tp) then
 		e:SetLabel(1)
 	else
@@ -77,7 +72,7 @@ function s.atop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_ATTRIBUTE)
 		e1:SetValue(att)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		if e:GetLabel()==1 and tc:IsControlerCanBeChanged() and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 			Duel.BreakEffect()

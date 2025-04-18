@@ -1,5 +1,5 @@
 --VV-真羅万象
---Vaylantz Vorld - Shinra Bansho
+--Vaylantz World - Shinra Bansho
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

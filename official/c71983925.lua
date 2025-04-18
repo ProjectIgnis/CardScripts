@@ -1,4 +1,5 @@
 --魔法封印の呪符
+--Talisman of Spell Sealing
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -21,7 +22,7 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_CANNOT_TRIGGER)
 	e3:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
 	e3:SetRange(LOCATION_SZONE)
-	e3:SetTargetRange(0xa,0xa)
+	e3:SetTargetRange(LOCATION_HAND|LOCATION_SZONE,LOCATION_HAND|LOCATION_SZONE)
 	e3:SetTarget(s.distg)
 	c:RegisterEffect(e3)
 	--disable
@@ -55,7 +56,7 @@ function s.distg(e,c)
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local tl=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
-	if (tl&LOCATION_SZONE)~=0 and re:IsActiveType(TYPE_SPELL) then
+	if (tl&LOCATION_SZONE)~=0 and re:IsSpellEffect() then
 		Duel.NegateEffect(ev)
 	end
 end

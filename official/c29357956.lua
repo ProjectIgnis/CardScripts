@@ -1,9 +1,10 @@
 --剣闘獣ネロキウス
+--Gladiator Beast Nerokius
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0x19),3)
+	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_GLADIATOR),3)
 	Fusion.AddContactProc(c,s.contactfil,s.contactop,s.splimit)
 	--battle indestructable
 	local e3=Effect.CreateEffect(c)
@@ -26,7 +27,7 @@ function s.initial_effect(c)
 	e6:SetDescription(aux.Stringid(id,1))
 	e6:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e6:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e6:SetCode(EVENT_PHASE+PHASE_BATTLE)
+	e6:SetCode(EVENT_PHASE|PHASE_BATTLE)
 	e6:SetRange(LOCATION_MZONE)
 	e6:SetCondition(s.spcon)
 	e6:SetCost(s.spcost)
@@ -34,14 +35,14 @@ function s.initial_effect(c)
 	e6:SetOperation(s.spop)
 	c:RegisterEffect(e6)
 end
-s.listed_series={0x19}
-s.material_setcode=0x19
+s.listed_series={SET_GLADIATOR}
+s.material_setcode=SET_GLADIATOR
 function s.contactfil(tp)
 	return Duel.GetMatchingGroup(function(c) return c:IsMonster() and c:IsAbleToDeckOrExtraAsCost() end,tp,LOCATION_ONFIELD,0,nil)
 end
 function s.contactop(g,tp)
 	Duel.ConfirmCards(1-tp,g)
-	Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST+REASON_MATERIAL)
+	Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST|REASON_MATERIAL)
 end
 function s.splimit(e,se,sp,st)
 	return e:GetHandler():GetLocation()~=LOCATION_EXTRA
@@ -55,10 +56,10 @@ end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsAbleToExtraAsCost() end
-	Duel.SendtoDeck(c,nil,0,REASON_COST)
+	Duel.SendtoDeck(c,nil,SEQ_DECKTOP,REASON_COST)
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x19) and c:IsCanBeSpecialSummoned(e,122,tp,false,false)
+	return c:IsSetCard(SET_GLADIATOR) and c:IsCanBeSpecialSummoned(e,122,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
@@ -78,10 +79,10 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		local sg=g:Select(tp,2,2,nil)
 		local tc=sg:GetFirst()
 		Duel.SpecialSummonStep(tc,122,tp,tp,false,false,POS_FACEUP)
-		tc:RegisterFlagEffect(tc:GetOriginalCode(),RESET_EVENT+RESETS_STANDARD_DISABLE,0,0)
+		tc:RegisterFlagEffect(tc:GetOriginalCode(),RESET_EVENT|RESETS_STANDARD_DISABLE,0,0)
 		tc=sg:GetNext()
 		Duel.SpecialSummonStep(tc,122,tp,tp,false,false,POS_FACEUP)
-		tc:RegisterFlagEffect(tc:GetOriginalCode(),RESET_EVENT+RESETS_STANDARD_DISABLE,0,0)
+		tc:RegisterFlagEffect(tc:GetOriginalCode(),RESET_EVENT|RESETS_STANDARD_DISABLE,0,0)
 		Duel.SpecialSummonComplete()
 	end
 end

@@ -47,7 +47,7 @@ function s.initial_effect(c)
 	e4:SetTarget(s.target3)
 	e4:SetOperation(s.operation3)
 	c:RegisterEffect(e4)
-	-- draw
+	--draw
 	local e5=Effect.CreateEffect(c)
 	e5:SetDescription(aux.Stringid(id,3))
 	e5:SetCategory(CATEGORY_DRAW)
@@ -60,30 +60,29 @@ function s.initial_effect(c)
 	e5:SetOperation(s.operation4)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x107a,0x207a}
+s.listed_series={SET_NOBLE_KNIGHT,SET_NOBLE_ARMS}
 function s.confilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x107a)
+	return c:IsFaceup() and c:IsSetCard(SET_NOBLE_KNIGHT)
 end
 function s.effcon(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetTurnPlayer()~=tp then return false end
-	local g=Duel.GetMatchingGroup(s.confilter,tp,LOCATION_GRAVE+LOCATION_ONFIELD,0,nil)
+	if Duel.IsTurnPlayer(1-tp) then return false end
+	local g=Duel.GetMatchingGroup(s.confilter,tp,LOCATION_GRAVE|LOCATION_ONFIELD,0,nil)
 	return g:GetClassCount(Card.GetCode)>=e:GetLabel()
 end
 function s.filter1(c)
-	return c:IsSetCard(0x107a) and c:IsAbleToGrave()
+	return c:IsSetCard(SET_NOBLE_KNIGHT) and c:IsAbleToGrave()
 end
 function s.target1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 end
 function s.operation1(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,s.filter1,tp,LOCATION_DECK,0,1,1,nil)
 	Duel.SendtoGrave(g,REASON_EFFECT)
 end
 function s.filter2(c,e,tp)
-	return  c:IsSetCard(0x107a) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_NOBLE_KNIGHT) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -91,10 +90,9 @@ function s.target2(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 end
 function s.eqfilter(c,tc,tp)
-	return c:IsType(TYPE_EQUIP) and c:IsSetCard(0x207a) and c:CheckEquipTarget(tc) and c:CheckUniqueOnField(tp)
+	return c:IsType(TYPE_EQUIP) and c:IsSetCard(SET_NOBLE_ARMS) and c:CheckEquipTarget(tc) and c:CheckUniqueOnField(tp)
 end
 function s.operation2(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.filter2,tp,LOCATION_HAND,0,1,1,nil,e,tp)
@@ -109,7 +107,7 @@ function s.operation2(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x107a) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_NOBLE_KNIGHT) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.target3(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc) end
@@ -119,15 +117,14 @@ function s.target3(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
 end
 function s.operation3(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 	end
 end
 function s.condition4(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetTurnPlayer()~=tp then return false end
-	local g=Duel.GetMatchingGroup(s.confilter,tp,LOCATION_GRAVE+LOCATION_ONFIELD,0,nil)
+	if Duel.IsTurnPlayer(1-tp) then return false end
+	local g=Duel.GetMatchingGroup(s.confilter,tp,LOCATION_GRAVE|LOCATION_ONFIELD,0,nil)
 	return g:GetClassCount(Card.GetCode)==12
 end
 function s.target4(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -135,6 +132,5 @@ function s.target4(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
 function s.operation4(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.Draw(tp,1,REASON_EFFECT)
 end

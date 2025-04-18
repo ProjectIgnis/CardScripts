@@ -1,4 +1,5 @@
 --フュージョン・ガード
+--Fusion Guard
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -13,7 +14,7 @@ function s.initial_effect(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local ex=Duel.GetOperationInfo(ev,CATEGORY_DAMAGE)
-	return ex and (re:IsActiveType(TYPE_MONSTER) or re:IsHasType(EFFECT_TYPE_ACTIVATE)) and Duel.IsChainNegatable(ev)
+	return ex and (re:IsMonsterEffect() or re:IsHasType(EFFECT_TYPE_ACTIVATE)) and Duel.IsChainNegatable(ev)
 end
 function s.filter(c)
 	return c:IsType(TYPE_FUSION) and c:IsAbleToGrave()

@@ -30,8 +30,8 @@ function s.chk(c,sg)
 	return c:IsRace(RACE_DRAGON) and sg:IsExists(Card.IsRace,1,c,RACE_FIEND)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsRace,2,true,s.spcheck,e:GetHandler(),RACE_DRAGON+RACE_FIEND) end
-	local sg=Duel.SelectReleaseGroupCost(tp,Card.IsRace,2,2,true,s.spcheck,e:GetHandler(),RACE_DRAGON+RACE_FIEND)
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsRace,2,true,s.spcheck,e:GetHandler(),RACE_DRAGON|RACE_FIEND) end
+	local sg=Duel.SelectReleaseGroupCost(tp,Card.IsRace,2,2,true,s.spcheck,e:GetHandler(),RACE_DRAGON|RACE_FIEND)
 	Duel.Release(sg,REASON_COST)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -46,7 +46,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST|REASON_DISCARD)
 end
 function s.filter(c,e)
 	return c:IsSpellTrap() and c:IsDestructable(e)
@@ -58,7 +58,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(500)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_DISABLE_PHASE_END)
 		c:RegisterEffect(e1)
 		local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil,e)
 		if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then

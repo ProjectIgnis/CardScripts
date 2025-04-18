@@ -37,7 +37,7 @@ function s.initial_effect(c)
 end
 function s.reg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	e:GetHandler():RegisterFlagEffect(id,RESET_PHASE+PHASE_END,EFFECT_FLAG_OATH,1)
+	e:GetHandler():RegisterFlagEffect(id,RESET_PHASE|PHASE_END,EFFECT_FLAG_OATH,1)
 end
 function s.zcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(id)~=0
@@ -45,7 +45,7 @@ end
 function s.ztg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE,PLAYER_NONE,0)+Duel.GetLocationCount(1-tp,LOCATION_MZONE,PLAYER_NONE,0)
 		+Duel.GetLocationCount(tp,LOCATION_SZONE,PLAYER_NONE,0)+Duel.GetLocationCount(1-tp,LOCATION_SZONE,PLAYER_NONE,0)>0 end
-	local dis=Duel.SelectDisableField(tp,1,LOCATION_MZONE+LOCATION_SZONE,LOCATION_MZONE+LOCATION_SZONE,0)
+	local dis=Duel.SelectDisableField(tp,1,LOCATION_MZONE|LOCATION_SZONE,LOCATION_MZONE|LOCATION_SZONE,0)
 	Duel.Hint(HINT_ZONE,tp,dis)
 	e:SetLabel(dis)
 end
@@ -57,7 +57,7 @@ function s.zop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetRange(LOCATION_PZONE)
 	e1:SetCode(EFFECT_DISABLE_FIELD)
 	e1:SetOperation(s.disop)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	e1:SetLabel(e:GetLabel())
 	c:RegisterEffect(e1)
 end
@@ -68,7 +68,7 @@ function s.zop2(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCode(EFFECT_DISABLE_FIELD)
 	e1:SetOperation(s.disop)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	e1:SetLabel(e:GetLabel())
 	c:RegisterEffect(e1)
 end

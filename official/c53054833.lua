@@ -1,4 +1,5 @@
 --SRダブルヨーヨー
+--Speedroid Double Yoyo
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -12,9 +13,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x2016}
+s.listed_series={SET_SPEEDROID}
 function s.filter(c,e,tp)
-	return c:IsLevelBelow(3) and c:IsSetCard(0x2016) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsLevelBelow(3) and c:IsSetCard(SET_SPEEDROID) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end

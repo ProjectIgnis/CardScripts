@@ -19,9 +19,9 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_GRAVE)
-	e2:SetHintTiming(0,TIMING_END_PHASE+TIMINGS_CHECK_MONSTER)
+	e2:SetHintTiming(0,TIMING_END_PHASE|TIMINGS_CHECK_MONSTER)
 	e2:SetCountLimit(1,{id,1})
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.sctg)
 	e2:SetOperation(s.scop)
 	c:RegisterEffect(e2)
@@ -32,17 +32,17 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetRange(LOCATION_GRAVE)
-	e3:SetHintTiming(0,TIMING_END_PHASE+TIMINGS_CHECK_MONSTER)
+	e3:SetHintTiming(0,TIMING_END_PHASE|TIMINGS_CHECK_MONSTER)
 	e3:SetCountLimit(1,{id,2})
-	e3:SetCost(aux.bfgcost)
+	e3:SetCost(Cost.SelfBanish)
 	e3:SetTarget(s.xyztg)
 	e3:SetOperation(s.xyzop)
 	c:RegisterEffect(e3)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
 end
-s.listed_series={0x107a}
+s.listed_series={SET_NOBLE_KNIGHT}
 function s.counterfilter(c)
-	return c:IsSetCard(0x107a)
+	return c:IsSetCard(SET_NOBLE_KNIGHT)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReleasable()
@@ -54,15 +54,15 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,2),nil)
 end 
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
-	return not c:IsSetCard(0x107a)
+	return not c:IsSetCard(SET_NOBLE_KNIGHT)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x107a) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_NOBLE_KNIGHT) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
@@ -79,7 +79,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.scfilter(c)
-	return c:IsSetCard(0x107a) and c:IsSynchroSummonable(nil)
+	return c:IsSetCard(SET_NOBLE_KNIGHT) and c:IsSynchroSummonable(nil)
 end
 function s.sctg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.scfilter,tp,LOCATION_EXTRA,0,1,nil) end
@@ -94,7 +94,7 @@ function s.scop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.xyzfilter(c)
-	return c:IsSetCard(0x107a) and c:IsXyzSummonable()
+	return c:IsSetCard(SET_NOBLE_KNIGHT) and c:IsXyzSummonable()
 end
 function s.xyztg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.xyzfilter,tp,LOCATION_EXTRA,0,1,nil) end

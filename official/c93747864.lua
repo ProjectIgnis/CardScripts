@@ -1,4 +1,5 @@
 --砂漠の光
+--Desert Sunlight
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

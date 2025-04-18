@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
-	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x33),1,1,Synchro.NonTuner(nil),1,99)
+	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_BLACKWING),1,1,Synchro.NonTuner(nil),1,99)
 	c:EnableReviveLimit()
 	--
 	local e1=Effect.CreateEffect(c)
@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.operation2)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x33}
+s.listed_series={SET_BLACKWING}
 s.counter_place_list={0x1002}
 function s.condition1(e,tp,eg,ep,ev,re,r,rp)
 	local atg=Duel.GetAttackTarget()
@@ -69,13 +69,13 @@ function s.operation2(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 			e1:SetValue(0)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e1:SetReset(RESETS_STANDARD_PHASE_END)
 			t:RegisterEffect(e1)
 			local e2=Effect.CreateEffect(c)
 			e2:SetType(EFFECT_TYPE_SINGLE)
 			e2:SetCode(EFFECT_SET_DEFENSE_FINAL)
 			e2:SetValue(0)
-			e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e2:SetReset(RESETS_STANDARD_PHASE_END)
 			t:RegisterEffect(e2)
 		end
 	end

@@ -1,5 +1,5 @@
 --メルフィー・マミィ
---Melffy Mammy
+--Melffy Mommy
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
@@ -48,13 +48,13 @@ function s.mtfilter(c,e)
 end
 function s.mttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsType(TYPE_XYZ)
-		and Duel.IsExistingMatchingCard(s.mtfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,e:GetHandler(),e) end
+		and Duel.IsExistingMatchingCard(s.mtfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,1,e:GetHandler(),e) end
 end
 function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
-	local g=Duel.SelectMatchingCard(tp,s.mtfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,e:GetHandler(),e)
+	local g=Duel.SelectMatchingCard(tp,s.mtfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,1,1,e:GetHandler(),e)
 	local tc=g:GetFirst()
 	if tc then
 		Duel.Overlay(c,tc,true)

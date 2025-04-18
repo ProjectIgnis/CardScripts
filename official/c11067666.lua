@@ -30,7 +30,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.SelectEffectYesNo(tp,e:GetHandler()) then
-		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+		e:GetHandler():RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 		if Duel.NegateEffect(ev) then
 			Duel.BreakEffect()
 			Duel.Destroy(e:GetHandler(),REASON_EFFECT)
@@ -39,5 +39,5 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.rmcon(e)
 	local c=e:GetHandler()
-	return c:IsSummonType(SUMMON_TYPE_PENDULUM) and c:IsReason(REASON_MATERIAL) and c:IsReason(REASON_SYNCHRO)
+	return c:IsPendulumSummoned() and c:IsReason(REASON_MATERIAL) and c:IsReason(REASON_SYNCHRO)
 end

@@ -1,6 +1,5 @@
 --Ｎｏ．６８ 魔天牢サンダルフォン
 --Number 68: Sanaphond the Sky Prison
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -24,17 +23,13 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1)
-	e3:SetCost(s.cost)
+	e3:SetCost(Cost.Detach(1))
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
 end
 s.xyz_number=68
 function s.value(e,c)
 	return Duel.GetMatchingGroupCount(Card.IsMonster,0,LOCATION_GRAVE,LOCATION_GRAVE,nil)*100
-end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -47,7 +42,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 		e1:SetValue(1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
+		e1:SetReset(RESETS_STANDARD_PHASE_END|RESET_OPPO_TURN)
 		c:RegisterEffect(e1)
 	end
 	--Neither player can special summon from the GYs
@@ -58,7 +53,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetTargetRange(1,1)
 	e2:SetTarget(s.splimit)
-	e2:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
+	e2:SetReset(RESET_PHASE|PHASE_END|RESET_OPPO_TURN)
 	Duel.RegisterEffect(e2,tp)
 end
 function s.splimit(e,c)

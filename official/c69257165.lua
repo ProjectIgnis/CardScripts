@@ -1,4 +1,5 @@
 --精神汚染
+--Mind Pollutant
 local s,id=GetID()
 function s.initial_effect(c)
 	--control
@@ -34,7 +35,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local sg=Duel.SelectMatchingCard(tp,s.ctfilter,tp,LOCATION_HAND,0,1,1,nil,tp)
 	local lv=sg:GetFirst():GetLevel()
 	e:SetLabel(lv)
-	Duel.SendtoGrave(sg,REASON_COST+REASON_DISCARD)
+	Duel.SendtoGrave(sg,REASON_COST|REASON_DISCARD)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONTROL)
 	local g=Duel.SelectTarget(tp,s.ctffilter,tp,0,LOCATION_MZONE,1,1,nil,lv)
 	Duel.SetOperationInfo(0,CATEGORY_CONTROL,g,1,0,0)

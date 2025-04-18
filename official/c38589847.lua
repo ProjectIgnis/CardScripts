@@ -1,4 +1,5 @@
 --アドバンス・フォース
+--Advance Force
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -52,6 +53,6 @@ function s.otop(e,tp,eg,ep,ev,re,r,rp,c)
 	local sg=e:GetLabelObject()
 	if not sg then return end
 	c:SetMaterial(sg)
-	Duel.Release(sg,REASON_SUMMON+REASON_MATERIAL)
+	Duel.Release(sg,REASON_SUMMON|REASON_MATERIAL)
 	sg:DeleteGroup()
 end

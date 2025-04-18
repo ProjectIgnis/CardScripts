@@ -1,8 +1,9 @@
 --TG ワンダー・マジシャン
+--T.G. Wonder Magician
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
-	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTunerEx(Card.IsSetCard,0x27),1,99)
+	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTunerEx(Card.IsSetCard,SET_TG),1,99)
 	c:EnableReviveLimit()
 	--destroy
 	local e1=Effect.CreateEffect(c)
@@ -32,19 +33,19 @@ function s.initial_effect(c)
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetCode(EVENT_FREE_CHAIN)
-	e3:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END)
+	e3:SetHintTiming(0,TIMINGS_CHECK_MONSTER|TIMING_MAIN_END)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCondition(s.sccon)
 	e3:SetTarget(s.sctg)
 	e3:SetOperation(s.scop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x27}
+s.listed_series={SET_TG}
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SYNCHRO
 end
 function s.filter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsSpellTrap()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and s.filter(chkc) end
@@ -73,8 +74,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Draw(p,d,REASON_EFFECT)
 end
 function s.sccon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp and (Duel.GetCurrentPhase()==PHASE_MAIN1 
-		or Duel.GetCurrentPhase()==PHASE_MAIN2)
+	return Duel.IsTurnPlayer(1-tp) and Duel.IsMainPhase()
 end
 function s.sctg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

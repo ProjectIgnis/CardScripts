@@ -1,18 +1,18 @@
--- 御巫神楽
--- Mikanko Kagura
--- Scripted by Hatter
+--御巫神楽
+--Mikanko Kagura
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Ritual Summon
+	--Ritual Summon
 	local e1=Ritual.AddProcGreater({
 		handler=c,
-		filter=aux.FilterBoolFunction(Card.IsSetCard,0x18e),
+		filter=aux.FilterBoolFunction(Card.IsSetCard,SET_MIKANKO),
 		stage2=s.stage2
 	})
 	e1:SetCategory(e1:GetCategory()|CATEGORY_DESTROY|CATEGORY_DAMAGE)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 end
-s.listed_series={0x18e}
+s.listed_series={SET_MIKANKO}
 function s.stage2(mat,e,tp,eg,ep,ev,re,r,rp,tc)
 	local g=Duel.GetFieldGroup(tp,0,LOCATION_ONFIELD)
 	if #g==0 then return end

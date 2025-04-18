@@ -1,9 +1,10 @@
 --V・HERO トリニティー
+--Vision HERO Trinity
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0x8),3)
+	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_HERO),3)
 	--summon success
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
@@ -24,20 +25,20 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x8}
-s.material_setcode=0x8
+s.listed_series={SET_HERO}
+s.material_setcode=SET_HERO
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)
+	return e:GetHandler():IsFusionSummoned()
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_SET_ATTACK)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESETS_STANDARD_DISABLE_PHASE_END)
 	e1:SetValue(c:GetBaseAttack()*2)
 	c:RegisterEffect(e1)
 end
 function s.atkcon(e)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)
+	return e:GetHandler():IsFusionSummoned()
 end

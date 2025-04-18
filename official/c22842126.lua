@@ -1,4 +1,5 @@
 --汎神の帝王
+--Pantheism of the Monarchs
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -19,14 +20,14 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,id)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xbe}
+s.listed_series={SET_MONARCH}
 function s.cfilter(c)
-	return c:IsSetCard(0xbe) and c:IsSpellTrap() and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(SET_MONARCH) and c:IsSpellTrap() and c:IsAbleToGraveAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,e:GetHandler()) end
@@ -43,7 +44,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Draw(p,d,REASON_EFFECT)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0xbe) and c:IsSpellTrap() and c:IsAbleToHand()
+	return c:IsSetCard(SET_MONARCH) and c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,3,nil) end

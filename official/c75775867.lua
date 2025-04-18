@@ -1,4 +1,5 @@
 --D・パッチン
+--Morphtronic Slingen
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy
@@ -22,12 +23,12 @@ function s.initial_effect(c)
 	e2:SetOperation(s.repop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x26}
+s.listed_series={SET_MORPHTRONIC}
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsDisabled() and e:GetHandler():IsAttackPos()
 end
 function s.cfilter(c)
-	return c:GetCode()~=id and c:IsSetCard(0x26)
+	return c:GetCode()~=id and c:IsSetCard(SET_MORPHTRONIC)
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local dg=Duel.GetMatchingGroup(Card.IsCanBeEffectTarget,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil,e)
@@ -49,7 +50,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.repfilter(c,e)
-	return c:IsFaceup() and c:IsSetCard(0x26)
+	return c:IsFaceup() and c:IsSetCard(SET_MORPHTRONIC)
 		and c:IsDestructable(e) and not c:IsStatus(STATUS_DESTROY_CONFIRMED)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -67,5 +68,5 @@ end
 function s.repop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
 	tc:SetStatus(STATUS_DESTROY_CONFIRMED,false)
-	Duel.Destroy(tc,REASON_EFFECT+REASON_REPLACE)
+	Duel.Destroy(tc,REASON_EFFECT|REASON_REPLACE)
 end

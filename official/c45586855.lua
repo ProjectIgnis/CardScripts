@@ -1,4 +1,5 @@
 --A・O・J サイクロン・クリエイター
+--Ally of Justice Cyclone Creator
 local s,id=GetID()
 function s.initial_effect(c)
 	--to hand
@@ -15,7 +16,7 @@ function s.initial_effect(c)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD,nil)
+	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST|REASON_DISCARD,nil)
 end
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_TUNER)

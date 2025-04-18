@@ -1,4 +1,5 @@
 --A・O・J リーサル・ウェポン
+--Ally of Justice Omni-Weapon
 local s,id=GetID()
 function s.initial_effect(c)
 	--check

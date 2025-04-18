@@ -22,18 +22,18 @@ function s.initial_effect(c)
 	end)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
-	if r&REASON_EFFECT>0 then Duel.RegisterFlagEffect(ep,id,RESET_PHASE+PHASE_END,0,1) end
+	if r&REASON_EFFECT>0 then Duel.RegisterFlagEffect(ep,id,RESET_PHASE|PHASE_END,0,1) end
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 end
-	-- cannot draw
+	--cannot draw
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_DRAW)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT+EFFECT_FLAG_OATH)
 	e1:SetDescription(aux.Stringid(id,2))
 	e1:SetTargetRange(1,0)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -77,14 +77,14 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			Duel.SendtoGrave(sc,REASON_RULE)
 		end
 	end
-	-- halve battle damage
+	--halve battle damage
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CHANGE_DAMAGE)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(0,1)
 	e1:SetValue(s.damval)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,1),nil)
 end

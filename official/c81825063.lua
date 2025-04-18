@@ -39,12 +39,12 @@ function s.initial_effect(c)
 	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x2f}
+s.listed_series={SET_ICE_BARRIER}
 function s.rmtg(e,c)
 	return c:GetOwner()~=e:GetHandlerPlayer() and c:IsOriginalType(TYPE_SPELL+TYPE_TRAP) and Duel.IsPlayerCanRemove(e:GetHandlerPlayer(),c)
 end
 function s.spfilter(c)
-	return c:IsSetCard(0x2f) and c:IsFaceup()
+	return c:IsSetCard(SET_ICE_BARRIER) and c:IsFaceup()
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0 and Duel.GetMatchingGroupCount(s.spfilter,tp,LOCATION_MZONE,0,nil)>0
@@ -60,7 +60,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x2f) and c:IsSpellTrap() and c:IsAbleToHand()
+	return c:IsSetCard(SET_ICE_BARRIER) and c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

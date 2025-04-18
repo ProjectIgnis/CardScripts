@@ -1,5 +1,5 @@
 --氷結界の照魔師
---Mirror Master of the Ice Barrier
+--Revealer of the Ice Barrier
 --Scripted by Hel
 local s,id=GetID()
 function s.initial_effect(c)
@@ -37,13 +37,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.sumcon(e)
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x2f),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_ICE_BARRIER),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
 end
 function s.tblimit(e,c,tp,sumtp)
 	return (sumtp&SUMMON_TYPE_TRIBUTE)==SUMMON_TYPE_TRIBUTE 
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x2f) and c:IsType(TYPE_TUNER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_ICE_BARRIER) and c:IsType(TYPE_TUNER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
@@ -67,7 +67,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.splimit(e,c)

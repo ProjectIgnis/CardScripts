@@ -1,7 +1,6 @@
 --聖夜に煌めく竜
 --Starry Night, Starry Dragon
 --Scripted by edo9300
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--If Normal or Special Summoned from hand, destroy 1 card on the field
@@ -67,12 +66,12 @@ end
 function s.banop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local d=Duel.GetAttacker():GetBattleTarget()
-	if d and d:IsRelateToBattle() and d:IsControler(1-tp) and Duel.Remove(d,0,REASON_EFFECT+REASON_TEMPORARY)>0 then
-		d:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+	if d and d:IsRelateToBattle() and d:IsControler(1-tp) and Duel.Remove(d,0,REASON_EFFECT|REASON_TEMPORARY)>0 then
+		d:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_PHASE+PHASE_END)
-		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_PHASE|PHASE_END)
 		e1:SetLabelObject(d)
 		e1:SetCountLimit(1)
 		e1:SetCondition(s.retcon)
@@ -85,7 +84,7 @@ function s.banop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EVENT_DAMAGE_STEP_END)
 		e2:SetRange(LOCATION_MZONE)
 		e2:SetOperation(function(e) Duel.ChainAttack() end)
-		e2:SetReset(RESET_PHASE+PHASE_DAMAGE)
+		e2:SetReset(RESET_PHASE|PHASE_DAMAGE)
 		c:RegisterEffect(e2)
 	end
 end

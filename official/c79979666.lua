@@ -1,4 +1,5 @@
 --E・HERO バブルマン
+--Elemental HERO Bubbleman
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -36,7 +37,7 @@ function s.filter(c)
 	return not c:IsStatus(STATUS_LEAVE_CONFIRMED)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_ONFIELD+LOCATION_HAND,0,1,e:GetHandler())
+	return not Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_ONFIELD|LOCATION_HAND,0,1,e:GetHandler())
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,2) end
@@ -45,7 +46,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,2)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_ONFIELD+LOCATION_HAND,0,1,e:GetHandler()) then return end
+	if Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_ONFIELD|LOCATION_HAND,0,1,e:GetHandler()) then return end
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Draw(p,d,REASON_EFFECT)
 end

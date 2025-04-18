@@ -1,5 +1,5 @@
 --シューティング・スター・ドラゴン・TG-EX
---Shooting Star Dragon T.G. - Expansion
+--Shooting Star Dragon T.G. EX
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -53,7 +53,7 @@ function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 	if not g then return false end
 	local c=e:GetHandler()
-	return re:IsActiveType(TYPE_MONSTER) and g:IsExists(s.disfilter,1,nil,tp)
+	return re:IsMonsterEffect() and g:IsExists(s.disfilter,1,nil,tp)
 		and not c:IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev)
 end
 function s.discfilter(c)
@@ -84,7 +84,7 @@ function s.daop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateAttack()
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return Duel.IsTurnPlayer(1-tp)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsType,2,false,aux.ReleaseCheckMMZ,nil,TYPE_SYNCHRO) end

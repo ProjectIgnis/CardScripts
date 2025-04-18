@@ -1,4 +1,4 @@
---Japanese name
+--古代亀の呪い
 --Curse of the Ancient Turtle
 --scripted by Naim
 local s,id=GetID()
@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetCondition(s.spcon)
-	e2:SetCost(aux.SelfBanishCost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)

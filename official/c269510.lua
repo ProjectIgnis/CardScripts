@@ -85,7 +85,7 @@ function s.cfilter(c)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetMatchingGroupCount(s.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)>1
-		and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsRace(RACE_CYBERSE)
+		and re:IsMonsterEffect() and re:GetHandler():IsRace(RACE_CYBERSE)
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateEffect(ev)

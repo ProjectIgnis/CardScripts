@@ -1,4 +1,5 @@
 --白竜の忍者
+--White Dragon Ninja
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon limit
@@ -19,10 +20,10 @@ function s.initial_effect(c)
 	e2:SetValue(1)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x61}
+s.listed_series={SET_NINJITSU_ART}
 function s.splimit(e,se,sp,st)
-	return se:GetHandler():IsSetCard(0x61)
+	return se:GetHandler():IsSetCard(SET_NINJITSU_ART)
 end
 function s.indes(e,c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsSpellTrap()
 end

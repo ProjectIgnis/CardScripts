@@ -14,7 +14,7 @@ function s.initial_effect(c)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetPossibleOperationInfo(0,CATEGORY_REMOVE,nil,1,1-tp,LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_REMOVE,nil,1,1-tp,LOCATION_HAND|LOCATION_ONFIELD|LOCATION_GRAVE)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFlagEffect(tp,id)~=0 then return end
@@ -24,17 +24,17 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EVENT_REMOVE)
 	e1:SetCondition(s.rmcon)
 	e1:SetOperation(s.rmop)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+	Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1)
 end
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	local flag=0
 	for tc in eg:Iter() do
 		local ploc=tc:GetPreviousLocation()
 		local te=tc:GetReasonEffect()
-		if tc:IsReason(REASON_EFFECT) and not tc:IsReason(REASON_REDIRECT) and (ploc&(LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE))~=0
-			and tc:IsPreviousControler(tp) and te:GetOwnerPlayer()==1-tp and te:IsActiveType(TYPE_MONSTER) and te:IsActivated() then
+		if tc:IsReason(REASON_EFFECT) and not tc:IsReason(REASON_REDIRECT) and (ploc&(LOCATION_HAND|LOCATION_ONFIELD|LOCATION_GRAVE))~=0
+			and tc:IsPreviousControler(tp) and te:GetOwnerPlayer()==1-tp and te:IsMonsterEffect() and te:IsActivated() then
 			flag=(flag|ploc)
 		end
 	end
@@ -63,7 +63,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 	if (flag&LOCATION_GRAVE)~=0 then
-		local rg=Duel.GetMatchingGroup(s.rmfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,nil)
+		local rg=Duel.GetMatchingGroup(s.rmfilter,tp,0,LOCATION_MZONE|LOCATION_GRAVE,nil)
 		if #rg>0 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 			g:Merge(rg:Select(tp,1,2,nil))

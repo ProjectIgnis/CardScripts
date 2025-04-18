@@ -1,4 +1,5 @@
 --光の援軍
+--Charge of the Light Brigade
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,14 +12,14 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x38}
+s.listed_series={SET_LIGHTSWORN}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeckAsCost(tp,3) and 
 	Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>3 end
 	Duel.DiscardDeck(tp,3,REASON_COST)
 end
 function s.filter(c)
-	return c:IsSetCard(0x38) and c:IsLevelBelow(4) and c:IsAbleToHand()
+	return c:IsSetCard(SET_LIGHTSWORN) and c:IsLevelBelow(4) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

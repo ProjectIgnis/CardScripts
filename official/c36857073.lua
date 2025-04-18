@@ -1,4 +1,5 @@
 --琰魔竜 レッド・デーモン・ベリアル
+--Hot Red Dragon Archfiend Bane
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -29,7 +30,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.synchro_nt_required=1
-s.listed_series={0x1045}
+s.listed_series={SET_RED_DRAGON_ARCHFIEND}
 function s.sfilter(c,val,scard,sumtype,tp)
 	return c:IsRace(RACE_DRAGON,scard,sumtype,tp) and c:IsAttribute(ATTRIBUTE_DARK,scard,sumtype,tp) and c:IsType(TYPE_SYNCHRO,scard,sumtype,tp)
 end
@@ -40,7 +41,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(g,REASON_COST)
 end
 function s.spfilter1(c,e,tp)
-	return c:IsSetCard(0x1045) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_RED_DRAGON_ARCHFIEND) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.spfilter1(chkc,e,tp) end
@@ -70,7 +71,7 @@ function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>1
 		and Duel.IsExistingMatchingCard(s.spfilter2,tp,LOCATION_DECK,0,1,nil,e,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,tp,LOCATION_DECK+LOCATION_GRAVE)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,tp,LOCATION_DECK|LOCATION_GRAVE)
 end
 function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then return end

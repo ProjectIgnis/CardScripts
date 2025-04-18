@@ -30,7 +30,7 @@ function s.mtarget(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		if not ec then return false end
 		local p=ec:GetControler()
-		local zone=ec:GetLinkedZone()&0x1f
+		local zone=ec:GetLinkedZone()&ZONES_MMZ
 		return Duel.GetLocationCount(p,LOCATION_MZONE,p,LOCATION_REASON_CONTROL,zone)>0
 	end
 end
@@ -39,7 +39,7 @@ function s.moperation(e,tp,eg,ep,ev,re,r,rp)
 	local ec=c:GetEquipTarget()
 	if not ec then return end
 	local p=ec:GetControler()
-	local zone=ec:GetLinkedZone()&0x1f
+	local zone=ec:GetLinkedZone()&ZONES_MMZ
 	if Duel.GetLocationCount(p,LOCATION_MZONE,p,LOCATION_REASON_CONTROL,zone)>0 then
 		local i=0
 		if not ec:IsControler(tp) then i=16 end
@@ -76,4 +76,3 @@ function s.doperation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(dg,REASON_EFFECT)
 	end
 end
-

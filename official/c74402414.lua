@@ -77,13 +77,13 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local rg=g:Select(tp,5,5,nil)
 	Duel.Remove(rg,POS_FACEUP,REASON_EFFECT)
 	for tc in aux.Next(rg) do
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,0)
+		tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,0)
 	end
 	e:GetLabelObject():Clear()
 	e:GetLabelObject():Merge(rg)
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
-	if rp==1-tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL) and e:GetHandler():GetFlagEffect(1)>0 then
+	if rp==1-tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsSpellEffect() and e:GetHandler():GetFlagEffect(1)>0 then
 		e:GetHandler():AddCounter(0x25,1)
 	end
 end

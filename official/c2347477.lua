@@ -31,7 +31,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x101,0x118}
+s.listed_series={SET_CODE_TALKER,SET_CYNET}
 function s.extrafilter(c,tp)
 	return c:IsLocation(LOCATION_MZONE) and c:IsControler(tp)
 end
@@ -46,7 +46,7 @@ function s.extraval(chk,summon_type,e,...)
 	local c=e:GetHandler()
 	if chk==0 then
 		local tp,sc=...
-		if summon_type~=SUMMON_TYPE_LINK or not sc:IsSetCard(0x101) or Duel.GetFlagEffect(tp,id)>0 then
+		if summon_type~=SUMMON_TYPE_LINK or not sc:IsSetCard(SET_CODE_TALKER) or Duel.GetFlagEffect(tp,id)>0 then
 			return Group.CreateGroup()
 		else
 			table.insert(s.flagmap[c],c:RegisterFlagEffect(id,0,0,1))
@@ -56,7 +56,7 @@ function s.extraval(chk,summon_type,e,...)
 		local sg,sc,tp=...
 		if summon_type&SUMMON_TYPE_LINK == SUMMON_TYPE_LINK and #sg>0 then
 			Duel.Hint(HINT_CARD,tp,id)
-			Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+			Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1)
 		end
 	elseif chk==2 then
 		for _,eff in ipairs(s.flagmap[c]) do
@@ -69,10 +69,10 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	e:SetLabel(0)
 	if c:IsPreviousLocation(LOCATION_ONFIELD) then e:SetLabel(1) end
-	return c:IsLocation(LOCATION_GRAVE) and c:IsPreviousLocation(LOCATION_ONFIELD+LOCATION_HAND) and r==REASON_LINK and c:GetReasonCard():IsSetCard(0x101)
+	return c:IsLocation(LOCATION_GRAVE) and c:IsPreviousLocation(LOCATION_ONFIELD|LOCATION_HAND) and r==REASON_LINK and c:GetReasonCard():IsSetCard(SET_CODE_TALKER)
 end
 function s.thfilter(c,chk)
-	return ((c:IsSetCard(0x118) and c:IsSpellTrap()) or (chk==1 and c:IsRace(RACE_CYBERSE) and c:IsLevel(4))) and c:IsAbleToHand()
+	return ((c:IsSetCard(SET_CYNET) and c:IsSpellTrap()) or (chk==1 and c:IsRace(RACE_CYBERSE) and c:IsLevel(4))) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,e:GetLabel()) end

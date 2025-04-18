@@ -1,4 +1,5 @@
 --影依の原核
+--Shaddoll Core
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -22,25 +23,25 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x9d}
+s.listed_series={SET_SHADDOLL}
 s.listed_names={id}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id,0,0x21,1450,1950,9,RACE_SPELLCASTER,ATTRIBUTE_DARK) end
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,id,0,TYPE_MONSTER|TYPE_EFFECT,1450,1950,9,RACE_SPELLCASTER,ATTRIBUTE_DARK) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
-		or not Duel.IsPlayerCanSpecialSummonMonster(tp,id,0,0x21,1450,1950,9,RACE_SPELLCASTER,ATTRIBUTE_DARK) then return end
+		or not Duel.IsPlayerCanSpecialSummonMonster(tp,id,0,TYPE_MONSTER|TYPE_EFFECT,1450,1950,9,RACE_SPELLCASTER,ATTRIBUTE_DARK) then return end
 	c:AddMonsterAttribute(TYPE_EFFECT+TYPE_TRAP)
 	Duel.SpecialSummonStep(c,0,tp,tp,true,false,POS_FACEUP)
 	c:AddMonsterAttributeComplete()
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(id)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	c:RegisterEffect(e1,true)
 	Duel.SpecialSummonComplete()
 end
@@ -48,7 +49,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsReason(REASON_EFFECT)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x9d) and c:IsSpellTrap() and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(SET_SHADDOLL) and c:IsSpellTrap() and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc) end

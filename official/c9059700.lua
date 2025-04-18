@@ -1,4 +1,5 @@
 --インフェルニティ・バリア
+--Infernity Barrier
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,12 +13,12 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cfilter(c)
-	return c:IsPosition(POS_FACEUP_ATTACK) and c:IsSetCard(0xb)
+	return c:IsPosition(POS_FACEUP_ATTACK) and c:IsSetCard(SET_INFERNITY)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if ep==tp or not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
 		or Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)~=0 then return false end
-	return Duel.IsChainNegatable(ev) and (re:IsActiveType(TYPE_MONSTER) or re:IsHasType(EFFECT_TYPE_ACTIVATE))
+	return Duel.IsChainNegatable(ev) and (re:IsMonsterEffect() or re:IsHasType(EFFECT_TYPE_ACTIVATE))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

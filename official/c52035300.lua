@@ -1,4 +1,5 @@
 --不死武士
+--The Immortal Bushi
 local s,id=GetID()
 function s.initial_effect(c)
 	--release limit
@@ -21,7 +22,7 @@ function s.initial_effect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_FIELD)
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e3:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e3:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e3:SetRange(LOCATION_GRAVE)
 	e3:SetCountLimit(1)
 	e3:SetCondition(s.condition)

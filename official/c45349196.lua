@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_DAMAGE+CATEGORY_TODECK)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e2:SetCode(EVENT_PHASE+PHASE_BATTLE)
+	e2:SetCode(EVENT_PHASE|PHASE_BATTLE)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCountLimit(1)
@@ -29,23 +29,23 @@ function s.initial_effect(c)
 	e2:SetOperation(s.damop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x3b}
-s.material_setcode={0x3b,0x45}
+s.listed_series={SET_RED_EYES}
+s.material_setcode={SET_RED_EYES,SET_ARCHFIEND}
 function s.mfilter1(c,fc,sumtype,tp)
-	return c:IsSetCard(0x45,fc,sumtype,tp) and c:IsType(TYPE_NORMAL,fc,sumtype,tp) and c:GetLevel()==6
+	return c:IsSetCard(SET_ARCHFIEND,fc,sumtype,tp) and c:IsType(TYPE_NORMAL,fc,sumtype,tp) and c:GetLevel()==6
 end
 function s.mfilter2(c,fc,sumtype,tp)
-	return c:IsSetCard(0x3b,fc,sumtype,tp) and c:IsType(TYPE_NORMAL,fc,sumtype,tp)
+	return c:IsSetCard(SET_RED_EYES,fc,sumtype,tp) and c:IsType(TYPE_NORMAL,fc,sumtype,tp)
 end
 function s.accon(e)
 	return Duel.GetAttacker()==e:GetHandler() or Duel.GetAttackTarget()==e:GetHandler()
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsSummonType(SUMMON_TYPE_FUSION) and c:GetBattledGroupCount()>0
+	return c:IsFusionSummoned() and c:GetBattledGroupCount()>0
 end
 function s.filter(c)
-	return c:IsSetCard(0x3b) and c:IsType(TYPE_NORMAL) and c:IsAbleToDeck()
+	return c:IsSetCard(SET_RED_EYES) and c:IsType(TYPE_NORMAL) and c:IsAbleToDeck()
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -60,6 +60,6 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) and Duel.Damage(1-tp,tc:GetBaseAttack(),REASON_EFFECT)~=0 then
 		Duel.BreakEffect()
-		Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)
+		Duel.SendtoDeck(tc,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	end
 end

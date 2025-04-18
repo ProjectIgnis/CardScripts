@@ -1,4 +1,5 @@
 --重力の斧－グラール
+--Gravity Axe - Grarl
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c)

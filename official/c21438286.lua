@@ -1,7 +1,6 @@
 --デーモンの杖
---Archfiend Staff of Despair
+--Archfiend's Staff of Despair
 --Scripted by DyXel
-
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c,0)
@@ -23,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_LEAVE_FIELD)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetCondition(s.retcon)
-	e2:SetCost(s.retcost)
+	e2:SetCost(Cost.PayLP(1000))
 	e2:SetTarget(s.rettg)
 	e2:SetOperation(s.retop)
 	c:RegisterEffect(e2)
@@ -40,17 +39,13 @@ function s.actop(e,tp,eg,ep,ev,re,r,rp)
 		e:SetType(EFFECT_TYPE_SINGLE)
 		e:SetCode(EFFECT_UPDATE_ATTACK)
 		e:SetValue(v)
-		e:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e)
 	end
 end
 function s.retcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsLocation(LOCATION_GRAVE) and c:GetEquipTarget()~=nil
-end
-function s.retcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,1000) end
-	Duel.PayLPCost(tp,1000)
 end
 function s.rettg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

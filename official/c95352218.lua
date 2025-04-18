@@ -1,4 +1,5 @@
 --天下統一
+--Unification
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,7 +13,7 @@ function s.initial_effect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
-	e2:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e2:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCountLimit(1)
 	e2:SetOperation(s.adjustop)

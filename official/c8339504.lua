@@ -1,4 +1,5 @@
 --エクシーズ・シフト
+--Xyz Shift
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -53,7 +54,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Overlay(sc,c)
 		end
 		local fid=c:GetFieldID()
-		sc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,fid)
+		sc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1,fid)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_PHASE+PHASE_END)

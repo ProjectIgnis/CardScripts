@@ -1,5 +1,5 @@
 --失楽の霹靂
---Cerulean Sky Fire
+--Cerulean Skyfire
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -40,13 +40,13 @@ function s.cfilter(c)
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
-		and rp~=tp and re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and Duel.IsChainDisablable(ev) 
+		and rp~=tp and re:IsSpellTrapEffect() and Duel.IsChainDisablable(ev) 
 		and e:GetHandler():GetFlagEffect(id)==0
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
 	if Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
-		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+		e:GetHandler():RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 		if Duel.NegateEffect(ev) then
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
@@ -71,10 +71,10 @@ function s.ndop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(1,0)
 	e1:SetValue(0)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_NO_EFFECT_DAMAGE)
-	e2:SetReset(RESET_PHASE+PHASE_END)
+	e2:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e2,tp)
 end

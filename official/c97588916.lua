@@ -1,4 +1,5 @@
 --ブンボーグ007
+--Deskbot 007
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -35,16 +36,16 @@ function s.initial_effect(c)
 	e6:SetValue(s.atlimit)
 	c:RegisterEffect(e6)
 end
-s.listed_series={0xab}
+s.listed_series={SET_DESKBOT}
 function s.splimcon(e)
 	return not e:GetHandler():IsForbidden()
 end
 function s.splimit(e,c,tp,sumtp,sumpos)
-	return not c:IsSetCard(0xab) and (sumtp&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
+	return not c:IsSetCard(SET_DESKBOT) and (sumtp&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
 end
 function s.value(e,c)
-	return Duel.GetMatchingGroupCount(Card.IsSetCard,c:GetControler(),LOCATION_GRAVE,0,nil,0xab)*500
+	return Duel.GetMatchingGroupCount(Card.IsSetCard,c:GetControler(),LOCATION_GRAVE,0,nil,SET_DESKBOT)*500
 end
 function s.atlimit(e,c)
-	return c:IsFaceup() and c:IsSetCard(0xab) and c~=e:GetHandler()
+	return c:IsFaceup() and c:IsSetCard(SET_DESKBOT) and c~=e:GetHandler()
 end

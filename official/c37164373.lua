@@ -1,8 +1,9 @@
 --クイーンマドルチェ・ティアラミス
+--Madolche Queen Tiaramisu
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
-	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x71),4,2)
+	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_MADOLCHE),4,2)
 	c:EnableReviveLimit()
 	--todeck
 	local e1=Effect.CreateEffect(c)
@@ -12,18 +13,14 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCost(s.cost)
+	e1:SetCost(Cost.Detach(1))
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
 end
-s.listed_series={0x71}
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
-end
+s.listed_series={SET_MADOLCHE}
 function s.filter(c)
-	return c:IsSetCard(0x71) and c:IsAbleToDeck()
+	return c:IsSetCard(SET_MADOLCHE) and c:IsAbleToDeck()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.filter(chkc) end
@@ -36,12 +33,12 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetTargetCards(e)
 	Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
-	local ct=g:FilterCount(Card.IsLocation,nil,LOCATION_DECK+LOCATION_HAND+LOCATION_EXTRA)
+	local ct=g:FilterCount(Card.IsLocation,nil,LOCATION_DECK|LOCATION_HAND|LOCATION_EXTRA)
 	local dg=Duel.GetMatchingGroup(Card.IsAbleToDeck,tp,0,LOCATION_ONFIELD,nil)
 	if ct>0 and #dg>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 		local rg=dg:Select(tp,1,ct,nil)
 		Duel.HintSelection(rg)
-		Duel.SendtoDeck(rg,nil,2,REASON_EFFECT)
+		Duel.SendtoDeck(rg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	end
 end

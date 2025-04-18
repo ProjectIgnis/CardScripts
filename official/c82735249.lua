@@ -1,5 +1,5 @@
 --ゲネラールプローベ
---Dress Rehearsal
+--Generalprobe
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -46,10 +46,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 s.listed_names={75304793}
-s.listed_series={0x1066}
+s.listed_series={SET_SYMPHONIC_WARRIOR}
 s.counter_place_list={0x35}
 function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
-	return re and re:GetHandler():IsSetCard(0x1066) and not re:IsHasType(EFFECT_TYPE_ACTIVATE)
+	return re and re:GetHandler():IsSetCard(SET_SYMPHONIC_WARRIOR) and not re:IsHasType(EFFECT_TYPE_ACTIVATE)
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():AddCounter(0x35,1)
@@ -59,7 +59,7 @@ function s.thcost1(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RemoveCounter(tp,1,0,0x35,3,REASON_COST)
 end
 function s.thfilter1(c)
-	return c:IsSetCard(0x1066) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_SYMPHONIC_WARRIOR) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter1,tp,LOCATION_DECK,0,1,nil) end
@@ -75,7 +75,7 @@ function s.thop1(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x1066) and c:IsSummonPlayer(tp)
+	return c:IsFaceup() and c:IsSetCard(SET_SYMPHONIC_WARRIOR) and c:IsSummonPlayer(tp)
 end
 function s.thcon2(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)

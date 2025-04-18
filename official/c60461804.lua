@@ -1,9 +1,9 @@
--- Ｄ－ＨＥＲＯ デストロイフェニックスガイ
--- Destiny HERO - Destroy Phoenix Enforcer
+--Ｄ－ＨＥＲＯ デストロイフェニックスガイ
+--Destiny HERO - Destroyer Phoenix Enforcer
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	Fusion.AddProcFun2(c,s.matfilter,aux.FilterBoolFunctionEx(Card.IsSetCard,0xc008),true)
+	Fusion.AddProcFun2(c,s.matfilter,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_DESTINY_HERO),true)
 	--Decrease the ATK of monster your opponent controls
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E+TIMING_MAIN_END)
+	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E|TIMING_MAIN_END)
 	e2:SetCountLimit(1,id)
 	e2:SetTarget(s.destg)
 	e2:SetOperation(s.desop)
@@ -37,18 +37,16 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x8,0xc008}
-s.material_setcode={0x8,0xc008}
-
+s.listed_series={SET_HERO,SET_DESTINY_HERO}
+s.material_setcode={SET_HERO,SET_DESTINY_HERO}
 function s.matfilter(c,fc,sumtype,tp)
-	return c:IsSetCard(0x8,fc,sumtype,tp) and c:IsLevelAbove(6)
+	return c:IsSetCard(SET_HERO,fc,sumtype,tp) and c:IsLevelAbove(6)
 end
 function s.atkval(e,c)
-	return Duel.GetMatchingGroupCount(Card.IsSetCard,e:GetHandler():GetControler(),LOCATION_GRAVE,0,nil,0x8)*-200
+	return Duel.GetMatchingGroupCount(Card.IsSetCard,e:GetHandler():GetControler(),LOCATION_GRAVE,0,nil,SET_HERO)*-200
 end
---destroy
 function s.rescon(sg,e,tp,mg)
-    return sg:IsExists(Card.IsControler,1,nil,tp)
+	return sg:IsExists(Card.IsControler,1,nil,tp)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local rg=Duel.GetMatchingGroup(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
@@ -74,24 +72,23 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e1:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e1:SetCountLimit(1)
 	e1:SetLabel(Duel.GetTurnCount())
 	e1:SetCondition(s.spcon1)
 	e1:SetOperation(s.spop1)
 	if Duel.IsTurnPlayer(tp) then
-		e1:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN,1)
+		e1:SetReset(RESET_PHASE|PHASE_END|RESET_OPPO_TURN,1)
 	else
-		e1:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN,1)
+		e1:SetReset(RESET_PHASE|PHASE_END|RESET_SELF_TURN,1)
 	end
 	Duel.RegisterEffect(e1,tp)
 end
-
 function s.spcon1(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnCount()~=e:GetLabel()
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0xc008) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_DESTINY_HERO) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.spop1(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

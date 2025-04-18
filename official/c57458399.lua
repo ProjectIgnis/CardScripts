@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x66,0xa3,0x1017}
+s.listed_series={SET_WARRIOR,SET_STARDUST,SET_SYNCHRON}
 function s.gfilter(c,tp)
 	return c:GetPreviousLocation()==LOCATION_GRAVE and c:GetPreviousControler()==tp
 end
@@ -44,12 +44,11 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c,e,tp,sc)
-	return c:IsFaceup() and (c:IsOriginalSetCard(0x66) or c:IsOriginalSetCard(0xa3) or c:IsOriginalSetCard(0x1017)) 
-	and c:IsType(TYPE_SYNCHRO)
+	return c:IsFaceup() and (c:IsOriginalSetCard(SET_WARRIOR) or c:IsOriginalSetCard(SET_STARDUST) or c:IsOriginalSetCard(SET_SYNCHRON)) 
+		and c:IsType(TYPE_SYNCHRO)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetLevel()~=4 
-	and  Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil)
+	return e:GetHandler():GetLevel()~=4 and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,nil)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -59,8 +58,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_LEVEL)
 		e1:SetValue(4)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_DISABLE_PHASE_END)
 		c:RegisterEffect(e1)
 	end
 end
-

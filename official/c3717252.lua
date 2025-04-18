@@ -1,4 +1,5 @@
 --シャドール・ビースト
+--Shaddoll Beast
 local s,id=GetID()
 function s.initial_effect(c)
 	--flip
@@ -42,7 +43,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.Draw(p,2,REASON_EFFECT)==2 then
 		Duel.ShuffleHand(tp)
 		Duel.BreakEffect()
-		Duel.DiscardHand(tp,nil,1,1,REASON_EFFECT+REASON_DISCARD)
+		Duel.DiscardHand(tp,nil,1,1,REASON_EFFECT|REASON_DISCARD)
 	end
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)

@@ -17,14 +17,10 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_SZONE)
 	e1:SetHintTiming(0,TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E|TIMING_EQUIP)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_CHAIN)
-	e1:SetCost(s.descost)
+	e1:SetCost(Cost.PayLP(1000))
 	e1:SetTarget(s.destg)
 	e1:SetOperation(s.desop)
 	c:RegisterEffect(e1)
-end
-function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,1000) end
-	Duel.PayLPCost(tp,1000)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()

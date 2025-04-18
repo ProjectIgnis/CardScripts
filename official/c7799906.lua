@@ -43,14 +43,14 @@ function s.initial_effect(c)
 	e4:SetOperation(s.drop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x125,0x9f,0x98,0x99}
+s.listed_series={SET_SMILE,SET_PERFORMAPAL,SET_MAGICIAN,SET_ODD_EYES}
 	--Check for ATK higher than original ATK
 function s.filter(c)
 	return c:IsFaceup() and c:GetAttack()>c:GetBaseAttack()
 end
 	--Check if monster(s) with ATK higher than base ATK were destroyed
 function s.cfilter(c,tp)
-	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:GetPreviousAttackOnField()>c:GetBaseAttack()
+	return c:IsReason(REASON_BATTLE|REASON_EFFECT) and c:GetPreviousAttackOnField()>c:GetBaseAttack()
 		and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousControler(tp)
 end
 	--If it ever happened
@@ -71,7 +71,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for "Smile" spell/trap
 function s.thfilter(c)
-	return c:IsSetCard(0x125) and c:IsSpellTrap() and c:IsAbleToHand()
+	return c:IsSetCard(SET_SMILE) and c:IsSpellTrap() and c:IsAbleToHand()
 end
 	--Activation legality
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -89,7 +89,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for "Performapal" monsters, "Magician" pendulums, or "Odd-Eyes" monsters
 function s.drfilter(c)
-	return c:IsFaceup() and (c:IsSetCard(0x9f) or (c:IsSetCard(0x98) and c:IsType(TYPE_PENDULUM)) or c:IsSetCard(0x99))
+	return c:IsFaceup() and (c:IsSetCard(SET_PERFORMAPAL) or (c:IsSetCard(SET_MAGICIAN) and c:IsType(TYPE_PENDULUM)) or c:IsSetCard(SET_ODD_EYES))
 end
 	--If you only control those archetypes and this card's ATK is boosted
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
@@ -113,7 +113,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	e1:SetTargetRange(1,0)
 	Duel.RegisterEffect(e1,tp)
 	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,1),nil)

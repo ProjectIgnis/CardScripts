@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_CANNOT_TRIGGER)
 	e3:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetTargetRange(LOCATION_HAND+LOCATION_SZONE,LOCATION_HAND+LOCATION_SZONE)
+	e3:SetTargetRange(LOCATION_HAND|LOCATION_SZONE,LOCATION_HAND|LOCATION_SZONE)
 	e3:SetTarget(aux.TargetBoolFunction(Card.IsTrap))
 	c:RegisterEffect(e3)
 	--negate
@@ -64,15 +64,15 @@ function s.initial_effect(c)
 	c:RegisterEffect(e7)
 	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
-s.listed_names={77585513}
+s.listed_names={CARD_JINZO}
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local tl=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
-	if tl==LOCATION_SZONE and re:IsActiveType(TYPE_TRAP) then
+	if tl==LOCATION_SZONE and re:IsTrapEffect() then
 		Duel.NegateEffect(ev)
 	end
 end
 function s.spfilter(c)
-	return c:IsFaceup() and c:IsCode(77585513) and c:IsAbleToGraveAsCost()
+	return c:IsFaceup() and c:IsCode(CARD_JINZO) and c:IsAbleToGraveAsCost()
 end
 function s.spcon(e,c)
 	if c==nil then return true end

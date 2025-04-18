@@ -40,9 +40,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 s.listed_names={id}
-s.listed_series={0x133}
+s.listed_series={SET_DRAGONMAID}
 function s.atkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x133) and c:IsMonster()
+	return c:IsFaceup() and c:IsSetCard(SET_DRAGONMAID) and c:IsMonster()
 end
 function s.atkval(e,c)
 	local ct=Duel.GetMatchingGroupCount(s.atkfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,nil)
@@ -53,10 +53,10 @@ function s.atkval(e,c)
 	end
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x133),tp,LOCATION_MZONE,0,2,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_DRAGONMAID),tp,LOCATION_MZONE,0,2,nil)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x133) and c:IsAbleToHand() and not c:IsCode(id)
+	return c:IsSetCard(SET_DRAGONMAID) and c:IsAbleToHand() and not c:IsCode(id)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc) end
@@ -80,9 +80,9 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e1:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
 	e1:SetTargetRange(LOCATION_MZONE,0)
-	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x133))
+	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_DRAGONMAID))
 	e1:SetValue(aux.tgoval)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	aux.RegisterClientHint(e:GetHandler(),nil,tp,0,1,aux.Stringid(id,2),nil)
 end

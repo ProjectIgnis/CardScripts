@@ -39,7 +39,7 @@ function s.thcfilter(c)
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thcfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,s.thcfilter,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,s.thcfilter,1,1,REASON_COST|REASON_DISCARD)
 end
 function s.thfilter(c)
 	return c:IsCode(44095762) and c:IsAbleToHand()

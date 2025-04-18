@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	Fusion.AddProcMix(c,true,true,s.matfilter,aux.FilterBoolFunctionEx(Card.IsSetCard,0xfb))
+	Fusion.AddProcMix(c,true,true,s.matfilter,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_TRICKSTAR))
 	--avoid damage
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -38,15 +38,15 @@ function s.initial_effect(c)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xfb}
-s.material_setcode={0xfb}
+s.listed_series={SET_TRICKSTAR}
+s.material_setcode={SET_TRICKSTAR}
 function s.matfilter(c,fc,sumtype,tp)
-	return c:IsType(TYPE_LINK,fc,sumtype,tp) and c:IsSetCard(0xfb,fc,sumtype,tp)
+	return c:IsType(TYPE_LINK,fc,sumtype,tp) and c:IsSetCard(SET_TRICKSTAR,fc,sumtype,tp)
 end
 function s.damval(e,re,val,r,rp)
-	if r&REASON_EFFECT==REASON_EFFECT and re and re:IsActiveType(TYPE_MONSTER) then
+	if r&REASON_EFFECT==REASON_EFFECT and re and re:IsMonsterEffect() then
 		local rc=re:GetHandler()
-		if rc:IsFaceup() and rc:IsSetCard(0xfb) and rc:IsLinkMonster()
+		if rc:IsFaceup() and rc:IsSetCard(SET_TRICKSTAR) and rc:IsLinkMonster()
 			and rc:GetLinkedGroup():IsContains(e:GetHandler()) then
 			return val*2
 		end
@@ -54,7 +54,7 @@ function s.damval(e,re,val,r,rp)
 	return val
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and r&REASON_EFFECT==REASON_EFFECT and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0xfb)
+	return ep~=tp and r&REASON_EFFECT==REASON_EFFECT and re:IsMonsterEffect() and re:GetHandler():IsSetCard(SET_TRICKSTAR)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -64,12 +64,12 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetLabelObject(e)
 		e1:SetValue(ev)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		c:RegisterEffect(e1)
 	end
 end
 function s.thfilter(c)
-	return c:IsMonster() and c:IsSetCard(0xfb) and c:IsAbleToHand()
+	return c:IsMonster() and c:IsSetCard(SET_TRICKSTAR) and c:IsAbleToHand()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetAttackedCount()>0

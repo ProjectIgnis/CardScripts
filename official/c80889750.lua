@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_UPDATE_ATTACK)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetTargetRange(LOCATION_MZONE,0)
-	e3:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0xad))
+	e3:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_FRIGHTFUR))
 	e3:SetValue(400)
 	c:RegisterEffect(e3)
 	--Cannot be destroyed
@@ -32,19 +32,19 @@ function s.initial_effect(c)
 	e4:SetValue(s.valcheck)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0xad}
-s.material_setcode={0xa9,0xc3,0xad}
+s.listed_series={SET_FRIGHTFUR}
+s.material_setcode={SET_FLUFFAL,SET_EDGE_IMP,SET_FRIGHTFUR}
 function s.mfilter1(c,fc,sumtype,tp)
-	return c:IsSetCard(0xad,fc,sumtype,tp) and c:IsType(TYPE_FUSION,fc,sumtype,tp)
+	return c:IsSetCard(SET_FRIGHTFUR,fc,sumtype,tp) and c:IsType(TYPE_FUSION,fc,sumtype,tp)
 end
 function s.mfilter2(c,fc,sumtype,tp)
-	return c:IsSetCard(0xa9,fc,sumtype,tp) or c:IsSetCard(0xc3,fc,sumtype,tp)
+	return c:IsSetCard(SET_FLUFFAL,fc,sumtype,tp) or c:IsSetCard(SET_EDGE_IMP,fc,sumtype,tp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return (e:GetHandler():GetSummonType()&SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0xad) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_FRIGHTFUR) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.spfilter(chkc,e,tp) end
@@ -67,7 +67,7 @@ function s.valcheck(e,c)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 		e1:SetValue(1)
 		e1:SetCondition(s.indcon)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD-RESET_TOFIELD)
 		c:RegisterEffect(e1,true)
 		local e2=e1:Clone()
 		e2:SetDescription(aux.Stringid(id,1))
@@ -77,5 +77,5 @@ function s.valcheck(e,c)
 	end
 end
 function s.indcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)
+	return e:GetHandler():IsFusionSummoned()
 end

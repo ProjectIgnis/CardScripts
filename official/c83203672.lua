@@ -1,7 +1,6 @@
 --スプリガンズ・バンガー
---Sprigguns Banger
+--Springans Branga
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -10,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e1:SetRange(LOCATION_GRAVE+LOCATION_HAND+LOCATION_MZONE)
+	e1:SetRange(LOCATION_GRAVE|LOCATION_HAND|LOCATION_MZONE)
 	e1:SetCountLimit(1,id)
 	e1:SetTarget(s.mattg)
 	e1:SetOperation(s.matop)
@@ -28,13 +27,12 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 	--Lists "Sprigguns" archetype
-s.listed_series={0x158}
+s.listed_series={SET_SPRINGANS}
 	--Specifically lists itself
 s.listed_names={id}
-
 	--Check for "Sprigguns" Xyz monster
 function s.matfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x158) and c:IsType(TYPE_XYZ)
+	return c:IsFaceup() and c:IsSetCard(SET_SPRINGANS) and c:IsType(TYPE_XYZ)
 end
 	--Activation legality
 function s.mattg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -56,7 +54,7 @@ function s.matop(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check for "Spriggun" monster, except "Sprigguns Banger"
 function s.cfilter(c)
-	return (c:IsMonster() and c:IsSetCard(0x158) and not c:IsCode(id))  and c:IsAbleToRemoveAsCost()
+	return (c:IsMonster() and c:IsSetCard(SET_SPRINGANS) and not c:IsCode(id)) and c:IsAbleToRemoveAsCost()
 end
 	--Banish itself and 1 "Sprigguns" monster from GY as cost
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -70,7 +68,7 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 	--Check for "Sprigguns" card to add
 function s.thfilter(c)
-	return c:IsSetCard(0x158) and c:IsAbleToHand()
+	return c:IsSetCard(SET_SPRINGANS) and c:IsAbleToHand()
 end
 	--Activation legality
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)

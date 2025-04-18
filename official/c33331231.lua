@@ -1,5 +1,5 @@
 --閃術兵器-H.A.M.P.
---Strategic Striker - H.A.M.P.
+--Surgical Striker - H.A.M.P.
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -30,9 +30,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x115,0x1115}
+s.listed_series={SET_SKY_STRIKER,SET_SKY_STRIKER_ACE}
 function s.ssacechk(e)
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x1115),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_SKY_STRIKER_ACE),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function s.hspcon(e,c)
 	if c==nil then return true end

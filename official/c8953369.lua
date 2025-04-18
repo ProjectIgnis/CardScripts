@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(TIMING_DAMAGE_STEP)
 	e1:SetCountLimit(1,id)
-	e1:SetCondition(s.condition)
+	e1:SetCondition(aux.StatChangeDamageStepCondition)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
@@ -29,9 +29,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_KASHTIRA}
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
-end
 function s.rmvfilter(c)
 	return c:IsMonster() and c:IsAttack(1500) and c:IsDefense(2100) and c:IsAbleToRemove()
 		and (c:IsLocation(LOCATION_HAND) or c:IsFaceup())

@@ -26,15 +26,15 @@ function s.initial_effect(c)
 	e2:SetValue(s.atkval)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x29}
+s.listed_series={SET_DRAGUNITY}
 function s.eqval(ec,c,tp)
-	return ec:IsControler(tp) and ec:IsSetCard(0x29) and ec:IsRace(RACE_DRAGON)
+	return ec:IsControler(tp) and ec:IsSetCard(SET_DRAGUNITY) and ec:IsRace(RACE_DRAGON)
 end
 function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
+	return e:GetHandler():IsSynchroSummoned()
 end
 function s.filter(c)
-	return c:IsSetCard(0x29) and c:IsRace(RACE_DRAGON) and not c:IsForbidden()
+	return c:IsSetCard(SET_DRAGUNITY) and c:IsRace(RACE_DRAGON) and not c:IsForbidden()
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -53,7 +53,7 @@ function s.equipop(c,e,tp,tc,chk)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_OWNER_RELATE)
 	e1:SetCode(EFFECT_EQUIP_LIMIT)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	e1:SetValue(Card.EquipByEffectLimit)
 	e1:SetLabelObject(e:GetLabelObject())
 	tc:RegisterEffect(e1)
@@ -68,5 +68,5 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.atkval(e,c)
-	return c:GetEquipGroup():FilterCount(Card.IsSetCard,nil,0x29)*300
+	return c:GetEquipGroup():FilterCount(Card.IsSetCard,nil,SET_DRAGUNITY)*300
 end

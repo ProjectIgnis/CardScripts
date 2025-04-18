@@ -1,5 +1,5 @@
 --サムサリック・サイクルのベンガランス 
---Benghalances of the Samsaric Cycle
+--Benghalancer the Resurgent
 --Scripted by Kohana Sonogami
 local s,id=GetID()
 function s.initial_effect(c)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1,id)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER|TIMING_MAIN_END)
 	e1:SetCondition(function(e,tp,eg,ep,ev,re,r,rp)return Duel.IsMainPhase()end)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
@@ -74,7 +74,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
-		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
+		e1:SetReset(RESET_EVENT|RESETS_REDIRECT)
 		e1:SetValue(LOCATION_REMOVED)
 		c:RegisterEffect(e1,true)
 	end

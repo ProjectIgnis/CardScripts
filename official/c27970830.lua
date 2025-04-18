@@ -2,7 +2,7 @@
 --Gateway of the Six
 local s,id=GetID()
 function s.initial_effect(c)
-	c:EnableCounterPermit(0x3)
+	c:EnableCounterPermit(COUNTER_BUSHIDO)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -51,20 +51,20 @@ function s.initial_effect(c)
 	e6:SetOperation(s.op3)
 	c:RegisterEffect(e6)
 end
-s.listed_series={0x3d,0x20}
-s.counter_place_list={0x3}
+s.listed_series={SET_SIX_SAMURAI,SET_SHIEN}
+s.counter_place_list={COUNTER_BUSHIDO}
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
-	if eg:IsExists(aux.FaceupFilter(Card.IsSetCard,0x3d),1,nil) then
-		e:GetHandler():AddCounter(0x3,2)
+	if eg:IsExists(aux.FaceupFilter(Card.IsSetCard,SET_SIX_SAMURAI),1,nil) then
+		e:GetHandler():AddCounter(COUNTER_BUSHIDO,2)
 	end
 end
 function s.cost1(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,0,0x3,2,REASON_COST) end
+	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,0,COUNTER_BUSHIDO,2,REASON_COST) end
 	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
-	Duel.RemoveCounter(tp,1,0,0x3,2,REASON_COST)
+	Duel.RemoveCounter(tp,1,0,COUNTER_BUSHIDO,2,REASON_COST)
 end
 function s.filter1(c)
-	return c:IsFaceup() and (c:IsSetCard(0x3d) or c:IsSetCard(0x20)) and c:IsType(TYPE_EFFECT)
+	return c:IsFaceup() and c:IsSetCard({SET_SIX_SAMURAI,SET_SHIEN}) and c:IsType(TYPE_EFFECT)
 end
 function s.tg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.filter1(chkc) end
@@ -74,45 +74,43 @@ function s.tg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_ATKCHANGE,g,1,0,500)
 end
 function s.op1(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) then
+	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		e1:SetValue(500)
 		tc:RegisterEffect(e1)
 	end
 end
 function s.cost2(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,0,0x3,4,REASON_COST) end
+	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,0,COUNTER_BUSHIDO,4,REASON_COST) end
 	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
-	Duel.RemoveCounter(tp,1,0,0x3,4,REASON_COST)
+	Duel.RemoveCounter(tp,1,0,COUNTER_BUSHIDO,4,REASON_COST)
 end
 function s.filter2(c)
-	return c:IsMonster() and c:IsSetCard(0x3d) and c:IsAbleToHand()
+	return c:IsMonster() and c:IsSetCard(SET_SIX_SAMURAI) and c:IsAbleToHand()
 end
 function s.tg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_DECK|LOCATION_GRAVE,0,1,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK|LOCATION_GRAVE)
 end
 function s.op2(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.filter2),tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.filter2),tp,LOCATION_DECK|LOCATION_GRAVE,0,1,1,nil)
 	if #g>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
 function s.cost3(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,0,0x3,6,REASON_COST) end
+	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,0,COUNTER_BUSHIDO,6,REASON_COST) end
 	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
-	Duel.RemoveCounter(tp,1,0,0x3,6,REASON_COST)
+	Duel.RemoveCounter(tp,1,0,COUNTER_BUSHIDO,6,REASON_COST)
 end
 function s.filter3(c,e,tp)
-	return c:IsSetCard(0x20) and c:IsType(TYPE_EFFECT) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_SHIEN) and c:IsType(TYPE_EFFECT) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.tg3(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.filter3(chkc,e,tp) end
@@ -123,10 +121,9 @@ function s.tg3(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
 end
 function s.op3(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end
 end

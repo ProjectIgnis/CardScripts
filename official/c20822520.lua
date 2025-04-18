@@ -22,14 +22,14 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge1,0)
 	end)
 end
-s.listed_series={0x106e}
+s.listed_series={SET_SPELLBOOK}
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
-	if re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL) and not re:GetHandler():IsSetCard(0x106e) then
-		Duel.RegisterFlagEffect(rp,id+1,RESET_PHASE+PHASE_END,0,1)
+	if re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsSpellEffect() and not re:GetHandler():IsSetCard(SET_SPELLBOOK) then
+		Duel.RegisterFlagEffect(rp,id+1,RESET_PHASE|PHASE_END,0,1)
 	end
 end
 function s.cfilter(c)
-	return c:IsSpell() and c:IsSetCard(0x106e)
+	return c:IsSpell() and c:IsSetCard(SET_SPELLBOOK)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,5,nil)
@@ -43,12 +43,12 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetCode(EFFECT_CANNOT_ACTIVATE)
 	e1:SetTargetRange(1,0)
 	e1:SetValue(s.aclimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,1),nil)
 end
 function s.aclimit(e,re,tp)
-	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL) and not re:GetHandler():IsSetCard(0x106e)
+	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsSpellEffect() and not re:GetHandler():IsSetCard(SET_SPELLBOOK)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then 
@@ -60,7 +60,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,0,LOCATION_DECK)
 end
 function s.filter(c)
-	return c:IsSpell() and c:IsSetCard(0x106e)
+	return c:IsSpell() and c:IsSetCard(SET_SPELLBOOK)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)

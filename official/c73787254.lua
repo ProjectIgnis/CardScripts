@@ -1,4 +1,5 @@
 --セイバー・ヴォールト
+--Saber Vault
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,7 +13,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x100d))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_X_SABER))
 	e2:SetValue(s.val1)
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
@@ -20,7 +21,7 @@ function s.initial_effect(c)
 	e3:SetValue(s.val2)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x100d}
+s.listed_series={SET_X_SABER}
 function s.val1(e,c)
 	return c:GetLevel()*100
 end

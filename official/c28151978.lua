@@ -1,4 +1,5 @@
 --SRドミノバタフライ
+--Speedroid Dominobutterfly
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -48,7 +49,7 @@ function s.cfilter(c)
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_COST|REASON_DISCARD)
 end
 function s.thfilter(c)
 	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_WIND) and c:IsMonster() and c:IsAbleToHand()
@@ -69,7 +70,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.synlimit(e,c)
 	if not c then return false end
-	return not c:IsAttribute(ATTRIBUTE_WIND) or not c:IsRace(RACE_DRAGON+RACE_MACHINE)
+	return not c:IsAttribute(ATTRIBUTE_WIND) or not c:IsRace(RACE_DRAGON|RACE_MACHINE)
 end
 function s.rmcon(e)
 	local c=e:GetHandler()

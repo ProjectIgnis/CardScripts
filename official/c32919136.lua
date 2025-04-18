@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e2:SetCategory(CATEGORY_DAMAGE)
-	e2:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e2:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCountLimit(1)
 	e2:SetCondition(s.damcon)
@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e5:SetValue(s.ctval)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x45}
+s.listed_series={SET_ARCHFIEND}
 function s.eqlimit(e,c)
 	return e:GetHandlerPlayer()~=c:GetControler() or e:GetHandler():GetEquipTarget()==c
 end
@@ -39,7 +39,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,tc,chk)
 	Duel.SetOperationInfo(0,CATEGORY_CONTROL,tc,1,0,0)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return tp~=Duel.GetTurnPlayer()
+	return Duel.IsTurnPlayer(1-tp)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -53,7 +53,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Damage(p,d,REASON_EFFECT)
 end
 function s.desfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x45)
+	return c:IsFaceup() and c:IsSetCard(SET_ARCHFIEND)
 end
 function s.descon(e)
 	return not Duel.IsExistingMatchingCard(s.desfilter,e:GetHandlerPlayer(),LOCATION_ONFIELD,0,1,nil)

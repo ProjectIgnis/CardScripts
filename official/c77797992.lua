@@ -1,4 +1,5 @@
 --森の聖獣 アルパカリブ
+--Alpacaribou, Mystical Beast of the Forest
 local s,id=GetID()
 function s.initial_effect(c)
 	--indes1
@@ -31,11 +32,11 @@ function s.cona(e)
 	return e:GetHandler():IsAttackPos()
 end
 function s.targeta(e,c)
-	return c:IsPosition(POS_FACEUP_ATTACK) and c:IsRace(RACE_WINGEDBEAST+RACE_PLANT+RACE_INSECT)
+	return c:IsPosition(POS_FACEUP_ATTACK) and c:IsRace(RACE_WINGEDBEAST|RACE_PLANT|RACE_INSECT)
 end
 function s.cond(e)
 	return e:GetHandler():IsDefensePos()
 end
 function s.targetd(e,c)
-	return c:IsPosition(POS_FACEUP_DEFENSE) and c:IsRace(RACE_WINGEDBEAST+RACE_PLANT+RACE_INSECT)
+	return c:IsPosition(POS_FACEUP_DEFENSE) and c:IsRace(RACE_WINGEDBEAST|RACE_PLANT|RACE_INSECT)
 end

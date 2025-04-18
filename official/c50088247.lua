@@ -1,4 +1,5 @@
 --氷結界の伝道師
+--Prior of the Ice Barrier
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -17,18 +18,18 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e2:SetCost(s.spcost2)
+	e2:SetCost(Cost.SelfTribute)
 	e2:SetTarget(s.sptg2)
 	e2:SetOperation(s.spop2)
 	c:RegisterEffect(e2)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
 end
-s.listed_series={0x2f}
+s.listed_series={SET_ICE_BARRIER}
 function s.counterfilter(c)
 	return not c:IsLevelAbove(5)
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x2f)
+	return c:IsFaceup() and c:IsSetCard(SET_ICE_BARRIER)
 end
 function s.spcon(e,c)
 	if c==nil then return true end
@@ -42,7 +43,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.sumlimit)
 	Duel.RegisterEffect(e1,tp)
@@ -50,12 +51,8 @@ end
 function s.sumlimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return c:IsLevelAbove(5)
 end
-function s.spcost2(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() end
-	Duel.Release(e:GetHandler(),REASON_COST)
-end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x2f) and c:GetCode()~=id and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_ICE_BARRIER) and c:GetCode()~=id and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.filter(chkc,e,tp) end

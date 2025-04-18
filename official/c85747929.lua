@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,id)
-	e2:SetCost(aux.dxmcostgen(1,1,nil))
+	e2:SetCost(Cost.Detach(1,1,nil))
 	e2:SetTarget(s.target)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
@@ -53,7 +53,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_PHOTON,SET_GALAXY}
 function s.filter(c)
-	return (c:IsSetCard(SET_PHOTON) or c:IsSetCard(SET_GALAXY)) and (c:IsAbleToHand() or c:IsAbleToGrave())
+	return c:IsSetCard({SET_PHOTON,SET_GALAXY}) and (c:IsAbleToHand() or c:IsAbleToGrave())
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

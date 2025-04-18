@@ -1,7 +1,6 @@
 --転生炎獣ラクーン
 --Salamangreat Raccoon
 --Scripted by AlphaKretin
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Gain LP equal to opponent's attacking monster's ATK
@@ -12,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCondition(s.lpcon)
-	e1:SetCost(s.lpcost)
+	e1:SetCost(Cost.SelfToGrave)
 	e1:SetTarget(s.lptg)
 	e1:SetOperation(s.lpop)
 	c:RegisterEffect(e1)
@@ -29,15 +28,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x119}
-
+s.listed_series={SET_SALAMANGREAT}
 function s.lpcon(e,tp,eg,ep,ev,re,r,rp)
 	local d=Duel.GetAttackTarget()
-	return d and d:IsControler(tp) and d:IsFaceup() and d:IsSetCard(0x119)
-end
-function s.lpcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
+	return d and d:IsControler(tp) and d:IsFaceup() and d:IsSetCard(SET_SALAMANGREAT)
 end
 function s.lpfilter(c,e)
 	return c and c:IsOnField() and c:IsFaceup() and c:IsCanBeEffectTarget(e)
@@ -68,7 +62,7 @@ function s.lpop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 		e1:SetRange(LOCATION_MZONE)
 		e1:SetValue(1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tg:RegisterEffect(e1)
 	end
 end
@@ -77,7 +71,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local bc=tc:GetBattleTarget()
 	return #eg==1
 		and tc:IsLocation(LOCATION_GRAVE) and tc:IsReason(REASON_BATTLE)
-		and bc:IsRelateToBattle() and bc:IsControler(tp) and bc:IsSetCard(0x119)
+		and bc:IsRelateToBattle() and bc:IsControler(tp) and bc:IsSetCard(SET_SALAMANGREAT)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

@@ -1,4 +1,5 @@
 --カラクリ兵 弐参六
+--Karakuri Soldier mdl 236 "Nisamu"
 local s,id=GetID()
 function s.initial_effect(c)
 	--must attack
@@ -26,7 +27,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x11}
+s.listed_series={SET_KARAKURI}
 function s.poscon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsAttackPos()
 end
@@ -40,7 +41,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsLocation(LOCATION_GRAVE) and e:GetHandler():IsReason(REASON_BATTLE)
 end
 function s.filter(c,e,tp)
-	return c:IsLevelBelow(4) and c:IsSetCard(0x11) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsLevelBelow(4) and c:IsSetCard(SET_KARAKURI) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

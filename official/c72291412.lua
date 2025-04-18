@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Fusion summon using materials from the GY
-	local params = {fusfilter=aux.FilterBoolFunction(Card.IsSetCard,0x10af),matfilter=aux.FALSE,extrafil=s.fextra,
+	local params = {fusfilter=aux.FilterBoolFunction(Card.IsSetCard,SET_DDD),matfilter=aux.FALSE,extrafil=s.fextra,
 					extraop=Fusion.BanishMaterial,gc=Fusion.ForcedHandler,extratg=s.extratarget}
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
@@ -14,9 +14,9 @@ function s.initial_effect(c)
 	e1:SetOperation(Fusion.SummonEffOP(params))
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x10af}
+s.listed_series={SET_DDD}
 function s.fextra(e,tp,mg)
-	if not Duel.IsPlayerAffectedByEffect(tp,69832741) then
+	if not Duel.IsPlayerAffectedByEffect(tp,CARD_SPIRIT_ELIMINATION) then
 		return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsAbleToRemove),tp,LOCATION_GRAVE,0,nil)
 	end
 	return nil

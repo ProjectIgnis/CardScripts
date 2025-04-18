@@ -42,7 +42,7 @@ function s.spcheck(g,lc,tp)
 	return g:CheckSameProperty(Card.GetRace,lc,SUMMON_TYPE_LINK,tp)
 end
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
+	return e:GetHandler():IsLinkSummoned()
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
@@ -58,7 +58,7 @@ function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return c:IsCode(id) and sumtype&SUMMON_TYPE_LINK==SUMMON_TYPE_LINK
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
+	return e:GetHandler():IsLinkSummoned()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local lg=e:GetHandler():GetLinkedGroup():Filter(Card.IsAbleToHand,nil)

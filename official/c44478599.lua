@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e1:SetCondition(function(e) return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK) end)
+	e1:SetCondition(function(e) return e:GetHandler():IsLinkSummoned() end)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
@@ -37,8 +37,8 @@ function s.initial_effect(c)
 	e3:SetOperation(s.atop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x2157,0x1157}
-s.listed_names={27520594}
+s.listed_series={SET_SUNVINE,SET_SUNAVALON}
+s.listed_names={27520594} --"Sunseed Genius Loci"
 function s.matcheck(g,lc,sumtype,tp)
 	return g:IsExists(Card.IsType,1,nil,TYPE_LINK,lc,sumtype,tp)
 end
@@ -47,7 +47,7 @@ function s.spfilter(c,e,tp)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end   
+		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
@@ -58,10 +58,10 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.atfilter(c,lg)
-	return c:IsSetCard(0x2157) and c:IsLinkMonster() and lg and lg:IsContains(c)
+	return c:IsSetCard(SET_SUNVINE) and c:IsLinkMonster() and lg and lg:IsContains(c)
 end
 function s.valfilter(c)
-	return c:IsSetCard(0x1157) and c:IsLinkMonster()
+	return c:IsSetCard(SET_SUNAVALON) and c:IsLinkMonster()
 end
 function s.attg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local lg=e:GetHandler():GetLinkedGroup()
@@ -81,7 +81,7 @@ function s.atop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetCode(EFFECT_EXTRA_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		e1:SetValue(ct-1)
 		tc:RegisterEffect(e1)
 	elseif ct==0 then
@@ -89,8 +89,8 @@ function s.atop(e,tp,eg,ep,ev,re,r,rp)
 		local e2=Effect.CreateEffect(e:GetHandler())
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_CANNOT_ATTACK)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e2:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e2)
 	end
-	tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,2))
+	tc:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,2))
 end

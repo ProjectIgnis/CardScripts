@@ -21,7 +21,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.costfilter1(c,tp)
 	return (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and c:IsMonster() and c:IsAbleToRemoveAsCost()
-		and Duel.IsExistingMatchingCard(s.costfilter2,tp,LOCATION_HAND+LOCATION_MZONE,0,1,c,c,tp)
+		and Duel.IsExistingMatchingCard(s.costfilter2,tp,LOCATION_HAND|LOCATION_MZONE,0,1,c,c,tp)
 end
 function s.costfilter2(c,tc,tp)
 	return (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and c:IsMonster() and c:IsAbleToRemoveAsCost()
@@ -37,13 +37,13 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		if e:GetLabel()~=100 then return false end
 		e:SetLabel(0)
-		return e:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsExistingMatchingCard(s.costfilter1,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil,tp)
+		return e:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsExistingMatchingCard(s.costfilter1,tp,LOCATION_HAND|LOCATION_MZONE,0,1,nil,tp)
 	end
 	e:SetLabel(0)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g1=Duel.SelectMatchingCard(tp,s.costfilter1,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,nil,tp)
+	local g1=Duel.SelectMatchingCard(tp,s.costfilter1,tp,LOCATION_HAND|LOCATION_MZONE,0,1,1,nil,tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g2=Duel.SelectMatchingCard(tp,s.costfilter2,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,g1:GetFirst(),g1:GetFirst(),tp)
+	local g2=Duel.SelectMatchingCard(tp,s.costfilter2,tp,LOCATION_HAND|LOCATION_MZONE,0,1,1,g1:GetFirst(),g1:GetFirst(),tp)
 	g1:Merge(g2)
 	Duel.SetTargetCard(g1)
 	Duel.Remove(g1,POS_FACEUP,REASON_COST)
@@ -60,4 +60,3 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-

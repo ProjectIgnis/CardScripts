@@ -1,6 +1,5 @@
 --光竜星－リフン
 --Chiwen, Light of the Yang Zing
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon 1 "Yang Zing" monster from deck
@@ -29,16 +28,15 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x9e}
+s.listed_series={SET_YANG_ZING}
 s.listed_names={id}
-
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsReason(REASON_DESTROY) and c:IsReason(REASON_BATTLE+REASON_EFFECT)
+	return c:IsReason(REASON_DESTROY) and c:IsReason(REASON_BATTLE|REASON_EFFECT)
 		and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousControler(tp)
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x9e) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_YANG_ZING) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -52,7 +50,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 end
 function s.cfilter(c,tp)
-	return c:IsSetCard(0x9e) and c:IsReason(REASON_DESTROY)
+	return c:IsSetCard(SET_YANG_ZING) and c:IsReason(REASON_DESTROY)
 		and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
@@ -73,7 +71,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
-		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
+		e1:SetReset(RESET_EVENT|RESETS_REDIRECT)
 		e1:SetValue(LOCATION_REMOVED)
 		c:RegisterEffect(e1,true)
 	end

@@ -18,14 +18,14 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,id)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.xtg)
 	e2:SetOperation(s.xop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x126}
+s.listed_series={SET_TIME_THIEF}
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x126) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_TIME_THIEF) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -41,7 +41,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.xfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x126) and c:IsType(TYPE_XYZ)
+	return c:IsFaceup() and c:IsSetCard(SET_TIME_THIEF) and c:IsType(TYPE_XYZ)
 end
 function s.xcheck(sg,e,tp)
 	return sg:FilterCount(Card.IsMonster,nil)==1
@@ -50,7 +50,7 @@ function s.xcheck(sg,e,tp)
 end
 function s.xtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.xfilter(chkc) end
-	local g=Duel.GetMatchingGroup(Card.IsSetCard,tp,LOCATION_GRAVE,0,e:GetHandler(),0x126)
+	local g=Duel.GetMatchingGroup(Card.IsSetCard,tp,LOCATION_GRAVE,0,e:GetHandler(),SET_TIME_THIEF)
 	if chk==0 then return Duel.IsExistingTarget(s.xfilter,tp,LOCATION_MZONE,0,1,nil)
 		and aux.SelectUnselectGroup(g,e,tp,3,3,s.xcheck,0) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
@@ -59,7 +59,7 @@ end
 function s.xop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not tc:IsRelateToEffect(e) or tc:IsImmuneToEffect(e) then return end
-	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(Card.IsSetCard),tp,LOCATION_GRAVE,0,nil,0x126)
+	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(Card.IsSetCard),tp,LOCATION_GRAVE,0,nil,SET_TIME_THIEF)
 	local sg=aux.SelectUnselectGroup(g,e,tp,3,3,s.xcheck,1,tp,HINTMSG_XMATERIAL)
 	if #sg==3 then
 		Duel.Overlay(tc,sg)

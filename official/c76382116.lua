@@ -1,5 +1,5 @@
 --鉄の王 ドヴェルグス
---Dvergs, Generaid of Iron
+--Dovelgus, Generaider Boss of Iron
 --Scripted by AlphaKretin and Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -17,12 +17,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x134}
+s.listed_series={SET_GENERAIDER}
 function s.cfilter(c)
-	return c:IsSetCard(0x134) or c:IsRace(RACE_MACHINE)
+	return c:IsSetCard(SET_GENERAIDER) or c:IsRace(RACE_MACHINE)
 end
 function s.filter(c,e,tp)
-	return (c:IsSetCard(0x134) or c:IsRace(RACE_MACHINE)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return (c:IsSetCard(SET_GENERAIDER) or c:IsRace(RACE_MACHINE)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.check(g)
 	return  function(sg,tp)

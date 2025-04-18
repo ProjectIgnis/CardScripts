@@ -1,4 +1,5 @@
 --昇華する魂
+--Ascending Soul
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -21,7 +22,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.cfilter(c)
-	return c:IsSummonType(SUMMON_TYPE_RITUAL)
+	return c:IsRitualSummoned()
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil)

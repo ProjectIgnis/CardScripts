@@ -48,7 +48,7 @@ end
 s.listed_series={SET_APPLIANCER}
 function s.lkcon(e)
 	local c=e:GetHandler()
-	return c:IsStatus(STATUS_SPSUMMON_TURN) and c:IsSummonType(SUMMON_TYPE_LINK)
+	return c:IsStatus(STATUS_SPSUMMON_TURN) and c:IsLinkSummoned()
 end
 function s.dacon(e)
 	return e:GetHandler():GetMutualLinkedGroupCount()==0

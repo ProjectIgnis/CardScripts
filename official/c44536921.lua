@@ -7,7 +7,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCategory(CATEGORY_COUNTER)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(0,TIMING_SUMMON+TIMING_SPSUMMON)
+	e1:SetHintTiming(0,TIMING_SUMMON|TIMING_SPSUMMON)
 	e1:SetCountLimit(1,id)
 	e1:SetCost(s.cost)
 	e1:SetTarget(s.target)
@@ -22,16 +22,16 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,{id,1})
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetCondition(s.descon)
 	e2:SetTarget(s.destg)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
 s.counter_place_list={COUNTER_PREDATOR}
-s.listed_series={0x10f3}
+s.listed_series={SET_PREDAPLANT}
 function s.thcfilter(c)
-	return c:IsMonster() and c:IsSetCard(0x10f3) and c:IsAbleToGraveAsCost()
+	return c:IsMonster() and c:IsSetCard(SET_PREDAPLANT) and c:IsAbleToGraveAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thcfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -54,7 +54,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_CHANGE_LEVEL)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			e1:SetCondition(s.lvcon)
 			e1:SetValue(1)
 			tc:RegisterEffect(e1)
@@ -65,7 +65,7 @@ function s.lvcon(e)
 	return e:GetHandler():GetCounter(COUNTER_PREDATOR)>0
 end
 function s.cfilter(c,tp)
-	return c:IsAttribute(ATTRIBUTE_DARK) and c:GetSummonPlayer()==tp and c:IsSummonType(SUMMON_TYPE_FUSION)
+	return c:IsAttribute(ATTRIBUTE_DARK) and c:GetSummonPlayer()==tp and c:IsFusionSummoned()
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)

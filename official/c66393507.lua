@@ -45,14 +45,14 @@ function s.initial_effect(c)
 	e5:SetValue(aux.ChangeBattleDamage(1,DOUBLE_DAMAGE))
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x104}
+s.listed_series={SET_KRAWLER}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return (c:IsReason(REASON_BATTLE) or (c:GetReasonPlayer()==1-tp and c:IsReason(REASON_EFFECT)))
 		and c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousControler(tp)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x104) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
+	return c:IsSetCard(SET_KRAWLER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
@@ -79,8 +79,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.indtg(e,c)
-	return e:GetHandler():GetLinkedGroup():IsContains(c) and c:IsSetCard(0x104)
+	return e:GetHandler():GetLinkedGroup():IsContains(c) and c:IsSetCard(SET_KRAWLER)
 end
 function s.damtg(e,c)
-	return c:IsSetCard(0x104) and c:GetBattleTarget()~=nil and e:GetHandler():GetLinkedGroup():IsContains(c)
+	return c:IsSetCard(SET_KRAWLER) and c:GetBattleTarget()~=nil and e:GetHandler():GetLinkedGroup():IsContains(c)
 end

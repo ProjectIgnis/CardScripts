@@ -60,7 +60,7 @@ function s.replaceop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetValue(TYPE_SPELL|TYPE_CONTINUOUS)
 	e1:SetReset(RESET_EVENT|RESETS_STANDARD&~RESET_TURN_SET)
 	c:RegisterEffect(e1)
-	Duel.RaiseEvent(c,EVENT_CUSTOM+47408488,e,0,tp,0,0)
+	Duel.RaiseEvent(c,EVENT_CUSTOM+CARD_CRYSTAL_TREE,e,0,tp,0,0)
 end
 function s.negatkcon(e,tp,eg,ep,ev,re,r,rp)
 	local d=Duel.GetAttackTarget()

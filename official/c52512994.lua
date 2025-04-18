@@ -1,4 +1,5 @@
 --火車
+--Kasha
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -38,7 +39,7 @@ function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,#g,0,0)
 end
 function s.rfilter(c)
-	return c:IsLocation(LOCATION_DECK+LOCATION_EXTRA) and c:IsRace(RACE_ZOMBIE) and (c:GetPreviousPosition()&POS_FACEUP)~=0
+	return c:IsLocation(LOCATION_DECK|LOCATION_EXTRA) and c:IsRace(RACE_ZOMBIE) and (c:GetPreviousPosition()&POS_FACEUP)~=0
 end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsAbleToDeck,tp,LOCATION_MZONE,LOCATION_MZONE,e:GetHandler())
@@ -50,7 +51,7 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetValue(rt*1000)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		c:RegisterEffect(e1)
 	end
 end

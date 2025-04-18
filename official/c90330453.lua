@@ -1,4 +1,5 @@
 --魔女狩り
+--Last Day of Witch
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

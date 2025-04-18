@@ -1,4 +1,5 @@
 --召喚獣ライディーン
+--Invoked Raidjin
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material

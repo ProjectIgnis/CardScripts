@@ -1,6 +1,5 @@
 --Ａ・ジェネクス・ドゥルダーク
 --Genex Ally Duradark
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Destroy 1 of opponent's monster, who has same attribute as this card
@@ -24,7 +23,7 @@ function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_OATH+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetCode(EFFECT_CANNOT_ATTACK_ANNOUNCE)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESETS_STANDARD_PHASE_END)
 	e:GetHandler():RegisterEffect(e1)
 end
 function s.filter(c,att)

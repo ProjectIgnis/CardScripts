@@ -9,16 +9,12 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,id)
-	e1:SetCost(s.cost)
+	e1:SetCost(Cost.PayLP(1000))
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
 s.roll_dice=true
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,1000) end
-	Duel.PayLPCost(tp,1000)
-end
 function s.filter1(c)
 	return c:IsSummonable(true,nil)
 end
@@ -37,7 +33,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_DICE,nil,0,tp,1)
 	Duel.SetOperationInfo(0,CATEGORY_SUMMON,nil,1,tp,0)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_GRAVE)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND|LOCATION_GRAVE)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local d=Duel.TossDice(tp,1)
@@ -64,4 +60,3 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-

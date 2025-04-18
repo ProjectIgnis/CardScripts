@@ -7,8 +7,8 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetCode(EFFECT_CHANGE_CODE)
-	e1:SetRange(LOCATION_MZONE+LOCATION_GRAVE)
-	e1:SetValue(78193831)
+	e1:SetRange(LOCATION_MZONE|LOCATION_GRAVE)
+	e1:SetValue(CARD_BUSTER_BLADER)
 	c:RegisterEffect(e1)
 	--Equip
 	local e2=Effect.CreateEffect(c)
@@ -34,9 +34,10 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
+s.listed_names={CARD_BUSTER_BLADER}
 function s.filter(c,e,tp)
 	return c:IsMonster() and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(1-tp)
-		and c:IsLocation(LOCATION_GRAVE) and c:IsReason(REASON_EFFECT+REASON_BATTLE) and c:IsCanBeEffectTarget(e) and not c:IsForbidden()
+		and c:IsLocation(LOCATION_GRAVE) and c:IsReason(REASON_EFFECT|REASON_BATTLE) and c:IsCanBeEffectTarget(e) and not c:IsForbidden()
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return eg:IsContains(chkc) and s.filter(chkc,e,tp) end

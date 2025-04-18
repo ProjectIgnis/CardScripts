@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCondition(s.tgcon)
-	e1:SetCost(s.tgcost)
+	e1:SetCost(Cost.SelfTribute)
 	e1:SetTarget(s.tgtg)
 	e1:SetOperation(s.tgop)
 	c:RegisterEffect(e1)
@@ -35,22 +35,18 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_GRAVE)
 	e3:SetCountLimit(1,{id,1})
 	e3:SetCondition(aux.exccon)
-	e3:SetCost(aux.bfgcost)
+	e3:SetCost(Cost.SelfBanish)
 	e3:SetTarget(s.thtg)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xfd,0xfe}
+s.listed_series={SET_WORLD_CHALICE,SET_WORLD_LEGACY}
 s.listed_names={id}
 function s.tgfilter(c)
 	return (c:GetSummonLocation()&LOCATION_EXTRA)==LOCATION_EXTRA and c:IsLocation(LOCATION_MZONE)
 end
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.tgfilter,1,nil)
-end
-function s.tgcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() end
-	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -65,10 +61,10 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP) and not c:IsSummonType(SUMMON_TYPE_SPECIAL)
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP) and not c:IsSpecialSummoned()
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0xfd) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_WORLD_CHALICE) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
@@ -85,7 +81,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thfilter(c)
-	return c:IsSetCard(0xfe) and c:IsAbleToHand()
+	return c:IsSetCard(SET_WORLD_LEGACY) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

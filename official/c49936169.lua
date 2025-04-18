@@ -17,20 +17,20 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={id}
-s.listed_series={0x107,0xb2}
+s.listed_series={SET_FA,SET_UA}
 function s.thfilter(c)
-	return c:IsAbleToHand() and c:IsMonster() and (c:IsSetCard(0x107) or c:IsSetCard(0xb2)) and (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE))
+	return c:IsAbleToHand() and c:IsMonster() and (c:IsSetCard(SET_FA) or c:IsSetCard(SET_UA)) and (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE))
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE+LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(s.thfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE|LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(s.thfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectTarget(tp,s.thfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil)
+	local g=Duel.SelectTarget(tp,s.thfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,500)
 end
 function s.tdfilter(c)
-	return  c:IsAbleToDeck() and c:IsMonster() and not c:IsPublic() and (c:IsSetCard(0x107) or c:IsSetCard(0xb2))
+	return c:IsAbleToDeck() and c:IsMonster() and not c:IsPublic() and c:IsSetCard({SET_FA,SET_UA})
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()

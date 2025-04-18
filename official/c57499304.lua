@@ -1,5 +1,5 @@
 --七皇転生
---Reincarnation of the Seven Emperors
+--Reincarnation of the Seventh Emperors
 --Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
@@ -13,11 +13,11 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x48}
+s.listed_series={SET_NUMBER}
 function s.cfilter(c)
 	if not c:IsType(TYPE_XYZ) then return false end
 	local no=c.xyz_number
-	return (c:IsSetCard(0x48) and no and no>=101 and no<=107)
+	return (c:IsSetCard(SET_NUMBER) and no and no>=101 and no<=107)
 		or c:GetOverlayGroup():IsExists(s.cfilter,1,nil)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
@@ -46,11 +46,11 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EVENT_PHASE+PHASE_END)
 	e1:SetCountLimit(1)
 	e1:SetOperation(s.op)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.spfilter(c,e,tp)
-	return c:IsRankBelow(3) and not c:IsSetCard(0x48) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsRankBelow(3) and not c:IsSetCard(SET_NUMBER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)

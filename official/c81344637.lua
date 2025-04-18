@@ -1,5 +1,5 @@
 --呪眼の眷属 バジリウス
---Basilius, Retainer of the Evil Eye
+--Basilius, Familiar of the Evil Eye
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
@@ -23,15 +23,15 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tgop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x129}
+s.listed_series={SET_EVIL_EYE}
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x129),tp,LOCATION_MZONE,0,1,nil)
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_EVIL_EYE),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.tgfilter(c)
-	return c:IsSpellTrap() and c:IsSetCard(0x129) and c:IsAbleToGrave()
+	return c:IsSpellTrap() and c:IsSetCard(SET_EVIL_EYE) and c:IsAbleToGrave()
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil) end

@@ -1,4 +1,5 @@
 --メタルフォーゼ・シルバード
+--Metalfoes Silverd
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -24,7 +25,7 @@ function s.desfilter(c,tp)
 	end
 end
 function s.filter(c,ignore)
-	return c:IsSetCard(0xe1) and c:IsSpellTrap() and c:IsSSetable(ignore)
+	return c:IsSetCard(SET_METALFOES) and c:IsSpellTrap() and c:IsSSetable(ignore)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(tp) and s.desfilter(chkc,tp) and chkc~=e:GetHandler() end

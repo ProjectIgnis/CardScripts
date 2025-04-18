@@ -35,16 +35,16 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x1d}
+s.listed_series={SET_KOAKI_MEIRU}
 s.listed_names={36623431}
 function s.mtcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.cfilter1(c)
 	return c:IsCode(36623431) and c:IsAbleToGraveAsCost()
 end
 function s.cfilter2(c)
-	return c:IsMonster() and c:IsSetCard(0x1d) and c:IsAbleToGraveAsCost()
+	return c:IsMonster() and c:IsSetCard(SET_KOAKI_MEIRU) and c:IsAbleToGraveAsCost()
 end
 function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

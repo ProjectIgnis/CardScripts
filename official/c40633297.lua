@@ -1,4 +1,5 @@
 --シモッチによる副作用
+--Bad Reaction to Simochi
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

@@ -64,7 +64,7 @@ end
 s.listed_names={34022290,81954378}
 function s.cfilter(c,tp)
 	return c:IsFaceup() and c:IsControler(tp)
-		and c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsReason(REASON_DESTROY) and c:IsCode(34022290)
+		and c:IsReason(REASON_BATTLE|REASON_EFFECT) and c:IsReason(REASON_DESTROY) and c:IsCode(34022290)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)

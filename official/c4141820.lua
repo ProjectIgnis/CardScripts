@@ -50,5 +50,5 @@ function s.hdcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.hdop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,id)
-	Duel.DiscardHand(1-e:GetLabel(),nil,1,1,REASON_EFFECT+REASON_DISCARD)
+	Duel.DiscardHand(1-e:GetLabel(),nil,1,1,REASON_EFFECT|REASON_DISCARD)
 end

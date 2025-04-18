@@ -1,4 +1,5 @@
 --EMインコーラス
+--Performapal Parrotrio
 local s,id=GetID()
 function s.initial_effect(c)
 	Pendulum.AddProcedure(c)
@@ -22,10 +23,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x98,0x99,0x9f}
+s.listed_series={SET_MAGICIAN,SET_ODD_EYES,SET_PERFORMAPAL}
 s.listed_names={id}
 function s.scfilter(c)
-	return (c:IsSetCard(0x98) or c:IsSetCard(0x99) or c:IsSetCard(0x9f)) and not c:IsCode(id)
+	return (c:IsSetCard(SET_MAGICIAN) or c:IsSetCard(SET_ODD_EYES) or c:IsSetCard(SET_PERFORMAPAL)) and not c:IsCode(id)
 end
 function s.sccon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.scfilter,tp,LOCATION_PZONE,0,1,e:GetHandler())
@@ -40,14 +41,14 @@ function s.scop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_CHANGE_LSCALE)
 	e1:SetValue(7)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESETS_STANDARD_DISABLE_PHASE_END)
 	c:RegisterEffect(e1)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_CHANGE_RSCALE)
 	c:RegisterEffect(e2)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x9f) and not c:IsType(TYPE_PENDULUM) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_PERFORMAPAL) and not c:IsType(TYPE_PENDULUM) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

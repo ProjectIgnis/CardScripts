@@ -1,4 +1,5 @@
 --バーバリアン・ハウリング
+--Battleguard Howling
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -25,7 +26,7 @@ function s.cfilter(c,tp)
 	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:IsRace(RACE_WARRIOR)
 end
 function s.condition2(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp and re:IsActiveType(TYPE_MONSTER) and eg:IsExists(s.cfilter,1,nil,tp)
+	return rp~=tp and re:IsMonsterEffect() and eg:IsExists(s.cfilter,1,nil,tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsFaceup() end

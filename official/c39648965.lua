@@ -1,4 +1,5 @@
 --機皇兵ワイゼル・アイン
+--Meklord Army of Wisel
 local s,id=GetID()
 function s.initial_effect(c)
 	--atkup
@@ -21,9 +22,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.pierceop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x13}
+s.listed_series={SET_MEKLORD}
 function s.atkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x13)
+	return c:IsFaceup() and c:IsSetCard(SET_MEKLORD)
 end
 function s.val(e,c)
 	return Duel.GetMatchingGroupCount(s.atkfilter,0,LOCATION_MZONE,LOCATION_MZONE,c)*100
@@ -31,7 +32,7 @@ end
 function s.piercecon(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
-	return d and a:IsControler(tp) and a~=e:GetHandler() and d:IsDefensePos() and a:IsSetCard(0x13)
+	return d and a:IsControler(tp) and a~=e:GetHandler() and d:IsDefensePos() and a:IsSetCard(SET_MEKLORD)
 end
 function s.piercetg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -43,7 +44,7 @@ function s.pierceop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_PIERCE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		a:RegisterEffect(e1)
 	end
 end

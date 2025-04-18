@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(0,TIMING_BATTLE_END+TIMING_END_PHASE)
+	e1:SetHintTiming(0,TIMING_BATTLE_END|TIMING_END_PHASE)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
@@ -24,7 +24,7 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	for tc in aux.Next(eg) do
 		if tc:IsFaceup() and tc:IsRelateToBattle() then
-			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+			tc:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 		end
 	end
 end

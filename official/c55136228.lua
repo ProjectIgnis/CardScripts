@@ -1,4 +1,5 @@
 --剣闘獣の底力
+--Indomitable Gladiator Beast
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -24,7 +25,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_GLADIATOR_BEAST}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetCurrentPhase()==PHASE_DAMAGE and Duel.IsDamageCalculated() then return false end
+	if Duel.IsPhase(PHASE_DAMAGE) and Duel.IsDamageCalculated() then return false end
 	return true
 end
 function s.filter(c)
@@ -42,7 +43,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		e1:SetValue(500)
 		tc:RegisterEffect(e1)
 	end

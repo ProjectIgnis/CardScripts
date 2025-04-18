@@ -1,16 +1,16 @@
--- ロイヤル・ストレート・スラッシャー
--- Royal Straight Slasher
--- Scripted by Hatter
+--ロイヤル・ストレート・スラッシャー
+--Royal Straight Slasher
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	-- Must be Special Summoned by "Royal Straight"
+	--Must be Special Summoned by "Royal Straight"
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	c:RegisterEffect(e1)
-	-- Destroy all opponent cards
+	--Destroy all opponent cards
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_TOGRAVE+CATEGORY_DESTROY)
@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.destg)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
-	-- Special Summon up to 3 LIGHT Warrior monsters
+	--Special Summon up to 3 LIGHT Warrior monsters
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -50,14 +50,14 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local dg=Duel.GetMatchingGroup(nil,tp,0,LOCATION_ONFIELD,nil)
 	if chk==0 then
 		if #dg<1 then return false end
-		local tg=Duel.GetMatchingGroup(s.tgfilter,tp,LOCATION_HAND+LOCATION_DECK,0,nil)
+		local tg=Duel.GetMatchingGroup(s.tgfilter,tp,LOCATION_HAND|LOCATION_DECK,0,nil)
 		return #tg>4 and aux.SelectUnselectGroup(tg,e,tp,5,5,s.tgrescon,0)
 	end
-	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,5,tp,LOCATION_HAND+LOCATION_DECK)
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,5,tp,LOCATION_HAND|LOCATION_DECK)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,dg,#dg,0,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(s.tgfilter,tp,LOCATION_HAND+LOCATION_DECK,0,nil)
+	local g=Duel.GetMatchingGroup(s.tgfilter,tp,LOCATION_HAND|LOCATION_DECK,0,nil)
 	if #g<5 then return end
 	local tg=aux.SelectUnselectGroup(g,e,tp,5,5,s.tgrescon,1,tp,HINTMSG_TOGRAVE)
 	if #tg==5 and Duel.SendtoGrave(tg,REASON_EFFECT)>0 then

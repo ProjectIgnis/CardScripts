@@ -1,5 +1,5 @@
 --死償不知
---Recklessness and Punishment
+--Imprudent Intrusion
 --Scripted by Neo Yuno
 local s,id=GetID()
 function s.initial_effect(c)

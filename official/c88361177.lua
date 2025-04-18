@@ -1,4 +1,5 @@
 --ドラグニティ－アングス
+--Dragunity Angusticlavii
 local s,id=GetID()
 function s.initial_effect(c)
 	--pierce
@@ -8,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.pcon)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x29}
+s.listed_series={SET_DRAGUNITY}
 function s.pcon(e)
-	return e:GetHandler():GetEquipGroup():IsExists(Card.IsSetCard,1,nil,0x29)
+	return e:GetHandler():GetEquipGroup():IsExists(Card.IsSetCard,1,nil,SET_DRAGUNITY)
 end

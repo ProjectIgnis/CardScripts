@@ -36,7 +36,7 @@ function s.initial_effect(c)
 	e8:SetDescription(aux.Stringid(id,0))
 	e8:SetCategory(CATEGORY_DAMAGE)
 	e8:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
-	e8:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e8:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e8:SetRange(LOCATION_SZONE)
 	e8:SetCountLimit(1)
 	e8:SetCondition(s.damcon)
@@ -44,23 +44,23 @@ function s.initial_effect(c)
 	e8:SetOperation(s.damop)
 	c:RegisterEffect(e8)
 end
-s.listed_series={0xaf}
+s.listed_series={SET_DD}
 function s.matlimit(e,c,sumtype,tp)
 	if tp==PLAYER_NONE then tp=c:GetControler() end
 	return e:GetHandlerPlayer()==1-tp
 end
 function s.condition(e)
-	return Duel.IsExistingMatchingCard(Card.IsSetCard,e:GetHandlerPlayer(),LOCATION_PZONE,0,2,nil,0xaf)
+	return Duel.IsExistingMatchingCard(Card.IsSetCard,e:GetHandlerPlayer(),LOCATION_PZONE,0,2,nil,SET_DD)
 end
 function s.sumlimit(e,c)
 	if not c then return false end
 	return not c:IsControler(e:GetHandlerPlayer())
 end
 function s.evalue(e,re,rp)
-	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and rp==1-e:GetHandlerPlayer()
+	return re:IsSpellTrapEffect() and rp==1-e:GetHandlerPlayer()
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

@@ -41,7 +41,7 @@ function s.initial_effect(c)
 end
 s.counter_place_list={COUNTER_SPELL}
 function s.addcc1(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
+	return e:GetHandler():IsSynchroSummoned()
 end
 function s.addct1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

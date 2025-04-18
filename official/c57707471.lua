@@ -1,4 +1,5 @@
 --No.21 氷結のレディ・ジャスティス
+--Number 21: Frozen Lady Justice
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -17,7 +18,7 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1)
-	e3:SetCost(s.descost)
+	e3:SetCost(Cost.Detach(1))
 	e3:SetTarget(s.destg)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3,false,REGISTER_FLAG_DETACH_XMAT)
@@ -33,10 +34,6 @@ function s.xyzop(e,tp,chk,mc)
 end
 function s.atkval(e,c)
 	return c:GetOverlayCount()*1000
-end
-function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.desfilter(c)
 	return c:IsDefensePos()

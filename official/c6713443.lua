@@ -1,4 +1,5 @@
 --極炎舞－「星斗」
+--Ultimate Fire Formation - Seito
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -12,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x7c) and c:IsSpellTrap() and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(SET_FIRE_FORMATION) and c:IsSpellTrap() and c:IsAbleToRemoveAsCost()
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,7,nil) end
@@ -21,7 +22,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x79) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_FIRE_FIST) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
@@ -29,7 +30,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 end
 function s.sfilter(c)
-	return c:IsSetCard(0x7c) and c:GetCode()~=id and c:IsSpellTrap() and c:IsSSetable()
+	return c:IsSetCard(SET_FIRE_FORMATION) and c:GetCode()~=id and c:IsSpellTrap() and c:IsSSetable()
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)

@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCondition(function(e,tp) return Duel.GetAttacker():IsControler(1-tp) and Duel.GetAttackTarget()~=e:GetHandler() end)
-	e2:SetCost(aux.dxmcostgen(1,1,nil))
+	e2:SetCost(Cost.Detach(1,1,nil))
 	e2:SetOperation(s.chngtgop)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
 	--Make 1 of your Xyz monsters gain ATK

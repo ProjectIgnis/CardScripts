@@ -4,14 +4,14 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0xe1),2)
+	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_METALFOES),2)
 	--pierce
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_PIERCE)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetTargetRange(LOCATION_MZONE,0)
-	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0xe1))
+	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_METALFOES))
 	e1:SetValue(DOUBLE_DAMAGE)
 	c:RegisterEffect(e1)
 	--destroy
@@ -25,8 +25,8 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xe1}
-s.material_setcode=0xe1
+s.listed_series={SET_METALFOES}
+s.material_setcode=SET_METALFOES
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end

@@ -1,4 +1,5 @@
 --エクリプス・ワイバーン
+--Eclipse Wyvern
 local s,id=GetID()
 function s.initial_effect(c)
 	--remove
@@ -39,8 +40,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if tc then
 		Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
 		e:SetLabelObject(tc)
-		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+0x1e60000,0,1)
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESET_TURN_SET|RESET_TOGRAVE|RESET_TOHAND|RESET_TODECK|RESET_LEAVE|RESET_TOFIELD,0,1)
+		tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1)
 	end
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)

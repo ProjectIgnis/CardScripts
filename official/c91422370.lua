@@ -13,9 +13,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x58}
+s.listed_series={SET_WIND_UP}
 function s.costfilter(c,ft,tp)
-	return c:IsSetCard(0x58) and c:IsAttackAbove(1500)
+	return c:IsSetCard(SET_WIND_UP) and c:IsAttackAbove(1500)
 		and (ft>0 or (c:IsControler(tp) and c:GetSequence()<5)) and (c:IsControler(tp) or c:IsFaceup())
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -25,10 +25,10 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(sg,REASON_COST)
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x58) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_WIND_UP) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.filter2(c,atk,e,tp)
-	return c:IsSetCard(0x58) and c:GetAttack()==atk and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_WIND_UP) and c:GetAttack()==atk and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,nil,e,tp) end

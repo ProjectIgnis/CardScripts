@@ -1,10 +1,10 @@
--- 音響戦士ギタリス
--- Symphonic Warrior Guitaris
--- Scripted by Hatter
+--音響戦士ギタリス
+--Symphonic Warrior Guitariss
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	Pendulum.AddProcedure(c)
-	-- Return self and another "Symphonic Warrior" to hand
+	--Return self and another "Symphonic Warrior" to hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sthtg)
 	e1:SetOperation(s.sthop)
 	c:RegisterEffect(e1)
-	-- Special Summon self
+	--Special Summon self
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	-- Return scale to hand
+	--Return scale to hand
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetCategory(CATEGORY_TOHAND)
@@ -41,10 +41,10 @@ function s.initial_effect(c)
 	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x1066}
+s.listed_series={SET_SYMPHONIC_WARRIOR}
 s.listed_names={75304793}
 function s.sthfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x1066) and c:IsAbleToHand()
+	return c:IsFaceup() and c:IsSetCard(SET_SYMPHONIC_WARRIOR) and c:IsAbleToHand()
 end
 function s.sthtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()

@@ -1,5 +1,5 @@
 --No.XX インフィニティ・ダークホープ
---Number XX - Infinity Dark Hope
+--Number XX: Utopic Dark Infinity
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1,id)
-	e1:SetCost(s.spcost)
+	e1:SetCost(Cost.Detach(1))
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
@@ -27,10 +27,6 @@ function s.initial_effect(c)
 	e2:SetTarget(s.rectg)
 	e2:SetOperation(s.recop)
 	c:RegisterEffect(e2)
-end
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.spfilter(c,e,tp)
 	return c:IsLocation(LOCATION_GRAVE) and c:IsReason(REASON_BATTLE)
@@ -51,7 +47,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSummonType(SUMMON_TYPE_SPECIAL) and c:GetBaseAttack()>0
+	return c:IsFaceup() and c:IsSpecialSummoned() and c:GetBaseAttack()>0
 end
 function s.rectg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()

@@ -1,4 +1,5 @@
 --M・HERO ダーク・ロウ
+--Masked HERO Dark Law
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

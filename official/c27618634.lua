@@ -1,4 +1,5 @@
 --薄幸の乙女
+--The Unhappy Girl
 local s,id=GetID()
 function s.initial_effect(c)
 	--battle indestructable
@@ -46,11 +47,11 @@ function s.atop(e,tp,eg,ep,ev,re,r,rp)
 	local bc=c:GetBattleTarget()
 	if bc and c:IsPosition(POS_FACEUP_ATTACK) then
 		if c:GetFlagEffect(id)==0 then
-			c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+			c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1)
 			e:GetLabelObject():Clear()
 		end
 		e:GetLabelObject():AddCard(bc)
-		bc:RegisterFlagEffect(id+1,RESET_EVENT+RESETS_STANDARD,0,1)
+		bc:RegisterFlagEffect(id+1,RESET_EVENT|RESETS_STANDARD,0,1)
 	end
 end
 function s.atlcon(e)

@@ -22,7 +22,7 @@ s.listed_names={27383110}
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if ep==tp or c:IsStatus(STATUS_BATTLE_DESTROYED) then return false end
-	return (re:IsActiveType(TYPE_MONSTER) or re:IsHasType(EFFECT_TYPE_ACTIVATE)) and Duel.IsChainNegatable(ev)
+	return (re:IsMonsterEffect() or re:IsHasType(EFFECT_TYPE_ACTIVATE)) and Duel.IsChainNegatable(ev)
 end
 function s.costfilter(c)
 	return c:IsRace(RACE_FAIRY) and c:IsAbleToGraveAsCost()

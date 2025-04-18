@@ -1,6 +1,5 @@
 --アクションマジック－フルターン
 --Action Magic - Full Turn
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -23,7 +22,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsAbleToEnterBP() or (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE)
+	return Duel.IsAbleToEnterBP() or Duel.IsBattlePhase()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 or Duel.GetFlagEffect(1-tp,id)==0 end
@@ -36,9 +35,9 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTargetRange(1,1)
 	e1:SetValue(DOUBLE_DAMAGE)
 	e1:SetCondition(s.dcon)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+	Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1)
 end
 function s.dcon(e)
 	return Duel.GetAttackTarget()
@@ -48,7 +47,7 @@ function s.costfilter(c)
 end
 function s.setcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,s.costfilter,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,s.costfilter,1,1,REASON_COST|REASON_DISCARD)
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsSSetable() end

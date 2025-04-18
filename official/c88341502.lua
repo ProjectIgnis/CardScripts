@@ -1,4 +1,5 @@
 --ブラック・アロー
+--Ebon Arrow
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -8,13 +9,10 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(TIMING_DAMAGE_STEP)
-	e1:SetCondition(s.condition)
+	e1:SetCondition(aux.StatChangeDamageStepCondition)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-end
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and chkc:IsFaceup() end
@@ -29,12 +27,12 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(-500)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(e:GetHandler())
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_PIERCE)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e2:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e2)
 		local e3=Effect.CreateEffect(e:GetHandler())
 		e3:SetDescription(aux.Stringid(id,0))
@@ -44,10 +42,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetCondition(s.damcon)
 		e3:SetTarget(s.damtg)
 		e3:SetOperation(s.damop)
-		e3:SetReset(RESET_PHASE+PHASE_END)
+		e3:SetReset(RESET_PHASE|PHASE_END)
 		e3:SetLabelObject(tc)
 		Duel.RegisterEffect(e3,tp)
-		tc:RegisterFlagEffect(id,RESET_EVENT+0x1020000+RESET_PHASE+PHASE_END,0,1)
+		tc:RegisterFlagEffect(id,RESET_EVENT|RESET_CONTROL|RESET_TOFIELD|RESET_PHASE|PHASE_END,0,1)
 	end
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)

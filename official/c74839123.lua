@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e2:SetTargetRange(LOCATION_MZONE,0)
 	e2:SetTarget(aux.TargetBoolFunction(Card.IsType,TYPE_FUSION))
 	e2:SetCode(EFFECT_ADD_SETCODE)
-	e2:SetValue(0xad)
+	e2:SetValue(SET_FRIGHTFUR)
 	c:RegisterEffect(e2)
 	--return
 	local e3=Effect.CreateEffect(c)
@@ -27,20 +27,20 @@ function s.initial_effect(c)
 	e3:SetOperation(s.tdop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xad}
+s.listed_series={SET_FRIGHTFUR}
 function s.cfilter(c)
-	return c:IsSetCard(0xad) and c:IsType(TYPE_FUSION) and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(SET_FRIGHTFUR) and c:IsType(TYPE_FUSION) and c:IsAbleToGraveAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,e:GetHandler())
 		and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_EXTRA,0,2,nil) end
-	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST|REASON_DISCARD)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_EXTRA,0,2,2,nil)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function s.filter(c)
-	return c:IsSetCard(0xad) and c:IsType(TYPE_FUSION) and c:IsAbleToExtra()
+	return c:IsSetCard(SET_FRIGHTFUR) and c:IsType(TYPE_FUSION) and c:IsAbleToExtra()
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -52,6 +52,6 @@ end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) then
-		Duel.SendtoDeck(tc,nil,0,REASON_EFFECT)
+		Duel.SendtoDeck(tc,nil,SEQ_DECKTOP,REASON_EFFECT)
 	end
 end

@@ -26,10 +26,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x141}
+s.listed_series={SET_RIKKA}
 s.listed_names={id}
 function s.filter(c)
-	return c:IsSetCard(0x141) and c:IsMonster() and (c:IsAbleToHand() or c:IsAbleToGrave()) and not c:IsCode(id)
+	return c:IsSetCard(SET_RIKKA) and c:IsMonster() and (c:IsAbleToHand() or c:IsAbleToGrave()) and not c:IsCode(id)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end
@@ -45,7 +45,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 		e1:SetTargetRange(1,0)
 		e1:SetTarget(s.splimit)
-		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_PHASE|PHASE_END)
 		Duel.RegisterEffect(e1,tp)
 	end
 end
@@ -54,7 +54,7 @@ function s.splimit(e,c)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(tp,LOCATION_MZONE,0)
-	return Duel.GetTurnPlayer()==1-tp and (#g==0 or (#g>0 and g:FilterCount(aux.FaceupFilter(Card.IsRace,RACE_PLANT),nil)==#g))
+	return Duel.IsTurnPlayer(1-tp) and (#g==0 or (#g>0 and g:FilterCount(aux.FaceupFilter(Card.IsRace,RACE_PLANT),nil)==#g))
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

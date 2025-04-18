@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--link summon
-	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x8),2)
+	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_HERO),2)
 	c:EnableReviveLimit()
 	--atk
 	local e1=Effect.CreateEffect(c)
@@ -20,12 +20,12 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_PIERCE)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x8}
+s.listed_series={SET_HERO}
 function s.atktg(e,c)
-	return (e:GetHandler():GetLinkedGroup():IsContains(c) or c==e:GetHandler()) and c:IsSetCard(0x8) and c:IsFaceup()
+	return (e:GetHandler():GetLinkedGroup():IsContains(c) or c==e:GetHandler()) and c:IsSetCard(SET_HERO) and c:IsFaceup()
 end
 function s.atkfilter(c)
-	return c:IsSetCard(0x8) and c:IsMonster()
+	return c:IsSetCard(SET_HERO) and c:IsMonster()
 end
 function s.atkval(e,c)
 	return Duel.GetMatchingGroup(s.atkfilter,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil):GetClassCount(Card.GetCode)*100

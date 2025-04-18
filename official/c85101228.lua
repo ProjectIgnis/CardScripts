@@ -1,4 +1,5 @@
 --D・バインド
+--Morphtronic Bind
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -20,9 +21,9 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_CANNOT_CHANGE_POSITION)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x26}
+s.listed_series={SET_MORPHTRONIC}
 function s.con(e)
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x26),e:GetHandler():GetControler(),LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_MORPHTRONIC),e:GetHandler():GetControler(),LOCATION_MZONE,0,1,nil)
 end
 function s.tg(e,c)
 	return c:GetLevel()>=4

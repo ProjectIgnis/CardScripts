@@ -1,4 +1,5 @@
 --ヴァイロン・スティグマ
+--Vylon Stigma
 local s,id=GetID()
 function s.initial_effect(c)
 	--equip
@@ -14,9 +15,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.eqop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x30}
+s.listed_series={SET_VYLON}
 function s.filter1(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x30) and c:GetEquipTarget()
+	return c:IsFaceup() and c:IsSetCard(SET_VYLON) and c:GetEquipTarget()
 		and Duel.IsExistingTarget(s.filter2,tp,LOCATION_MZONE,LOCATION_MZONE,1,c:GetEquipTarget(),c)
 end
 function s.filter2(c,eqc)

@@ -1,4 +1,5 @@
 --暴君の暴言
+--Tyrant's Tirade
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -24,5 +25,5 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.aclimit(e,re,tp)
 	local loc=re:GetActivateLocation()
-	return (loc==LOCATION_MZONE or loc==LOCATION_HAND) and re:IsActiveType(TYPE_MONSTER) and not re:GetHandler():IsImmuneToEffect(e)
+	return (loc==LOCATION_MZONE or loc==LOCATION_HAND) and re:IsMonsterEffect() and not re:GetHandler():IsImmuneToEffect(e)
 end

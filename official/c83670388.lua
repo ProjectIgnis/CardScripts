@@ -1,14 +1,14 @@
--- 氷水呪縛
--- Icejade Curse
--- Scripted by Hatter
+--氷水呪縛
+--Icejade Curse
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	-- Prevent the activation of monster's effects
+	--Prevent the activation of monster's effects
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	e2:SetCondition(s.accon)
 	e2:SetValue(s.aclim)
 	c:RegisterEffect(e2)
-	-- Inflict damage
+	--Inflict damage
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_DAMAGE)

@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e3:SetCode(EVENT_PHASE+PHASE_BATTLE_START)
+	e3:SetCode(EVENT_PHASE|PHASE_BATTLE_START)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetCountLimit(1)
 	e3:SetCondition(function(_,tp) return Duel.IsTurnPlayer(1-tp) end)
@@ -31,13 +31,13 @@ function s.initial_effect(c)
 	e3:SetOperation(s.atkop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x147}
+s.listed_series={SET_MELFFY}
 function s.cfilter(c,tp)
 	return c:IsRace(RACE_BEAST) and not c:IsPublic() and c:IsAbleToDeck()
-		and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,c:GetCode())
+		and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK|LOCATION_GRAVE,0,1,nil,c:GetCode())
 end
 function s.thfilter(c,code)
-	return c:IsMonster() and c:IsSetCard(0x147) and not c:IsCode(code) and c:IsAbleToHand()
+	return c:IsMonster() and c:IsSetCard(SET_MELFFY) and not c:IsCode(code) and c:IsAbleToHand()
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil,tp) end
@@ -51,7 +51,7 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE)
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK|LOCATION_GRAVE)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,tp,LOCATION_HAND)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
@@ -59,7 +59,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=sg:GetFirst()
 	if rc:IsRelateToEffect(e) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-		local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.thfilter),tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,rc:GetCode())
+		local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.thfilter),tp,LOCATION_DECK|LOCATION_GRAVE,0,1,1,nil,rc:GetCode())
 		if #g>0 and Duel.SendtoHand(g,nil,REASON_EFFECT)>0 and g:GetFirst():IsLocation(LOCATION_HAND) then
 			Duel.ConfirmCards(1-tp,g)
 			Duel.ShuffleDeck(tp)
@@ -69,7 +69,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	sg:DeleteGroup()
 end
 function s.rvfilter(c)
-	return c:IsMonster() and c:IsSetCard(0x147) and not c:IsPublic()
+	return c:IsMonster() and c:IsSetCard(SET_MELFFY) and not c:IsPublic()
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.rvfilter,tp,LOCATION_HAND,0,1,nil) end
@@ -89,7 +89,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_PUBLIC)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_BATTLE)
 		tc:RegisterEffect(e1)
 	end
 	--Decrease ATK of opponent's monsters
@@ -99,6 +99,6 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTargetRange(0,LOCATION_MZONE)
 	e2:SetValue(-value)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE)
+	e2:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_BATTLE)
 	c:RegisterEffect(e2)
 end

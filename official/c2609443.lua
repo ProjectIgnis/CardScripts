@@ -15,8 +15,8 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
-	e1:SetHintTiming(TIMING_DAMAGE_STEP,TIMING_DAMAGE_STEP+TIMING_END_PHASE)
-	e1:SetCondition(s.atkcon)
+	e1:SetHintTiming(TIMING_DAMAGE_STEP,TIMING_DAMAGE_STEP|TIMING_END_PHASE)
+	e1:SetCondition(aux.StatChangeDamageStepCondition)
 	e1:SetTarget(s.atktg)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
@@ -30,17 +30,14 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
 	e2:SetCondition(s.discon)
-	e2:SetCost(s.discost)
+	e2:SetCost(Cost.Detach(2))
 	e2:SetTarget(s.distg)
 	e2:SetOperation(s.disop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x70}
-function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
-end
+s.listed_series={SET_CHRONOMALY}
 function s.gyfilter(c)
-	return (c:IsSetCard(0x70) or c:IsType(TYPE_XYZ)) and c:IsMonster()
+	return (c:IsSetCard(SET_CHRONOMALY) or c:IsType(TYPE_XYZ)) and c:IsMonster()
 		and c:GetAttack()>0 and not c:IsForbidden()
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -65,7 +62,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		e1:SetValue(math.floor(tc2:GetAttack()/2))
 		tc1:RegisterEffect(e1)
 		if not tc1:IsHasEffect(EFFECT_REVERSE_UPDATE) and c:IsRelateToEffect(e) then
@@ -75,11 +72,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
-	return rp==1-tp and re:IsActiveType(TYPE_MONSTER) and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev)
-end
-function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,2,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,2,2,REASON_COST)
+	return rp==1-tp and re:IsMonsterEffect() and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

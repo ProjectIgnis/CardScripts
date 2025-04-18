@@ -1,7 +1,8 @@
 --D・レトロエンジン
+--Morphtronic Rusty Engine
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsSetCard,0x26))
+	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsSetCard,SET_MORPHTRONIC))
 	--damage
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_DAMAGE)
@@ -12,7 +13,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.damop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x26}
+s.listed_series={SET_MORPHTRONIC}
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local ec=c:GetPreviousEquipTarget()

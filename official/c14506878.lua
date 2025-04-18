@@ -1,4 +1,5 @@
 --ダッカー
+--DUCKER Mobile Cannon
 local s,id=GetID()
 function s.initial_effect(c)
 	--flip

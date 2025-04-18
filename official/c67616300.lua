@@ -34,7 +34,7 @@ function s.initial_effect(c)
 	e6:SetProperty(EFFECT_FLAG_BOTH_SIDE)
 	e6:SetRange(LOCATION_FZONE)
 	e6:SetCountLimit(1)
-	e6:SetCost(s.effcost)
+	e6:SetCost(Cost.PayLP(1000))
 	e6:SetTarget(s.efftg)
 	e6:SetOperation(s.effop)
 	c:RegisterEffect(e6)
@@ -46,10 +46,6 @@ end
 function s.damcon2(e)
 	local tp=e:GetHandlerPlayer()
 	return Duel.GetLP(1-tp)<Duel.GetLP(tp)
-end
-function s.effcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,1000) end
-	Duel.PayLPCost(tp,1000)
 end
 function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

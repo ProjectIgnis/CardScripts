@@ -14,9 +14,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x3a}
+s.listed_series={SET_GISHKI}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_RITUAL)
+	return e:GetHandler():IsRitualSummoned()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return true end
@@ -32,6 +32,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ConfirmCards(tp,g)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local sg=g:Select(tp,1,1,nil)
-	Duel.SendtoDeck(sg,nil,2,REASON_EFFECT)
+	Duel.SendtoDeck(sg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	Duel.ShuffleHand(1-tp)
 end

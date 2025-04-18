@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetCountLimit(1)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCost(s.cost)
+	e2:SetCost(Cost.Detach(1))
 	e2:SetTarget(s.target)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
@@ -48,14 +48,9 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x7e,0x107e,0x107f}
-
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
-end
+s.listed_series={SET_ZEXAL,SET_ZW,SET_UTOPIA}
 function s.thfilter(c)
-	return c:IsSetCard(0x7e) and c:IsSpellTrap() and c:IsAbleToHand()
+	return c:IsSetCard(SET_ZEXAL) and c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -70,7 +65,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x107f)
+	return c:IsFaceup() and c:IsSetCard(SET_UTOPIA)
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -96,7 +91,7 @@ function s.equipop(c,e,tp,tc)
 	e1:SetType(EFFECT_TYPE_EQUIP)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(3000)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	c:RegisterEffect(e1)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
@@ -105,7 +100,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return ec==e:GetHandler():GetEquipTarget() and ec:IsStatus(STATUS_OPPO_BATTLE) and bc:IsMonster()
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x107e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_ZW) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()

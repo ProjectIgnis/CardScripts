@@ -1,5 +1,5 @@
 --電影の騎士ガイアセイバー
---Gaiasaber, the Video Knight
+--Gaia Saber, the Lightning Shadow
 local s,id=GetID()
 function s.initial_effect(c)
 	--link summon

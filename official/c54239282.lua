@@ -18,8 +18,8 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_HANDES,nil,1,PLAYER_ALL,LOCATION_HAND)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
-function s.filter(c,ty)
-	return c:IsType(ty&0x7) and c:IsDiscardable(REASON_EFFECT)
+function s.filter(c,typ)
+	return c:IsType(typ) and c:IsDiscardable(REASON_EFFECT)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -27,7 +27,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #g==0 then return end
 	local oc=g:RandomSelect(tp,1):GetFirst()
 	Duel.ConfirmCards(tp,oc)
-	local b=Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,nil,oc:GetType())
+	local b=Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,nil,oc:GetMainCardType())
 		and Duel.IsPlayerCanDraw(tp,1) and c:IsRelateToEffect(e)
 	local op=1
 	if b then
@@ -36,9 +36,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		op=Duel.SelectOption(tp,aux.Stringid(id,1))+1
 	end
 	if op==0 then
-		local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND,0,1,1,nil,oc:GetType())
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
+		local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND,0,1,1,nil,oc:GetMainCardType())
 		g:AddCard(oc)
-		if Duel.SendtoGrave(g,REASON_EFFECT+REASON_DISCARD)==2 then
+		if Duel.SendtoGrave(g,REASON_EFFECT|REASON_DISCARD)==2 then
 			Duel.BreakEffect()
 			c:CancelToGrave()
 			Duel.SendtoHand(c,1-tp,REASON_EFFECT)

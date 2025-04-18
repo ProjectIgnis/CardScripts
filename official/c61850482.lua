@@ -1,6 +1,5 @@
 --レベル調整
 --Level Modulation
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Opponent draws 2, then you special summon 1 "LV" monster from GY
@@ -13,10 +12,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x41}
-
+s.listed_series={SET_LV}
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x41) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+	return c:IsSetCard(SET_LV) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end
@@ -40,7 +38,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_CANNOT_ATTACK)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESETS_STANDARD_PHASE_END)
 	tc:RegisterEffect(e1,true)
 	--Cannot apply its effects
 	local e2=Effect.CreateEffect(c)
@@ -48,7 +46,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_DISABLE)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e2:SetReset(RESETS_STANDARD_PHASE_END)
 	tc:RegisterEffect(e2,true)
 	--Cannot activate its effects
 	local e3=Effect.CreateEffect(c)
@@ -56,6 +54,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e3:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetCode(EFFECT_CANNOT_TRIGGER)
-	e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e3:SetReset(RESETS_STANDARD_PHASE_END)
 	tc:RegisterEffect(e3,true)
 end

@@ -44,7 +44,7 @@ s.counter_place_list={COUNTER_SPELL}
 function s.acop(e,tp,eg,ep,ev,re,r,rp)
 	local p=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_PLAYER)
 	local c=e:GetHandler()
-	if re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL) and c:GetFlagEffect(1)>0 then
+	if re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsSpellEffect() and c:GetFlagEffect(1)>0 then
 		c:AddCounter(COUNTER_SPELL,1)
 		if c:GetCounter(COUNTER_SPELL)==4 then
 			Duel.RaiseSingleEvent(c,EVENT_CUSTOM+id,re,0,0,p,0)

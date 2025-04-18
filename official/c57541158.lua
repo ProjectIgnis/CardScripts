@@ -22,14 +22,14 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,{id,1})
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.eqtg)
 	e2:SetOperation(s.eqop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x12b}
+s.listed_series={SET_MARINCESS}
 function s.spfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x12b)
+	return c:IsFaceup() and c:IsSetCard(SET_MARINCESS)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
@@ -56,15 +56,15 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetRange(LOCATION_MZONE)
 		e1:SetTarget(function(e,c) return c==e:GetHandler():GetFirstCardTarget() end)
 		e1:SetValue(aux.indoval)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e1)
 	end
 end
 function s.efilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x12b) and c:IsType(TYPE_LINK)
+	return c:IsFaceup() and c:IsSetCard(SET_MARINCESS) and c:IsType(TYPE_LINK)
 end
 function s.eqfilter(c)
-	return not c:IsForbidden() and c:IsLinkMonster() and c:IsSetCard(0x12b)
+	return not c:IsForbidden() and c:IsLinkMonster() and c:IsSetCard(SET_MARINCESS)
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.efilter(chkc,tp) end
@@ -87,7 +87,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_EQUIP_LIMIT)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e1:SetValue(s.eqlimit)
 		e1:SetLabelObject(tc)
 		eq:RegisterEffect(e1)

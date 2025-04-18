@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e3:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e3:SetCountLimit(1)
 	e3:SetCondition(s.lvcon)
 	e3:SetOperation(s.lvop)
@@ -92,7 +92,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetCode(EFFECT_UPDATE_LEVEL)
 			e1:SetValue(ct)
 			if tc==e:GetHandler() then
-				e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE|RESET_PHASE|PHASE_END)
+				e1:SetReset(RESETS_STANDARD_DISABLE_PHASE_END)
 			else
 				e1:SetReset(RESETS_STANDARD_PHASE_END)
 			end

@@ -1,5 +1,5 @@
 --インスペクト・ボーダー
---Inspect Boarder
+--Inspector Boarder
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon limit
@@ -61,8 +61,8 @@ function s.typecount(c)
 	return c:GetType()&TYPE_FUSION+TYPE_RITUAL+TYPE_SYNCHRO+TYPE_XYZ+TYPE_PENDULUM+TYPE_LINK
 end
 function s.aclimit1(e,tp,eg,ep,ev,re,r,rp)
-	if ep==1-tp or not re:IsActiveType(TYPE_MONSTER) then return end
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD_DISABLE|RESET_CONTROL+RESET_PHASE+PHASE_END,0,1)
+	if ep==1-tp or not re:IsMonsterEffect() then return end
+	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD_DISABLE|RESET_CONTROL|RESET_PHASE|PHASE_END,0,1)
 end
 function s.aclimit2(e,tp,eg,ep,ev,re,r,rp)
 	if ep~=tp or not re:IsHasType(EFFECT_TYPE_ACTIVATE) then return end
@@ -74,8 +74,8 @@ function s.econ1(e)
 	return e:GetHandler():GetFlagEffect(id)>=ct
 end
 function s.aclimit3(e,tp,eg,ep,ev,re,r,rp)
-	if ep==tp or not re:IsActiveType(TYPE_MONSTER) then return end
-	e:GetHandler():RegisterFlagEffect(id+1,RESET_EVENT|RESETS_STANDARD_DISABLE|RESET_CONTROL+RESET_PHASE+PHASE_END,0,1)
+	if ep==tp or not re:IsMonsterEffect() then return end
+	e:GetHandler():RegisterFlagEffect(id+1,RESET_EVENT|RESETS_STANDARD_DISABLE|RESET_CONTROL|RESET_PHASE|PHASE_END,0,1)
 end
 function s.aclimit4(e,tp,eg,ep,ev,re,r,rp)
 	if ep==tp or not re:IsHasType(EFFECT_TYPE_ACTIVATE) then return end
@@ -87,5 +87,5 @@ function s.econ2(e)
 	return e:GetHandler():GetFlagEffect(id+1)>=ct
 end
 function s.elimit(e,re,tp)
-	return re:IsActiveType(TYPE_MONSTER)
+	return re:IsMonsterEffect()
 end

@@ -1,4 +1,5 @@
 --聖騎士ボールス
+--Noble Knight Borz
 local s,id=GetID()
 function s.initial_effect(c)
 	--Normal monster
@@ -39,25 +40,25 @@ function s.initial_effect(c)
 	e5:SetOperation(s.thop)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x207a}
+s.listed_series={SET_NOBLE_ARMS}
 function s.eqcon1(e)
-	return not e:GetHandler():GetEquipGroup():IsExists(Card.IsSetCard,1,nil,0x207a)
+	return not e:GetHandler():GetEquipGroup():IsExists(Card.IsSetCard,1,nil,SET_NOBLE_ARMS)
 end
 function s.eqcon2(e)
-	return e:GetHandler():GetEquipGroup():IsExists(Card.IsSetCard,1,nil,0x207a)
+	return e:GetHandler():GetEquipGroup():IsExists(Card.IsSetCard,1,nil,SET_NOBLE_ARMS)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return s.eqcon2(e)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x207a) and c:IsAbleToHand()
+	return c:IsSetCard(SET_NOBLE_ARMS) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,3,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,0,LOCATION_DECK)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(Card.IsSetCard,tp,LOCATION_DECK,0,nil,0x207a)
+	local g=Duel.GetMatchingGroup(Card.IsSetCard,tp,LOCATION_DECK,0,nil,SET_NOBLE_ARMS)
 	if #g>=3 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local sg=g:Select(tp,3,3,nil)

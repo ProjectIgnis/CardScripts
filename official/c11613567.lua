@@ -1,4 +1,5 @@
 --BF－漆黒のエルフェン
+--Blackwing - Elphin the Raven
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon with no tribute
@@ -20,11 +21,11 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x33}
+s.listed_series={SET_BLACKWING}
 function s.ntcon(e,c,minc)
 	if c==nil then return true end
 	return minc==0 and c:GetLevel()>4 and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x33),c:GetControler(),LOCATION_MZONE,0,1,nil)
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_BLACKWING),c:GetControler(),LOCATION_MZONE,0,1,nil)
 end
 function s.filter(c)
 	return c:IsCanChangePosition()

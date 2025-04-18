@@ -1,4 +1,5 @@
 --バスター・テレポート
+--Assault Teleport
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,9 +13,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x104f}
+s.listed_series={SET_ASSAULT_MODE}
 function s.filter(c)
-	return c:IsSetCard(0x104f) and c:IsAbleToDeck()
+	return c:IsSetCard(SET_ASSAULT_MODE) and c:IsAbleToDeck()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,nil) end

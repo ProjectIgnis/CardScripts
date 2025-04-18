@@ -1,4 +1,5 @@
 --ジャンク・サーバント
+--Junk Servant
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -10,9 +11,9 @@ function s.initial_effect(c)
 	e1:SetCondition(s.spcon)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x43}
+s.listed_series={SET_JUNK}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x43)
+	return c:IsFaceup() and c:IsSetCard(SET_JUNK)
 end
 function s.spcon(e,c)
 	if c==nil then return true end

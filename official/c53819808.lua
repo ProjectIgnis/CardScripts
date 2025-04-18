@@ -2,7 +2,7 @@
 --Temple of the Six
 local s,id=GetID()
 function s.initial_effect(c)
-	c:EnableCounterPermit(0x3)
+	c:EnableCounterPermit(COUNTER_BUSHIDO)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -27,16 +27,16 @@ function s.initial_effect(c)
 	e4:SetValue(s.val)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x3d}
-s.counter_place_list={0x3}
+s.listed_series={SET_SIX_SAMURAI}
+s.counter_place_list={COUNTER_BUSHIDO}
 function s.ctfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x3d)
+	return c:IsFaceup() and c:IsSetCard(SET_SIX_SAMURAI)
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	if eg:IsExists(s.ctfilter,1,nil) then
-		e:GetHandler():AddCounter(0x3,1)
+		e:GetHandler():AddCounter(COUNTER_BUSHIDO,1)
 	end
 end
 function s.val(e)
-	return e:GetHandler():GetCounter(0x3)*-100
+	return e:GetHandler():GetCounter(COUNTER_BUSHIDO)*-100
 end

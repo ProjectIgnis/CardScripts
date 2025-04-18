@@ -26,14 +26,14 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={}
-s.listed_series={0x10b}
+s.listed_series={SET_TINDANGLE}
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,c) end
-	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD,c)
+	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST|REASON_DISCARD,c)
 end
 function s.tgfilter(c)
-	return c:IsSetCard(0x10b) and c:IsAbleToGrave() and not c:IsCode(id)
+	return c:IsSetCard(SET_TINDANGLE) and c:IsAbleToGrave() and not c:IsCode(id)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -64,4 +64,3 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil):GetFirst()
 	aux.ToHandOrElse(tc,tp)
 end
-

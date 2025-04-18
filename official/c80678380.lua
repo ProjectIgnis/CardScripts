@@ -1,4 +1,5 @@
 --蛇神の勅命
+--Snake Deity's Command
 local s,id=GetID()
 function s.initial_effect(c)
 	--negate
@@ -12,12 +13,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x50}
+s.listed_series={SET_VENOM}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and re:IsActiveType(TYPE_SPELL) and re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)
+	return ep~=tp and re:IsSpellEffect() and re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x50) and c:IsMonster() and not c:IsPublic()
+	return c:IsSetCard(SET_VENOM) and c:IsMonster() and not c:IsPublic()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end

@@ -1,4 +1,5 @@
 --The supremacy SUN
+--The Supremacy Sun
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot special summon
@@ -20,7 +21,7 @@ function s.initial_effect(c)
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetRange(LOCATION_GRAVE)
-	e3:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e3:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e3:SetCondition(s.spcon)
 	e3:SetCost(s.spcost)
 	e3:SetTarget(s.sptg)
@@ -31,7 +32,7 @@ function s.spr(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsReason(REASON_DESTROY) and c:IsPreviousLocation(LOCATION_ONFIELD)
 		and c:IsPreviousPosition(POS_FACEUP) then
-		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,2)
+		c:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,2)
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
@@ -40,7 +41,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD,nil)
+	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST|REASON_DISCARD,nil)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

@@ -1,7 +1,6 @@
 --夢魔鏡の使徒－ネイロイ
 --Neiroy, the Dream Mirror Disciple
 --Scripted by Naim
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special Summon itself from the hand
@@ -28,11 +27,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.op2)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x131}
+s.listed_series={SET_DREAM_MIRROR}
 s.listed_names={CARD_DREAM_MIRROR_JOY,CARD_DREAM_MIRROR_TERROR}
-
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x131),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_DREAM_MIRROR),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -49,14 +47,14 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
 			e1:SetCode(EFFECT_CHANGE_ATTRIBUTE)
 			e1:SetValue(ATTRIBUTE_DARK)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 			c:RegisterEffect(e1)
 		end
 	end
 end
 function s.cond2(e,tp,eg,ep,ev,re,r,rp)
 	if not re then return false end
-	return re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0x131)
+	return re:IsMonsterEffect() and re:GetHandler():IsSetCard(SET_DREAM_MIRROR)
 end
 function s.tg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

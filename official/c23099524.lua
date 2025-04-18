@@ -57,10 +57,10 @@ function s.atkfilter(c)
 	return c:IsTrap() and c:IsType(TYPE_CONTINUOUS) and c:IsFaceup()
 end
 function s.atkval(e,c)
-	return Duel.GetMatchingGroupCount(s.atkfilter,e:GetHandlerPlayer(),LOCATION_ONFIELD+LOCATION_GRAVE,LOCATION_ONFIELD+LOCATION_GRAVE,nil)*300
+	return Duel.GetMatchingGroupCount(s.atkfilter,e:GetHandlerPlayer(),LOCATION_ONFIELD|LOCATION_GRAVE,LOCATION_ONFIELD|LOCATION_GRAVE,nil)*300
 end
 function s.thcfilter(c)
-	return c:IsRace(RACE_FAIRY+RACE_FIEND+RACE_REPTILE)
+	return c:IsRace(RACE_FAIRY|RACE_FIEND|RACE_REPTILE)
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.thcfilter,1,false,nil,nil) end
@@ -88,6 +88,6 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e1:SetTargetRange(1,0)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end

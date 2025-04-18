@@ -1,4 +1,5 @@
 --プランクスケール
+--Planckton
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -16,7 +17,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e1:SetValue(500)
 	e1:SetTarget(s.filter1)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_UPDATE_DEFENSE)
@@ -25,7 +26,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetCode(EFFECT_CANNOT_ATTACK)
 	e3:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e3:SetReset(RESET_PHASE+PHASE_END)
+	e3:SetReset(RESET_PHASE|PHASE_END)
 	e3:SetTarget(s.filter2)
 	Duel.RegisterEffect(e3,tp)
 end

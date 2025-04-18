@@ -1,4 +1,5 @@
 --A・ジェネクス・パワーコール
+--Genex Ally Powercell
 local s,id=GetID()
 function s.initial_effect(c)
 	--atkup

@@ -1,5 +1,5 @@
 --結晶の大賢者サンドリヨン
---Magistus Verre Cendrillon
+--Rilliona, the Magistus of Verre
 --Scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -24,14 +24,14 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_GRAVE)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetCountLimit(1,{id,1})
-	e3:SetCost(aux.bfgcost)
+	e3:SetCost(Cost.SelfBanish)
 	e3:SetTarget(s.eqtg)
 	e3:SetOperation(s.eqop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x152}
+s.listed_series={SET_MAGISTUS}
 function s.schfilter(c)
-	return c:IsSetCard(0x152) and c:IsSpellTrap() and c:IsAbleToHand()
+	return c:IsSetCard(SET_MAGISTUS) and c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.tgfilter(c)
 	return c:IsRace(RACE_SPELLCASTER) and c:IsLevelBelow(4) and c:IsFaceup()
@@ -78,22 +78,22 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		if Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_REMOVED,0,1,nil) then
 			local tg=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_REMOVED,0,1,1,nil)
 			if #tg>0 then
-				Duel.SendtoGrave(tg,REASON_EFFECT+REASON_RETURN)
+				Duel.SendtoGrave(tg,REASON_EFFECT|REASON_RETURN)
 			end
 		end
 	end
 end
 function s.eqfilter(c)
-	return c:IsSetCard(0x152) and not c:IsLevel(4) and c:IsMonster()
+	return c:IsSetCard(SET_MAGISTUS) and not c:IsLevel(4) and c:IsMonster()
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and chkc:IsFaceup() and chkc:IsSetCard(0x152) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and chkc:IsFaceup() and chkc:IsSetCard(SET_MAGISTUS) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
-		and Duel.IsExistingTarget(aux.FaceupFilter(Card.IsSetCard,0x152),tp,LOCATION_MZONE,0,1,nil)
+		and Duel.IsExistingTarget(aux.FaceupFilter(Card.IsSetCard,SET_MAGISTUS),tp,LOCATION_MZONE,0,1,nil)
 		and Duel.IsExistingMatchingCard(s.eqfilter,tp,LOCATION_GRAVE,0,1,c) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	Duel.SelectTarget(tp,aux.FaceupFilter(Card.IsSetCard,0x152),tp,LOCATION_MZONE,0,1,1,nil)
+	Duel.SelectTarget(tp,aux.FaceupFilter(Card.IsSetCard,SET_MAGISTUS),tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,nil,1,tp,LOCATION_GRAVE)
 end
 function s.eqop(e,tp,eg,ep,ev,re,r,rp)
@@ -107,7 +107,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_EQUIP_LIMIT)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e1:SetValue(s.eqlimit)
 		e1:SetLabelObject(tc)
 		ec:RegisterEffect(e1)

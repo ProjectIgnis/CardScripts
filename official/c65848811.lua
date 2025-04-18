@@ -1,4 +1,5 @@
 --H・C 強襲のハルベルト
+--Heroic Challenger - Assault Halberd
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -25,7 +26,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x6f}
+s.listed_series={SET_HEROIC}
 function s.spcon(e,c)
 	if c==nil then return true end
 	return Duel.GetFieldGroupCount(c:GetControler(),LOCATION_MZONE,0)==0
@@ -36,7 +37,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp
 end
 function s.filter(c)
-	return c:IsSetCard(0x6f) and c:IsAbleToHand()
+	return c:IsSetCard(SET_HEROIC) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

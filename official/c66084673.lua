@@ -1,4 +1,5 @@
 --空炎星－サイチョウ
+--Brotherhood of the Fire Fist - Rhino
 local s,id=GetID()
 function s.initial_effect(c)
 	--attack up
@@ -13,16 +14,16 @@ function s.initial_effect(c)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x79,0x7c}
+s.listed_series={SET_FIRE_FIST,SET_FIRE_FORMATION}
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return (Duel.GetAttacker():IsControler(tp) and Duel.GetAttacker():IsSetCard(0x79))
-		or (Duel.GetAttackTarget() and Duel.GetAttackTarget():IsControler(tp) and Duel.GetAttackTarget():IsSetCard(0x79))
+	return (Duel.GetAttacker():IsControler(tp) and Duel.GetAttacker():IsSetCard(SET_FIRE_FIST))
+		or (Duel.GetAttackTarget() and Duel.GetAttackTarget():IsControler(tp) and Duel.GetAttackTarget():IsSetCard(SET_FIRE_FIST))
 end
 function s.filter1(c)
-	return c:IsFaceup() and c:IsSetCard(0x7c) and c:IsAbleToGraveAsCost()
+	return c:IsFaceup() and c:IsSetCard(SET_FIRE_FORMATION) and c:IsAbleToGraveAsCost()
 end
 function s.filter2(c)
-	return c:IsSetCard(0x79) and c:GetBaseAttack()>0 and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(SET_FIRE_FIST) and c:GetBaseAttack()>0 and c:IsAbleToGraveAsCost()
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetFlagEffect(id)==0
@@ -35,7 +36,7 @@ function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(g2:GetFirst():GetBaseAttack())
 	g1:Merge(g2)
 	Duel.SendtoGrave(g1,REASON_COST)
-	e:GetHandler():RegisterFlagEffect(id,RESET_PHASE+PHASE_DAMAGE_CAL,0,1)
+	e:GetHandler():RegisterFlagEffect(id,RESET_PHASE|PHASE_DAMAGE_CAL,0,1)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=Duel.GetAttacker()
@@ -43,7 +44,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
-	e1:SetReset(RESET_PHASE+PHASE_DAMAGE_CAL)
+	e1:SetReset(RESET_PHASE|PHASE_DAMAGE_CAL)
 	e1:SetValue(e:GetLabel())
 	c:RegisterEffect(e1)
 end

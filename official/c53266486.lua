@@ -1,5 +1,5 @@
 --アネスヴァレット・ドラゴン
---Anesvullet Dragon
+--Anesthrokket Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy
@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.regop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x102}
+s.listed_series={SET_ROKKET}
 s.listed_names={id}
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -51,7 +51,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
@@ -61,7 +61,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 			e3:SetType(EFFECT_TYPE_SINGLE)
 			e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 			e3:SetCode(EFFECT_DISABLE_TRAPMONSTER)
-			e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e3:SetReset(RESETS_STANDARD_PHASE_END)
 			tc:RegisterEffect(e3)
 		end
 		local e4=e1:Clone()
@@ -71,7 +71,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsReason(REASON_DESTROY) and c:IsPreviousLocation(LOCATION_ONFIELD) then
+	if c:IsReason(REASON_BATTLE|REASON_EFFECT) and c:IsReason(REASON_DESTROY) and c:IsPreviousLocation(LOCATION_ONFIELD) then
 		local e1=Effect.CreateEffect(c)
 		e1:SetDescription(aux.Stringid(id,1))
 		e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -81,12 +81,12 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetRange(LOCATION_GRAVE)
 		e1:SetTarget(s.sptg)
 		e1:SetOperation(s.spop)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		c:RegisterEffect(e1)
 	end
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x102) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_ROKKET) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

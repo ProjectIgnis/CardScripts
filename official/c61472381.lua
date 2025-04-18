@@ -1,7 +1,6 @@
 --巧炎星－エランセイ
 --Brotherhood of the Fire Fist - Eland
 --Scripted by Eerie Code
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -31,34 +30,33 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={93754402,id}
-s.listed_series={0x7c,0x79}
-
+s.listed_series={SET_FIRE_FORMATION,SET_FIRE_FIST}
 function s.setcfilter(c)
 	return c:IsMonster() and c:IsDiscardable()
 end
 function s.setcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.setcfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,s.setcfilter,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,s.setcfilter,1,1,REASON_COST|REASON_DISCARD)
 end
 function s.setfilter(c)
-	return c:IsSetCard(0x7c) and c:IsSpellTrap() and c:IsSSetable()
+	return c:IsSetCard(SET_FIRE_FORMATION) and c:IsSpellTrap() and c:IsSSetable()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_DECK|LOCATION_GRAVE,0,1,nil) end
 end
 function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
-	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.setfilter),tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.setfilter),tp,LOCATION_DECK|LOCATION_GRAVE,0,1,1,nil)
 	if #g>0 then
 		Duel.SSet(tp,g:GetFirst())
 	end
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
-		and ep~=tp and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainDisablable(ev)
+		and ep~=tp and re:IsMonsterEffect() and Duel.IsChainDisablable(ev)
 end
 function s.cfilter(c)
-	return c:IsFaceup() and (c:IsSetCard(0x79) or c:IsSetCard(0x7c)) and not c:IsCode(id) and c:IsAbleToGraveAsCost()
+	return c:IsFaceup() and (c:IsSetCard(SET_FIRE_FIST) or c:IsSetCard(SET_FIRE_FORMATION)) and not c:IsCode(id) and c:IsAbleToGraveAsCost()
 end
 function s.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local nc=Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD,0,1,nil)

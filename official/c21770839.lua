@@ -41,13 +41,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
 end
-s.listed_series={0x99}
+s.listed_series={SET_ODD_EYES}
 function s.counterfilter(c)
-	return not c:IsSummonType(SUMMON_TYPE_PENDULUM)
+	return not c:IsPendulumSummoned()
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST|REASON_DISCARD)
 end
 function s.thfilter(c)
 	return c:IsFaceup() and c:IsRace(RACE_DRAGON) and c:IsAbleToHand()
@@ -66,7 +66,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.exfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x99) and c:IsType(TYPE_PENDULUM)
+	return c:IsFaceup() and c:IsSetCard(SET_ODD_EYES) and c:IsType(TYPE_PENDULUM)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetCustomActivityCount(id,tp,ACTIVITY_SPSUMMON)==0 end
@@ -75,7 +75,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetDescription(aux.Stringid(id,3))
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	e1:SetTarget(s.splimit)
 	e1:SetTargetRange(1,0)
 	Duel.RegisterEffect(e1,tp)
@@ -110,7 +110,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetReset(RESET_PHASE+PHASE_DAMAGE_CAL)
+		e1:SetReset(RESET_PHASE|PHASE_DAMAGE_CAL)
 		e1:SetValue(-gc*1000)
 		d:RegisterEffect(e1)
 	end

@@ -1,4 +1,5 @@
 --腐乱犬
+--Zombowwow
 local s,id=GetID()
 function s.initial_effect(c)
 	--atkup
@@ -25,7 +26,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(500)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 	c:RegisterEffect(e1)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
@@ -46,16 +47,16 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=g:GetFirst()
 	if tc then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)
+		tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(e:GetHandler())
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e2)
 		local de=Effect.CreateEffect(e:GetHandler())
 		de:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -65,19 +66,19 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		de:SetLabelObject(tc)
 		de:SetCondition(s.descon)
 		de:SetOperation(s.desop)
-		if Duel.GetTurnPlayer()==tp and Duel.GetCurrentPhase()==PHASE_END then
+		if Duel.IsTurnPlayer(tp) and Duel.IsPhase(PHASE_END) then
 			de:SetLabel(Duel.GetTurnCount())
-			de:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN,2)
+			de:SetReset(RESET_PHASE|PHASE_END|RESET_SELF_TURN,2)
 		else
 			de:SetLabel(0)
-			de:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN)
+			de:SetReset(RESET_PHASE|PHASE_END|RESET_SELF_TURN)
 		end
 		Duel.RegisterEffect(de,tp)
 	end
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
-	return Duel.GetTurnPlayer()==tp and Duel.GetTurnCount()~=e:GetLabel() and tc:GetFlagEffect(id)~=0
+	return Duel.IsTurnPlayer(tp) and Duel.GetTurnCount()~=e:GetLabel() and tc:GetFlagEffect(id)~=0
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()

@@ -1,7 +1,6 @@
 --千年の血族
 --Millennium Seeker
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -32,7 +31,7 @@ function s.initial_effect(c)
 end
 	--If you took battle or effect damage
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep==tp and r&(REASON_BATTLE+REASON_EFFECT)~=0 and ev>=1000
+	return ep==tp and r&(REASON_BATTLE|REASON_EFFECT)~=0 and ev>=1000
 end
 	--Activation legality
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

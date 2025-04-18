@@ -1,4 +1,5 @@
 --どぐう
+--Dogu
 local s,id=GetID()
 function s.initial_effect(c)
 	--to grave
@@ -21,7 +22,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetRange(LOCATION_GRAVE)
 		e1:SetTarget(s.thtg)
 		e1:SetOperation(s.thop)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		c:RegisterEffect(e1)
 	end
 end
@@ -30,7 +31,7 @@ function s.cfilter(c,lv)
 end
 function s.filter(c,tp)
 	return c:IsMonster() and c:IsAbleToHand()
-		and not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil,c:GetLevel())
+		and not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,nil,c:GetLevel())
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,tp) end

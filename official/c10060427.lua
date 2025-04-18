@@ -1,4 +1,5 @@
 --コアキメイル・ルークロード
+--Koa'ki Meiru Rooklord
 local s,id=GetID()
 function s.initial_effect(c)
 	--cost
@@ -26,10 +27,10 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x1d}
+s.listed_series={SET_KOAKI_MEIRU}
 s.listed_names={36623431}
 function s.mtcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.cfilter1(c)
 	return c:IsCode(36623431) and c:IsAbleToGraveAsCost()
@@ -68,15 +69,15 @@ function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.otfilter(c,tp)
-	return c:IsSetCard(0x1d) and (c:IsControler(tp) or c:IsFaceup())
+	return c:IsSetCard(SET_KOAKI_MEIRU) and (c:IsControler(tp) or c:IsFaceup())
 end
 function s.dfilter(c)
-	return c:IsSetCard(0x1d) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
+	return c:IsSetCard(SET_KOAKI_MEIRU) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.dfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.dfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.dfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.dfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,1,nil)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

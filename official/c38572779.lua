@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.immcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2
+	return Duel.IsMainPhase()
 end
 function s.immcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() and Duel.GetFlagEffect(tp,id)==0 end
@@ -38,15 +38,15 @@ function s.immop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTargetRange(LOCATION_MZONE,0)
 	e1:SetTarget(aux.TargetBoolFunction(Card.IsRace,RACE_DINOSAUR))
 	e1:SetValue(s.efilter)
-	if Duel.GetCurrentPhase()==PHASE_MAIN1 then
-		e1:SetReset(RESET_PHASE+PHASE_MAIN1)
+	if Duel.IsPhase(PHASE_MAIN1) then
+		e1:SetReset(RESET_PHASE|PHASE_MAIN1)
 	else
-		e1:SetReset(RESET_PHASE+PHASE_MAIN2)
+		e1:SetReset(RESET_PHASE|PHASE_MAIN2)
 	end
-	if Duel.GetCurrentPhase()==PHASE_MAIN1 then
-		Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_MAIN1,0,1)
+	if Duel.IsPhase(PHASE_MAIN1) then
+		Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_MAIN1,0,1)
 	else
-		Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_MAIN2,0,1)
+		Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_MAIN2,0,1)
 	end
 	Duel.RegisterEffect(e1,tp)
 end
@@ -110,7 +110,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=g:GetFirst()
 	if tc and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)~=0 then
 		local fid=e:GetHandler():GetFieldID()
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,fid)
+		tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1,fid)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)

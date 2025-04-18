@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x11e}
+s.listed_series={SET_DANGER}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,3) end
 	Duel.SetTargetPlayer(tp)
@@ -22,7 +22,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,3)
 end
 function s.rescon(sg,e,tp,mg)
-	return sg:IsExists(Card.IsSetCard,1,nil,0x11e)
+	return sg:IsExists(Card.IsSetCard,1,nil,SET_DANGER)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
@@ -30,9 +30,9 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ShuffleHand(p)
 		Duel.BreakEffect()
 		local g=Duel.GetFieldGroup(p,LOCATION_HAND,0)
-		if g:IsExists(Card.IsSetCard,1,nil,0x11e) then
+		if g:IsExists(Card.IsSetCard,1,nil,SET_DANGER) then
 			local sg=aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,1,tp,HINTMSG_DISCARD)
-			Duel.SendtoGrave(sg,REASON_EFFECT+REASON_DISCARD)
+			Duel.SendtoGrave(sg,REASON_EFFECT|REASON_DISCARD)
 		else
 			Duel.ConfirmCards(1-p,g)
 			Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)

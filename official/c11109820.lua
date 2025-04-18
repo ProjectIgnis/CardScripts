@@ -1,4 +1,5 @@
 --エクシーズ・ユニバース
+--Xyz Universe
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -12,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x48}
+s.listed_series={SET_NUMBER}
 function s.filter1(c,e,tp)
 	return c:IsFaceup() and c:IsType(TYPE_XYZ)
 		and Duel.IsExistingTarget(s.filter2,tp,LOCATION_MZONE,LOCATION_MZONE,1,c,e,tp,c,c:GetRank())
@@ -23,7 +24,7 @@ function s.filter2(c,e,tp,mc,rk)
 end
 function s.spfilter(c,e,tp,rk,sg)
 	local crk=c:GetRank()
-	return (crk==rk or crk==rk-1) and not c:IsSetCard(0x48) and Duel.GetLocationCountFromEx(tp,tp,sg,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return (crk==rk or crk==rk-1) and not c:IsSetCard(SET_NUMBER) and Duel.GetLocationCountFromEx(tp,tp,sg,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
@@ -47,11 +48,11 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(0,1)
 	e1:SetValue(0)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_NO_EFFECT_DAMAGE)
-	e2:SetReset(RESET_PHASE+PHASE_END)
+	e2:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e2,tp)
 	--sp_summon
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)

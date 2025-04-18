@@ -1,4 +1,5 @@
 --The grand JUPITER
+--The Grand Jupiter
 local s,id=GetID()
 function s.initial_effect(c)
 	--equip
@@ -29,7 +30,7 @@ function s.initial_effect(c)
 end
 function s.eqcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,2,nil) end
-	Duel.DiscardHand(tp,Card.IsDiscardable,2,2,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,Card.IsDiscardable,2,2,REASON_COST|REASON_DISCARD)
 end
 function s.eqfilter(c)
 	return c:IsFaceup() and c:IsAbleToChangeControler()
@@ -51,7 +52,7 @@ function s.equipop(c,e,tp,tc)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_OWNER_RELATE)
 	e1:SetValue(atk)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	tc:RegisterEffect(e1)
 end
 function s.eqop(e,tp,eg,ep,ev,re,r,rp)

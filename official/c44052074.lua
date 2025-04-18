@@ -22,18 +22,18 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCountLimit(1,id)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.tktg)
 	e2:SetOperation(s.tkop)
 	c:RegisterEffect(e2)
 end
 s.listed_names={44052075}
-s.listed_series={0x7}
+s.listed_series={SET_ANCIENT_GEAR}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x7) and c:IsMonster() and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+	return c:IsSetCard(SET_ANCIENT_GEAR) and c:IsMonster() and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(tp) and chkc:IsFaceup() and chkc~=e:GetHandler() end
@@ -64,7 +64,7 @@ function s.tktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(tp) and s.desfilter(chkc,ft) end
 	if chk==0 then
 		return ft>-1 and Duel.IsExistingTarget(s.desfilter,tp,LOCATION_ONFIELD,0,1,nil,ft)
-			and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0x7,TYPES_TOKEN,0,0,1,RACE_MACHINE,ATTRIBUTE_EARTH)
+			and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,SET_ANCIENT_GEAR,TYPES_TOKEN,0,0,1,RACE_MACHINE,ATTRIBUTE_EARTH)
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectTarget(tp,s.desfilter,tp,LOCATION_ONFIELD,0,1,1,nil,ft)
@@ -75,7 +75,7 @@ end
 function s.tkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) and Duel.Destroy(tc,REASON_EFFECT)~=0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0x7,TYPES_TOKEN,0,0,1,RACE_MACHINE,ATTRIBUTE_EARTH) then
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,SET_ANCIENT_GEAR,TYPES_TOKEN,0,0,1,RACE_MACHINE,ATTRIBUTE_EARTH) then
 		local token=Duel.CreateToken(tp,id+1)
 		Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)
 	end

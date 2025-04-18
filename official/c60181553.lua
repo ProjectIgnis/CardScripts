@@ -1,4 +1,5 @@
 --巨星のミラ
+--Mira the Star-Bearer
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon

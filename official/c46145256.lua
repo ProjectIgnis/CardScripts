@@ -1,4 +1,5 @@
 --閃光の結界像
+--Barrier Statue of the Heavens
 local s,id=GetID()
 function s.initial_effect(c)
 	--disable spsummon

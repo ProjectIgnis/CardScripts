@@ -1,4 +1,5 @@
 --植物連鎖
+--Plant Food Chain
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -8,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(TIMING_DAMAGE_STEP)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
-	e1:SetCondition(s.condition)
+	e1:SetCondition(aux.StatChangeDamageStepCondition)
 	e1:SetCost(aux.RemainFieldCost)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
@@ -25,9 +26,6 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
-end
 function s.filter(c)
 	return c:IsFaceup() and c:IsRace(RACE_PLANT)
 end
@@ -42,14 +40,14 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsLocation(LOCATION_SZONE) or not c:IsRelateToEffect(e) or c:IsStatus(STATUS_LEAVE_CONFIRMED) then return end
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
+	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		Duel.Equip(tp,c,tc)
 		--Atkup
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_EQUIP)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(500)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e1)
 		--Equip limit
 		local e2=Effect.CreateEffect(c)
@@ -57,7 +55,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EFFECT_EQUIP_LIMIT)
 		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e2:SetValue(s.eqlimit)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e2)
 	else
 		c:CancelToGrave(false)
@@ -67,7 +65,7 @@ function s.eqlimit(e,c)
 	return c:GetControler()==e:GetOwnerPlayer() and c:IsRace(RACE_PLANT)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetReason()&0x41==0x41 and e:GetHandler():GetEquipTarget()
+	return e:GetHandler():GetReason()&(REASON_DESTROY|REASON_EFFECT)==(REASON_DESTROY|REASON_EFFECT) and e:GetHandler():GetEquipTarget()
 end
 function s.spfilter(c,e,tp)
 	return c:IsRace(RACE_PLANT) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -82,7 +80,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end
 end

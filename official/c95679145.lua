@@ -79,7 +79,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	ge1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	ge1:SetTargetRange(1,0)
 	ge1:SetTarget(s.splimit)
-	ge1:SetReset(RESET_PHASE+PHASE_END)
+	ge1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(ge1,tp)
 	aux.RegisterClientHint(e:GetHandler(),EFFECT_FLAG_OATH,tp,1,0,aux.Stringid(id,2),nil)
 	--lizard check

@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetHintTiming(0,TIMING_MAIN_END+TIMING_BATTLE_START+TIMING_BATTLE_END)
+	e2:SetHintTiming(0,TIMING_MAIN_END|TIMING_BATTLE_START|TIMING_BATTLE_END)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetCondition(s.bancon)
 	e2:SetTarget(s.bantg)
@@ -36,7 +36,7 @@ local function adjzone(loc,seq)
 	if loc==LOCATION_MZONE then
 		if seq<5 then
 			--Own zone and horizontally adjancent | Vertical adjancent zone
-			return ((7<<(seq-1))&0x1F)|(1<<(seq+8))
+			return ((7<<(seq-1))&ZONES_MMZ)|(1<<(seq+8))
 		else
 			--Own zone | vertical adjancent main monster zone
 			return (1<<seq)|(2+(6*(seq-5)))
@@ -116,7 +116,7 @@ end
 function s.banop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsFaceup() and c:IsRelateToEffect(e) then
-		Duel.Remove(c,POS_FACEUP,REASON_EFFECT+REASON_TEMPORARY)
+		Duel.Remove(c,POS_FACEUP,REASON_EFFECT|REASON_TEMPORARY)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_PHASE+PHASE_END)

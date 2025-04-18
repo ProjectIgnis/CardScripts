@@ -1,9 +1,9 @@
 --御巫の祓舞
---Purifying Dance of the Mikanko
+--Mikanko Purification Dance
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsSetCard,0x18e))
+	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsSetCard,SET_MIKANKO))
 	--Prevent destruction by effects
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_EQUIP)
@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x18e}
+s.listed_series={SET_MIKANKO}
 function s.thcond(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(Card.IsControler,1,nil,1-tp)
 end

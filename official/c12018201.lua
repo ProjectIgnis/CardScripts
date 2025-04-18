@@ -33,10 +33,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsLocation(LOCATION_HAND+LOCATION_MZONE)
+	return rp~=tp and re:IsMonsterEffect() and re:GetHandler():IsLocation(LOCATION_HAND|LOCATION_MZONE)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_HAND+LOCATION_MZONE) and not chkc:IsControler(tp) end
+	if chkc then return chkc:IsLocation(LOCATION_HAND|LOCATION_MZONE) and not chkc:IsControler(tp) end
 	local rc=re:GetHandler()
 	if chk==0 then return rc:IsMonster() and rc:IsControler(1-tp) end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,rc,1,0,LOCATION_MZONE)
@@ -50,7 +50,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsSummonType(SUMMON_TYPE_SYNCHRO) and rp==1-tp and c:IsPreviousControler(tp)
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsSynchroSummoned() and rp==1-tp and c:IsPreviousControler(tp)
 end
 function s.spfilter(c,e,tp)
 	return c:IsAttribute(ATTRIBUTE_FIRE) and c:IsDefense(200) and not c:IsType(TYPE_SYNCHRO) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -73,12 +73,12 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_DISABLE)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			tc:RegisterEffect(e1,true)
 			local e2=Effect.CreateEffect(c)
 			e2:SetType(EFFECT_TYPE_SINGLE)
 			e2:SetCode(EFFECT_DISABLE_EFFECT)
-			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 			tc:RegisterEffect(e2,true)
 		end
 	Duel.SpecialSummonComplete()

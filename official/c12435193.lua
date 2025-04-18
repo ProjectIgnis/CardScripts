@@ -1,4 +1,5 @@
 --コアキメイル・ドラゴ
+--Koa'ki Meiru Drago
 local s,id=GetID()
 function s.initial_effect(c)
 	--cost
@@ -23,7 +24,7 @@ function s.initial_effect(c)
 end
 s.listed_names={36623431}
 function s.mtcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.cfilter1(c)
 	return c:IsCode(36623431) and c:IsAbleToGraveAsCost()

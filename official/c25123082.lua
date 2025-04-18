@@ -1,4 +1,5 @@
 --ヒュグロの魔導書
+--Spellbook of Power
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x106e}
+s.listed_series={SET_SPELLBOOK}
 function s.filter(c)
 	return c:IsFaceup() and c:IsRace(RACE_SPELLCASTER)
 end
@@ -28,10 +29,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		e1:SetValue(1000)
 		tc:RegisterEffect(e1)
-		tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD&~(RESET_LEAVE|RESET_TODECK|RESET_TEMP_REMOVE|RESET_REMOVE|RESET_TOGRAVE)+RESET_PHASE+PHASE_END,0,1)
+		tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD&~(RESET_LEAVE|RESET_TODECK|RESET_TEMP_REMOVE|RESET_REMOVE|RESET_TOGRAVE)|RESET_PHASE|PHASE_END,0,1)
 		local e2=Effect.CreateEffect(e:GetHandler())
 		e2:SetDescription(aux.Stringid(id,0))
 		e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -42,7 +43,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCondition(s.shcon)
 		e2:SetTarget(s.shtg)
 		e2:SetOperation(s.shop)
-		e2:SetReset(RESET_PHASE+PHASE_END)
+		e2:SetReset(RESET_PHASE|PHASE_END)
 		Duel.RegisterEffect(e2,tp)
 	end
 end
@@ -51,7 +52,7 @@ function s.shcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsContains(tc) and tc:GetFlagEffect(id)~=0
 end
 function s.shfilter(c)
-	return c:IsSetCard(0x106e) and c:IsSpell() and c:IsAbleToHand()
+	return c:IsSetCard(SET_SPELLBOOK) and c:IsSpell() and c:IsAbleToHand()
 end
 function s.shtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.shfilter,tp,LOCATION_DECK,0,1,nil) end

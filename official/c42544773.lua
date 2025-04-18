@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,id)
-	e1:SetCost(s.effcost)
+	e1:SetCost(Cost.SelfDiscard)
 	e1:SetTarget(s.efftg)
 	e1:SetOperation(s.effop)
 	c:RegisterEffect(e1)
@@ -21,18 +21,13 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,{id,1})
-	e2:SetCost(aux.SelfBanishCost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.eqtg)
 	e2:SetOperation(s.eqop)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_MAGISTUS}
 s.listed_names={id}
-function s.effcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsDiscardable() end
-	Duel.SendtoGrave(c,REASON_COST|REASON_DISCARD)
-end
 function s.thfilter(c)
 	return c:IsSetCard(SET_MAGISTUS) and c:IsMonster() and not c:IsCode(id) and c:IsAbleToHand()
 end

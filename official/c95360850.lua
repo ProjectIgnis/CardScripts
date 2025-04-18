@@ -1,4 +1,5 @@
 --シールド・ウォリアー
+--Shield Warrior
 local s,id=GetID()
 function s.initial_effect(c)
 	--
@@ -8,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
 	e1:SetRange(LOCATION_GRAVE)
 	e1:SetCondition(s.atkcon)
-	e1:SetCost(aux.bfgcost)
+	e1:SetCost(Cost.SelfBanish)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
 end
@@ -25,7 +26,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 		e1:SetValue(1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_DAMAGE)
 		tc:RegisterEffect(e1)
 	end
 end

@@ -1,4 +1,5 @@
 --異星の最終戦士
+--The Last Warrior from Another Planet
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material

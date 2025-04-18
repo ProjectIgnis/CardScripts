@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetValue(s.catlimit)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x116,0xfe}
+s.listed_series={SET_CRUSADIA,SET_WORLD_LEGACY}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	if s.spcost(e,tp,eg,ep,ev,re,r,rp,0) and s.sptarget(e,tp,eg,ep,ev,re,r,rp,0)
@@ -39,11 +39,11 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 end
 function s.costfilter(c,e,tp)
-	return c:IsMonster() and (c:IsSetCard(0x116) or c:IsSetCard(0xfe))
-		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,e,tp,c)
+	return c:IsMonster() and (c:IsSetCard(SET_CRUSADIA) or c:IsSetCard(SET_WORLD_LEGACY))
+		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK|LOCATION_GRAVE,0,1,nil,e,tp,c)
 end
 function s.spfilter(c,e,tp,tc)
-	return c:IsMonster() and (c:IsSetCard(0x116) or c:IsSetCard(0xfe)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsMonster() and (c:IsSetCard(SET_CRUSADIA) or c:IsSetCard(SET_WORLD_LEGACY)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and not c:IsOriginalCode(tc:GetOriginalCode())
 end
 function s.sptarget(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -64,13 +64,13 @@ function s.spoperation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,e,tp,tc)
+	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK|LOCATION_GRAVE,0,1,1,nil,e,tp,tc)
 	if #g>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
 function s.catfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x116) and c:IsLinkMonster()
+	return c:IsFaceup() and c:IsSetCard(SET_CRUSADIA) and c:IsLinkMonster()
 end
 function s.catcondition(e)
 	return Duel.IsExistingMatchingCard(s.catfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)

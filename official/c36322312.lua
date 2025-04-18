@@ -1,7 +1,6 @@
 --起動提督デストロイリボルバー
 --Boot-Up Admiral - Destroyer Dynamo
 --Scripted by Hel
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -46,19 +45,18 @@ function s.initial_effect(c)
 	e5:SetOperation(s.rdop)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x51}
-
+s.listed_series={SET_GADGET}
 function s.spfilter(c)
-	return c:IsOriginalType(TYPE_MONSTER) and c:IsSetCard(0x51) and c:IsAbleToGraveAsCost() and (c:IsFaceup() or c:IsLocation(LOCATION_HAND))
+	return c:IsOriginalType(TYPE_MONSTER) and c:IsSetCard(SET_GADGET) and c:IsAbleToGraveAsCost() and (c:IsFaceup() or c:IsLocation(LOCATION_HAND))
 end
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,c)
+	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_HAND|LOCATION_ONFIELD,0,c)
 	return aux.SelectUnselectGroup(g,e,tp,2,2,aux.ChkfMMZ(1),0)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
-	local rg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,c)
+	local rg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_HAND|LOCATION_ONFIELD,0,c)
 	local g=aux.SelectUnselectGroup(rg,e,tp,2,2,aux.ChkfMMZ(1),1,tp,HINTMSG_TOGRAVE)
 	if #g>0 then
 		g:KeepAlive()
@@ -74,16 +72,16 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	g:DeleteGroup()
 end
 function s.indesfil(c)
-	return c:IsFaceup() and c:IsSetCard(0x51) and c:IsOriginalType(TYPE_MONSTER) and c:IsType(TYPE_EQUIP)
+	return c:IsFaceup() and c:IsSetCard(SET_GADGET) and c:IsOriginalType(TYPE_MONSTER) and c:IsType(TYPE_EQUIP)
 end
 function s.incon(e)
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x51),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_GADGET),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 		or Duel.IsExistingMatchingCard(s.indesfil,e:GetHandlerPlayer(),LOCATION_SZONE,0,1,nil)
 end
 function s.rdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
 	if chkc then return chkc:IsOnField() and chkc~=c end
-	if chk==0 then return  Duel.IsExistingTarget(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c) end
+	if chk==0 then return Duel.IsExistingTarget(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectTarget(tp,aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,c)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,LOCATION_ONFIELD)

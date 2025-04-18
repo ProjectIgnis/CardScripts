@@ -1,4 +1,5 @@
 --ガーディアン・ケースト
+--Guardian Kay'est
 local s,id=GetID()
 function s.initial_effect(c)
 	--sum limit
@@ -39,5 +40,5 @@ function s.sumlimit(e)
 	return not Duel.IsExistingMatchingCard(s.cfilter,e:GetHandlerPlayer(),LOCATION_ONFIELD,0,1,nil)
 end
 function s.efilter(e,te)
-	return te:IsActiveType(TYPE_SPELL)
+	return te:IsSpellEffect()
 end

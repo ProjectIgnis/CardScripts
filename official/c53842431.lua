@@ -54,13 +54,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 s.counter_place_list={COUNTER_SPELL}
-s.listed_series={0x10d}
+s.listed_series={SET_MYTHICAL_BEAST}
 s.listed_names={55424270}
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_PZONE,0) == 1
 end
 function s.thfilter(c)
-	return (c:IsSetCard(0x10d) or c:IsCode(55424270)) and c:IsLevelBelow(7)
+	return (c:IsSetCard(SET_MYTHICAL_BEAST) or c:IsCode(55424270)) and c:IsLevelBelow(7)
 		and c:IsType(TYPE_EFFECT) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -81,7 +81,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.acop(e,tp,eg,ep,ev,re,r,rp)
-	if re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL) and e:GetHandler():GetFlagEffect(1)>0 then
+	if re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsSpellEffect() and e:GetHandler():GetFlagEffect(1)>0 then
 		e:GetHandler():AddCounter(COUNTER_SPELL,2)
 	end
 end
@@ -113,7 +113,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(atk)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
+		e1:SetReset(RESETS_STANDARD_DISABLE_PHASE_END|RESET_OPPO_TURN)
 		c:RegisterEffect(e1)
 	end
 end

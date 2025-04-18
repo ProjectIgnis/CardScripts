@@ -36,7 +36,7 @@ function s.initial_effect(c)
 	e6:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e6:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e6:SetRange(0xff)
-	e6:SetCode(EVENT_PHASE+PHASE_BATTLE)
+	e6:SetCode(EVENT_PHASE|PHASE_BATTLE)
 	e6:SetCountLimit(1)
 	e6:SetCondition(s.spcon)
 	e6:SetTarget(s.sptg)
@@ -65,7 +65,7 @@ function s.atlimit(e,c)
 	return c:IsFaceup() and c~=e:GetHandler()
 end
 function s.battleop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE,0,1)
+	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_BATTLE,0,1)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(id)~=0
@@ -80,7 +80,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return (r&REASON_EFFECT)~=0 and re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
+	return (r&REASON_EFFECT)~=0 and re:IsSpellTrapEffect()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) end

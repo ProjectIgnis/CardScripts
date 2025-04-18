@@ -1,4 +1,4 @@
---
+--光の継承
 --Heritage of the Light
 --Scripted by Eerie Code
 local s,id=GetID()
@@ -25,13 +25,13 @@ function s.typecheck(sc,card_type)
 	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsType,card_type),0,LOCATION_MZONE,LOCATION_MZONE,1,sc)
 end
 function s.drcfilter(c)
-	if c:IsSummonType(SUMMON_TYPE_RITUAL) then
+	if c:IsRitualSummoned() then
 		return s.typecheck(c,TYPE_RITUAL)
-	elseif c:IsSummonType(SUMMON_TYPE_FUSION) then
+	elseif c:IsFusionSummoned() then
 		return s.typecheck(c,TYPE_FUSION)
-	elseif c:IsSummonType(SUMMON_TYPE_SYNCHRO) then
+	elseif c:IsSynchroSummoned() then
 		return s.typecheck(c,TYPE_SYNCHRO)
-	elseif c:IsSummonType(SUMMON_TYPE_XYZ) then
+	elseif c:IsXyzSummoned() then
 		return s.typecheck(c,TYPE_XYZ)
 	else
 		return false

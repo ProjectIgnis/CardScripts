@@ -1,5 +1,5 @@
 --氷水帝コスモクロア
---Cosmocroix the Icejade Imperatrix
+--Icejade Kosmochlor
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -34,7 +34,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={7142724}
-s.listed_series={0x16e}
+s.listed_series={SET_ICEJADE}
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
@@ -47,14 +47,14 @@ end
 function s.aclimit(e,re,tp)
 	local rc=re:GetHandler()
 	local status=STATUS_SUMMON_TURN+STATUS_FLIP_SUMMON_TURN+STATUS_SPSUMMON_TURN
-	return re:IsActiveType(TYPE_MONSTER) and rc:IsLocation(LOCATION_MZONE)
+	return re:IsMonsterEffect() and rc:IsLocation(LOCATION_MZONE)
 		and not rc:IsStatus(status)
 end
 function s.atkcon(e)
-	return Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL and Duel.GetAttackTarget()
+	return Duel.IsPhase(PHASE_DAMAGE_CAL) and Duel.GetAttackTarget()
 end
 function s.atktg(e,c)
 	local tp=e:GetHandlerPlayer()
 	local bc=c:GetBattleTarget()
-	return c:IsControler(1-tp) and bc and bc:IsSetCard(0x16e) and bc:IsControler(tp)
+	return c:IsControler(1-tp) and bc and bc:IsSetCard(SET_ICEJADE) and bc:IsControler(tp)
 end

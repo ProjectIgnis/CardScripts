@@ -1,4 +1,5 @@
 --押し売りゾンビ
+--Hard-sellin' Zombie
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -20,7 +21,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and eg:GetFirst():GetControler()==tp
+	return ep~=tp and eg:GetFirst():IsControler(tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(1-tp) and chkc:IsAbleToDeck() end
@@ -35,6 +36,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) then
-		Duel.SendtoDeck(tc,nil,1,REASON_EFFECT)
+		Duel.SendtoDeck(tc,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
 	end
 end

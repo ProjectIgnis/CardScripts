@@ -1,6 +1,5 @@
 --チェンジ・デステニー
 --Changing Destiny
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -14,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return tp~=Duel.GetTurnPlayer()
+	return Duel.IsTurnPlayer(1-tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local tc=Duel.GetAttacker()
@@ -32,7 +31,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_CHANGE_POSITION)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		local val=tc:GetAttack()/2
 		local op=Duel.SelectOption(1-tp,aux.Stringid(id,0),aux.Stringid(id,1))

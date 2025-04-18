@@ -28,12 +28,12 @@ function s.initial_effect(c)
 	e3:SetOperation(s.drop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x11}
+s.listed_series={SET_KARAKURI}
 s.counter_place_list={0x12}
 function s.cfilter(c)
 	local np=c:GetPosition()
 	local pp=c:GetPreviousPosition()
-	return c:IsSetCard(0x11) and ((pp==0x1 and np==0x4) or (pp==0x4 and np==0x1) or (pp==0x8 and np==0x1))
+	return c:IsSetCard(SET_KARAKURI) and ((pp==SET_ALLY_OF_JUSTICE and np==SET_AMAZONESS) or (pp==SET_AMAZONESS and np==SET_ALLY_OF_JUSTICE) or (pp==SET_HERO and np==SET_ALLY_OF_JUSTICE))
 end
 function s.accon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil)

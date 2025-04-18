@@ -1,9 +1,10 @@
 --聖霊獣騎 アペライオ
+--Ritual Beast Ulti-Apelio
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0x10b5),aux.FilterBoolFunctionEx(Card.IsSetCard,0x20b5))
+	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_RITUAL_BEAST_TAMER),aux.FilterBoolFunctionEx(Card.IsSetCard,SET_SPIRITUAL_BEAST))
 	Fusion.AddContactProc(c,s.contactfil,s.contactop,true)
 	--immune
 	local e3=Effect.CreateEffect(c)
@@ -24,13 +25,13 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x10b5,0x20b5}
-s.material_setcode={0xb5,0x10b5,0x20b5}
+s.listed_series={SET_RITUAL_BEAST_TAMER,SET_SPIRITUAL_BEAST}
+s.material_setcode={SET_RITUAL_BEAST,SET_RITUAL_BEAST_TAMER,SET_SPIRITUAL_BEAST}
 function s.contactfil(tp)
 	return Duel.GetMatchingGroup(Card.IsAbleToRemoveAsCost,tp,LOCATION_MZONE,0,nil)
 end
 function s.contactop(g)
-	Duel.Remove(g,POS_FACEUP,REASON_COST+REASON_MATERIAL)
+	Duel.Remove(g,POS_FACEUP,REASON_COST|REASON_MATERIAL)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -40,7 +41,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCode(EFFECT_IMMUNE_EFFECT)
 	e1:SetValue(s.efilter)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_DAMAGE)
 	c:RegisterEffect(e1)
 end
 function s.efilter(e,te)
@@ -48,14 +49,14 @@ function s.efilter(e,te)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToExtraAsCost() end
-	Duel.SendtoDeck(e:GetHandler(),nil,0,REASON_COST)
+	Duel.SendtoDeck(e:GetHandler(),nil,SEQ_DECKTOP,REASON_COST)
 end
 function s.filter1(c,e,tp)
-	return c:IsFaceup() and c:IsSetCard(0x10b5) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsFaceup() and c:IsSetCard(SET_RITUAL_BEAST_TAMER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and Duel.IsExistingTarget(s.filter2,tp,LOCATION_REMOVED,0,1,c,e,tp)
 end
 function s.filter2(c,e,tp)
-	return c:IsFaceup() and c:IsSetCard(0x20b5) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsFaceup() and c:IsSetCard(SET_SPIRITUAL_BEAST) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

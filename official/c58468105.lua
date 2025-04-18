@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0xc3),1,aux.FilterBoolFunctionEx(Card.IsSetCard,0xa9),2)
+	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_EDGE_IMP),1,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_FLUFFAL),2)
 	--atk up
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -36,19 +36,19 @@ function s.initial_effect(c)
 	e3:SetOperation(s.disop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xc3,0xa9,0xad}
+s.listed_series={SET_EDGE_IMP,SET_FLUFFAL,SET_FRIGHTFUR}
 function s.atkcon(e)
 	return Duel.GetTurnPlayer()==e:GetHandlerPlayer()
 end
 function s.atkval(e,c)
-	return Duel.GetMatchingGroupCount(Card.IsRace,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil,RACE_FAIRY+RACE_FIEND)*300
+	return Duel.GetMatchingGroupCount(Card.IsRace,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil,RACE_FAIRY|RACE_FIEND)*300
 end
 function s.gycon(e,tp,eg,ep,ev,re,r,rp)
-	return aux.bdcon(e,tp,eg,ep,ev,re,r,rp) and e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)
+	return aux.bdcon(e,tp,eg,ep,ev,re,r,rp) and e:GetHandler():IsFusionSummoned()
 end
 function s.gyfilter(c)
 	return c:IsAbleToGrave() and c:IsMonster()
-		and (c:IsSetCard(0xc3) or c:IsSetCard(0xa9) or c:IsSetCard(0xad))
+		and (c:IsSetCard(SET_EDGE_IMP) or c:IsSetCard(SET_FLUFFAL) or c:IsSetCard(SET_FRIGHTFUR))
 end
 function s.gytg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local lv=e:GetHandler():GetBattleTarget():GetLevel()
@@ -74,7 +74,7 @@ function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	return gp and gp:IsContains(c) and Duel.IsChainDisablable(ev)
 end
 function s.disfilter(c)
-	return c:IsSetCard(0xad) and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(SET_FRIGHTFUR) and c:IsAbleToRemoveAsCost()
 end
 function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.disfilter,tp,LOCATION_EXTRA,0,1,nil) end

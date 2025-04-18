@@ -1,9 +1,9 @@
--- 白銀の城の狂時計
--- Labrynth Cooclock
--- Scripted by Hatter
+--白銀の城の狂時計
+--Labrynth Cooclock
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Allow Trap activation in the same turn it's set
+	--Allow Trap activation in the same turn it's set
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_QUICK_O)
@@ -11,10 +11,10 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER|TIMING_MAIN_END)
 	e1:SetCountLimit(1,id)
-	e1:SetCost(s.accost)
+	e1:SetCost(Cost.SelfDiscard)
 	e1:SetOperation(s.acop)
 	c:RegisterEffect(e1)
-	-- Add to hand or Special Summon
+	--Add to hand or Special Summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SPECIAL_SUMMON)
@@ -30,11 +30,6 @@ function s.initial_effect(c)
 end
 s.listed_names={id}
 s.listed_series={SET_LABRYNTH}
-function s.accost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsDiscardable() end
-	Duel.SendtoGrave(c,REASON_COST+REASON_DISCARD)
-end
 function s.acop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetDescription(aux.Stringid(id,2))

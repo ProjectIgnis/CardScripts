@@ -1,8 +1,9 @@
 --フォトン・アレキサンドラ・クィーン
+--Photon Alexandra Queen
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
-	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x6a),4,2)
+	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_BUTTERSPY),4,2)
 	c:EnableReviveLimit()
 	--return
 	local e1=Effect.CreateEffect(c)
@@ -10,16 +11,12 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_DAMAGE)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCost(s.retcost)
+	e1:SetCost(Cost.Detach(1))
 	e1:SetTarget(s.rettg)
 	e1:SetOperation(s.retop)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
 end
-s.listed_series={0x6a}
-function s.retcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
-end
+s.listed_series={SET_BUTTERSPY}
 function s.rettg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToHand,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 	local g=Duel.GetMatchingGroup(Card.IsAbleToHand,tp,LOCATION_MZONE,LOCATION_MZONE,nil)

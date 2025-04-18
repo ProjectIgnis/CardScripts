@@ -64,7 +64,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	elseif op==2 then
 		Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE|PHASE_END,0,1)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-		sg=Duel.SelectMatchingCard(tp,s.rmfilter,tp,0,LOCATION_GRAVE+LOCATION_MZONE,1,1,nil)
+		sg=Duel.SelectMatchingCard(tp,s.rmfilter,tp,0,LOCATION_GRAVE|LOCATION_MZONE,1,1,nil)
 		if #sg==0 then return end
 		Duel.HintSelection(sg,true)
 		Duel.Remove(sg,POS_FACEUP,REASON_EFFECT)

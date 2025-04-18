@@ -1,4 +1,5 @@
 --極星宝ドラウプニル
+--Nordic Relic Draupnir
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c,nil,s.filter)
@@ -20,16 +21,16 @@ function s.initial_effect(c)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x42,0x4b,0x5042}
+s.listed_series={SET_NORDIC,SET_AESIR,SET_NORDIC_RELIC}
 function s.filter(c)
-	return c:IsSetCard(0x42) or c:IsSetCard(0x4b)
+	return c:IsSetCard(SET_NORDIC) or c:IsSetCard(SET_AESIR)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp,chk)
 	return e:GetHandler():IsPreviousPosition(POS_FACEUP)
-		and (e:GetHandler():GetReason()&0x41)==0x41
+		and (e:GetHandler():GetReason()&(REASON_DESTROY|REASON_EFFECT))==(REASON_DESTROY|REASON_EFFECT)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x5042) and c:IsAbleToHand()
+	return c:IsSetCard(SET_NORDIC_RELIC) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

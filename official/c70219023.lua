@@ -25,7 +25,7 @@ function s.fusfilter(typ)
 			end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)
+	return e:GetHandler():IsFusionSummoned()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=0
@@ -126,7 +126,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 		e1:SetRange(LOCATION_MZONE)
 		e1:SetValue(math.floor(diff/2))
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		c:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_FIELD)
@@ -134,7 +134,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetTargetRange(LOCATION_MZONE,0)
 		e2:SetTarget(s.ftarget)
 		e2:SetLabel(c:GetFieldID())
-		e2:SetReset(RESET_PHASE+PHASE_END)
+		e2:SetReset(RESET_PHASE|PHASE_END)
 		Duel.RegisterEffect(e2,tp)
 		aux.RegisterClientHint(c,nil,tp,1,0,aux.Stringid(id,3),nil)
 	end

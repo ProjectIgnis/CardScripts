@@ -41,14 +41,14 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetValue(math.floor(tc:GetAttack()/2))
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 		Duel.BreakEffect()
 		Duel.Destroy(c,REASON_EFFECT)
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return r&(REASON_EFFECT+REASON_BATTLE)~=0
+	return r&(REASON_EFFECT|REASON_BATTLE)~=0
 end
 function s.spfilter(c,e,tp)
 	return c:IsAttribute(ATTRIBUTE_DARK) and c:IsRace(RACE_SPELLCASTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

@@ -1,5 +1,5 @@
 --無限起動ハーヴェスター
---Infinite Ignition Harvester
+--Infinitrack Harvester
 --Scripted by Naim
 local s,id = GetID()
 function s.initial_effect(c)
@@ -29,10 +29,10 @@ function s.initial_effect(c)
 	e3:SetOperation(s.lvop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x127}
+s.listed_series={SET_INFINITRACK}
 s.listed_names={id}
 function s.filter(c)
-	return c:IsSetCard(0x127) and c:IsMonster() and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(SET_INFINITRACK) and c:IsMonster() and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end
@@ -67,7 +67,7 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_CHANGE_LEVEL)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e1:SetReset(RESETS_STANDARD_PHASE_END)
 			e1:SetValue(lv)
 			oc:RegisterEffect(e1)
 		end

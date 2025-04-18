@@ -1,6 +1,5 @@
 --超重武者ココロガマ－Ａ
 --Superheavy Samurai Prepped Defense
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Cannot be normal or flip summoned while you have a spell/trap in GY
@@ -47,7 +46,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 		e1:SetValue(1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		c:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)

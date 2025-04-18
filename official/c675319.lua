@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetTargetRange(LOCATION_MZONE,0)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0xf1))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_ZOODIAC))
 	e2:SetValue(300)
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
@@ -38,7 +38,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.repop)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0xf1}
+s.listed_series={SET_ZOODIAC}
 function s.atfilter(c,atk)
 	return c:IsFaceup() and c:IsRace(RACE_BEASTWARRIOR) and c:GetAttack()>atk
 end
@@ -46,15 +46,15 @@ function s.atlimit(e,c)
 	return c:IsFaceup() and c:IsRace(RACE_BEASTWARRIOR) and Duel.IsExistingMatchingCard(s.atfilter,c:GetControler(),LOCATION_MZONE,0,1,nil,c:GetAttack())
 end
 function s.repfilter(c,tp)
-	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:IsSetCard(0xf1) 
+	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:IsSetCard(SET_ZOODIAC) 
 		and not c:IsReason(REASON_REPLACE) and c:IsReason(REASON_EFFECT) and c:GetFlagEffect(id)==0
 end
 function s.desfilter(c,e,tp)
-	return c:IsControler(tp) and c:IsLocation(LOCATION_MZONE+LOCATION_HAND) and c:IsMonster()
+	return c:IsControler(tp) and c:IsLocation(LOCATION_MZONE|LOCATION_HAND) and c:IsMonster()
 		and c:IsDestructable(e) and not c:IsStatus(STATUS_DESTROY_CONFIRMED+STATUS_BATTLE_DESTROYED)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.desfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,1,nil,e,tp)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.desfilter,tp,LOCATION_MZONE|LOCATION_HAND,0,1,nil,e,tp)
 		and eg:IsExists(s.repfilter,1,nil,tp) end
 	if Duel.SelectEffectYesNo(tp,e:GetHandler(),96) then
 		local g=eg:Filter(s.repfilter,nil,tp)
@@ -66,9 +66,9 @@ function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 			e:SetLabelObject(cg:GetFirst())
 		end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESREPLACE)
-		local tg=Duel.SelectMatchingCard(tp,s.desfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,1,1,nil,e,tp)
+		local tg=Duel.SelectMatchingCard(tp,s.desfilter,tp,LOCATION_MZONE|LOCATION_HAND,0,1,1,nil,e,tp)
 		Duel.SetTargetCard(tg)
-		tg:GetFirst():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET+RESET_CHAIN,0,1)
+		tg:GetFirst():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD-RESET_TURN_SET|RESET_CHAIN,0,1)
 		tg:GetFirst():SetStatus(STATUS_DESTROY_CONFIRMED,true)
 		return true
 	else return false end
@@ -80,5 +80,5 @@ function s.repop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,1-tp,id)
 	local tc=Duel.GetFirstTarget()
 	tc:SetStatus(STATUS_DESTROY_CONFIRMED,false)
-	Duel.Destroy(tc,REASON_EFFECT+REASON_REPLACE)
+	Duel.Destroy(tc,REASON_EFFECT|REASON_REPLACE)
 end

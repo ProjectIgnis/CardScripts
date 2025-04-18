@@ -1,7 +1,6 @@
 --転生炎獣ベイルリンクス
 --Salamangreat Almiraj
 --Scripted by Eerie Code
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -15,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCost(s.immcost)
+	e1:SetCost(Cost.SelfTribute)
 	e1:SetTarget(s.immtg)
 	e1:SetOperation(s.immop)
 	e1:SetHintTiming(0,TIMING_END_PHASE)
@@ -33,12 +32,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.matfilter(c)
-	return c:IsSummonType(SUMMON_TYPE_NORMAL) and c:IsAttackBelow(1000)
-end
-function s.immcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsReleasable() end
-	Duel.Release(c,REASON_COST)
+	return c:IsNormalSummoned() and c:IsAttackBelow(1000)
 end
 function s.immtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) end
@@ -56,12 +50,12 @@ function s.immop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 		e1:SetValue(aux.indoval)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end
 function s.spcfilter(c,tp)
-	return c:IsSummonType(SUMMON_TYPE_NORMAL) and c:IsPreviousControler(tp)
+	return c:IsNormalSummoned() and c:IsPreviousControler(tp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.spcfilter,1,nil,tp)

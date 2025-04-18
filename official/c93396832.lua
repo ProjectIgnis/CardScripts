@@ -1,4 +1,5 @@
 --角笛砕き
+--Smashing Horn
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return (re:IsActiveType(TYPE_MONSTER) or (re:IsActiveType(TYPE_TRAP) and re:IsHasType(EFFECT_TYPE_ACTIVATE)))
+	return (re:IsMonsterEffect() or (re:IsTrapEffect() and re:IsHasType(EFFECT_TYPE_ACTIVATE)))
 		and re:IsHasCategory(CATEGORY_DISABLE_SUMMON) and Duel.IsChainNegatable(ev)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

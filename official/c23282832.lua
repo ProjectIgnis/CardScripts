@@ -1,4 +1,5 @@
 --オーバーリミット
+--Over Limit
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -7,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(0,TIMING_END_PHASE)
-	e1:SetCost(s.cost)
+	e1:SetCost(Cost.PayLP(500))
 	e1:SetTarget(s.tg)
 	e1:SetOperation(s.op)
 	c:RegisterEffect(e1)
@@ -15,10 +16,6 @@ end
 function s.filter(c,e,tp,tid)
 	return c:GetTurnID()==tid and c:IsReason(REASON_BATTLE) and c:IsType(TYPE_NORMAL)
 		and c:IsAttackBelow(1000) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,500) end
-	Duel.PayLPCost(tp,500)
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

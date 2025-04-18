@@ -1,5 +1,5 @@
 --エーリアン・バスター
---Alien Buster
+--Alien Stealthbuster
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetCondition(aux.exccon)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.destg)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)

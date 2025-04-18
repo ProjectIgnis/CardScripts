@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	Fusion.AddProcFun2(c,s.matfilter,aux.FilterBoolFunctionEx(Card.IsSetCard,0xaf),true)
+	Fusion.AddProcFun2(c,s.matfilter,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_DD),true)
 	--Special Summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -35,19 +35,19 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
-s.listed_series={0xaf}
-s.material_setcode={0xaf}
+s.listed_series={SET_DD}
+s.material_setcode={SET_DD}
 function s.matfilter(c,fc,sumtype,tp)
-	return c:IsSetCard(0xaf,fc,sumtype,tp) and c:IsLevelAbove(5)
+	return c:IsSetCard(SET_DD,fc,sumtype,tp) and c:IsLevelAbove(5)
 end
 function s.cfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0xaf) and c:IsControler(tp)
+	return c:IsFaceup() and c:IsSetCard(SET_DD) and c:IsControler(tp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return not eg:IsContains(e:GetHandler()) and eg:IsExists(s.cfilter,1,nil,tp)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0xaf) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_DD) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.spfilter(chkc,e,tp) end
@@ -64,7 +64,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and Duel.IsChainNegatable(ev)
+	return Duel.IsTurnPlayer(tp) and re:IsSpellTrapEffect() and Duel.IsChainNegatable(ev)
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

@@ -1,4 +1,5 @@
 --超重武者タマ－C
+--Superheavy Samurai Battleball
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -13,20 +14,20 @@ function s.initial_effect(c)
 	e1:SetOperation(s.scop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x9a}
+s.listed_series={SET_SUPERHEAVY_SAMURAI}
 function s.cfilter(c)
-	return c:IsFacedown() or not c:IsSetCard(0x9a)
+	return c:IsFacedown() or not c:IsSetCard(SET_SUPERHEAVY_SAMURAI)
 end
 function s.sccon(e,tp,eg,ep,ev,re,r,rp)
 	return not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
-		and not Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_GRAVE,0,1,nil,TYPE_SPELL+TYPE_TRAP)
+		and not Duel.IsExistingMatchingCard(Card.IsSpellTrap,tp,LOCATION_GRAVE,0,1,nil)
 end
 function s.filter(c,e,tp,lv)
 	return c:IsFaceup() and c:GetLevel()>0
 		and Duel.IsExistingMatchingCard(s.scfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,lv+c:GetOriginalLevel())
 end
 function s.scfilter(c,e,tp,lv)
-	return c:IsSetCard(0x9a) and c:IsLevel(lv) and c:IsType(TYPE_SYNCHRO)
+	return c:IsSetCard(SET_SUPERHEAVY_SAMURAI) and c:IsLevel(lv) and c:IsType(TYPE_SYNCHRO)
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_SYNCHRO,tp,false,false)
 end
 function s.sctg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

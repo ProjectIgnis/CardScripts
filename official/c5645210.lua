@@ -1,4 +1,5 @@
 --The splendid VENUS
+--Splendid Venus
 local s,id=GetID()
 function s.initial_effect(c)
 	--atk,def
@@ -35,5 +36,5 @@ end
 function s.effectfilter(e,ct)
 	local p=e:GetHandler():GetControler()
 	local te,tp,loc=Duel.GetChainInfo(ct,CHAININFO_TRIGGERING_EFFECT,CHAININFO_TRIGGERING_PLAYER,CHAININFO_TRIGGERING_LOCATION)
-	return p==tp and te:IsActiveType(TYPE_SPELL+TYPE_TRAP) and (loc&LOCATION_ONFIELD)~=0
+	return p==tp and te:IsSpellTrapEffect() and (loc&LOCATION_ONFIELD)~=0
 end

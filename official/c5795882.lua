@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCountLimit(1)
 	e2:SetCondition(s.sumcon)
-	e2:SetCost(s.sumcost)
+	e2:SetCost(Cost.PayLP(500))
 	e2:SetTarget(s.sumtg)
 	e2:SetOperation(s.sumop)
 	c:RegisterEffect(e2)
@@ -31,13 +31,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.recop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x8e}
+s.listed_series={SET_VAMPIRE}
 function s.sumcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsPlayerCanAdditionalSummon(tp)
-end
-function s.sumcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,500) end
-	Duel.PayLPCost(tp,500)
 end
 function s.sumtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanSummon(tp) end
@@ -48,13 +44,13 @@ function s.sumop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetDescription(aux.Stringid(id,2))
 	e1:SetCode(EFFECT_EXTRA_SUMMON_COUNT)
-	e1:SetTargetRange(LOCATION_HAND+LOCATION_MZONE,0)
-	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x8e))
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetTargetRange(LOCATION_HAND|LOCATION_MZONE,0)
+	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_VAMPIRE))
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.reccon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and eg:GetFirst():IsControler(tp) and eg:GetFirst():IsSetCard(0x8e)
+	return ep~=tp and eg:GetFirst():IsControler(tp) and eg:GetFirst():IsSetCard(SET_VAMPIRE)
 end
 function s.rectg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -67,4 +63,3 @@ function s.recop(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Recover(p,d,REASON_EFFECT)
 end
-

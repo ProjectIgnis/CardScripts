@@ -1,4 +1,5 @@
 --拘束解放波
+--Release Restraint Wave
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

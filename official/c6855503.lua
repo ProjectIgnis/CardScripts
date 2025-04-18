@@ -1,8 +1,8 @@
 --赫灼竜マスカレイド
---Masquerade, the Crimsongleam Dragon
+--Masquerade the Blazing Dragon
 local s,id=GetID()
 function s.initial_effect(c)
-	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0x166),s.matfilter)
+	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_DESPIA),s.matfilter)
 	c:EnableReviveLimit()
 	--activate cost
 	local e1=Effect.CreateEffect(c)
@@ -38,13 +38,13 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x166}
+s.listed_series={SET_DESPIA}
 function s.matfilter(c,fc,st,tp)
 	return c:IsAttribute(ATTRIBUTE_LIGHT,fc,st,tp) or c:IsAttribute(ATTRIBUTE_DARK,fc,st,tp)
 end
 function s.costcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsSummonType(SUMMON_TYPE_FUSION)
+	return c:IsFusionSummoned()
 end
 function s.costchk(e,te_or_c,tp)
 	local ct=#{Duel.GetPlayerEffect(tp,id)}
@@ -74,7 +74,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 		e1:SetValue(LOCATION_REMOVED)
-		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
+		e1:SetReset(RESET_EVENT|RESETS_REDIRECT)
 		c:RegisterEffect(e1,true)
 	end
 end

@@ -1,4 +1,5 @@
 --アマゾネスの賢者
+--Amazoness Sage
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy
@@ -17,7 +18,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler()==Duel.GetAttacker() and e:GetHandler():IsRelateToBattle()
 end
 function s.filter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsSpellTrap()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) and s.filter(chkc) end

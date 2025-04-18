@@ -1,6 +1,5 @@
 --グングニールの影霊衣
 --Nekroz of Gungnir
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -19,7 +18,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_HAND)
 	e2:SetCountLimit(1,id)
-	e2:SetCost(s.indcost)
+	e2:SetCost(Cost.SelfDiscard)
 	e2:SetTarget(s.indtg)
 	e2:SetOperation(s.indop)
 	c:RegisterEffect(e2)
@@ -34,20 +33,15 @@ function s.initial_effect(c)
 	e3:SetCost(s.descost)
 	e3:SetTarget(s.destg)
 	e3:SetOperation(s.desop)
-	e3:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
+	e3:SetHintTiming(0,TIMINGS_CHECK_MONSTER|TIMING_END_PHASE)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xb4}
-
+s.listed_series={SET_NEKROZ}
 function s.mat_filter(c)
 	return c:GetLevel()~=7
 end
-function s.indcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsDiscardable() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
-end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0xb4)
+	return c:IsFaceup() and c:IsSetCard(SET_NEKROZ)
 end
 function s.indtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) end
@@ -64,7 +58,7 @@ function s.indop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		e1:SetValue(1)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()
@@ -73,11 +67,11 @@ function s.indop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c)
-	return c:IsSetCard(0xb4) and c:IsDiscardable()
+	return c:IsSetCard(SET_NEKROZ) and c:IsDiscardable()
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_COST|REASON_DISCARD)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() end

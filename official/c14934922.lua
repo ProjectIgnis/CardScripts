@@ -29,16 +29,16 @@ function s.initial_effect(c)
 	e2:SetOperation(s.activate2)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x119}
+s.listed_series={SET_SALAMANGREAT}
 	--Check for "Salamangreat" monster
 function s.costfilter(c)
-	return c:IsSetCard(0x119) and c:IsMonster() and (c:IsFaceup() or not c:IsLocation(LOCATION_MZONE)) and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(SET_SALAMANGREAT) and c:IsMonster() and (c:IsFaceup() or not c:IsLocation(LOCATION_MZONE)) and c:IsAbleToGraveAsCost()
 end
 	--Defining cost
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,1,1,nil)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 	--Activation legality
@@ -58,7 +58,7 @@ function s.activate1(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check if "Salamangreat" link monster was summoned using its own name
 function s.lkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x119) and c:IsLinkMonster() and c:IsReincarnationSummoned()
+	return c:IsFaceup() and c:IsSetCard(SET_SALAMANGREAT) and c:IsLinkMonster() and c:IsReincarnationSummoned()
 end
 	--Activation legality
 function s.target2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -82,4 +82,3 @@ function s.activate2(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(sg,REASON_EFFECT)
 	end
 end
-

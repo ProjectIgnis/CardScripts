@@ -1,4 +1,5 @@
 --天刑王 ブラック・ハイランダー
+--Dark Highlander
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon

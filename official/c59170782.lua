@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_CHAINING)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCondition(s.tgcon1)
-	e1:SetCost(s.tgcost)
+	e1:SetCost(Cost.Detach(1))
 	e1:SetOperation(s.tgop1)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
 	--Change battle target
@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCondition(s.tgcon2)
-	e2:SetCost(s.tgcost)
+	e2:SetCost(Cost.Detach(1))
 	e2:SetOperation(s.tgop2)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
 	--Special Summon
@@ -37,18 +37,14 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x74}
-function s.tgcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
-end
+s.listed_series={SET_MERMAIL}
 function s.tgcon1(e,tp,eg,ep,ev,re,r,rp)
-	if rp==tp or not re:IsActiveType(TYPE_SPELL+TYPE_TRAP) or not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
+	if rp==tp or not re:IsSpellTrapEffect() or not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 	if not g or #g~=1 then return false end
 	local tc=g:GetFirst()
 	local c=e:GetHandler()
-	if tc==c or tc:GetControler()==1-tp or tc:IsFacedown() or not tc:IsLocation(LOCATION_MZONE) or not tc:IsSetCard(0x74) then return false end
+	if tc==c or tc:IsControler(1-tp) or tc:IsFacedown() or not tc:IsLocation(LOCATION_MZONE) or not tc:IsSetCard(SET_MERMAIL) then return false end
 	return Duel.CheckChainTarget(ev,c)
 end
 function s.tgop1(e,tp,eg,ep,ev,re,r,rp)
@@ -64,7 +60,7 @@ end
 function s.tgcon2(e,tp,eg,ep,ev,re,r,rp)
 	if tp==Duel.GetTurnPlayer() then return false end
 	local at=Duel.GetAttackTarget()
-	if at and at:IsFaceup() and at:IsSetCard(0x74) then
+	if at and at:IsFaceup() and at:IsSetCard(SET_MERMAIL) then
 		local ag=eg:GetFirst():GetAttackableTarget()
 		return ag:IsContains(e:GetHandler())
 	end
@@ -80,7 +76,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsReason(REASON_DESTROY)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x74) and c:GetCode()~=id and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_MERMAIL) and c:GetCode()~=id and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.spfilter(chkc,e,tp) end

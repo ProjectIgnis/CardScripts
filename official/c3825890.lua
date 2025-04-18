@@ -22,12 +22,12 @@ function s.initial_effect(c)
 	e4:SetTarget(s.desreptg)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x2e}
+s.listed_series={SET_GRAVEKEEPERS}
 function s.otfilter(c,tp)
-	return c:IsSetCard(0x2e) and (c:IsControler(tp) or c:IsFaceup())
+	return c:IsSetCard(SET_GRAVEKEEPERS) and (c:IsControler(tp) or c:IsFaceup())
 end
 function s.filter(c)
-	return c:IsSetCard(0x2e) and c:IsMonster()
+	return c:IsSetCard(SET_GRAVEKEEPERS) and c:IsMonster()
 end
 function s.atkval(e,c)
 	return Duel.GetMatchingGroupCount(s.filter,c:GetControler(),LOCATION_GRAVE,0,nil)*200
@@ -39,7 +39,7 @@ function s.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if Duel.SelectEffectYesNo(tp,c,96) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
 		local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND,0,1,1,nil)
-		Duel.SendtoGrave(g,REASON_EFFECT+REASON_REPLACE)
+		Duel.SendtoGrave(g,REASON_EFFECT|REASON_REPLACE)
 		return true
 	else return false end
 end

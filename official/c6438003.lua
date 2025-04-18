@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={id}
-s.listed_series={0x137}
+s.listed_series={SET_ANCIENT_WARRIORS}
 function s.tgfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_CONTINUOUS) and c:IsSpellTrap() and c:IsAbleToGrave()
 end
@@ -57,20 +57,20 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 				e1:SetType(EFFECT_TYPE_SINGLE)
 				e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 				e1:SetValue(card:GetAttack()//2)
-				e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+				e1:SetReset(RESETS_STANDARD_PHASE_END)
 				card:RegisterEffect(e1)
 			end
 		end
 	end
 end
 function s.cfilter(c,tp)
-	return c:IsPreviousLocation(LOCATION_ONFIELD) and c:GetPreviousControler()==1-tp and c:IsReason(REASON_BATTLE+REASON_EFFECT)
+	return c:IsPreviousLocation(LOCATION_ONFIELD) and c:GetPreviousControler()==1-tp and c:IsReason(REASON_BATTLE|REASON_EFFECT)
 end
 function s.thcond(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x137) and c:IsAbleToHand() and not c:IsCode(id)
+	return c:IsSetCard(SET_ANCIENT_WARRIORS) and c:IsAbleToHand() and not c:IsCode(id)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc) end

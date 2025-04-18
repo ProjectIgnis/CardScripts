@@ -1,4 +1,5 @@
 --封魔一閃
+--Flash of the Forbidden Spell
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

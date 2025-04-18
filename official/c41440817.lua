@@ -1,5 +1,5 @@
 --心太砲式
---J.E.L.L.Y. Cannon System
+--Jelly Cannon
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
@@ -23,6 +23,6 @@ end
 function s.tdop(e)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) then
-		Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)
+		Duel.SendtoDeck(tc,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	end
 end

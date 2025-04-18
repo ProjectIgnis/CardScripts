@@ -14,12 +14,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x31}
+s.listed_series={SET_FORTUNE_LADY}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x31),tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_FORTUNE_LADY),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x31) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and
+	return c:IsSetCard(SET_FORTUNE_LADY) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and
 		not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,c:GetCode()),tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -42,7 +42,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	--lizard check
 	aux.addTempLizardCheck(e:GetHandler(),tp,s.lizfilter)

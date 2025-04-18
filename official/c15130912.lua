@@ -1,10 +1,10 @@
--- ヴァリアンツの弓引－西園
--- Saion the Vaylantz Archer
--- Scripted by Hatter
+--ヴァリアンツの弓引－西園
+--Saion the Vaylantz Archer
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	Pendulum.AddProcedure(c)
-	-- Special Summon itself from the Pendulum Zone
+	--Special Summon itself from the Pendulum Zone
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	-- Negate or halve ATK
+	--Negate or halve ATK
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_COIN+CATEGORY_DISABLE+CATEGORY_ATKCHANGE)
@@ -22,11 +22,11 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,{id,1})
-	e2:SetCondition(function(e) return e:GetHandler():IsSummonType(SUMMON_TYPE_SPECIAL) end)
+	e2:SetCondition(function(e) return e:GetHandler():IsSpecialSummoned() end)
 	e2:SetTarget(s.disatktg)
 	e2:SetOperation(s.disatkop)
 	c:RegisterEffect(e2)
-	-- Destroy or return to hand
+	--Destroy or return to hand
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetCategory(CATEGORY_COIN+CATEGORY_DESTROY+CATEGORY_TOHAND)
@@ -56,7 +56,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if zone~=0 then
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP,zone)
 	end
-	-- Cannot Special Summon, except "Vaylantz" and from the Extra Deck
+	--Cannot Special Summon, except "Vaylantz" and from the Extra Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,3))
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -83,7 +83,7 @@ function s.disatkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local coin=Duel.TossCoin(tp,1)
 	if coin==COIN_HEADS then
-		-- Negate its effects
+		--Negate its effects
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
@@ -94,7 +94,7 @@ function s.disatkop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
 		tc:RegisterEffect(e2)
 	elseif coin==COIN_TAILS then
-		-- Halve its ATK
+		--Halve its ATK
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)

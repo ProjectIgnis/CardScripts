@@ -8,10 +8,10 @@ function s.initial_effect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e1:SetCode(EVENT_PHASE+PHASE_BATTLE)
+	e1:SetCode(EVENT_PHASE|PHASE_BATTLE)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCondition(function(e) return e:GetHandler():GetBattledGroupCount()>0 end)
-	e1:SetCost(s.deckspcost)
+	e1:SetCost(Cost.SelfToDeck)
 	e1:SetTarget(s.decksptg)
 	e1:SetOperation(s.deckspop)
 	c:RegisterEffect(e1)
@@ -41,11 +41,6 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_GLADIATOR_BEAST,SET_GLADIATOR}
 s.listed_names={id}
-function s.deckspcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsAbleToDeckAsCost() end
-	Duel.SendtoDeck(c,nil,SEQ_DECKSHUFFLE,REASON_COST)
-end
 function s.deckspfilter(c,e,tp)
 	return c:IsSetCard(SET_GLADIATOR_BEAST) and c:IsCanBeSpecialSummoned(e,100,tp,false,false) and not c:IsCode(id)
 end

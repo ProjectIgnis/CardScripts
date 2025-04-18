@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.spcop)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0xc}
+s.listed_series={SET_ALIEN}
 s.counter_place_list={COUNTER_A}
 function s.spcost(e,c,tp,sumtype)
 	return sumtype ~= SUMMON_TYPE_SPECIAL+1 or Duel.GetActivityCount(tp,ACTIVITY_NORMALSUMMON)==0
@@ -46,7 +46,7 @@ function s.spcop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_SUMMON)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	e1:SetTargetRange(1,0)
 	Duel.RegisterEffect(e1,tp)
 	local e2=e1:Clone()
@@ -63,11 +63,11 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.adcon(e)
-	return Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL and Duel.GetAttackTarget()
+	return Duel.IsPhase(PHASE_DAMAGE_CAL) and Duel.GetAttackTarget()
 end
 function s.adtg(e,c)
 	local bc=c:GetBattleTarget()
-	return bc and c:GetCounter(COUNTER_A)~=0 and bc:IsSetCard(0xc)
+	return bc and c:GetCounter(COUNTER_A)~=0 and bc:IsSetCard(SET_ALIEN)
 end
 function s.adval(e,c)
 	return c:GetCounter(COUNTER_A)*-300

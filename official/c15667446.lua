@@ -1,4 +1,5 @@
 --暗黒界の闘神 ラチナ
+--Latinum, Exarch of Dark World
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -13,7 +14,7 @@ function s.initial_effect(c)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	e:SetLabel(e:GetHandler():GetPreviousControler())
-	return e:GetHandler():IsPreviousLocation(LOCATION_HAND) and (r&0x4040)==0x4040
+	return e:GetHandler():IsPreviousLocation(LOCATION_HAND) and r&(REASON_DISCARD|REASON_EFFECT)==REASON_DISCARD|REASON_EFFECT
 end
 function s.atfilter(c)
 	return c:IsFaceup() and c:IsRace(RACE_FIEND)
@@ -40,7 +41,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetValue(500)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			tc:RegisterEffect(e1)
 		end
 	end

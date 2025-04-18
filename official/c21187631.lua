@@ -30,13 +30,13 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x103}
+s.listed_series={SET_ALTERGEIST}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttacker()
-	return at:IsSummonType(SUMMON_TYPE_SPECIAL) and not at:IsControler(tp)
+	return at:IsSpecialSummoned() and not at:IsControler(tp)
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x103) and c:IsMonster() and c:IsAbleToHandAsCost()
+	return c:IsFaceup() and c:IsSetCard(SET_ALTERGEIST) and c:IsMonster() and c:IsAbleToHandAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD,0,1,nil) end

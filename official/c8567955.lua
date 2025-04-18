@@ -1,5 +1,5 @@
 --バランサーロード
--- Balancer Lord
+--Balancer Lord
 local s,id=GetID()
 function s.initial_effect(c)
 	--extra summon
@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
 	e1:SetCondition(s.sumcon)
-	e1:SetCost(s.sumcost)
+	e1:SetCost(Cost.PayLP(1000))
 	e1:SetTarget(s.sumtg)
 	e1:SetOperation(s.sumop)
 	c:RegisterEffect(e1)
@@ -28,10 +28,6 @@ end
 function s.sumcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsPlayerCanAdditionalSummon(tp)
 end
-function s.sumcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,1000) end
-	Duel.PayLPCost(tp,1000)
-end
 function s.sumtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanSummon(tp) end
 end
@@ -40,9 +36,9 @@ function s.sumop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetDescription(aux.Stringid(id,2))
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_EXTRA_SUMMON_COUNT)
-	e1:SetTargetRange(LOCATION_HAND+LOCATION_MZONE,0)
+	e1:SetTargetRange(LOCATION_HAND|LOCATION_MZONE,0)
 	e1:SetTarget(aux.TargetBoolFunction(Card.IsRace,RACE_CYBERSE))
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.filter(c,e,tp)

@@ -1,4 +1,4 @@
---Japanese name
+--巳剣降臨
 --Mitsurugi Ritual
 --scripted by Naim
 local s,id=GetID()

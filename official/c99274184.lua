@@ -1,4 +1,5 @@
 --クリストロン・インパクト
+--Crystron Impact
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -18,14 +19,14 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_CHAINING)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCondition(s.discon)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.distg)
 	e2:SetOperation(s.disop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xea}
+s.listed_series={SET_CRYSTRON}
 function s.filter(c,e,tp)
-	return c:IsFaceup() and c:IsSetCard(0xea) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsFaceup() and c:IsSetCard(SET_CRYSTRON) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_REMOVED) and s.filter(chkc,e,tp) end
@@ -46,14 +47,14 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 				e1:SetType(EFFECT_TYPE_SINGLE)
 				e1:SetCode(EFFECT_SET_DEFENSE_FINAL)
 				e1:SetValue(0)
-				e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+				e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 				sc:RegisterEffect(e1)
 			end
 		end
 	end
 end
 function s.tgfilter(c,tp)
-	return c:IsFaceup() and c:IsLocation(LOCATION_MZONE) and c:IsControler(tp) and c:IsSetCard(0xea)
+	return c:IsFaceup() and c:IsLocation(LOCATION_MZONE) and c:IsControler(tp) and c:IsSetCard(SET_CRYSTRON)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end

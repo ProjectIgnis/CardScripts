@@ -1,4 +1,5 @@
 --共闘するランドスターの剣士
+--Comrade Swordsman of Landstar
 local s,id=GetID()
 function s.initial_effect(c)
 	--atk

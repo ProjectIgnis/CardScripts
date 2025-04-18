@@ -1,4 +1,5 @@
 --極星天ヴァナディース
+--Vanadis of the Nordic Ascendant
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro substitute
@@ -12,7 +13,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_SYNCHRO_MAT_RESTRICTION)
-	e2:SetValue(aux.TargetBoolFunction(Card.IsSetCard,0x42))
+	e2:SetValue(aux.TargetBoolFunction(Card.IsSetCard,SET_NORDIC))
 	c:RegisterEffect(e2)
 	--level change
 	local e3=Effect.CreateEffect(c)
@@ -24,10 +25,10 @@ function s.initial_effect(c)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x42}
+s.listed_series={SET_NORDIC}
 function s.cfilter(c,lv)
 	local clv=c:GetLevel()
-	return c:IsSetCard(0x42) and clv>0 and clv~=lv and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(SET_NORDIC) and clv>0 and clv~=lv and c:IsAbleToGraveAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_DECK,0,1,nil,e:GetHandler():GetLevel()) end
@@ -43,7 +44,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_LEVEL)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		e1:SetValue(e:GetLabel())
 		c:RegisterEffect(e1)
 	end

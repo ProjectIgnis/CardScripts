@@ -46,7 +46,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
-s.listed_series={0x10e}
+s.listed_series={SET_EVOLUTION_PILL}
 function s.spfilter(c)
 	return c:IsFaceup() and c:IsRace(RACE_DINOSAUR) and c:IsAbleToDeckAsCost()
 end
@@ -85,13 +85,13 @@ function s.pubfilter(c)
 	return c:IsPublic() and c:IsMonster() and c:IsRace(RACE_DINOSAUR)
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.desfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.desfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,1,nil) end
 	local hg=Duel.GetFieldGroup(tp,LOCATION_HAND,0)
 	if #hg==0 or (hg:FilterCount(Card.IsPublic,nil)==#hg and hg:IsExists(s.pubfilter,1,nil)) then
 		local dg=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_MZONE,0,nil)
-		Duel.SetOperationInfo(0,CATEGORY_DESTROY,dg,1,tp,LOCATION_HAND+LOCATION_MZONE)
+		Duel.SetOperationInfo(0,CATEGORY_DESTROY,dg,1,tp,LOCATION_HAND|LOCATION_MZONE)
 	else
-		Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,tp,LOCATION_HAND+LOCATION_MZONE)
+		Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,tp,LOCATION_HAND|LOCATION_MZONE)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
 	if re:GetHandler():IsDestructable() and re:GetHandler():IsRelateToEffect(re) then
@@ -100,7 +100,7 @@ function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g1=Duel.SelectMatchingCard(tp,s.desfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,nil)
+	local g1=Duel.SelectMatchingCard(tp,s.desfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,1,1,nil)
 	if #g1>0 and Duel.Destroy(g1,REASON_EFFECT)~=0 then
 		if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then
 			Duel.Destroy(eg,REASON_EFFECT)
@@ -111,7 +111,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsReason(REASON_EFFECT)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x10e) and c:IsSpell() and c:IsAbleToHand()
+	return c:IsSetCard(SET_EVOLUTION_PILL) and c:IsSpell() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

@@ -41,7 +41,7 @@ function s.initial_effect(c)
 end
 s.listed_names={22398665}
 function s.tgval(e,re,rp)
-	return aux.tgoval(e,re,rp) and re:IsActiveType(TYPE_MONSTER)
+	return aux.tgoval(e,re,rp) and re:IsMonsterEffect()
 end
 function s.valcheck(e,c)
 	local g=c:GetMaterial()
@@ -51,10 +51,10 @@ function s.valcheck(e,c)
 end
 function s.atkcon(e)
 	local c=e:GetHandler()
-	return c:IsSummonType(SUMMON_TYPE_RITUAL) and c:GetFlagEffect(id)~=0
+	return c:IsRitualSummoned() and c:GetFlagEffect(id)~=0
 end
 function s.atkfilter(e,c)
-	return c:IsSummonType(SUMMON_TYPE_SPECIAL)
+	return c:IsSpecialSummoned()
 end
 function s.gycon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsTurnPlayer(1-tp)
@@ -77,7 +77,7 @@ function s.tgfilter(c)
 end
 function s.gytg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return s.tgfilter() end
-	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil)
+	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,nil)
 	local ct=Duel.GetMatchingGroupCount(aux.AND(s.tgfilter,Card.IsCanBeEffectTarget),tp,0,LOCATION_ONFIELD,nil,e)
 	if chk==0 then return ct>0 and aux.SelectUnselectGroup(g,e,tp,1,#g,s.rescon(ct),0) end
 	local rg=aux.SelectUnselectGroup(g,e,tp,1,#g,s.rescon(ct),1,tp,HINTMSG_REMOVE,s.rescon(ct),nil,false)

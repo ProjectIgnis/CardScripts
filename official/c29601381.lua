@@ -1,7 +1,6 @@
 --スプリガンズ・キャプテン サルガス
---Sprigguns Captain Sargus
+--Springans Captain Sargas
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -10,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e1:SetRange(LOCATION_GRAVE+LOCATION_HAND+LOCATION_MZONE)
+	e1:SetRange(LOCATION_GRAVE|LOCATION_HAND|LOCATION_MZONE)
 	e1:SetCountLimit(1,id)
 	e1:SetTarget(s.mattg)
 	e1:SetOperation(s.matop)
@@ -41,11 +40,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 	--Lists "Sprigguns" archetype
-s.listed_series={0x158}
-
+s.listed_series={SET_SPRINGANS}
 	--Check for "Sprigguns" Xyz monster
 function s.matfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x158) and c:IsType(TYPE_XYZ)
+	return c:IsFaceup() and c:IsSetCard(SET_SPRINGANS) and c:IsType(TYPE_XYZ)
 end
 	--Activation legality
 function s.mattg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -67,7 +65,7 @@ function s.matop(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check if it's opponent's turn
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return Duel.IsTurnPlayer(1-tp)
 end
 	--Detach 1 Xyz material from your field as cost
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -91,5 +89,5 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 end
 	--Check if Xyz monster this card is attached to is "Spriggun" card
 function s.xyzcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSetCard(0x158)
+	return e:GetHandler():IsSetCard(SET_SPRINGANS)
 end

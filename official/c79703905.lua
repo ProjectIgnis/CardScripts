@@ -35,23 +35,23 @@ function s.initial_effect(c)
 	e4:SetOperation(s.hdop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x18}
-s.counter_place_list={0x1019}
+s.listed_series={SET_CLOUDIAN}
+s.counter_place_list={COUNTER_FOG}
 function s.sdcon(e)
 	return e:GetHandler():IsPosition(POS_FACEUP_DEFENSE)
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x18)
+	return c:IsFaceup() and c:IsSetCard(SET_CLOUDIAN)
 end
 function s.addc(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsRelateToEffect(e) then
 		local ct=Duel.GetMatchingGroupCount(s.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-		e:GetHandler():AddCounter(COUNTER_NEED_ENABLE+0x1019,ct)
+		e:GetHandler():AddCounter(COUNTER_NEED_ENABLE+COUNTER_FOG,ct)
 	end
 end
 function s.hdcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,1,0x1019,3,REASON_COST) end
-	Duel.RemoveCounter(tp,1,1,0x1019,3,REASON_COST)
+	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,1,COUNTER_FOG,3,REASON_COST) end
+	Duel.RemoveCounter(tp,1,1,COUNTER_FOG,3,REASON_COST)
 end
 function s.hdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)~=0 end
@@ -59,5 +59,5 @@ function s.hdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.hdop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(tp,0,LOCATION_HAND):RandomSelect(tp,1)
-	Duel.SendtoGrave(g,REASON_EFFECT+REASON_DISCARD)
+	Duel.SendtoGrave(g,REASON_EFFECT|REASON_DISCARD)
 end

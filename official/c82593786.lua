@@ -1,4 +1,5 @@
 --タスケルトン
+--Bacon Saver
 local s,id=GetID()
 function s.initial_effect(c)
 	--disable attack
@@ -10,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_GRAVE)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_DUEL)
 	e1:SetCondition(s.condition)
-	e1:SetCost(aux.bfgcost)
+	e1:SetCost(Cost.SelfBanish)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end

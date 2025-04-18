@@ -1,5 +1,5 @@
 --デスピアの大導劇神s
---Dramaturgia of Despia
+--Dramaturge of Despia
 --scripted by Rundas
 local s,id=GetID()
 function s.initial_effect(c)
@@ -54,22 +54,22 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE_EFFECT)
 		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e2:SetValue(RESET_TURN_SET)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e2:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e2)
 	end
 end
 --Special Summon on being Fusion Material
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return (r&REASON_FUSION)==REASON_FUSION and c:IsPreviousLocation(LOCATION_ONFIELD+LOCATION_HAND)
-		and c:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED) and c:IsFaceup()
+	return (r&REASON_FUSION)==REASON_FUSION and c:IsPreviousLocation(LOCATION_ONFIELD|LOCATION_HAND)
+		and c:IsLocation(LOCATION_GRAVE|LOCATION_REMOVED) and c:IsFaceup()
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

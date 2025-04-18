@@ -23,10 +23,10 @@ function s.initial_effect(c)
 	e3:SetOperation(s.effop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x86}
+s.listed_series={SET_STAR_SERAPH}
 s.listed_names={id}
 function s.filter(c)
-	return c:IsSetCard(0x86) and not c:IsCode(id) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_STAR_SERAPH) and not c:IsCode(id) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end
@@ -56,19 +56,19 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCondition(s.descon)
 	e1:SetTarget(s.destg)
 	e1:SetOperation(s.desop)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	rc:RegisterEffect(e1,true)
 	if not rc:IsType(TYPE_EFFECT) then
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_ADD_TYPE)
 		e2:SetValue(TYPE_EFFECT)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		rc:RegisterEffect(e2,true)
 	end
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ)
+	return e:GetHandler():IsXyzSummoned()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc~=e:GetHandler() end

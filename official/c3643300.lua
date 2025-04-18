@@ -1,4 +1,5 @@
 --伝説のフィッシャーマン
+--The Legendary Fisherman
 local s,id=GetID()
 function s.initial_effect(c)
 	--immune spell
@@ -25,5 +26,5 @@ function s.econ(e)
 	return Duel.IsEnvironment(CARD_UMI)
 end
 function s.efilter(e,te)
-	return te:IsActiveType(TYPE_SPELL)
+	return te:IsSpellEffect()
 end

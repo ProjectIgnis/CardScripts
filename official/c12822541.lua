@@ -16,12 +16,12 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xaf}
+s.listed_series={SET_DD}
 function s.filter1(c)
-	return c:IsSetCard(0xaf) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_DD) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.filter2(c)
-	return c:IsFaceup() and c:IsSetCard(0xaf) and c:IsType(TYPE_PENDULUM) and c:IsAbleToHand()
+	return c:IsFaceup() and c:IsSetCard(SET_DD) and c:IsType(TYPE_PENDULUM) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter1(chkc) end

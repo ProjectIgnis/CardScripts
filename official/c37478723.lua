@@ -1,5 +1,5 @@
 --『焔聖剣-デュランダル』
---"Flame Noble Arms - Durendal"
+--"Infernoble Arms - Durendal"
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
@@ -50,7 +50,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsReason(REASON_LOST_TARGET) and ec and ec:IsLocation(LOCATION_GRAVE)
 end
 function s.spfilter(c,e,tp)
-	return c:IsLevelBelow(5) and c:IsRace(RACE_WARRIOR) and c:IsAttribute(ATTRIBUTE_FIRE)  and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsLevelBelow(5) and c:IsRace(RACE_WARRIOR) and c:IsAttribute(ATTRIBUTE_FIRE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.spfilter(chkc,e,tp) end
@@ -72,10 +72,9 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp)
 	return not c:IsRace(RACE_WARRIOR)
 end
-

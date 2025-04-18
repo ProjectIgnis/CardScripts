@@ -33,7 +33,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCondition(s.hdcon)
 		e1:SetTarget(s.hdtg)
 		e1:SetOperation(s.hdop)
-		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_PHASE|PHASE_END)
 		Duel.RegisterEffect(e1,tp)
 	end
 end
@@ -49,5 +49,5 @@ function s.hdop(e,tp,eg,ep,ev,re,r,rp)
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
 	local g=Duel.GetFieldGroup(p,0,LOCATION_HAND)
 	local dg=g:RandomSelect(tp,2)
-	Duel.SendtoGrave(dg,REASON_EFFECT+REASON_DISCARD)
+	Duel.SendtoGrave(dg,REASON_EFFECT|REASON_DISCARD)
 end

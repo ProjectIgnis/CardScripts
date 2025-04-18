@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	--negate attack	
+	--Negate an attack and move that monster you control to another of your Main Monster Zones
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_BE_BATTLE_TARGET)
@@ -36,12 +36,12 @@ function s.initial_effect(c)
 	e3:SetOperation(s.mvop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x2157}
+s.listed_series={SET_SUNVINE}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==tp and (r&REASON_BATTLE+REASON_EFFECT)~=0
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x2157) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_SUNVINE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCountFromEx(tp)>0

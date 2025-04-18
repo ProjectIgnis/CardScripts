@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x138}
+s.listed_series={SET_MEGALITH}
 function s.indct(e,re,r,rp)
 	if (r&REASON_BATTLE)~=0 then
 		return 1
@@ -39,7 +39,7 @@ function s.indct(e,re,r,rp)
 	end
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(Card.IsSetCard,1,nil,0x138)
+	return eg:IsExists(Card.IsSetCard,1,nil,SET_MEGALITH)
 end
 function s.thfilter(c)
 	return c:IsRitualMonster() and c:IsAbleToHand()
@@ -57,4 +57,3 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 	end
 end
-

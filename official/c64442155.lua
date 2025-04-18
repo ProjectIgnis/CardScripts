@@ -17,10 +17,10 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x2093}
+s.listed_series={SET_CYBER_ANGEL}
 	--Check for "Cyber Angel" ritual monster
 function s.costfilter(c)
-	return c:IsSetCard(0x2093) and c:IsRitualMonster()
+	return c:IsSetCard(SET_CYBER_ANGEL) and c:IsRitualMonster()
 end
 	--Defining cost
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -58,7 +58,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	--Cannot Special Summon from the Main Deck check
 	local e2=Effect.CreateEffect(c)
@@ -66,7 +66,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetCode(CARD_EHERO_BLAZEMAN)
 	e2:SetTargetRange(1,0)
-	e2:SetReset(RESET_PHASE+PHASE_END)
+	e2:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e2,tp)
 end
 	--Restricted to ritual monsters for rest of the turn

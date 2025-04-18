@@ -20,7 +20,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and (Duel.IsDuelType(DUEL_TRAP_MONSTERS_NOT_USE_ZONE) or Duel.GetLocationCount(tp,LOCATION_SZONE)>0)
 		and Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,nil)
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id,0,0x21,1000,1000,4,RACE_ROCK,ATTRIBUTE_EARTH) end
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,id,0,TYPE_MONSTER|TYPE_EFFECT,1000,1000,4,RACE_ROCK,ATTRIBUTE_EARTH) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
@@ -30,7 +30,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
-		or not Duel.IsPlayerCanSpecialSummonMonster(tp,id,0,0x21,1000,1000,4,RACE_ROCK,ATTRIBUTE_EARTH) then return end
+		or not Duel.IsPlayerCanSpecialSummonMonster(tp,id,0,TYPE_MONSTER|TYPE_EFFECT,1000,1000,4,RACE_ROCK,ATTRIBUTE_EARTH) then return end
 	c:AddMonsterAttribute(TYPE_EFFECT+TYPE_TRAP)
 	Duel.SpecialSummonStep(c,0,tp,tp,true,false,POS_FACEUP)
 	c:AddMonsterAttributeComplete()
@@ -41,7 +41,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EVENT_DAMAGE_STEP_END)
 	e1:SetCondition(s.poscon)
 	e1:SetOperation(s.posop)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	c:RegisterEffect(e1,true)
 	--atk
 	local e2=Effect.CreateEffect(c)
@@ -50,13 +50,13 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetValue(s.atkval)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 	c:RegisterEffect(e2,true)
 	local e3=e2:Clone()
 	e3:SetCode(EFFECT_UPDATE_DEFENSE)
 	c:RegisterEffect(e3,true)
 	Duel.SpecialSummonComplete()
-	aux.AddEREquipLimit(c,nil,s.eqval,s.equipop,e,nil,RESET_EVENT+RESETS_STANDARD)
+	aux.AddEREquipLimit(c,nil,s.eqval,s.equipop,e,nil,RESET_EVENT|RESETS_STANDARD)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		Duel.BreakEffect()

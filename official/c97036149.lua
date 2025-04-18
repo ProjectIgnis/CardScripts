@@ -1,5 +1,5 @@
 --天威龍－ナハタ
---Tianwei Dragon - Nahata
+--Tenyi Spirit - Nahata
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
@@ -18,10 +18,10 @@ function s.initial_effect(c)
 	e2:SetCategory(CATEGORY_ATKCHANGE)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_ATTACK_ANNOUNCE)
-	e2:SetRange(LOCATION_HAND+LOCATION_GRAVE)
+	e2:SetRange(LOCATION_HAND|LOCATION_GRAVE)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetCondition(s.atcon)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.atg)
 	e2:SetOperation(s.atop)
 	c:RegisterEffect(e2)
@@ -60,7 +60,7 @@ function s.atop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(-1500)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end 
 end

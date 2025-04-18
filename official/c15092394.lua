@@ -1,4 +1,5 @@
 --RR－エトランゼ・ファルコン
+--Raidraptor - Stranger Falcon
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -12,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCondition(s.descon)
-	e1:SetCost(s.descost)
+	e1:SetCost(Cost.Detach(1))
 	e1:SetTarget(s.destg)
 	e1:SetOperation(s.desop)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
@@ -28,14 +29,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xba}
+s.listed_series={SET_RAIDRAPTOR}
 s.listed_names={id}
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetOverlayGroup():IsExists(Card.IsType,1,nil,TYPE_XYZ)
-end
-function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) end
@@ -56,7 +53,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsPreviousControler(tp) and rp==1-tp and c:IsReason(REASON_DESTROY)
 end
 function s.spfilter(c,e,tp)
-	return c:IsType(TYPE_XYZ) and c:IsSetCard(0xba) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsType(TYPE_XYZ) and c:IsSetCard(SET_RAIDRAPTOR) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.spfilter(chkc,e,tp) end

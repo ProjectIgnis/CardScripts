@@ -1,4 +1,5 @@
 --音響戦士ベーシス
+--Symphonic Warrior Basses
 local s,id=GetID()
 function s.initial_effect(c)
 	--lv up
@@ -16,14 +17,14 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.target2)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x1066}
+s.listed_series={SET_SYMPHONIC_WARRIOR}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x1066) and c:IsLevelAbove(1)
+	return c:IsFaceup() and c:IsSetCard(SET_SYMPHONIC_WARRIOR) and c:IsLevelAbove(1)
 end
 function s.target1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) end
@@ -47,7 +48,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_LEVEL)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		e1:SetValue(ct)
 		tc:RegisterEffect(e1)
 	end

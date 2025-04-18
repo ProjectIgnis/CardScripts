@@ -1,5 +1,5 @@
 --通販売員
---Two-Man Salesman
+--Two-for-One Team
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

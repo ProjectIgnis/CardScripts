@@ -32,10 +32,10 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x27}
+s.listed_series={SET_TG}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(tp,LOCATION_MZONE,0)
-	return #g>0 and g:FilterCount(aux.FaceupFilter(Card.IsSetCard,0x27),nil)==#g
+	return #g>0 and g:FilterCount(aux.FaceupFilter(Card.IsSetCard,SET_TG),nil)==#g
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -50,7 +50,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	return ep~=tp and tc:IsControler(tp) and tc:IsSetCard(0x27)
+	return ep~=tp and tc:IsControler(tp) and tc:IsSetCard(SET_TG)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) end

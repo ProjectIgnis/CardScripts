@@ -1,4 +1,5 @@
 --アンチエイリアン
+--Antialian
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon
@@ -25,7 +26,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.sumcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE
+	return Duel.IsBattlePhase()
 		and #(e:GetHandler():GetBattledGroup()-e:GetHandler())>0
 end
 function s.sumfilter(c)
@@ -57,4 +58,3 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Draw(p,d,REASON_EFFECT)
 end
-

@@ -1,9 +1,9 @@
--- セリオンズ“リーパー”ファム
--- Therions' "Leaper" Fam
--- Scripted by Hatter
+--セリオンズ“リーパー”ファム
+--Therion "Reaper" Fum
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Special Summon self
+	--Special Summon self
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_EQUIP)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 	aux.AddEREquipLimit(c,nil,s.eqval,Card.EquipByEffectAndLimitRegister,e1)
-	-- Send to hand
+	--Send to hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TOHAND)
@@ -29,25 +29,25 @@ function s.initial_effect(c)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
-	-- Equipped monster gains ATK
+	--Equipped monster gains ATK
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_EQUIP)
 	e3:SetCode(EFFECT_UPDATE_ATTACK)
-	e3:SetCondition(function(e) return e:GetHandler():GetEquipTarget():IsSetCard(0x17b) end)
+	e3:SetCondition(function(e) return e:GetHandler():GetEquipTarget():IsSetCard(SET_THERION) end)
 	e3:SetValue(700)
 	c:RegisterEffect(e3)
-	-- Equipped monster gains effect
+	--Equipped monster gains effect
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_GRANT)
 	e4:SetRange(LOCATION_SZONE)
 	e4:SetTargetRange(LOCATION_MZONE,0)
-	e4:SetTarget(function(e,c) return c==e:GetHandler():GetEquipTarget() and c:IsSetCard(0x17b) end)
+	e4:SetTarget(function(e,c) return c==e:GetHandler():GetEquipTarget() and c:IsSetCard(SET_THERION) end)
 	e4:SetLabelObject(e2)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x17b}
+s.listed_series={SET_THERION}
 function s.eqfilter(c)
-	return c:IsMonster() and (c:IsSetCard(0x17b) or c:IsRace(RACE_AQUA))
+	return c:IsMonster() and (c:IsSetCard(SET_THERION) or c:IsRace(RACE_AQUA))
 end
 function s.eqval(ec,c,tp)
 	return ec:IsControler(tp) and s.eqfilter(ec)
@@ -69,7 +69,7 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)>0 
+	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)>0
 		and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and tc:IsRelateToEffect(e)
 		and tc:IsMonster() and not tc:IsForbidden() then
 		c:EquipByEffectAndLimitRegister(e,tp,tc)
@@ -77,10 +77,10 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.thfilter(c,e,tp)
 	return c:IsCanBeEffectTarget(e) and c:IsAbleToHand() and (c:IsControler(1-tp)
-		or (c:GetSequence()<5 and c:IsFaceup() and c:IsSetCard(0x17b)))
+		or (c:GetSequence()<5 and c:IsFaceup() and c:IsSetCard(SET_THERION)))
 end
 function s.threscon(sg,e,tp,mg)
-    return sg:FilterCount(Card.IsControler,nil,tp)==1
+	return sg:FilterCount(Card.IsControler,nil,tp)==1
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

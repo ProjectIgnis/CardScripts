@@ -1,5 +1,5 @@
 --竜剣士ラスターP
---Luster Pendulum, The Dracoslayer
+--Luster Pendulum, the Dracoslayer
 local s,id=GetID()
 function s.initial_effect(c)
 	--Pendulum procedure

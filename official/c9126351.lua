@@ -39,7 +39,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.exop)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x12}
+s.listed_series={SET_FROG}
 function s.spfilter(c)
 	return c:IsMonster() and c:IsAttribute(ATTRIBUTE_WATER) and c:IsDiscardable()
 end
@@ -47,7 +47,7 @@ function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_HAND,0,e:GetHandler())
-	return aux.SelectUnselectGroup(g,e,tp,1,1,nil,0) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0	
+	return aux.SelectUnselectGroup(g,e,tp,1,1,nil,0) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,c)
 	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_HAND,0,e:GetHandler())
@@ -62,7 +62,7 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	local rg=e:GetLabelObject()
 	if not rg then return end
-	Duel.SendtoGrave(rg,REASON_COST+REASON_DISCARD)
+	Duel.SendtoGrave(rg,REASON_COST|REASON_DISCARD)
 	rg:DeleteGroup()
 end
 function s.tgfilter(c)
@@ -70,12 +70,12 @@ function s.tgfilter(c)
 		and (c:IsLocation(LOCATION_DECK) or c:IsFaceup()) and c:IsAbleToGrave()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK+LOCATION_MZONE,0,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK+LOCATION_MZONE)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK|LOCATION_MZONE,0,1,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK|LOCATION_MZONE)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_DECK+LOCATION_MZONE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_DECK|LOCATION_MZONE,0,1,1,nil)
 	if #g>0 then
 		Duel.SendtoGrave(g,REASON_EFFECT)
 	end
@@ -93,13 +93,13 @@ function s.exop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetDescription(aux.Stringid(id,2))
-	e1:SetTargetRange(LOCATION_HAND+LOCATION_MZONE,0)
+	e1:SetTargetRange(LOCATION_HAND|LOCATION_MZONE,0)
 	e1:SetCode(EFFECT_EXTRA_SUMMON_COUNT)
 	e1:SetTarget(s.estg)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+	Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1)
 end
 function s.estg(e,c)
-	return c:IsSetCard(0x12) and c:GetCode()~=id
+	return c:IsSetCard(SET_FROG) and c:GetCode()~=id
 end

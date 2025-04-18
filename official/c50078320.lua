@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_CHAINING)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCondition(s.declcon)
-	e1:SetCost(s.declcost)
+	e1:SetCost(Cost.SelfToGrave)
 	e1:SetOperation(s.declop)
 	c:RegisterEffect(e1)
 	--Destroy 1 face-up card on the field during the End Phase of the next turn
@@ -29,11 +29,6 @@ end
 function s.declcon(e,tp,eg,ep,ev,re,r,rp)
 	local ex,cg,ct,cp,cv=Duel.GetOperationInfo(ev,CATEGORY_ANNOUNCE)
 	return rp==1-tp and ex and (cv&ANNOUNCE_CARD+ANNOUNCE_CARD_FILTER)~=0
-end
-function s.declcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(c,REASON_COST)
 end
 function s.declop(e,tp,eg,ep,ev,re,r,rp)
 	local ex,cg,ct,cp,cv=Duel.GetOperationInfo(ev,CATEGORY_ANNOUNCE)

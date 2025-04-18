@@ -1,5 +1,5 @@
 --X・HERO クロスガイ
---Xtra HERO Crossguy
+--Xtra HERO Cross Crusader
 local s,id=GetID()
 function s.initial_effect(c)
 	--link summon
@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	-- search
+	--search
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -31,9 +31,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
 end
-s.listed_series={0x8,0xc008}
+s.listed_series={SET_HERO,SET_DESTINY_HERO}
 function s.counterfilter(c)
-	return c:IsSetCard(0x8)
+	return c:IsSetCard(SET_HERO)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetCustomActivityCount(id,tp,ACTIVITY_SPSUMMON)==0 end
@@ -42,20 +42,20 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	e1:SetTargetRange(1,0)
 	e1:SetLabelObject(e)
 	e1:SetTarget(s.splimit)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
-	return not c:IsSetCard(0x8)
+	return not c:IsSetCard(SET_HERO)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
+	return e:GetHandler():IsLinkSummoned()
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0xc008) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp)
+	return c:IsSetCard(SET_DESTINY_HERO) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end
@@ -73,7 +73,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c,tp)
-	return c:IsSetCard(0xc008) 
+	return c:IsSetCard(SET_DESTINY_HERO) 
 	and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,c:GetCode())
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -85,14 +85,14 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	e1:SetTargetRange(1,0)
 	e1:SetLabelObject(e)
 	e1:SetTarget(s.splimit)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.thfilter(c,code)
-	return c:IsSetCard(0x8) and c:IsMonster() and c:IsAbleToHand() and not c:IsCode(code)
+	return c:IsSetCard(SET_HERO) and c:IsMonster() and c:IsAbleToHand() and not c:IsCode(code)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,e:GetLabel()) end
@@ -106,4 +106,3 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-

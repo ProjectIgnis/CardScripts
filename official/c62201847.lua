@@ -1,9 +1,9 @@
--- 被検体ミュートリアＭ－０５
--- Myutant M-05
--- Scripted by Hatter
+--被検体ミュートリアＭ－０５
+--Myutant M-05
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- If Normal or Special Summoned, add 1 "Myutant" monster from Deck
+	--If Normal or Special Summoned, add 1 "Myutant" monster from Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	local e2=e1:Clone()
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
-	-- Special Summon 1 "Myutant" monster from hand or Deck
+	--Special Summon 1 "Myutant" monster from hand or Deck
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -29,10 +29,10 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x159}
+s.listed_series={SET_MYUTANT}
 s.listed_names={CARD_MYUTANT_BEAST,CARD_MYUTANT_MIST,CARD_MYUTANT_ARSENAL}
 function s.thfilter(c)
-	return c:IsSetCard(0x159) and c:IsMonster() and c:IsAbleToHand() and not c:IsCode(id)
+	return c:IsSetCard(SET_MYUTANT) and c:IsMonster() and c:IsAbleToHand() and not c:IsCode(id)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -57,16 +57,16 @@ function s.getspcode(c)
 end
 function s.spcostfilter(c,e,tp,ft)
 	return (c:IsFaceup() or not c:IsOnField()) and c:IsAbleToRemoveAsCost() and (ft>0 or Duel.GetMZoneCount(tp,c)>0)
-		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,c,e,tp,s.getspcode(c))
+		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK|LOCATION_HAND,0,1,c,e,tp,s.getspcode(c))
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local ft=Duel.GetMZoneCount(tp,c)
 	if chk==0 then return c:IsReleasable() 
-		and Duel.IsExistingMatchingCard(s.spcostfilter,tp,LOCATION_ONFIELD+LOCATION_HAND,0,1,c,e,tp,ft) end
+		and Duel.IsExistingMatchingCard(s.spcostfilter,tp,LOCATION_ONFIELD|LOCATION_HAND,0,1,c,e,tp,ft) end
 	Duel.Release(c,REASON_COST)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local rg=Duel.SelectMatchingCard(tp,s.spcostfilter,tp,LOCATION_ONFIELD+LOCATION_HAND,0,1,1,c,e,tp,ft)
+	local rg=Duel.SelectMatchingCard(tp,s.spcostfilter,tp,LOCATION_ONFIELD|LOCATION_HAND,0,1,1,c,e,tp,ft)
 	e:SetLabel(s.getspcode(rg:GetFirst()))
 	Duel.Remove(rg,POS_FACEUP,REASON_COST)
 end
@@ -78,7 +78,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local code=e:GetLabel()
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<1 or not code then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,1,nil,e,tp,code)
+	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK|LOCATION_HAND,0,1,1,nil,e,tp,code)
 	if #g>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end

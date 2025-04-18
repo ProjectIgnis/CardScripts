@@ -14,8 +14,8 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCountLimit(1,id)
 	e2:SetCost(s.spcost)
-	e2:SetTarget(Fusion.SummonEffTG(aux.FilterBoolFunction(Card.IsSetCard,0xad)))
-	e2:SetOperation(Fusion.SummonEffOP(aux.FilterBoolFunction(Card.IsSetCard,0xad)))
+	e2:SetTarget(Fusion.SummonEffTG(aux.FilterBoolFunction(Card.IsSetCard,SET_FRIGHTFUR)))
+	e2:SetOperation(Fusion.SummonEffOP(aux.FilterBoolFunction(Card.IsSetCard,SET_FRIGHTFUR)))
 	c:RegisterEffect(e2)
 	--tohand
 	local e3=Effect.CreateEffect(c)
@@ -28,10 +28,10 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x46,0xad}
+s.listed_series={SET_FUSION,SET_FRIGHTFUR}
 s.listed_names={6077601}
 function s.spfilter(c)
-	return c:IsSetCard(0x46) and c:IsSpell() and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(SET_FUSION) and c:IsSpell() and c:IsAbleToRemoveAsCost()
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_GRAVE,0,1,nil) end

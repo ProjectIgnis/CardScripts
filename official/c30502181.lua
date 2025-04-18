@@ -1,7 +1,8 @@
 --ライトロード・レイピア
+--Lightsworn Sabre
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsSetCard,0x38))
+	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsSetCard,SET_LIGHTSWORN))
 	--Atk up
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_EQUIP)
@@ -20,15 +21,15 @@ function s.initial_effect(c)
 	e4:SetOperation(s.operation)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x38}
+s.listed_series={SET_LIGHTSWORN}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x38)
+	return c:IsFaceup() and c:IsSetCard(SET_LIGHTSWORN)
 end
 function s.eqcondtion(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetPreviousLocation()==LOCATION_DECK
 end
 function s.eqtarget(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:GetLocation()==LOCATION_MZONE and chkc:GetControler()==tp and s.filter(chkc) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
 		and Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)

@@ -25,7 +25,7 @@ function s.initial_effect(c)
 end
 s.material={67270095}
 s.listed_names={67270095}
-s.material_setcode=0x1017
+s.material_setcode=SET_SYNCHRON
 function s.tfilter(c,scard,sumtype,tp)
 	return c:IsSummonCode(scard,sumtype,tp,67270095) or c:IsHasEffect(20932152)
 end
@@ -46,7 +46,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetValue(d:GetAttack()/2)
-		e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
+		e1:SetReset(RESET_PHASE|PHASE_DAMAGE)
 		d:RegisterEffect(e1)
 	end
 end

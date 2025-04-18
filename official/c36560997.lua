@@ -1,4 +1,5 @@
 --オーバー・コアリミット
+--Core Overclock
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,7 +13,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTargetRange(LOCATION_MZONE,0)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x1d))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_KOAKI_MEIRU))
 	e2:SetValue(500)
 	c:RegisterEffect(e2)
 	--atkup
@@ -27,17 +28,17 @@ function s.initial_effect(c)
 	e3:SetOperation(s.atop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x1d}
+s.listed_series={SET_KOAKI_MEIRU}
 s.listed_names={36623431}
 function s.cfilter(c)
 	return c:IsCode(36623431) and c:IsDiscardable()
 end
 function s.atcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_COST|REASON_DISCARD)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x1d)
+	return c:IsFaceup() and c:IsSetCard(SET_KOAKI_MEIRU)
 end
 function s.attg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil) end
@@ -52,7 +53,7 @@ function s.atop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(1000)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end

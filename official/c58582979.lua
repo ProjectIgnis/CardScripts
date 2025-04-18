@@ -62,7 +62,7 @@ function s.rescon(sg,e,tp,mg)
 end
 function s.spcost2(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	local g=Duel.GetMatchingGroup(s.spcfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,c)
+	local g=Duel.GetMatchingGroup(s.spcfilter,tp,LOCATION_ONFIELD|LOCATION_GRAVE,0,c)
 	if chk==0 then return aux.SelectUnselectGroup(g,e,tp,3,3,s.rescon,0) end
 	local sg=aux.SelectUnselectGroup(g,e,tp,3,3,s.rescon,1,tp,HINTMSG_REMOVE)
 	Duel.Remove(sg,POS_FACEUP,REASON_COST)

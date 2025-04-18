@@ -13,14 +13,14 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x122}
+s.listed_series={SET_VALKYRIE}
 s.listed_names={92182447}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetTurnPlayer()==1-tp or Duel.GetCurrentPhase()~=PHASE_BATTLE or Duel.GetCurrentChain(true)>0 then
+	if Duel.IsTurnPlayer(1-tp) or Duel.GetCurrentPhase()~=PHASE_BATTLE or Duel.GetCurrentChain(true)>0 then
 		return false
 	end
 	local g=Duel.GetFieldGroup(tp,LOCATION_MZONE,0)
-	return #g>0 and g:FilterCount(aux.FaceupFilter(Card.IsSetCard,0x122),nil)==#g
+	return #g>0 and g:FilterCount(aux.FaceupFilter(Card.IsSetCard,SET_VALKYRIE),nil)==#g
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -34,7 +34,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoGrave(c,REASON_EFFECT)
 	end
 	--skip phases until Battle Phase
-	Duel.SkipPhase(tp,PHASE_BATTLE,RESET_PHASE+PHASE_END,1)
+	Duel.SkipPhase(tp,PHASE_BATTLE,RESET_PHASE|PHASE_END,1)
 	--prevent activations for the rest of that battle phase
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_FIELD)
@@ -42,26 +42,26 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e0:SetCode(EFFECT_CANNOT_ACTIVATE)
 	e0:SetTargetRange(0,1)
 	e0:SetValue(1)
-	e0:SetReset(RESET_PHASE+PHASE_BATTLE+PHASE_END)
+	e0:SetReset(RESET_PHASE|PHASE_BATTLE|PHASE_END)
 	Duel.RegisterEffect(e0,tp)
-	Duel.SkipPhase(tp,PHASE_MAIN2,RESET_PHASE+PHASE_END,1)
-	Duel.SkipPhase(tp,PHASE_END,RESET_PHASE+PHASE_END,1)
+	Duel.SkipPhase(tp,PHASE_MAIN2,RESET_PHASE|PHASE_END,1)
+	Duel.SkipPhase(tp,PHASE_END,RESET_PHASE|PHASE_END,1)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetCode(EFFECT_SKIP_TURN)
 	e1:SetTargetRange(0,1)
-	e1:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
+	e1:SetReset(RESET_PHASE|PHASE_END|RESET_OPPO_TURN)
 	Duel.RegisterEffect(e1,tp)
-	Duel.SkipPhase(tp,PHASE_DRAW,RESET_PHASE+PHASE_END,2)
-	Duel.SkipPhase(tp,PHASE_STANDBY,RESET_PHASE+PHASE_END,2)
-	Duel.SkipPhase(tp,PHASE_MAIN1,RESET_PHASE+PHASE_END,2)
+	Duel.SkipPhase(tp,PHASE_DRAW,RESET_PHASE|PHASE_END,2)
+	Duel.SkipPhase(tp,PHASE_STANDBY,RESET_PHASE|PHASE_END,2)
+	Duel.SkipPhase(tp,PHASE_MAIN1,RESET_PHASE|PHASE_END,2)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetCode(EFFECT_CANNOT_EP)
 	e2:SetTargetRange(1,0)
-	e2:SetReset(RESET_PHASE+PHASE_MAIN1+RESET_SELF_TURN)
+	e2:SetReset(RESET_PHASE|PHASE_MAIN1|RESET_SELF_TURN)
 	Duel.RegisterEffect(e2,tp)
 	--prevent activation of "Mischief of the Time Goddess"
 	local e3=Effect.CreateEffect(c)
@@ -71,7 +71,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e3:SetCode(EFFECT_CANNOT_ACTIVATE)
 	e3:SetTargetRange(1,0)
 	e3:SetValue(s.limit)
-	e3:SetReset(RESET_PHASE+PHASE_END,3)
+	e3:SetReset(RESET_PHASE|PHASE_END,3)
 	Duel.RegisterEffect(e3,tp)
 end
 function s.limit(e,re,tp)

@@ -32,7 +32,7 @@ end
 s.counter_place_list={COUNTER_SPELL}
 s.listed_names={CARD_DARK_MAGICIAN}
 function s.acop(e,tp,eg,ep,ev,re,r,rp)
-	if re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL) and e:GetHandler():GetFlagEffect(1)>0 then
+	if re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsSpellEffect() and e:GetHandler():GetFlagEffect(1)>0 then
 		e:GetHandler():AddCounter(COUNTER_SPELL,1)
 	end
 end

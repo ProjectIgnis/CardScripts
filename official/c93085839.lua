@@ -1,4 +1,5 @@
 --聖騎士エクター・ド・マリス
+--Noble Knight Eachtar
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -6,7 +7,7 @@ function s.initial_effect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
-	e1:SetRange(LOCATION_HAND+LOCATION_GRAVE)
+	e1:SetRange(LOCATION_HAND|LOCATION_GRAVE)
 	e1:SetCountLimit(1,id)
 	e1:SetCost(s.spcost)
 	e1:SetTarget(s.sptg)
@@ -28,12 +29,12 @@ function s.initial_effect(c)
 	e3:SetOperation(s.effop2)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x107a}
+s.listed_series={SET_NOBLE_KNIGHT}
 function s.spfilter(c)
-	return c:IsSetCard(0x107a) and c:IsMonster() and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
+	return c:IsSetCard(SET_NOBLE_KNIGHT) and c:IsMonster() and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local rg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,e:GetHandler())
+	local rg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,e:GetHandler())
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>-2 and #rg>1 
 		and aux.SelectUnselectGroup(rg,e,tp,2,2,aux.ChkfMMZ(1),0) end
 	local g=aux.SelectUnselectGroup(rg,e,tp,2,2,aux.ChkfMMZ(1),1,tp,HINTMSG_REMOVE)
@@ -50,7 +51,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.effcon(e,tp,eg,ep,ev,re,r,rp)
-	return (r==REASON_XYZ or r==REASON_SYNCHRO) and e:GetHandler():GetReasonCard():IsSetCard(0x107a)
+	return (r==REASON_XYZ or r==REASON_SYNCHRO) and e:GetHandler():GetReasonCard():IsSetCard(SET_NOBLE_KNIGHT)
 end
 function s.effop1(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -59,7 +60,7 @@ function s.effop1(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	e1:SetOperation(s.sumop)
 	rc:RegisterEffect(e1)
 end
@@ -76,6 +77,6 @@ function s.effop2(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_CANNOT_DISABLE_SPSUMMON)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	rc:RegisterEffect(e1)
 end

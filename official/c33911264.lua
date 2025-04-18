@@ -1,4 +1,5 @@
 --太陽風帆船
+--Solar Wind Jammer
 local s,id=GetID()
 function s.initial_effect(c)
 	c:SetUniqueOnField(1,1,id)
@@ -17,7 +18,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
-	e2:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e2:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e2:SetCondition(s.lvcon)
 	e2:SetOperation(s.lvop)
 	c:RegisterEffect(e2)
@@ -43,7 +44,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	c:RegisterEffect(e2)
 end
 function s.lvcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -52,6 +53,6 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_LEVEL)
 	e1:SetValue(1)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 	c:RegisterEffect(e1)
 end

@@ -1,4 +1,5 @@
 --神竜－エクセリオン
+--Divine Dragon - Excelion
 local s,id=GetID()
 function s.initial_effect(c)
 	--to defense
@@ -39,7 +40,7 @@ function s.reg(c,opt)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(1000)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		c:RegisterEffect(e1)
 	elseif opt==1 then
 		--chain attack
@@ -49,7 +50,7 @@ function s.reg(c,opt)
 		e1:SetCode(EVENT_BATTLE_DESTROYING)
 		e1:SetCondition(s.atcon)
 		e1:SetOperation(s.atop)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		c:RegisterEffect(e1)
 	else
 		--damage
@@ -62,7 +63,7 @@ function s.reg(c,opt)
 		e1:SetCondition(aux.bdgcon)
 		e1:SetTarget(s.damtg)
 		e1:SetOperation(s.damop)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		c:RegisterEffect(e1)
 	end
 end

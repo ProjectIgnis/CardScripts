@@ -1,7 +1,6 @@
 --幻影騎士団ティアースケイル
---The Phantom Knights of Tear Scale
+--The Phantom Knights of Torn Scales
 --Scripted by Larry126
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Send 1 "Phantom Knights" card from deck to GY
@@ -30,14 +29,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={id}
-s.listed_series={0xdb}
-
+s.listed_series={SET_PHANTOM_KNIGHTS}
 function s.tgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST|REASON_DISCARD)
 end
 function s.tgfilter(c)
-	return ((c:IsSetCard(0x10db) and c:IsMonster()) or (c:IsSetCard(0xdb) and c:IsSpellTrap()))
+	return ((c:IsSetCard(SET_THE_PHANTOM_KNIGHTS) and c:IsMonster()) or (c:IsSetCard(SET_PHANTOM_KNIGHTS) and c:IsSpellTrap()))
 		and not c:IsCode(id) and c:IsAbleToGrave()
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -52,7 +50,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c,tp)
-	return ((c:IsSetCard(0x10db) and c:IsMonster()) or (c:IsSetCard(0xdb) and c:IsSpellTrap()))
+	return ((c:IsSetCard(SET_THE_PHANTOM_KNIGHTS) and c:IsMonster()) or (c:IsSetCard(SET_PHANTOM_KNIGHTS) and c:IsSpellTrap()))
 		and c:IsPreviousLocation(LOCATION_GRAVE) and c:IsControler(tp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
@@ -72,7 +70,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
-		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
+		e1:SetReset(RESET_EVENT|RESETS_REDIRECT)
 		e1:SetValue(LOCATION_REMOVED)
 		c:RegisterEffect(e1,true)
 	end

@@ -13,13 +13,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
-	if rp==tp or not re:IsHasType(EFFECT_TYPE_ACTIVATE) or not re:IsActiveType(TYPE_SPELL)
+	if rp==tp or not re:IsHasType(EFFECT_TYPE_ACTIVATE) or not re:IsSpellEffect()
 		or not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 	if not g or #g~=1 then return false end
 	local tc=g:GetFirst()
 	e:SetLabelObject(tc)
-	return tc:IsOnField() and tc:IsType(TYPE_SPELL+TYPE_TRAP)
+	return tc:IsOnField() and tc:IsSpellTrap()
 end
 function s.filter(c,ct)
 	return c:IsSpellTrap() and Duel.CheckChainTarget(ct,c)

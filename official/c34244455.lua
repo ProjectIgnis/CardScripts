@@ -1,5 +1,5 @@
 --星向鳥
---Which Starling
+--Star Staring Starling
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)

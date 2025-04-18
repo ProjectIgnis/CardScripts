@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	e3:SetCondition(s.sdcon)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xe6}
+s.listed_series={SET_FLOWER_CARDIAN}
 function s.cfilter(c,tp)
 	return c:IsSummonPlayer(1-tp) and c:IsPreviousLocation(LOCATION_HAND)
 end
@@ -38,7 +38,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.filter(c)
 	return c:IsSummonLocation(LOCATION_HAND) and c:IsAbleToHand()
-		and c:IsSummonType(SUMMON_TYPE_SPECIAL)
+		and c:IsSpecialSummoned()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,nil) end
@@ -53,7 +53,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.sdfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xe6) and c:IsType(TYPE_SYNCHRO)
+	return c:IsFaceup() and c:IsSetCard(SET_FLOWER_CARDIAN) and c:IsType(TYPE_SYNCHRO)
 end
 function s.sdcon(e)
 	return not Duel.IsExistingMatchingCard(s.sdfilter,e:GetHandlerPlayer(),LOCATION_MZONE,LOCATION_MZONE,1,nil)

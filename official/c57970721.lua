@@ -1,5 +1,5 @@
 --星彩の竜輝巧
---Draitron Asterism
+--Drytron Asterism
 --Scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -10,18 +10,18 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
-	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER|TIMING_MAIN_END)
 	e1:SetCondition(s.descond)
 	e1:SetTarget(s.destg)
 	e1:SetOperation(s.desop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x151}
+s.listed_series={SET_DRYTRON}
 function s.descond()
 	return Duel.IsMainPhase()
 end
 function s.atkfilter(c)
-	return c:IsFaceup() and c:GetAttack()>=1000 and (c:IsSetCard(0x151) or c:IsRitualMonster())
+	return c:IsFaceup() and c:GetAttack()>=1000 and (c:IsSetCard(SET_DRYTRON) or c:IsRitualMonster())
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
@@ -41,7 +41,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetTargetCards(e)
 	local dc=g:GetFirst()
 	if dc==tc then dc=g:GetNext() end
-	if tc and tc:UpdateAttack(-1000,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN,c)==-1000 and dc and dc:IsControler(1-tp) and not dc:IsFacedown() then
+	if tc and tc:UpdateAttack(-1000,RESETS_STANDARD_PHASE_END|RESET_OPPO_TURN,c)==-1000 and dc and dc:IsControler(1-tp) and not dc:IsFacedown() then
 		 Duel.Destroy(dc,REASON_EFFECT)
 	end
 end

@@ -1,5 +1,5 @@
 --溟界の漠－フロギ
---Phlogi, Dreg of the Abhyss
+--Flogos, the Ogdoadic Boundless
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetCategory(CATEGORY_DAMAGE)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e2:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e2:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
 	e2:SetCondition(s.damcon)
@@ -37,16 +37,16 @@ function s.initial_effect(c)
 	end)
 end
 s.listed_names={12958920}
-s.listed_series={0x49}
+s.listed_series={SET_SKYBLASTER}
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	if tc:IsSetCard(0x49) then
-		Duel.RegisterFlagEffect(tc:GetControler(),id,RESET_PHASE+PHASE_END,0,1)
+	if tc:IsSetCard(SET_SKYBLASTER) then
+		Duel.RegisterFlagEffect(tc:GetControler(),id,RESET_PHASE|PHASE_END,0,1)
 	end
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0x49,TYPES_TOKEN,500,500,4,RACE_FIEND,ATTRIBUTE_DARK) end
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,SET_SKYBLASTER,TYPES_TOKEN,500,500,4,RACE_FIEND,ATTRIBUTE_DARK) end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0)
 end
@@ -56,7 +56,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if ft>ct then ft=ct end
 	if ft<=0 then return end
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
-	if not Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0x49,TYPES_TOKEN,500,500,4,RACE_FIEND,ATTRIBUTE_DARK) then return end
+	if not Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,SET_SKYBLASTER,TYPES_TOKEN,500,500,4,RACE_FIEND,ATTRIBUTE_DARK) then return end
 	local ctn=true
 	while ft>0 and ctn do
 		local token=Duel.CreateToken(tp,id+1)
@@ -75,19 +75,19 @@ function s.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_ATTACK_ANNOUNCE)
 	e1:SetProperty(EFFECT_FLAG_OATH)
-	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x49))
+	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_SKYBLASTER))
 	e1:SetTargetRange(LOCATION_MZONE,0)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	local ct=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,0x49),tp,LOCATION_MZONE,0,nil)
+	local ct=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,SET_SKYBLASTER),tp,LOCATION_MZONE,0,nil)
 	Duel.SetTargetPlayer(1-tp)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,ct*300)
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
-	local ct=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,0x49),tp,LOCATION_MZONE,0,nil)
+	local ct=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,SET_SKYBLASTER),tp,LOCATION_MZONE,0,nil)
 	Duel.Damage(p,ct*300,REASON_EFFECT)
 end

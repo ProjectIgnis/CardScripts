@@ -1,5 +1,5 @@
 --龍相剣現
---The Xiangjian Dragonsword Appears
+--Swordsoul Emergence
 --Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
@@ -25,9 +25,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.lvop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x16d}
+s.listed_series={SET_SWORDSOUL}
 function s.thfilter(c,sync)
-	return (c:IsSetCard(0x16d) or (sync and c:IsRace(RACE_WYRM))) and c:IsMonster() and c:IsAbleToHand()
+	return (c:IsSetCard(SET_SWORDSOUL) or (sync and c:IsRace(RACE_WYRM))) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local sync=Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsType,TYPE_SYNCHRO),tp,LOCATION_MZONE,0,1,nil)
@@ -44,7 +44,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.lvfilter(c)
-	return c:IsFaceup() and (c:IsSetCard(0x16d) or c:IsRace(RACE_WYRM)) and c:HasLevel()
+	return c:IsFaceup() and (c:IsSetCard(SET_SWORDSOUL) or c:IsRace(RACE_WYRM)) and c:HasLevel()
 end
 function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.lvfilter(chkc) end
@@ -64,7 +64,7 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp,chk)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_LEVEL)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		if op==0 then
 			e1:SetValue(1)
 		else

@@ -1,5 +1,5 @@
--- Ｈ－Ｃ クレイヴソリッシュ
--- Heroic Champion - Claiomh Solais
+--Ｈ－Ｃ クレイヴソリッシュ
+--Heroic Champion - Claivesolish
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1,{id,2})
 	e3:SetCondition(s.atkcon)
-	e3:SetCost(aux.dxmcostgen(1,1,nil))
+	e3:SetCost(Cost.Detach(1,1,nil))
 	e3:SetTarget(s.atktg)
 	e3:SetOperation(s.atkop)
 	c:RegisterEffect(e3,false,REGISTER_FLAG_DETACH_XMAT)
@@ -52,11 +52,11 @@ end
 function s.doubleop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e1:SetCode(EVENT_PHASE+PHASE_BATTLE_START)
+	e1:SetCode(EVENT_PHASE|PHASE_BATTLE_START)
 	e1:SetCountLimit(1)
 	e1:SetCondition(s.con)
 	e1:SetOperation(s.op)
-	e1:SetReset(RESET_PHASE+PHASE_BATTLE)
+	e1:SetReset(RESET_PHASE|PHASE_BATTLE)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
@@ -72,7 +72,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e1:SetValue(tc:GetAttack()*2)
 		tc:RegisterEffect(e1)
 	end
@@ -100,7 +100,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(tc:GetAttack())
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_DISABLE_PHASE_END)
 		c:RegisterEffect(e1)
 	end
 end

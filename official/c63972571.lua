@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	e3:SetValue(1)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x13e}
+s.listed_series={SET_BARBAROS}
 function s.rescon(sg,tp)
 	if not aux.ChkfMMZ(1)(sg,nil,tp) then return false end
 	Duel.SetSelectedCard(sg)
@@ -60,12 +60,12 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.desfilter(c,tp)
-	return c:IsSetCard(0x13e) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true,true)
+	return c:IsSetCard(SET_BARBAROS) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true,true)
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil,tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.desfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil,tp)
+	local g=Duel.SelectMatchingCard(tp,s.desfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,1,nil,tp)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -81,4 +81,3 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(tg,REASON_EFFECT)
 	end
 end
-

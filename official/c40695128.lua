@@ -28,10 +28,10 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EVENT_PREDRAW)
 	e1:SetCondition(s.condition)
 	e1:SetOperation(s.operation)
-	e1:SetReset(RESET_PHASE+PHASE_DRAW+RESET_SELF_TURN,1)
+	e1:SetReset(RESET_PHASE|PHASE_DRAW|RESET_SELF_TURN,1)
 	Duel.RegisterEffect(e1,tp)
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,2)
-	aux.RegisterClientHint(c,0,tp,1,0,aux.Stringid(id,1),RESET_PHASE+PHASE_DRAW+RESET_SELF_TURN,1)
+	Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,2)
+	aux.RegisterClientHint(c,0,tp,1,0,aux.Stringid(id,1),RESET_PHASE|PHASE_DRAW|RESET_SELF_TURN,1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsTurnPlayer(tp) and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>0

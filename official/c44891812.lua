@@ -1,4 +1,5 @@
 --超重武者オタス－K
+--Superheavy Samurai Helper
 local s,id=GetID()
 function s.initial_effect(c)
 	--def up
@@ -10,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCondition(s.defcon)
-	e1:SetCost(s.defcost)
+	e1:SetCost(Cost.SelfDiscard)
 	e1:SetTarget(s.deftg)
 	e1:SetOperation(s.defop)
 	c:RegisterEffect(e1)
@@ -23,22 +24,17 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCondition(s.spcon)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x9a}
+s.listed_series={SET_SUPERHEAVY_SAMURAI}
 function s.defcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetMatchingGroupCount(Card.IsType,tp,LOCATION_GRAVE,0,nil,TYPE_SPELL+TYPE_TRAP)==0
-end
-function s.defcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsDiscardable() end
-	Duel.SendtoGrave(c,REASON_COST+REASON_DISCARD)
+	return Duel.GetMatchingGroupCount(Card.IsSpellTrap,tp,LOCATION_GRAVE,0,nil)==0
 end
 function s.deffilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x9a) and c:HasNonZeroDefense()
+	return c:IsFaceup() and c:IsSetCard(SET_SUPERHEAVY_SAMURAI) and c:HasNonZeroDefense()
 end
 function s.deftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local a=Duel.GetAttacker()
@@ -60,7 +56,7 @@ function s.defop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_DEFENSE)
 		e1:SetValue(tc:GetDefense())
-		e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
+		e1:SetReset(RESET_PHASE|PHASE_DAMAGE)
 		ac:RegisterEffect(e1)
 	end
 end
@@ -69,12 +65,11 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return at:GetControler()~=tp and Duel.GetAttackTarget()==nil
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x9a) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_SUPERHEAVY_SAMURAI) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp)
-		and s.spfilter(chkc,e,tp) and chkc~=c end
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.spfilter(chkc,e,tp) and chkc~=c end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingTarget(s.spfilter,tp,LOCATION_GRAVE,0,1,c,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
@@ -83,7 +78,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end
 end

@@ -37,9 +37,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.roll_dice=true
-s.listed_series={0x26}
+s.listed_series={SET_MORPHTRONIC}
 function s.spfilter(c,tp)
-	return c:IsSetCard(0x26) and c:IsMonster() and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
+	return c:IsSetCard(SET_MORPHTRONIC) and c:IsMonster() and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 		and (Duel.GetLocationCount(tp,LOCATION_MZONE)>0 or (c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5))
 end
 function s.spcon(e,c)
@@ -72,7 +72,7 @@ function s.tga(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DICE,nil,0,tp,1)
 end
 function s.filter(c)
-	return c:IsSetCard(0x26) and c:IsAbleToHand()
+	return c:IsSetCard(SET_MORPHTRONIC) and c:IsAbleToHand()
 end
 function s.opa(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)==0 then return end

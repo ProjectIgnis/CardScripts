@@ -1,4 +1,5 @@
 --E・HERO アクア・ネオス
+--Elemental HERO Aqua Neos
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -19,20 +20,20 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 s.listed_names={CARD_NEOS}
-s.material_setcode={0x8,0x3008,0x9,0x1f}
+s.material_setcode={SET_HERO,SET_ELEMENTAL_HERO,SET_NEOS,SET_NEO_SPACIAN}
 function s.contactfil(tp)
 	return Duel.GetMatchingGroup(Card.IsAbleToDeckOrExtraAsCost,tp,LOCATION_ONFIELD,0,nil)
 end
 function s.contactop(g,tp)
 	Duel.ConfirmCards(1-tp,g)
-	Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST+REASON_MATERIAL)
+	Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST|REASON_MATERIAL)
 end
 function s.splimit(e,se,sp,st)
 	return not e:GetHandler():IsLocation(LOCATION_EXTRA)
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST|REASON_DISCARD)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)>0 end

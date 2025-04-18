@@ -1,4 +1,5 @@
 --メンタル・カウンセラー リリー
+--Counselor Lily
 local s,id=GetID()
 function s.initial_effect(c)
 	--atk change
@@ -9,16 +10,12 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_BE_MATERIAL)
 	e1:SetCondition(s.con)
-	e1:SetCost(s.cost)
+	e1:SetCost(Cost.PayLP(500))
 	e1:SetOperation(s.op)
 	c:RegisterEffect(e1)
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsLocation(LOCATION_GRAVE) and r==REASON_SYNCHRO
-end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,500) end
-	Duel.PayLPCost(tp,500)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -27,6 +24,6 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(1000)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESETS_STANDARD_PHASE_END)
 	sync:RegisterEffect(e1)
 end

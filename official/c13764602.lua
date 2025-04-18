@@ -1,5 +1,5 @@
 --阿吽の呼吸
---Perfect Sync - A-un
+--Perfect Sync - A-Un
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
@@ -24,10 +24,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x14e}
+s.listed_series={SET_DUAL_AVATAR}
 s.listed_names={TOKEN_DUAL_AVATAR_SPIRIT}
 function s.thfilter(c)
-	return c:IsSetCard(0x14e) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_DUAL_AVATAR) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
@@ -40,14 +40,14 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x14e) and c:IsType(TYPE_EFFECT)
+	return c:IsFaceup() and c:IsSetCard(SET_DUAL_AVATAR) and c:IsType(TYPE_EFFECT)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_DUAL_AVATAR_SPIRIT,0x14e,TYPES_TOKEN,0,0,2,RACE_WARRIOR,ATTRIBUTE_LIGHT) end
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_DUAL_AVATAR_SPIRIT,SET_DUAL_AVATAR,TYPES_TOKEN,0,0,2,RACE_WARRIOR,ATTRIBUTE_LIGHT) end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
 end
@@ -60,12 +60,12 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	ge1:SetDescription(aux.Stringid(id,2))
 	ge1:SetTargetRange(1,0)
 	ge1:SetTarget(s.splimit)
-	ge1:SetReset(RESET_PHASE+PHASE_END)
+	ge1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(ge1,tp)
 	--lizard check
 	aux.addTempLizardCheck(e:GetHandler(),tp,s.lizfilter)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
-		or not Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_DUAL_AVATAR_SPIRIT,0x14e,TYPES_TOKEN,0,0,2,RACE_WARRIOR,ATTRIBUTE_LIGHT) then return end
+		or not Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_DUAL_AVATAR_SPIRIT,SET_DUAL_AVATAR,TYPES_TOKEN,0,0,2,RACE_WARRIOR,ATTRIBUTE_LIGHT) then return end
 	local token=Duel.CreateToken(tp,TOKEN_DUAL_AVATAR_SPIRIT)
 	Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)
 end

@@ -1,4 +1,5 @@
 --カラクリ無双 八壱八
+--Karakuri Muso mdl 818 "Haipa"
 local s,id=GetID()
 function s.initial_effect(c)
 	--must attack
@@ -18,7 +19,7 @@ function s.initial_effect(c)
 	--to defense
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e4:SetCode(EVENT_PHASE+PHASE_BATTLE)
+	e4:SetCode(EVENT_PHASE|PHASE_BATTLE)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetCountLimit(1)
 	e4:SetCondition(s.bpcon)

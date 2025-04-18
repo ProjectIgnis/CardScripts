@@ -1,4 +1,5 @@
 --竜星の輝跡
+--Yang Zing Path
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,9 +13,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x9e}
+s.listed_series={SET_YANG_ZING}
 function s.filter(c)
-	return c:IsSetCard(0x9e) and c:IsMonster() and c:IsAbleToDeck()
+	return c:IsSetCard(SET_YANG_ZING) and c:IsMonster() and c:IsAbleToDeck()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -28,10 +29,10 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	if not tg or tg:FilterCount(Card.IsRelateToEffect,nil,e)~=3 then return end
-	Duel.SendtoDeck(tg,nil,0,REASON_EFFECT)
+	Duel.SendtoDeck(tg,nil,SEQ_DECKTOP,REASON_EFFECT)
 	local g=Duel.GetOperatedGroup()
 	if g:IsExists(Card.IsLocation,1,nil,LOCATION_DECK) then Duel.ShuffleDeck(tp) end
-	local ct=g:FilterCount(Card.IsLocation,nil,LOCATION_DECK+LOCATION_EXTRA)
+	local ct=g:FilterCount(Card.IsLocation,nil,LOCATION_DECK|LOCATION_EXTRA)
 	if ct==3 then
 		Duel.BreakEffect()
 		Duel.Draw(tp,2,REASON_EFFECT)

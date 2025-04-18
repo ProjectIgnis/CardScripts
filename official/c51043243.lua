@@ -1,4 +1,5 @@
 --ワーム・カルタロス
+--Worm Cartaros
 local s,id=GetID()
 function s.initial_effect(c)
 	--search
@@ -9,9 +10,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.op)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x3e}
+s.listed_series={SET_WORM}
 function s.filter(c)
-	return c:IsLevelBelow(4) and c:IsSetCard(0x3e) and c:IsRace(RACE_REPTILE) and c:IsAbleToHand()
+	return c:IsLevelBelow(4) and c:IsSetCard(SET_WORM) and c:IsRace(RACE_REPTILE) and c:IsAbleToHand()
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

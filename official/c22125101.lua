@@ -1,12 +1,12 @@
--- 軌跡の魔術師
--- Beyond the Pendulum
--- Scripted by Hatter
+--軌跡の魔術師
+--Beyond the Pendulum
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	-- 2 Effect Monsters, including a Pendulum Monster
+	--2 Effect Monsters, including a Pendulum Monster
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsType,TYPE_EFFECT),2,2,s.lcheck)
-	-- Search 1 Pendulum Monster
+	--Search 1 Pendulum Monster
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
@@ -14,11 +14,11 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetCondition(s.thcon)
-	e1:SetCost(s.thcost)
+	e1:SetCost(Cost.PayLP(1200))
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
-	-- Destroy 2 cards
+	--Destroy 2 cards
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DESTROY)
@@ -37,11 +37,7 @@ function s.lcheck(g,lc,sumtype,tp)
 end
 function s.thcon(e)
 	local c=e:GetHandler()
-	return c:IsSummonType(SUMMON_TYPE_LINK) and c:IsInExtraMZone()
-end
-function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,1200) end
-	Duel.PayLPCost(tp,1200)
+	return c:IsLinkSummoned() and c:IsInExtraMZone()
 end
 function s.thfilter(c)
 	return c:IsType(TYPE_PENDULUM) and c:IsMonster() and c:IsAbleToHand()
@@ -58,7 +54,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 	local c=e:GetHandler()
-	-- Cannot activate monster effects
+	--Cannot activate monster effects
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,2))
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -68,14 +64,14 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetValue(function(_,re) return re:IsMonsterEffect() end)
 	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
-	-- Pendulum effects are negated
+	--Pendulum effects are negated
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_DISABLE)
 	e2:SetTargetRange(LOCATION_PZONE,0)
 	e2:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e2,tp)
-	-- Remove restrictions on Pendulum Summon
+	--Remove restrictions on Pendulum Summon
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e0:SetCode(EVENT_SPSUMMON_SUCCESS)
@@ -85,7 +81,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e0,tp)
 end
 function s.psfilter(c,tp)
-	return c:IsSummonPlayer(tp) and c:IsSummonType(SUMMON_TYPE_PENDULUM)
+	return c:IsSummonPlayer(tp) and c:IsPendulumSummoned()
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local ef=e:GetLabelObject()
@@ -96,7 +92,7 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.pendfilter(c,tp)
-	return c:IsSummonPlayer(tp) and c:IsSummonType(SUMMON_TYPE_PENDULUM) and c:HasLevel()
+	return c:IsSummonPlayer(tp) and c:IsPendulumSummoned() and c:HasLevel()
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

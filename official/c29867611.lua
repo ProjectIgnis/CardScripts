@@ -1,7 +1,6 @@
 --Ａ・Ɐ・ＭＭ
---Amaze Ɐttraction Majestic Menage
+--Amaze Attraction Majestic Merry-Go-Round
 --Scripted by Eerie Code
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--From cards_specific_functions.lua
@@ -20,9 +19,9 @@ function s.initial_effect(c)
 	e3:SetTarget(s.desreptg)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x15e,0x15f}
+s.listed_series={SET_AMAZEMENT,SET_ATTRACTION}
 function s.atkfilter(c)
-	return c:IsTrap() and c:IsSetCard(0x15f) and c:GetEquipTarget()
+	return c:IsTrap() and c:IsSetCard(SET_ATTRACTION) and c:GetEquipTarget()
 end
 function s.atkval(e,c)
 	local et=e:GetHandler():GetEquipTarget()
@@ -37,7 +36,7 @@ end
 function s.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local tc=c:GetEquipTarget()
-	if chk==0 then return tc:GetControler()==tp and not tc:IsReason(REASON_REPLACE) end
+	if chk==0 then return tc:IsControler(tp) and not tc:IsReason(REASON_REPLACE) end
 	if Duel.SelectEffectYesNo(tp,c,96) then
 		Duel.SendtoGrave(c,REASON_EFFECT)
 		return true

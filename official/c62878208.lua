@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
-	return (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE)
+	return Duel.IsBattlePhase()
 end
 function s.filter1(c,e,tp)
 	local ec=c:GetEquipTarget()
@@ -45,7 +45,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.BreakEffect()
 		local a=eqc
 		local d=tc
-		if Duel.GetTurnPlayer()~=tp then
+		if Duel.IsTurnPlayer(1-tp) then
 			a=tc
 			d=eqc
 		end

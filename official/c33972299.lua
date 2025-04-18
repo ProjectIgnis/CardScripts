@@ -24,13 +24,13 @@ function s.initial_effect(c)
 end
 s.material={68505803}
 s.listed_names={68505803}
-s.listed_series={0x2}
+s.listed_series={SET_GENEX}
 function s.valcon(e)
 	return e:GetHandler():GetFlagEffect(id)~=0
 		and Duel.IsExistingMatchingCard(s.cfilter,e:GetHandler():GetControler(),LOCATION_MZONE,0,1,nil)
 end
 function s.cfilter(c)
-	return c:IsLevelBelow(4) and c:IsFaceup() and c:IsSetCard(0x2)
+	return c:IsLevelBelow(4) and c:IsFaceup() and c:IsSetCard(SET_GENEX)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
@@ -38,6 +38,6 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsFaceup() and c:IsRelateToEffect(e) then
-		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+		c:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 	end
 end

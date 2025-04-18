@@ -1,4 +1,5 @@
 --スカル・マイスター
+--Skull Meister
 local s,id=GetID()
 function s.initial_effect(c)
 	--Inactivate
@@ -9,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_CHAINING)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCondition(s.discon)
-	e1:SetCost(s.discost)
+	e1:SetCost(Cost.SelfToGrave)
 	e1:SetTarget(s.distg)
 	e1:SetOperation(s.disop)
 	c:RegisterEffect(e1)
@@ -24,10 +25,6 @@ end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	local loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
 	return ep~=tp and Duel.IsChainDisablable(ev) and loc==LOCATION_GRAVE
-end
-function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not re:GetHandler():IsStatus(STATUS_DISABLED) end

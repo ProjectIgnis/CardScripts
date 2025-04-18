@@ -1,4 +1,5 @@
 --疾風鳥人ジョー
+--Swift Birdman Joe
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon success
@@ -28,7 +29,7 @@ function s.valcheck(e,c)
 	end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_TRIBUTE) and e:GetLabel()==1
+	return e:GetHandler():IsTributeSummoned() and e:GetLabel()==1
 end
 function s.filter(c)
 	return c:IsSpellTrap() and c:IsAbleToHand()

@@ -17,7 +17,7 @@ function s.initial_effect(c)
 end
 function s.chainfilter(re,tp,cid)
 	if Duel.GetFlagEffect(tp,id)==0 then return true end
-	return not (re:IsActiveType(TYPE_SPELL+TYPE_TRAP) or not re:GetHandler():IsRace(RACE_DIVINE))
+	return not (re:IsSpellTrapEffect() or not re:GetHandler():IsRace(RACE_DIVINE))
 end
 function s.filter(c,e,ec)
 	if not c:IsRace(RACE_DIVINE) then return false end
@@ -48,7 +48,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_ADD_EXTRA_TRIBUTE)
 		e1:SetTargetRange(0,LOCATION_MZONE)
 		e1:SetValue(POS_FACEUP)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1,true)
 		local s1=tc:IsSummonable(true,nil,1)
 		local s2=tc:IsMSetable(true,nil,1)
@@ -59,7 +59,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetCode(EVENT_SUMMON_SUCCESS)
 			e2:SetOperation(s.sumsuc)
 			e2:SetLabel(tp)
-			e2:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD)
+			e2:SetReset(RESET_EVENT|RESETS_STANDARD-RESET_TOFIELD)
 			tc:RegisterEffect(e2,true)
 			Duel.Summon(tp,tc,true,nil,1)
 		else
@@ -67,7 +67,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 			e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 			e3:SetCode(EVENT_MSET)
-			e3:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD)
+			e3:SetReset(RESET_EVENT|RESETS_STANDARD-RESET_TOFIELD)
 			e3:SetOperation(s.sumsuc)
 			e3:SetLabel(tp)
 			tc:RegisterEffect(e3,true)
@@ -86,14 +86,14 @@ function s.sumsuc(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetTargetRange(1,0)
 		e1:SetCondition(s.accon)
 		e1:SetValue(s.aclimit)
-		e1:SetReset(RESET_PHASE+PHASE_END,2)
+		e1:SetReset(RESET_PHASE|PHASE_END,2)
 		Duel.RegisterEffect(e1,player)
-		Duel.RegisterFlagEffect(player,id,RESET_PHASE+PHASE_END,0,2)
+		Duel.RegisterFlagEffect(player,id,RESET_PHASE|PHASE_END,0,2)
 	end
 end
 function s.accon(e)
 	return Duel.GetCustomActivityCount(id,e:GetHandlerPlayer(),ACTIVITY_CHAIN)>0
 end
 function s.aclimit(e,re,tp)
-	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP) or not re:GetHandler():IsRace(RACE_DIVINE)
+	return re:IsSpellTrapEffect() or not re:GetHandler():IsRace(RACE_DIVINE)
 end

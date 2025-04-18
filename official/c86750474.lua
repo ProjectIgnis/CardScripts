@@ -1,5 +1,5 @@
 --トリックスター・フォクシーウィッチ
---Trickstar Foxy Witch
+--Trickstar Foxglove Witch
 local s,id=GetID()
 function s.initial_effect(c)
 	--link summon
@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.damop2)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xfb}
+s.listed_series={SET_TRICKSTAR}
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,0,LOCATION_ONFIELD)>0 end
 	Duel.SetTargetPlayer(1-tp)
@@ -42,10 +42,10 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return (r&REASON_EFFECT+REASON_BATTLE)~=0 and c:IsSummonType(SUMMON_TYPE_LINK) and c:IsPreviousLocation(LOCATION_MZONE)
+	return (r&REASON_EFFECT+REASON_BATTLE)~=0 and c:IsLinkSummoned() and c:IsPreviousLocation(LOCATION_MZONE)
 end
 function s.damfilter(c,e,tp)
-	return c:IsSetCard(0xfb) and c:IsLinkBelow(2) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_TRICKSTAR) and c:IsLinkBelow(2) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.damtg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.damfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end

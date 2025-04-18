@@ -1,4 +1,5 @@
 --ファイナル・インゼクション
+--Final Inzektion
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,9 +12,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x56}
+s.listed_series={SET_INZEKTOR}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x56) and c:IsAbleToGraveAsCost()
+	return c:IsFaceup() and c:IsSetCard(SET_INZEKTOR) and c:IsAbleToGraveAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD,0,5,nil) end
@@ -36,7 +37,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTargetRange(0,1)
 	e1:SetCondition(s.actcon)
 	e1:SetValue(s.aclimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.actcon(e)
@@ -44,5 +45,5 @@ function s.actcon(e)
 	return ph>PHASE_MAIN1 and ph<PHASE_MAIN2
 end
 function s.aclimit(e,re,tp)
-	return re:GetHandler():IsMonster() and re:GetHandler():IsLocation(LOCATION_HAND+LOCATION_GRAVE)
+	return re:GetHandler():IsMonster() and re:GetHandler():IsLocation(LOCATION_HAND|LOCATION_GRAVE)
 end

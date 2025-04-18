@@ -35,9 +35,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xfc}
+s.listed_series={SET_GOUKI}
 function s.econ(e)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
+	return e:GetHandler():IsLinkSummoned()
 end
 function s.efilter(e,te)
 	return te:GetOwner()~=e:GetOwner()
@@ -61,7 +61,7 @@ function s.spcheck(sg,tp,exg,dg)
 	return #dg-a>0
 end
 function s.cfilter(c)
-	return c:IsSetCard(0xfc) and c:IsType(TYPE_LINK)
+	return c:IsSetCard(SET_GOUKI) and c:IsType(TYPE_LINK)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

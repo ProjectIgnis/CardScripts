@@ -1,4 +1,5 @@
 --EMコール
+--Performapal Call
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,12 +13,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x9f}
+s.listed_series={SET_PERFORMAPAL}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker():IsControler(1-tp) and Duel.GetAttackTarget()==nil
 end
 function s.filter(c,def)
-	return c:IsSetCard(0x9f) and c:IsDefenseBelow(def) and c:IsAbleToHand()
+	return c:IsSetCard(SET_PERFORMAPAL) and c:IsDefenseBelow(def) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local at=Duel.GetAttacker()
@@ -53,15 +54,14 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 		e1:SetTargetRange(1,0)
 		e1:SetTarget(s.sumlimit)
-		if Duel.GetTurnPlayer()==tp then
-			e1:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN,2)
+		if Duel.IsTurnPlayer(tp) then
+			e1:SetReset(RESET_PHASE|PHASE_END|RESET_SELF_TURN,2)
 		else
-			e1:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN)
+			e1:SetReset(RESET_PHASE|PHASE_END|RESET_SELF_TURN)
 		end
 		Duel.RegisterEffect(e1,tp)
-		
 		--lizard check
-		aux.addTempLizardCheck(e:GetHandler(),tp,aux.TRUE,RESET_PHASE+PHASE_END+RESET_SELF_TURN,0xff,0,Duel.GetTurnPlayer()==tp and 2 or 1)
+		aux.addTempLizardCheck(e:GetHandler(),tp,aux.TRUE,RESET_PHASE|PHASE_END|RESET_SELF_TURN,0xff,0,Duel.IsTurnPlayer(tp) and 2 or 1)
 	end
 end
 function s.sumlimit(e,c,sump,sumtype,sumpos,targetp,se)

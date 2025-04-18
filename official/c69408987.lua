@@ -1,4 +1,5 @@
 --スパイダー・ウェブ
+--Spider Web
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -22,11 +23,11 @@ end
 function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	if Duel.ChangePosition(a,POS_FACEUP_DEFENSE)~=0 then
-		e:GetHandler():CreateRelation(a,RESET_EVENT+RESETS_STANDARD)
+		e:GetHandler():CreateRelation(a,RESET_EVENT|RESETS_STANDARD)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_CHANGE_POSITION)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,3)
+		e1:SetReset(RESETS_STANDARD_PHASE_END,3)
 		e1:SetCondition(s.poscon2)
 		a:RegisterEffect(e1)
 	end

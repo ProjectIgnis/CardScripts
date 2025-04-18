@@ -1,4 +1,5 @@
 --光の導き
+--Beacon of White
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -31,13 +32,13 @@ function s.initial_effect(c)
 	e4:SetTarget(s.ftarget)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0xdd}
+s.listed_series={SET_BLUE_EYES}
 s.listed_names={id}
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0xdd) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_BLUE_EYES) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.gvfilter(c)
-	return c:IsSetCard(0xdd)
+	return c:IsSetCard(SET_BLUE_EYES)
 end
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsCode(id)
@@ -67,14 +68,14 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_EQUIP_LIMIT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e1:SetValue(s.eqlimit)
 		c:RegisterEffect(e1)
 		--Disable
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_DISABLE)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e2)
 		local e3=e2:Clone()
 		e3:SetCode(EFFECT_DISABLE_EFFECT)
@@ -92,6 +93,6 @@ function s.ftarget(e,c)
 	return e:GetHandler():GetEquipTarget()~=c
 end
 function s.val(e,c)
-	local ct=Duel.GetMatchingGroupCount(Card.IsSetCard,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil,0xdd)
+	local ct=Duel.GetMatchingGroupCount(Card.IsSetCard,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil,SET_BLUE_EYES)
 	return math.max(0,ct-1)
 end

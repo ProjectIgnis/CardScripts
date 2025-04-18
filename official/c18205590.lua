@@ -13,13 +13,13 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x9c}
+s.listed_series={SET_TELLARKNIGHT}
 function s.filter(c,e,tp)
-	return c:IsFaceup() and c:IsSetCard(0x9c) and c:IsAbleToDeck()
+	return c:IsFaceup() and c:IsSetCard(SET_TELLARKNIGHT) and c:IsAbleToDeck()
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetCode())
 end
 function s.spfilter(c,e,tp,code)
-	return c:IsSetCard(0x9c) and not c:IsCode(code) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_TELLARKNIGHT) and not c:IsCode(code) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc,e,tp) end
@@ -39,7 +39,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 		if tc:IsRelateToEffect(e) and tc:IsFaceup() then
-			Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)
+			Duel.SendtoDeck(tc,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 		end
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD)
@@ -48,10 +48,10 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 		e1:SetAbsoluteRange(tp,1,0)
 		e1:SetTarget(s.splimit)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		g:GetFirst():RegisterEffect(e1,true)
 	end
 end
 function s.splimit(e,c)
-	return not c:IsSetCard(0x9c)
+	return not c:IsSetCard(SET_TELLARKNIGHT)
 end

@@ -1,4 +1,5 @@
 --追い剥ぎゾンビ
+--Robbin' Zombie
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
@@ -19,7 +20,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and eg:GetFirst():GetControler()==tp
+	return ep~=tp and eg:GetFirst():IsControler(tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

@@ -1,4 +1,5 @@
 --ガジェット・ドライバー
+--Gadget Driver
 local s,id=GetID()
 function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
@@ -8,18 +9,14 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCost(s.cost)
+	e1:SetCost(Cost.SelfToGrave)
 	e1:SetTarget(s.tg)
 	e1:SetOperation(s.op)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x26}
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
-end
+s.listed_series={SET_MORPHTRONIC}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x26)
+	return c:IsFaceup() and c:IsSetCard(SET_MORPHTRONIC)
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end

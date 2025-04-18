@@ -40,16 +40,16 @@ function s.initial_effect(c)
 		end)
 	end)
 end
-s.listed_series={0x9a}
+s.listed_series={SET_SUPERHEAVY_SAMURAI}
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	if tc:IsRelateToBattle() and tc:IsStatus(STATUS_OPPO_BATTLE)
-		and tc:IsFaceup() and tc:IsSetCard(0x9a) then
+		and tc:IsFaceup() and tc:IsSetCard(SET_SUPERHEAVY_SAMURAI) then
 		s[tc:GetControler()]=true
 	end
 end
 function s.sccon(e,tp,eg,ep,ev,re,r,rp)
-	return s[tp] and Duel.GetTurnPlayer()==tp and (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE)
+	return s[tp] and Duel.IsTurnPlayer(tp) and Duel.IsBattlePhase()
 end
 function s.sctg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsSynchroSummonable,tp,LOCATION_EXTRA,0,1,nil,e:GetHandler()) end
@@ -66,10 +66,10 @@ function s.scop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_GRAVE,0,1,nil,TYPE_SPELL+TYPE_TRAP)
+	return not Duel.IsExistingMatchingCard(Card.IsSpellTrap,tp,LOCATION_GRAVE,0,1,nil)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsLevelAbove(2) and c:IsSetCard(0x9a) and c:IsType(TYPE_SYNCHRO)
+	return c:IsFaceup() and c:IsLevelAbove(2) and c:IsSetCard(SET_SUPERHEAVY_SAMURAI) and c:IsType(TYPE_SYNCHRO)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -89,7 +89,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	aux.RegisterClientHint(e:GetHandler(),nil,tp,1,0,aux.Stringid(id,2),nil)
 	local tc=Duel.GetFirstTarget()
@@ -97,7 +97,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_UPDATE_LEVEL)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 	e2:SetValue(-1)
 	tc:RegisterEffect(e2)
 	if c:IsRelateToEffect(e) then
@@ -105,5 +105,5 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.splimit(e,c)
-	return not c:IsSetCard(0x9a)
+	return not c:IsSetCard(SET_SUPERHEAVY_SAMURAI)
 end

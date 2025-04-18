@@ -1,4 +1,5 @@
 --７カード
+--7 Completed
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsRace,RACE_MACHINE),nil,nil,nil,s.operation)
@@ -16,7 +17,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetCode(EFFECT_UPDATE_DEFENSE) 
 		end
 		e1:SetValue(700)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e1)
 	end
 end

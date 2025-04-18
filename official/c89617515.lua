@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e4:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e4:SetRange(LOCATION_GRAVE)
 	e4:SetCountLimit(1,{id,1})
-	e4:SetCost(aux.bfgcost)
+	e4:SetCost(Cost.SelfBanish)
 	e4:SetTarget(s.drtg)
 	e4:SetOperation(s.drop)
 	c:RegisterEffect(e4)
@@ -63,10 +63,10 @@ end
 function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetTargetCards(e)
 	if #tg<=0 then return end
-	Duel.SendtoDeck(tg,nil,0,REASON_EFFECT)
+	Duel.SendtoDeck(tg,nil,SEQ_DECKTOP,REASON_EFFECT)
 	local g=Duel.GetOperatedGroup()
 	if g:IsExists(Card.IsLocation,1,nil,LOCATION_DECK) then Duel.ShuffleDeck(tp) end
-	local ct=g:FilterCount(Card.IsLocation,nil,LOCATION_DECK+LOCATION_EXTRA)
+	local ct=g:FilterCount(Card.IsLocation,nil,LOCATION_DECK|LOCATION_EXTRA)
 	if ct>0 then
 		Duel.BreakEffect()
 		Duel.Draw(tp,1,REASON_EFFECT)

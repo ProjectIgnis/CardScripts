@@ -1,4 +1,5 @@
 --TG サイバー・マジシャン
+--T.G. Cyber Magician
 local s,id=GetID()
 function s.initial_effect(c)
 	--to grave
@@ -17,10 +18,10 @@ function s.initial_effect(c)
 	e3:SetValue(s.synval)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x27}
+s.listed_series={SET_TG}
 function s.synval(e,c,sc)
-	if sc:IsSetCard(0x27) and --c:IsNotTuner() 
-		(not c:IsType(TYPE_TUNER) or c:IsHasEffect(EFFECT_NONTUNER)) and c:IsSetCard(0x27) and c:IsLocation(LOCATION_HAND) then
+	if sc:IsSetCard(SET_TG) and --c:IsNotTuner() 
+		(not c:IsType(TYPE_TUNER) or c:IsHasEffect(EFFECT_NONTUNER)) and c:IsSetCard(SET_TG) and c:IsLocation(LOCATION_HAND) then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_HAND_SYNCHRO+EFFECT_SYNCHRO_CHECK)
@@ -59,12 +60,12 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetRange(LOCATION_GRAVE)
 		e1:SetTarget(s.thtg)
 		e1:SetOperation(s.thop)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		c:RegisterEffect(e1)
 	end
 end
 function s.filter(c)
-	return c:IsSetCard(0x27) and c:GetCode()~=id and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_TG) and c:GetCode()~=id and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

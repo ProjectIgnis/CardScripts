@@ -30,7 +30,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		ct=ct+Duel.GetMatchingGroupCount(Card.IsType,tp,LOCATION_GRAVE,LOCATION_GRAVE,nil,TYPE_FIELD)
 		if ct==0 then return false end
 		for p=0,1 do
-			if Duel.GetLocationCount(p,LOCATION_MZONE)>0 and Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_ROSE,0x123,TYPES_TOKEN,800,800,2,RACE_PLANT,ATTRIBUTE_DARK,POS_FACEUP_DEFENSE,p) then return true end
+			if Duel.GetLocationCount(p,LOCATION_MZONE)>0 and Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_ROSE,SET_ROSE,TYPES_TOKEN,800,800,2,RACE_PLANT,ATTRIBUTE_DARK,POS_FACEUP_DEFENSE,p) then return true end
 		end
 		return false
 	end
@@ -43,8 +43,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if ct==0 then return end
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ct=1 end
 	repeat
-		local b1=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_ROSE,0x123,TYPES_TOKEN,800,800,2,RACE_PLANT,ATTRIBUTE_DARK,POS_FACEUP_DEFENSE,tp)
-		local b2=Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0 and Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_ROSE,0x123,TYPES_TOKEN,800,800,2,RACE_PLANT,ATTRIBUTE_DARK,POS_FACEUP_DEFENSE,1-tp)
+		local b1=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_ROSE,SET_ROSE,TYPES_TOKEN,800,800,2,RACE_PLANT,ATTRIBUTE_DARK,POS_FACEUP_DEFENSE,tp)
+		local b2=Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0 and Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_ROSE,SET_ROSE,TYPES_TOKEN,800,800,2,RACE_PLANT,ATTRIBUTE_DARK,POS_FACEUP_DEFENSE,1-tp)
 		if not (b1 or b2) then break end
 		local op=0
 		if b1 and b2 then
@@ -78,23 +78,23 @@ end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and Duel.Remove(tc,0,REASON_EFFECT+REASON_TEMPORARY)>0 then
+	if tc:IsRelateToEffect(e) and Duel.Remove(tc,0,REASON_EFFECT|REASON_TEMPORARY)>0 then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
+		e1:SetCode(EVENT_PHASE|PHASE_STANDBY)
 		e1:SetLabelObject(tc)
 		e1:SetCountLimit(1)
-		if Duel.GetCurrentPhase()==PHASE_STANDBY then
+		if Duel.IsPhase(PHASE_STANDBY) then
 			e1:SetLabel(Duel.GetTurnCount())
 			e1:SetCondition(s.retcon)
-			e1:SetReset(RESET_PHASE+PHASE_STANDBY,2)
+			e1:SetReset(RESET_PHASE|PHASE_STANDBY,2)
 		else
-			e1:SetReset(RESET_PHASE+PHASE_STANDBY)
+			e1:SetReset(RESET_PHASE|PHASE_STANDBY)
 		end
 		e1:SetOperation(s.retop)
 		Duel.RegisterEffect(e1,tp)
 		if c:IsRelateToEffect(e) then
-			Duel.SendtoDeck(c,nil,1,REASON_EFFECT)
+			Duel.SendtoDeck(c,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
 		end
 	end
 end

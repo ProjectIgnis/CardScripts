@@ -1,12 +1,12 @@
--- ギガンティック・スプライト
--- Gigantic Splight
--- Scripted by Hatter
+--ギガンティック・スプライト
+--Gigantic Spright
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	-- 2 Level 2 monsters
+	--2 Level 2 monsters
 	Xyz.AddProcedure(c,nil,2,2)
-	-- Can use Link 2 monsters as Level 2 materials
+	--Can use Link 2 monsters as Level 2 materials
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_FIELD)
 	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_IGNORE_IMMUNE)
@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e0:SetTarget(function(e,c) return c:IsLink(2) end)
 	e0:SetValue(function(e,_,rc) return rc==e:GetHandler() and 2 or 0 end)
 	c:RegisterEffect(e0)
-	-- Double own ATK
+	--Double own ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e1:SetCondition(function(e) return e:GetHandler():GetOverlayGroup():IsExists(Card.IsType,1,nil,TYPE_EXTRA) end)
 	e1:SetValue(function(_,c) return c:GetBaseAttack()*2 end)
 	c:RegisterEffect(e1)
-	-- Special Summon 1 Level 2 monster
+	--Special Summon 1 Level 2 monster
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -53,7 +53,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 		end
 	end
-	-- Cannot Special Summon monsters, except Level/Rank/Link 2 monsters
+	--Cannot Special Summon monsters, except Level/Rank/Link 2 monsters
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -61,6 +61,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e1:SetTargetRange(1,1)
 	e1:SetTarget(function(_,c) return not (c:IsLevel(2) or c:IsRank(2) or c:IsLink(2)) end)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end

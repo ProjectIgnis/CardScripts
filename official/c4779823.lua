@@ -1,4 +1,5 @@
 --ライトロード・アーク ミカエル
+--Michael, the Arch-Lightsworn
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -12,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
-	e1:SetCost(s.rmcost)
+	e1:SetCost(Cost.PayLP(1000))
 	e1:SetTarget(s.rmtg)
 	e1:SetOperation(s.rmop)
 	c:RegisterEffect(e1)
@@ -39,11 +40,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.disop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x38}
-function s.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,1000) end
-	Duel.PayLPCost(tp,1000)
-end
+s.listed_series={SET_LIGHTSWORN}
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsAbleToRemove() end
 	if chk==0 then return Duel.IsExistingTarget(Card.IsAbleToRemove,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
@@ -58,7 +55,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter(c)
-	return c:IsSetCard(0x38) and c:IsMonster() and c:IsAbleToDeck()
+	return c:IsSetCard(SET_LIGHTSWORN) and c:IsMonster() and c:IsAbleToDeck()
 end
 function s.rettg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc) end

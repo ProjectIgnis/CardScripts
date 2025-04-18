@@ -25,9 +25,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.limop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x8d}
+s.listed_series={SET_GHOSTRICK}
 function s.sumcon(e)
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x8d),0,LOCATION_MZONE,LOCATION_MZONE,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_GHOSTRICK),0,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 end
 function s.limcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -41,6 +41,6 @@ function s.limop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetTargetRange(0,1)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end

@@ -1,4 +1,4 @@
---
+--ティスティナの還り仔
 --Returned of the Tistina
 --Scripted by Hatter
 local s,id=GetID()
@@ -64,7 +64,7 @@ function s.mattg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingTarget(s.matfilter,tp,LOCATION_MZONE,0,1,nil,c,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	Duel.SelectTarget(tp,s.matfilter,tp,LOCATION_MZONE,0,1,1,nil,c,tp)
-	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,c,1,0,0)	
+	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,c,1,0,0)
 end
 function s.matop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

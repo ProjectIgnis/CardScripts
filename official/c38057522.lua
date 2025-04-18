@@ -1,7 +1,6 @@
 --大霊術－「一輪」
 --Grand Spiritual Art - Ichirin
 --Scripted by ahtelel
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -33,7 +32,7 @@ function s.negf(c,tp)
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.negf,tp,LOCATION_MZONE,0,1,nil)
-		and rp==1-tp and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainDisablable(ev)
+		and rp==1-tp and re:IsMonsterEffect() and Duel.IsChainDisablable(ev)
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
@@ -62,7 +61,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		if #g1>0 and #g2>0 then
 			Duel.SendtoHand(g2,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,g2)
-			Duel.SendtoDeck(g1,tp,2,REASON_EFFECT)
+			Duel.SendtoDeck(g1,tp,SEQ_DECKSHUFFLE,REASON_EFFECT)
 		end
 	end
 end

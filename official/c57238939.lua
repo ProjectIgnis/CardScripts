@@ -1,4 +1,5 @@
 --A・ジェネクス・リモート
+--Genex Ally Remote
 local s,id=GetID()
 function s.initial_effect(c)
 	--cos
@@ -29,7 +30,7 @@ function s.cosop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_CHANGE_CODE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetValue(68505803)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end

@@ -1,4 +1,5 @@
 --クリアクリボー
+--Clear Kuriboh
 local s,id=GetID()
 function s.initial_effect(c)
 	--negate
@@ -10,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e1:SetCondition(s.negcon)
-	e1:SetCost(s.negcost)
+	e1:SetCost(Cost.SelfDiscard)
 	e1:SetTarget(s.negtg)
 	e1:SetOperation(s.negop)
 	c:RegisterEffect(e1)
@@ -23,18 +24,14 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,id)
 	e2:SetCondition(s.drcon)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.drtg)
 	e2:SetOperation(s.drop)
 	c:RegisterEffect(e2)
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsChainNegatable(ev) and (aux.damcon1(e,tp,eg,ep,ev,re,r,rp) or aux.damcon1(e,1-tp,eg,ep,ev,re,r,rp))
-		and re:IsActiveType(TYPE_MONSTER) and ep~=tp
-end
-function s.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsDiscardable() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
+		and re:IsMonsterEffect() and ep~=tp
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

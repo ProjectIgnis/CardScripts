@@ -1,4 +1,5 @@
 --ギミック・パペット－シャドー・フィーラー
+--Gimmick Puppet Shadow Feeler
 local s,id=GetID()
 function s.initial_effect(c)
 	--battle indestructable

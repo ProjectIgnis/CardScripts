@@ -1,4 +1,5 @@
 --極星邪竜ヨルムンガンド
+--Jormungardr the Nordic Serpent
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -33,7 +34,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.damop)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x4b}
+s.listed_series={SET_AESIR}
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
@@ -41,7 +42,7 @@ function s.spcon(e,c)
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x4b)
+	return c:IsFaceup() and c:IsSetCard(SET_AESIR)
 end
 function s.descon(e)
 	return not Duel.IsExistingMatchingCard(s.filter,0,LOCATION_MZONE,LOCATION_MZONE,1,nil)

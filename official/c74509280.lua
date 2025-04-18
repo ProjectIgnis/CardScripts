@@ -1,4 +1,5 @@
 --Sin パラレルギア
+--Malefic Parallel Gear
 local s,id=GetID()
 function s.initial_effect(c)
 	--hand synchro
@@ -22,12 +23,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.synop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x23}
+s.listed_series={SET_MALEFIC}
 function s.synfilter(e,c)
-	return c:IsLocation(LOCATION_HAND) and c:IsSetCard(0x23) and c:IsControler(e:GetHandlerPlayer())
+	return c:IsLocation(LOCATION_HAND) and c:IsSetCard(SET_MALEFIC) and c:IsControler(e:GetHandlerPlayer())
 end
 function s.synval(e,c,sc)
-	if c:IsSetCard(0x23) and c:IsLocation(LOCATION_HAND) then
+	if c:IsSetCard(SET_MALEFIC) and c:IsLocation(LOCATION_HAND) then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_HAND_SYNCHRO+EFFECT_SYNCHRO_CHECK)

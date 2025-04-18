@@ -1,5 +1,5 @@
 --L・G・D
---Link God Dragon
+--Five-Headed Link Dragon
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -55,7 +55,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e6)
 end
 function s.valcheck(e,c)
-	local g=c:GetMaterial():Filter(Card.IsAttribute,nil,0x2f)
+	local g=c:GetMaterial():Filter(Card.IsAttribute,nil,ATTRIBUTE_DARK|ATTRIBUTE_WIND|ATTRIBUTE_FIRE|ATTRIBUTE_WATER|ATTRIBUTE_EARTH)
 	if #g==5
 		and g:IsExists(Card.IsAttribute,1,nil,ATTRIBUTE_EARTH)
 		and g:IsExists(Card.IsAttribute,1,nil,ATTRIBUTE_WIND)
@@ -66,7 +66,7 @@ function s.valcheck(e,c)
 	end
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK) and e:GetLabel()==1
+	return e:GetHandler():IsLinkSummoned() and e:GetLabel()==1
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetFieldGroup(tp,0,LOCATION_ONFIELD)
@@ -83,10 +83,10 @@ function s.efilter(e,te)
 	return te:GetOwner()~=e:GetOwner()
 end
 function s.batfilter(e,c)
-	return c:IsAttribute(0x2f)
+	return c:IsAttribute(ATTRIBUTE_DARK|ATTRIBUTE_WIND|ATTRIBUTE_FIRE|ATTRIBUTE_WATER|ATTRIBUTE_EARTH)
 end
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return Duel.IsTurnPlayer(1-tp)
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -106,4 +106,3 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-

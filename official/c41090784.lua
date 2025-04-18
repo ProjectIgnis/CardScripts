@@ -1,4 +1,5 @@
 --氷結界の大僧正
+--Dai-sojo of the Ice Barrier
 local s,id=GetID()
 function s.initial_effect(c)
 	--to defense
@@ -19,11 +20,11 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetTargetRange(LOCATION_MZONE,0)
 	e3:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
-	e3:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x2f))
+	e3:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_ICE_BARRIER))
 	e3:SetValue(s.indval)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x2f}
+s.listed_series={SET_ICE_BARRIER}
 function s.potg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return e:GetHandler():IsAttackPos() end
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,e:GetHandler(),1,0,0)
@@ -35,5 +36,5 @@ function s.poop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.indval(e,re,rp)
-	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
+	return re:IsSpellTrapEffect()
 end

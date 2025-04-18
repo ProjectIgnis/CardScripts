@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x4))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_AMAZONESS))
 	e2:SetValue(200)
 	c:RegisterEffect(e2)
 	--Special Summon 1 "Amazoness" from your Deck
@@ -30,13 +30,13 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x4}
+s.listed_series={SET_AMAZONESS}
 function s.cfilter(c,e,tp)
-	return c:IsSetCard(0x4) and c:IsReason(REASON_DESTROY) and c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:HasLevel()
+	return c:IsSetCard(SET_AMAZONESS) and c:IsReason(REASON_DESTROY) and c:IsReason(REASON_BATTLE|REASON_EFFECT) and c:HasLevel()
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetLevel())
 end
 function s.spfilter(c,e,tp,lv)
-	return c:IsLevelBelow(lv) and c:IsSetCard(0x4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsLevelBelow(lv) and c:IsSetCard(SET_AMAZONESS) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,e,tp)

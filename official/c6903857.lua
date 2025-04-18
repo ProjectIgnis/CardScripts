@@ -1,4 +1,5 @@
 --パワー・ブレイカー
+--Power Breaker
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy

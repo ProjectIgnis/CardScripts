@@ -61,4 +61,3 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SSet(tp,tc)
 	end
 end
-

@@ -1,7 +1,6 @@
 --ハイパー・ギャラクシー
 --Hyper Galaxy
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -20,7 +19,6 @@ function s.initial_effect(c)
 end
 	--Contains "Galaxy-Eyes Photon Dragon" in text
 s.listed_names={CARD_GALAXYEYES_P_DRAGON}
-
 	--Check for a monster with 2000+ ATK, besides "Galaxy-Eyes Photon Dragon"
 function s.costfilter(c,ft,tp)
 	return (c:IsControler(tp) or c:IsFaceup()) and c:IsAttackAbove(2000) and not c:IsCode(CARD_GALAXYEYES_P_DRAGON) and (ft>0 or c:GetSequence()<5)
@@ -45,11 +43,11 @@ end
 	--Activation legality
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and s.filter(chkc,e) end
-	if chk==0 then return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,nil,e,tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND|LOCATION_DECK|LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	local g=Duel.SelectTarget(tp,s.filter,tp,0,LOCATION_MZONE,1,1,nil,e)
 	Duel.SetTargetCard(g)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND|LOCATION_DECK|LOCATION_GRAVE)
 end
 	--Tribute opponent's monster, special summon "Galaxy-Eyes Photon Dragon"
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
@@ -57,7 +55,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if tc and tc:IsRelateToEffect(e) and Duel.Release(tc,REASON_EFFECT)~=0
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter),tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,e,tp)
+		local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter),tp,LOCATION_HAND|LOCATION_DECK|LOCATION_GRAVE,0,1,1,nil,e,tp)
 		if #g>0 then
 			Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 		end

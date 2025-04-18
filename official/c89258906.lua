@@ -1,4 +1,5 @@
 --BF－そよ風のブリーズ
+--Blackwing - Breeze the Zephyr
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -20,10 +21,10 @@ function s.initial_effect(c)
 	e2:SetValue(s.synlimit)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x33}
+s.listed_series={SET_BLACKWING}
 function s.synlimit(e,c)
 	if not c then return false end
-	return not c:IsSetCard(0x33)
+	return not c:IsSetCard(SET_BLACKWING)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return (r&REASON_EFFECT)~=0 and e:GetHandler():IsPreviousLocation(LOCATION_DECK) and e:GetHandler():IsPreviousControler(tp)

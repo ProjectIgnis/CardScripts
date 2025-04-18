@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
 end
-s.listed_series={0xf0}
+s.listed_series={SET_WINDWITCH}
 function s.counterfilter(c)
 	return not c:IsSummonLocation(LOCATION_EXTRA) or (c:IsLevelAbove(5) and c:IsAttribute(ATTRIBUTE_WIND))
 end
@@ -45,14 +45,14 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	--Clock Lizard check
 	aux.addTempLizardCheck(e:GetHandler(),tp,s.lizfilter)
 	local e2=Effect.CreateEffect(e:GetHandler())
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT+EFFECT_FLAG_OATH)
 	e2:SetDescription(aux.Stringid(id,3))
-	e2:SetReset(RESET_PHASE+PHASE_END)
+	e2:SetReset(RESET_PHASE|PHASE_END)
 	e2:SetTargetRange(1,0)
 	Duel.RegisterEffect(e2,tp)
 end
@@ -69,7 +69,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0xf0) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_WINDWITCH) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -91,13 +91,13 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 				e1:SetType(EFFECT_TYPE_SINGLE)
 				e1:SetCode(EFFECT_UNRELEASABLE_SUM)
 				e1:SetValue(1)
-				e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+				e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 				tc:RegisterEffect(e1)
 				local e2=Effect.CreateEffect(c)
 				e2:SetType(EFFECT_TYPE_SINGLE)
 				e2:SetCode(EFFECT_UNRELEASABLE_NONSUM)
 				e2:SetValue(1)
-				e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+				e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 				tc:RegisterEffect(e2)
 			end
 		end

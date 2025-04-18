@@ -1,4 +1,5 @@
 --陽気な葬儀屋
+--The Cheerful Coffin
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -15,5 +16,5 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_HANDES,nil,0,tp,1)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	Duel.DiscardHand(tp,Card.IsMonster,1,3,REASON_EFFECT+REASON_DISCARD)
+	Duel.DiscardHand(tp,Card.IsMonster,1,3,REASON_EFFECT|REASON_DISCARD)
 end

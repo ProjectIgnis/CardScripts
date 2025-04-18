@@ -1,4 +1,5 @@
 --Subterror Cave Clash
+--Subterror Cave Clash
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,7 +13,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTargetRange(LOCATION_MZONE,0)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0xed))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_SUBTERROR))
 	e2:SetValue(s.atkval)
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
@@ -32,17 +33,17 @@ function s.initial_effect(c)
 	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0xed}
+s.listed_series={SET_SUBTERROR}
 s.listed_names={id}
 function s.atkval(e,c)
 	return Duel.GetMatchingGroupCount(Card.IsFacedown,e:GetHandlerPlayer(),LOCATION_MZONE,LOCATION_MZONE,nil)*500
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local rc=eg:GetFirst()
-	return ep~=tp and rc:IsControler(tp) and rc:IsSetCard(0xed)
+	return ep~=tp and rc:IsControler(tp) and rc:IsSetCard(SET_SUBTERROR)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0xed) and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(SET_SUBTERROR) and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc) end

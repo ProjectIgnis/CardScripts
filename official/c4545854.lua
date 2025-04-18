@@ -1,4 +1,5 @@
 --エクシーズ・テリトリー
+--Xyz Territory
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -29,7 +30,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function s.adcon(e)
-	return Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL and Duel.GetAttackTarget()
+	return Duel.IsPhase(PHASE_DAMAGE_CAL) and Duel.GetAttackTarget()
 end
 function s.adtg(e,c)
 	local a=Duel.GetAttacker()

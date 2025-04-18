@@ -1,4 +1,5 @@
 --幻奏の音女オペラ
+--Opera the Melodious Diva
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot attack
@@ -19,12 +20,12 @@ function s.initial_effect(c)
 	e3:SetOperation(s.indop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x9b}
+s.listed_series={SET_MELODIOUS}
 function s.atklimit(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_CANNOT_ATTACK)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESETS_STANDARD_PHASE_END)
 	e:GetHandler():RegisterEffect(e1)
 end
 function s.indcon(e,tp,eg,ep,ev,re,r,rp)
@@ -35,9 +36,9 @@ function s.indop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e1:SetTargetRange(LOCATION_MZONE,0)
-	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x9b))
+	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_MELODIOUS))
 	e1:SetValue(1)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)

@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetRange(LOCATION_FZONE)
-	e2:SetTargetRange(LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE)
+	e2:SetTargetRange(LOCATION_MZONE|LOCATION_GRAVE,LOCATION_MZONE|LOCATION_GRAVE)
 	e2:SetCode(EFFECT_CHANGE_ATTRIBUTE)
 	e2:SetTarget(s.tg)
 	e2:SetValue(ATTRIBUTE_DARK)
@@ -44,9 +44,9 @@ function s.initial_effect(c)
 	e5:SetValue(s.val)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x1034,0x2034}
+s.listed_series={SET_CRYSTAL_BEAST,SET_ULTIMATE_CRYSTAL}
 function s.tg(e,c)
-	if not c:IsSetCard(0x1034) then return false end
+	if not c:IsSetCard(SET_CRYSTAL_BEAST) then return false end
 	if c:GetFlagEffect(1)==0 then
 		c:RegisterFlagEffect(1,0,0,0)
 		local eff
@@ -64,13 +64,13 @@ function s.tg(e,c)
 	return true
 end
 function s.val(e,c,re,chk)
-	if chk==0 then return c:IsSetCard(0x1034) end
+	if chk==0 then return c:IsSetCard(SET_CRYSTAL_BEAST) end
 	return ATTRIBUTE_DARK
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local at=Duel.GetAttackTarget()
-	return at and a:IsSetCard(0x2034)
+	return at and a:IsSetCard(SET_ULTIMATE_CRYSTAL)
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -79,12 +79,12 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_DISABLE)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_BATTLE)
 	tc:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_DISABLE_EFFECT)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE)
+	e2:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_BATTLE)
 	tc:RegisterEffect(e2)
 	Duel.AdjustInstantly(tc)
 end
@@ -92,10 +92,10 @@ function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local at=Duel.GetAttackTarget()
 	return Duel.GetBattleDamage(tp)>0
-		and ((a:IsControler(tp) and a:IsSetCard(0x1034)) or (at and at:IsControler(tp) and at:IsSetCard(0x1034)))
+		and ((a:IsControler(tp) and a:IsSetCard(SET_CRYSTAL_BEAST)) or (at and at:IsControler(tp) and at:IsSetCard(SET_CRYSTAL_BEAST)))
 end
 function s.dfilter(c)
-	return c:IsSetCard(0x1034) and c:IsMonster() and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(SET_CRYSTAL_BEAST) and c:IsMonster() and c:IsAbleToGraveAsCost()
 end
 function s.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.dfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -111,6 +111,6 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(1,0)
-	e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
+	e1:SetReset(RESET_PHASE|PHASE_DAMAGE)
 	Duel.RegisterEffect(e1,tp)
 end

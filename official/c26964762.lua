@@ -1,4 +1,5 @@
 --D－HERO ダークエンジェル
+--Destiny HERO - Dark Angel
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -9,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCondition(s.spcon)
-	e1:SetCost(s.spcost)
+	e1:SetCost(Cost.SelfDiscard)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
@@ -25,7 +26,7 @@ function s.initial_effect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_FIELD)
 	e3:SetRange(LOCATION_GRAVE)
-	e3:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e3:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e3:SetCountLimit(1)
 	e3:SetCondition(s.deckcon)
 	e3:SetCost(s.deckcost)
@@ -33,16 +34,12 @@ function s.initial_effect(c)
 	e3:SetOperation(s.deckop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xc008}
+s.listed_series={SET_DESTINY_HERO}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_GRAVE,0,3,nil,0xc008)
-end
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsDiscardable() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
+	return Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_GRAVE,0,3,nil,SET_DESTINY_HERO)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0xc008) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE,1-tp)
+	return c:IsSetCard(SET_DESTINY_HERO) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE,1-tp)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.spfilter(chkc,e,tp) end
@@ -59,7 +56,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
-	if rp==tp and re:IsActiveType(TYPE_SPELL) then
+	if rp==tp and re:IsSpellEffect() then
 		local rc=re:GetHandler()
 		if Duel.NegateEffect(ev) and rc:IsRelateToEffect(re) then
 			Duel.Destroy(rc,REASON_EFFECT)
@@ -67,10 +64,10 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.deckcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.cfilter(c)
-	return c:IsSetCard(0xc008) and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(SET_DESTINY_HERO) and c:IsAbleToRemoveAsCost()
 end
 function s.deckcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -82,7 +79,7 @@ function s.deckcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.filter(c)
-	return c:GetType()==TYPE_SPELL
+	return c:IsNormalSpell()
 end
 function s.decktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,0,LOCATION_DECK)>0

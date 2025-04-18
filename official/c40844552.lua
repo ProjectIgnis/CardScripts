@@ -15,12 +15,12 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={40844553}
-s.listed_series={0x42}
+s.listed_series={SET_NORDIC}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0 and Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD,0)<=1
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x42) and c:IsMonster() and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(SET_NORDIC) and c:IsMonster() and c:IsAbleToRemoveAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,2,nil) end

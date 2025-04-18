@@ -1,7 +1,6 @@
 --デメット爺さん
 --Grandpa Demetto
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -52,7 +51,6 @@ function s.initial_effect(c)
 end
 	--Specifically lists "Princess Cologne"
 s.listed_names={75574498}
-
 	--Check for "Princess Cologne"
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsCode(75574498)
@@ -97,19 +95,18 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetCode(EFFECT_CHANGE_ATTRIBUTE)
 			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 			e1:SetValue(ATTRIBUTE_DARK)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			tc:RegisterEffect(e1,true)
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_CHANGE_LEVEL)
 			e1:SetValue(8)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			tc:RegisterEffect(e1,true)
 		end
 		Duel.SpecialSummonComplete()
 	end
 end
-	
 function s.rcon(e,tp,eg,ep,ev,re,r,rp)
 	e:GetLabelObject():GetLabelObject():Merge(re:GetHandler():GetOverlayGroup())
 	return false

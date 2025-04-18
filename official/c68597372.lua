@@ -1,4 +1,5 @@
 --発条機甲ゼンマイスター
+--Wind-Up Zenmaister
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
@@ -20,17 +21,13 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCountLimit(1)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCost(s.cost)
+	e2:SetCost(Cost.Detach(1))
 	e2:SetTarget(s.target)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
 end
 function s.atkval(e,c)
 	return c:GetOverlayCount()*300
-end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsCanTurnSet()
@@ -46,12 +43,12 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		Duel.ChangePosition(tc,POS_FACEDOWN_DEFENSE)
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET+RESET_PHASE+PHASE_END,0,1)
+		tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD-RESET_TURN_SET|RESET_PHASE|PHASE_END,0,1)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_PHASE+PHASE_END)
 		e1:SetCountLimit(1)
-		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_PHASE|PHASE_END)
 		e1:SetCondition(s.flipcon)
 		e1:SetOperation(s.flipop)
 		e1:SetLabelObject(tc)

@@ -1,4 +1,5 @@
 --死の花－ネクロ・フルール
+--Necro Fleur
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -15,7 +16,7 @@ function s.initial_effect(c)
 end
 s.listed_names={36405256}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return (e:GetHandler():GetReason()&0x41)==0x41
+	return (e:GetHandler():GetReason()&(REASON_DESTROY|REASON_EFFECT))==(REASON_DESTROY|REASON_EFFECT)
 end
 function s.filter(c,e,tp)
 	return c:IsCode(36405256) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

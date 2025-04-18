@@ -1,12 +1,12 @@
--- 凶導の葬列
--- Dogmatikamacabre
--- Scripted by Hatter
+--凶導の葬列
+--Dogmatikamacabre
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Ritual Summon
+	--Ritual Summon
 	local e1=Ritual.AddProcGreater({
 		handler=c,
-		filter=aux.FilterBoolFunction(Card.IsSetCard,0x146),
+		filter=aux.FilterBoolFunction(Card.IsSetCard,SET_DOGMATIKA),
 		location=LOCATION_HAND|LOCATION_GRAVE,
 		extrafil=s.extramat,
 		extratg=s.extratg,
@@ -17,12 +17,12 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={40352445,48654323}
-s.listed_series={0x146}
+s.listed_series={SET_DOGMATIKA}
 function s.matfilter(c)
 	return c:HasLevel() and c:IsType(TYPE_FUSION|TYPE_SYNCHRO) and c:IsAbleToRemove()
 end
 function s.extramat(e,tp,eg,ep,ev,re,r,rp,chk)
-	return Duel.IsPlayerAffectedByEffect(tp,69832741)
+	return Duel.IsPlayerAffectedByEffect(tp,CARD_SPIRIT_ELIMINATION)
 		and Group.NewGroup() or Duel.GetMatchingGroup(s.matfilter,tp,LOCATION_GRAVE,0,nil)
 end
 function s.extratg(e,tp,eg,ep,ev,re,r,rp,chk)

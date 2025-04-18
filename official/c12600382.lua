@@ -1,4 +1,5 @@
 --エクゾディア・ネクロス
+--Exodia Necross
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -28,7 +29,7 @@ function s.initial_effect(c)
 	e4:SetDescription(aux.Stringid(id,0))
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e4:SetCategory(CATEGORY_ATKCHANGE)
-	e4:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e4:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetCountLimit(1)
 	e4:SetCondition(s.atkcon)
@@ -45,7 +46,7 @@ function s.initial_effect(c)
 end
 s.listed_names={8124921,44519536,70903634,7902349,33396948}
 function s.efdes(e,re)
-	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
+	return re:IsSpellTrapEffect()
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return tp==Duel.GetTurnPlayer()
@@ -57,7 +58,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 	e1:SetValue(500)
 	c:RegisterEffect(e1)
 end

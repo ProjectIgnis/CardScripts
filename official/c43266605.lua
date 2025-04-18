@@ -1,6 +1,5 @@
 --ＰＳＹフレーム・マルチスレッダー
 --PSY-Frame Multi-Threader
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Name becomes "PSY-Frame Driver" while in hand or GY
@@ -8,7 +7,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetCode(EFFECT_CHANGE_CODE)
-	e1:SetRange(LOCATION_HAND+LOCATION_GRAVE)
+	e1:SetRange(LOCATION_HAND|LOCATION_GRAVE)
 	e1:SetValue(CARD_PSYFRAME_DRIVER)
 	c:RegisterEffect(e1)
 	--Substitute destruction for a "PSY-Frame" card(s)
@@ -34,11 +33,10 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0xc1}
-
+s.listed_series={SET_PSY_FRAME}
 function s.repfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0xc1) and c:IsOnField() and c:IsControler(tp) 
-		and not c:IsReason(REASON_REPLACE) and c:IsReason(REASON_EFFECT+REASON_BATTLE)
+	return c:IsFaceup() and c:IsSetCard(SET_PSY_FRAME) and c:IsOnField() and c:IsControler(tp) 
+		and not c:IsReason(REASON_REPLACE) and c:IsReason(REASON_EFFECT|REASON_BATTLE)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsDiscardable() and eg:IsExists(s.repfilter,1,nil,tp) end
@@ -51,7 +49,7 @@ function s.repop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoGrave(e:GetHandler(),REASON_EFFECT+REASON_DISCARD+REASON_REPLACE)
 end
 function s.cfilter(c,tp)
-	return c:IsSetCard(0xc1) and c:IsType(TYPE_TUNER) and c:IsControler(tp)
+	return c:IsSetCard(SET_PSY_FRAME) and c:IsType(TYPE_TUNER) and c:IsControler(tp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)
@@ -70,7 +68,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
-		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
+		e1:SetReset(RESET_EVENT|RESETS_REDIRECT)
 		e1:SetValue(LOCATION_REMOVED)
 		c:RegisterEffect(e1,true)
 	end

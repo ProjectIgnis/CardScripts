@@ -1,4 +1,5 @@
 --オッドアイズ・ファントム・ドラゴン
+--Odd-Eyes Phantom Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -27,9 +28,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.damop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x99}
+s.listed_series={SET_ODD_EYES}
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	if not Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_PZONE,0,1,e:GetHandler(),0x99) then return end
+	if not Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_PZONE,0,1,e:GetHandler(),SET_ODD_EYES) then return end
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
 	if d and a:GetControler()~=d:GetControler() then
@@ -52,21 +53,21 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(1200)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_BATTLE)
 		tc:RegisterEffect(e1)
 	end
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and e:GetHandler():IsSummonType(SUMMON_TYPE_PENDULUM)
+	return ep~=tp and e:GetHandler():IsPendulumSummoned()
 		and Duel.GetAttacker()==e:GetHandler()
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ct=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,0x99),tp,LOCATION_PZONE,0,nil)
+	local ct=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,SET_ODD_EYES),tp,LOCATION_PZONE,0,nil)
 	if chk==0 then return ct>0 end
 	Duel.SetTargetParam(ct*1200)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,ct*1200)
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
-	local ct=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,0x99),tp,LOCATION_PZONE,0,nil)
+	local ct=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,SET_ODD_EYES),tp,LOCATION_PZONE,0,nil)
 	Duel.Damage(1-tp,ct*1200,REASON_EFFECT)
 end

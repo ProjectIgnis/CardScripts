@@ -1,11 +1,11 @@
 --ダイノルフィア・レクスターム
---Dinorphia Rexsturm
+--Dinomorphia Rexterm
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--Fusion Summon procedure
-	Fusion.AddProcMix(c,true,true,s.matfilter,aux.FilterBoolFunctionEx(Card.IsSetCard,0x175))
+	Fusion.AddProcMix(c,true,true,s.matfilter,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_DINOMORPHIA))
 	--Opponent cannot activate monster effects
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -23,10 +23,10 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetHintTiming(TIMING_DAMAGE_STEP,TIMING_DAMAGE_STEP+TIMING_MAIN_END+TIMINGS_CHECK_MONSTER)
+	e2:SetHintTiming(TIMING_DAMAGE_STEP,TIMING_DAMAGE_STEP|TIMING_MAIN_END|TIMINGS_CHECK_MONSTER)
 	e2:SetCountLimit(1,id)
-	e2:SetCondition(s.atkcon)
-	e2:SetCost(s.atkcost)
+	e2:SetCondition(aux.StatChangeDamageStepCondition)
+	e2:SetCost(Cost.PayLP(1/2))
 	e2:SetTarget(s.atktg)
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
@@ -43,21 +43,14 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x175}
-s.material_setcode={0x175}
+s.listed_series={SET_DINOMORPHIA}
+s.material_setcode={SET_DINOMORPHIA}
 function s.matfilter(c,fc,sumtype,tp)
-	return c:IsType(TYPE_FUSION,fc,sumtype,tp) and c:IsSetCard(0x175,fc,sumtype,tp)
+	return c:IsType(TYPE_FUSION,fc,sumtype,tp) and c:IsSetCard(SET_DINOMORPHIA,fc,sumtype,tp)
 end
 function s.aclimit(e,re,tp)
 	local rc=re:GetHandler()
-	return re:IsActiveType(TYPE_MONSTER) and rc:IsLocation(LOCATION_MZONE) and rc:IsAttackAbove(Duel.GetLP(e:GetHandlerPlayer()))
-end
-function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
-end
-function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	Duel.PayLPCost(tp,Duel.GetLP(tp)//2)
+	return re:IsMonsterEffect() and rc:IsLocation(LOCATION_MZONE) and rc:IsAttackAbove(Duel.GetLP(e:GetHandlerPlayer()))
 end
 function s.atkfilter(c,atk)
 	return c:IsFaceup() and not c:IsAttack(atk)
@@ -76,7 +69,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetValue(atk)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end
@@ -84,7 +77,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return (r&REASON_EFFECT+REASON_BATTLE)~=0
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x175) and c:IsLevelBelow(6) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_DINOMORPHIA) and c:IsLevelBelow(6) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

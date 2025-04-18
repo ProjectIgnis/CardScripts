@@ -29,12 +29,12 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 	--Part of "@Ignister" archetype
-s.listed_series={0x135}
+s.listed_series={SET_IGNISTER}
 	--Lists "A.I. Love Fusion"
 s.listed_names={59332125}
 	--Look for "@Ignister" monster
 function s.filter(c)
-	return c:IsSetCard(0x135) and c:IsFaceup()
+	return c:IsSetCard(SET_IGNISTER) and c:IsFaceup()
 end
 	--Check for "@Ignister" monster in monster zones
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
@@ -73,11 +73,10 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	local g=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_DECK,0,1,1,nil)
-	if tc:IsRelateToEffect(e) and Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)~=0
+	if tc:IsRelateToEffect(e) and Duel.SendtoDeck(tc,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)~=0
 		and tc:IsLocation(LOCATION_EXTRA) and #g>0 then
 		local sg=g:Select(tp,1,1,nil)
 		Duel.SendtoHand(sg,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,sg)
 	end
 end
-

@@ -13,11 +13,11 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x56}
+s.listed_series={SET_INZEKTOR}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
-	return d:IsFaceup() and d:IsSetCard(0x56) and a:IsControler(1-tp)
+	return d:IsFaceup() and d:IsSetCard(SET_INZEKTOR) and a:IsControler(1-tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local a=Duel.GetAttacker()
@@ -41,7 +41,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_EQUIP_LIMIT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e1:SetValue(s.eqlimit)
 		e1:SetLabelObject(tc)
 		ec:RegisterEffect(e1)
@@ -49,7 +49,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetType(EFFECT_TYPE_EQUIP)
 		e2:SetCode(EFFECT_SET_CONTROL)
 		e2:SetValue(tp)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD-RESET_TURN_SET)
 		ec:RegisterEffect(e2)
 	end
 end

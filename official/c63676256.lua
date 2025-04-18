@@ -1,4 +1,5 @@
 --バスター・ショットマン
+--Buster Blaster
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddUnionProcedure(c,nil,true,false)

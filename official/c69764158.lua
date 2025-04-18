@@ -1,4 +1,5 @@
 --ペロペロケルペロス
+--Peropero Cerperus
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy
@@ -11,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_GRAVE)
 	e1:SetCountLimit(1)
 	e1:SetCondition(s.descon)
-	e1:SetCost(aux.bfgcost)
+	e1:SetCost(Cost.SelfBanish)
 	e1:SetTarget(s.destg)
 	e1:SetOperation(s.desop)
 	c:RegisterEffect(e1)

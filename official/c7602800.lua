@@ -64,7 +64,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.repfilter(c,tp)
 	return c:IsControler(tp) and c:IsAttribute(ATTRIBUTE_DARK) and c:IsLocation(LOCATION_MZONE) and c:IsFaceup()
-		and c:IsReason(REASON_BATTLE+REASON_EFFECT) and not c:IsReason(REASON_REPLACE)
+		and c:IsReason(REASON_BATTLE|REASON_EFFECT) and not c:IsReason(REASON_REPLACE)
 end
 function s.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -76,5 +76,5 @@ function s.desrepval(e,c)
 	return s.repfilter(c,e:GetHandlerPlayer())
 end
 function s.desrepop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.RemoveCounter(tp,1,0,COUNTER_FEATHER,1,REASON_EFFECT+REASON_REPLACE)
+	Duel.RemoveCounter(tp,1,0,COUNTER_FEATHER,1,REASON_EFFECT|REASON_REPLACE)
 end

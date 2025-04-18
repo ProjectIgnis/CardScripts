@@ -1,4 +1,5 @@
 --魔界劇団－カーテン・ライザー
+--Abyss Actor - Curtain Raiser
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -35,7 +36,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x20ec,0x10ec}
+s.listed_series={SET_ABYSS_SCRIPT,SET_ABYSS_ACTOR}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0
 end
@@ -57,7 +58,7 @@ function s.atkcon(e)
 	return Duel.GetMatchingGroupCount(nil,tp,LOCATION_MZONE,0,c)==0
 end
 function s.thcfilter(c)
-	return c:IsSpell() and c:IsSetCard(0x20ec) and c:IsAbleToGraveAsCost()
+	return c:IsSpell() and c:IsSetCard(SET_ABYSS_SCRIPT) and c:IsAbleToGraveAsCost()
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thcfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -66,7 +67,7 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function s.thfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x10ec) and c:IsType(TYPE_PENDULUM) and c:IsAbleToHand()
+	return c:IsFaceup() and c:IsSetCard(SET_ABYSS_ACTOR) and c:IsType(TYPE_PENDULUM) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_EXTRA,0,1,nil) end

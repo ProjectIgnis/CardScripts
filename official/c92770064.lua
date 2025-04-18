@@ -43,14 +43,14 @@ function s.initial_effect(c)
 	e4:SetCost(s.descost)
 	e4:SetTarget(s.destg)
 	e4:SetOperation(s.desop)
-	c:RegisterEffect(e4)	
+	c:RegisterEffect(e4)
 end
-s.listed_series={0x1157}
+s.listed_series={SET_SUNAVALON}
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
+	return e:GetHandler():IsLinkSummoned()
 end
 function s.thfilter(c)
-	return (c:IsSetCard(0x1157) and c:IsSpellTrap()) and c:IsAbleToHand()
+	return (c:IsSetCard(SET_SUNAVALON) and c:IsSpellTrap()) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -64,7 +64,6 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-
 function s.tgvalue(e,re,rp)
 	return rp~=e:GetHandlerPlayer()
 end
@@ -91,7 +90,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(lk)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,dg,lk,0,0)
 end
-function s.desop(e,tp,eg,ep,ev,re,r,rp)	
+function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectMatchingCard(tp,nil,tp,0,LOCATION_ONFIELD,1,e:GetLabel(),nil)
 	if #g>0 then

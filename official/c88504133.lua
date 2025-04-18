@@ -1,5 +1,5 @@
 --ＲＵＭ－ファントム・フォース
---Rank-Up-Magic Phantom Knights' Force
+--Phantom Knights' Rank-Up-Magic Force
 --scripted by AlphaKretin and by edo9300
 local s,id=GetID()
 function s.initial_effect(c)
@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x10db,0xba,0x2073}
+s.listed_series={SET_THE_PHANTOM_KNIGHTS,SET_RAIDRAPTOR,SET_XYZ_DRAGON}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsMainPhase()
 end
@@ -43,7 +43,7 @@ function s.rmfilter(c)
 	return c:IsAttribute(ATTRIBUTE_DARK) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true,false)
 end
 function s.extrafil(c,e,tp)
-	return c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false) and (c:IsSetCard(0x10db) or c:IsSetCard(0xba) or c:IsSetCard(0x2073))
+	return c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false) and (c:IsSetCard(SET_THE_PHANTOM_KNIGHTS) or c:IsSetCard(SET_RAIDRAPTOR) or c:IsSetCard(SET_XYZ_DRAGON))
 end
 function s.fieldfil(c,e)
 	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsAttribute(ATTRIBUTE_DARK) and (c:GetRank()>0 or c:IsStatus(STATUS_NO_LEVEL)) and c:IsCanBeEffectTarget(e)
@@ -51,7 +51,7 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local exg=Duel.GetMatchingGroup(s.extrafil,tp,LOCATION_EXTRA,0,nil,e,tp)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.fieldfil(chkc,e) and s.filter1(chkc,e,tp,Group.FromCards(chkc),exg,e:GetLabel()) end
-	local g=Duel.GetMatchingGroup(s.rmfilter,tp,LOCATION_GRAVE+LOCATION_MZONE,0,nil)
+	local g=Duel.GetMatchingGroup(s.rmfilter,tp,LOCATION_GRAVE|LOCATION_MZONE,0,nil)
 	local fg=Duel.GetMatchingGroup(s.fieldfil,tp,LOCATION_MZONE,0,nil,e)
 	local _,maxrel1=fg:GetMinGroup(Card.GetRank)
 	local _,maxrel2=exg:GetMaxGroup(Card.GetRank)
@@ -80,7 +80,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	ge1:SetDescription(aux.Stringid(id,1))
 	ge1:SetTargetRange(1,0)
 	ge1:SetTarget(s.splimit)
-	ge1:SetReset(RESET_PHASE+PHASE_END)
+	ge1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(ge1,tp)
 	--lizard check
 	aux.addTempLizardCheck(e:GetHandler(),tp,s.lizfilter)

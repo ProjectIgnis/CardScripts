@@ -37,7 +37,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.mtop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x48,0x109c}
+s.listed_series={SET_NUMBER,SET_STELLARKNIGHT}
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:CheckRemoveOverlayCard(tp,3,REASON_COST) and c:GetFlagEffect(id)==0 end
@@ -45,7 +45,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	c:RegisterFlagEffect(id,RESET_CHAIN,0,1)
 end
 function s.filter(c,e,tp,rk,pg)
-	return c:IsRank(rk+1) and not c:IsSetCard(0x48) and e:GetHandler():IsCanBeXyzMaterial(c,tp)
+	return c:IsRank(rk+1) and not c:IsSetCard(SET_NUMBER) and e:GetHandler():IsCanBeXyzMaterial(c,tp)
 		and (#pg<=0 or pg:IsContains(e:GetHandler())) and Duel.GetLocationCountFromEx(tp,tp,e:GetHandler(),c)>0
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
 end
@@ -84,7 +84,7 @@ function s.skipop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetCode(EFFECT_SKIP_TURN)
 	e1:SetTargetRange(0,1)
-	e1:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
+	e1:SetReset(RESET_PHASE|PHASE_END|RESET_OPPO_TURN)
 	e1:SetCondition(s.skipcon)
 	Duel.RegisterEffect(e1,tp)
 end
@@ -92,7 +92,7 @@ function s.skipcon(e)
 	return Duel.GetTurnPlayer()~=e:GetHandlerPlayer()
 end
 function s.mtfilter(c)
-	return c:IsSetCard(0x109c)
+	return c:IsSetCard(SET_STELLARKNIGHT)
 end
 function s.mttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsType(TYPE_XYZ)

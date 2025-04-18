@@ -2,7 +2,7 @@
 --Number 39: Utopia Beyond
 local s,id=GetID()
 function s.initial_effect(c)
-	c:AddSetcodesRule(id,true,0x107f) --easier workaround so that Utopia Beyond (Anime) doesn't get the setcode
+	c:AddSetcodesRule(id,true,SET_UTOPIA) --easier workaround so that Utopia Beyond (Anime) doesn't get the setcode
 	--xyz summon
 	Xyz.AddProcedure(c,nil,6,2)
 	c:EnableReviveLimit()
@@ -24,15 +24,15 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCountLimit(1)
-	e2:SetCost(s.spcost)
+	e2:SetCost(Cost.Detach(1))
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
 end
-s.listed_series={0x107f}
+s.listed_series={SET_UTOPIA}
 s.xyz_number=39
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ)
+	return e:GetHandler():IsXyzSummoned()
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
@@ -42,19 +42,15 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetValue(0)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 	end
-end
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.rmfilter(c,ft)
 	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsAbleToRemove() and (ft>0 or c:GetSequence()<5)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x107f) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_UTOPIA) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

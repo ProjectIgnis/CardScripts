@@ -16,21 +16,21 @@ function s.initial_effect(c)
 	--activity check
 	Duel.AddCustomActivityCounter(id,ACTIVITY_CHAIN,s.chainfilter)
 end
-s.listed_series={0x20ec,0x10ec}
+s.listed_series={SET_ABYSS_SCRIPT,SET_ABYSS_ACTOR}
 function s.chainfilter(re,tp,cid)
-	return not (re:IsActiveType(TYPE_SPELL) and re:GetHandler():IsSetCard(0x20ec))
+	return not (re:IsSpellEffect() and re:GetHandler():IsSetCard(SET_ABYSS_SCRIPT))
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCustomActivityCount(id,tp,ACTIVITY_CHAIN)>0
 end
 function s.thfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x10ec) and c:IsType(TYPE_PENDULUM) and c:IsAbleToHand()
+	return c:IsFaceup() and c:IsSetCard(SET_ABYSS_ACTOR) and c:IsType(TYPE_PENDULUM) and c:IsAbleToHand()
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x10ec) and c:IsType(TYPE_PENDULUM) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_ABYSS_ACTOR) and c:IsType(TYPE_PENDULUM) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.ctfilter(c)
-	return c:IsSpell() and c:IsSetCard(0x20ec)
+	return c:IsSpell() and c:IsSetCard(SET_ABYSS_SCRIPT)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.ctfilter,tp,LOCATION_GRAVE,0,1,nil) and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_EXTRA,0,1,nil) end
@@ -45,7 +45,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	local ct=Duel.GetMatchingGroupCount(s.ctfilter,tp,LOCATION_GRAVE,0,nil)
 	if ct<1 then return end
@@ -64,5 +64,5 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.splimit(e,c)
-	return not (c:IsSetCard(0x10ec) and c:IsType(TYPE_PENDULUM))
+	return not (c:IsSetCard(SET_ABYSS_ACTOR) and c:IsType(TYPE_PENDULUM))
 end

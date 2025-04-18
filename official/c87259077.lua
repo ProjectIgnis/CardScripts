@@ -1,4 +1,5 @@
 --ライトニング・ウォリアー
+--Lightning Warrior
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -21,7 +22,7 @@ function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local t=Duel.GetAttackTarget()
 	if ev==1 then t=Duel.GetAttacker() end
 	if not c:IsRelateToBattle() or c:IsFacedown() then return false end
-	return t:GetLocation()==LOCATION_GRAVE and t:IsMonster()
+	return t:IsLocation(LOCATION_GRAVE) and t:IsMonster()
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

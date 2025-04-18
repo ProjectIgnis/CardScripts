@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_TOHAND)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
-	e3:SetHintTiming(0,TIMING_MAIN_END+TIMING_END_PHASE)
+	e3:SetHintTiming(0,TIMING_MAIN_END|TIMING_END_PHASE)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetRange(LOCATION_SZONE)
@@ -35,16 +35,16 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x1034}
+s.listed_series={SET_CRYSTAL_BEAST}
 function s.cfilter(c,tp)
-	return c:IsSetCard(0x1034) and c:IsReason(REASON_BATTLE+REASON_EFFECT)
+	return c:IsSetCard(SET_CRYSTAL_BEAST) and c:IsReason(REASON_BATTLE|REASON_EFFECT)
 		and c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x1034) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_CRYSTAL_BEAST) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -65,7 +65,7 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(c,REASON_COST)
 end
 function s.thfilter1(c,rc)
-	return c:IsFaceup() and c:IsSetCard(0x1034) and c:IsAbleToHand()
+	return c:IsFaceup() and c:IsSetCard(SET_CRYSTAL_BEAST) and c:IsAbleToHand()
 		and Duel.IsExistingTarget(s.thfilter2,0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c,rc)
 end
 function s.thfilter2(c,rc)

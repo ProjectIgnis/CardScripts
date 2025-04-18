@@ -1,4 +1,5 @@
 --炎の女暗殺者
+--Lady Assailant of Flames
 local s,id=GetID()
 function s.initial_effect(c)
 	--flip

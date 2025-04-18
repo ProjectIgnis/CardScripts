@@ -1,4 +1,5 @@
 --剛地帝グランマーグ
+--Granmarg the Mega Monarch
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon with 1 tribute
@@ -23,10 +24,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function s.otfilter(c)
-	return c:IsSummonType(SUMMON_TYPE_TRIBUTE)
+	return c:IsTributeSummoned()
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_TRIBUTE)
+	return e:GetHandler():IsTributeSummoned()
 end
 function s.desfilter(c)
 	return c:IsFacedown()

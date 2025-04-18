@@ -1,12 +1,11 @@
 --リローダー・ドラゴン
 --Overburst Dragon
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
 	--Link summon procedure
-	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x102),2,2)
+	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_ROKKET),2,2)
 	--Special summon 1 "Rokket" monster
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -30,8 +29,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x102}
-
+s.listed_series={SET_ROKKET}
 function s.spfilter1(c,e,tp)
 	if c:IsFaceup() and c:IsLinkMonster() then
 		local zone=c:GetLinkedZone(tp)
@@ -39,7 +37,7 @@ function s.spfilter1(c,e,tp)
 	else return false end
 end
 function s.spfilter2(c,e,tp,zone)
-	return c:IsSetCard(0x102) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
+	return c:IsSetCard(SET_ROKKET) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
@@ -52,7 +50,7 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local lc=Duel.GetFirstTarget()
-	if lc and lc:IsRelateToEffect(e) and lc:IsFaceup() then
+	if lc:IsRelateToEffect(e) and lc:IsFaceup() then
 		local zone=lc:GetLinkedZone(tp)
 		if zone==0 then return end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
@@ -65,11 +63,11 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_CANNOT_BE_LINK_MATERIAL)
 			e1:SetValue(1)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			tc:RegisterEffect(e1,true)
 			--Destroyed during end phase
 			local fid=c:GetFieldID()
-			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,fid)
+			tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1,fid)
 			local e2=Effect.CreateEffect(c)
 			e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 			e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
@@ -96,10 +94,10 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousControler(tp) and r&0x21==0x21
+	return c:IsPreviousControler(tp) and c:IsReason(REASON_BATTLE)
 end
 function s.thfilter(c)
-	return c:IsMonster() and c:IsSetCard(0x102) and c:IsAbleToHand()
+	return c:IsMonster() and c:IsSetCard(SET_ROKKET) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc) end
@@ -110,7 +108,7 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) then
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 	end
 end

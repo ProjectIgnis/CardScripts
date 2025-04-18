@@ -12,9 +12,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x1034}
+s.listed_series={SET_CRYSTAL_BEAST}
 function s.costfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x1034) and c:IsAbleToGraveAsCost() and c:GetSequence()<5
+	return c:IsFaceup() and c:IsSetCard(SET_CRYSTAL_BEAST) and c:IsAbleToGraveAsCost() and c:GetSequence()<5
 end
 function s.rescon(sg,e,tp,mg)
 	return Duel.IsExistingMatchingCard(Card.IsAbleToGrave,0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,sg+e:GetHandler())
@@ -44,7 +44,7 @@ function s.ctfilter(c,tp)
 	return c:IsPreviousControler(1-tp) and c:IsLocation(LOCATION_GRAVE)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x1034) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_CRYSTAL_BEAST) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsAbleToGrave,0,LOCATION_ONFIELD,LOCATION_ONFIELD,e:GetHandler())

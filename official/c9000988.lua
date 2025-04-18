@@ -1,4 +1,5 @@
 --EM小判竜
+--Performapal Coin Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -51,7 +52,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetOwnerPlayer(tp)
 		e1:SetCondition(s.rmcon)
 		e1:SetOperation(s.rmop)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1,true)
 	end
 end

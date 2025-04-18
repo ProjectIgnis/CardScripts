@@ -1,6 +1,5 @@
 --電子光虫－レジストライダー
---Digital Bug Resistrider
-
+--Digital Bug Registrider
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -73,7 +72,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_CHANGE_LEVEL)
 			e1:SetValue(lv)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			oc:RegisterEffect(e1)
 		end
 	end
@@ -114,7 +113,7 @@ function s.efop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(1000)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	rc:RegisterEffect(e1,true)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_UPDATE_DEFENSE)
@@ -124,7 +123,7 @@ function s.efop(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetType(EFFECT_TYPE_SINGLE)
 		e3:SetCode(EFFECT_ADD_TYPE)
 		e3:SetValue(TYPE_EFFECT)
-		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e3:SetReset(RESET_EVENT|RESETS_STANDARD)
 		rc:RegisterEffect(e3,true)
 	end
 end

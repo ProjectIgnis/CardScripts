@@ -1,4 +1,5 @@
 --ドドドドライバー
+--Dododo Driver
 local s,id=GetID()
 function s.initial_effect(c)
 	--lv change
@@ -20,18 +21,18 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x82}
+s.listed_series={SET_DODODO}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return re and re:GetHandler():IsSetCard(0x82)
+	return re and re:GetHandler():IsSetCard(SET_DODODO)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+	e:GetHandler():RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(id)>0
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x82) and c:IsLevelAbove(1)
+	return c:IsFaceup() and c:IsSetCard(SET_DODODO) and c:IsLevelAbove(1)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -52,7 +53,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetCode(EFFECT_UPDATE_LEVEL)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		if e:GetLabel()==0 then
 			e1:SetValue(1)
 		else e1:SetValue(-1) end

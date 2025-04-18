@@ -14,14 +14,14 @@ function s.initial_effect(c)
 	e2:SetOperation(s.repop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x106}
+s.listed_series={SET_VENDREAD}
 s.fit_monster={4388680} --should be removed in hardcode overhaul
 s.listed_names={4388680}
 function s.ritualfil(c)
-	return c:IsSetCard(0x106) and c:IsRitualMonster()
+	return c:IsSetCard(SET_VENDREAD) and c:IsRitualMonster()
 end
 function s.mfilter(c)
-	return not Duel.IsPlayerAffectedByEffect(c:GetControler(),69832741) and c:HasLevel() and c:IsRace(RACE_ZOMBIE)
+	return not Duel.IsPlayerAffectedByEffect(c:GetControler(),CARD_SPIRIT_ELIMINATION) and c:HasLevel() and c:IsRace(RACE_ZOMBIE)
 		and c:IsMonster() and c:IsAbleToRemove()
 end
 function s.extrafil(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -33,7 +33,7 @@ function s.extratg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.repfilter(c,tp)
 	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:IsCode(4388680)
-		and not c:IsReason(REASON_REPLACE) and c:IsReason(REASON_EFFECT+REASON_BATTLE)
+		and not c:IsReason(REASON_REPLACE) and c:IsReason(REASON_EFFECT|REASON_BATTLE)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemove() and eg:IsExists(s.repfilter,1,nil,tp) end

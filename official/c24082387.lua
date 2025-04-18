@@ -14,17 +14,17 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0xc}
+s.listed_series={SET_ALIEN}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(100)
 	return true
 end
 function s.filter1(c,e,tp,cg,minc)
-	return c:IsSetCard(0xc) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_ALIEN) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and cg:CheckWithSumEqual(Card.GetLevel,c:GetLevel(),minc,99)
 end
 function s.cgfilter(c)
-	return c:HasLevel() and c:IsAbleToGraveAsCost() and (c:GetOriginalType()&TYPE_MONSTER)~=0
+	return c:HasLevel() and c:IsAbleToGraveAsCost() and c:IsMonsterCard()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local cg=Duel.GetMatchingGroup(s.cgfilter,tp,LOCATION_MZONE,0,nil)
@@ -45,7 +45,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function s.filter2(c,e,tp,lv)
-	return c:IsSetCard(0xc) and c:GetLevel()==lv and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_ALIEN) and c:GetLevel()==lv and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then Duel.Damage(tp,2000,REASON_EFFECT) return end

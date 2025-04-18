@@ -23,10 +23,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x6}
+s.listed_series={SET_DARK_WORLD}
 s.listed_names={id}
 function s.spfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x6) and not c:IsCode(id) and c:IsAbleToHandAsCost()
+	return c:IsFaceup() and c:IsSetCard(SET_DARK_WORLD) and not c:IsCode(id) and c:IsAbleToHandAsCost()
 end
 function s.spcon(e,c)
 	if c==nil then return true end
@@ -59,7 +59,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	e:SetLabel(e:GetHandler():GetPreviousControler())
-	return e:GetHandler():IsPreviousLocation(LOCATION_HAND) and r&0x4040==0x4040
+	return e:GetHandler():IsPreviousLocation(LOCATION_HAND) and r&(REASON_DISCARD|REASON_EFFECT)==REASON_DISCARD|REASON_EFFECT
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) end

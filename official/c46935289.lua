@@ -37,14 +37,14 @@ function s.spcheck(g,lc,sumtype,tp)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) then return false end
-	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and Duel.IsChainNegatable(ev)
+	return re:IsSpellTrapEffect() and Duel.IsChainNegatable(ev)
 end
 function s.disfilter(c)
 	return c:IsRace(RACE_FAIRY) and c:IsAbleToGraveAsCost() 
 end
 function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.disfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,s.disfilter,1,1,REASON_COST+REASON_DISCARD,nil)
+	Duel.DiscardHand(tp,s.disfilter,1,1,REASON_COST|REASON_DISCARD,nil)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

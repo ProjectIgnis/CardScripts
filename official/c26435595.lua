@@ -1,13 +1,13 @@
--- 
--- Patissciel Couverture
--- Scripted by Hatter
+--聖菓使クーベル
+--Patissciel Couverture
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	Pendulum.AddProcedure(c,false)
 	--- 2 Pendulum monsters
 	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsType,TYPE_PENDULUM),2)
-	-- Place 1 Pendulum Card in the Pendulum Zone
+	--Place 1 Pendulum Card in the Pendulum Zone
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.pctg)
 	e1:SetOperation(s.pcop)
 	c:RegisterEffect(e1)
-	-- Place this card in the Pendulum Zone
+	--Place this card in the Pendulum Zone
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)

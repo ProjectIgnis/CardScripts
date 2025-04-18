@@ -1,6 +1,5 @@
 --魔天使ローズ・ソーサラー
 --Fallen Angel of Roses
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon itself from hand
@@ -15,7 +14,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={id}
-
 function s.spfilter(c,ft)
 	return c:IsFaceup() and c:IsRace(RACE_PLANT) and not c:IsCode(id) and c:IsAbleToHandAsCost()
 end
@@ -46,7 +44,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
-	e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
+	e1:SetReset(RESET_EVENT|RESETS_REDIRECT)
 	e1:SetValue(LOCATION_REMOVED)
 	e:GetHandler():RegisterEffect(e1,true)
 end

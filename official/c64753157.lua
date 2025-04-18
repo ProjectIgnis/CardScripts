@@ -1,4 +1,5 @@
 --Charming Resort Staff
+--Charming Resort Staff
 local s,id=GetID()
 function s.initial_effect(c)
 	--atkdown
@@ -32,7 +33,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_BATTLE_DESTROYED)
 	e3:SetRange(LOCATION_GRAVE)
 	e3:SetCondition(s.thcon)
-	e3:SetCost(aux.bfgcost)
+	e3:SetCost(Cost.SelfBanish)
 	e3:SetTarget(s.thtg)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
@@ -62,7 +63,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetValue(0)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 	end
 end

@@ -1,4 +1,5 @@
 --グラヴィティ・ウォリアー
+--Gravity Warrior
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -28,7 +29,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
+	return e:GetHandler():IsSynchroSummoned()
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -38,11 +39,11 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(ct*300)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 	c:RegisterEffect(e1)
 end
 function s.poscon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp and (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE)
+	return Duel.IsTurnPlayer(1-tp) and Duel.IsBattlePhase()
 end
 function s.postg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and chkc:IsDefensePos() end
@@ -59,7 +60,7 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_MUST_ATTACK)
-			e1:SetReset(RESET_PHASE+PHASE_END)
+			e1:SetReset(RESET_PHASE|PHASE_END)
 			tc:RegisterEffect(e1)
 		end
 	end

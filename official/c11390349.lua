@@ -1,4 +1,5 @@
 --ナチュル・フライトフライ
+--Naturia Fruitfly
 local s,id=GetID()
 function s.initial_effect(c)
 	--atk,def
@@ -24,9 +25,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.ctlop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x2a}
+s.listed_series={SET_NATURIA}
 function s.val(e,c)
-	return Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,0x2a),e:GetOwnerPlayer(),LOCATION_MZONE,0,nil)*-300
+	return Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,SET_NATURIA),e:GetOwnerPlayer(),LOCATION_MZONE,0,nil)*-300
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsDefenseBelow(0) and c:IsControlerCanBeChanged()

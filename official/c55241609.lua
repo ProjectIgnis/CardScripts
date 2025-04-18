@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x116}
+s.listed_series={SET_CRUSADIA}
 function s.spval(e,c)
 	return 0,aux.GetMMZonesPointedTo(c:GetControler())
 end
@@ -37,7 +37,7 @@ function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return aux.IsZone(e:GetHandler(),zone,tp)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x116)
+	return c:IsFaceup() and c:IsSetCard(SET_CRUSADIA)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

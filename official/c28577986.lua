@@ -14,15 +14,15 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x74}
+s.listed_series={SET_MERMAIL}
 function s.cfilter(c,e,tp)
 	local lv=c:GetLevel()
-	return lv>0 and c:IsFaceup() and c:IsSetCard(0x74)
+	return lv>0 and c:IsFaceup() and c:IsSetCard(SET_MERMAIL)
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,lv,e,tp)
 end
 function s.spfilter(c,lv,e,tp)
 	if lv>4 then lv=4 end
-	return c:IsLevelBelow(lv) and c:IsSetCard(0x74) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsLevelBelow(lv) and c:IsSetCard(SET_MERMAIL) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.cfilter(chkc,e,tp) end

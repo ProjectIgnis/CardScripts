@@ -1,4 +1,5 @@
 --もの忘れ
+--Memory Loss
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainDisablable(ev)
+	return rp~=tp and re:IsMonsterEffect() and Duel.IsChainDisablable(ev)
 		and re:GetHandler():IsLocation(LOCATION_MZONE) and re:GetHandler():IsPosition(POS_FACEUP_ATTACK)
 		and re:GetHandler():IsCanChangePosition()
 end

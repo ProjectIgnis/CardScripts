@@ -1,4 +1,5 @@
 --BF－激震のアブロオロス
+--Blackwing - Abrolhos the Megaquake
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon limit
@@ -38,7 +39,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_MAIN1
+	return Duel.IsPhase(PHASE_MAIN1)
 end
 function s.filter(c)
 	return c:IsAbleToHand() and c:GetSequence()<5
@@ -56,7 +57,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(-1000)
 		c:RegisterEffect(e1)

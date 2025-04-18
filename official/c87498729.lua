@@ -1,4 +1,4 @@
---
+--ティスティナの落とし仔
 --Fallen of the Tistina
 --Scripted by Hatter
 local s,id=GetID()
@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_HAND|LOCATION_MZONE)
 	e1:SetCountLimit(1,id)
-	e1:SetCost(s.plcost)
+	e1:SetCost(Cost.SelfToGrave)
 	e1:SetTarget(s.pltg)
 	e1:SetOperation(s.plop)
 	c:RegisterEffect(e1)
@@ -23,18 +23,13 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetCondition(s.spcon)
-	e2:SetCost(aux.SelfBanishCost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
 s.listed_names={12397569}
 s.listed_series={SET_TISTINA}
-function s.plcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(c,REASON_COST)
-end
 function s.plfilter(c)
 	return c:IsFieldSpell() and c:IsCode(12397569) and not c:IsForbidden()
 end

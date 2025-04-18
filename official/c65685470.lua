@@ -1,7 +1,8 @@
 --六武衆の御霊代
+--Spirit of the Six Samurai
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddUnionProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x3d),true,false)
+	aux.AddUnionProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,SET_SIX_SAMURAI),true,false)
 	--Atk up
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_EQUIP)
@@ -26,7 +27,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.drop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x3d}
+s.listed_series={SET_SIX_SAMURAI}
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return aux.IsUnionState(e) and e:GetHandler():GetEquipTarget()==eg:GetFirst()
 end

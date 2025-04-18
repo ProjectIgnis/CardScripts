@@ -1,10 +1,8 @@
 --EMミス・ディレクター
 --Performapal Miss Director
 --Credit to Larry126 and/or ClementLouis
-
 --Substitute ID
 local s,id=GetID()
-
 function s.initial_effect(c)
 	--Cannot be battle target
 	local e1=Effect.CreateEffect(c)
@@ -48,7 +46,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 	--Supports "Odd-Eyes" archetype
-s.listed_series={0x99}
+s.listed_series={SET_ODD_EYES}
 	--Check if you control "Odd-Eyes" monster
 function s.atkcon(e)
 	return Duel.IsExistingMatchingCard(aux.TRUE,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
@@ -59,7 +57,7 @@ function s.econ(e)
 end
 	--"Odd-Eyes" filter
 function s.efilter(e,c)
-	return c:IsSetCard(0x99)
+	return c:IsSetCard(SET_ODD_EYES)
 end
 	--Check for synchro monster
 function s.scfilter(c,mg)
@@ -90,7 +88,7 @@ function s.scop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_DISABLE)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	tc:RegisterEffect(e1)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_DISABLE_EFFECT)

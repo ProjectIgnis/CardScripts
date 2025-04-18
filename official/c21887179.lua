@@ -1,4 +1,5 @@
 --月風魔
+--Getsu Fuhma
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy
@@ -15,7 +16,7 @@ end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local t=e:GetHandler():GetBattleTarget()
 	e:SetLabelObject(t)
-	return t and t:IsRace(RACE_FIEND+RACE_ZOMBIE) and t:IsRelateToBattle()
+	return t and t:IsRace(RACE_FIEND|RACE_ZOMBIE) and t:IsRelateToBattle()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

@@ -1,5 +1,5 @@
 --修士号ディプロマン
---Master-Model Diploman
+--Master's Diploman
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_TRIBUTE)
+	return e:GetHandler():IsTributeSummoned()
 end
 function s.eqfilter1(c,tp)
 	return c:IsMonster() and Duel.IsExistingTarget(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil)
@@ -53,7 +53,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_EQUIP)
 		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_OWNER_RELATE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e1:SetValue(-ec:GetAttack())
 		ec:RegisterEffect(e1)
 		--Equip limit
@@ -62,11 +62,11 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EFFECT_EQUIP_LIMIT)
 		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e2:SetValue(true)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		ec:RegisterEffect(e2)
 	end
 end
 function s.aclimit(e,re)
 	local loc=re:GetActivateLocation()
-	return loc==LOCATION_MZONE and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():GetEquipGroup():IsExists(Card.IsControler,1,nil,e:GetHandlerPlayer())
+	return loc==LOCATION_MZONE and re:IsMonsterEffect() and re:GetHandler():GetEquipGroup():IsExists(Card.IsControler,1,nil,e:GetHandlerPlayer())
 end

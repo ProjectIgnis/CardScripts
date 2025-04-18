@@ -14,15 +14,15 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x39}
+s.listed_series={SET_LAVAL}
 function s.cfilter(c)
-	return c:IsSetCard(0x39) and c:GetCode()~=id
+	return c:IsSetCard(SET_LAVAL) and c:GetCode()~=id
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,1,nil)
 end
 function s.filter(c)
-	return c:IsSetCard(0x39) and c:IsMonster() and c:IsAbleToGrave()
+	return c:IsSetCard(SET_LAVAL) and c:IsMonster() and c:IsAbleToGrave()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

@@ -1,4 +1,5 @@
 --剣現する武神
+--Bujin Regalia - The Sword
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -21,9 +22,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.activate2)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x88}
+s.listed_series={SET_BUJIN}
 function s.filter(c)
-	return c:IsSetCard(0x88) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_BUJIN) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.filter(chkc) end
@@ -40,7 +41,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter2(c)
-	return c:IsFaceup() and c:IsSetCard(0x88) and c:IsMonster()
+	return c:IsFaceup() and c:IsSetCard(SET_BUJIN) and c:IsMonster()
 end
 function s.target2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_REMOVED) and s.filter2(chkc) end
@@ -51,6 +52,6 @@ end
 function s.activate2(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
-		Duel.SendtoGrave(tc,REASON_EFFECT+REASON_RETURN)
+		Duel.SendtoGrave(tc,REASON_EFFECT|REASON_RETURN)
 	end
 end

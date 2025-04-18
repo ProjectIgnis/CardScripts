@@ -26,12 +26,12 @@ function s.initial_effect(c)
 	e3:SetHintTiming(0,TIMING_ATTACK)
 	e3:SetRange(LOCATION_GRAVE)
 	e3:SetCondition(s.grcondition)
-	e3:SetCost(aux.bfgcost)
+	e3:SetCost(Cost.SelfBanish)
 	e3:SetOperation(s.groperation)
 	c:RegisterEffect(e3)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return tp~=Duel.GetTurnPlayer()
+	return Duel.IsTurnPlayer(1-tp)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,1000) end
@@ -43,13 +43,13 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateAttack()
 end
 function s.grcondition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp and (Duel.IsAbleToEnterBP() or (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE))
+	return Duel.IsTurnPlayer(1-tp) and (Duel.IsAbleToEnterBP() or Duel.IsBattlePhase())
 end
 function s.groperation(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
 	e1:SetTargetRange(0,LOCATION_MZONE)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end

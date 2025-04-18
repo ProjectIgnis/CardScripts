@@ -37,7 +37,7 @@ function s.initial_effect(c)
 	e4:SetCode(EVENT_FREE_CHAIN)
 	e4:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e4:SetRange(LOCATION_MZONE)
-	e4:SetHintTiming(TIMING_ATTACK,TIMINGS_CHECK_MONSTER_E+TIMING_ATTACK)
+	e4:SetHintTiming(TIMING_ATTACK,TIMINGS_CHECK_MONSTER_E|TIMING_ATTACK)
 	e4:SetCountLimit(1,{id,1})
 	e4:SetCost(s.descost)
 	e4:SetTarget(s.destg)
@@ -45,7 +45,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
+	return e:GetHandler():IsSynchroSummoned()
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=(e:GetHandler():GetMaterialCount())-1
@@ -63,7 +63,7 @@ function s.adval(e,c)
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,2,e:GetHandler()) end
-	Duel.DiscardHand(tp,Card.IsDiscardable,2,2,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,Card.IsDiscardable,2,2,REASON_COST|REASON_DISCARD)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() end
@@ -78,4 +78,3 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end
-

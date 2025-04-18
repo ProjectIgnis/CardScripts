@@ -1,7 +1,6 @@
 --小天使テルス
 --Tellus the Little Angel
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -34,7 +33,7 @@ s.listed_names={19280590}
 	--Stats for "Tellus Wing Token"
 function s.cansstk(tp)
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and
-	       Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0,TYPES_TOKEN,0,0,1,RACE_FAIRY,ATTRIBUTE_LIGHT)
+		Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0,TYPES_TOKEN,0,0,1,RACE_FAIRY,ATTRIBUTE_LIGHT)
 end
 	--If sent from monster zone to GY
 function s.tkcon(e,tp,eg,ep,ev,re,r,rp)
@@ -99,7 +98,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 	--Restricted to hand

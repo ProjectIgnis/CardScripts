@@ -1,4 +1,5 @@
 --リグレット・リボーン
+--Regretful Rebirth
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -34,13 +35,13 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EVENT_PHASE+PHASE_END)
 		e1:SetCondition(s.descon)
 		e1:SetOperation(s.desop)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,2)
+		e1:SetReset(RESETS_STANDARD_PHASE_END,2)
 		e1:SetCountLimit(1)
 		tc:RegisterEffect(e1,true)
 	end
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Destroy(e:GetHandler(),REASON_EFFECT)

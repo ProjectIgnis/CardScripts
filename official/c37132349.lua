@@ -1,4 +1,5 @@
 --おジャマ・レッド
+--Ojama Red
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -11,9 +12,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0xf}
+s.listed_series={SET_OJAMA}
 function s.filter(c,e,tp)
-	return c:IsSetCard(0xf) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_OJAMA) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

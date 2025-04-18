@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCondition(s.atkcond)
-	e1:SetCost(s.atkcost)
+	e1:SetCost(Cost.Detach(1))
 	e1:SetTarget(s.atktg)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
@@ -31,13 +31,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x147}
+s.listed_series={SET_MELFFY}
 function s.atkcond(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsAbleToEnterBP()
-end
-function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsAbleToEnterBP() and Duel.GetFlagEffect(tp,id)==0 end
@@ -47,10 +43,10 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_DIRECT_ATTACK)
 	e1:SetTargetRange(LOCATION_MZONE,0)
-	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x147))
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_MELFFY))
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+	Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1)
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsRace(RACE_BEAST) and c:IsAbleToExtra()
@@ -69,7 +65,7 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	local ft=math.min(tc:GetOverlayCount(),Duel.GetMZoneCount(tp,tc))
-	if tc and tc:IsRelateToEffect(e) and Duel.SendtoDeck(tc,nil,0,REASON_EFFECT)>0 then
+	if tc and tc:IsRelateToEffect(e) and Duel.SendtoDeck(tc,nil,SEQ_DECKTOP,REASON_EFFECT)>0 then
 		local og=Duel.GetOperatedGroup()
 		local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.spfilter),tp,LOCATION_GRAVE,0,nil,e,tp)
 		if og:GetFirst():IsLocation(LOCATION_EXTRA) and ft>0 and #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then

@@ -1,5 +1,5 @@
 --空牙団の剣士 ビート
---Beat, Swordsman of the Skyfang Brigade
+--Beat, Bladesman Fur Hire
 --
 local s,id=GetID()
 function s.initial_effect(c)
@@ -28,9 +28,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={id}
-s.listed_series={0x114}
+s.listed_series={SET_FUR_HIRE}
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x114) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_FUR_HIRE) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -46,13 +46,13 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x114) and c:IsControler(tp)
+	return c:IsFaceup() and c:IsSetCard(SET_FUR_HIRE) and c:IsControler(tp)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return not eg:IsContains(e:GetHandler()) and eg:IsExists(s.cfilter,1,nil,tp)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x114) and c:IsMonster() and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(SET_FUR_HIRE) and c:IsMonster() and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -66,4 +66,3 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-

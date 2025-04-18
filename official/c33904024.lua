@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetCondition(s.drcon)
-	e3:SetCost(s.drcost)
+	e3:SetCost(Cost.SelfToGrave)
 	e3:SetTarget(s.drtg)
 	e3:SetOperation(s.drop)
 	c:RegisterEffect(e3)
@@ -35,10 +35,6 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetCounter(0xd)>=2
-end
-function s.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,2) end

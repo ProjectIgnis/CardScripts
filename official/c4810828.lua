@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_CHAINING)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCondition(s.negcon)
-	e1:SetCost(s.negcost)
+	e1:SetCost(Cost.SelfDiscard)
 	e1:SetTarget(s.negtg)
 	e1:SetOperation(s.negop)
 	c:RegisterEffect(e1)
@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_SPSUMMON)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCondition(s.discon)
-	e2:SetCost(s.discost)
+	e2:SetCost(Cost.SelfToHand)
 	e2:SetTarget(s.distg)
 	e2:SetOperation(s.disop)
 	c:RegisterEffect(e2)
@@ -37,10 +37,6 @@ function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	if not (rp==1-tp and re:IsHasProperty(EFFECT_FLAG_CARD_TARGET)) then return false end
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 	return g and g:IsExists(s.cfilter,1,nil,tp) and Duel.IsChainNegatable(ev)
-end
-function s.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsDiscardable() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -55,10 +51,6 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	return tp~=ep and Duel.GetCurrentChain()==0
-end
-function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToHandAsCost() end
-	Duel.SendtoHand(e:GetHandler(),nil,REASON_COST)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

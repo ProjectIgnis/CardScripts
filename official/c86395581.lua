@@ -38,7 +38,7 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
 	local g=Duel.SelectMatchingCard(tp,s.dfilter,tp,LOCATION_HAND,0,1,1,c)
 	g:AddCard(c)
-	Duel.SendtoGrave(g,REASON_COST+REASON_DISCARD)
+	Duel.SendtoGrave(g,REASON_COST|REASON_DISCARD)
 end
 function s.thfilter(c)
 	return c:IsDefenseBelow(1500) and c:IsAttribute(ATTRIBUTE_WIND) and not c:IsCode(id) and c:IsAbleToHand()

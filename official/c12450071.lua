@@ -32,7 +32,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.spcfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_FUSION) and c:IsSummonType(SUMMON_TYPE_FUSION)
+	return c:IsFaceup() and c:IsType(TYPE_FUSION) and c:IsFusionSummoned()
 end
 function s.spfilter(c,e,tp)
 	return c:IsAttackBelow(1000) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

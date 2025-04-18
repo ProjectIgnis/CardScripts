@@ -1,5 +1,5 @@
 --カラクリ大権現 無零武
---Karakuri Daigongen mdl 00X Bureibu
+--Karakuri Super Shogun mdl 00N "Bureibu"
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
@@ -39,12 +39,12 @@ function s.initial_effect(c)
 	e3:SetOperation(s.rmop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x11}
+s.listed_series={SET_KARAKURI}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
+	return e:GetHandler():IsSynchroSummoned()
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x11) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_KARAKURI) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -62,7 +62,7 @@ end
 function s.cfilter(c,tp)
 	local np=c:GetPosition()
 	local pp=c:GetPreviousPosition()
-	return c:IsSetCard(0x11) and c:IsControler(tp) and ((pp==POS_FACEUP_ATTACK and np==POS_FACEUP_DEFENSE) or (pp==POS_FACEUP_DEFENSE and np==POS_FACEUP_ATTACK))
+	return c:IsSetCard(SET_KARAKURI) and c:IsControler(tp) and ((pp==POS_FACEUP_ATTACK and np==POS_FACEUP_DEFENSE) or (pp==POS_FACEUP_DEFENSE and np==POS_FACEUP_ATTACK))
 end
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)
@@ -80,4 +80,3 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
 	end
 end
-

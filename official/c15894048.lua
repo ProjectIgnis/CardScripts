@@ -1,4 +1,5 @@
 --究極恐獣
+--Ultimate Tyranno
 local s,id=GetID()
 function s.initial_effect(c)
 	--attack
@@ -26,6 +27,5 @@ function s.cfilter(c)
 	return #ag>0 or direct
 end
 function s.cacon(e)
-	return Duel.GetCurrentPhase()>PHASE_MAIN1 and Duel.GetCurrentPhase()<PHASE_MAIN2
-		and Duel.IsExistingMatchingCard(s.cfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
+	return Duel.IsBattlePhase() and Duel.IsExistingMatchingCard(s.cfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end

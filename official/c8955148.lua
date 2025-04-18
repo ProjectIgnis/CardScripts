@@ -1,5 +1,5 @@
 --リトマスの死儀式
--- Litmus Doom Ritual
+--Litmus Doom Ritual
 local s,id=GetID()
 function s.initial_effect(c)
 	Ritual.AddProcGreaterCode(c,8,nil,72566043)
@@ -14,12 +14,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.tdop)
 	c:RegisterEffect(e1)
 end
-s.listed_names={72566043}
+s.listed_names={72566043} --"Litmus Doom Swordsman"
 function s.costfilter(c)
 	return c:IsCode(72566043) and c:IsAbleToDeck()
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsAbleToDeck() and chkc:IsControler(tp)  and chkc~=e:GetHandler()  and Duel.IsPlayerCanDraw(tp,1)  end
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsAbleToDeck() and chkc:IsControler(tp) and chkc~=e:GetHandler() and Duel.IsPlayerCanDraw(tp,1) end
 	if chk==0 then return e:GetHandler():IsAbleToDeck()
 		and Duel.IsExistingTarget(s.costfilter,tp,LOCATION_GRAVE,0,1,e:GetHandler()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
@@ -33,7 +33,7 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) then
 		local g=Group.FromCards(c,tc)
-		Duel.SendtoDeck(g,nil,0,REASON_EFFECT)
+		Duel.SendtoDeck(g,nil,SEQ_DECKTOP,REASON_EFFECT)
 		Duel.ShuffleDeck(tp)
 			Duel.BreakEffect()
 			Duel.Draw(tp,1,REASON_EFFECT)

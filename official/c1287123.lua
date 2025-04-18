@@ -21,7 +21,7 @@ function s.filter(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) or not Duel.IsChainNegatable(ev) then return false end
-	if not re:IsActiveType(TYPE_MONSTER) or re:IsHasCategory(CATEGORY_NEGATE) then return false end
+	if not re:IsMonsterEffect() or re:IsHasCategory(CATEGORY_NEGATE) then return false end
 	local ex,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_DESTROY)
 	return ex and tg~=nil and tc+tg:FilterCount(s.filter,nil)-#tg>0
 end

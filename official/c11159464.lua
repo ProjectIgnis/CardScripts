@@ -1,4 +1,5 @@
 --ワーム・ホープ
+--Worm Hope
 local s,id=GetID()
 function s.initial_effect(c)
 	--flip
@@ -21,12 +22,12 @@ function s.initial_effect(c)
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	if Duel.GetCurrentPhase()==PHASE_DAMAGE and e:GetHandler()==Duel.GetAttackTarget() then
+	if Duel.IsPhase(PHASE_DAMAGE) and e:GetHandler()==Duel.GetAttackTarget() then
 		Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 	end
 end
 function s.drop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetCurrentPhase()==PHASE_DAMAGE and e:GetHandler()==Duel.GetAttackTarget() then
+	if Duel.IsPhase(PHASE_DAMAGE) and e:GetHandler()==Duel.GetAttackTarget() then
 		Duel.Draw(tp,1,REASON_EFFECT)
 	end
 end

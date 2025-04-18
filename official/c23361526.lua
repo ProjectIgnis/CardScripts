@@ -1,5 +1,5 @@
 --ＨＳＲコルク－１０
---Hi-Speedroid Cork Blaster
+--Hi-Speedroid Cork Shooter
 --Scripted by the Razgriz
 local s,id=GetID()
 function s.initial_effect(c)
@@ -42,12 +42,12 @@ function s.initial_effect(c)
 	--Cannot Summon non-WIND monsters the turn you activate effect
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
 end
-s.listed_series={0x2016}
+s.listed_series={SET_SPEEDROID}
 function s.counterfilter(c)
 	return c:IsAttribute(ATTRIBUTE_WIND)
 end
 function s.syncon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
+	return e:GetHandler():IsSynchroSummoned()
 end
 function s.syncost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetCustomActivityCount(id,tp,ACTIVITY_SPSUMMON)==0 end
@@ -56,7 +56,7 @@ function s.syncost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
 	Duel.RegisterEffect(e1,tp)
@@ -66,7 +66,7 @@ function s.splimit(e,c)
 	return not c:IsAttribute(ATTRIBUTE_WIND)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x2016) and c:IsSpellTrap() and c:IsAbleToHand()
+	return c:IsSetCard(SET_SPEEDROID) and c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -81,11 +81,11 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO) and e:GetLabel()==2
+	return e:GetHandler():IsSynchroSummoned() and e:GetLabel()==2
 end
 function s.spfilter(c,e,tp,sync)
 	return c:IsControler(tp) and c:IsLocation(LOCATION_GRAVE)
-		and c:GetReason()&0x80008==0x80008 and c:GetReasonCard()==sync
+		and c:GetReason()&(REASON_SYNCHRO|REASON_MATERIAL)==(REASON_SYNCHRO|REASON_MATERIAL) and c:GetReasonCard()==sync
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -107,7 +107,7 @@ end
 function s.valcheck(e,c)
 	local g=c:GetMaterial()
 	if not g then return end
-	local ct=g:FilterCount(Card.IsSetCard,nil,0x2016)
+	local ct=g:FilterCount(Card.IsSetCard,nil,SET_SPEEDROID)
 	if ct==#g then
 		e:GetLabelObject():SetLabel(2)
 	else

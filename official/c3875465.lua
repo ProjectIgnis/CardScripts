@@ -35,9 +35,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.mvop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x14a}
+s.listed_series={SET_APPLIANCER}
 function s.thfilter(c)
-	return not c:IsType(TYPE_FIELD) and c:IsSetCard(0x14a) and c:IsAbleToHand()
+	return not c:IsType(TYPE_FIELD) and c:IsSetCard(SET_APPLIANCER) and c:IsAbleToHand()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
@@ -50,14 +50,14 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.confilter(c,tp)
-	return c:IsSetCard(0x14a) and c:IsType(TYPE_LINK) and c:IsFaceup()
-		and c:IsSummonType(SUMMON_TYPE_LINK) and c:IsSummonPlayer(tp)
+	return c:IsSetCard(SET_APPLIANCER) and c:IsType(TYPE_LINK) and c:IsFaceup()
+		and c:IsLinkSummoned() and c:IsSummonPlayer(tp)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.confilter,1,nil,tp)
 end
 function s.thfilter2(c)
-	return c:IsSetCard(0x14a) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_APPLIANCER) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter2,tp,LOCATION_GRAVE,0,1,nil) end
@@ -73,7 +73,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,tc)
 	end
 end
-s.mvfilter=aux.FaceupFilter(Card.IsSetCard,0x14a)
+s.mvfilter=aux.FaceupFilter(Card.IsSetCard,SET_APPLIANCER)
 function s.mvtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.mvfilter,tp,LOCATION_MZONE,0,1,nil)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end

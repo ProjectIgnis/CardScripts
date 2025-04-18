@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x103),2,2)
+	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_ALTERGEIST),2,2)
 	--ATK increase
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -40,9 +40,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
-s.listed_series={0x103}
+s.listed_series={SET_ALTERGEIST}
 function s.atkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x103) and c:GetBaseAttack()>=0
+	return c:IsFaceup() and c:IsSetCard(SET_ALTERGEIST) and c:GetBaseAttack()>=0
 end
 function s.atkval(e,c)
 	local lg=c:GetLinkedGroup():Filter(s.atkfilter,nil)
@@ -50,10 +50,10 @@ function s.atkval(e,c)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) then return false end
-	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and Duel.IsChainNegatable(ev)
+	return re:IsSpellTrapEffect() and Duel.IsChainNegatable(ev)
 end
 function s.cfilter(c,g)
-	return c:IsSetCard(0x103) and g:IsContains(c) and not c:IsStatus(STATUS_BATTLE_DESTROYED)
+	return c:IsSetCard(SET_ALTERGEIST) and g:IsContains(c) and not c:IsStatus(STATUS_BATTLE_DESTROYED)
 end
 function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local lg=e:GetHandler():GetLinkedGroup()
@@ -77,7 +77,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x103) and c:IsAbleToHand()
+	return c:IsSetCard(SET_ALTERGEIST) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

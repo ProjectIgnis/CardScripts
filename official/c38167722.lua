@@ -1,4 +1,5 @@
 --闇霊術－「欲」
+--Dark Spirit Art - Greed
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

@@ -1,4 +1,5 @@
 --超重武者ソード－999
+--Superheavy Samurai Swordsman
 local s,id=GetID()
 function s.initial_effect(c)
 	--position
@@ -24,7 +25,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.atkop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x9a}
+s.listed_series={SET_SUPERHEAVY_SAMURAI}
 function s.postg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,e:GetHandler(),1,0,0)
@@ -40,7 +41,7 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local d=Duel.GetAttackTarget()
 	if a:IsControler(1-tp) then a,d=d,a end
 	e:SetLabelObject(d)
-	return a and d and a:IsFaceup() and a:IsSetCard(0x9a) and a:IsRelateToBattle() and d:IsFaceup() and d:IsRelateToBattle()
+	return a and d and a:IsFaceup() and a:IsSetCard(SET_SUPERHEAVY_SAMURAI) and a:IsRelateToBattle() and d:IsFaceup() and d:IsRelateToBattle()
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
@@ -48,7 +49,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e1:SetValue(0)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()

@@ -17,16 +17,16 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x10ec}
+s.listed_series={SET_ABYSS_ACTOR}
 function s.matfilter(c,lc,sumtype,tp)
-	return c:IsSetCard(0x10ec,lc,sumtype,tp) and c:IsType(TYPE_PENDULUM,lc,sumtype,tp)
+	return c:IsSetCard(SET_ABYSS_ACTOR,lc,sumtype,tp) and c:IsType(TYPE_PENDULUM,lc,sumtype,tp)
 end
 function s.spfilter(c,e,tp)
 	return c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and Duel.IsExistingMatchingCard(s.pfilter,tp,LOCATION_DECK+LOCATION_EXTRA,0,1,1,nil,c:GetCode())
+		and Duel.IsExistingMatchingCard(s.pfilter,tp,LOCATION_DECK|LOCATION_EXTRA,0,1,1,nil,c:GetCode())
 end
 function s.pfilter(c,cd)
-	return c:IsSetCard(0x10ec) and c:IsType(TYPE_PENDULUM)
+	return c:IsSetCard(SET_ABYSS_ACTOR) and c:IsType(TYPE_PENDULUM)
 		and (c:IsFaceup() or not c:IsLocation(LOCATION_EXTRA))
 		and not c:IsForbidden() and not c:IsCode(cd)
 end
@@ -42,7 +42,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)~=0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
-		local g=Duel.SelectMatchingCard(tp,s.pfilter,tp,LOCATION_DECK+LOCATION_EXTRA,0,1,1,nil,tc:GetCode())
+		local g=Duel.SelectMatchingCard(tp,s.pfilter,tp,LOCATION_DECK|LOCATION_EXTRA,0,1,1,nil,tc:GetCode())
 		if #g>0 then
 			Duel.BreakEffect()
 			Duel.MoveToField(g:GetFirst(),tp,tp,LOCATION_PZONE,POS_FACEUP,true)
@@ -54,7 +54,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_CANNOT_SUMMON)
@@ -62,11 +62,10 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local e3=Effect.CreateEffect(e:GetHandler())
 	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e3:SetDescription(aux.Stringid(id,1))
-	e3:SetReset(RESET_PHASE+PHASE_END)
+	e3:SetReset(RESET_PHASE|PHASE_END)
 	e3:SetTargetRange(1,0)
 	Duel.RegisterEffect(e3,tp)
 end
 function s.splimit(e,c)
-	return not c:IsSetCard(0x10ec)
+	return not c:IsSetCard(SET_ABYSS_ACTOR)
 end
-

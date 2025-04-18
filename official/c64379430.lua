@@ -1,4 +1,5 @@
 --終焉の精霊
+--Doomsday Horror
 local s,id=GetID()
 function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
@@ -42,5 +43,5 @@ function s.rettg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.filter,0,LOCATION_REMOVED,LOCATION_REMOVED,nil)
-	Duel.SendtoGrave(g,REASON_EFFECT+REASON_RETURN)
+	Duel.SendtoGrave(g,REASON_EFFECT|REASON_RETURN)
 end

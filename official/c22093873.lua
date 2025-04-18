@@ -1,4 +1,5 @@
 --M・HERO カミカゼ
+--Masked HERO Divine Wind
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -53,7 +54,7 @@ end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():GetFlagEffect(id)~=0 then return end
 	local fid=eg:GetFirst():GetFieldID()
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+	e:GetHandler():RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 	e:GetLabelObject():SetLabel(fid)
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)

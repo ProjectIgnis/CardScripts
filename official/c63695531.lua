@@ -1,4 +1,5 @@
 --墓守の長槍兵
+--Gravekeeper's Spear Soldier
 local s,id=GetID()
 function s.initial_effect(c)
 	--pierce

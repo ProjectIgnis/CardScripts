@@ -31,7 +31,7 @@ function s.cfilter(c)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,e:GetHandler()) end
-	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_COST+REASON_DISCARD,e:GetHandler())
+	Duel.DiscardHand(tp,s.cfilter,1,1,REASON_COST|REASON_DISCARD,e:GetHandler())
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -58,7 +58,7 @@ function s.defop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_SET_DEFENSE_FINAL)
 	e1:SetValue(at:GetBaseAttack()*2)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_DAMAGE)
 	at:RegisterEffect(e1)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_SET_ATTACK_FINAL)
@@ -69,4 +69,3 @@ function s.defop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ChangePosition(at,POS_FACEUP_DEFENSE)
 	end
 end
-

@@ -1,4 +1,5 @@
 --氷霊神ムーラングレイス
+--Moulinglacia the Elemental Lord
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -45,7 +46,7 @@ function s.hdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.hdop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(tp,0,LOCATION_HAND):RandomSelect(tp,2)
-	Duel.SendtoGrave(g,REASON_EFFECT+REASON_DISCARD)
+	Duel.SendtoGrave(g,REASON_EFFECT|REASON_DISCARD)
 end
 function s.leaveop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsFacedown() then return end
@@ -58,9 +59,9 @@ function s.leaveop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetTurnPlayer()==effp then
 		e1:SetLabel(Duel.GetTurnCount())
 		e1:SetCondition(s.skipcon)
-		e1:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN,2)
+		e1:SetReset(RESET_PHASE|PHASE_END|RESET_SELF_TURN,2)
 	else
-		e1:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN,1)
+		e1:SetReset(RESET_PHASE|PHASE_END|RESET_SELF_TURN,1)
 	end
 	Duel.RegisterEffect(e1,effp)
 end

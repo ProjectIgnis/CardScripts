@@ -1,7 +1,6 @@
 --ヴェンデット・ストリゲス
 --Vendread Striges
 --Scripted by Eerie Code
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon itself from GY
@@ -25,10 +24,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.mtop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x106}
-
+s.listed_series={SET_VENDREAD}
 function s.spcfilter(c)
-	return c:IsSetCard(0x106) and not c:IsPublic()
+	return c:IsSetCard(SET_VENDREAD) and not c:IsPublic()
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.spcfilter,tp,LOCATION_HAND,0,1,nil) end
@@ -52,18 +50,18 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
-		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
+		e1:SetReset(RESET_EVENT|RESETS_REDIRECT)
 		e1:SetValue(LOCATION_REMOVED)
 		c:RegisterEffect(e1,true)
 	end
 end
 function s.mtcon(e,tp,eg,ep,ev,re,r,rp)
-	return r==REASON_RITUAL and eg:IsExists(Card.IsSetCard,1,nil,0x106)
+	return r==REASON_RITUAL and eg:IsExists(Card.IsSetCard,1,nil,SET_VENDREAD)
 		and e:GetHandler():IsPreviousLocation(LOCATION_MZONE)
 end
 function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local g=eg:Filter(Card.IsSetCard,nil,0x106)
+	local g=eg:Filter(Card.IsSetCard,nil,SET_VENDREAD)
 	local rc=g:GetFirst()
 	if not rc then return end
 	local e1=Effect.CreateEffect(rc)
@@ -73,17 +71,17 @@ function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EVENT_BATTLED)
 	e1:SetTarget(s.drtg)
 	e1:SetOperation(s.drop)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	rc:RegisterEffect(e1,true)
 	if not rc:IsType(TYPE_EFFECT) then
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_ADD_TYPE)
 		e2:SetValue(TYPE_EFFECT)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		rc:RegisterEffect(e2,true)
 	end
-	rc:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,2))
+	rc:RegisterFlagEffect(0,RESET_EVENT|RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,2))
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -95,6 +93,6 @@ end
 function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.Draw(tp,1,REASON_EFFECT)~=0 then
 		Duel.BreakEffect()
-		Duel.DiscardHand(tp,nil,1,1,REASON_EFFECT+REASON_DISCARD)
+		Duel.DiscardHand(tp,nil,1,1,REASON_EFFECT|REASON_DISCARD)
 	end
 end

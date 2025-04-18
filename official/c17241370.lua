@@ -23,9 +23,9 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_FLIP)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x3a}
+s.listed_series={SET_GISHKI}
 function s.tdfilter(c)
-	return c:IsSetCard(0x3a) and c:IsMonster() and c:IsAbleToDeck()
+	return c:IsSetCard(SET_GISHKI) and c:IsMonster() and c:IsAbleToDeck()
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.tdfilter(chkc) end
@@ -37,6 +37,6 @@ end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
-		Duel.SendtoDeck(tc,nil,0,REASON_EFFECT)
+		Duel.SendtoDeck(tc,nil,SEQ_DECKTOP,REASON_EFFECT)
 	end
 end

@@ -1,4 +1,5 @@
 --SDロボ・ライオ
+--Super Defense Robot Lio
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -25,7 +26,7 @@ function s.initial_effect(c)
 end
 s.listed_names={71071546}
 function s.filter(c,e,tp)
-	return (c:IsSetCard(0x85) or c:IsCode(71071546)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return (c:IsSetCard(SET_SUPER_DEFENSE_ROBOT) or c:IsCode(71071546)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sumtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -42,7 +43,7 @@ function s.sumop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	return #eg==1 and (tc:IsSetCard(0x85) or tc:IsCode(71071546))
+	return #eg==1 and (tc:IsSetCard(SET_SUPER_DEFENSE_ROBOT) or tc:IsCode(71071546))
 		and tc:IsControler(tp) and tc:IsPreviousControler(tp) and tc:IsPreviousLocation(LOCATION_GRAVE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

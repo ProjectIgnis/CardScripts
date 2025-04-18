@@ -1,4 +1,5 @@
 --魔轟神獣キャシー
+--The Fabled Catsith
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy

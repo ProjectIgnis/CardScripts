@@ -1,4 +1,5 @@
 --ナチュル・バタフライ
+--Naturia Butterfly
 local s,id=GetID()
 function s.initial_effect(c)
 	--negate attack

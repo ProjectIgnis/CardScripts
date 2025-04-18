@@ -47,7 +47,7 @@ function s.ls(e,tp,eg,ep,ev,re,r,rp,c)
 	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e1:SetTargetRange(1,0)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	e1:SetTarget(s.splimit)
 	Duel.RegisterEffect(e1,tp)
 end
@@ -73,4 +73,3 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	Duel.SpecialSummonComplete()
 end
-

@@ -1,4 +1,5 @@
 --風霊術－「雅」
+--Spiritual Wind Art - Miyabi
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -35,6 +36,6 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) then
-		Duel.SendtoDeck(tc,nil,1,REASON_EFFECT)
+		Duel.SendtoDeck(tc,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
 	end
 end

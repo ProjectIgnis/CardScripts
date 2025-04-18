@@ -1,4 +1,5 @@
 --強化支援メカ・ヘビーアーマー
+--Heavy Mech Support Armor
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddUnionProcedure(c,aux.FilterBoolFunction(Card.IsRace,RACE_MACHINE))

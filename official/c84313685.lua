@@ -1,7 +1,8 @@
 --ヴァイロン・テセラクト
+--Vylon Tesseract
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddUnionProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x30),true,false)
+	aux.AddUnionProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,SET_VYLON),true,false)
 	--special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,2))
@@ -15,12 +16,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.gspop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x30}
+s.listed_series={SET_VYLON}
 function s.gspcon(e,tp,eg,ep,ev,re,r,rp)
 	return aux.IsUnionState(e) and e:GetHandler():GetEquipTarget()==eg:GetFirst()
 end
 function s.gfilter(c,e,tp)
-	return c:IsLevelBelow(4) and c:IsSetCard(0x30) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsLevelBelow(4) and c:IsSetCard(SET_VYLON) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.gsptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.gfilter(chkc,e,tp) end

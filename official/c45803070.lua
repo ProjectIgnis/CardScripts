@@ -1,4 +1,5 @@
 --ティオの蟲惑魔
+--Traptrix Dionaea
 local s,id=GetID()
 function s.initial_effect(c)
 	--immune
@@ -30,13 +31,13 @@ function s.initial_effect(c)
 	e3:SetOperation(s.setop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x4c,0x89,0x108a}
+s.listed_series={SET_TRAP_HOLE,SET_HOLE,SET_TRAPTRIX}
 function s.efilter(e,te)
 	local c=te:GetHandler()
-	return c:GetType()==TYPE_TRAP and (c:IsSetCard(0x4c) or c:IsSetCard(0x89))
+	return c:IsNormalTrap() and (c:IsSetCard(SET_TRAP_HOLE) or c:IsSetCard(SET_HOLE))
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x108a) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return c:IsSetCard(SET_TRAPTRIX) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end
@@ -53,7 +54,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.setfilter(c)
-	return c:GetType()==TYPE_TRAP and (c:IsSetCard(0x4c) or c:IsSetCard(0x89)) and c:IsSSetable()
+	return c:IsNormalTrap() and (c:IsSetCard(SET_TRAP_HOLE) or c:IsSetCard(SET_HOLE)) and c:IsSSetable()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.setfilter(chkc) end
@@ -72,23 +73,23 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_PHASE+PHASE_END)
 		e1:SetCountLimit(1)
-		if Duel.GetTurnPlayer()==tp then
+		if Duel.IsTurnPlayer(tp) then
 			e1:SetLabel(Duel.GetTurnCount())
-			e1:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN,2)
+			e1:SetReset(RESET_PHASE|PHASE_END|RESET_SELF_TURN,2)
 		else
 			e1:SetLabel(0)
-			e1:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN)
+			e1:SetReset(RESET_PHASE|PHASE_END|RESET_SELF_TURN)
 		end
 		e1:SetLabelObject(tc)
 		e1:SetValue(fid)
 		e1:SetCondition(s.rmcon)
 		e1:SetOperation(s.rmop)
 		Duel.RegisterEffect(e1,tp)
-		tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,fid)
+		tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1,fid)
 	end
 end
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnCount()~=e:GetLabel() and Duel.GetTurnPlayer()==tp
+	return Duel.GetTurnCount()~=e:GetLabel() and Duel.IsTurnPlayer(tp)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()

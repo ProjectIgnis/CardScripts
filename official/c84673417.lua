@@ -27,15 +27,15 @@ function s.initial_effect(c)
 	e2:SetOperation(s.ddop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x38}
+s.listed_series={SET_LIGHTSWORN}
 function s.atkcfilter(c)
-	return c:IsSetCard(0x38) and c:IsLevelAbove(1) and c:IsAbleToRemoveAsCost() and (c:IsLocation(LOCATION_HAND) or aux.SpElimFilter(c,true))
+	return c:IsSetCard(SET_LIGHTSWORN) and c:IsLevelAbove(1) and c:IsAbleToRemoveAsCost() and (c:IsLocation(LOCATION_HAND) or aux.SpElimFilter(c,true))
 		and Duel.IsExistingTarget(Card.IsFaceup,0,LOCATION_MZONE,LOCATION_MZONE,1,c)
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.atkcfilter,tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.atkcfilter,tp,LOCATION_HAND|LOCATION_MZONE|LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.atkcfilter,tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.atkcfilter,tp,LOCATION_HAND|LOCATION_MZONE|LOCATION_GRAVE,0,1,1,nil)
 	e:SetLabel(g:GetFirst():GetLevel())
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
@@ -53,7 +53,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(-lv*300)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_UPDATE_DEFENSE)
@@ -63,8 +63,8 @@ end
 function s.ddcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local rc=re:GetHandler()
-	return re:IsActiveType(TYPE_MONSTER) and rc~=c
-		and rc:IsSetCard(0x38) and rc:IsControler(tp)
+	return re:IsMonsterEffect() and rc~=c
+		and rc:IsSetCard(SET_LIGHTSWORN) and rc:IsControler(tp)
 end
 function s.ddtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

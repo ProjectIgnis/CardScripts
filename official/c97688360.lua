@@ -1,5 +1,5 @@
 --剛鬼ツイストコブラ
---Gouki TwistCobra
+--Gouki Twistcobra
 local s,id=GetID()
 function s.initial_effect(c)
 	--atkup
@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1,id)
 	e1:SetHintTiming(TIMING_DAMAGE_STEP)
-	e1:SetCondition(s.atkcon)
+	e1:SetCondition(aux.StatChangeDamageStepCondition)
 	e1:SetCost(s.atkcost)
 	e1:SetTarget(s.atktg)
 	e1:SetOperation(s.atkop)
@@ -30,16 +30,13 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xfc}
+s.listed_series={SET_GOUKI}
 s.listed_names={id}
-function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
-end
 function s.atkfilter1(c,tp)
-	return c:IsSetCard(0xfc) and Duel.IsExistingTarget(s.atkfilter2,tp,LOCATION_MZONE,0,1,c)
+	return c:IsSetCard(SET_GOUKI) and Duel.IsExistingTarget(s.atkfilter2,tp,LOCATION_MZONE,0,1,c)
 end
 function s.atkfilter2(c)
-	return c:IsFaceup() and c:IsSetCard(0xfc)
+	return c:IsFaceup() and c:IsSetCard(SET_GOUKI)
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.atkfilter1,1,false,nil,nil,tp) end
@@ -55,12 +52,12 @@ function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) then
+	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(e:GetLabel())
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end
@@ -68,7 +65,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0xfc) and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(SET_GOUKI) and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

@@ -1,4 +1,5 @@
 --フェニキシアン・シード
+--Phoenixian Seed
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
@@ -7,16 +8,12 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCost(s.cost)
+	e1:SetCost(Cost.SelfToGrave)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
 s.listed_names={23558733}
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
-end
 function s.filter(c,e,tp)
 	return c:IsCode(23558733) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end

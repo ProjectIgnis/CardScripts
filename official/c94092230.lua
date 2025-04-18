@@ -1,4 +1,5 @@
 --インヴェルズ・グレズ
+--Steelswarm Hercules
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot special summon
@@ -28,9 +29,9 @@ function s.initial_effect(c)
 	e5:SetOperation(s.desop)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0x100a}
+s.listed_series={SET_STEELSWARM}
 function s.tlimit(e,c)
-	return not c:IsSetCard(0x100a)
+	return not c:IsSetCard(SET_STEELSWARM)
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

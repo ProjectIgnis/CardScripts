@@ -1,4 +1,5 @@
 --天空の泉
+--The Fountain in the Sky
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -27,7 +28,7 @@ end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local rc=s.filter(eg,tp)
-		return rc and not Duel.IsPlayerAffectedByEffect(rc:GetControler(),69832741) and rc:IsAbleToRemoveAsCost()
+		return rc and not Duel.IsPlayerAffectedByEffect(rc:GetControler(),CARD_SPIRIT_ELIMINATION) and rc:IsAbleToRemoveAsCost()
 	end
 	local rc=s.filter(eg,tp)
 	e:SetLabel(rc:GetAttack())

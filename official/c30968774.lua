@@ -36,7 +36,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(-500)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	sc:RegisterEffect(e1)
 	if not sc:IsImmuneToEffect(e1) and not sc:IsHasEffect(EFFECT_REVERSE_UPDATE) then
 		Duel.BreakEffect()

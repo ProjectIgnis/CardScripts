@@ -1,4 +1,5 @@
 --マジオシャレオン
+--Majioshaleon
 local s,id=GetID()
 function s.initial_effect(c)
 	--cannot be battle target
@@ -17,5 +18,5 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.ccon(e)
-	return Duel.IsExistingMatchingCard(Card.IsType,e:GetHandlerPlayer(),0,LOCATION_ONFIELD,1,nil,TYPE_SPELL+TYPE_TRAP)
+	return Duel.IsExistingMatchingCard(Card.IsSpellTrap,e:GetHandlerPlayer(),0,LOCATION_ONFIELD,1,nil)
 end

@@ -1,7 +1,8 @@
 --ヴァイロン・ペンタクロ
+--Vylon Pentachloro
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddUnionProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x30),true,false)
+	aux.AddUnionProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,SET_VYLON),true,false)
 	--destroy
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,2))
@@ -15,7 +16,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.desop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x30}
+s.listed_series={SET_VYLON}
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return aux.IsUnionState(e) and e:GetHandler():GetEquipTarget()==eg:GetFirst()
 end

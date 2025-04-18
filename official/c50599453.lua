@@ -1,21 +1,21 @@
--- 枯鰈葉リプレース
--- Leapress the Withered Flounder
--- Scripted by Hatter
+--枯鰈葉リプレース
+--Leafplace Plaice
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Special Summon
+	--Special Summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
-	e1:SetRange(LOCATION_HAND+LOCATION_GRAVE)
+	e1:SetCode(EVENT_PHASE|PHASE_STANDBY)
+	e1:SetRange(LOCATION_HAND|LOCATION_GRAVE)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(s.spcon)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	-- Gain ATK/DEF
+	--Gain ATK/DEF
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)

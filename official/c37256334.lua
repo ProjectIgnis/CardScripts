@@ -1,4 +1,5 @@
 --EMカード・ガードナー
+--Performapal Card Gardna
 local s,id=GetID()
 function s.initial_effect(c)
 	--pendulum summon
@@ -23,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetValue(s.defval)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x9f}
+s.listed_series={SET_PERFORMAPAL}
 function s.deffilter1(c,def)
 	return c:IsPosition(POS_FACEUP_DEFENSE) and c:GetDefense()~=def
 end
@@ -45,13 +46,13 @@ function s.defop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_DEFENSE_FINAL)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e1:SetValue(def)
 		tc:RegisterEffect(e1)
 	end
 end
 function s.deffilter2(c)
-	return c:IsFaceup() and c:IsSetCard(0x9f)
+	return c:IsFaceup() and c:IsSetCard(SET_PERFORMAPAL)
 end
 function s.defval(e,c)
 	local g=Duel.GetMatchingGroup(s.deffilter2,c:GetControler(),LOCATION_MZONE,0,c)

@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0xc3),aux.FilterBoolFunctionEx(Card.IsSetCard,0xa9))
+	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_EDGE_IMP),aux.FilterBoolFunctionEx(Card.IsSetCard,SET_FLUFFAL))
 	--Destroy 2 cards
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -25,18 +25,18 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetHintTiming(0,TIMING_DAMAGE_STEP+TIMING_END_PHASE)
+	e2:SetHintTiming(0,TIMING_DAMAGE_STEP|TIMING_END_PHASE)
 	e2:SetCountLimit(1)
-	e2:SetCondition(s.atkcon)
+	e2:SetCondition(aux.StatChangeDamageStepCondition)
 	e2:SetTarget(s.atktg)
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
 end
 s.listed_names={id}
-s.listed_series={0xc3,0xa9,0xad}
-s.material_setcode={0xa9,0xc3}
+s.listed_series={SET_EDGE_IMP,SET_FLUFFAL,SET_FRIGHTFUR}
+s.material_setcode={SET_FLUFFAL,SET_EDGE_IMP}
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)
+	return e:GetHandler():IsFusionSummoned()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g1=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_ONFIELD,0,nil)
@@ -55,27 +55,24 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(sg,REASON_EFFECT)
 	end
 end
-function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
-end
 function s.atkfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_FUSION) and c:GetBaseAttack()>0
 end
 function s.gyfilter(c)
-	return c:IsSetCard(0xad) and not c:IsCode(id) and c:IsAbleToGrave()
+	return c:IsSetCard(SET_FRIGHTFUR) and not c:IsCode(id) and c:IsAbleToGrave()
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.atkfilter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(s.atkfilter,tp,LOCATION_MZONE,0,1,nil)
-		and Duel.IsExistingMatchingCard(s.gyfilter,tp,LOCATION_DECK+LOCATION_EXTRA,0,1,nil) end
+		and Duel.IsExistingMatchingCard(s.gyfilter,tp,LOCATION_DECK|LOCATION_EXTRA,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	Duel.SelectTarget(tp,s.atkfilter,tp,LOCATION_MZONE,0,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK+LOCATION_EXTRA)
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK|LOCATION_EXTRA)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,s.gyfilter,tp,LOCATION_DECK+LOCATION_EXTRA,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.gyfilter,tp,LOCATION_DECK|LOCATION_EXTRA,0,1,1,nil)
 	if #g>0 and Duel.SendtoGrave(g,REASON_EFFECT)>0 and g:GetFirst():IsLocation(LOCATION_GRAVE)
 		and tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		--Increase ATK
@@ -84,7 +81,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetValue(tc:GetBaseAttack()/2)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end
 end

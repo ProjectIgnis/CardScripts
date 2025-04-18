@@ -1,6 +1,5 @@
 --怒炎壊獣ドゴラン
 --Dogoran, the Mad Flame Kaiju
-
 local s,id=GetID()
 function s.initial_effect(c)
 	local e1,e2=aux.AddKaijuProcedure(c)
@@ -15,19 +14,18 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
-s.counter_list={0x37}
-
+s.counter_list={COUNTER_KAIJU}
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,1,0x37,3,REASON_COST)
+	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,1,COUNTER_KAIJU,3,REASON_COST)
 		and e:GetHandler():GetAttackAnnouncedCount()==0 end
-	Duel.RemoveCounter(tp,1,1,0x37,3,REASON_COST)
+	Duel.RemoveCounter(tp,1,1,COUNTER_KAIJU,3,REASON_COST)
 	--Cannot attack this turn
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetDescription(3206)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_OATH+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetCode(EFFECT_CANNOT_ATTACK)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+	e1:SetReset(RESETS_STANDARD_PHASE_END)
 	e:GetHandler():RegisterEffect(e1)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)

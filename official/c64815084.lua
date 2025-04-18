@@ -1,4 +1,5 @@
 --進化の分岐点
+--Evo-Branch
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,12 +13,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x304e}
+s.listed_series={SET_EVOLTILE}
 function s.filter(c,ft)
 	return c:IsFaceup() and c:IsRace(RACE_REPTILE) and (ft>0 or c:GetSequence()<5)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x304e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
+	return c:IsSetCard(SET_EVOLTILE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)

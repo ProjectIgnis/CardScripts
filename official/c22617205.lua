@@ -29,12 +29,12 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 	local e4=e2:Clone()
 	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e4:SetCondition(function(e) return e:GetHandler():IsSummonType(SUMMON_TYPE_PENDULUM) end)
+	e4:SetCondition(function(e) return e:GetHandler():IsPendulumSummoned() end)
 	c:RegisterEffect(e4)
 end
 s.listed_series={SET_TELLARKNIGHT,SET_ZEFRA}
 function s.splimit(e,c,sump,sumtype,sumpos,targetp)
-	if c:IsSetCard(SET_TELLARKNIGHT) or c:IsSetCard(SET_ZEFRA) then return false end
+	if c:IsSetCard({SET_TELLARKNIGHT,SET_ZEFRA}) then return false end
 	return (sumtype&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
 end
 function s.filter1(c)

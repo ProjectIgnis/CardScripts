@@ -1,4 +1,5 @@
 --魂を呼ぶ者
+--Spirit Caller
 local s,id=GetID()
 function s.initial_effect(c)
 	--flip

@@ -1,4 +1,5 @@
 --借カラクリ蔵
+--Karakuri Cash Cache
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,12 +12,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x11}
+s.listed_series={SET_KARAKURI}
 function s.filter1(c)
-	return c:IsLevelBelow(4) and c:IsSetCard(0x11) and c:IsAbleToHand()
+	return c:IsLevelBelow(4) and c:IsSetCard(SET_KARAKURI) and c:IsAbleToHand()
 end
 function s.filter2(c)
-	return c:IsFaceup() and c:IsSetCard(0x11) and c:IsCanChangePosition()
+	return c:IsFaceup() and c:IsSetCard(SET_KARAKURI) and c:IsCanChangePosition()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.filter2(chkc) end

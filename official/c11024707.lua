@@ -64,7 +64,7 @@ function s.selfspop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spfilter(c,e,tp)
 	return c:IsMonster() and c:IsControler(tp) and c:IsPreviousLocation(LOCATION_HAND|LOCATION_DECK) and c:IsLocation(LOCATION_GRAVE)
-		and c:IsCanBeEffectTarget(e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)	
+		and c:IsCanBeEffectTarget(e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local eff=e:GetLabelObject()

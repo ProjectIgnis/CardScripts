@@ -1,4 +1,5 @@
 --墓場からの誘い
+--Grave Lure
 local s,id=GetID()
 function s.initial_effect(c)
 	Duel.EnableGlobalFlag(GLOBALFLAG_DECK_REVERSE_CHECK)
@@ -25,7 +26,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_DRAW)
 		e1:SetOperation(s.tgop)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOHAND)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD-RESET_TOHAND)
 		tc:RegisterEffect(e1)
 	end
 end

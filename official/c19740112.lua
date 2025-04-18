@@ -1,4 +1,5 @@
 --干ばつの結界像
+--Barrier Statue of the Drought
 local s,id=GetID()
 function s.initial_effect(c)
 	--disable spsummon

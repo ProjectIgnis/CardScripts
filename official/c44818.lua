@@ -1,7 +1,6 @@
 --ホーリーナイツ・オルビタエル
 --Starry Knight Orbitael
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -33,14 +32,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 	--Lists "Starry Knight" archetype
-s.listed_series={0x15b}
-
+s.listed_series={SET_STARRY_KNIGHT}
 function s.releasefilter(c)
 	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsReleasableByEffect()
 end
 	--Check for "Starry Knight" spell/trap
 function s.setfilter(c)
-	return c:IsSetCard(0x15b) and c:IsSpellTrap() and c:IsSSetable()
+	return c:IsSetCard(SET_STARRY_KNIGHT) and c:IsSpellTrap() and c:IsSSetable()
 end
 	--Activation legality
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

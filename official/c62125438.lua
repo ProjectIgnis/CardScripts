@@ -8,8 +8,8 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_EXTRA_SUMMON_COUNT)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetTargetRange(LOCATION_HAND+LOCATION_MZONE,0)
-	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x1017))
+	e1:SetTargetRange(LOCATION_HAND|LOCATION_MZONE,0)
+	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_SYNCHRON))
 	c:RegisterEffect(e1)
 	--search
 	local e2=Effect.CreateEffect(c)
@@ -25,22 +25,22 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={62125439}
-s.listed_series={0x1017}
+s.listed_series={SET_SYNCHRON}
 function s.filter(c,tp)
-	return c:IsSetCard(0x1017) and c:IsMonster() and c:IsControler(tp) and c:IsLocation(LOCATION_GRAVE)
+	return c:IsSetCard(SET_SYNCHRON) and c:IsMonster() and c:IsControler(tp) and c:IsLocation(LOCATION_GRAVE)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.filter,1,nil,tp) and r==REASON_SYNCHRO and re:GetHandler():IsRace(RACE_WARRIOR+RACE_MACHINE)
+	return eg:IsExists(s.filter,1,nil,tp) and r==REASON_SYNCHRO and re:GetHandler():IsRace(RACE_WARRIOR|RACE_MACHINE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0x1017,TYPES_TOKEN,1000,0,2,RACE_MACHINE,ATTRIBUTE_EARTH) end
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,SET_SYNCHRON,TYPES_TOKEN,1000,0,2,RACE_MACHINE,ATTRIBUTE_EARTH) end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0x1017,TYPES_TOKEN,1000,0,2,RACE_MACHINE,ATTRIBUTE_EARTH) then
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,SET_SYNCHRON,TYPES_TOKEN,1000,0,2,RACE_MACHINE,ATTRIBUTE_EARTH) then
 		local token=Duel.CreateToken(tp,id+1)
 		Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)
 	end

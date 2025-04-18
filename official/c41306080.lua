@@ -27,9 +27,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={85327820}
-s.listed_series={0x135}
+s.listed_series={SET_IGNISTER}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x135)
+	return c:IsFaceup() and c:IsSetCard(SET_IGNISTER)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
@@ -51,7 +51,7 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabelObject(g:GetFirst())
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x135) and c:IsLevelAbove(5) and c:IsAbleToHand()
+	return c:IsSetCard(SET_IGNISTER) and c:IsLevelAbove(5) and c:IsAbleToHand()
 end
 function s.thfilter2(c)
 	return c:IsCode(85327820) and c:IsAbleToHand()
@@ -69,7 +69,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_LEVEL)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_DISABLE_PHASE_END)
 		e1:SetValue(4)
 		e:GetHandler():RegisterEffect(e1)
 		local lc=e:GetLabelObject()

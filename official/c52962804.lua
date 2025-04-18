@@ -22,9 +22,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.imop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0x29}
+s.listed_series={SET_DRAGUNITY}
 function s.thfilter(c,e)
-	return c:IsSetCard(0x29) and c:IsMonster() and c:IsLevelBelow(4)
+	return c:IsSetCard(SET_DRAGUNITY) and c:IsMonster() and c:IsLevelBelow(4)
 		and c:IsAbleToHand() and c:IsCanBeEffectTarget(e) 
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -47,7 +47,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.imcon(e,tp,eg,ep,ev,re,r,rp)
 	local ac=Duel.GetAttacker()
-	return ac and ac:IsControler(tp) and ac:IsSetCard(0x29) and ac:GetOriginalLevel()>=5
+	return ac and ac:IsControler(tp) and ac:IsSetCard(SET_DRAGUNITY) and ac:GetOriginalLevel()>=5
 end
 function s.imop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
@@ -56,7 +56,7 @@ function s.imop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCode(EFFECT_IMMUNE_EFFECT)
 	e1:SetValue(s.efilter)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_DAMAGE)
 	Duel.GetAttacker():RegisterEffect(e1)
 	Duel.AdjustInstantly(Duel.GetAttacker())
 end

@@ -1,4 +1,5 @@
 --鋼核の輝き
+--Iron Core Luster
 local s,id=GetID()
 function s.initial_effect(c)
 	--negate

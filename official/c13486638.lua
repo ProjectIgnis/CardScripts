@@ -16,9 +16,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x2073,0x10db,0xba}
+s.listed_series={SET_XYZ_DRAGON,SET_THE_PHANTOM_KNIGHTS,SET_RAIDRAPTOR}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev)
+	return re:IsMonsterEffect() and Duel.IsChainNegatable(ev)
 end
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsAttribute(ATTRIBUTE_DARK)
@@ -32,7 +32,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return #g>0 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVEXYZ)
 	local sc=g:Select(tp,1,1,nil):GetFirst()
-	if sc:IsSetCard(0x2073) or sc:IsSetCard(0x10db) or sc:IsSetCard(0xba) then
+	if sc:IsSetCard({SET_XYZ_DRAGON,SET_THE_PHANTOM_KNIGHTS,SET_RAIDRAPTOR}) then
 		e:SetLabel(1)
 	else
 		e:SetLabel(0)
@@ -48,7 +48,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.atkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xba) and c:IsType(TYPE_XYZ)
+	return c:IsFaceup() and c:IsSetCard(SET_RAIDRAPTOR) and c:IsType(TYPE_XYZ)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re)
@@ -63,7 +63,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetValue(atk)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			sc:RegisterEffect(e1)
 		end
 	end

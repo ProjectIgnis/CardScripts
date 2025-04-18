@@ -24,10 +24,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xfc}
+s.listed_series={SET_GOUKI}
 s.listed_names={id}
 function s.cfilter(c)
-	return c:IsFacedown() or not c:IsSetCard(0xfc)
+	return c:IsFacedown() or not c:IsSetCard(SET_GOUKI)
 end
 function s.ntcon(e,c,minc,zone)
 	if c==nil then return true end
@@ -39,7 +39,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0xfc) and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(SET_GOUKI) and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

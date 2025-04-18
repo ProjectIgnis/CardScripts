@@ -1,5 +1,5 @@
 --暗黒界の文殿
---Dark World Library
+--Dark World Archives
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -32,21 +32,21 @@ function s.initial_effect(c)
 	e3:SetOperation(s.drwop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x6}
+s.listed_series={SET_DARK_WORLD}
 function s.cfilter(c)
-	return c:IsSetCard(0x6) and c:IsMonster() and c:IsDiscardable()
+	return c:IsSetCard(SET_DARK_WORLD) and c:IsMonster() and c:IsDiscardable()
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil)
-		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x6),tp,LOCATION_MZONE,0,1,nil) end
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_DARK_WORLD),tp,LOCATION_MZONE,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_HANDES,nil,0,tp,1)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
 	local dg=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND,0,1,1,nil)
-	if #dg>0 and Duel.SendtoGrave(dg,REASON_EFFECT+REASON_DISCARD)>0 then
+	if #dg>0 and Duel.SendtoGrave(dg,REASON_EFFECT|REASON_DISCARD)>0 then
 		local og=Duel.GetOperatedGroup()
-		local sg=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,0x6),tp,LOCATION_MZONE,0,nil)
+		local sg=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,SET_DARK_WORLD),tp,LOCATION_MZONE,0,nil)
 		if #sg==0 then return end
 		local atk=og:GetFirst():GetLevel()*100
 		for tc in sg:Iter() do
@@ -55,7 +55,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetValue(atk)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+			e1:SetReset(RESETS_STANDARD_PHASE_END)
 			tc:RegisterEffect(e1)
 		end
 	end
@@ -64,7 +64,7 @@ function s.dfilter(c,tp)
 	return c:IsControler(tp) and c:IsPreviousControler(tp) and c:IsOriginalRace(RACE_FIEND) and c:IsReason(REASON_EFFECT)
 end
 function s.drwcond(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.dfilter,1,nil,tp) and (re:GetHandler():IsSetCard(0x6) or rp==1-tp)
+	return eg:IsExists(s.dfilter,1,nil,tp) and (re:GetHandler():IsSetCard(SET_DARK_WORLD) or rp==1-tp)
 end
 function s.drwtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) and Duel.IsPlayerCanDraw(tp,2) end
@@ -74,7 +74,7 @@ end
 function s.drwop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
 	local g=Duel.SelectMatchingCard(tp,Card.IsDiscardable,tp,LOCATION_HAND,0,1,1,nil)
-	if #g>0 and Duel.SendtoGrave(g,REASON_EFFECT+REASON_DISCARD)>0 then
+	if #g>0 and Duel.SendtoGrave(g,REASON_EFFECT|REASON_DISCARD)>0 then
 		Duel.BreakEffect()
 		Duel.Draw(tp,2,REASON_EFFECT)
 	end

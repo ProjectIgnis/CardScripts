@@ -1,4 +1,5 @@
 --究極竜騎士
+--Dragon Master Knight
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
@@ -21,7 +22,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={23995346}
-s.material_setcode={0x10cf,0xcf,0xdd}
+s.material_setcode={SET_BLACK_LUSTER_SOLDIER,SET_CHAOS,SET_BLUE_EYES}
 function s.atkval(e,c)
 	return Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsRace,RACE_DRAGON),c:GetControler(),LOCATION_MZONE,0,c)*500
 end

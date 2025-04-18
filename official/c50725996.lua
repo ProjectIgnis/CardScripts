@@ -1,4 +1,5 @@
 --ブラック・マジシャンズ・ナイト
+--Dark Magician Knight
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

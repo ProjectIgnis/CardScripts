@@ -1,4 +1,5 @@
 --使徒喰い虫
+--Nobleman-Eater Bug
 local s,id=GetID()
 function s.initial_effect(c)
 	--flip

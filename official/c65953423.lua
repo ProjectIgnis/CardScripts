@@ -1,7 +1,6 @@
 --妖精伝姫－ラチカ
 --Fairy Tail - Rochka
 --Scripted by DyXel
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Opponent looks at top 3 cards of your deck, choose 1 to add to your hand

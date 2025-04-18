@@ -34,9 +34,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x9f}
+s.listed_series={SET_PERFORMAPAL}
 function s.spcfilter(c,ft)
-	return c:IsFaceup() and c:IsSetCard(0x9f) and c:IsLevelAbove(5) and c:IsAbleToHandAsCost() and (ft>0 or c:GetSequence()<5)
+	return c:IsFaceup() and c:IsSetCard(SET_PERFORMAPAL) and c:IsLevelAbove(5) and c:IsAbleToHandAsCost() and (ft>0 or c:GetSequence()<5)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
@@ -59,7 +59,7 @@ function s.distg(e,c)
 	return c==e:GetHandler():GetBattleTarget()
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x9f),tp,LOCATION_MZONE,0,1,e:GetHandler())
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_PERFORMAPAL),tp,LOCATION_MZONE,0,1,e:GetHandler())
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local t=Duel.GetAttackTarget()

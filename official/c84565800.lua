@@ -42,7 +42,7 @@ function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and tc:IsFaceup() and tc:IsType(TYPE_SPELL+TYPE_TRAP) then
+	if tc:IsRelateToEffect(e) and tc:IsFaceup() and tc:IsSpellTrap() then
 		Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
 	end
 end
@@ -64,8 +64,8 @@ function s.cpop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_CODE)
 		e1:SetValue(code)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_SELF_TURN)
+		e1:SetReset(RESETS_STANDARD_PHASE_END|RESET_SELF_TURN)
 		c:RegisterEffect(e1)
-		c:CopyEffect(code,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_SELF_TURN)
+		c:CopyEffect(code,RESETS_STANDARD_PHASE_END|RESET_SELF_TURN)
 	end
 end

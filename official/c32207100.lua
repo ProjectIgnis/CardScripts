@@ -1,4 +1,5 @@
 --大番狂わせ
+--A Major Upset
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -20,7 +21,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(g,REASON_COST)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsLevelAbove(7) and c:IsSummonType(SUMMON_TYPE_SPECIAL) and c:IsAbleToHand()
+	return c:IsFaceup() and c:IsLevelAbove(7) and c:IsSpecialSummoned() and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end

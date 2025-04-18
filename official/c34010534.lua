@@ -1,5 +1,5 @@
 --サイバネット・オプティマイズ
---Cynet Optimize
+--Cynet Optimization
 --Script by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	e3:SetCondition(s.actcon)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x101}
+s.listed_series={SET_CODE_TALKER}
 function s.filter(c)
 	return c:IsRace(RACE_CYBERSE) and c:IsSummonable(true,nil)
 end
@@ -52,7 +52,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	--lizard check
 	aux.addTempLizardCheck(e:GetHandler(),tp,s.lizfilter)
@@ -64,7 +64,7 @@ function s.lizfilter(e,c)
 	return not c:IsOriginalRace(RACE_CYBERSE)
 end
 function s.cfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x101) and c:IsControler(tp)
+	return c:IsFaceup() and c:IsSetCard(SET_CODE_TALKER) and c:IsControler(tp)
 end
 function s.actcon(e)
 	local tp=e:GetHandlerPlayer()

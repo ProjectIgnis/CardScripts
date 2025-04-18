@@ -1,7 +1,6 @@
 --ドラグマ・ジェネシス
 --Dogmatika Genesis
 --Logical Nonsense
-
 --Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
@@ -11,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e1:SetHintTiming(0,TIMING_STANDBY_PHASE+TIMINGS_CHECK_MONSTER_E)
+	e1:SetHintTiming(0,TIMING_STANDBY_PHASE|TIMINGS_CHECK_MONSTER_E)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
@@ -44,7 +43,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local ex,g1=Duel.GetOperationInfo(0,CATEGORY_TODECK)
 	local ex,g2=Duel.GetOperationInfo(0,CATEGORY_DISABLE)
 	if g1:GetFirst():IsRelateToEffect(e) then
-		Duel.SendtoDeck(g1,nil,2,REASON_EFFECT)
+		Duel.SendtoDeck(g1,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 		local og=Duel.GetOperatedGroup()
 		if og:GetFirst():IsLocation(LOCATION_EXTRA) then
 			local tc=g2:GetFirst()

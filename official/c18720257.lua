@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e2a:SetRange(LOCATION_FZONE)
 	e2a:SetTargetRange(LOCATION_SZONE,0)
 	e2a:SetCondition(s.addtypecon)
-	e2a:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x109))
+	e2a:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_THE_WEATHER))
 	e2a:SetValue(TYPE_MONSTER)
 	c:RegisterEffect(e2a)
 	--Normal Summon 1 "The Weather" monster from your hand
@@ -41,9 +41,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.nsop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={0x109}
+s.listed_series={SET_THE_WEATHER}
 function s.plfilter(c,tp)
-	return c:IsType(TYPE_SPELL|TYPE_TRAP) and c:IsSetCard(0x109) and not c:IsForbidden() and c:CheckUniqueOnField(tp)
+	return c:IsSpellTrap() and c:IsSetCard(SET_THE_WEATHER) and not c:IsForbidden() and c:CheckUniqueOnField(tp)
 		and not c:IsType(TYPE_FIELD)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
@@ -57,12 +57,12 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.matfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x109) and c:GetSequence()<5
+	return c:IsFaceup() and c:IsSetCard(SET_THE_WEATHER) and c:GetSequence()<5
 end
 function s.extraval(chk,summon_type,e,...)
 	if chk==0 then
 		local tp,sc=...
-		if summon_type~=SUMMON_TYPE_LINK or not (sc and sc:IsSetCard(0x109)) then
+		if summon_type~=SUMMON_TYPE_LINK or not (sc and sc:IsSetCard(SET_THE_WEATHER)) then
 			return Group.CreateGroup()
 		else
 			Duel.RegisterFlagEffect(tp,id,0,0,1)
@@ -76,16 +76,15 @@ function s.addtypecon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFlagEffect(e:GetHandlerPlayer(),id)>0
 end
 function s.nsfilter(c)
-	return c:IsSetCard(0x109) and c:IsSummonable(true,nil)
+	return c:IsSetCard(SET_THE_WEATHER) and c:IsSummonable(true,nil)
 end
 function s.nstg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.nsfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.nsfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_SUMMON,nil,1,0,0)
 end
 function s.nsop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.nsfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,nil)
-	local tc=g:GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,s.nsfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,1,1,nil):GetFirst()
 	if tc then
 		Duel.Summon(tp,tc,true,nil)
 	end

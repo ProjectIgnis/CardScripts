@@ -1,4 +1,5 @@
 --スノーマンイーター
+--Snowman Eater
 local s,id=GetID()
 function s.initial_effect(c)
 	--Destroy

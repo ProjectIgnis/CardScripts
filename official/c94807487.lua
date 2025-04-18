@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(0x31)
-	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsSetCard,0x107f))
+	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsSetCard,SET_UTOPIA))
 	--Untargetable
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_EQUIP)
@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	e6:SetOperation(s.rop)
 	c:RegisterEffect(e6)
 end
-s.listed_series={0x107f}
+s.listed_series={SET_UTOPIA}
 s.counter_place_list={0x31}
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():AddCounter(0x31,1)

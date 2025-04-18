@@ -1,4 +1,5 @@
 --恵災いの像
+--Elephant Statue of Disaster
 local s,id=GetID()
 function s.initial_effect(c)
 	--damage

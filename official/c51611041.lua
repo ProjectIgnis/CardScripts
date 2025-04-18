@@ -1,9 +1,9 @@
--- 模拘撮星人 エピゴネン
--- Epigonen the Imitarian
--- Scripted by Hatter
+--模拘撮星人 エピゴネン
+--Epigonen, the Impersonation Invader
+--Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Special Summon self and Token
+	--Special Summon self and Token
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
@@ -43,14 +43,14 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		local token=Duel.CreateToken(tp,id+1)
 		if Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP) then
 			Duel.BreakEffect()
-			-- Change Type and Attribute
+			--Change Type and Attribute
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_CHANGE_RACE)
 			e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 			e1:SetRange(LOCATION_MZONE)
 			e1:SetValue(race)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD-RESET_TOFIELD)
 			token:RegisterEffect(e1,true)
 			local e2=e1:Clone()
 			e2:SetCode(EFFECT_CHANGE_ATTRIBUTE)

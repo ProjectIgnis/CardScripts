@@ -1,4 +1,5 @@
 --大噴火
+--Volcanic Eruption
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -17,7 +18,7 @@ function s.filter(c)
 	return c:IsFaceup() and c:IsCode(10080320)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_END and Duel.GetTurnPlayer()==tp
+	return Duel.IsPhase(PHASE_END) and Duel.IsTurnPlayer(tp)
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

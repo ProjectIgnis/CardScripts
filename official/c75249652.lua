@@ -1,4 +1,5 @@
 --業炎のバリア －ファイヤー・フォース－
+--Blazing Mirror Force
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

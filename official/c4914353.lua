@@ -1,6 +1,5 @@
 --スペース・インシュレイター
 --Space Insulator
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Must be properly summoned before reviving
@@ -35,7 +34,7 @@ function s.tgtg(e,c)
 	return e:GetHandler():GetLinkedGroup():IsContains(c)
 end
 function s.cfilter(c,tp)
-	return c:IsControler(tp) and c:IsRace(RACE_CYBERSE) and c:IsLinkMonster() and c:IsSummonType(SUMMON_TYPE_LINK)
+	return c:IsControler(tp) and c:IsRace(RACE_CYBERSE) and c:IsLinkMonster() and c:IsLinkSummoned()
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp) and aux.exccon(e)
@@ -65,7 +64,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetCode(EFFECT_CANNOT_BE_LINK_MATERIAL)
 		e1:SetValue(1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e1,true)
 		--Banish it if it leaves the field
 		local e2=Effect.CreateEffect(c)
@@ -74,7 +73,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e2:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 		e2:SetValue(LOCATION_REMOVED)
-		e2:SetReset(RESET_EVENT+RESETS_REDIRECT)
+		e2:SetReset(RESET_EVENT|RESETS_REDIRECT)
 		c:RegisterEffect(e2,true)
 	end
 	Duel.SpecialSummonComplete()

@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
-	e2:SetCost(s.rmcost)
+	e2:SetCost(Cost.PayLP(1000))
 	e2:SetTarget(s.rmtg)
 	e2:SetOperation(s.rmop)
 	c:RegisterEffect(e2)
@@ -32,7 +32,7 @@ function s.initial_effect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_ATKCHANGE)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e3:SetCode(EVENT_PHASE+PHASE_BATTLE_START)
+	e3:SetCode(EVENT_PHASE|PHASE_BATTLE_START)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1)
 	e3:SetCondition(s.atkcon)
@@ -42,21 +42,17 @@ end
 --Immune
 function s.immcon(e)
 	local tp=e:GetHandlerPlayer()
-	return Duel.GetLP(tp)<=Duel.GetLP(1-tp) and e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
+	return Duel.GetLP(tp)<=Duel.GetLP(1-tp) and e:GetHandler():IsSynchroSummoned()
 end
 function s.immval(e,te)
 	return te:GetOwnerPlayer()~=e:GetHandlerPlayer() and te:IsActivated()
 end
 --Banish
-function s.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,1000) end
-	Duel.PayLPCost(tp,1000)
-end
 function s.rmfilter(c,e)
 	return c:IsAbleToRemove() and c:IsCanBeEffectTarget(e)
 end
 function s.rescon(sg,e,tp,mg)
-    return sg:FilterCount(Card.IsControler,nil,tp)==1
+	return sg:FilterCount(Card.IsControler,nil,tp)==1
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
@@ -84,7 +80,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		e1:SetValue(atk)
 		c:RegisterEffect(e1)
 	end

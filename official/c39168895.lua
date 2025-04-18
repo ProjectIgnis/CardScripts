@@ -1,4 +1,5 @@
 --怒れる類人猿
+--Berserk Gorilla
 local s,id=GetID()
 function s.initial_effect(c)
 	--must attack

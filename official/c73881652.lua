@@ -1,4 +1,5 @@
 --十二獣の方合
+--Zoodiac Combo
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -18,17 +19,17 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetCondition(aux.exccon)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.drtg)
 	e2:SetOperation(s.drop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={0xf1}
+s.listed_series={SET_ZOODIAC}
 function s.tgfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsSetCard(0xf1)
+	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsSetCard(SET_ZOODIAC)
 end
 function s.matfilter(c)
-	return c:IsMonster() and c:IsSetCard(0xf1)
+	return c:IsMonster() and c:IsSetCard(SET_ZOODIAC)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.tgfilter(chkc) end
@@ -48,7 +49,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.drfilter(c,e)
-	return c:IsSetCard(0xf1) and c:IsAbleToDeck() and c:IsCanBeEffectTarget(e)
+	return c:IsSetCard(SET_ZOODIAC) and c:IsAbleToDeck() and c:IsCanBeEffectTarget(e)
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
@@ -63,10 +64,10 @@ end
 function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	if not tg or tg:FilterCount(Card.IsRelateToEffect,nil,e)~=5 then return end
-	Duel.SendtoDeck(tg,nil,0,REASON_EFFECT)
+	Duel.SendtoDeck(tg,nil,SEQ_DECKTOP,REASON_EFFECT)
 	local g=Duel.GetOperatedGroup()
 	if g:IsExists(Card.IsLocation,1,nil,LOCATION_DECK) then Duel.ShuffleDeck(tp) end
-	local ct=g:FilterCount(Card.IsLocation,nil,LOCATION_DECK+LOCATION_EXTRA)
+	local ct=g:FilterCount(Card.IsLocation,nil,LOCATION_DECK|LOCATION_EXTRA)
 	if ct==5 then
 		Duel.BreakEffect()
 		Duel.Draw(tp,1,REASON_EFFECT)

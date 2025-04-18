@@ -1,4 +1,5 @@
 --暗黒界の狩人 ブラウ
+--Broww, Huntsman of Dark World
 local s,id=GetID()
 function s.initial_effect(c)
 	--spsummon
@@ -15,7 +16,7 @@ function s.initial_effect(c)
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	e:SetLabel(e:GetHandler():GetPreviousControler())
-	return e:GetHandler():IsPreviousLocation(LOCATION_HAND) and (r&0x4040)==0x4040
+	return e:GetHandler():IsPreviousLocation(LOCATION_HAND) and r&(REASON_DISCARD|REASON_EFFECT)==REASON_DISCARD|REASON_EFFECT
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

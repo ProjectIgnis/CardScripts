@@ -1,4 +1,5 @@
 --裁きの龍
+--Judgment Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -17,7 +18,7 @@ function s.initial_effect(c)
 	e2:SetCategory(CATEGORY_DESTROY)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCost(s.cost)
+	e2:SetCost(Cost.PayLP(1000))
 	e2:SetTarget(s.target)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
@@ -40,9 +41,9 @@ function s.initial_effect(c)
 	e4:SetCode(EFFECT_SPSUMMON_CONDITION)
 	c:RegisterEffect(e4)
 end
-s.listed_series={0x38}
+s.listed_series={SET_LIGHTSWORN}
 function s.spfilter(c)
-	return c:IsSetCard(0x38) and c:IsMonster()
+	return c:IsSetCard(SET_LIGHTSWORN) and c:IsMonster()
 end
 function s.spcon(e,c)
 	if c==nil then return true end
@@ -50,10 +51,6 @@ function s.spcon(e,c)
 	local g=Duel.GetMatchingGroup(s.spfilter,c:GetControler(),LOCATION_GRAVE,0,nil)
 	local ct=g:GetClassCount(Card.GetCode)
 	return ct>3
-end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,1000) end
-	Duel.PayLPCost(tp,1000)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

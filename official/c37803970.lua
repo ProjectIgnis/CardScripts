@@ -1,4 +1,5 @@
 --アメイジング・ペンデュラム
+--Amazing Pendulum
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,12 +12,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x98}
+s.listed_series={SET_MAGICIAN}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return not Duel.GetFieldCard(tp,LOCATION_PZONE,0) and not Duel.GetFieldCard(tp,LOCATION_PZONE,1)
 end
 function s.thfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x98) and c:IsType(TYPE_PENDULUM) and c:IsAbleToHand()
+	return c:IsFaceup() and c:IsSetCard(SET_MAGICIAN) and c:IsType(TYPE_PENDULUM) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then

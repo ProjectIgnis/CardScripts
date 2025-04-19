@@ -8,12 +8,32 @@ local function make_deprecated_function_alias(old_funcname,new_funcname)
 		return load("return ]] .. new_funcname .. [[(...)")(...)
 	end]],"make_deprecated_function_alias")()
 end
-
+local function make_deprecated_function_no_replacement(old_funcname,message)
+	load(old_funcname .. [[=
+		(function()
+			local oldfunc=]] .. old_funcname .. [[
+			return function(...)
+				Debug.PrintStacktrace()
+				Debug.Message("]] .. old_funcname .. [[ is deprecated and will be removed. ]] .. message .. [[")
+				return oldfunc(...)
+			end
+		end)()]],"make_deprecated_function_alias")()
+end
 local function make_deleted_replaced_function(old_funcname,new_funcname)
 	load(old_funcname .. [[= function()
 		error("]].. old_funcname ..[[ was deleted. Use ]] .. new_funcname .. [[ instead.",2)
 	end]])()
 end
+
+local function make_deleted_function(funcname,message)
+	load(funcname .. [[= function()
+		error("]].. funcname ..[[ was removed. ]] .. message .. [[",2)
+	end]])()
+end
+
+--Functions deprecated since version 41.0:
+make_deprecated_function_no_replacement("Duel.GetEnvironment", "You should use Duel.IsEnvironment to check if a field spell is active on the field.")
+make_deprecated_function_no_replacement("Duel.GetTributeCount", "You should use Duel.CheckTribute and relative functions to check if a monster can be tribute summoned.")
 
 --Functions deprecated since version 40.0 and deleted in 41.0:
 make_deleted_replaced_function("Auxiliary.AskAny","Duel.AskAny")
@@ -49,11 +69,6 @@ make_deleted_replaced_function("Auxiliary.FilterFaceupFunction","Auxiliary.Faceu
 make_deleted_replaced_function("Auxiliary.MZFilter","Card.IsInMainMZone")
 make_deleted_replaced_function("Card.IsDifferentAttribute","Card.IsAttributeExcept")
 
-local function make_deleted_function(funcname,message)
-	load(funcname .. [[= function()
-		error("]].. funcname ..[[ was deleted. ]] .. message .. [[",2)
-	end]])()
-end
 --Deleted functions
 make_deleted_function("Auxiliary.CallToken","Use Duel.LoadCardScript or Duel.LoadScript instead.")
 make_deleted_function("Auxiliary.SpiritReturnCondition","Check Spirit.MandatoryReturnCondition and Spirit.OptionalReturnCondition for more details.")

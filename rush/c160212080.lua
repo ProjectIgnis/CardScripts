@@ -1,5 +1,5 @@
 --硫酸のたまった落とし穴
---Acid Trap Hole
+--Acid Trap Hole (Rush)
 --Scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

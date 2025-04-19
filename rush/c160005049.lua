@@ -1,5 +1,5 @@
 -- 不屈の世紀末獣戦士
---The Indomitable Post-Apocalyptic Beast-Warrior
+--Apocalypse - The Unstoppable Beast-Warrior
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

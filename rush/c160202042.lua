@@ -1,5 +1,5 @@
 --コズミックストリング・ヌードルイダス
---Cosmic String Noodle-Druidess
+--Cosmic String Noodryad
 local s,id=GetID()
 function s.initial_effect(c)
 	--Destroy all level 7 or lower monsters on the field

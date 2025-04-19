@@ -1,5 +1,5 @@
 -- Prime Roast Beef Horseman
--- ジョーミノケンタウロース
+--Prime Roast Beef Horseman
 local s,id=GetID()
 function s.initial_effect(c)
 	-- fusion summon

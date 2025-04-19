@@ -1,5 +1,5 @@
 --夢幻刃龍ビルドリム
---Infinidream Constructor Wyrm Buildrim
+--Infinite Constructor Wyrm Buildream
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

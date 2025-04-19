@@ -1,5 +1,5 @@
 --電導精ボルト
---Bolt the Conduction Spirit
+--Volt the Electrical Fairy
 local s,id=GetID()
 function s.initial_effect(c)
 	--Add 1 Level 5/10 Pyro/Aqua monster to the hand

@@ -1,5 +1,5 @@
 --ジョインテック・ラッシュホーン
---Jointech Rushhorn
+--Jointech Rush Horn
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 -- ツメレオン
--- Clawleon
+--Clawmeleon
 local s,id=GetID()
 function s.initial_effect(c)
 	--Give Piercing damage to a Reptile monster

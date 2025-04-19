@@ -1,5 +1,5 @@
 --『攻撃』封じ
---Block Attack (rush)
+--Block Attack (Rush)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Position change

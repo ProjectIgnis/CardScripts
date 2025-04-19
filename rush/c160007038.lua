@@ -1,5 +1,5 @@
 -- 火麺特忍ニクマシゴックブート
--- Masked Fiery Noodle Tokunin Nikumashi Gockboot
+--Meat Spice the Special Noodle Ninja
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

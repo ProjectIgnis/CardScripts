@@ -1,5 +1,5 @@
 --大嵐
---Heavy Storm
+--Heavy Storm (Rush)
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

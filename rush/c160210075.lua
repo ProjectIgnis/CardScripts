@@ -1,5 +1,5 @@
 --ツイン・クールスター
---Twin Twinkle Star
+--Twin Coolstars
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

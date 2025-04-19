@@ -1,4 +1,5 @@
 --ブラック・デーモンズ・ドラゴン
+--Black Skull Dragon (Rush)
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material

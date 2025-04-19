@@ -1,5 +1,5 @@
 -- 幻刃復帰 
--- Mythic Sword Return
+--Constructor Resurrection
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

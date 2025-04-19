@@ -1,5 +1,5 @@
 --刷新戦士シャイン・O
---Remodeled Corporate Soldier Shine Organizer
+--Worker Warrior - Overhauled Organizer
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon 1 Arktalk from Hand

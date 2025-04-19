@@ -1,5 +1,5 @@
 --環幻楽鬼神トランスゴッドブレス
---Trancegodbreath the Music Fiend Deity
+--Divinebreath the Orchestral Music Fiend
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

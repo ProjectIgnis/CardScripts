@@ -1,5 +1,5 @@
 -- 先の兆し
--- Opening Move Omen
+--Telegraphed Strike
 local s,id=GetID()
 function s.initial_effect(c)
 	-- Draw

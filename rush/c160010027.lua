@@ -1,5 +1,5 @@
 --地獄河童ダイウェット
---Hell Kappa Daiwet
+--Pandemonium Kappa Dive Wet
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

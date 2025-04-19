@@ -1,5 +1,5 @@
 -- 背番号99 球児皇龍ホームグランドラ 
--- Uniform No. 99: Junior Baseball King Dragon, Home Groundra
+--Player #99: Grand Slam Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

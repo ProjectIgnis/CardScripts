@@ -1,4 +1,5 @@
 --Supreme Machine Magnum Overlord [R]
+--Supreme Machine Magnum Overlord [R]
 local s,id=GetID()
 function s.initial_effect(c)
 	--ATK increase

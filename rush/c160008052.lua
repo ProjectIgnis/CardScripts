@@ -1,5 +1,5 @@
 -- デッキ改かい造ぞうパック 創そう造ぞうのマスターロード！！
--- Explosive Rage
+--Fire Wrath
 
 local s,id=GetID()
 function s.initial_effect(c)

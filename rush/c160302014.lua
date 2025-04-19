@@ -1,5 +1,5 @@
 --反攻の竜撃
---Counteroffensive Dragonstrike
+--Vengeful Dragon's Counterattack
 local s,id=GetID()
 function s.initial_effect(c)
 	--Destroy 1 monster

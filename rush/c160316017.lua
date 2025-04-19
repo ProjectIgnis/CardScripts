@@ -1,5 +1,5 @@
 --ランプの炎魔メチル
---Methyl the Flame Jinn of the Lamp
+--Methyl the Fire Genie of the Lamp
 local s,id=GetID()
 function s.initial_effect(c)
 	--Add 1 level 4 Pyro monster to the hand

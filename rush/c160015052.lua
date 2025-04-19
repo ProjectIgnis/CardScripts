@@ -1,5 +1,5 @@
 -- ミラクルピック
--- Miracle pick
+--Miracle Pick
 local s,id=GetID()
 function s.initial_effect(c)
 	-- Excavate 3, add 1 card to the hand, send the rest to Grave

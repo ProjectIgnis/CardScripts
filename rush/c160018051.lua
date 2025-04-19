@@ -1,5 +1,5 @@
 --双海潮流
---Twin Ocean Tides
+--Clashing Twin Tides
 --Scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

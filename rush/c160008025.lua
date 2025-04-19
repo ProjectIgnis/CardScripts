@@ -1,5 +1,5 @@
 --Zap Zap Octospark
---バチバチ・オクトスパーク
+--Zap Zap Octospark
 local s,id=GetID()
 function s.initial_effect(c)
 	--Draw 1 card

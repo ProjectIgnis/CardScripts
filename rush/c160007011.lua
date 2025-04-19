@@ -1,5 +1,5 @@
 -- ネクロマン三世
--- Necroman III
+--Necroman the Third
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

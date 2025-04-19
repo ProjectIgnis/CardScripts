@@ -1,5 +1,5 @@
 -- ジャスト・ミート
--- Just Meat
+--Best Bite
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

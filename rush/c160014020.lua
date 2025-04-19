@@ -1,5 +1,5 @@
 --秘密捜査官ミスマッチ
---Secret Investigator Mismatch
+--Agent Mismatch
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

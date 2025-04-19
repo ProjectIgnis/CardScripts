@@ -1,5 +1,5 @@
 --超魔旗艦マグナム・オーバーロード［Ｌ］
---Super Magiflag Ship Magnum Over Road [L]
+--Supreme Skystream Magnum Overlord [L]
 local s,id=GetID()
 function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)

@@ -1,5 +1,5 @@
 --超魔導剣士－ブラック・パラディン
---Dark Paladin
+--Dark Paladin (Rush)
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,4 +1,5 @@
 --Constructor Ambush
+--Constructor Ambush
 local s,id=GetID()
 function s.initial_effect(c)
 	--Decrease ATK

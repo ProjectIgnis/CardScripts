@@ -1,5 +1,5 @@
 --火葬犬ニトロ
---Cremation Dog Nitro
+--Nitro Hound
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

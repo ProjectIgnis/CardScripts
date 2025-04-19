@@ -1,5 +1,5 @@
 --羊界ウェーブシャーフ
---Ewekai Waveschaf
+--Wooly Wonderland Wave Schaf
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

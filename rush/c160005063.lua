@@ -1,5 +1,5 @@
 --魔雷冥
---Maraimei, the Dark Fire
+--Maraimei, the Igniting Inferno
 local s,id=GetID()
 function s.initial_effect(c)
 	--When your opponent normal/special summons a monster, take damage and shuffle monsters from the GY

@@ -1,5 +1,5 @@
 -- ドラゴンズ・コネクション
--- Dragon's Connection
+--Sportsdragon Connection
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --ヴォイドヴェルグ・グロビュール
---Voidvelgr Globule
+--Voidvelg Globule
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --ロイヤルデモンズ・ライブアリーナ
--- Royal Demon's Live Arena
+--Royal Rebel's Arena
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate

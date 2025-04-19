@@ -1,5 +1,5 @@
 --蒸気燕ジェムズ
---Steam Swallow Gem-zz
+--James the Steam Swallow
 --Scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

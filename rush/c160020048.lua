@@ -1,5 +1,5 @@
 --デーモンの顕現
---Archfiend's Manifestation
+--Archfiend's Manifestation (Rush)
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)

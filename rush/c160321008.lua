@@ -1,5 +1,5 @@
 --サイバー・ジラフ
---Cyber Kirin
+--Cyber Kirin (Rush)
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

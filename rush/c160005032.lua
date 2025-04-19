@@ -1,5 +1,5 @@
 -- 花牙シノビ・ガトリング
---Flower Fang Shinobi Gatring
+--Gatling the Shadow Flower Shinobi
 local s,id=GetID()
 function s.initial_effect(c)
 	--Destroy 2 of opponent's monsters

@@ -1,5 +1,5 @@
 --超魔導騎士－ブラック・キャバルリー
---Dark Cavalry
+--Dark Cavalry (Rush)
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

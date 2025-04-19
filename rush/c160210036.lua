@@ -1,5 +1,5 @@
 --焔魔神ルシュレス
---Blaze Fiend Deity Luculess
+--Blaze Fiend Overlord Luciless
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

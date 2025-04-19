@@ -1,5 +1,5 @@
 -- 寿司天使タイガーロール
--- Tiger Roll the Sushi Angel
+--Tiger Roll the Sushi Fairy
 local s,id=GetID()
 function s.initial_effect(c)
 	--Add to hand

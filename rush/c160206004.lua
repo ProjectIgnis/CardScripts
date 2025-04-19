@@ -1,5 +1,5 @@
 --合成魔獣 ガーゼット
---Maju Garzett
+--Maju Garzett (Rush)
 local s,id=GetID()
 function s.initial_effect(c)
 	--tribute check

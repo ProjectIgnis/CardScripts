@@ -1,5 +1,5 @@
 --マグマックス・マントルヴェーダ
---Magmax Mantle-Ayurveda
+--Magmax Mantleveda
 
 local s,id=GetID()
 function s.initial_effect(c)

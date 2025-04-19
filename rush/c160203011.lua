@@ -1,5 +1,5 @@
 -- 抑竜ステルンプテラ
--- Terrorsaur Sternptera
+--Supressaurus Sternptera
 local s,id=GetID()
 function s.initial_effect(c)
 	--Send the top card of your Deck to the GY

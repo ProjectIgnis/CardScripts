@@ -1,5 +1,5 @@
 -- 陰陽士カラタケ
--- Onmyou Warrior Karatake
+--Karatake the Talismanic Warrior
 local s,id=GetID()
 function s.initial_effect(c)
 	--Pay LP to deal damage

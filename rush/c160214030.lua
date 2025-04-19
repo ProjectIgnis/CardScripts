@@ -1,5 +1,5 @@
 --古代の機械超巨人
---Ancient Gear Megaton Golem
+--Ancient Gear Megaton Golem (Rush)
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,4 +1,5 @@
 -- 体力増強剤ストロングZ Tairyoku Zoukyou Zai Strong Z (Strength Enhancement Drug Strong Z/Strong Z/Energy Drink Z)
+--Nutrient Zero
 
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 -- 名刺しの命死交換
--- Deadly Business Card Exchange
+--Business Card Barrage
 
 local s,id=GetID()
 function s.initial_effect(c)

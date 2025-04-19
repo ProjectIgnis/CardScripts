@@ -1,5 +1,5 @@
 --エレキック・アンプル
---Elechic Ampoule
+--Elepsychic Amp Up
 --Scripted by pyrQ
 
 local s,id=GetID()

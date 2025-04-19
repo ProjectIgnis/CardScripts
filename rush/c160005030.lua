@@ -1,5 +1,5 @@
 --花牙蘭獅子ガジュウ丸 
---Gajuumaru the Shadow Flower Lion
+--Gajumaru the Shadow Flower Lion
 local s,id=GetID()
 function s.initial_effect(c)
 	--Targeted monster loses ATK

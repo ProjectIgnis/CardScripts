@@ -1,5 +1,5 @@
 --鳥呪戦術
---Avian Spell Strategy
+--Avian Spell Tactics
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

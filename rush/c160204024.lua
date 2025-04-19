@@ -1,5 +1,5 @@
 -- ドラゴンズ・キックベース・マスター
--- Dragon's Kickbase Master
+--Sportsdragon Kickbase Master
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

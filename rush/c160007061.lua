@@ -1,5 +1,5 @@
 --リクエスト９
---Request 9
+--Requesting 9
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

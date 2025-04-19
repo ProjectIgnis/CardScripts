@@ -1,5 +1,5 @@
 --月の女戦士
---Penumbral Soldier Lady
+--Penumbral Soldier Lady (Rush)
 --Scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

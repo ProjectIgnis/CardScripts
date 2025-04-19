@@ -1,5 +1,5 @@
 --獣機界トライク・フォックス
---Trike Fox of the Beast Gear World
+--Beast Gear Trike Fox
 
 local s,id=GetID()
 function s.initial_effect(c)

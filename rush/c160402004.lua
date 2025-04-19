@@ -1,5 +1,5 @@
 --ロイヤルデモンズ・ブルース
---Royal Demon's Blues
+--Royal Rebel's Blues
 
 local s,id=GetID()
 function s.initial_effect(c)

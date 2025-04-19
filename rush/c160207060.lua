@@ -1,3 +1,3 @@
 --海竜－ダイダロス
---Levia-Dragon - Daedalus
+--Levia-Dragon - Daedalus (Rush)
 Duel.LoadCardScriptAlias(160007000)

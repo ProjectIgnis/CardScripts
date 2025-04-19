@@ -1,5 +1,5 @@
 --剛撃龍メタギアスターＦ
---Strong Strike Dragon Metagiastar F
+--Sturdy Strike Dragon Metagiastar F
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material

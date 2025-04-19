@@ -1,5 +1,5 @@
 --秘密捜査官ミスファイア
---Secret Investigator Misfire
+--Agent Mishap
 --Scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

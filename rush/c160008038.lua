@@ -1,5 +1,5 @@
 -- 花牙潜攻サブマリン・ドゥルガー
--- Durga the Shadow Flower Stealth Submarine
+--Durga the Shadow Flower Submarine
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material

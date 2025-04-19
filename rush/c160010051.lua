@@ -1,5 +1,5 @@
 --３００光年アカイマント
---300 Light-Year Red Cloak
+--300 Light Year Red Cape
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

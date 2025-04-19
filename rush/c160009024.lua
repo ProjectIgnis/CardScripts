@@ -1,5 +1,5 @@
 --パクチュ
---Packrat
+--Pakupakuchu
 local s,id=GetID()
 function s.initial_effect(c)
 	--Add to the hand

@@ -1,5 +1,5 @@
 -- 超魔旗艦マグナム・オーバーロード
--- Supreme Flagship Magnum Overlord
+--Supreme Skystream Magnum Overlord
 local s,id=GetID()
 function s.initial_effect(c)
 	Maximum.AddProcedure(c,nil,s.filter1,s.filter2)

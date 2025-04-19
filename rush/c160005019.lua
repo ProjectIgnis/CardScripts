@@ -1,5 +1,5 @@
 -- ＣＡＮ－Ｒｅ：Ｄ
---CAN-Re:D
+--CAN - Re:D
 local s,id=GetID()
 function s.initial_effect(c)
 	--deal damage

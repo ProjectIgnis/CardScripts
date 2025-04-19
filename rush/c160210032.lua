@@ -1,5 +1,5 @@
 --強制脱出装置
---Compulsory Evacuation Device
+--Compulsory Evacuation Device (Rush)
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 -- お掃除マシン・ゴーガイン
--- Cleaning Machine Gorgain
+--Clean Machine Newsweeper
 
 local s,id=GetID()
 function s.initial_effect(c)

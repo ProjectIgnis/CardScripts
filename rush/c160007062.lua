@@ -1,5 +1,5 @@
 -- 現場からは以上です！
--- That's All from the Scene!
+--Reporting from the Scene!
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

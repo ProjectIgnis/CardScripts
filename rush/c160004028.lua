@@ -1,5 +1,5 @@
 --重楽鬼アンサンブルファイター
---Ensemble Fighter the Heavy Music Oni
+--Ensembullfighter the Music Fiend
 local s,id=GetID()
 function s.initial_effect(c)
 	--Prevent Tribute Summon

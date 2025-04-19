@@ -1,5 +1,5 @@
 --THE トリッキー
---The Tricky
+--The Tricky (Rush)
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon

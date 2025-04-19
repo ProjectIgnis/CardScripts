@@ -1,5 +1,5 @@
 --花牙胞子
---Flower Fang Spores
+--Shadow Flower Spore
 --Scripted by The Razgriz
 local s,id=GetID()
 function s.initial_effect(c)

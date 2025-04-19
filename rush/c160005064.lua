@@ -1,5 +1,5 @@
 -- 草葉エール 
--- Laughing Grass
+--Cheering Grass
 local s,id=GetID()
 function s.initial_effect(c)
 	--If opponent normal summons, special summon 1 plant monster from hand

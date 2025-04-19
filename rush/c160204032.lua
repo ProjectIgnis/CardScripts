@@ -1,5 +1,5 @@
 -- レッド・ポーション (Rush)
--- Red Medicine (Rush)
+--Red Medicine
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

@@ -1,5 +1,5 @@
 -- 魅惑の不夜城
---The Enchanted Nightless City
+--Shining City Nights
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate

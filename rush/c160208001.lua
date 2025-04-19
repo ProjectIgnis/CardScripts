@@ -1,5 +1,5 @@
 --ハーピィ三姉妹［Ｌ］
---Harpie Ladies [L]
+--Harpie Lady Sisters [L]
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

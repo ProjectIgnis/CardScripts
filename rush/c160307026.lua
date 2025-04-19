@@ -1,5 +1,5 @@
 -- キングス・ライト
--- King’s Right
+--King's Right
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

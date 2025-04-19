@@ -1,5 +1,5 @@
 --ヴィシュワ・ランバディ
---Vishwar Ranbuddy
+--Vishwar Lambadi
 local s,id=GetID()
 function s.initial_effect(c)
 	--Send to GY and destroy

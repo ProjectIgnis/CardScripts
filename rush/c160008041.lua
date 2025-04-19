@@ -1,5 +1,5 @@
 -- Showering Infergyo
--- シャワーリング・インフェルギョ
+--Showering Seaferno
 local s,id=GetID()
 function s.initial_effect(c)
 	-- fusion

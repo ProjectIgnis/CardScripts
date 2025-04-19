@@ -1,4 +1,5 @@
 --鬼将メザメ Kishou Mezame (Mezame the Oni Commander)
+--Mezame the Ringing Alarm
 local s,id=GetID()
 function s.initial_effect(c)
 	--Add card to hand

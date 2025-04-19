@@ -1,5 +1,5 @@
 --ドラゴンズ・ロック・クローザー
---Dragon’s Lock Closer
+--Sportsdragon Closer
 local s,id=GetID()
 function s.initial_effect(c)
 	--Increase ATK by 2000

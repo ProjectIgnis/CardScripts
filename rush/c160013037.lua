@@ -1,5 +1,5 @@
 --碧牙の超越爆速竜
---Blue Tooth Enhanced Burst Dragon
+--Blue-Fang Enhanced Burst Dragon
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

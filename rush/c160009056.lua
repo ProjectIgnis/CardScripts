@@ -1,5 +1,5 @@
 --吉兆の面
---Mask of Good Omens
+--Lucky Mask of Omens
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

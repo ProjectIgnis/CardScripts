@@ -1,5 +1,5 @@
 --彩光超プリンセスオメガ
---Princess Omega the Supreme Shining Superstar
+--Princess Omega the Shining Megastar
 local s,id=GetID()
 function s.initial_effect(c)
 	--Fusion Material

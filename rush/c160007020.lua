@@ -1,5 +1,5 @@
 -- 幻刃天竜ガントリー・ドラゴン
--- Gantry Dragon the Mythic Sword Heavenly Dragon
+--Constructor Sky Wyrm Gantry Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon wyrm normal monster from GY

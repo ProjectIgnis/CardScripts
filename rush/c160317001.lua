@@ -1,5 +1,5 @@
 --ヴォイドヴェルグ・エリジウム
---Voidvelgr Elysium
+--Voidvelg Elysium
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --ことのはの妖精
---Wording Fairy
+--Poet Fairy
 
 --Substitute ID
 local s,id=GetID()

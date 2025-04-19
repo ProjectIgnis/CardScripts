@@ -1,5 +1,5 @@
 -- 虚鋼演機乱流
--- Imaginary Ark Turbulence
+--Imaginary Arc Turbulence
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

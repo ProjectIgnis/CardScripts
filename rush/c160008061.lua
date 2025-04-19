@@ -1,5 +1,5 @@
 -- 警告鱗光
--- Warning Scale Phosphorescence
+--Wrath of Light
 local s,id=GetID()
 function s.initial_effect(c)
 	--When your opponent normal/special summons a monster, prevent attack and shuffle monsters from the GY

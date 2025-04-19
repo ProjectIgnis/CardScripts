@@ -1,5 +1,5 @@
 --翅甲王ディナス・ドルクス
---Bladearmor King Dynas Dorcus
+--Dynas Dorcus the Beetle King
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

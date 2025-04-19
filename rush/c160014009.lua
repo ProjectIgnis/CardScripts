@@ -1,5 +1,5 @@
 --ケミスペット・ニャンコ
---Chemispet Nyanko
+--Chemipet Purr
 local s,id=GetID()
 function s.initial_effect(c)
 	--Gain LP

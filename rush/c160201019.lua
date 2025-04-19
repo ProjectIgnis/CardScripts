@@ -1,5 +1,5 @@
 --宮殿のガーゴイル
---Gargoyle of the Palace
+--Palace Gargoyle
 local s,id=GetID()
 function s.initial_effect(c)
 	--Increase Level by 1

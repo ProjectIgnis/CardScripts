@@ -1,5 +1,5 @@
 --エクスキューティー・フラーメ
---Excutie Flame
+--Executie Flame
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

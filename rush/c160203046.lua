@@ -1,5 +1,5 @@
 -- ローリング・ネバーダイ
--- Rolling Never Die
+--Rolled Sticky Save
 
 local s,id=GetID()
 function s.initial_effect(c)

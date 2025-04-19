@@ -1,5 +1,5 @@
 --最強旗獣ボルトライコーン
---Ultimate Flag Beast Bolt Tricorn
+--Ultimate Flag Beast Boltricorn
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

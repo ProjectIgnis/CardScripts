@@ -1,5 +1,5 @@
 --マスター・オブ・セブンスロード
---Master of Sevens Road
+--Master of the Sevens Road
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

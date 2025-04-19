@@ -1,5 +1,5 @@
 --獣機界覇者キングコンボイ・ライガオン
---King Convoy Ligeon, Conqueror of the Beast Gear World
+--Beast Gear King Convoy Liogon
 
 local s,id=GetID()
 function s.initial_effect(c)

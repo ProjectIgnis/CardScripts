@@ -1,5 +1,5 @@
 --お天道様の森
---Forest of the Sun
+--Sunny Forest
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

@@ -1,5 +1,5 @@
 --ＳＰアシスタント・ヒーヤ
---Super Assistant Hiya
+--Icelyn the Super Assistant
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

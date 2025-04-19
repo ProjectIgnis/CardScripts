@@ -1,5 +1,5 @@
 -- ジョイント・チェア 
--- Joint Chair
+--Joining Chairs
 
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --貫貴益荒男
---Pierce Samurai
+--Piercing Samurai
 local s,id=GetID()
 function s.initial_effect(c)
 	--Give Piercing damage to a Warrior monster

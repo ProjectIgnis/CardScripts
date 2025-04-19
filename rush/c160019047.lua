@@ -1,5 +1,5 @@
 --Ｅ・ＨＥＲＯ セイラーマン
---Elemental HERO Mariner
+--Elemental HERO Mariner (Rush)
 --Scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

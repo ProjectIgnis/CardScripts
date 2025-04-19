@@ -1,5 +1,5 @@
 --幻刃兵站デスク・タラスク
---Constructor Logistics Desk Taraque
+--Constructor Logistics Desk Tarasque
 --Scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

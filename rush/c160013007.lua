@@ -1,5 +1,5 @@
 --ヴォイドヴェルグ・ロジスティコス
---Voidvelgr Logistikos
+--Voidvelg Logistikos
 --scritped by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

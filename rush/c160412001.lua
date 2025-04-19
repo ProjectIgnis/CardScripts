@@ -1,5 +1,5 @@
 --治療の神 ディアン・ケト
---Dian Keto the Cure Master
+--Dian Keto the Cure Master (Rush)
 local s,id=GetID()
 function s.initial_effect(c)
 	--recover

@@ -1,5 +1,5 @@
 --デーモンのじゅにく
--- Archfiend's Incarnation
+--Archfiend's Revival
 
 local s,id=GetID()
 function s.initial_effect(c)

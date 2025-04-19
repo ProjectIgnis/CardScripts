@@ -1,5 +1,5 @@
 --放浪の勇者 フリード
---Freed the Brave Wanderer
+--Freed the Brave Wanderer (Rush)
 --Scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

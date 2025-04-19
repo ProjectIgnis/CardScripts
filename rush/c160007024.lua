@@ -1,5 +1,5 @@
 -- ヘッドバッドキャシャロット
--- Headbutt Cachalot
+--Head Bad Cachalot
 local s,id=GetID()
 function s.initial_effect(c)
 	-- atk + damage

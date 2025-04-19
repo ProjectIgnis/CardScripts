@@ -1,5 +1,5 @@
 --水分補給 
---Moisturize
+--Hydration
 local s,id=GetID()
 function s.initial_effect(c)
 	--heal and destroy

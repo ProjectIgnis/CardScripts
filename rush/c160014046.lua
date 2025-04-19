@@ -1,5 +1,5 @@
 --百戦の覇者ガイア
---Gaia the Battle Ruler
+--Gaia, Conqueror of Champions
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

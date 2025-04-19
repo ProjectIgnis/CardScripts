@@ -1,5 +1,5 @@
 --ギャラクシー・ナルトローラ
---Galaxy Narutorolla
+--Galaxy Topping Troll
 
 local s,id=GetID()
 function s.initial_effect(c)

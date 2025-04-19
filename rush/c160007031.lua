@@ -1,5 +1,5 @@
 --海竜クレインドロス
---Sea Dragon Cranedross
+--Sea Dragon Kleindros
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon 1 Sea Serpent/Fish monster from hand

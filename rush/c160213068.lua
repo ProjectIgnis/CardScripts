@@ -1,5 +1,5 @@
 --ライヤー・ワイヤー
---Lair Wire
+--Lair Wire (Rush)
 --Scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --背番号３９ 球児皇ホーム
---Uniform No. 39: Junior Baseball King, Home
+--Player #39: Home Run Hitter
 
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --ヴォイドヴェルグ・モルゲンスタイン
---Voidvelgr Morgenstein
+--Voidvelg Morgenstein
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

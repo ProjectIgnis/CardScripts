@@ -1,5 +1,5 @@
 --猫の目
---Cat's Eyes
+--Cat's Eye
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

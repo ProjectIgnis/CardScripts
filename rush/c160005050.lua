@@ -1,5 +1,5 @@
 -- 魔迅雷 
--- Majinrai, the Magical Lightning
+--Majinrai, the Striking Storm
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

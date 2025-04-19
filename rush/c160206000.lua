@@ -1,4 +1,5 @@
 --Meteor Black Dragon (Rush)
+--Meteor Black Dragon (Rush)
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material

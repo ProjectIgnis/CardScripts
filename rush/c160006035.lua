@@ -1,4 +1,5 @@
 --Gatekeeping Gargoyle
+--Gate Gargoyle
 local s,id=GetID()
 function s.initial_effect(c)
 	--Make 1 of your monsters gain 1 level

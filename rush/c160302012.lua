@@ -1,5 +1,5 @@
 --火竜の熱閃
---Fire Dragon's Heatflash
+--Dragon's Inferno
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

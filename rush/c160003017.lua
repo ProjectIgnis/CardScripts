@@ -1,5 +1,5 @@
 --聖剣士の鞘払いシース 
---Sheath the Scabbard of the Holy Swordsman
+--Sieth, the Scabbard of Noble Arms
 
 local s,id=GetID()
 function s.initial_effect(c)

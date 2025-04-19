@@ -1,5 +1,5 @@
 --花牙クノイチ・エトランゼ
---Flower Fang Kunoichi Etranzer
+--Etraynze the Shadow Flower Ninja
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon

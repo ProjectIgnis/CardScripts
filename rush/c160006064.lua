@@ -1,5 +1,5 @@
 --永久凍結
---Eternal Freeze
+--Forever Freeze
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate(summon)

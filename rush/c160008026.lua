@@ -1,5 +1,5 @@
 -- 恵雷の精霊
--- Spirit of Bolt of Inspiration
+--Lightning Bringer Spirit
 local s,id=GetID()
 function s.initial_effect(c)
 	--Shuffle 1 card from your opponent's GY into the Deck

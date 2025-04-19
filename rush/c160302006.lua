@@ -1,5 +1,5 @@
 --ツインエッジ・ドラゴン
---Twin-Edge Dragon
+--Twin Edge Dragon
 
 local s,id=GetID()
 function s.initial_effect(c)

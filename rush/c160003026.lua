@@ -1,5 +1,5 @@
 --死魔将ケッシン
---Kesshin the Decided Death Demon General
+--Kesshin the Dark Decimator
 
 local s,id=GetID()
 function s.initial_effect(c)

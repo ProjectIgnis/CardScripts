@@ -1,5 +1,5 @@
 -- ドグーチェ・ラングドシャコウキ
--- Dogulce Langue de Chakoki
+--Dogulce Langue de Shakoki
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

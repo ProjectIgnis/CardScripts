@@ -1,5 +1,5 @@
 --アサルト・アルマート 
---Assault Armato
+--Assault Cannon
 local s,id=GetID()
 function s.initial_effect(c)
 	--Make 1 of opponent's monsters lose 300 ATK/DEF

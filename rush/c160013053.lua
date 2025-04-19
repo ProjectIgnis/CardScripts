@@ -1,5 +1,5 @@
 --カリス魔杖デス・ワンド
---Magic Scepter of Charis - Death Wand
+--Charis Magic Scepter - Death Wand
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

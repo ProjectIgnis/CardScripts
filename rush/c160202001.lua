@@ -1,4 +1,5 @@
 --Supreme Machine Magnum Overlord [L]
+--Supreme Machine Magnum Overlord [L]
 local s,id=GetID()
 function s.initial_effect(c)
 	--Make itself gain ATK until end of this turn

@@ -1,5 +1,5 @@
 -- 幻書鳩の騎士ナイト・ヴィジョン
--- Phantom Dove Night Vision
+--Night Vision the Phantom Pigeon
 local s,id=GetID()
 function s.initial_effect(c)
 	--gain atk

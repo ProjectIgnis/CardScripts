@@ -1,5 +1,5 @@
 --ヘルフレイムエンペラー
---Infernal Flame Emperor
+--Infernal Flame Emperor (Rush)
 --Scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

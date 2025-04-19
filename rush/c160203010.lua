@@ -1,5 +1,5 @@
 -- ナリキング・レックス 
--- Upstart King Rex
+--Ritzy King Rex
 local s,id=GetID()
 function s.initial_effect(c)
 	--Draw

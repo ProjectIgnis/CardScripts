@@ -1,3 +1,3 @@
 --コズミックストリング・ヌードルイダス
---Cosmic String Noodle-Druidess
+--Cosmic String Noodryad
 Duel.LoadCardScriptAlias(160202042)

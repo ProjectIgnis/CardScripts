@@ -1,3 +1,3 @@
 --ロイヤルデモンズ・パンク
---Royal Demon's Punk
+--Royal Rebel's Rocker
 Duel.LoadCardScriptAlias(160201017)

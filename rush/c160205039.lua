@@ -1,5 +1,5 @@
 --エクスキューティー・スクランブル！
---Excutie Scramble!
+--Executie Scramble!
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special Summon 1 level 6 with 500 def

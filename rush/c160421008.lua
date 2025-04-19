@@ -1,5 +1,5 @@
 -- 最強戦旗ゴールドラッシュ
--- Saikyo Battle Flag Gold Rush
+--Ultimate Flag Mech Gold Rush
 local s,id=GetID()
 function s.initial_effect(c)
 	--Add card to hand

@@ -1,5 +1,5 @@
 -- 暗黒シャイン王アークトーク 
--- Shining Black Corporate King Arktalk the Corrupt
+--Worker Warrior - Sinister CEO
 local s,id=GetID()
 function s.initial_effect(c)
 	-- Set 

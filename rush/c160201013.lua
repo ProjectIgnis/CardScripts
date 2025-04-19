@@ -1,5 +1,5 @@
 --一同礼状
---Scroll of Simultaneous Salutations
+--Scroll of Salutation
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

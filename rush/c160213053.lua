@@ -1,5 +1,5 @@
 --栄華夢中のシルビクス
---Fleeting Delirium Sylvix
+--Fleeting Delirium Silbyx
 --Scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

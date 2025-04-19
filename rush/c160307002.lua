@@ -1,5 +1,5 @@
 --星戦騎アスボロス
---Absolus the Star Knight
+--Asbolus the Star Knight
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --呪いの着信番号
---Terror Phone Number
+--Terrorphone Number
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

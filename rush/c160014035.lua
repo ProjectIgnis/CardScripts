@@ -1,5 +1,5 @@
 --天始の怪依
---The Strange Specter of Celestial Starts
+--Specter of Heaven's Beginning
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

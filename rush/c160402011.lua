@@ -1,5 +1,5 @@
 -- 陰陽極士ドウマ
--- Onmyou Supreme Sage Douma
+--Douma the Talismanic Supreme Sage
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

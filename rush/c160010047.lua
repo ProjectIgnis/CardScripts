@@ -1,5 +1,5 @@
 --雨に打たれれば
---Caught in the Rain
+--Embracing the Rain
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

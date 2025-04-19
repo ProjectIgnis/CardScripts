@@ -1,5 +1,5 @@
 --仙人の神髄
---Essence of the Hermit
+--Hermit's Soul
 
 local s,id=GetID()
 function s.initial_effect(c)

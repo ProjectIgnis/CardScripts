@@ -1,5 +1,5 @@
 --Maid's Present
--- メイドの土産
+--Maid's Baneful Gift
 
 local s,id=GetID()
 function s.initial_effect(c)

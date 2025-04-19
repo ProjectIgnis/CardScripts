@@ -1,5 +1,5 @@
 --特上寿司天使ガリブエル
---Garibel the Extra Premium Sushi Angel
+--Gingangel, the Deluxe Sushi Fairy
 
 local s,id=GetID()
 function s.initial_effect(c)

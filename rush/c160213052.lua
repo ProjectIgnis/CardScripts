@@ -1,5 +1,5 @@
 --現夢中のシルビクス
---Oneirophrenia Delirium Sylvix
+--Oneirophrenia Delirium Silbyx
 --Scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

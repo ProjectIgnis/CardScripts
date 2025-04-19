@@ -1,5 +1,5 @@
 -- 交剣死哀
--- Cross-Sword Deathmatch
+--Climax Clash
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

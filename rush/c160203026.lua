@@ -1,5 +1,5 @@
 -- ドウェルチェア・スケイル
--- Dwell Chair Scale
+--Scarechair Scale
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

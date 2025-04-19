@@ -1,5 +1,5 @@
 -- 重騎屋戦法 
--- Heavy Mequestrian Tactics
+--Heavy Cavalry Tactics
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

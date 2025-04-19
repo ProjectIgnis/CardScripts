@@ -1,5 +1,5 @@
 --エリート秘密捜査官ミステリー
---Elite Secret Investigator Mystery
+--Elite Agent Mystery
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

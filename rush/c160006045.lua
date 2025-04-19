@@ -1,5 +1,5 @@
 --フォローウィング・ワールド 
---Follow Wing World
+--Following World
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

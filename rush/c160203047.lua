@@ -1,5 +1,5 @@
 --ローリング・ホットアロー
---Rolling Hot Arrow
+--Rolled Hot Arrow
 local s,id=GetID()
 function s.initial_effect(c)
 	--If opponent normal summons, special summon 1 insect 100 ATK or less from hand or grave

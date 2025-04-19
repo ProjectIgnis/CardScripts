@@ -1,5 +1,5 @@
 -- 火麺炙りバーナーの術
--- Art of Masked Fiery Noodle Scorching Burner
+--The Noodle Art of Roastery
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

@@ -1,5 +1,5 @@
 --アリバティ・フラッグ 
---Libanty Flag
+--Antiberty Flag
 --Scripted by edo9300
 local s,id=GetID()
 function s.initial_effect(c)

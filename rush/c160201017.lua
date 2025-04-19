@@ -1,5 +1,5 @@
 --ロイヤルデモンズ・パンク
---Royal Demon's Punk
+--Royal Rebel's Rocker
 local s,id=GetID()
 function s.initial_effect(c)
 	--Add 1 Level 6 or higher Fiend from your GY to your hand

@@ -1,5 +1,5 @@
 --Ｅ・ＨＥＲＯ バブルマン
---Elemental HERO Bubbleman
+--Elemental HERO Bubbleman (Rush)
 --Scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

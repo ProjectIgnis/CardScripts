@@ -1,5 +1,5 @@
 --キングス・ディグニティ
---King's Dignity
+--King's Majesty
 
 local s,id=GetID()
 function s.initial_effect(c)

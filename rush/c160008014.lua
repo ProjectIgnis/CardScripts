@@ -1,5 +1,5 @@
 --戦天女キリハリー
---Valkyrian Cutpasterie
+--Shearkyrie the Celestial Seamstress
 
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --厨房の神 ディアン・ケト
---Dian Keto the Kitchen Master
+--Dian Keto the Cooking Master
 local s,id=GetID()
 function s.initial_effect(c)
 	--Send the top 3 cards of your Deck to the GY

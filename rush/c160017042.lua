@@ -1,5 +1,5 @@
 --七宝神－米大
---Deity of Seven Treasures - Heitai
+--Deity of Seven Treasures - Beidai
 --Scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

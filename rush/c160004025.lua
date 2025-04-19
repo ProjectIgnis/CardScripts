@@ -1,5 +1,5 @@
 --幻刃妖精ピッケロン
---Pickelong the Mythic Sword Fairy
+--Picklon the Constructor Fairy
 local s,id=GetID()
 function s.initial_effect(c)
 	--Draw

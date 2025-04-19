@@ -1,5 +1,5 @@
 --竜騎士ガイア (Rush)
---Gaia he Dragon Champion (Rush)
+--Gaia the Dragon Champion (Rush)
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

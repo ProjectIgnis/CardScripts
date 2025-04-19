@@ -1,5 +1,5 @@
 -- 混沌の勇者ライダクロス・アッシュ
--- Brave of Chaos, Lydacross Ash
+--Raidacross Ash, Hero of Chaos
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material

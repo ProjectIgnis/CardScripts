@@ -1,5 +1,5 @@
 --ランプの炎魔エチル
---Ethyl the Flame Jinn of the Lamp
+--Ethyl the Fire Genie of the Lamp
 local s,id=GetID()
 function s.initial_effect(c)
 	-- Special Summon

@@ -1,3 +1,3 @@
 --エクスキューティー・フローア
---Executie Floor
+--Executie Floa
 Duel.LoadCardScriptAlias(160205033)

@@ -1,4 +1,5 @@
 --The☆Star Dragon
+--The Star Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	-- atk change

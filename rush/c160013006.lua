@@ -1,5 +1,5 @@
 --ヴォイドヴェルグ・キリエ
---Voidvelgr Kyrie
+--Voidvelg Kyrie
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --Ｅ・ＨＥＲＯ サンダー・ジャイアント
---Elemental HERO Thunder Giant
+--Elemental HERO Thunder Giant (Rush)
 --Scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

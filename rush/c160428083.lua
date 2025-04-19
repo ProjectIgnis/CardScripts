@@ -1,5 +1,5 @@
 --ビックリ・ゾンビクトリー
---Surprising Zombie Victory
+--Surprising Zomvictory
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

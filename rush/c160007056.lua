@@ -1,5 +1,5 @@
 -- カンバック！カンショック！！
--- Comeback! Feelshock!!
+--Shocking Comeback!!
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

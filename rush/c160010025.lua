@@ -1,5 +1,5 @@
 --ヴォイドヴェルグ・レクイエム
---Voidvelgr Requiem
+--Voidvelg Requiem
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --吹き抜ける風
---The Wind Blowing Through
+--Atrium's Wind
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

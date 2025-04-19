@@ -1,5 +1,5 @@
 --エクスキューティー・プラウティ・Ｆ
---Excutie Prouty Frontiere
+--Executie Prouty Frontiere
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

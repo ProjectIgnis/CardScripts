@@ -1,5 +1,5 @@
 --滅びの爆裂疾風弾
---Burst Stream of Destruction
+--Burst Stream of Destruction (Rush)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

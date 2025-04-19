@@ -1,3 +1,3 @@
 --超魔旗艦マグナム・オーバーロード［Ｌ］
---Super Magiflag Ship Magnum Over Road [L]
+--Supreme Skystream Magnum Overlord [L]
 Duel.LoadCardScriptAlias(160203001)

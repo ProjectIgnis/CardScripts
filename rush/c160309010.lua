@@ -1,5 +1,5 @@
 --幻刃闘士ミキサ
---Constructor Brawler Mixah
+--Constructor Fighter Mixer
 local s,id=GetID()
 function s.initial_effect(c)
 	--ATK increase

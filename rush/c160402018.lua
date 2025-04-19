@@ -1,5 +1,5 @@
 --ヴォイドヴェルグ・トランジ
---Voidvelgr Transi
+--Voidvelg Transi
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

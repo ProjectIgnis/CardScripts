@@ -1,5 +1,5 @@
 --Hot-Blooded Spirits Stadium
--- 熱血スピリッツ・スタジアム
+--Feverous Spirit Stadium
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

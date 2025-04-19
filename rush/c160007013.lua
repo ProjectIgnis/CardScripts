@@ -1,5 +1,5 @@
 -- 山嵐竜
--- Mountain Storm Dragon
+--Porcupine Dragon
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --ロード・マジック－バックフロー
---Road Magic - Backflow
+--Road Magic - Flowback
 --Scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,4 +1,5 @@
 --N・フレア・スカラベ
+--Neo-Spacian Flare Scarab (Rush)
 local s,id=GetID()
 function s.initial_effect(c)
 	--atk up

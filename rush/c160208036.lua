@@ -1,5 +1,5 @@
 --三千破界
---Universal Destruction
+--Destruction of the Universe
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

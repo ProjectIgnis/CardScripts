@@ -1,5 +1,5 @@
 --魔将キメルーラ
---Fiendish Commander Kimeruler
+--Kimeruler the Dark Raider
 
 local s,id=GetID()
 function s.initial_effect(c)

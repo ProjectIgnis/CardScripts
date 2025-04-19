@@ -1,5 +1,5 @@
 --ピーコック・ハイトロン
---Picock Hightron
+--Peacock Picotron
 
 --Substitute ID
 local s,id=GetID()

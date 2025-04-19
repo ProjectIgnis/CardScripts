@@ -1,3 +1,3 @@
 -- 最強戦旗ゴールドラッシュ
--- Saikyo Battle Flag Gold Rush
+--Ultimate Flag Mech Gold Rush
 Duel.LoadCardScriptAlias(160421008)

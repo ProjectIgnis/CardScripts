@@ -1,5 +1,5 @@
 --真花牙クノイチ・ガーランド
---True Flower Fang Kunoichi Garrand
+--Garland the True Shadow Flower Ninja
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon

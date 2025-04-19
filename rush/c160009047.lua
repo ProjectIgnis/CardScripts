@@ -1,5 +1,5 @@
 -- メ守破離剣
--- Shuhari Sword
+--Defense Destroying Sword
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

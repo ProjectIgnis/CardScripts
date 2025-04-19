@@ -1,5 +1,5 @@
 --漆黒シャイン王Gアークトーク 
---Shining Black Corporate King Great Arktalk the Corrupt
+--Worker Warrior - Sinister Chairman
 
 local s,id=GetID()
 function s.initial_effect(c)

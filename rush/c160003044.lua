@@ -1,5 +1,5 @@
 --火中の栗
---Chestnuts Out of the Fire
+--Blazing Chestnut
 
 --Substitute ID
 local s,id=GetID()

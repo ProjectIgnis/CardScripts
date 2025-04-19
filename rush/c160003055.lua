@@ -1,5 +1,5 @@
 --キラー・バイトボール
---Killer Bite Ball
+--Bait Bite Ball
 
 --Substitute ID
 local s,id=GetID()

@@ -1,5 +1,5 @@
 --背誤射撃
---Rear Misfire
+--Faulty Fire
 local s,id=GetID()
 function s.initial_effect(c)
 	--Destroy 1 of opponent's level 6 or lower effect monsters

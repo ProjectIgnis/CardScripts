@@ -1,5 +1,5 @@
 -- 監獄島アネ・ゴ ・ロック 
--- Prison Island Ane Go Rock
+--Prison Island - Cell Block 5 & 6
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate

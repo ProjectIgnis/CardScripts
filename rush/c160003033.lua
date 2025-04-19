@@ -1,5 +1,5 @@
 --火麺上忍カエダマゴックブート
---Masked Fiery Noodle Jonin Kaedama Gockboot
+--Extra Spice the Elite Noodle Ninja
 local s,id=GetID()
 function s.initial_effect(c)
 	--Gain ATK

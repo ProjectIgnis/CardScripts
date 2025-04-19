@@ -1,5 +1,5 @@
 --ヴォイドヴェルグ・アポカリプス
---Voidvelgr Apocalypse
+--Voidvelg Apocalypse
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

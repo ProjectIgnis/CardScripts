@@ -1,5 +1,5 @@
 --ロイヤルデモンズ・フェイザー
---Royal Demon’s Phaser
+--Royal Rebel's Phaser
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon

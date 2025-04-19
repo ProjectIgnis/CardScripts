@@ -1,5 +1,5 @@
 -- ドリームラマー
--- Dreamrummer
+--Dream Drummer
 
 --Substitute ID
 local s,id=GetID()

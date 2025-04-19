@@ -1,4 +1,5 @@
 -- 火麺特忍ミソインスタント (かめんとくにんミソインスタント) Kamen Tokunin Miso Instant (Fiery Masked Noodle Tokunin Miso Instant) 
+--Miso Instant the Special Noodle Ninja
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material

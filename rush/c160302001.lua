@@ -1,5 +1,5 @@
 --連撃竜ドラギアス
---Rush Dragon Dragears
+--Multistrike Dragon Dragias
 local s,id=GetID()
 function s.initial_effect(c)
 	--Attack

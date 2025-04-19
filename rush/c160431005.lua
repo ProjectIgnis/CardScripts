@@ -1,3 +1,3 @@
 --ケミカライズ・サラマンダー
---Chemicalize Salamander
+--Chemicalized Salamander
 Duel.LoadCardScriptAlias(160010020)

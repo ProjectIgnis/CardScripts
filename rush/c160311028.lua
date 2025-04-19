@@ -1,5 +1,5 @@
 --トランザム・アライブ
---Transamu Arrive
+--Transam Alive
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special Summon 1 Galaxy Normal Monster from the GY

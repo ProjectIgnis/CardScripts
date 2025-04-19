@@ -1,5 +1,5 @@
 --炎の天秤
---Scales of Flame
+--Scale of Flame
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

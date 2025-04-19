@@ -1,5 +1,5 @@
 --超魔輝獣マグナム・オーバーロード
---Supreme Beast Magnum Overlord
+--Supreme Wildgleam Magnum Overlord
 local s,id=GetID()
 function s.initial_effect(c)
 	Maximum.AddProcedure(c,nil,s.filter1,s.filter2)

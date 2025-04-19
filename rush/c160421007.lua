@@ -1,3 +1,3 @@
 -- 幻刃竜ビルド・ドラゴン
--- Build Dragon the Mythic Sword Dragon
+--Constructor Wyrm Buildragon
 Duel.LoadCardScriptAlias(160004024)

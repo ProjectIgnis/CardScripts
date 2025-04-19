@@ -1,5 +1,5 @@
 -- Meteorlarva
--- メテオラーヴァ
+--Meteorlarva
 local s,id=GetID()
 function s.initial_effect(c)
 	-- Mill

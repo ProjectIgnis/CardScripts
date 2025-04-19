@@ -1,5 +1,5 @@
 --１アップ
---1 Up
+--1-Up
 
 local s,id=GetID()
 function s.initial_effect(c)

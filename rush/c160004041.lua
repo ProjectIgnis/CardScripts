@@ -1,5 +1,5 @@
 --悪星の導き
--- Evil Star's Guidance
+--Evil Star Beacon
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

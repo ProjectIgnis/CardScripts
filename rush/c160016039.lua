@@ -1,5 +1,5 @@
 --トランザム・プライム・フルアーマーノヴァ
---Transamu Praime Full Armor Nova
+--Transam Praime Full Armor Nova
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

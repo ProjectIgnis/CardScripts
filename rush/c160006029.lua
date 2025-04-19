@@ -1,5 +1,5 @@
 -- 花牙祭のジャスミン
--- Flower Fang Festival Jasmine
+--Jasmine the Shadow Flower Festival
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

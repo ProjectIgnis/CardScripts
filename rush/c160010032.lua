@@ -1,5 +1,5 @@
 --邪犬武闘神シバ
---Wicked Dog Warrior Deity Shiva
+--Mean Mutt Sacred Shiba
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

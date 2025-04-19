@@ -1,5 +1,5 @@
 --監獄の神 ディアン・ケト 
---Dian Keto the Prison Master
+--Dian Keto the Security Master
 local s,id=GetID()
 function s.initial_effect(c)
 	--Gain LP

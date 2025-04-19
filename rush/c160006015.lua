@@ -1,5 +1,5 @@
 --火雷神サンダーボールド
---Thunderbold the Lightningfire Deity
+--Thunderbold, the Blazing Thunder
 local s,id=GetID()
 function s.initial_effect(c)
 	--Increase ATK

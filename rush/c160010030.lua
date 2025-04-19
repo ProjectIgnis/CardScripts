@@ -1,5 +1,5 @@
 --治療の神童 ディアン・ケト
---Dian Keto the Cure Maiden
+--Dian Keto the Cure Prodigy
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

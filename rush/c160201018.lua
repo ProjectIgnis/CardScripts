@@ -1,5 +1,5 @@
 --ロイヤルデモンズ・シャウト
---Royal Demon's Shout
+--Royal Rebel's Shout
 local s,id=GetID()
 function s.initial_effect(c)
 	--Hand Destruction

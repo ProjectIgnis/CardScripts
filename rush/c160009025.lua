@@ -1,5 +1,5 @@
 --貿績蚕フィブロン
---Swapling Silkworm Fibellon
+--Swapling Silkworm Fibron
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

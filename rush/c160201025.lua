@@ -1,5 +1,5 @@
 --魔人の熱風 
---Simoom of the Genie
+--Genie's Fire Breath
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

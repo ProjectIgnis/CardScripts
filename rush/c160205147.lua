@@ -1,3 +1,3 @@
 --ヴォイドヴェルグ・アポカリプス
---Voidvelgr Apocalypse
+--Voidvelg Apocalypse
 Duel.LoadCardScriptAlias(160205047)

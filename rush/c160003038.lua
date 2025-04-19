@@ -1,5 +1,5 @@
 --哨艇エルダイン
---Sentry Boat Eldrain
+--Eldign Patrol Ship
 
 local s,id=GetID()
 function s.initial_effect(c)

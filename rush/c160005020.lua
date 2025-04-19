@@ -1,5 +1,5 @@
 --魔将分隊 武組
---Takegumi of the Fiendish Commander Squad
+--Takegumi the Ruler's Squad
 local s,id=GetID()
 function s.initial_effect(c)
 	--Make 1 of your winged beast monsters gain 1000 ATK

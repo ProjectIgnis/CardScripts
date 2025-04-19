@@ -1,5 +1,5 @@
 -- 特報マシン・タフロイド 
--- News Flash Machine Toughroid
+--Printing Presser
 local s,id=GetID()
 function s.initial_effect(c)
 	--excavate

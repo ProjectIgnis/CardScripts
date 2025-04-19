@@ -1,5 +1,5 @@
 --ＡＩくまキャン
---A.I. Bear Can
+--Ice Pop Bear
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

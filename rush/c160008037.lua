@@ -1,4 +1,4 @@
--- Meika Etraynze the Shadow Flower Venus
+--花牙絢爛メイカ・エトランゼ
 --Meika Etraynze the Shadow Flower Venus
 local s,id=GetID()
 function s.initial_effect(c)

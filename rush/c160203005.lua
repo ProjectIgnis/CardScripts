@@ -1,4 +1,4 @@
---大恐竜駕ダイナーミクス［R］
+--大恐竜駕ダイナ－ミクス［Ｌ
 --Dynamic Dino Dynamix [L]
 local s,id=GetID()
 function s.initial_effect(c)

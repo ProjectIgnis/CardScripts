@@ -1,10 +1,10 @@
--- 体力増強剤ストロングZ Tairyoku Zoukyou Zai Strong Z (Strength Enhancement Drug Strong Z/Strong Z/Energy Drink Z)
+--体力増強剤ストロングＺ
 --Nutrient Zero
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Gain LP equal to sum of the targeted monsters' Level
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_RECOVER)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)

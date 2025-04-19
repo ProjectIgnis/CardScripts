@@ -1,4 +1,4 @@
---Meteor Black Dragon (Rush)
+--メテオ・ブラック・ドラゴン
 --Meteor Black Dragon (Rush)
 local s,id=GetID()
 function s.initial_effect(c)

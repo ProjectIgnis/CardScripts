@@ -1,4 +1,4 @@
---Sakuretsu Force
+--聖なる装甲 －炸裂フォース－
 --Sakuretsu Force
 local s,id=GetID()
 function s.initial_effect(c)

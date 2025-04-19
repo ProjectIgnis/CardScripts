@@ -1,6 +1,5 @@
+--執念の竜
 --Fortitude Dragon
---Fortitude Dragon
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Make 1 of opponent's monsters lose 400 ATK

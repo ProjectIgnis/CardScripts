@@ -1,4 +1,4 @@
---仙斗カーチスザーク Masento Kachisuzaku (Demonic Hermit Vessel Kachisuzaku)
+--魔仙斗カーチスザーク
 --Karchizark the Unequaled
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,6 +1,5 @@
+--荒野の七輪ホルモン・ガンマックイーン
 --Hormone GunMcQueen, the Magnificent Shichirin
---Hormone GunMcQueen, the Magnificent Shichirin
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material

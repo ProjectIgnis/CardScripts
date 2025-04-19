@@ -1,4 +1,4 @@
--- 火麺特忍ミソインスタント (かめんとくにんミソインスタント) Kamen Tokunin Miso Instant (Fiery Masked Noodle Tokunin Miso Instant) 
+--火麺特忍ミソインスタント
 --Miso Instant the Special Noodle Ninja
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,4 +1,4 @@
--- Berserker Colosseum
+--バーサーカーコロシアム
 --Berserker Colosseum
 local s,id=GetID()
 function s.initial_effect(c)

@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	e1:SetValue(s.splimit)
 	c:RegisterEffect(e1)
-	--Prevent destruction by opponent's effect
+	--Your Insect monsters cannot be destroyed by your opponent's card effects
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetTarget(aux.TargetBoolFunction(Card.IsRace,RACE_INSECT))
 	e2:SetValue(aux.indoval)
 	c:RegisterEffect(e2)
-	--Prevent effect target
+	--Your opponent cannot target Insect monsters you control with card effects,
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
@@ -31,7 +31,7 @@ function s.initial_effect(c)
 	e3:SetTarget(aux.TargetBoolFunction(Card.IsRace,RACE_INSECT))
 	e3:SetValue(aux.tgoval)
 	c:RegisterEffect(e3)
-	--Chain attack
+	--This card can attack an opponent's monster again in a row
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,0))
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -40,9 +40,9 @@ function s.initial_effect(c)
 	e4:SetCost(s.atcost)
 	e4:SetOperation(s.atop)
 	c:RegisterEffect(e4)
-	--Special Summon
+	--Special Summon 1 "Insect Monster Token"
 	local e5=Effect.CreateEffect(c)
-	e5:SetDescription(aux.Stringid(91512835,1))
+	e5:SetDescription(aux.Stringid(id,1))
 	e5:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
 	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e5:SetRange(LOCATION_MZONE)

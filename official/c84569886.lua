@@ -5,7 +5,7 @@ function s.initial_effect(c)
 	c:EnableReviveLimit()
 	Pendulum.AddProcedure(c,false)
 	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_DDD),2)
-	--atk
+	--Make an opponent's monster lose 1000 ATK until the end of this turn
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_ATKCHANGE)
@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.atkcon1)
 	e1:SetOperation(s.atkop1)
 	c:RegisterEffect(e1)
-	--destroy
+	--Destroy 1 Attack Position monster your opponent controls and inflict damage to your opponent equal to half its original ATK
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DESTROY+CATEGORY_DAMAGE)
@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.destg)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
-	--reset atk
+	--Make the ATK of an opponent's monster become equal to its original ATK until the end of the Damage Step
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetCategory(CATEGORY_ATKCHANGE)
@@ -37,9 +37,9 @@ function s.initial_effect(c)
 	e3:SetCondition(s.atkcon2)
 	e3:SetOperation(s.atkop2)
 	c:RegisterEffect(e3)
-	--pendulum
+	--Place this card in your Pendulum Zone
 	local e6=Effect.CreateEffect(c)
-	e6:SetDescription(aux.Stringid(100219001,3))
+	e6:SetDescription(aux.Stringid(id,3))
 	e6:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e6:SetCode(EVENT_DESTROYED)
 	e6:SetProperty(EFFECT_FLAG_DELAY)

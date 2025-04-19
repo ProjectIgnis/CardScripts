@@ -11,9 +11,9 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	e1:SetValue(aux.FALSE)
 	c:RegisterEffect(e1)
-	--special summon
+	--Must be Special Summoned (from your hand) by Tributing 3 monsters
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(83965310,0))
+	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_SPSUMMON_PROC)
 	e2:SetProperty(EFFECT_FLAG_UNCOPYABLE)
@@ -22,13 +22,13 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	--act limit
+	--Your opponent cannot activate cards or effects during the Battle Phase.
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e3:SetCode(EFFECT_CANNOT_ACTIVATE)
-	e3:SetTargetRange(0,1)
 	e3:SetRange(LOCATION_MZONE)
+	e3:SetTargetRange(0,1)
 	e3:SetCondition(s.actcon)
 	e3:SetValue(1)
 	c:RegisterEffect(e3)
@@ -58,6 +58,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 			atk=atk+batk
 		end
 	end
+	--This card's ATK becomes the combined original ATK of the Tributed monsters
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_SET_ATTACK)

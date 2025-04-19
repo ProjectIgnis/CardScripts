@@ -45,7 +45,7 @@ function s.initial_effect(c)
 	e5:SetRange(LOCATION_MZONE)
 	e5:SetCountLimit(1)
 	e5:SetCondition(s.spcon)
-	e5:SetCost(aux.dxmcostgen(1,1,nil))
+	e5:SetCost(Cost.Detach(1))
 	e5:SetTarget(s.sptg)
 	e5:SetOperation(s.spop)
 	--

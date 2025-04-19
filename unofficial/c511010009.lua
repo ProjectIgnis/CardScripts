@@ -34,7 +34,7 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1)
 	e3:SetCondition(s.dacon)
-	e3:SetCost(aux.dxmcostgen(1,1,nil))
+	e3:SetCost(Cost.Detach(1))
 	e3:SetOperation(s.daop)
 	c:RegisterEffect(e3,false,REGISTER_FLAG_DETACH_XMAT)
 	--Cannot be destroyed by battle, except by "Number" monsters

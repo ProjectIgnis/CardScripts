@@ -1,5 +1,5 @@
 --彩光のプリマギターナ
---Prima Guitarna of the Colorful Light
+--Prima Guitarna the Shining Superstar
 local s,id=GetID()
 function s.initial_effect(c)
 	--ATK increase

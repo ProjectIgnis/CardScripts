@@ -1,5 +1,5 @@
 --正統なるバーストブレス
---Traditional Burst Breath
+--Burst Breath of Destruction
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

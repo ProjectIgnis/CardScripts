@@ -1,5 +1,5 @@
 --冥骸デッド・ルーラー
---Dark Skeleton Dead Ruler
+--Dark Doom Dread Ruler
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
---アロマグマ 
---Aromagrrma
+--アロマグマ
+--Aromagmabear
 local s,id=GetID()
 function s.initial_effect(c)
 	--Gain LP

@@ -30,7 +30,7 @@ function s.initial_effect(c)
 end
 --cost
 function s.tdfilter(c,tp)
-	return c:IsCode(160201028) and c:IsAbleToDeckOrExtraAsCost() and Duel.IsExistingMatchingCard(s.tdfilter2,tp,LOCATION_GRAVE,0,1,c) 
+	return c:IsCode(160201028) and c:IsAbleToDeckOrExtraAsCost() and Duel.IsExistingMatchingCard(s.tdfilter2,tp,LOCATION_GRAVE,0,1,c)
 end
 function s.tdfilter2(c)
 	return c:IsCode(160002023) and c:IsAbleToDeckOrExtraAsCost()

@@ -1,5 +1,5 @@
 --古代の機械猟犬
---Ancient Gear Hunting Hound
+--Ancient Gear Hunting Hound (Rush)
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

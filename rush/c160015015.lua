@@ -27,7 +27,7 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Effect
 	if Duel.DiscardDeck(tp,2,REASON_EFFECT)==0 then return end
-	if Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil) 
+	if Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil)
 		and Duel.IsExistingMatchingCard(Card.IsSpellTrap,tp,0,LOCATION_ONFIELD,1,nil)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)

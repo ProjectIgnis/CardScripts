@@ -1,5 +1,5 @@
 --花牙美人のゲッカ
---Flower Fang Beauty Gekka
+--Gekka the Shadow Flower Beauty
 local s,id=GetID()
 function s.initial_effect(c)
 	--Send to GY and destroy

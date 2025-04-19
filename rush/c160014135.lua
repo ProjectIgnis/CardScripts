@@ -1,3 +1,3 @@
 --天始の怪依
---The Strange Specter of Celestial Starts
+--Specter of Heaven's Beginning
 Duel.LoadCardScriptAlias(160014035)

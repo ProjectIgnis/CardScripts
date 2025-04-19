@@ -50,5 +50,5 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.sumlimit(e,c)
-	return c:IsLocation(LOCATION_HAND+LOCATION_GRAVE)
+	return c:IsLocation(LOCATION_HAND|LOCATION_GRAVE)
 end

@@ -1,3 +1,3 @@
 --ヴォイドヴェルグ・トランジ
---Voidvelgr Transi
+--Voidvelg Transi
 Duel.LoadCardScriptAlias(160402018)

@@ -1,5 +1,5 @@
 --闘将ナンデス
---Nanes the Fire Awakener
+--Nandes the Fire Awakener
 
 local s,id=GetID()
 function s.initial_effect(c)

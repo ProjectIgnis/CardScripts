@@ -65,7 +65,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCode(EFFECT_EXTRA_ATTACK_MONSTER)
 	e2:SetValue(1)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
+	e2:SetReset(RESETS_STANDARD_DISABLE_PHASE_END)
 	c:RegisterEffect(e2)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)

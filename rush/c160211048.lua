@@ -74,6 +74,6 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetAttackTarget()
 	if tg==nil then	
 		local fid=eg:GetFirst():GetFieldID()
-		e:GetLabelObject():SetLabel(fid) 
+		e:GetLabelObject():SetLabel(fid)
 	end
 end

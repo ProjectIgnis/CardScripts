@@ -1,5 +1,5 @@
 -- はぐれ集い魔
--- Stray Familia
+--Straynge Cats
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

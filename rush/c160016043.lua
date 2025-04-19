@@ -1,5 +1,5 @@
 --華蝶風彩のプロフェシーフレイル
---Prophecy Flail of the Colors of the Wind, Butterflies, and Flowers
+--Prophecy Flail of the Colors of the Wind, Butterflies and Flowers
 --Scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

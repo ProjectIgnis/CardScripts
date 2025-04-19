@@ -1,5 +1,5 @@
 -- 世紀末獣戦士伝説
---Post-Apocalyptic Beast-Warrior Legend
+--Apocalypse - Legend of the Warrior
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

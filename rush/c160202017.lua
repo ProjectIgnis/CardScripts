@@ -1,4 +1,4 @@
---ヨクトロン 
+--ヨクトロン
 --Yoctron
 
 local s,id=GetID()

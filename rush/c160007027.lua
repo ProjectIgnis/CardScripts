@@ -1,5 +1,5 @@
--- 背番号99 球児皇龍ホームグランドラ 
--- Uniform No. 99: Junior Baseball King Dragon, Home Groundra
+-- 背番号99 球児皇龍ホームグランドラ
+--Player #99: Grand Slam Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-end 
+end
 s.listed_names={CARD_UNIFORM_39}
 function s.tdfilter(c,tp)
 	return c:IsMonster() and c:IsAttribute(ATTRIBUTE_FIRE)	and c:IsAbleToDeckOrExtraAsCost()
@@ -49,7 +49,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetValue(2000)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
+			e1:SetReset(RESETS_STANDARD_DISABLE_PHASE_END)
 			c:RegisterEffect(e1)
 		end
 	end

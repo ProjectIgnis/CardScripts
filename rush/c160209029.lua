@@ -1,4 +1,5 @@
 --Twin Edge Fire Dragon
+--Twin Edge Fire Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--Make 1 of your Dragon monsters gain 500 ATK

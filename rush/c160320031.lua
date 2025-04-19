@@ -1,5 +1,5 @@
 --ミラクル・フュージョン
---Miracle Fusion
+--Miracle Fusion (Rush)
 --Scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)
@@ -17,7 +17,7 @@ function s.fextra(e,tp,mg)
 	return Duel.GetMatchingGroup(s.mfilter,tp,LOCATION_GRAVE|LOCATION_MZONE,0,nil)
 end
 function s.extraop(e,tc,tp,sg)
-	local gg=sg:Filter(Card.IsLocation,nil,LOCATION_HAND+LOCATION_GRAVE)
+	local gg=sg:Filter(Card.IsLocation,nil,LOCATION_HAND|LOCATION_GRAVE)
 	if #gg>0 then Duel.HintSelection(gg,true) end
 	local rg=sg:Filter(Card.IsFacedown,nil)
 	if #rg>0 then Duel.ConfirmCards(1-tp,rg) end

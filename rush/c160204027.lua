@@ -1,5 +1,5 @@
 -- ザ☆パワーアップ
--- The☆Power-Up
+--The Power Up
 local s,id=GetID()
 function s.initial_effect(c)
 	--Increase ATK

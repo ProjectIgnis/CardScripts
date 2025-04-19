@@ -1,5 +1,5 @@
 --超撃龍ドラギアスターＦ
---Superstrike Dragon Dragiastar F
+--Hyperstrike Dragon Dragiastar F
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()

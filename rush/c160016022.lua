@@ -1,5 +1,5 @@
 --秘密捜査官ミスファイア
---Secret Investigator Misfire
+--Agent Mishap
 --Scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)
@@ -40,7 +40,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_CANNOT_ATTACK)
 	e1:SetTargetRange(LOCATION_MZONE,0)
 	e1:SetTarget(s.ftarget)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.ftarget(e,c)

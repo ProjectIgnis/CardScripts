@@ -1,5 +1,5 @@
 -- 幻刃竜ビルド・ドラゴン
--- Build Dragon the Mythic Sword Dragon
+--Constructor Wyrm Buildragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon wyrm normal monster from GY

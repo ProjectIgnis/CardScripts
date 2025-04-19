@@ -1,5 +1,5 @@
 --モンスター招集
---Monster Convocation
+--Monster Calling
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)
@@ -31,7 +31,7 @@ end
 function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local tc=Duel.SelectMatchingCard(tp,s.drcostfilter,tp,LOCATION_HAND,0,1,1,nil):GetFirst()
-	if Duel.SendtoGrave(tc,REASON_COST)==1 and Duel.Draw(tp,1,REASON_EFFECT)>0 then 
+	if Duel.SendtoGrave(tc,REASON_COST)==1 and Duel.Draw(tp,1,REASON_EFFECT)>0 then
 		local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.spfilter),tp,LOCATION_GRAVE,0,nil,e,tp)
 		if #g>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

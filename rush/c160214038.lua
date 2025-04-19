@@ -1,5 +1,5 @@
 --アルティメット・バースト
---Neutron Blast
+--Neutron Blast (Rush)
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

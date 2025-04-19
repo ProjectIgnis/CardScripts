@@ -1,5 +1,5 @@
 --邪犬雷帝ドライヌ
---Wicked Dog Thunder Emperor Dorainu
+--Mean Mutt Duke Doberguardian
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

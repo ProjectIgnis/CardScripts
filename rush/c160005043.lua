@@ -1,5 +1,5 @@
 --セツリの流転
---Vicissitude of Providence
+--Transmigration of Curiosity
 local s,id=GetID()
 function s.initial_effect(c)
 	--Shuffle 4 monsters into the deck to draw 1

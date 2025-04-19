@@ -1,5 +1,5 @@
---水分補給 
---Moisturize
+--水分補給
+--Hydration
 local s,id=GetID()
 function s.initial_effect(c)
 	--heal and destroy
@@ -24,7 +24,7 @@ function s.rectg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.recop(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
-	if Duel.Recover(p,d,REASON_EFFECT)>0 then 
+	if Duel.Recover(p,d,REASON_EFFECT)>0 then
 		local dg=Duel.GetMatchingGroup(Card.IsSpellTrap,tp,0,LOCATION_ONFIELD,nil)
 		if #dg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 			local sg=dg:Select(tp,1,1,nil)

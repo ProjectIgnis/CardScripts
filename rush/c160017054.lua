@@ -1,5 +1,5 @@
 --ブルー・トゥース・リコネクト
---Blue Tooth Reconnect
+--Blue-Fang Reconnect
 --Scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

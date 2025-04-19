@@ -1,5 +1,5 @@
 -- ハートブレイクルック
--- Heartbreak Look
+--Brocoohearted Pigeon
 
 local s,id=GetID()
 function s.initial_effect(c)

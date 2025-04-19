@@ -1,5 +1,5 @@
---楽姫の倍急風 
--- Music Maiden Twin Squall
+--楽姫の倍急風
+--Music Princess's Whirling Wind
 local s,id=GetID()
 function s.initial_effect(c)
 	--Position change

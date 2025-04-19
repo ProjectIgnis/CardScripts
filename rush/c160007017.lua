@@ -1,5 +1,5 @@
 -- 月魔将キメルーナ
---Kimeluna the Lunar Dark Decider
+--Kimeluna the Dark Shifter
 
 local s,id=GetID()
 function s.initial_effect(c)

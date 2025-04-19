@@ -1,4 +1,5 @@
 --N・フレア・スカラベ
+--Neo-Spacian Flare Scarab (Rush)
 local s,id=GetID()
 function s.initial_effect(c)
 	--atk up
@@ -12,5 +13,5 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.val(e,c)
-	return Duel.GetMatchingGroupCount(Card.IsType,c:GetControler(),0,LOCATION_ONFIELD,nil,TYPE_SPELL|TYPE_TRAP)*400
+	return Duel.GetMatchingGroupCount(Card.IsSpellTrap,c:GetControler(),0,LOCATION_ONFIELD,nil)*400
 end

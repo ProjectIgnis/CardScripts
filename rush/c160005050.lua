@@ -1,5 +1,5 @@
--- 魔迅雷 
--- Majinrai, the Magical Lightning
+-- 魔迅雷
+--Majinrai, the Striking Storm
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -22,10 +22,10 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,e:GetHandler()) end
 end
 function s.filter(c)
-	return c:IsRace(RACE_FIEND) and c:IsLevelAbove(7) and c:IsType(TYPE_NORMAL) and c:IsFaceup() 
+	return c:IsRace(RACE_FIEND) and c:IsLevelAbove(7) and c:IsType(TYPE_NORMAL) and c:IsFaceup()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return 
+	return
 	(Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_SUMMONED_SKULL),tp,LOCATION_MZONE,0,1,nil)
 	or
 	Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil))

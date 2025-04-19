@@ -1,5 +1,5 @@
 --朧撃龍ミラギアスターＦ
---Fantasia Strike Dragon Miragiastar F
+--Hazy Strike Dragon Miragiastar F
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material

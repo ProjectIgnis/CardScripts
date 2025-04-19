@@ -37,8 +37,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local ct=Duel.GetMatchingGroupCount(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	Duel.DiscardDeck(tp,ct,REASON_EFFECT)
 	local g=Duel.GetOperatedGroup()
-	if g:FilterCount(Card.IsMonster,nil)>0 
-		and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_GRAVE,0,1,nil) 
+	if g:FilterCount(Card.IsMonster,nil)>0
+		and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_GRAVE,0,1,nil)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		local g2=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_GRAVE,0,1,2,nil)
 		if #g2>0 then

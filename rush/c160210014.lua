@@ -1,3 +1,3 @@
 --カリス魔杖デス・ワンド
---Magic Scepter of Charis - Death Wand
+--Charis Magic Scepter - Death Wand
 Duel.LoadCardScriptAlias(160013053)

@@ -1,5 +1,5 @@
 --脅威の人造人間－サイコ・ショッカー
---Jinzo the Machine Menace
+--Jinzo the Machine Menace (Rush)
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cfilter(c)
-	return c:IsMonster() and c:IsAbleToDeckOrExtraAsCost() 
+	return c:IsMonster() and c:IsAbleToDeckOrExtraAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,2,nil) end
@@ -29,7 +29,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,2,tp,LOCATION_GRAVE)
 end
 function s.tdfilter3(c)
-	return c:IsMonster() and c:IsAbleToDeck() 
+	return c:IsMonster() and c:IsAbleToDeck()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	-- Requirement

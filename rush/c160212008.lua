@@ -1,5 +1,5 @@
 --古代の機械兵士
---Ancient Gear Soldier
+--Ancient Gear Soldier (Rush)
 --Scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

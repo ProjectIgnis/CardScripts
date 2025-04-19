@@ -1,5 +1,5 @@
 --陰陽士サカカゼ
---Onmyou Warrior Sakakaze
+--Sakakaze the Talismanic Warrior
 local s,id=GetID()
 function s.initial_effect(c)
 	--shuffle to deck

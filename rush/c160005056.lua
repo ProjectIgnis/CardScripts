@@ -1,5 +1,5 @@
---水の泡－崩壊のバブル－ 
--- All For Naught -Bubble Burst-
+--水の泡－崩壊のバブル－
+--All For Naught - Bubble Burst
 local s,id=GetID()
 function s.initial_effect(c)
 	--Opponent's attacking monster loses ATK

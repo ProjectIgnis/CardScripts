@@ -1,5 +1,5 @@
 --月輪龍アンブランサーＦ
---Full Moon Dragon Umbrlancer F
+--Full Moon Dragon Umbralancer F
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material

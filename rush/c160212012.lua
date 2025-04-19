@@ -1,5 +1,5 @@
 --古代の整備場
---Ancient Gear Workshop
+--Ancient Gear Workshop (Rush)
 --Scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

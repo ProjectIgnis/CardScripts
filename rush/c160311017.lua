@@ -1,5 +1,5 @@
 --トランザム・クライネ
---Transamu Klein
+--Transam Kleine
 local s,id=GetID()
 function s.initial_effect(c)
 	--Draw and send 1 card from hand to GY
@@ -37,6 +37,6 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_CANNOT_ATTACK)
 	e1:SetTargetRange(LOCATION_MZONE,0)
 	e1:SetTarget(function(_,c) return not c:IsRace(RACE_GALAXY) end)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end

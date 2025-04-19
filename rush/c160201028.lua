@@ -1,5 +1,5 @@
 --夢弦のフォルダーブリッツ
---Foldablitz of the Dream Strings
+--Folder Blitz the Infinite Dream
 local s,id=GetID()
 function s.initial_effect(c)
 	--Inflict 1500 damage

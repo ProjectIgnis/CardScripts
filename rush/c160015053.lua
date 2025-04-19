@@ -1,5 +1,5 @@
 --透幻郷の錦綉
---Autum Leaves of Blisstopia
+--Autumn Leaves of Blisstopia
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

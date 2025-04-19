@@ -1,5 +1,5 @@
 --特上寿司天使ガリブエル
---Garibel the Extra Premium Sushi Angel
+--Gingangel, the Deluxe Sushi Fairy
 
 local s,id=GetID()
 function s.initial_effect(c)
@@ -49,7 +49,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetTargetRange(LOCATION_MZONE,0)
 		e1:SetTarget(s.ftarget)
 		e1:SetLabel(c:GetFieldID())
-		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_PHASE|PHASE_END)
 		Duel.RegisterEffect(e1,tp)
 	end
 end

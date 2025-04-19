@@ -1,5 +1,5 @@
 --竜骸のプシュケラ
---Dino Skeleton Pushcera
+--Dino Fossil Psycera
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)
@@ -20,7 +20,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeckAsCost(tp,2) end
 end
 function s.cfilter(c)
-	return c:IsMonster() and c:IsRace(RACE_DINOSAUR) and c:IsType(TYPE_NORMAL) 
+	return c:IsMonster() and c:IsRace(RACE_DINOSAUR) and c:IsType(TYPE_NORMAL)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,1,nil)

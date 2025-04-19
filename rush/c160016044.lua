@@ -1,5 +1,5 @@
 --セレブローズ・インフルエンサーズ
---Celeb Rose Influncers
+--Celeb Rose Influencers
 --Scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

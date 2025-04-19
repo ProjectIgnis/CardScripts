@@ -1,5 +1,5 @@
 -- 山嵐竜
--- Mountain Storm Dragon
+--Porcupine Dragon
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
@@ -31,7 +31,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.PayLPCost(tp,500)
 	-- Effect
 	Duel.DiscardDeck(tp,1,REASON_EFFECT)
-	if #Duel.GetOperatedGroup()>0 
+	if #Duel.GetOperatedGroup()>0
 		and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_GRAVE,0,1,nil)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)

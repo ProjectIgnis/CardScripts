@@ -1,5 +1,5 @@
 --ヴォイドヴェルグ・ゴッドレクイエム
---Voidvelgr God Requiem
+--Voidvelg God Requiem
 --Scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

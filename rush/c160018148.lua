@@ -1,3 +1,3 @@
 --エクスキューティー・リュミエル・Ｆ
---Excutie Lumiere Frontiere
+--Executie Lumiere Frontiere
 Duel.LoadCardScriptAlias(160018048)

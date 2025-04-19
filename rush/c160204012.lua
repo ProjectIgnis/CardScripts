@@ -1,5 +1,5 @@
 --虚鋼演機塔
---Imaginary Ark Tower
+--Imaginary Arc Tower
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

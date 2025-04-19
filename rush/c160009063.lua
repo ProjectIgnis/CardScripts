@@ -1,5 +1,5 @@
 --転倒無視
---Tumbling Insects
+--Ignoring Insect
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

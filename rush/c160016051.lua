@@ -31,7 +31,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND|LOCATION_MZONE,0,1,2,e:GetHandler())
 	g=g:AddMaximumCheck()
-	if Duel.SendtoGrave(g,REASON_COST)<1 then return end 
+	if Duel.SendtoGrave(g,REASON_COST)<1 then return end
 	if Duel.Draw(tp,1,REASON_EFFECT)<1 then return end
 	local g2=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.spfilter),tp,LOCATION_GRAVE,0,nil,e,tp)
 	if #g2>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then

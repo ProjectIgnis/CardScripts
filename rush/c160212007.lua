@@ -1,5 +1,5 @@
 --古代の機械獣
---Ancient Gear Beast
+--Ancient Gear Beast (Rush)
 --Scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --観測亀スパイタートル
---Spyturtle the Observational Turtle
+--Spyturtle
 local s,id=GetID()
 function s.initial_effect(c)
 	--Make 1 of your winged beast monsters gain 200 ATK and 2 level

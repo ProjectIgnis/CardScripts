@@ -1,5 +1,5 @@
 --超魔導騎士－ブラック・キャバルリー
---Dark Cavalry
+--Dark Cavalry (Rush)
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)
@@ -34,11 +34,8 @@ end
 function s.ffilter(c,fc,sumtype,tp)
 	return c:IsRace(RACE_WARRIOR,scard,sumtype,tp) and c:IsDefense(2100)
 end
-function s.filter(c)
-	return c:IsType(TYPE_SPELL|TYPE_TRAP)
-end
 function s.val(e,c)
-	return Duel.GetMatchingGroupCount(s.filter,0,LOCATION_GRAVE,LOCATION_GRAVE,nil)*100
+	return Duel.GetMatchingGroupCount(Card.IsSpellTrap,0,LOCATION_GRAVE,LOCATION_GRAVE,nil)*100
 end
 function s.condition(e)
 	return Duel.GetFieldGroupCount(e:GetHandlerPlayer(),LOCATION_HAND,0)>=1

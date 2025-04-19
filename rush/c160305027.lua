@@ -1,5 +1,5 @@
--- オジギルド 
--- Bowing of the Graying Gauze Guild
+-- オジギルド
+--Bowing Brotherhood
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

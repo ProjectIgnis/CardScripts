@@ -1,5 +1,5 @@
 --メタリオン・ヴリトラスター
---Metallion Vritrastar
+--Metarion Vritrastar
 local s,id=GetID()
 function s.initial_effect(c)
 	--Fusion Summon

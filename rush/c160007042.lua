@@ -1,5 +1,5 @@
---超魔基地マグナム・オーバーベース 
--- Super Magibase Magnum Overbase
+--超魔基地マグナム・オーバーベース
+--Supreme Marine Fortress Magnum Overbase
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

@@ -33,8 +33,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<1 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
-	if Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)>0 
-		and Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(s.attfilter),tp,0,LOCATION_MZONE,1,nil) 
+	if Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)>0
+		and Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(s.attfilter),tp,0,LOCATION_MZONE,1,nil)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 		local g=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.attfilter),tp,0,LOCATION_MZONE,1,3,nil)

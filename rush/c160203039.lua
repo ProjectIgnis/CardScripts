@@ -1,5 +1,5 @@
 --極上寿司天使アガリブエル
---Agariel, the Finest Sushi Angel
+--Agariel, the Finest Sushi Fairy
 
 --Substitute ID
 local s,id=GetID()

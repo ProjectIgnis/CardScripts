@@ -1,3 +1,4 @@
+--超魔機神マグナム・オーバーロード［Ｒ］
 --Supreme Machine Magnum Overlord [R]
 local s,id=GetID()
 function s.initial_effect(c)

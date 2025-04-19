@@ -1,3 +1,3 @@
 --夢幻刃龍ビルドリム
---Infinidream Constructor Wyrm Buildrim
+--Infinite Constructor Wyrm Buildream
 Duel.LoadCardScriptAlias(160421014)

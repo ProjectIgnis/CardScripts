@@ -1,5 +1,5 @@
 --哨艇エルダイン
---Sentry Boat Eldrain
+--Eldign Patrol Ship
 
 local s,id=GetID()
 function s.initial_effect(c)
@@ -20,7 +20,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tdfilter,tp,LOCATION_GRAVE,0,1,nil) end
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsFacedown,tp,0,LOCATION_ONFIELD,1,nil) 
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsFacedown,tp,0,LOCATION_ONFIELD,1,nil)
 	end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
@@ -31,7 +31,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		--Effect
 		local g=Duel.SelectMatchingCard(tp,Card.IsFacedown,tp,0,LOCATION_ONFIELD,1,1,nil):GetFirst()
 		Duel.HintSelection(Group.FromCards(g))
-		if g and g:IsFacedown() then 
+		if g and g:IsFacedown() then
 			Duel.ConfirmCards(tp,g)
 		end
 	end

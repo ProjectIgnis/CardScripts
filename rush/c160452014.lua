@@ -1,3 +1,3 @@
 --ヴォイドヴェルグ・エリジウム
---Voidvelgr Elysium
+--Voidvelg Elysium
 Duel.LoadCardScriptAlias(160317001)

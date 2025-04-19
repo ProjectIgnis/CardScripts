@@ -1,5 +1,5 @@
 -- 天帝の威眼
---The Menacing Eyes of the Heavenly Emperor
+--Mighty Gaze of the Sky Emperor
 local s,id=GetID()
 function s.initial_effect(c)
 	--Position change

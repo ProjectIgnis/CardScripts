@@ -1,3 +1,3 @@
 --エクスキューティー・ライディング！
---Excutie Riding!
+--Executie Riding!
 Duel.LoadCardScriptAlias(160014064)

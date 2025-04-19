@@ -1,5 +1,5 @@
 --昂光天使エッセル
---Rising Light Angel Esser
+--Rising Light Angel Essel
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

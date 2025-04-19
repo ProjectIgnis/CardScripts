@@ -1,5 +1,5 @@
 --大恐竜駕ダイナーミクス
---Great Imperial Dinocarriage Dynarmix
+--Dynamic Dino Dynamix
 local s,id=GetID()
 function s.initial_effect(c)
 	Maximum.AddProcedure(c,nil,s.filter1,s.filter2)

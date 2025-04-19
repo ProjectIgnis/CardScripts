@@ -1,5 +1,5 @@
 --アメガロポリス
---Rainy Megalopolis
+--Rainapolis
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

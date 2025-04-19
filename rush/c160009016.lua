@@ -1,5 +1,5 @@
 --トランザム・エフィライ
---Transamu Ephyrai
+--Transam Ephyrai
 local s,id=GetID()
 function s.initial_effect(c)
 	--"Transamu Rainac" gains 1000 ATK

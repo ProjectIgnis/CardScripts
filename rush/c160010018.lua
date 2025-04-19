@@ -1,5 +1,5 @@
 --火葬犬ニトロ
---Cremation Dog Nitro
+--Nitro Hound
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -35,6 +35,6 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e1:SetTargetRange(LOCATION_MZONE,0)
 	e1:SetTarget(function(_,c) return not c:IsRace(RACE_PYRO) end)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end

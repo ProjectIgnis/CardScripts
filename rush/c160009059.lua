@@ -1,5 +1,5 @@
 -- 破竜の咆鋼
--- Demolition Wyrm Roar
+--Demolisher Wyrm Roar
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

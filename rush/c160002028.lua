@@ -1,5 +1,5 @@
 --獣機界王カタパルト・デビルコング
---Beast Gear Emperor Catapult King
+--Beast Gear Emperor Catapult Kong
 --Scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

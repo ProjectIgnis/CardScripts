@@ -1,5 +1,5 @@
 --サイバー・ドラゴン・ツヴァイ
---Cyber Dragon Zwei
+--Cyber Dragon Zwei (Rush)
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --天の加護
---Heavenly Protection
+--Heavenly Gift
 
 --Substitute ID
 local s,id=GetID()

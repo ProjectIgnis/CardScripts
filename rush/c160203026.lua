@@ -1,5 +1,5 @@
 -- ドウェルチェア・スケイル
--- Dwell Chair Scale
+--Scarechair Scale
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-end 
+end
 function s.condition(e,tp)
 	return not Duel.IsExistingMatchingCard(Card.IsMonster,tp,LOCATION_ONFIELD,0,1,e:GetHandler())
 end

@@ -1,5 +1,5 @@
 --昇陣の装備品
---Armaments of Ascension
+--Equipment of Ascension
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

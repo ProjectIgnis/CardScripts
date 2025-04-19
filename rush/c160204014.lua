@@ -1,5 +1,5 @@
 -- 虚鋼演機再動
--- Imaginary Ark Turnback
+--Imaginary Arc Turnback
 local s,id=GetID()
 function s.initial_effect(c)
 	--summon a light with 500 def or a cyborg

@@ -1,5 +1,5 @@
---花牙蘭獅子ガジュウ丸 
---Gajuumaru the Shadow Flower Lion
+--花牙蘭獅子ガジュウ丸
+--Gajumaru the Shadow Flower Lion
 local s,id=GetID()
 function s.initial_effect(c)
 	--Targeted monster loses ATK
@@ -20,7 +20,7 @@ function s.filter(c)
 	return c:IsFaceup() and c:GetBaseAttack()>0 and c:IsLevelBelow(8) and c:IsAttribute(ATTRIBUTE_EARTH) and c:IsNotMaximumModeSide()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_MZONE,0,1,e:GetHandler()) 
+	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_MZONE,0,1,e:GetHandler())
 		and Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,nil) end
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)

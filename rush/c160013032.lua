@@ -1,5 +1,5 @@
 --顕現術師ドルテオ
---Manifestation Master Dortheo
+--Summoning Sorcerer Doretheo
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

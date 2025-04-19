@@ -1,8 +1,10 @@
---鬼将メザメ Kishou Mezame (Mezame the Oni Commander)
+--鬼将メザメ
+--Mezame the Ringing Alarm
 local s,id=GetID()
 function s.initial_effect(c)
 	--Add card to hand
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
@@ -36,7 +38,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_OATH)
 		e1:SetTargetRange(LOCATION_MZONE,0)
 		e1:SetTarget(s.ftarget)
-		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_PHASE|PHASE_END)
 		Duel.RegisterEffect(e1,tp)
 	end
 end

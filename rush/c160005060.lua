@@ -1,5 +1,5 @@
 -- ハート道化
--- Clown Clock Heart
+--Clowning Cookoo Clock
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

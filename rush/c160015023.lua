@@ -1,5 +1,5 @@
 --地獄河童リバースプリンター
---Infernal Kappa River Sprinter
+--Pandemonium Kappa River Sprinter
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

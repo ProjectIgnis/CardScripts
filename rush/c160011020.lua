@@ -21,7 +21,7 @@ function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)
-	local ct2=Duel.GetFieldGroupCount(1-tp,LOCATION_HAND,0) 
+	local ct2=Duel.GetFieldGroupCount(1-tp,LOCATION_HAND,0)
 	if ct==0 and ct2==0 then
 		if chk==0 then return Duel.IsPlayerCanDraw(tp,1) and Duel.IsPlayerCanDraw(1-tp,1) end
 		Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,PLAYER_ALL,1)

@@ -44,7 +44,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local dg=g:Select(tp,1,1,nil)
 		dg:AddMaximumCheck()
 		Duel.HintSelection(dg,true)
-		local ct=Duel.Destroy(dg,REASON_EFFECT) 
+		local ct=Duel.Destroy(dg,REASON_EFFECT)
 		if ct>0 then
 			local g2=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.spfilter),tp,0,LOCATION_GRAVE,nil,e,tp)
 			if #g2>0 and Duel.IsExistingMatchingCard(s.attfilter,tp,LOCATION_GRAVE,0,1,nil,tp) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then

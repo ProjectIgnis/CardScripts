@@ -1,5 +1,5 @@
 --抑竜コアトルステルン
---Suppressaurus Coatlustern
+--Supressaurus Coatlustern
 --Scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

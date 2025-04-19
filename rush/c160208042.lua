@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-end 
+end
 s.listed_names={160004024}
 function s.tdfilter(c)
 	return c:IsMonster() and c:IsRace(RACE_WYRM) and c:IsAbleToDeckOrExtraAsCost()

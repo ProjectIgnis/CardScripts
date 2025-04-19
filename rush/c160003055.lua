@@ -1,5 +1,5 @@
 --キラー・バイトボール
---Killer Bite Ball
+--Bait Bite Ball
 
 --Substitute ID
 local s,id=GetID()
@@ -28,7 +28,7 @@ function s.atkfilter(c)
 end
 	--Activation legality
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,nil) 
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,nil)
 		and Duel.IsExistingMatchingCard(s.atkfilter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_ATKCHANGE,nil,0,0,LOCATION_MZONE)
 end

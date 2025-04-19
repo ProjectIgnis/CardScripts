@@ -1,5 +1,5 @@
 --ヴォイドヴェルグ・レクイエム
---Voidvelgr Requiem
+--Voidvelg Requiem
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -33,14 +33,14 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESETS_STANDARD_DISABLE_PHASE_END)
 		e1:SetValue(ct*300)
 		c:RegisterEffect(e1)
 		if Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsAttribute,ATTRIBUTE_LIGHT),tp,0,LOCATION_MZONE,1,nil) then
 			local e2=Effect.CreateEffect(c)
 			e2:SetType(EFFECT_TYPE_SINGLE)
 			e2:SetCode(EFFECT_UPDATE_ATTACK)
-			e2:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
+			e2:SetReset(RESETS_STANDARD_DISABLE_PHASE_END)
 			e2:SetValue(600)
 			c:RegisterEffect(e2)
 		end

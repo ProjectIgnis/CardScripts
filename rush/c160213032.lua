@@ -1,3 +1,3 @@
 --大恐竜駕ダイナーミクス
---Great Imperial Dinocarriage Dynarmix
+--Dynamic Dino Dynamix
 Duel.LoadCardScriptAlias(160203006)

@@ -1,4 +1,4 @@
---重騎起動装置 
+--重騎起動装置
 --Heavy Cavalry Starter
 local s,id=GetID()
 function s.initial_effect(c)

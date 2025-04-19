@@ -54,7 +54,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 				e1:SetTargetRange(1,0)
 				e1:SetCondition(s.accon)
 				e1:SetValue(s.aclimit)
-				e1:SetReset(RESET_PHASE+PHASE_END)
+				e1:SetReset(RESET_PHASE|PHASE_END)
 				Duel.RegisterEffect(e1,tp)
 				Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,2)
 			end

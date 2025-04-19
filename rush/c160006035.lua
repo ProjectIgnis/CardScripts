@@ -1,8 +1,10 @@
---Gatekeeping Gargoyle
+--門衛のガーゴイル
+--Gate Gargoyle
 local s,id=GetID()
 function s.initial_effect(c)
 	--Make 1 of your monsters gain 1 level
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)

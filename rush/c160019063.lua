@@ -1,5 +1,5 @@
 --狡猾な落とし穴
---Treacherous Trap Hole
+--Treacherous Trap Hole (Rush)
 --Scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

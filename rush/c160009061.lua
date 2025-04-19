@@ -1,5 +1,5 @@
 -- 迎え突き！
--- Greeting Strike!
+--Engage and Strike!
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

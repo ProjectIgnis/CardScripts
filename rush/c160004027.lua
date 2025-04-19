@@ -1,5 +1,5 @@
 --突楽姫トランペットンファー
---Trumpetonfa the Stabbing Music Maiden
+--Trumpetonfa the Music Princess
 local s,id=GetID()
 function s.initial_effect(c)
 	--ATK increase

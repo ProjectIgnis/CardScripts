@@ -1,5 +1,5 @@
 --サイバースパイス・クイーンターメリック
---Cyberspice Queen Turmeric
+--Cybersepice Queen Turmeric
 --Scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

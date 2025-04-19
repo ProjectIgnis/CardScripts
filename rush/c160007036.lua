@@ -1,5 +1,5 @@
 --てんしょうルーラヤメテラス
---Yamiterasu the Divine Delayer
+--Yamiterasu the Divine Ruler
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material

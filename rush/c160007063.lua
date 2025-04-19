@@ -1,5 +1,5 @@
 -- 事件です！
--- It's an Accident!
+--Breaking News!
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

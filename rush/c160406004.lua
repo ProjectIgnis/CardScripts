@@ -1,5 +1,5 @@
 --サイコな埋葬
---Psycho Burial
+--Psychic Burial
 
 local s,id=GetID()
 function s.initial_effect(c)

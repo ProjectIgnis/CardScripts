@@ -1,5 +1,5 @@
 --ヴァルカン・イグナイト・ハイパードライブ
---Vulcan Ignition Overdrive
+--Vulcan Ignite Hyperdrive
 local s,id=GetID()
 function s.initial_effect(c)
 	--Inflict damage

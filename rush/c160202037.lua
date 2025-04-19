@@ -1,5 +1,5 @@
 --イスの冥王ダユー
---Dayu the Dark King of Chairs
+--Dahut, Dark Ruler of the Chair
 local s,id=GetID()
 function s.initial_effect(c)
 	--ATK increase

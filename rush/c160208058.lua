@@ -33,7 +33,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.HintSelection(g,true)
 	Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	local dg=Duel.GetMatchingGroup(s.desfilter,tp,0,LOCATION_MZONE,nil)
-	if g:Filter(Card.IsLocation,nil,LOCATION_DECK|LOCATION_EXTRA):GetSum(Card.GetLevel)>=16 
+	if g:Filter(Card.IsLocation,nil,LOCATION_DECK|LOCATION_EXTRA):GetSum(Card.GetLevel)>=16
 		and #dg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.BreakEffect()
 		Duel.Destroy(dg,REASON_EFFECT)

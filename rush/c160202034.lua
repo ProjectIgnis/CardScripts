@@ -1,5 +1,5 @@
 --嵐を呼ぶサンダービート
---Storm-Calling Thunderbeat
+--Thunderbeetle Storm
 
 local s,id=GetID()
 function s.initial_effect(c)

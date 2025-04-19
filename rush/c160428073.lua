@@ -1,5 +1,5 @@
 --這いずり回る半身
---The Half-Body Crawling Around
+--Crawling Torso
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

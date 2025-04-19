@@ -1,5 +1,5 @@
 --Ｅ・ＨＥＲＯ フレイム・ウィングマン
---Elemental HERO Flame Wingman
+--Elemental HERO Flame Wingman (Rush)
 --Scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

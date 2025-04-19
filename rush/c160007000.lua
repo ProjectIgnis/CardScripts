@@ -1,5 +1,5 @@
 --海竜－ダイダロス
---Levia-Dragon - Daedalus
+--Levia-Dragon - Daedalus (Rush)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Destroy all cards on the field

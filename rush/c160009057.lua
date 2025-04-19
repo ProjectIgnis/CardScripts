@@ -1,5 +1,5 @@
 -- 手札増刷
--- Card Reprint
+--Card Reprinting
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

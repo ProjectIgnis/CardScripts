@@ -1,5 +1,5 @@
 --大貫通！！
---Greater Piercing!!
+--Powerful Pierce!!
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

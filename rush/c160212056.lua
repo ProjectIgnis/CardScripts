@@ -1,5 +1,5 @@
 --ワイトキング
---King of the Skull Servants
+--King of the Skull Servants (Rush)
 --Scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

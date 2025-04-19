@@ -1,5 +1,5 @@
 -- ドキドキ・ヘクセンハウス
--- Dokidoki Hexenhaus
+--Doki Doki Hexenhaus
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

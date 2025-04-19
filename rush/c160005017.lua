@@ -1,5 +1,5 @@
+--執念の竜
 --Fortitude Dragon
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--Make 1 of opponent's monsters lose 400 ATK
@@ -21,8 +21,8 @@ function s.filter(c)
 	return c:IsFaceup() and c:IsAttackAbove(2000) and c:IsNotMaximumModeSide()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return 
-		Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,nil) 
+	if chk==0 then return
+		Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,nil)
 	end
 end
 function s.sfilter(c)

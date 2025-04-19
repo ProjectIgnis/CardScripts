@@ -22,7 +22,7 @@ function s.filter1(c,tp)
 	return c:IsSummonPlayer(1-tp) and c:IsLevelAbove(7) and c:IsFaceup()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.filter1,1,nil,tp) 
+	return eg:IsExists(s.filter1,1,nil,tp)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_MZONE,0,1,nil) end

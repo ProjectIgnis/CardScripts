@@ -1,5 +1,5 @@
---幻刃工兵ドラフタンニム 
---Draftannium the Mythic Sword Engineer
+--幻刃工兵ドラフタンニム
+--Constructor Engineer Draftannium
 local s,id=GetID()
 function s.initial_effect(c)
 	--check top of deck

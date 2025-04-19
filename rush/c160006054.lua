@@ -1,5 +1,5 @@
---鉄の重撃 
---Iron Onslaught
+--鉄の重撃
+--Barrage of Steel
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

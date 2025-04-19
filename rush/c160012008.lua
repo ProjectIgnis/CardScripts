@@ -1,5 +1,5 @@
 --ヴォイドヴェルグ・カタフラクトス
---Voidvelgr Kataphraktos
+--Voidvelg Kataphraktos
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

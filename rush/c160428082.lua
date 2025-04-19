@@ -37,7 +37,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e0:SetProperty(EFFECT_FLAG_OATH)
 	e0:SetTargetRange(LOCATION_MZONE,0)
 	e0:SetTarget(function(e,c) return not c:IsRace(RACE_ZOMBIE) end)
-	e0:SetReset(RESET_PHASE+PHASE_END)
+	e0:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e0,tp)
 	--Requirement
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)

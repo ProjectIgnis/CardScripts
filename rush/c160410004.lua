@@ -1,3 +1,3 @@
 -- 幻撃竜ミラギアス
---Fantastrike Dragon Miragears
+--Illusion Strike Dragon Miragias
 Duel.LoadCardScriptAlias(160003025)

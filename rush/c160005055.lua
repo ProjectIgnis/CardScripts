@@ -1,4 +1,4 @@
---美☆魔女封じ 
+--美☆魔女封じ
 -- Pretty☆Witch Imprisonment
 
 local s,id=GetID()

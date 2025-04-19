@@ -1,5 +1,5 @@
 --ロイヤルデモンズ・コマンド
---Royal Demon's Command
+--Royal Rebel's Command
 local s,id=GetID()
 function s.initial_effect(c)
 	--Increase ATK

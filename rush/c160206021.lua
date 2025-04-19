@@ -1,5 +1,5 @@
 --未熟な魔王
---Inexperienced Dark Ruler
+--Embryonic Dark Ruler
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

@@ -42,7 +42,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e1:SetTarget(function(_,tc)return tc:IsFacedown()end)
 	e1:SetValue(1)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,1-tp)
 	aux.RegisterClientHint(c,0,tp,0,1,aux.Stringid(id,0),RESET_PHASE+PHASE_END)
 end

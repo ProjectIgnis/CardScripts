@@ -1,4 +1,4 @@
---最強闘志 
+--最強闘志
 -- Ultimate Fighting Spirit
 
 local s,id=GetID()

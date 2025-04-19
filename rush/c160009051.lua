@@ -1,5 +1,5 @@
 --イントルード・ビートル
---Intrude Beetle
+--Intruding Beetles
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

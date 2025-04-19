@@ -1,10 +1,10 @@
 --メタリオン・キングコブラスター
---Metallion King Cobrastar
+--Metarion King Cobrastar
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--"Imaginary Actor" + "Snake Clown" 
+	--"Imaginary Actor" + "Snake Clown"
 	Fusion.AddProcMix(c,true,true,CARD_IMAGINARY_ACTOR,160008002)
 	--Draw
 	local e1=Effect.CreateEffect(c)

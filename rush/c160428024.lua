@@ -1,5 +1,5 @@
 --彩光超オメガギターナ
---Omega Guitarna the Supreme Shining Superstar
+--Omega Guitarna the Shining Megastar
 local s,id=GetID()
 function s.initial_effect(c)
 	--Fusion Material

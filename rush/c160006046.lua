@@ -1,5 +1,5 @@
 -- 名刺しの命死交換
--- Deadly Business Card Exchange
+--Business Card Barrage
 
 local s,id=GetID()
 function s.initial_effect(c)
@@ -25,7 +25,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return #dg>0 end
 end
 function s.desfilter(c)
-	return c:IsFaceup() and c:IsLevelBelow(7) 
+	return c:IsFaceup() and c:IsLevelBelow(7)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Effect

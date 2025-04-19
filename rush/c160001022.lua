@@ -1,5 +1,5 @@
 --暁の勇者ライダクロス
---Raidacross, Hero of Dawn
+--Raidacross, Hero of the Dawn
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon up to 2 level 5 or lower spellcaster monsters from hand

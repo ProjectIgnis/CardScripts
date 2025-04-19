@@ -1,5 +1,5 @@
 --透幻郷の嶮峻
---The Insurmountable Summit of Spectral Shangri-La
+--Peaks of Blisstopia
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate

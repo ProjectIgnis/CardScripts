@@ -1,5 +1,5 @@
 --地帝グランマーグ
---Granmarg the Rock Monarch
+--Granmarg the Rock Monarch (Rush)
 --Scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

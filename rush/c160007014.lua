@@ -1,8 +1,8 @@
 -- サイピックアッパー
--- Psyphickupper
+--Psypickupper
 local s,id=GetID()
 function s.initial_effect(c)
-	-- Set 
+	-- Set
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_RECOVER)
@@ -33,7 +33,7 @@ local c=e:GetHandler()
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
+			e1:SetReset(RESETS_STANDARD_DISABLE_PHASE_END)
 			e1:SetValue(-800)
 			c:RegisterEffect(e1)
 			if Duel.SelectYesNo(tp,aux.Stringid(id,0)) then

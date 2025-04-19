@@ -1,5 +1,5 @@
 --ザ☆バリア
---The☆Barrier
+--The Barrier
 local s,id=GetID()
 function s.initial_effect(c)
 	--Opponent's attacking monster loses 400 ATK

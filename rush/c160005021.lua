@@ -1,5 +1,5 @@
 --和仮真戦士
---Tranquil Unknown Soldier
+--Wondering Warrior
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon

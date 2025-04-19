@@ -1,4 +1,4 @@
---幻刃剣匠 
+--幻刃剣匠
 --Constructor Sword Foreman
 local s,id=GetID()
 function s.initial_effect(c)

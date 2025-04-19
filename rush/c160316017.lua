@@ -1,5 +1,5 @@
 --ランプの炎魔メチル
---Methyl the Flame Jinn of the Lamp
+--Methyl the Fire Genie of the Lamp
 local s,id=GetID()
 function s.initial_effect(c)
 	--Add 1 level 4 Pyro monster to the hand
@@ -39,6 +39,6 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_CANNOT_ATTACK)
 	e1:SetTargetRange(LOCATION_MZONE,0)
 	e1:SetTarget(function(_,c) return not c:IsRace(RACE_PYRO) end)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end

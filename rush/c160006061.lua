@@ -1,4 +1,4 @@
---援護弾幕 
+--援護弾幕
 -- Covering Barrage
 local s,id=GetID()
 function s.initial_effect(c)

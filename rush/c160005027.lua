@@ -1,5 +1,5 @@
 --花牙僧のミモザ
---Flower Fang Monk Mimosa
+--Acacia the Shadow Flower Priestess
 local s,id=GetID()
 function s.initial_effect(c)
 	--Position change

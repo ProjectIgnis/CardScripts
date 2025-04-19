@@ -1,4 +1,4 @@
---魔将決闘斬 
+--魔将決闘斬
 --Dark Ruler Battle Slash
 local s,id=GetID()
 function s.initial_effect(c)

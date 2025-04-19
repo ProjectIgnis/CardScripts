@@ -1,5 +1,5 @@
 -- 報道狸マイクタン
--- Reporter Raccoon Miketan
+--Reporter Raccoon
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

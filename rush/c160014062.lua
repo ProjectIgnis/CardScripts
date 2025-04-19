@@ -17,7 +17,7 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_GAIA_CHAMPION}
 function s.cfilter(c,tp)
-	return c:GetReasonPlayer()==1-tp and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp) 
+	return c:GetReasonPlayer()==1-tp and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp)
 		and (c:IsReason(REASON_EFFECT) or (c:IsReason(REASON_BATTLE) and Duel.GetAttacker():IsControler(1-tp)))
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)

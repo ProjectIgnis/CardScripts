@@ -1,5 +1,5 @@
---洗浄のサンタクロス 
---Washing Santa Cloth
+--洗浄のサンタクロス
+--Scrubbing Santa Cloth
 local s,id=GetID()
 function s.initial_effect(c)
 	--Draw and recover

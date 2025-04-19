@@ -1,5 +1,5 @@
 --トランザム・ライカー
---Transamu Raiker
+--Transam Lika
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
--- 魔仙斗アイスザーク 
--- Demonic Hermit Vessel Icezark
+-- 魔仙斗アイスザーク
+--Icezark the Unequaled
 local s,id=GetID()
 function s.initial_effect(c)
 --Activate

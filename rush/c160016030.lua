@@ -27,7 +27,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,2,tp,LOCATION_GRAVE)
 end
 function s.spfilter(c,e,tp)
-	return (c:IsCode(CARD_GAIA_CHAMPION) or (c:IsRace(RACE_AQUA) and c:IsDefense(2000))) 
+	return (c:IsCode(CARD_GAIA_CHAMPION) or (c:IsRace(RACE_AQUA) and c:IsDefense(2000)))
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)

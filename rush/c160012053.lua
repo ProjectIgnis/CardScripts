@@ -1,5 +1,5 @@
 --蒼救の照覧
---Skysavior Witnesses
+--Skysavior Watch
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

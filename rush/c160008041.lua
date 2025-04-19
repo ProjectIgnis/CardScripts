@@ -1,5 +1,5 @@
--- Showering Infergyo
--- シャワーリング・インフェルギョ
+--シャワーリング・インフェルギョ
+--Showering Seaferno
 local s,id=GetID()
 function s.initial_effect(c)
 	-- fusion
@@ -7,6 +7,7 @@ function s.initial_effect(c)
 	Fusion.AddProcMix(c,true,true,160008025,CARD_JELLYPLUG)
 	--All pyro monsters you control gain ATK
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DAMAGE)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)

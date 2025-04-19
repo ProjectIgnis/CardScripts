@@ -1,3 +1,3 @@
 -- アトラシュート・ハイドロン
--- Attolashoot Highdron
+--Attrashoot Hydron
 Duel.LoadCardScriptAlias(160421013)

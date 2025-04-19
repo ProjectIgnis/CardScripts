@@ -19,7 +19,7 @@ function s.initial_effect(c)
 end
 s.listed_names={160014008,160312010} --Jointech Hero, Jointech Ace
 function s.spfilter(c,e,tp)
-	return c:IsLevel(7) and c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_EARTH) 
+	return c:IsLevel(7) and c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_EARTH)
 		and (c:IsAbleToHand() or (Duel.GetMZoneCount(tp)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -32,7 +32,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local ct=Duel.GetOperatedGroup():GetFirst()
 	if ct:IsMonster() and ct:IsLevel(7) and ct.roll_dice then
 		local dam=Duel.Damage(1-tp,700,REASON_EFFECT)
-		if dam>0 and Duel.IsExistingMatchingCard(Card.IsNotMaximumModeSide,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) 
+		if dam>0 and Duel.IsExistingMatchingCard(Card.IsNotMaximumModeSide,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
 			and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 			local g=Duel.GetMatchingGroup(Card.IsNotMaximumModeSide,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)

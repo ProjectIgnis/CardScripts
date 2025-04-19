@@ -1,5 +1,5 @@
 --氷帝メビウス
---Mobius the Frost Monarch
+--Mobius the Frost Monarch (Rush)
 --Scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

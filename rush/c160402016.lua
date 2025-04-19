@@ -1,5 +1,5 @@
 --ライステラス・セキュア
---Raistellas Secure
+--Rice Terrace Secure
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

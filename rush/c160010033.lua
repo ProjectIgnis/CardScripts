@@ -37,7 +37,7 @@ function s.thfilter(c)
 end
 function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
-	 Duel.PayLPCost(tp,700) 
+	 Duel.PayLPCost(tp,700)
 	--Effect
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,0,LOCATION_MZONE,1,1,nil)

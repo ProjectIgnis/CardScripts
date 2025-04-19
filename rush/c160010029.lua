@@ -1,5 +1,5 @@
 --御茶女邪神ヌヴィア
---Nuvia the Wicked Mischief Maker
+--Nuvia the Mischievous
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

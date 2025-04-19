@@ -48,8 +48,8 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp,chk)
 	-- Effect
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local hg=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_GRAVE,0,1,1,nil)
-	if #hg>0 and Duel.SendtoHand(hg,nil,REASON_EFFECT)>0 
-		and Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(Card.IsFaceup),tp,0,LOCATION_MZONE,1,nil) 
+	if #hg>0 and Duel.SendtoHand(hg,nil,REASON_EFFECT)>0
+		and Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(Card.IsFaceup),tp,0,LOCATION_MZONE,1,nil)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,3)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATKDEF)
 		local ag=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(Card.IsFaceup),tp,0,LOCATION_MZONE,1,1,nil)

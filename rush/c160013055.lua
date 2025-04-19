@@ -1,5 +1,5 @@
 --魔導槍グレイス・スピア
---Grace Spear the Magical Spear
+--Magical Lance - Grace Spear
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --ゲッコーの３不思議
---The Three Moonlit Mystery Geckos
+--Three Lunar Legends
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

@@ -32,7 +32,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local ctdeck=Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)
-	if ctdeck>3 then ctdeck=3 end 
+	if ctdeck>3 then ctdeck=3 end
 	local g=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_HAND,0,1,ctdeck,nil)
 	local count=Duel.SendtoGrave(g,REASON_COST)
 	--Effect

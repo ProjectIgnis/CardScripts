@@ -1,5 +1,5 @@
 --お注射天使リリー
---Injection Fairy Lily
+--Injection Fairy Lily (Rush)
 --Scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)
@@ -16,9 +16,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then 
+	if chk==0 then
 		if Duel.IsPlayerAffectedByEffect(tp,160019053) then return Duel.CheckLPCost(tp,100) end
-		return Duel.CheckLPCost(tp,2000) 
+		return Duel.CheckLPCost(tp,2000)
 	end
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -32,7 +32,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsPlayerAffectedByEffect(tp,160019053) and (not Duel.CheckLPCost(tp,2000) or Duel.SelectYesNo(tp,aux.Stringid(id,1))) then
 		lpcost=100
 	end
-	Duel.PayLPCost(tp,lpcost) 
+	Duel.PayLPCost(tp,lpcost)
 	--Effect
 	--Increase ATK by 3000
 	local e1=Effect.CreateEffect(c)

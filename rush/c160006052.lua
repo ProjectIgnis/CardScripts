@@ -1,5 +1,5 @@
 -- 渡来古討つデカコレーション
--- Dried Fruit De-kako-ration
+--Dekorelic Dessert
 -- Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --ＨＰアシスタント・アーチ
---Hyper Assistant Achi
+--Ember the Hyper Assistant
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special Summon 1 Level 7 or higher Pyro from the hand

@@ -1,5 +1,5 @@
 -- Ｍｒ．アルケ
--- Mr. Alche
+--Mr. Alchemy
 local s,id=GetID()
 function s.initial_effect(c)
 	--Add card to hand

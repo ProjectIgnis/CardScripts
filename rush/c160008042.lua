@@ -1,5 +1,5 @@
--- Prime Roast Beef Horseman
--- ジョーミノケンタウロース
+--ジョーミノケンタウロース
+--Prime Roast Beef Horseman
 local s,id=GetID()
 function s.initial_effect(c)
 	-- fusion summon
@@ -36,7 +36,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SortDecktop(tp,tp,#g)
 	--gy recover
 	local sg=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_GRAVE,0,nil)
-	if #sg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+	if #sg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.BreakEffect()
 		local tg=aux.SelectUnselectGroup(sg,1,tp,1,ft,s.rescon,1,tp)
 		Duel.SendtoHand(tg,nil,REASON_EFFECT)

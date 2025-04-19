@@ -1,5 +1,5 @@
---魔将方円舞 
---Fiendish Commander Dance
+--魔将方円舞
+--Ruler's Dance
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

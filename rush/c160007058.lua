@@ -1,5 +1,5 @@
 --海豚反撃
---Dolphin Counter
+--Dolphin Counterattack
 local s,id=GetID()
 function s.initial_effect(c)
 	--Destroy a monster with the highest ATK, draw 1 card and inflict 500 damage to the opponent

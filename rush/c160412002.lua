@@ -1,5 +1,5 @@
--- 花牙鬼のユリ 
--- Flower Fang Oni Yuri
+-- 花牙鬼のユリ
+--Yuri the Shadow Flower Fiend
 local s,id=GetID()
 function s.initial_effect(c)
 	--Gain LP

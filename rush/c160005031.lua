@@ -1,5 +1,5 @@
 --真花牙クノイチ・ガーランド
---True Flower Fang Kunoichi Garrand
+--Garland the True Shadow Flower Ninja
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon
@@ -43,7 +43,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 			local tc=g:GetFirst()
 			local fid=c:GetFieldID()
-			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,fid)
+			tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1,fid)
 			local e2=Effect.CreateEffect(c)
 			e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 			e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)

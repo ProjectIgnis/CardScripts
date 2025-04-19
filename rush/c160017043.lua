@@ -8,17 +8,17 @@ function s.initial_effect(c)
 	local e1=aux.AddNormalSummonProcedure(c,true,true,3,3,SUMMON_TYPE_TRIBUTE+1,aux.Stringid(id,0),aux.FilterBoolFunction(Card.IsType,TYPE_EFFECT))
 	--
 	local e1=Effect.CreateEffect(c)
-    e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-    e1:SetCode(EVENT_SUMMON_SUCCESS)
-    e1:SetOperation(s.operation)
-    c:RegisterEffect(e1)
-    --tribute check
-    local e2=Effect.CreateEffect(c)
-    e2:SetType(EFFECT_TYPE_SINGLE)
-    e2:SetCode(EFFECT_MATERIAL_CHECK)
-    e2:SetValue(s.valcheck)
-    e2:SetLabelObject(e1)
-    c:RegisterEffect(e2)
+	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e1:SetCode(EVENT_SUMMON_SUCCESS)
+	e1:SetOperation(s.operation)
+	c:RegisterEffect(e1)
+	--tribute check
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_SINGLE)
+	e2:SetCode(EFFECT_MATERIAL_CHECK)
+	e2:SetValue(s.valcheck)
+	e2:SetLabelObject(e1)
+	c:RegisterEffect(e2)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -56,7 +56,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 				catk=tc.MaximumAttack*2
 			end
 			atk=atk+(catk>=0 and catk or 0)
-		else 
+		else
 			for tc in sg:Iter() do
 				local catk=0
 				catk=tc:GetTextAttack()
@@ -95,7 +95,7 @@ function s.valcheck(e,c)
 			tg=sg:Filter(Card.HasFlagEffect,nil,FLAG_DOUBLE_TRIB_DARK+FLAG_DOUBLE_TRIB_FIEND+FLAG_DOUBLE_TRIB_0_ATK+FLAG_DOUBLE_TRIB_0_DEF+FLAG_DOUBLE_TRIB_EFFECT)
 		end
 		tg:KeepAlive()
-		local label_obj=e:GetLabelObject() --this is e0 
+		local label_obj=e:GetLabelObject() --this is e0
 		label_obj:SetLabelObject(tg)
 		return
 	end

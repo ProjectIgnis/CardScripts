@@ -1,5 +1,5 @@
 --ウルトラバイオレディ
---Ultra Bio Lady
+--Ultra Violady
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

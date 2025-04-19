@@ -1,5 +1,5 @@
 -- 花牙踏み
---Flower Fang Shadow Strike
+--Shadow Flower Stance
 
 local s,id=GetID()
 function s.initial_effect(c)
@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.GetAttackTarget() 
+	local tc=Duel.GetAttackTarget()
 	return tc and tc:IsFaceup() and tc:IsControler(tp) and tc:IsRace(RACE_PLANT) and Duel.GetAttacker():IsCanChangePositionRush()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)

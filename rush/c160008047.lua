@@ -1,5 +1,5 @@
 -- 花牙紫吹
--- Shadow Flower Purple Smoke Spray
+--Shadow Flower Flurry
 local s,id=GetID()
 function s.initial_effect(c)
 	-- Activate

@@ -1,4 +1,4 @@
---ロング・シールド・ガードナー 
+--ロング・シールド・ガードナー
 --Long Shield Gardna
 local s,id=GetID()
 function s.initial_effect(c)

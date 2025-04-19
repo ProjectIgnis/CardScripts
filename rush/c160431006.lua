@@ -1,3 +1,3 @@
 --ヴォイドヴェルグ・レクイエム
---Voidvelgr Requiem
+--Voidvelg Requiem
 Duel.LoadCardScriptAlias(160010025)

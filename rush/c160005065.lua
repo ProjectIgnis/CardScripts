@@ -1,4 +1,4 @@
--- 酢酸のたまった落とし穴 
+-- 酢酸のたまった落とし穴
 -- Acetic Acid Trap Hole
 local s,id=GetID()
 function s.initial_effect(c)

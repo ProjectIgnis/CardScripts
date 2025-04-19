@@ -1,5 +1,5 @@
 --プロト・サイバー・ドラゴン (Rush)
---Proto Cyber Dragon (Rush)
+--Proto-Cyber Dragon (Rush)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Name becomes "Cyber Dragon"

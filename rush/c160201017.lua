@@ -1,5 +1,5 @@
 --ロイヤルデモンズ・パンク
---Royal Demon's Punk
+--Royal Rebel's Rocker
 local s,id=GetID()
 function s.initial_effect(c)
 	--Add 1 Level 6 or higher Fiend from your GY to your hand
@@ -36,7 +36,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
 		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 		e1:SetTargetRange(LOCATION_MZONE,0)
-		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_PHASE|PHASE_END)
 		Duel.RegisterEffect(e1,tp)
 	end
 end

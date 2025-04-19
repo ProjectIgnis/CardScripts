@@ -1,5 +1,5 @@
---洗銃士ウォッシューター 
---Washing Musketeer Washooter
+--洗銃士ウォッシューター
+--Washsprayer the Cleansketeer
 local s,id=GetID()
 function s.initial_effect(c)
 	--Send to GY and destroy

@@ -1,5 +1,5 @@
 --ひたひたと迫る足音
---Gradually Approaching Footsteps
+--I Hear Footsteps
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

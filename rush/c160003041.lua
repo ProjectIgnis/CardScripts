@@ -1,5 +1,5 @@
--- 海竜王グランガノス Kairyu-Oh Granganoth 
---Sea Dragon King Granganoth
+-- 海竜王グランガノス Kairyu-Oh Granganoth
+--Sea Dragon King Granganus
 local s,id=GetID()
 function s.initial_effect(c)
 	--Pay LP to deal damage

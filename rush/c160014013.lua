@@ -1,5 +1,5 @@
 --火燃精ホット
---Hot the Combustion Spirit
+--Hot the Combustible Fairy
 local s,id=GetID()
 function s.initial_effect(c)
 	--Send the top 3 cards of your Deck to the GY and draw 1 card

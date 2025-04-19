@@ -1,5 +1,5 @@
 -- 花牙シノビ・ガトリング
---Flower Fang Shinobi Gatring
+--Gatling the Shadow Flower Shinobi
 local s,id=GetID()
 function s.initial_effect(c)
 	--Destroy 2 of opponent's monsters
@@ -50,14 +50,14 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetTargetRange(LOCATION_MZONE,0)
 			e1:SetCondition(s.atkcon)
 			e1:SetTarget(s.atktg)
-			e1:SetReset(RESET_PHASE+PHASE_END)
+			e1:SetReset(RESET_PHASE|PHASE_END)
 			Duel.RegisterEffect(e1,tp)
 			local e2=Effect.CreateEffect(e:GetHandler())
 			e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 			e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 			e2:SetCode(EVENT_ATTACK_ANNOUNCE)
 			e2:SetOperation(s.checkop)
-			e2:SetReset(RESET_PHASE+PHASE_END)
+			e2:SetReset(RESET_PHASE|PHASE_END)
 			e2:SetLabelObject(e1)
 			Duel.RegisterEffect(e2,tp)
 		end

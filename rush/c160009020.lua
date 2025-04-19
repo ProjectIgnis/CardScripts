@@ -1,5 +1,5 @@
 --羊界プランユー
---Ewekai Planeau
+--Wooly Wonderland Planewe
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

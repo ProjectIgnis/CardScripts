@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cfilter(c)
-	return (c:IsCode(id) or c:IsType(TYPE_MONSTER)) and c:IsAbleToDeckOrExtraAsCost()
+	return (c:IsCode(id) or c:IsMonster()) and c:IsAbleToDeckOrExtraAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local cg=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_GRAVE,0,nil)

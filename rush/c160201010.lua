@@ -1,5 +1,5 @@
 --オジギプス
---Bandaged Bowing
+--Bonded Bowing
 --Scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

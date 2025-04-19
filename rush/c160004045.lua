@@ -1,5 +1,5 @@
 -- 楽姫の息吹
--- Breath of the Music Maidens
+--Music Princess's Breath
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

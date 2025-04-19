@@ -1,5 +1,5 @@
 --大恐竜駕ダイナーミクス［R］
---Great Imperial Dinocarriage Dynarmix [R]
+--Dynamic Dino Dynamix [R]
 local s,id=GetID()
 function s.initial_effect(c)
 	--Cannot be destroyed

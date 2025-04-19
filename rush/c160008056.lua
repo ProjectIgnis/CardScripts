@@ -1,5 +1,5 @@
 -- 閃駆雷撃
---Trailblitzing Thunderbolt
+--Trailblitzing Thunderblast
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

@@ -1,5 +1,5 @@
 --コラプス・チェア
---Collapse Chair
+--Collapsing Chairs
 
 --Substitute ID
 local s,id=GetID()

@@ -1,5 +1,5 @@
 -- 陰陽極士ドウマ
--- Onmyou Supreme Sage Douma
+--Douma the Talismanic Supreme Sage
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -33,7 +33,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
+			e1:SetReset(RESETS_STANDARD_DISABLE_PHASE_END)
 			e1:SetValue(atkval)
 			c:RegisterEffect(e1)
 		end

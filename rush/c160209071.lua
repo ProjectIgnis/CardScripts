@@ -49,7 +49,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.rescon(sg,e,tp,mg)
-	return sg:FilterCount(Card.IsCode,nil,160306003)<2 
+	return sg:FilterCount(Card.IsCode,nil,160306003)<2
 		and sg:FilterCount(Card.IsCode,nil,160002024)<2
 		and sg:FilterCount(Card.IsCode,nil,160201029)<2
 		and sg:FilterCount(Card.IsCode,nil,160306012)<2

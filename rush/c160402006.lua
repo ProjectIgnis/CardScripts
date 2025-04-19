@@ -1,5 +1,5 @@
 --黄昏の勇者ライダクロス
---Brave of Twilight, Lydacross
+--Raidacross, Hero of the Dusk
 
 local s,id=GetID()
 function s.initial_effect(c)

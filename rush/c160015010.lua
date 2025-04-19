@@ -25,7 +25,7 @@ function s.posfilter(c)
 	return c:IsLevelBelow(9) and c:IsCanTurnSet() and c:IsCanChangePositionRush()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.posfilter,tp,0,LOCATION_MZONE,1,nil) 
+	if chk==0 then return Duel.IsExistingMatchingCard(s.posfilter,tp,0,LOCATION_MZONE,1,nil)
 		and Duel.GetFieldGroupCount(tp,0,LOCATION_DECK)>=3 end
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,nil,1,0,0)
 end

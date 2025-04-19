@@ -1,5 +1,5 @@
 --獣機界奥義 獣之拳
---Beast Gear World Secret Technique – Fist of the Beast
+--Beast Gear Secret Art - Primal Fist
 --Scripted by The Razgriz
 local s,id=GetID()
 function s.initial_effect(c)

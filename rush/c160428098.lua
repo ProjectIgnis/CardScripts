@@ -29,7 +29,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.Damage(p,d,REASON_EFFECT)==0 then return end
 	if Duel.GetMatchingGroupCountRush(s.cfilter,tp,0,LOCATION_MZONE,nil)>=2
 		and Duel.IsExistingMatchingCard(Card.IsAbleToDeck,tp,0,LOCATION_MZONE,1,nil)
-		and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then 
+		and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 		local g=Duel.SelectMatchingCard(tp,Card.IsAbleToDeck,tp,0,LOCATION_MZONE,1,1,nil)
 		if #g>0 then

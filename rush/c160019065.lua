@@ -1,5 +1,5 @@
 --Ｅ・ＨＥＲＯ プリズマー
---Elemental HERO Prisma
+--Elemental HERO Prisma (Rush)
 --Scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

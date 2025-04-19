@@ -1,5 +1,5 @@
 -- 火麺ドローっと濃厚返しの術
--- Art of Masked Fiery Noodle Drawing-Out-The-Rich-Tasty-Flavor Reversal
+--The Noodle Art of Saucery
 -- Scripted bu Hatter
 local s,id=GetID()
 function s.initial_effect(c)	

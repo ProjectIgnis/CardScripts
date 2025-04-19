@@ -17,7 +17,7 @@ end
 s.listed_names={160212014,160212013}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsMonster,tp,LOCATION_GRAVE,0,nil)
-	return e:GetHandler():IsStatus(STATUS_SUMMON_TURN) and #g>0 and not g:IsExists(aux.NOT(Card.IsRace),1,nil,RACE_MACHINE) 
+	return e:GetHandler():IsStatus(STATUS_SUMMON_TURN) and #g>0 and not g:IsExists(aux.NOT(Card.IsRace),1,nil,RACE_MACHINE)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,2) end

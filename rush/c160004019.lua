@@ -1,5 +1,5 @@
 --祭神モドリーナ
---Enshrined Deity Modorina
+--Modorina the Light Retriever
 
 local s,id=GetID()
 function s.initial_effect(c)

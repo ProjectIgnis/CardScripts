@@ -1,5 +1,5 @@
 --獣騎動メガ・エレファント
---Mega Elephant the Mobile Beast Cavalry
+--Beast Drive Mega Elephant
 
 local s,id=GetID()
 function s.initial_effect(c)

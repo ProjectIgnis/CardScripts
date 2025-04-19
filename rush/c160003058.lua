@@ -1,5 +1,5 @@
 -- 強欲な大亀
--- Great Turtle of Greed
+--Giant Tortoise of Greed
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

@@ -1,5 +1,5 @@
 --ＨＰアシスタント・ビリー
---Hyper Assistant Biri
+--Sparkle the Hyper Assistant
 --Scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 -- ドウェルチェア・コリキエル
--- Dwell Chair Massage
+--Scarechair Relaxer
 
 local s,id=GetID()
 function s.initial_effect(c)

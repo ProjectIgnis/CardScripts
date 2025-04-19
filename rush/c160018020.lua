@@ -1,5 +1,5 @@
 --Ｒ・ＨＥＲＯ メナカイター
---Rising HERO Menachiter
+--Rising HERO Manaccaniter
 --Scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

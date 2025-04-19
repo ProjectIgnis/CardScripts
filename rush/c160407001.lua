@@ -1,5 +1,5 @@
 --あまびえさん
---Amabie-san (Rush)
+--Amabie (Rush)
 local s,id=GetID()
 function s.initial_effect(c)
 	--LP recover

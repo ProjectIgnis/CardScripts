@@ -1,5 +1,5 @@
 --ジャイアント革命
---Gi-Ant Revolution
+--Gi-ant Revolution
 --scripted by edo9300
 local s,id=GetID()
 function s.initial_effect(c)

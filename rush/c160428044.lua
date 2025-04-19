@@ -42,7 +42,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 				local sg=tc:Select(tp,1,1,nil)
 				Duel.HintSelection(sg,true)
 				if Duel.Destroy(sg,REASON_EFFECT)>0 then res=sg:GetFirst():GetTextAttack() end
-			else   --otherwise, directly destroy it
+			else  --otherwise, directly destroy it
 				if Duel.Destroy(tc,REASON_EFFECT)>0 then res=tc:GetFirst():GetTextAttack() end
 			end
 			if res and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsRace,RACE_OMEGAPSYCHIC),tp,LOCATION_MZONE,0,1,nil) then

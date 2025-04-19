@@ -1,5 +1,5 @@
 -- 最強戦旗エースブレイカー
---Saikyo Battle Flag Ace Breaker
+--Ultimate Flag Mech Ace Breaker
 
 --Substitute ID
 local s,id=GetID()

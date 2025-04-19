@@ -1,3 +1,3 @@
 --サイバー・シャーク
---Cyber Shark
+--Cyber Shark (Rush)
 Duel.LoadCardScriptAlias(160015021)

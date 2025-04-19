@@ -1,5 +1,5 @@
 -- 天翔流麗セメテラス
---Semeterasu the Celestial Summoner
+--Semeterasu the Divine Ruler
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material

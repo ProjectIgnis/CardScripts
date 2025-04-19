@@ -1,5 +1,5 @@
 --超伝導恐獣
---Super Conductor Tyranno
+--Super Conductor Tyranno (Rush)
 --Scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --虎死眈々
---Tiger Doom Sight
+--Tiger Glare
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

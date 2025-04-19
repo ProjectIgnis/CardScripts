@@ -1,5 +1,5 @@
 --ランプの炎皇アルコ
---Alco the Flame Emperor of the Lamp
+--Alkyl the Flame Emperor of the Lamp
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --斬奏のプレクトクライム
---Prectcrime of the Deadly Dirge
+--Plectcrime of the Deadly Dirge
 local s,id=GetID()
 function s.initial_effect(c)
 	--Add 1 Equip Spell card to hand

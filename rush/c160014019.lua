@@ -1,5 +1,5 @@
 --秘密捜査官ミステイク
---Secret Investigator Mistake
+--Agent Mistake
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --メロメロメェ～グ☆ウ～ルトラビーム
---Melo Melo Meeeg☆Uuultra Beam
+--Beaming Bell Beam
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

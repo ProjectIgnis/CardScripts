@@ -1,3 +1,3 @@
 --彩光のプリマギターナ
---Prima Guitarna of the Colorful Light
+--Prima Guitarna the Shining Superstar
 Duel.LoadCardScriptAlias(CARD_PRIMA_GUITARNA)

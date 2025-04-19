@@ -1,5 +1,5 @@
 -- 警告鱗光
--- Warning Scale Phosphorescence
+--Wrath of Light
 local s,id=GetID()
 function s.initial_effect(c)
 	--When your opponent normal/special summons a monster, prevent attack and shuffle monsters from the GY
@@ -43,7 +43,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		ge1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 		ge1:SetTargetRange(0,LOCATION_MZONE)
 		ge1:SetTarget(s.atktg)
-		ge1:SetReset(RESET_PHASE+PHASE_END)
+		ge1:SetReset(RESET_PHASE|PHASE_END)
 		Duel.RegisterEffect(ge1,tp)
 		local og=Duel.GetMatchingGroup(s.gyfilter,tp,LOCATION_GRAVE,0,nil)
 		if #og>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then

@@ -1,5 +1,5 @@
 --水溶精メルト
---Melt the Aqueous Spirit
+--Melt the Aqueous Fairy
 local s,id=GetID()
 function s.initial_effect(c)
 	--Add 1 Level 7/10 Pyro/Thunder monster to the hand

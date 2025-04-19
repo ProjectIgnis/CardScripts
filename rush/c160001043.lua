@@ -1,5 +1,5 @@
 --闇の訪れ
---Darkness Approaches (Rush Duel)
+--Darkness Approaches (Rush)
 
 local s,id=GetID()
 function s.initial_effect(c)

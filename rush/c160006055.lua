@@ -1,5 +1,5 @@
 --野獣の激怒
---Rage of the Wild Beasts
+--Rage of the Beasts
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

@@ -1,5 +1,5 @@
 --ジョインテック・アークスコーピオ
---Jointech Arc Scorpio
+--Jointech Arcscorpio
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)
@@ -20,7 +20,7 @@ function s.tgfilter(c)
 	return c:IsMonster() and c:IsRace(RACE_MACHINE) and c:IsAbleToGraveAsCost() and (c:IsLocation(LOCATION_HAND) or c:IsFaceup())
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,1,nil) end
 end
 function s.thfilter(c)
 	return c:IsCode(CARD_FUSION,37630732) and c:IsAbleToHand()
@@ -36,7 +36,7 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local tg=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,nil)
+	local tg=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,1,1,nil)
 	if Duel.SendtoGrave(tg,REASON_COST)==0 then return end
 	--Effect
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)

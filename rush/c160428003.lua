@@ -1,5 +1,5 @@
 --超魔輝獣マグナム・オーバーロード［Ｒ］
---Supreme Beast Magnum Overlord [R]
+--Supreme Wildgleam Magnum Overlord [R]
 local s,id=GetID()
 function s.initial_effect(c)
 	-- cannot attack

@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-end 
+end
 function s.tdfilter(c,tp)
 	return c:IsMonster() and c:IsAbleToDeckOrExtraAsCost()
 end

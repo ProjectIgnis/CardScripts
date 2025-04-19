@@ -1,5 +1,5 @@
 --古代の機械巨人
---Ancient Gear Golem
+--Ancient Gear Golem (Rush)
 --Scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)

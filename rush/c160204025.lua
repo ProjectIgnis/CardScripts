@@ -1,5 +1,5 @@
 --ザ☆ワイバーン
---The☆Wyvern
+--The Wyvern
 
 local s,id=GetID()
 function s.initial_effect(c)

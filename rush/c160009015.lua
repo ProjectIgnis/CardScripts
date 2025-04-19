@@ -26,7 +26,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Effect
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	local tc=Duel.SelectMatchingCard(tp,aux.FaceupFilter(Card.IsRace,RACE_GALAXY),tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
-	if tc then 
+	if tc then
 		Duel.HintSelection(tc,true)
 		--Cannot be destroyed by opponent's trap
 		local e1=Effect.CreateEffect(e:GetHandler())

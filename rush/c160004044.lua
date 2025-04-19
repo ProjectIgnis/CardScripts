@@ -1,5 +1,5 @@
 --始幻の咆哮
---Roar of the First Fantasy
+--Primal Howling
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

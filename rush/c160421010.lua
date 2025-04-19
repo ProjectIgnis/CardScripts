@@ -1,5 +1,5 @@
 -- ＣＡＮ－Ｍｅｌｏ：Ｄ
--- CAN-Melo:D
+--CAN - Melo:D
 local s,id=GetID()
 function s.initial_effect(c)
 	-- Shuffle an opponent's face-down card to the deck

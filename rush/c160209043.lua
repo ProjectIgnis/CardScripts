@@ -1,3 +1,3 @@
 --ジャンク・ブレイカー
---Fiendish Commander Yameruler
+--Yamiruler the Dark Delayer
 Duel.LoadCardScriptAlias(160001029)

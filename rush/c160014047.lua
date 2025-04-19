@@ -46,7 +46,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 	if Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.SendtoGrave(g,REASON_EFFECT)
-	else 
+	else
 		local ct=#g
 		if ct>0 then
 			Duel.MoveToDeckTop(g,tp)

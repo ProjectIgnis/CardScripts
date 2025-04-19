@@ -33,14 +33,14 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.SendtoGrave(g,REASON_COST)<1 then return end
 	--Effect
 	local sg=Duel.GetMatchingGroup(aux.FilterMaximumSideFunctionEx(Card.IsMonster),tp,0,LOCATION_MZONE,nil)
-	if Duel.Draw(tp,2,REASON_EFFECT)>0 and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil) 
+	if Duel.Draw(tp,2,REASON_EFFECT)>0 and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil)
 		and #sg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 		local tg=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(Card.IsMonster),tp,0,LOCATION_MZONE,1,1,nil)
-		if #tg>0 then 
+		if #tg>0 then
 			tg=tg:AddMaximumCheck()
 			Duel.HintSelection(tg)
-			Duel.Destroy(tg,REASON_EFFECT) 
+			Duel.Destroy(tg,REASON_EFFECT)
 		end
 	end
 end

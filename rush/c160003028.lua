@@ -1,5 +1,5 @@
 --アッシーホース
---Assi-Sea Horse
+--Seahorse Carrier
 local s,id=GetID()
 function s.initial_effect(c)
 	--Send to GY and destroy

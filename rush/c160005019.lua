@@ -1,5 +1,5 @@
 -- ＣＡＮ－Ｒｅ：Ｄ
---CAN-Re:D
+--CAN - Re:D
 local s,id=GetID()
 function s.initial_effect(c)
 	--deal damage
@@ -31,7 +31,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetRange(LOCATION_MZONE)
 		e1:SetCode(EFFECT_CANNOT_SUMMON)
 		e1:SetTarget(s.sumlimit)
-		e1:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN,1)
+		e1:SetReset(RESET_PHASE|PHASE_END|RESET_OPPO_TURN,1)
 		e1:SetTargetRange(1,0)
 		c:RegisterEffect(e1)
 	end

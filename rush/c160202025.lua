@@ -1,5 +1,5 @@
--- 妖瞳の二又猫 
--- Odd-Eyes Twin-Tail Cat
+-- 妖瞳の二又猫
+--Odd-Eyes Twin Tail Cat
 local s,id=GetID()
 function s.initial_effect(c)
 	--Send to GY and destroy

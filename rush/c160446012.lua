@@ -1,3 +1,3 @@
 --連撃竜ドラギアス
---Rush Dragon Dragears
+--Multistrike Dragon Dragias
 Duel.LoadCardScriptAlias(160302001)

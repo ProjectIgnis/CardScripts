@@ -37,7 +37,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.ChangePosition(c,POS_FACEUP_DEFENSE,0,0,0)<1 then return end
 	--Effect
 	if Duel.DiscardDeck(tp,2,REASON_EFFECT)>0
-		and Duel.IsExistingMatchingCard(s.insectfilter,tp,0,LOCATION_MZONE,1,nil) 
+		and Duel.IsExistingMatchingCard(s.insectfilter,tp,0,LOCATION_MZONE,1,nil)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_APPLYTO)
 		local dg=Duel.SelectMatchingCard(tp,s.insectfilter,tp,0,LOCATION_MZONE,1,1,nil)

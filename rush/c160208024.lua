@@ -25,7 +25,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	--Effect
 	Duel.DiscardDeck(tp,3,REASON_EFFECT)
-	if Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsAttackAbove,3000),tp,0,LOCATION_MZONE,1,nil) 
+	if Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsAttackAbove,3000),tp,0,LOCATION_MZONE,1,nil)
 		and Duel.IsPlayerCanDraw(tp,3) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.BreakEffect()
 		Duel.Draw(tp,3,REASON_EFFECT)

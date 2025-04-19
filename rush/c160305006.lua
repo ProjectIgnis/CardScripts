@@ -1,4 +1,4 @@
--- 魔将分隊 待組 
+-- 魔将分隊 待組
 -- Matsugumi the Ruler's Squad
 local s,id=GetID()
 function s.initial_effect(c)

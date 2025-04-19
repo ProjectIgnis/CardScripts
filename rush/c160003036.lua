@@ -1,4 +1,4 @@
---ルミナス・パロット 
+--ルミナス・パロット
 --Luminous Parrot
 
 local s,id=GetID()

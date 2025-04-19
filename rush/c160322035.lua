@@ -30,7 +30,7 @@ function s.condition2(e,tp,eg,ep,ev,re,r,rp)
 	return ep==1-tp and Duel.IsTurnPlayer(1-tp)
 end
 function s.spfilter(c,e,tp)
-	return (c:IsCode(CARD_HARPIE_LADY,160208002) or (c:IsRace(RACE_WINGEDBEAST) and c:IsAttribute(ATTRIBUTE_WIND) and c:IsType(TYPE_FUSION))) 
+	return (c:IsCode(CARD_HARPIE_LADY,160208002) or (c:IsRace(RACE_WINGEDBEAST) and c:IsAttribute(ATTRIBUTE_WIND) and c:IsType(TYPE_FUSION)))
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

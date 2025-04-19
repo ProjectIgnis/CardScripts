@@ -13,5 +13,5 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condtion(e)
-	return Duel.IsBattlePhase() and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsAttribute,ATTRIBUTE_LIGHT),e:GetHandlerPlayer(),0,LOCATION_MZONE,1,nil) 
+	return Duel.IsBattlePhase() and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsAttribute,ATTRIBUTE_LIGHT),e:GetHandlerPlayer(),0,LOCATION_MZONE,1,nil)
 end

@@ -1,4 +1,4 @@
---水の泡－崩壊のバブル－ 
+--水の泡－崩壊のバブル－
 --All For Naught - Bubble Burst
 local s,id=GetID()
 function s.initial_effect(c)

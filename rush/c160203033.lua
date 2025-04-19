@@ -1,4 +1,4 @@
--- 幻刃復帰 
+-- 幻刃復帰
 --Constructor Resurrection
 local s,id=GetID()
 function s.initial_effect(c)

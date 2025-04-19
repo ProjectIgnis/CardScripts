@@ -1,4 +1,4 @@
---幻刃工兵ドラフタンニム 
+--幻刃工兵ドラフタンニム
 --Constructor Engineer Draftannium
 local s,id=GetID()
 function s.initial_effect(c)

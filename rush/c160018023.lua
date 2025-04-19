@@ -30,8 +30,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetReset(RESETS_STANDARD_PHASE_END,2)
 	e1:SetValue(1500)
 	c:RegisterEffect(e1)
-	if tc:IsMonster() and tc:GetBaseAttack()==100 
-		and Duel.IsExistingMatchingCard(Card.IsCanChangePositionRush,tp,0,LOCATION_MZONE,1,nil) 
+	if tc:IsMonster() and tc:GetBaseAttack()==100
+		and Duel.IsExistingMatchingCard(Card.IsCanChangePositionRush,tp,0,LOCATION_MZONE,1,nil)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		local g=Duel.SelectMatchingCard(tp,Card.IsCanChangePositionRush,tp,0,LOCATION_MZONE,1,1,nil)
 		Duel.HintSelection(g)

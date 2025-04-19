@@ -1,4 +1,4 @@
---魔人の熱風 
+--魔人の熱風
 --Genie's Fire Breath
 local s,id=GetID()
 function s.initial_effect(c)

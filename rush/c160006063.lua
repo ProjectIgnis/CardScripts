@@ -19,7 +19,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,600) end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.GetAttackTarget() 
+	local tc=Duel.GetAttackTarget()
 	return tc and tc:IsFaceup() and tc:IsControler(tp) and tc:IsRace(RACE_MACHINE)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

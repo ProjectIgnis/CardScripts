@@ -27,7 +27,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil,tp) end
 end
 function s.desfilter(c,lv)
-	return c:IsFaceup() and c:IsLevelBelow(lv) 
+	return c:IsFaceup() and c:IsLevelBelow(lv)
 end
 function s.tgfilter(c,tp)
 	return c:IsMonster() and c:IsRace(RACE_REPTILE) and c:IsAbleToGraveAsCost()

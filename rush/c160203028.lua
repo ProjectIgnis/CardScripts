@@ -1,4 +1,4 @@
--- ジョイント・チェア 
+-- ジョイント・チェア
 --Joining Chairs
 
 local s,id=GetID()

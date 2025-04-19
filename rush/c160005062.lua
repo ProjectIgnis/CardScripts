@@ -16,8 +16,8 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_SUMMONED_SKULL}
 function s.filter(c,tp)
-	return c:GetReasonPlayer()==1-tp and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE) 
-	and c:IsType(TYPE_NORMAL) 
+	return c:GetReasonPlayer()==1-tp and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE)
+	and c:IsType(TYPE_NORMAL)
 	and (c:IsCode(CARD_SUMMONED_SKULL) or (c:IsRace(RACE_FIEND) and c:IsLevelAbove(7)))
 		and (c:IsReason(REASON_BATTLE) and Duel.GetAttacker():IsControler(1-tp))
 end

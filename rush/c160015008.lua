@@ -17,7 +17,7 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_CELEB_ROSE_MAGICIAN,CARD_CELEB_ROSE_WITCH,CARD_FUSION}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsStatus(STATUS_SUMMON_TURN) 
+	return e:GetHandler():IsStatus(STATUS_SUMMON_TURN)
 end
 function s.revfilter(c)
 	return ((c:IsRace(RACE_SPELLCASTER) and c:IsAttribute(ATTRIBUTE_LIGHT)

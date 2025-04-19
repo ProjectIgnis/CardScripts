@@ -30,7 +30,7 @@ function s.lpop(e,tp,eg,ep,ev,re,r,rp)
 	if not tc then return end
 	Duel.HintSelection(tc,true)
 	local rec=Duel.Recover(tp,tc:GetAttack(),REASON_EFFECT)
-	if rec>=1000 and tc:IsAbleToHand() and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then 
+	if rec>=1000 and tc:IsAbleToHand() and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		Duel.BreakEffect()
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 	end

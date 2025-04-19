@@ -1,4 +1,4 @@
---アリバティ・フラッグ 
+--アリバティ・フラッグ
 --Antiberty Flag
 --Scripted by edo9300
 local s,id=GetID()

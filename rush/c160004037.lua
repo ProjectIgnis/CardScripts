@@ -18,7 +18,7 @@ end
 
 function s.costfilter(c,tp)
 	return c:IsMonster() and c:IsRace(RACE_PYRO) and c:IsAbleToGraveAsCost()
-	and Duel.IsExistingMatchingCard(s.desfilter,tp,0,LOCATION_MZONE,1,nil,c:GetLevel()) 
+	and Duel.IsExistingMatchingCard(s.desfilter,tp,0,LOCATION_MZONE,1,nil,c:GetLevel())
 end
 function s.desfilter(c,lvl)
 	return c:IsMonster() and c:IsPosition(POS_FACEUP_DEFENSE) and c:IsLevel(lvl)

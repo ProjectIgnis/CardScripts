@@ -43,7 +43,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Effect
 	local at=Duel.GetAttacker()
 	local ct=Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)
-	if at and at:IsAttackPos() and at:IsRelateToBattle() and Duel.ChangePosition(at,POS_FACEUP_DEFENSE)>0 
+	if at and at:IsAttackPos() and at:IsRelateToBattle() and Duel.ChangePosition(at,POS_FACEUP_DEFENSE)>0
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,1,nil)
 		and ct<6 and Duel.IsPlayerCanDraw(tp,6-ct) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.Draw(tp,6-ct,REASON_EFFECT)

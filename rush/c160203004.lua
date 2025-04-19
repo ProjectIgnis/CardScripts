@@ -1,4 +1,4 @@
--- 緊急帰還 
+-- 緊急帰還
 --Emergency Return
 local s,id=GetID()
 function s.initial_effect(c)

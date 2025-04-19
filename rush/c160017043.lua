@@ -56,7 +56,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 				catk=tc.MaximumAttack*2
 			end
 			atk=atk+(catk>=0 and catk or 0)
-		else 
+		else
 			for tc in sg:Iter() do
 				local catk=0
 				catk=tc:GetTextAttack()
@@ -95,7 +95,7 @@ function s.valcheck(e,c)
 			tg=sg:Filter(Card.HasFlagEffect,nil,FLAG_DOUBLE_TRIB_DARK+FLAG_DOUBLE_TRIB_FIEND+FLAG_DOUBLE_TRIB_0_ATK+FLAG_DOUBLE_TRIB_0_DEF+FLAG_DOUBLE_TRIB_EFFECT)
 		end
 		tg:KeepAlive()
-		local label_obj=e:GetLabelObject() --this is e0 
+		local label_obj=e:GetLabelObject() --this is e0
 		label_obj:SetLabelObject(tg)
 		return
 	end

@@ -1,4 +1,4 @@
---漆黒シャイン王Gアークトーク 
+--漆黒シャイン王Gアークトーク
 --Worker Warrior - Sinister Chairman
 
 local s,id=GetID()
@@ -27,7 +27,7 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	--Requirement
-	Duel.PayLPCost(tp,600) 
+	Duel.PayLPCost(tp,600)
 	--Effect
 	if c:IsRelateToEffect(e) and c:IsFaceup() then
 		local atk=Duel.GetMatchingGroupCount(Card.IsRace,tp,LOCATION_GRAVE,0,e:GetHandler(),RACE_MACHINE)

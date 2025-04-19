@@ -1,4 +1,4 @@
--- 最強旗獣サージバイコーン 
+-- 最強旗獣サージバイコーン
 --Ultimate Flag Beast Surge Bicorn
 local s,id=GetID()
 function s.initial_effect(c)

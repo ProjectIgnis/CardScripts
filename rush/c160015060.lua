@@ -40,7 +40,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local sg=og:Filter(s.cfilter,nil)
 		if #sg>0 and Duel.IsPlayerCanDraw(tp,#sg) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 			Duel.BreakEffect()
-			Duel.Draw(tp,#sg,REASON_EFFECT) 
+			Duel.Draw(tp,#sg,REASON_EFFECT)
 		end
 	end
 end

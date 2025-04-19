@@ -28,7 +28,7 @@ end
 function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local tc=Duel.SelectMatchingCard(tp,s.drcostfilter,tp,LOCATION_HAND,0,1,1,nil):GetFirst()
-	if Duel.SendtoGrave(tc,REASON_COST)==1 then 
+	if Duel.SendtoGrave(tc,REASON_COST)==1 then
 		Duel.BreakEffect()
 		Duel.Draw(tp,1,REASON_EFFECT)
 		if Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,2,nil,CARD_STRAYNGE_CAT,160209016) then

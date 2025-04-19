@@ -34,7 +34,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.SendtoDeck(td,nil,SEQ_DECKBOTTOM,REASON_COST)<1 then return end
 	--Effect
 	local tc=eg:GetFirst()
-	if tc then 
+	if tc then
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end

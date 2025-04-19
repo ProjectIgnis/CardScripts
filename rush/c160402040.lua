@@ -25,7 +25,7 @@ function s.filter(c)
 	if c:IsMaximumModeSide() then return false end
 	local atk=c:GetBaseAttack()
 	if c:IsMaximumMode() then atk=c:GetMaximumAttack() end
-	return c:IsFaceup() and atk>=100 
+	return c:IsFaceup() and atk>=100
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,nil) end

@@ -18,7 +18,7 @@ function s.costfilter(c)
 	return c:IsRace(RACE_CYBERSE) and c:IsFaceup() and c:IsAbleToGraveAsCost()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_MZONE,0,1,nil) 
+	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_MZONE,0,1,nil)
 		and Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(Card.IsFaceup),tp,0,LOCATION_MZONE,1,nil) end
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)

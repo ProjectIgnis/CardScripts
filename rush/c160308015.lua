@@ -1,4 +1,4 @@
---粒子加速 
+--粒子加速
 --Particle Acceleration
 local s,id=GetID()
 function s.initial_effect(c)

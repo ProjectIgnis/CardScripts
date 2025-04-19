@@ -25,7 +25,7 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	--requirement
-	 Duel.PayLPCost(tp,1000) 
+	 Duel.PayLPCost(tp,1000)
 		--effect
 	if c:IsRelateToEffect(e) and c:IsFaceup() then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)

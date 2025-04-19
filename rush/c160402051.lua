@@ -40,7 +40,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local dg=g:Select(tp,1,1,nil)
 	local dg2=dg:AddMaximumCheck()
 	Duel.HintSelection(dg2)
-	local ct=Duel.Destroy(dg,REASON_EFFECT) 
+	local ct=Duel.Destroy(dg,REASON_EFFECT)
 	local g2=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.spfilter),tp,LOCATION_GRAVE,0,nil,e,tp)
 	if ct>0 and #g2>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

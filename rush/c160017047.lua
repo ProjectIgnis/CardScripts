@@ -26,6 +26,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local sg=Duel.GetMatchingGroup(Card.IsSpellTrap,tp,0,LOCATION_ONFIELD,nil)
 	if g:FilterCount(Card.IsSpellTrap,nil)>0 and #sg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.Destroy(sg,REASON_EFFECT)
-	end 
+	end
 	Duel.SortDecktop(1-tp,1-tp,4)
 end

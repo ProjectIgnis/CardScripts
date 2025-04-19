@@ -1,4 +1,4 @@
---一気貫通 
+--一気貫通
 --Straight Pierce
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,4 +1,4 @@
--- イスの鏡王ダユー・エイビス 
+-- イスの鏡王ダユー・エイビス
 -- Dahut Abyss, Dark Mirror Ruler of the Chair
 local s,id=GetID()
 function s.initial_effect(c)

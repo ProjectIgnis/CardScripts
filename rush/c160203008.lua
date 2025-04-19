@@ -1,4 +1,4 @@
--- 大くしゃみのゼニゲバザウルス 
+-- 大くしゃみのゼニゲバザウルス
 --Sneezing Greedizauls
 local s,id=GetID()
 function s.initial_effect(c)

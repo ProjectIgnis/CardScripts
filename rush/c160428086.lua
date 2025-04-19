@@ -17,7 +17,7 @@ function s.zfilter(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
-	return tc:IsControler(1-tp) and tc:IsLevelBelow(9) and Duel.IsExistingMatchingCard(s.zfilter,tp,LOCATION_MZONE,0,1,nil) 
+	return tc:IsControler(1-tp) and tc:IsLevelBelow(9) and Duel.IsExistingMatchingCard(s.zfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

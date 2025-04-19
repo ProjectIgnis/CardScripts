@@ -1,4 +1,4 @@
---聖剣士の鞘払いシース 
+--聖剣士の鞘払いシース
 --Sieth, the Scabbard of Noble Arms
 
 local s,id=GetID()

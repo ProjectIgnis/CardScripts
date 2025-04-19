@@ -40,10 +40,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		if #sg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 			local tg=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(Card.IsMonster),tp,0,LOCATION_MZONE,1,1,nil)
-			if #tg>0 then 
+			if #tg>0 then
 				tg=tg:AddMaximumCheck()
 				Duel.HintSelection(tg,true)
-				Duel.Destroy(tg,REASON_EFFECT) 
+				Duel.Destroy(tg,REASON_EFFECT)
 			end
 		end
 	end

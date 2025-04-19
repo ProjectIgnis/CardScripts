@@ -21,13 +21,13 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_FUSION,160015051} --Psyquip Fusion
 function s.extrafil_repl_filter(c)
-    return c:IsMonster() and c:IsAbleToDeck() and c:IsRace(RACE_PSYCHIC)
+	return c:IsMonster() and c:IsAbleToDeck() and c:IsRace(RACE_PSYCHIC)
 end
 function s.extrafil_replacement(e,tp,mg)
-    return Duel.GetMatchingGroup(aux.NecroValleyFilter(s.extrafil_repl_filter),tp,LOCATION_GRAVE,0,nil)
+	return Duel.GetMatchingGroup(aux.NecroValleyFilter(s.extrafil_repl_filter),tp,LOCATION_GRAVE,0,nil)
 end
 function s.extramat(c,e,tp)
-    return c:IsControler(tp) and e:GetHandler():IsCode(CARD_FUSION,160015051)
+	return c:IsControler(tp) and e:GetHandler():IsCode(CARD_FUSION,160015051)
 end
 function s.operation(e,tc,tp,sg)
 	local g=tc:GetMaterial()

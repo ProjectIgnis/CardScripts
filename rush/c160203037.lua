@@ -1,4 +1,4 @@
---楽姫の倍急風 
+--楽姫の倍急風
 --Music Princess's Whirling Wind
 local s,id=GetID()
 function s.initial_effect(c)

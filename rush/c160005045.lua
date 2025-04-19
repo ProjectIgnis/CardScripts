@@ -1,4 +1,4 @@
--- 監獄島アネ・ゴ ・ロック 
+-- 監獄島アネ・ゴ ・ロック
 --Prison Island - Cell Block 5 & 6
 local s,id=GetID()
 function s.initial_effect(c)

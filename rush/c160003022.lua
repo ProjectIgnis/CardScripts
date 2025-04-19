@@ -1,5 +1,5 @@
 --クリア・アイス・ドラゴン
---Clear Ice Dragon 
+--Clear Ice Dragon
 --Scripted by Hatter
 
 local s,id=GetID()

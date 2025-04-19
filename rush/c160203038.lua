@@ -1,4 +1,4 @@
---楽姫奥義－三連虎 
+--楽姫奥義－三連虎
 --Music Princess Art - Triplet
 local s,id=GetID()
 function s.initial_effect(c)

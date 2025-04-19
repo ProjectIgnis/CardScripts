@@ -1,4 +1,4 @@
---成銀ゴブリン 
+--成銀ゴブリン
 --Startup Goblin
 local s,id=GetID()
 function s.initial_effect(c)

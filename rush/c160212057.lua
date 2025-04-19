@@ -38,7 +38,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.ChangePosition(e:GetHandler(),POS_FACEUP_DEFENSE,0,0,0)<1 then return end
 	--Effect
 	if Duel.DiscardDeck(tp,1,REASON_EFFECT)==0 then return end
-	if Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,1,nil,CARD_SKULL_SERVANT,36021814) 
+	if Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,1,nil,CARD_SKULL_SERVANT,36021814)
 		and Duel.IsPlayerCanDiscardDeck(tp,2) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.DiscardDeck(tp,2,REASON_EFFECT)
 	end

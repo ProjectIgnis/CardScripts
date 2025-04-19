@@ -1,4 +1,4 @@
--- 妖瞳の二又猫 
+-- 妖瞳の二又猫
 --Odd-Eyes Twin Tail Cat
 local s,id=GetID()
 function s.initial_effect(c)

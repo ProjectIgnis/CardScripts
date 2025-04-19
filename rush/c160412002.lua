@@ -1,4 +1,4 @@
--- 花牙鬼のユリ 
+-- 花牙鬼のユリ
 --Yuri the Shadow Flower Fiend
 local s,id=GetID()
 function s.initial_effect(c)

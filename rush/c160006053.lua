@@ -1,4 +1,4 @@
---陰陽封陣 
+--陰陽封陣
 --Talismanic Seal Array
 local s,id=GetID()
 function s.initial_effect(c)

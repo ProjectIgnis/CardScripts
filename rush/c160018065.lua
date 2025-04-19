@@ -36,6 +36,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local dg=g:Select(tp,1,1,nil)
 		dg:AddMaximumCheck()
 		Duel.HintSelection(dg)
-		Duel.Destroy(dg,REASON_EFFECT) 
+		Duel.Destroy(dg,REASON_EFFECT)
 	end
 end

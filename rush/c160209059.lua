@@ -33,7 +33,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 	local ct2=0
-	if #ct==1 then 
+	if #ct==1 then
 		ct2=Duel.DiscardDeck(tp,ct[1],REASON_COST)
 	else
 		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,2))

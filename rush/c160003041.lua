@@ -1,4 +1,4 @@
--- 海竜王グランガノス Kairyu-Oh Granganoth 
+-- 海竜王グランガノス Kairyu-Oh Granganoth
 --Sea Dragon King Granganus
 local s,id=GetID()
 function s.initial_effect(c)

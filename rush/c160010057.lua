@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cfilter(c)
-	return c:IsMonster() and c:IsAbleToDeckOrExtraAsCost() 
+	return c:IsMonster() and c:IsAbleToDeckOrExtraAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,2,nil) end
@@ -51,12 +51,12 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetReset(RESETS_STANDARD_PHASE_END)
 	g:GetFirst():RegisterEffect(e1)
 	if Duel.GetMatchingGroupCount(Card.IsSpell,c:GetControler(),0,LOCATION_GRAVE,nil)>4
-		and Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(s.desfilter),tp,0,LOCATION_MZONE,1,nil) 
+		and Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(s.desfilter),tp,0,LOCATION_MZONE,1,nil)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		local tg=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.desfilter),tp,0,LOCATION_MZONE,1,1,nil)
-		if #tg>0 then 
+		if #tg>0 then
 			tg=tg:AddMaximumCheck()
-			Duel.Destroy(tg,REASON_EFFECT) 
+			Duel.Destroy(tg,REASON_EFFECT)
 		end
 	end
 end

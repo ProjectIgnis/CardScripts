@@ -1,4 +1,4 @@
---洗銃士ウォッシューター 
+--洗銃士ウォッシューター
 --Washsprayer the Cleansketeer
 local s,id=GetID()
 function s.initial_effect(c)

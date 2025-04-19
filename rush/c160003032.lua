@@ -1,4 +1,4 @@
--- 特報マシン・タフロイド 
+-- 特報マシン・タフロイド
 --Printing Presser
 local s,id=GetID()
 function s.initial_effect(c)

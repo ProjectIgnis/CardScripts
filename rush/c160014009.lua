@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cfilter(c)
-	return c:IsMonster() and c:IsRace(RACE_PYRO|RACE_AQUA|RACE_THUNDER) 
+	return c:IsMonster() and c:IsRace(RACE_PYRO|RACE_AQUA|RACE_THUNDER)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,1,nil)
@@ -32,7 +32,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_TODECK,nil,0,tp,LOCATION_GRAVE)
 end
 function s.tdfilter(c)
-	return c:IsAbleToDeck() and c:IsMonster() and c:IsRace(RACE_PYRO|RACE_AQUA|RACE_THUNDER) 
+	return c:IsAbleToDeck() and c:IsMonster() and c:IsRace(RACE_PYRO|RACE_AQUA|RACE_THUNDER)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement

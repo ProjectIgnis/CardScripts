@@ -1,4 +1,4 @@
---アンマグマ 
+--アンマグマ
 --Anmagmabear
 
 local s,id=GetID()

@@ -1,4 +1,4 @@
--- 重騎屋戦法 
+-- 重騎屋戦法
 --Heavy Cavalry Tactics
 local s,id=GetID()
 function s.initial_effect(c)

@@ -53,7 +53,7 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 		local dg=Duel.SelectMatchingCard(tp,s.desfilter,tp,0,LOCATION_MZONE,1,1,nil,tp)
 		if #dg>0 then
 			Duel.BreakEffect()
-			Duel.Destroy(dg,REASON_EFFECT) 
+			Duel.Destroy(dg,REASON_EFFECT)
 		end
 	end
 end

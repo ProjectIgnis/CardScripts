@@ -1,4 +1,4 @@
--- ダークネス・リチェアル 
+-- ダークネス・リチェアル
 --Darkness Ri-chair-al
 local s,id=GetID()
 function s.initial_effect(c)

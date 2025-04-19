@@ -47,7 +47,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ShuffleDeck(tp)
 	--Effect
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
-	if Duel.Draw(p,d,REASON_EFFECT)>0 and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>=5 
+	if Duel.Draw(p,d,REASON_EFFECT)>0 and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>=5
 		and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.ConfirmDecktop(tp,5)
 		local g=Duel.GetDecktopGroup(tp,5)

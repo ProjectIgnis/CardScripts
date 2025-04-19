@@ -42,7 +42,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 				Duel.Draw(tp,1,REASON_EFFECT)
 				if sg:GetFirst():IsType(TYPE_FIELD) and Duel.IsPlayerCanDraw(tp,1) and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 					Duel.Draw(tp,1,REASON_EFFECT)
-				end 
+				end
 			end
 		end
 	end

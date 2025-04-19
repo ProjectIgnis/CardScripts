@@ -1,4 +1,4 @@
--- 草葉エール 
+-- 草葉エール
 --Cheering Grass
 local s,id=GetID()
 function s.initial_effect(c)

@@ -21,7 +21,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local lp=Duel.GetLP(1-tp)-Duel.GetLP(tp)
-	return lp>0 and e:GetHandler():IsMaximumModeCenter() 
+	return lp>0 and e:GetHandler():IsMaximumModeCenter()
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

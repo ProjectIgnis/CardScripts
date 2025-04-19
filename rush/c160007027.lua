@@ -1,4 +1,4 @@
--- 背番号99 球児皇龍ホームグランドラ 
+-- 背番号99 球児皇龍ホームグランドラ
 --Player #99: Grand Slam Dragon
 local s,id=GetID()
 function s.initial_effect(c)
@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-end 
+end
 s.listed_names={CARD_UNIFORM_39}
 function s.tdfilter(c,tp)
 	return c:IsMonster() and c:IsAttribute(ATTRIBUTE_FIRE)	and c:IsAbleToDeckOrExtraAsCost()

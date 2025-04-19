@@ -1,4 +1,4 @@
---最強旗獣エイムイーグル 
+--最強旗獣エイムイーグル
 --Ultimate Flag Beast Aim Eagle
 local s,id=GetID()
 function s.initial_effect(c)

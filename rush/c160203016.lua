@@ -16,7 +16,7 @@ function s.costfilter(c)
 	return c:IsRace(RACE_DINOSAUR) and c:GetOriginalLevel()>0 and c:IsFaceup() and c:IsAbleToGraveAsCost() and c:IsNotMaximumModeSide()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_MZONE,0,1,nil) 
+	return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.filter(c,e,tp)
 	return c:IsRace(RACE_DINOSAUR) and c:IsLevelAbove(5) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

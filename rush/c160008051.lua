@@ -27,7 +27,7 @@ function s.cfilter(c)
 	return c:IsLocation(LOCATION_GRAVE) and c:IsRace(RACE_REPTILE) and c:IsMonster()
 end
 function s.filter(c)
-	return c:IsRace(RACE_REPTILE) and c:IsFaceup() 
+	return c:IsRace(RACE_REPTILE) and c:IsFaceup()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
@@ -36,7 +36,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.DiscardDeck(tp,5,REASON_EFFECT)
 	local g=Duel.GetOperatedGroup()
 	local ct=g:FilterCount(s.cfilter,nil)
-	if ct>0 and Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(s.filter),tp,LOCATION_MZONE,0,1,nil) 
+	if ct>0 and Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(s.filter),tp,LOCATION_MZONE,0,1,nil)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local tc=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.filter),tp,LOCATION_MZONE,0,1,1,nil):GetFirst()

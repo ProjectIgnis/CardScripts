@@ -17,7 +17,7 @@ function s.filter(c)
 	return c:IsFaceup() and c:IsRace(RACE_SPELLCASTER) and c:GetBaseAttack()==0 and not c:IsMaximumModeSide()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil) 
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil)
 		and Duel.GetFieldGroupCountRush(tp,0,LOCATION_MZONE)>0 end
 end
 function s.thfilter(c)

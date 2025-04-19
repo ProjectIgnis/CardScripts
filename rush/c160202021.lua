@@ -1,4 +1,4 @@
--- クリーンベレー・モップ大佐 
+-- クリーンベレー・モップ大佐
 --Clean Beret - Colonel Mop
 local s,id=GetID()
 function s.initial_effect(c)

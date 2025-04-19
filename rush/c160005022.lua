@@ -1,4 +1,4 @@
--- 魔仙斗アイスザーク 
+-- 魔仙斗アイスザーク
 --Icezark the Unequaled
 local s,id=GetID()
 function s.initial_effect(c)

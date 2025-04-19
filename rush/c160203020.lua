@@ -1,4 +1,4 @@
--- ダイノミック・プレッシャー 
+-- ダイノミック・プレッシャー
 -- Dinomic Pressure
 
 local s,id=GetID()

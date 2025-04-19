@@ -18,7 +18,7 @@ s.listed_names={CARD_STRAYNGE_CAT,160209016}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local tc=Duel.GetAttackTarget()
-	return a and a:IsControler(1-tp) and 
+	return a and a:IsControler(1-tp) and
 		((tc and tc:IsFaceup() and tc:IsAttack(0) and tc:IsControler(tp)) or (Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,1,nil,CARD_STRAYNGE_CAT,160209016)))
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)

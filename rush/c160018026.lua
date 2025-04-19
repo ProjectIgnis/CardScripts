@@ -17,7 +17,7 @@ function s.initial_effect(c)
 end
 s.listed_names={160010034,160018022}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsStatus(STATUS_SUMMON_TURN|STATUS_SPSUMMON_TURN) 
+	return e:GetHandler():IsStatus(STATUS_SUMMON_TURN|STATUS_SPSUMMON_TURN)
 end
 function s.thfilter(c)
 	return c:IsCode(160010034,160018022) and c:IsAbleToHand()

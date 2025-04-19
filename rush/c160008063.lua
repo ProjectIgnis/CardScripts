@@ -58,5 +58,5 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.desfilter(c)
-	return c:IsFaceup() and c:IsPosition(POS_FACEUP_ATTACK) 
+	return c:IsFaceup() and c:IsPosition(POS_FACEUP_ATTACK)
 end

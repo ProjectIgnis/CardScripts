@@ -34,7 +34,6 @@ end
 --Functions deprecated since version 41.0:
 make_deprecated_function_no_replacement("Duel.GetEnvironment", "You should use Duel.IsEnvironment to check if a field spell is active on the field.")
 make_deprecated_function_no_replacement("Duel.GetTributeCount", "You should use Duel.CheckTribute and relative functions to check if a monster can be tribute summoned.")
-make_deprecated_function_alias("Auxiliary.bfgcost","Cost.SelfBanish")
 make_deprecated_function_alias("Auxiliary.selfbanishcost","Cost.SelfBanish")
 make_deprecated_function_alias("Auxiliary.SelfBanishCost","Cost.SelfBanish")
 make_deprecated_function_alias("Auxiliary.DiscardCost","Cost.Discard")

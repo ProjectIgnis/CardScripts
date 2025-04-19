@@ -1447,10 +1447,19 @@ function Auxiliary.StatChangeDamageStepCondition()
 	return not (Duel.IsPhase(PHASE_DAMAGE) and Duel.IsDamageCalculated())
 end
 
---Functions to commonly used costs:
-
+--Functions for commonly used costs:
 Cost={}
 
+function Cost.SelfBanish(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
+	if chk==0 then return c:IsAbleToRemoveAsCost() end
+	Duel.Remove(c,POS_FACEUP,REASON_COST)
+end
+function Cost.SelfTribute(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
+	if chk==0 then return c:IsReleasable() end
+	Duel.Release(c,REASON_COST)
+end
 function Cost.SelfToGrave(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsAbleToGraveAsCost() end
@@ -1487,8 +1496,8 @@ function Cost.SelfReveal(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.ConfirmCards(1-tp,c)
 	Duel.ShuffleHand(tp)
 end
-
-
+--Alias for historical reasons:
+Cost.SelfRelease=Cost.SelfTribute
 
 function Cost.Discard(filter,other,count)
 	count=count or 1
@@ -1537,20 +1546,6 @@ function Cost.Detach(min,max,op)
 			op(e,Duel.GetOperatedGroup())
 		end
 	end
-end
-
---Default cost function for "You can banish this card; .."
-function Cost.SelfBanish(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsAbleToRemoveAsCost() end
-	Duel.Remove(c,POS_FACEUP,REASON_COST)
-end
-
---Default cost function for "You can Tribute this card; .."
-function Cost.SelfTribute(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsReleasable() end
-	Duel.Release(c,REASON_COST)
 end
 
 --Default cost for "You can pay X LP;"
@@ -1611,8 +1606,6 @@ function Cost.AND(...)
 	end
 end
 
---Alias for historical reasons:
-Cost.SelfRelease=Cost.SelfTribute
 
 function Card.EquipByEffectLimit(e,c)
 	if e:GetOwner()~=c then return false end

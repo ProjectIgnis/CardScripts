@@ -17,7 +17,7 @@ local function make_deprecated_function_no_replacement(old_funcname,message)
 				Debug.Message("]] .. old_funcname .. [[ is deprecated and will be removed. ]] .. message .. [[")
 				return oldfunc(...)
 			end
-		end)()]],"make_deprecated_function_alias")()
+		end)()]],"make_deprecated_function_no_replacement")()
 end
 local function make_deleted_replaced_function(old_funcname,new_funcname)
 	load(old_funcname .. [[= function()

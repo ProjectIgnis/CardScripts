@@ -45,7 +45,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_DDD,SET_DD}
 function s.damcfilter(c,tp)
-	local ty=c:GetType() & (TYPE_FUSION|TYPE_SYNCHRO|TYPE_XYZ|TYPE_LINK)
+	local ty=c:GetType()&(TYPE_FUSION|TYPE_SYNCHRO|TYPE_XYZ|TYPE_LINK)
 	return c:IsSummonPlayer(1-tp) and ty~=0 and Duel.IsExistingMatchingCard(s.damcfilter2,tp,LOCATION_MZONE,0,1,nil,ty)
 end
 function s.damcfilter2(c,ty)

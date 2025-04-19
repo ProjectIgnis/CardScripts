@@ -30,7 +30,7 @@ function s.valcheck(e,c)
 			att=(att|tc:GetAttribute())
 		end
 	end
-	att=(att&ATTRIBUTE_WIND|ATTRIBUTE_WATER|ATTRIBUTE_DARK)
+	att=att&(ATTRIBUTE_WIND|ATTRIBUTE_WATER|ATTRIBUTE_DARK)
 	e:SetLabel(att)
 end
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)

@@ -22,7 +22,11 @@ function s.initial_effect(c)
 end
 function s.val(e,c)
 	local r=c:GetRace()
-	if (r&RACE_FISH|RACE_SEASERPENT|RACE_THUNDER|RACE_AQUA)>0 then return 200
-	elseif (r&RACE_MACHINE|RACE_PYRO)>0 then return -200
-	else return 0 end
+	if r&(RACE_FISH|RACE_SEASERPENT|RACE_THUNDER|RACE_AQUA)>0 then
+		return 200
+	elseif r&(RACE_MACHINE|RACE_PYRO)>0 then
+		return -200
+	else
+		return 0
+	end
 end

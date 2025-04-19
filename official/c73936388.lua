@@ -77,7 +77,7 @@ function s.bttldesop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return (r&REASON_EFFECT|REASON_BATTLE)>0 and (not re or re:GetHandler()~=e:GetHandler())
+	return r&(REASON_EFFECT|REASON_BATTLE)>0 and (not re or re:GetHandler()~=e:GetHandler())
 end
 function s.spfilter(c,e,tp)
 	if c:IsLocation(LOCATION_DECK) and Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return false end

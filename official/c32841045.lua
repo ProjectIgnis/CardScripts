@@ -53,7 +53,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 		if chainid==i then
 			if c:GetFlagEffect(2)==0 then
 				g:Clear()
-				c:RegisterFlagEffect(2,RESET_EVENT|RESETS_STANDARD&~RESET_TURN_SET|RESET_CHAIN,0,1)
+				c:RegisterFlagEffect(2,RESET_EVENT|(RESETS_STANDARD&~RESET_TURN_SET)|RESET_CHAIN,0,1)
 				Duel.RaiseSingleEvent(c,EVENT_CUSTOM+id,e,0,0,0,0)
 			end
 			g:AddCard(re:GetHandler())
@@ -67,7 +67,7 @@ function s.regcon(e,tp,eg,ep,ev,re,r,rp)
 	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and c:IsColumn(seq,p,LOCATION_SZONE)
 end
 function s.regop2(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():RegisterFlagEffect(1,RESET_EVENT|RESETS_STANDARD&~RESET_TURN_SET|RESET_CHAIN,0,1,ev)
+	e:GetHandler():RegisterFlagEffect(1,RESET_EVENT|(RESETS_STANDARD&~RESET_TURN_SET)|RESET_CHAIN,0,1,ev)
 end
 function s.thfilter(c,codes)
 	return c:IsSetCard(SET_MAGICAL_MUSKET) and not c:IsCode(codes) and c:IsAbleToHand()

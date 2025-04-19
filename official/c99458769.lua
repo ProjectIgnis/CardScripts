@@ -25,7 +25,7 @@ function s.initial_effect(c)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_HAND) and rp==1-tp
-		and (r&REASON_DISCARD|REASON_EFFECT)==(REASON_DISCARD|REASON_EFFECT)
+		and (r&(REASON_DISCARD|REASON_EFFECT))==(REASON_DISCARD|REASON_EFFECT)
 		and e:GetHandler():IsPreviousControler(tp)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

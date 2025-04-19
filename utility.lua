@@ -1496,8 +1496,9 @@ function Cost.SelfReveal(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.ConfirmCards(1-tp,c)
 	Duel.ShuffleHand(tp)
 end
---Alias for historical reasons:
+--Aliases for historical reasons:
 Cost.SelfRelease=Cost.SelfTribute
+Auxiliary.bfgcost=Cost.SelfBanish
 
 function Cost.Discard(filter,other,count)
 	count=count or 1

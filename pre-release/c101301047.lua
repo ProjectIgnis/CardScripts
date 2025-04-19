@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--Xyz Summon procedure: 2+ Level 6 monsters OR 1 Rank 5 or 7 Xyz Monster you control
-	Xyz.AddProcedure(c,nil,6,2,s.ovfilter,aux.Stringid(id,0),99,s.xyzop)
+	Xyz.AddProcedure(c,nil,6,2,s.ovfilter,aux.Stringid(id,0),Xyz.InfiniteMats,s.xyzop)
 	--Cannot be used as material for an Xyz Summon the turn it was Xyz Summoned
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_SINGLE)

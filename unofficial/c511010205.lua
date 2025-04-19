@@ -5,7 +5,7 @@ Duel.LoadCardScript("c69757518.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
-	Xyz.AddProcedure(c,nil,6,3,nil,nil,99)
+	Xyz.AddProcedure(c,nil,6,3,nil,nil,Xyz.InfiniteMats)
 	c:EnableReviveLimit()
 	--Rank Up Check
 	aux.EnableCheckRankUp(c,nil,nil,90126061)

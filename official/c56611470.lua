@@ -27,51 +27,40 @@ s.listed_series={SET_ARTIFACT}
 function s.filter(c,e)
 	return c:IsFaceup() and c:IsSetCard(SET_ARTIFACT) and c:IsCanBeEffectTarget(e)
 end
-function s.xyzfilter(c,mg,tp,chk)
-	return c:IsXyzSummonable(nil,mg,2,2) and (not chk or Duel.GetLocationCountFromEx(tp,tp,mg,c)>0)
+function s.xyzfilter(c,mg,tp)
+	return c:IsXyzSummonable(nil,mg,2,2)
 end
-function s.mfilter1(c,mg,exg,tp)
-	return mg:IsExists(s.mfilter2,1,c,c,exg,tp)
-end
-function s.zonecheck(c,tp,g)
-	return Duel.GetLocationCountFromEx(tp,tp,g,c)>0 and c:IsXyzSummonable(nil,g)
-end
-function s.mfilter2(c,mc,exg,tp)
-	local g=Group.FromCards(c,mc)
-	return exg:IsExists(s.zonecheck,1,nil,tp,g)
+function s.rescon(exg)
+	return function(sg)
+		return #sg==2 and exg:IsExists(Card.IsXyzSummonable,1,nil,nil,sg,2,2)
+	end
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	local mg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil,e)
 	local exg=Duel.GetMatchingGroup(s.xyzfilter,tp,LOCATION_EXTRA,0,nil,mg)
-	if chk==0 then return mg:IsExists(s.mfilter1,1,nil,mg,exg,tp) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
-	local sg1=mg:FilterSelect(tp,s.mfilter1,1,1,nil,mg,exg,tp)
-	local tc1=sg1:GetFirst()
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
-	local sg2=mg:FilterSelect(tp,s.mfilter2,1,1,tc1,tc1,exg,tp)
-	sg1:Merge(sg2)
-	Duel.SetTargetCard(sg1)
+	if chk==0 then return #exg>0 end
+	local sg=aux.SelectUnselectGroup(mg,e,tp,2,2,s.rescon(exg),1,tp,HINTMSG_XMATERIAL)
+	Duel.SetTargetCard(sg)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
-function s.tfilter(c,e)
-	return c:IsRelateToEffect(e) and c:IsFaceup()
-end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local e1=Effect.CreateEffect(e:GetHandler())
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetCode(EFFECT_CANNOT_ATTACK)
-	e1:SetTargetRange(LOCATION_MZONE,0)
-	e1:SetTarget(s.attg)
-	e1:SetReset(RESET_PHASE|PHASE_END)
-	Duel.RegisterEffect(e1,tp)
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(s.tfilter,nil,e)
+	if e:IsHasType(EFFECT_TYPE_ACTIVATE) then
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetType(EFFECT_TYPE_FIELD)
+		e1:SetCode(EFFECT_CANNOT_ATTACK)
+		e1:SetTargetRange(LOCATION_MZONE,0)
+		e1:SetTarget(s.attg)
+		e1:SetReset(RESET_PHASE|PHASE_END)
+		Duel.RegisterEffect(e1,tp)
+	end
+	local g=Duel.GetTargetCards(e):Match(Card.IsFaceup,nil)
 	if #g<2 then return end
-	local xyzg=Duel.GetMatchingGroup(s.xyzfilter,tp,LOCATION_EXTRA,0,nil,g,tp,true)
+	local xyzg=Duel.GetMatchingGroup(s.xyzfilter,tp,LOCATION_EXTRA,0,nil,g,tp)
 	if #xyzg>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local xyz=xyzg:Select(tp,1,1,nil):GetFirst()
-		Duel.XyzSummon(tp,xyz,nil,g)
+		Duel.XyzSummon(tp,xyz,g,nil,2,2)
 	end
 end
 function s.attg(e,c)
@@ -81,7 +70,7 @@ function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp and e:GetHandler():IsPreviousControler(tp)
 end
 function s.cffilter(c)
-	return c:IsAttribute(ATTRIBUTE_LIGHT) and c:GetLevel()==5 and not c:IsPublic()
+	return c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsLevel(5) and not c:IsPublic()
 end
 function s.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cffilter,tp,LOCATION_HAND,0,1,nil) end

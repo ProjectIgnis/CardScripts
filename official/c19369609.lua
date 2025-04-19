@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--Xyz Summon Procedure
-	Xyz.AddProcedure(c,nil,1,2,nil,nil,99)
+	Xyz.AddProcedure(c,nil,1,2,nil,nil,Xyz.InfiniteMats)
 	--Gains 500 ATK for each material attached to it
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)

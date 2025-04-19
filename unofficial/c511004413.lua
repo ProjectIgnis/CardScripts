@@ -62,6 +62,6 @@ function s.operation(e,tp,eg,ev,ep,re,r,rp)
 		e1:SetValue(xc:GetRank())
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		xc:RegisterEffect(e1)
-		Duel.XyzSummon(tp,tc,nil,Group.FromCards(mc,xc))
+		Duel.XyzSummon(tp,tc,Group.FromCards(mc,xc),nil,2,2)
 	end
 end

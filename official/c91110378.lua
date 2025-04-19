@@ -6,7 +6,7 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(id)
+	e1:SetCode(EFFECT_STAR_SERAPH_SOVEREIGNTY)
 	e1:SetValue(0x30003) --0x1 >, 0x2 =, 0x4 <, value == last digit(s)
 	c:RegisterEffect(e1)
 	--spsummon

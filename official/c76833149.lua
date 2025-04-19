@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Xyz Summon
 	c:EnableReviveLimit()
-	Xyz.AddProcedure(c,aux.FilterBoolFunction(Card.IsRace,RACE_BEAST),2,2,nil,nil,99)
+	Xyz.AddProcedure(c,aux.FilterBoolFunction(Card.IsRace,RACE_BEAST),2,2,nil,nil,Xyz.InfiniteMats)
 	--Attach material
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))

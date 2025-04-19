@@ -4,7 +4,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
 	c:EnableReviveLimit()
-	Xyz.AddProcedure(c,s.xyzfilter,nil,2,nil,nil,99,nil,false,s.xyzcheck)
+	Xyz.AddProcedure(c,s.xyzfilter,nil,2,nil,nil,Xyz.InfiniteMats,nil,false,s.xyzcheck)
 	--Special Summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -34,11 +34,11 @@ function s.xyzfilter(c,xyz,sumtype,tp)
 	return c:IsType(TYPE_XYZ,xyz,sumtype,tp) and c:IsSetCard(SET_NUMBER,xyz,sumtype,tp) and c:GetOverlayCount()>0
 end
 function s.xyzcheck(g,tp,xyz)
-	local mg=g:Filter(function(c) return not c:IsHasEffect(511001175) end,nil)
+	local mg=g:Filter(function(c) return not c:IsHasEffect(EFFECT_EQUIP_SPELL_XYZ_MAT) end,nil)
 	return mg:GetClassCount(Card.GetRank)==1
 end
 function s.check(c,rk)
-	return c:GetRank()~=rk and not c:IsHasEffect(511001175)
+	return c:GetRank()~=rk and not c:IsHasEffect(EFFECT_EQUIP_SPELL_XYZ_MAT)
 end
 function s.filter(c,e,tp,rp)
 	return c:IsRankBelow(9) and c:IsAttackBelow(3000) and c:IsSetCard(SET_NUMBER)

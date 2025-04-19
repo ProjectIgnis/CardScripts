@@ -43,7 +43,7 @@ function s.xyzfilter(c,xyz,sumtype,tp)
 	return c:IsType(TYPE_XYZ,xyz,sumtype,tp) and c:IsSetCard(SET_NUMBER,xyz,sumtype,tp)
 end
 function s.xyzcheck(g,tp,xyz)
-	local mg=g:Filter(function(c) return not c:IsHasEffect(511001175) end,nil)
+	local mg=g:Filter(function(c) return not c:IsHasEffect(EFFECT_EQUIP_SPELL_XYZ_MAT) end,nil)
 	return mg:GetClassCount(Card.GetRank)==1 and mg:GetClassCount(Card.GetCode)==1
 end
 function s.filter(c)

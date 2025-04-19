@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	Xyz.AddProcedure(c,nil,3,2,nil,nil,99,nil,false,s.xyzcheck)
+	Xyz.AddProcedure(c,nil,3,2,nil,nil,Xyz.InfiniteMats,nil,false,s.xyzcheck)
 	--Cannot be target
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -36,7 +36,7 @@ function s.ntcon(e)
 	return e:GetHandler():GetOverlayCount()>0
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
-	if rp==tp or e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) 
+	if rp==tp or e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
 		or not re:IsMonsterEffect() or not Duel.IsChainNegatable(ev) then return false end
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
 	if #g==0 then return false end

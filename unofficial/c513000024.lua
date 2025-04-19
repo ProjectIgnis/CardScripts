@@ -3,7 +3,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	Fusion.AddProcFunRep(c,aux.FilterBoolFunction(Card.IsSetCard,0x3008),3,true)
+	Fusion.AddProcFunRep(c,aux.FilterBoolFunction(Card.IsSetCard,SET_ELEMENTAL_HERO),3,true)
 	--atkup
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(95486586,0))

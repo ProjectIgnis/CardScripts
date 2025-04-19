@@ -30,7 +30,7 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	s[ep]=s[ep]+ev
 end
 function s.filter1(c)
-	return c:IsFaceup() and c:IsSetCard(0x7f)
+	return c:IsFaceup() and c:IsSetCard(SET_UTOPIC)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetLP(tp)<=Duel.GetLP(1-tp)

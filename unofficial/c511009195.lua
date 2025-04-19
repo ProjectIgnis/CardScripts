@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and eg:GetFirst():GetControler()==tp and eg:GetFirst():IsSetCard(0xf7)
+	return ep~=tp and eg:GetFirst():GetControler()==tp and eg:GetFirst():IsSetCard(SET_LYRILUSC)
 end
 function s.filter(c,e,tp)
 	return c:GetLevel()==1 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

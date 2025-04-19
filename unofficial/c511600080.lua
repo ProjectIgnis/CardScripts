@@ -42,7 +42,7 @@ function s.atktg(e,c)
 	return c==e:GetHandler() or g:IsContains(c)
 end
 function s.filter(c,e,tp,zone)
-	return c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone) and c:IsSetCard(0x101)
+	return c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone) and c:IsSetCard(SET_CODE_TALKER)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local zone=e:GetHandler():GetLinkedZone(tp)&0x1f

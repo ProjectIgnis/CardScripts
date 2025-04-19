@@ -28,7 +28,7 @@ end
 s.listed_series={0x9f,0x99}
 function s.atkupcon(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttacker()
-	return at:IsControler(tp) and (at:IsSetCard(0x9f) or at:IsSetCard(0x99))
+	return at:IsControler(tp) and (at:IsSetCard(SET_PERFORMAPAL) or at:IsSetCard(SET_ODD_EYES))
 end
 function s.atkupop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
@@ -46,7 +46,7 @@ function s.atkcon(e)
 	local d=Duel.GetAttackTarget()
 	local a=Duel.GetAttacker()
 	local tp=e:GetHandlerPlayer()
-	return Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL and d and d:IsControler(1-tp) and a and (a:IsSetCard(0x9f) or a:IsSetCard(0x99))
+	return Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL and d and d:IsControler(1-tp) and a and (a:IsSetCard(SET_PERFORMAPAL) or a:IsSetCard(SET_ODD_EYES))
 end
 function s.atktg(e,c)
 	return c==Duel.GetAttackTarget() 

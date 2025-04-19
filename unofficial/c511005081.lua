@@ -22,13 +22,13 @@ function s.initial_effect(c)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
-	if re:IsMonsterEffect() and re:GetCode()==EVENT_SUMMON_SUCCESS and rc:IsSummonType(SUMMON_TYPE_TRIBUTE) then
+	if re:IsMonsterEffect() and re:GetCode()==EVENT_SUMMON_SUCCESS and rc:IsTributeSummoned() then
 		rc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,0)
 	end
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsLevelAbove(5) and c:IsMonarch()
-		and c:IsSummonType(SUMMON_TYPE_TRIBUTE) and c:HasFlagEffect(id)
+		and c:IsTributeSummoned() and c:HasFlagEffect(id)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end

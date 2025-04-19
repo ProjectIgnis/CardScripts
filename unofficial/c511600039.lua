@@ -59,7 +59,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return #dg>0
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x99)
+	return c:IsFaceup() and c:IsSetCard(SET_ODD_EYES)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

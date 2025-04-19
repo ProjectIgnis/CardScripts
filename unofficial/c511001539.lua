@@ -59,7 +59,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Damage(p,d,REASON_EFFECT)
 end
 function s.confilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x7)
+	return c:IsFaceup() and c:IsSetCard(SET_ANCIENT_GEAR)
 end
 function s.fuscon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.confilter,tp,LOCATION_MZONE,0,1,e:GetHandler())

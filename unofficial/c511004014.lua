@@ -336,7 +336,7 @@ function s.setlimit(e,c,tp)
 end
 function s.aclimit1(e,tp,eg,ep,ev,re,r,rp)
 	if re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL) and re:GetHandler():IsPreviousLocation(LOCATION_HAND) then
-		re:GetHandler():RegisterFlagEffect(EFFECT_TYPE_ACTIVATE,RESET_PHASE+PHASE_END,0,1)
+		re:GetHandler():RegisterFlagEffect(EFFECT_TYPE_ACTIVATE,RESET_PHASE|PHASE_END,0,1)
 	end
 end
 function s.aclimit2(e,tp,eg,ep,ev,re,r,rp)
@@ -348,10 +348,10 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local hg=eg:Filter(Card.IsPreviousLocation,nil,LOCATION_HAND)
 	if #hg>0 then
 		if hg:IsExists(Card.IsSpell,1,nil) then
-			Duel.RegisterFlagEffect(rp,TYPE_SPELL,RESET_PHASE+PHASE_END,0,1)
+			Duel.RegisterFlagEffect(rp,TYPE_SPELL,RESET_PHASE|PHASE_END,0,1)
 		end
 		if hg:IsExists(Card.IsTrap,1,nil) then
-			Duel.RegisterFlagEffect(rp,TYPE_TRAP,RESET_PHASE+PHASE_END,0,1)
+			Duel.RegisterFlagEffect(rp,TYPE_TRAP,RESET_PHASE|PHASE_END,0,1)
 		end
 	end
 end

@@ -42,8 +42,8 @@ function s.initial_effect(c)
 end
 s.listed_series={0xae}
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return aux.damcon1(e,tp,eg,ep,ev,re,r,rp) and ep==tp and re:GetHandler():IsSetCard(0xae) 
-		and Duel.GetCurrentPhase()==PHASE_STANDBY and Duel.GetTurnPlayer()==tp
+	return aux.damcon1(e,tp,eg,ep,ev,re,r,rp) and ep==tp and re:GetHandler():IsSetCard(SET_DARK_CONTRACT) 
+		and Duel.GetCurrentPhase()==PHASE_STANDBY and Duel.IsTurnPlayer(tp)
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	local cid=Duel.GetChainInfo(ev,CHAININFO_CHAIN_ID)
@@ -64,12 +64,12 @@ function s.refcon(e,re,r,rp,rc)
 	return cid==e:GetLabel()
 end
 function s.cfilter(c)
-	return (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and c:IsSetCard(0xae) and c:IsAbleToGraveAsCost()
+	return (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and c:IsSetCard(SET_DARK_CONTRACT) and c:IsAbleToGraveAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD+LOCATION_HAND,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD|LOCATION_HAND,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_ONFIELD+LOCATION_HAND,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_ONFIELD|LOCATION_HAND,0,1,1,nil)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
@@ -98,7 +98,7 @@ function s.aclimit(e,re,tp)
 	return re:IsHasType(EFFECT_TYPE_ACTIVATE)
 end
 function s.filter(c)
-	return c:IsSetCard(0xae) and c:IsAbleToHand()
+	return c:IsSetCard(SET_DARK_CONTRACT) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

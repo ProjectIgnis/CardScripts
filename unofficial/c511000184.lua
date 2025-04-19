@@ -68,5 +68,5 @@ function s.dfilter(c,atk)
 	return c:IsFaceup() and c:IsDestructable() and c:GetAttack()<=atk
 end
 function s.indes(e,c)
-	return not c:IsSetCard(0x48)
+	return not c:IsSetCard(SET_NUMBER)
 end

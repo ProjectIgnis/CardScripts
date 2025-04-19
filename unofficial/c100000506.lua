@@ -31,7 +31,7 @@ function s.initial_effect(c)
 end
 s.listed_names={27780618}
 function s.spfilter(c)
-	return (c:IsSetCard(0x5008) or c:IsCode(27780618)) and c:IsLevelBelow(4) and c:IsAbleToGraveAsCost()
+	return (c:IsSetCard(SET_VISION_HERO) or c:IsCode(27780618)) and c:IsLevelBelow(4) and c:IsAbleToGraveAsCost()
 end
 function s.spcon(e,c)
 	if c==nil then return true end
@@ -57,7 +57,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	g:DeleteGroup()
 end
 function s.tgfilter(c)
-	return (c:IsSetCard(0x5008) or c:IsCode(27780618)) and c:IsAbleToGrave()
+	return (c:IsSetCard(SET_VISION_HERO) or c:IsCode(27780618)) and c:IsAbleToGrave()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil) end

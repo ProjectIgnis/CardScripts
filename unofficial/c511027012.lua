@@ -27,7 +27,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x1157}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x1157)
+	return c:IsFaceup() and c:IsSetCard(SET_SUNAVALON)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil)

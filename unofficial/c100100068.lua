@@ -21,7 +21,7 @@ function s.filter(c)
 	return c:IsFaceup() and c:IsDestructable()
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsAttackPos() and c:IsSetCard(0x100d)
+	return c:IsFaceup() and c:IsAttackPos() and c:IsSetCard(SET_X_SABER)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

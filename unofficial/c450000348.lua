@@ -14,12 +14,12 @@ function s.initial_effect(c)
 end
 s.listed_names={31801517}
 function s.filter(c)
-	return c:IsAbleToRemoveAsCost() and c:IsMonster() and (c:IsSetCard(0x55) or c:IsCode(31801517)) and aux.SpElimFilter(c,true)
+	return c:IsAbleToRemoveAsCost() and c:IsMonster() and (c:IsSetCard(SET_PHOTON) or c:IsCode(31801517)) and aux.SpElimFilter(c,true)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,2,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,2,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,2,2,nil)
+	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,2,2,nil)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

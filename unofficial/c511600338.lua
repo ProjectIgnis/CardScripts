@@ -16,7 +16,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x119}
 function s.filter(c)
-	return c:IsType(TYPE_LINK) and c:IsSetCard(0x119) and c:IsAbleToExtra()
+	return c:IsType(TYPE_LINK) and c:IsSetCard(SET_SALAMANGREAT) and c:IsAbleToExtra()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

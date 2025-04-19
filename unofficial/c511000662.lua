@@ -14,10 +14,10 @@ function s.initial_effect(c)
 end
 s.listed_series={0x93}
 function s.cfilter(c)
-	return c:IsSetCard(0x93) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
+	return c:IsSetCard(SET_CYBER) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end
 function s.filter(c,e,tp)
-	return c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsSetCard(0x93) and c:GetLevel()==10
+	return c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsSetCard(SET_CYBER) and c:GetLevel()==10
 end
 function s.mzfilter(c)
 	return c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5
@@ -32,7 +32,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 			and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,nil,e,tp)
 	end
 	local g=Duel.IsPlayerAffectedByEffect(tp,69832741) and Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE,0,nil)
-		or Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil)
+		or Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,nil)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
 end

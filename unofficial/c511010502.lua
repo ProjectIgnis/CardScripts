@@ -34,7 +34,7 @@ function s.lvcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function s.lvfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xe5) and c:GetLevel()>0
+	return c:IsFaceup() and c:IsSetCard(SET_CIPHER) and c:GetLevel()>0
 end
 function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.lvfilter,tp,LOCATION_MZONE,0,1,e:GetHandler()) end

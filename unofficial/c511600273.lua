@@ -70,10 +70,10 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.etarget(e,c)
-	return c:IsFaceup() and c:IsSetCard(0x13c)
+	return c:IsFaceup() and c:IsSetCard(SET_CODEBREAKER)
 end
 function s.tgfilter(c,p)
-	return c:IsFaceup() and c:IsSetCard(0x13c) and c:GetOwner()==p and not c:IsControler(p)
+	return c:IsFaceup() and c:IsSetCard(SET_CODEBREAKER) and c:GetOwner()==p and not c:IsControler(p)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.tgfilter,1,nil,tp)

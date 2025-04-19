@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cfilter(c,e,tp)
-	return c:IsSetCard(0xf0) and c:IsLevelBelow(4) and c:IsMonster() and not c:IsPublic() 
+	return c:IsSetCard(SET_WINDWITCH) and c:IsLevelBelow(4) and c:IsMonster() and not c:IsPublic() 
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetCode())
 end
 function s.spfilter(c,e,tp,code)

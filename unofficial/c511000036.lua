@@ -32,7 +32,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_PHASE_START+PHASE_END)
 	e1:SetOperation(s.countop)
-	if Duel.GetTurnPlayer()==tp and Duel.GetCurrentPhase()==PHASE_END then
+	if Duel.IsTurnPlayer(tp) and Duel.GetCurrentPhase()==PHASE_END then
 		e1:SetLabel(1)
 	else
 		e1:SetLabel(0)

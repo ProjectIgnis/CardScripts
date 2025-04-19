@@ -56,7 +56,7 @@ function s.splimit(e,c,sump,sumtype,sumpos,targetp)
 	return sumtype&SUMMON_TYPE_LINK==SUMMON_TYPE_LINK
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.desfilter(c)
 	return c:IsReleasableByEffect() and c:IsType(TYPE_LINK)

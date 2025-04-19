@@ -47,7 +47,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x102}
 function s.actfilter(c)
-	return c:IsSetCard(0x102) and c:IsMonster() and c:IsAbleToGrave()
+	return c:IsSetCard(SET_ROKKET) and c:IsMonster() and c:IsAbleToGrave()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
@@ -90,14 +90,14 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():AddCounter(0x580,1)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and Duel.GetCurrentPhase()==PHASE_MAIN2
+	return Duel.IsTurnPlayer(tp) and Duel.GetCurrentPhase()==PHASE_MAIN2
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,0x580,1,REASON_EFFECT) end
 	e:GetHandler():RemoveCounter(tp,0x580,1,REASON_EFFECT)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x102) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return c:IsSetCard(SET_ROKKET) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.spfilter(chkc,e,tp) end

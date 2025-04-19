@@ -16,7 +16,7 @@ function s.cd(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 	if not g or #g~=1 then return false end
 	local c=g:GetFirst()
-	if c:IsOnField() and c:IsFaceup() and c:IsSetCard(0x54) then
+	if c:IsOnField() and c:IsFaceup() and c:IsSetCard(SET_GAGAGA) then
 		e:SetLabelObject(c)
 		return true
 	end

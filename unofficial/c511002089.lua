@@ -59,7 +59,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetLabelObject(e2)
 		e3:SetOwnerPlayer(tp)
 		e3:SetOperation(s.reset)
-		if Duel.GetTurnPlayer()==tp then
+		if Duel.IsTurnPlayer(tp) then
 			e3:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN,3)
 		else
 			e3:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN,3)

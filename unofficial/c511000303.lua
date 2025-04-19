@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x55)
+	return c:IsFaceup() and c:IsSetCard(SET_PHOTON)
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
 	if rp==tp or not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil) then return false end

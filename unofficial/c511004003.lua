@@ -59,7 +59,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.SendtoDeck(tc,p,2,REASON_EFFECT)
 		elseif (loc&LOCATION_HAND)~=0 then
 			Duel.SendtoHand(tc,p,REASON_EFFECT)
-		elseif (loc&LOCATION_MZONE+LOCATION_SZONE)~=0 then
+		elseif (loc&LOCATION_MZONE|LOCATION_SZONE)~=0 then
 			local seq2=0
 			if pzone then
 				loc=LOCATION_PZONE

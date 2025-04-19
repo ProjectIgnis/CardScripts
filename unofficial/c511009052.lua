@@ -27,11 +27,11 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter(c,e,tp)
-	return c:IsFaceup() and c:IsSetCard(0xc008) and c:GetFlagEffect(id)>0 
+	return c:IsFaceup() and c:IsSetCard(SET_DESTINY_HERO) and c:GetFlagEffect(id)>0 
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND,0,1,nil,c:GetAttack(),e,tp)
 end
 function s.spfilter(c,atk,e,tp)
-	return c:IsSetCard(0xc008) and c:GetAttack()<=atk and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_DESTINY_HERO) and c:GetAttack()<=atk and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end

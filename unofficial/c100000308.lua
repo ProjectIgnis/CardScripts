@@ -29,11 +29,11 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp)
-		and Duel.IsExistingMatchingCard(s.gfilter,tp,LOCATION_ONFIELD+LOCATION_HAND,0,2,nil) end
+		and Duel.IsExistingMatchingCard(s.gfilter,tp,LOCATION_ONFIELD|LOCATION_HAND,0,2,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local g1=Duel.GetMatchingGroup(s.gfilter,tp,LOCATION_ONFIELD+LOCATION_HAND,0,nil)
+	local g1=Duel.GetMatchingGroup(s.gfilter,tp,LOCATION_ONFIELD|LOCATION_HAND,0,nil)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 or #g1~=2 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g2=g1:Select(tp,2,2,nil)

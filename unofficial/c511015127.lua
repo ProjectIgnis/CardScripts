@@ -38,7 +38,7 @@ function s.repop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoGrave(e:GetHandler(),REASON_EFFECT+REASON_REPLACE,1-tp)
 end
 function s.hdcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and not e:GetHandler():IsPreviousControler(tp)
+	return Duel.IsTurnPlayer(tp) and not e:GetHandler():IsPreviousControler(tp)
 end
 function s.hdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

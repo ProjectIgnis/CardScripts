@@ -16,7 +16,7 @@ function s.initial_effect(c)
 end
 s.toss_coin=true
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local ct=Duel.CountHeads(Duel.TossCoin(tp,3))

@@ -30,10 +30,10 @@ end
 s.listed_series={0x99,0x9f}
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttacker()
-	return at:IsControler(tp) and at:IsSetCard(0x99)
+	return at:IsControler(tp) and at:IsSetCard(SET_ODD_EYES)
 end
 function s.atkfil(c)
-	return c:HasNonZeroAttack() and c:IsAttackPos() and c:IsSetCard(0x9f)
+	return c:HasNonZeroAttack() and c:IsAttackPos() and c:IsSetCard(SET_PERFORMAPAL)
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetAttacker():IsCanBeEffectTarget(e) and Duel.IsExistingMatchingCard(s.atkfil,tp,LOCATION_MZONE,0,1,nil) end
@@ -55,7 +55,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.atkfilter(c)
-	return c:IsFaceup() and (c:IsSetCard(0x99) or c:IsSetCard(0x9f))
+	return c:IsFaceup() and (c:IsSetCard(SET_ODD_EYES) or c:IsSetCard(SET_PERFORMAPAL))
 end
 function s.atkval(e,c)
 	if s.atkfilter(c) then

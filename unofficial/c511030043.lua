@@ -35,11 +35,11 @@ function s.initial_effect(c)
 end
 s.listed_series={0x14a}
 function s.matfilter(c,lc,sumtype,tp)
-	return c:IsSetCard(0x14a,fc,sumtype,tp) and c:IsLink(1)
+	return c:IsSetCard(SET_APPLIANCER,fc,sumtype,tp) and c:IsLink(1)
 end
 function s.lkcon(e)
 	local c=e:GetHandler()
-	return c:IsStatus(STATUS_SPSUMMON_TURN) and c:IsSummonType(SUMMON_TYPE_LINK)
+	return c:IsStatus(STATUS_SPSUMMON_TURN) and c:IsLinkSummoned()
 end
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

@@ -29,7 +29,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,tc)
 		if tc:IsCode(ac) then
 			Duel.BreakEffect()
-			local sg=Duel.GetMatchingGroup(Card.IsAbleToDeck,tp,0,LOCATION_ONFIELD+LOCATION_HAND,nil)
+			local sg=Duel.GetMatchingGroup(Card.IsAbleToDeck,tp,0,LOCATION_ONFIELD|LOCATION_HAND,nil)
 			Duel.SendtoDeck(sg,nil,2,REASON_EFFECT)
 		end
 		Duel.ShuffleHand(1-tp)

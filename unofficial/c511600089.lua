@@ -22,7 +22,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0xfb}
 function s.filter(c,ec)
-	return c:IsLinkMonster() and c:IsFaceup() and c:IsSetCard(0xfb)
+	return c:IsLinkMonster() and c:IsFaceup() and c:IsSetCard(SET_TRICKSTAR)
 		and (c:GetLinkedGroup():IsExists(Card.IsAbleToGraveAsCost,1,nil) or ec:IsAbleToGraveAsCost())
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

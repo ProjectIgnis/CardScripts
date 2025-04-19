@@ -60,7 +60,7 @@ function s.clear(e,tp,eg,ep,ev,re,r,rp)
 	s[3]=0
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x4)
+	return c:IsFaceup() and c:IsSetCard(SET_AMAZONESS)
 end
 function s.descon(e)
 	return not Duel.IsExistingMatchingCard(s.cfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)

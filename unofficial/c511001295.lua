@@ -61,13 +61,13 @@ function s.initial_effect(c)
 end
 s.listed_series={0x2178}
 function s.rescon(sg,e,tp,mg)
-	return aux.ChkfMMZ(1)(sg,e,tp,mg) and sg:IsExists(Card.IsSetCard,1,nil,0x2178)
+	return aux.ChkfMMZ(1)(sg,e,tp,mg) and sg:IsExists(Card.IsSetCard,1,nil,SET_BATTLEGUARD)
 end
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	local rg=Duel.GetReleaseGroup(tp)
-	return Duel.GetLocationCount(tp,LOCATION_MZONE)>-3 and #rg>2 and rg:IsExists(Card.IsSetCard,1,nil,0x2178) 
+	return Duel.GetLocationCount(tp,LOCATION_MZONE)>-3 and #rg>2 and rg:IsExists(Card.IsSetCard,1,nil,SET_BATTLEGUARD) 
 		and aux.SelectUnselectGroup(rg,e,tp,3,3,s.rescon,0)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)

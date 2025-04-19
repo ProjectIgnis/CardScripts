@@ -18,17 +18,17 @@ function s.initial_effect(c)
 end
 s.listed_series={0x12b}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x12b) and c:IsType(TYPE_LINK) and c:IsMonster()
+	return c:IsFaceup() and c:IsSetCard(SET_MARINCESS) and c:IsType(TYPE_LINK) and c:IsMonster()
 end
 function s.condition(e,c)
 	if c==nil then return true end
 	local tp=e:GetHandlerPlayer()
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil)
-	local zone=aux.GetMMZonesPointedTo(tp,Card.IsSetCard,LOCATION_MZONE,0,nil,0x12b)
+	local zone=aux.GetMMZonesPointedTo(tp,Card.IsSetCard,LOCATION_MZONE,0,nil,SET_MARINCESS)
 	return #g>1 and zone>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
 end
 function s.spval(e,c)
-	return 0,aux.GetMMZonesPointedTo(e:GetHandlerPlayer(),Card.IsSetCard,LOCATION_MZONE,0,nil,0x12b)
+	return 0,aux.GetMMZonesPointedTo(e:GetHandlerPlayer(),Card.IsSetCard,LOCATION_MZONE,0,nil,SET_MARINCESS)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp,c)
 	local e1=Effect.CreateEffect(c)

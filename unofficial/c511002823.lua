@@ -3,7 +3,7 @@
 --rescripted by Naim to match the Fusion Summon procedure
 local s,id=GetID()
 function s.initial_effect(c)
-	local e1=Fusion.CreateSummonEff({handler=c,fusfilter=aux.FilterBoolFunction(Card.IsSetCard,0x7),matfilter=aux.FALSE,extrafil=s.extrafilter,stage2=s.stage2,extraop=s.extraop})
+	local e1=Fusion.CreateSummonEff({handler=c,fusfilter=aux.FilterBoolFunction(Card.IsSetCard,SET_ANCIENT_GEAR),matfilter=aux.FALSE,extrafil=s.extrafilter,stage2=s.stage2,extraop=s.extraop})
 	c:RegisterEffect(e1)
 end
 function s.extrafilter(e,tp,eg,ep,ev,re,r,rp)

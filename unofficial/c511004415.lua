@@ -26,7 +26,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	return true
 end
 function s.cfilter(c)
-	return c:IsMonster() and c:IsSetCard(0xc008) and c:IsAbleToRemove() and aux.SpElimFilter(c,true)
+	return c:IsMonster() and c:IsSetCard(SET_DESTINY_HERO) and c:IsAbleToRemove() and aux.SpElimFilter(c,true)
 end
 function s.target(e,tp,eg,ev,ep,re,r,rp,chk,chkc)
 	if chkc then return s.filter(chkc,e,tp) and eg:IsContains(chkc) end
@@ -45,7 +45,7 @@ function s.target(e,tp,eg,ev,ep,re,r,rp,chk,chkc)
 	Duel.Remove(rc,POS_FACEUP,REASON_COST)
 end
 function s.afilter(c)
-	return c:IsMonster() and c:IsSetCard(0xc008) and c:GetAttackedCount()~=0
+	return c:IsMonster() and c:IsSetCard(SET_DESTINY_HERO) and c:GetAttackedCount()~=0
 end
 function s.operation(e,tp,eg,ev,ep,re,r,rp)
 	local atk=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
@@ -57,7 +57,7 @@ function s.operation(e,tp,eg,ev,ep,re,r,rp)
 		e1:SetValue(-atk)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
-		if Duel.GetTurnPlayer()==tp and Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE then
+		if Duel.IsTurnPlayer(tp) and Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE then
 			local ag=Duel.SelectMatchingCard(tp,s.afilter,tp,LOCATION_MZONE,0,1,1,nil)
 			local ac=ag:GetFirst()
 			if not ac then return end

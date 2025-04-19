@@ -23,7 +23,7 @@ function s.spfilter(c,e,tp,id)
 	return c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,0x1e),tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,SET_CHRYSALIS),tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	if chk==0 then 
 		if not (#g>0 and g:FilterCount(Card.IsAbleToGrave,nil)==#g) then return false end
 		local tok=e:GetLabelObject()
@@ -33,7 +33,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 			for _,v in ipairs(c.listed_names) do
 				tok:Recreate(v)
 				if tok:IsMonster() then
-					local tempg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,nil,e,tp,v)
+					local tempg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_HAND|LOCATION_DECK,0,nil,e,tp,v)
 					if #tempg==0 then return false end
 					tg:Merge(tempg)
 				end
@@ -41,10 +41,10 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		end
 		return Duel.GetMZoneCount(tp,g)>=tg:GetClassCount(Card.GetCode)
 	end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND|LOCATION_DECK)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,0x1e),tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,SET_CHRYSALIS),tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	if Duel.SendtoGrave(g,REASON_EFFECT)>0 then
 		local sg=g:Filter(Card.IsLocation,nil,LOCATION_GRAVE)
 		if #sg==0 then return end
@@ -55,7 +55,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			for _,v in ipairs(c.listed_names) do
 				tok:Recreate(v)
 				if tok:IsMonster() then
-					local tempg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_HAND+LOCATION_DECK,0,nil,e,tp,v)
+					local tempg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_HAND|LOCATION_DECK,0,nil,e,tp,v)
 					if #tempg==0 then return end
 					tg:Merge(tempg)
 				end

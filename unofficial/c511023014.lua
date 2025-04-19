@@ -16,7 +16,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x3008}
 function s.filter(c,ec)
-	if not c:IsSetCard(0x3008) or not c:IsSummonableCard() then return false end
+	if not c:IsSetCard(SET_ELEMENTAL_HERO) or not c:IsSummonableCard() then return false end
 	local e1=Effect.CreateEffect(ec)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 	e1:SetType(EFFECT_TYPE_SINGLE)

@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.repfilter(c,tp)
-	return c:IsFaceup() and c:IsControler(tp) and c:IsReason(REASON_BATTLE) and c:IsLocation(LOCATION_MZONE) and c:IsSetCard(0xba) 
+	return c:IsFaceup() and c:IsControler(tp) and c:IsReason(REASON_BATTLE) and c:IsLocation(LOCATION_MZONE) and c:IsSetCard(SET_RAIDRAPTOR) 
 		and not c:IsReason(REASON_REPLACE) and c:CheckRemoveOverlayCard(tp,1,REASON_EFFECT)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)

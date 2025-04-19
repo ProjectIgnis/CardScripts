@@ -14,7 +14,7 @@ function s.initial_effect(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=eg:GetFirst()
-	return tc:IsPreviousControler(tp) and tc:IsSetCard(0x87) and tc:IsReason(REASON_BATTLE)
+	return tc:IsPreviousControler(tp) and tc:IsSetCard(SET_UMBRAL_HORROR) and tc:IsReason(REASON_BATTLE)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tg=eg:GetFirst():GetReasonCard()

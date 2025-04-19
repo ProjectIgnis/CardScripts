@@ -26,7 +26,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x119}
 function s.filter(c,atk)
-	return c:IsSetCard(0x119) and c:GetAttack()~=atk
+	return c:IsSetCard(SET_SALAMANGREAT) and c:GetAttack()~=atk
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker():IsControler(1-tp) and Duel.GetLP(tp)<=1000

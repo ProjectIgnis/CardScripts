@@ -20,17 +20,17 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetCountLimit(1,id)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x119}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==1-tp
+	return Duel.IsTurnPlayer(1-tp)
 end
 function s.costfilter(c)
-	return c:IsSetCard(0x119) and c:IsType(TYPE_LINK)
+	return c:IsSetCard(SET_SALAMANGREAT) and c:IsType(TYPE_LINK)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.costfilter,1,false,nil,nil) end
@@ -41,10 +41,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
 end
 function s.filter1(c)
-	return c:IsSetCard(0x119) and c:IsType(TYPE_LINK) and c:IsAbleToDeck()
+	return c:IsSetCard(SET_SALAMANGREAT) and c:IsType(TYPE_LINK) and c:IsAbleToDeck()
 end
 function s.filter2(c,e,tp)
-	return c:IsSetCard(0x119) and (not c:IsType(TYPE_LINK)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return c:IsSetCard(SET_SALAMANGREAT) and (not c:IsType(TYPE_LINK)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

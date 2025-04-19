@@ -35,7 +35,7 @@ function s.cfilter(c)
 	return c:IsPosition(POS_FACEUP_DEFENSE)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and Duel.IsExistingMatchingCard(Card.IsAttackPos,tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsTurnPlayer(tp) and Duel.IsExistingMatchingCard(Card.IsAttackPos,tp,LOCATION_MZONE,0,1,nil)
 		and Duel.GetActivityCount(tp,ACTIVITY_ATTACK)==0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

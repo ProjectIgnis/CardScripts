@@ -21,7 +21,7 @@ end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
 	if re:IsHasType(EFFECT_TYPE_ACTIVATE) and rc:IsSpell() then
-		rc:RegisterFlagEffect(id,RESET_PHASE+PHASE_END,0,0)
+		rc:RegisterFlagEffect(id,RESET_PHASE|PHASE_END,0,0)
 	end
 end
 function s.cfilter(c)

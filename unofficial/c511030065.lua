@@ -59,7 +59,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ChangeBattleDamage(tp,0)
 end
 function s.spcfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsSummonType(SUMMON_TYPE_XYZ)
+	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsXyzSummoned()
 end
 function s.costfilter(c,ft,tp)
 	return c:IsFaceup() and c:IsRace(RACE_PLANT)

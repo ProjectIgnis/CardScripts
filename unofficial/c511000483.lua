@@ -20,7 +20,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return d and d:IsFaceup()
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x3008)
+	return c:IsSetCard(SET_ELEMENTAL_HERO)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingTarget(s.cfilter,tp,LOCATION_GRAVE,0,1,nil) end

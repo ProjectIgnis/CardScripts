@@ -15,7 +15,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return tp~=Duel.GetTurnPlayer()
 end
 function s.filter(c,e)
-	return c:IsCanBeEffectTarget(e) and c:IsSetCard(0x26)
+	return c:IsCanBeEffectTarget(e) and c:IsSetCard(SET_MORPHTRONIC)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

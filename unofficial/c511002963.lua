@@ -3,7 +3,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	Fusion.AddProcMix(c,true,true,10979723,aux.FilterBoolFunctionEx(Card.IsSetCard,0x4))
+	Fusion.AddProcMix(c,true,true,10979723,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_AMAZONESS))
 	--atkup
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -46,7 +46,7 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
 	if not d then return false end
-	return a:IsControler(tp) and d:IsControler(1-tp) and a:IsSetCard(0x4)
+	return a:IsControler(tp) and d:IsControler(1-tp) and a:IsSetCard(SET_AMAZONESS)
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() end

@@ -45,5 +45,5 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Damage(1-tp,500,REASON_EFFECT)
 end
 function s.indes(e,c)
-	return not c:IsSetCard(0x48)
+	return not c:IsSetCard(SET_NUMBER)
 end

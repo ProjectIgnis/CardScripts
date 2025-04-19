@@ -23,7 +23,7 @@ function s.tfilter(c,scard,sumtype,tp)
 	return c:IsSummonCode(scard,sumtype,tp,63977008) or c:IsHasEffect(20932152)
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
+	return e:GetHandler():IsSynchroSummoned()
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsLevelBelow(2)

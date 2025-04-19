@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.sccon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.filter(c,lv)
 	return c:IsFaceup() and c:IsAbleToGrave() and c:IsLevelBelow(lv) and c:GetSummonType()==SUMMON_TYPE_PENDULUM

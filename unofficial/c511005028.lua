@@ -28,7 +28,7 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE 
+	return Duel.IsTurnPlayer(tp) and Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE 
 		and Duel.GetChainInfo(0,CHAININFO_CHAIN_ID)==s[0] and Duel.IsChainDisablable(ev)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -22,11 +22,11 @@ function s.initial_effect(c)
 end
 s.listed_series={0x119}
 function s.spfilter(c,e,tp,sc)
-	return c:IsSetCard(0x119) and c:IsSummonType(SUMMON_TYPE_LINK) and c:IsStatus(STATUS_SPSUMMON_TURN) and c:IsLinkMonster()
+	return c:IsSetCard(SET_SALAMANGREAT) and c:IsLinkSummoned() and c:IsStatus(STATUS_SPSUMMON_TURN) and c:IsLinkMonster()
 		and sc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,c:GetFreeLinkedZone()&0x1f)
 end
 function s.rfilter(c)
-	return c:IsSetCard(0x119) and c:IsAbleToDeck() and c:IsMonster()
+	return c:IsSetCard(SET_SALAMANGREAT) and c:IsAbleToDeck() and c:IsMonster()
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

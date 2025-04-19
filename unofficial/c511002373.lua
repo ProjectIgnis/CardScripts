@@ -3,7 +3,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	Fusion.AddProcMixN(c,true,true,97165977,1,aux.FilterBoolFunction(Card.IsSetCard,0xdf),2)
+	Fusion.AddProcMixN(c,true,true,97165977,1,aux.FilterBoolFunction(Card.IsSetCard,SET_LUNALIGHT),2)
 	--immune
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -43,6 +43,6 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetAttacker()==c and c:GetFlagEffect(id)==0 then
 		local sg=Duel.GetMatchingGroup(Card.IsDestructable,tp,0,LOCATION_MZONE,nil)
 		Duel.Destroy(sg,REASON_EFFECT)
-		c:RegisterFlagEffect(id,RESET_PHASE+PHASE_END,0,1)
+		c:RegisterFlagEffect(id,RESET_PHASE|PHASE_END,0,1)
 	end
 end

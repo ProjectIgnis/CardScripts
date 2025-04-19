@@ -39,11 +39,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x84)
+	return c:IsFaceup() and c:IsSetCard(SET_BATTLIN_BOXER)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp~=tp and re:IsActiveType(TYPE_TRAP) and re:IsHasType(EFFECT_TYPE_ACTIVATE)
-	 and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x84),tp,LOCATION_MZONE,0,1,nil) 
+	 and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_BATTLIN_BOXER),tp,LOCATION_MZONE,0,1,nil) 
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToHand() end

@@ -108,7 +108,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x1157) and c:IsMonster() and c:IsFaceup()
+	return c:IsSetCard(SET_SUNAVALON) and c:IsMonster() and c:IsFaceup()
 end
 function s.tgocon(e)
 	return Duel.IsExistingMatchingCard(s.cfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)

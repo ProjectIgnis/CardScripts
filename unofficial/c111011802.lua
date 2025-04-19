@@ -40,7 +40,7 @@ end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	if not re then return false end
 	local rc=re:GetHandler()
-	return eg:IsExists(s.drfilter,1,nil) and rc:IsSetCard(0x95)
+	return eg:IsExists(s.drfilter,1,nil) and rc:IsSetCard(SET_RANK_UP_MAGIC)
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
@@ -88,7 +88,7 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if not re then return end
 	local rc=re:GetHandler()
-	if rc:IsSetCard(0x95) then
+	if rc:IsSetCard(SET_RANK_UP_MAGIC) then
 		local tc=eg:GetFirst()
 		while tc do
 			tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1)

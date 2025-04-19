@@ -47,7 +47,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return ep==tp
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x2178)
+	return c:IsFaceup() and c:IsSetCard(SET_BATTLEGUARD)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetHandler():GetFirstCardTarget()

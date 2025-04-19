@@ -38,7 +38,7 @@ function s.initial_effect(c)
 end
 s.material_setcode={SET_HERO,SET_DESTINY_HERO}
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)
+	return e:GetHandler():IsFusionSummoned()
 end
 function s.damfilter(c,fc)
 	local mg=fc:GetMaterial()

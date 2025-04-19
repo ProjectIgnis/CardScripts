@@ -14,7 +14,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x84}
 function s.filter(c,e,tp)
-	return c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsSetCard(0x84)
+	return c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsSetCard(SET_BATTLIN_BOXER)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

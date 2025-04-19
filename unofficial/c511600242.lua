@@ -14,7 +14,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x2016}
 function s.spfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x2016)
+	return c:IsFaceup() and c:IsSetCard(SET_SPEEDROID)
 end
 function s.spcon(e,c)
 	if c==nil then return true end

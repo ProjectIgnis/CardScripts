@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.filter(c,tp)
-	return c:IsLocation(LOCATION_ONFIELD+LOCATION_HAND+LOCATION_GRAVE) and c:IsControler(1-tp)
+	return c:IsLocation(LOCATION_ONFIELD|LOCATION_HAND|LOCATION_GRAVE) and c:IsControler(1-tp)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end

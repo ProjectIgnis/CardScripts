@@ -43,7 +43,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:GetHandler():SetTurnCounter(0)
 end
 function s.sdescon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==1-tp
+	return Duel.IsTurnPlayer(1-tp)
 end
 function s.sdesop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

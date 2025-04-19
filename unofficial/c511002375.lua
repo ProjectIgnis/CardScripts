@@ -4,7 +4,7 @@ function s.initial_effect(c)
 	--pendulum summon
 	Pendulum.AddProcedure(c)
 	--Fusion Summon
-	local params = {aux.FilterBoolFunction(Card.IsSetCard,0xdf),Fusion.IsMonsterFilter(Card.IsAbleToRemove),nil,Fusion.BanishMaterial}
+	local params = {aux.FilterBoolFunction(Card.IsSetCard,SET_LUNALIGHT),Fusion.IsMonsterFilter(Card.IsAbleToRemove),nil,Fusion.BanishMaterial}
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -29,7 +29,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x46,0xdf}
 function s.thfilter(c)
-	return c:IsSetCard(0x46) and c:IsSpell() and c:IsAbleToHand()
+	return c:IsSetCard(SET_FUSION) and c:IsSpell() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

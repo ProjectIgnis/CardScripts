@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_UPDATE_ATTACK)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetTargetRange(LOCATION_MZONE,0)
-	e3:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0xad))
+	e3:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_FRIGHTFUR))
 	e3:SetValue(s.atkval)
 	c:RegisterEffect(e3)
 	--effect gain
@@ -33,16 +33,16 @@ function s.initial_effect(c)
 end
 s.material_setcode={0xc3,0xa9,0xad}
 function s.mfilter1(c,fc,sumtype,tp)
-	return c:IsSetCard(0xad,fc,sumtype,tp) and c:IsLevelAbove(6)
+	return c:IsSetCard(SET_FRIGHTFUR,fc,sumtype,tp) and c:IsLevelAbove(6)
 end
 function s.mfilter2(c,fc,sumtype,tp)
-	return c:IsSetCard(0xa9,fc,sumtype,tp) or c:IsSetCard(0xc3,fc,sumtype,tp)
+	return c:IsSetCard(SET_FLUFFAL,fc,sumtype,tp) or c:IsSetCard(SET_EDGE_IMP,fc,sumtype,tp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return (e:GetHandler():GetSummonType()&SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0xad) and c:IsMonster() and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+	return c:IsSetCard(SET_FRIGHTFUR) and c:IsMonster() and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.spfilter(chkc,e,tp) end
@@ -59,7 +59,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.atkfilter(c)
-	return c:IsFaceup() and (c:IsSetCard(0xa9) or c:IsSetCard(0xad))
+	return c:IsFaceup() and (c:IsSetCard(SET_FLUFFAL) or c:IsSetCard(SET_FRIGHTFUR))
 end
 function s.atkval(e,c)
 	return Duel.GetMatchingGroupCount(s.atkfilter,c:GetControler(),LOCATION_MZONE,0,nil)*400

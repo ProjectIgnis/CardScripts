@@ -58,7 +58,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	else Duel.SortDecktop(tp,tp,ct) end
 end
 function s.sumtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.GetTurnPlayer()==tp
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsTurnPlayer(tp)
 		and e:GetLabelObject():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 end
 function s.sumop(e,tp,eg,ep,ev,re,r,rp)

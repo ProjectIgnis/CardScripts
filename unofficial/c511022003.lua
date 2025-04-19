@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condfilter(c)
-	return c:IsLinkMonster() and c:IsSetCard(0x11a)
+	return c:IsLinkMonster() and c:IsSetCard(SET_DINOWRESTLER)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if ep==tp or not Duel.IsExistingMatchingCard(s.condfilter,tp,LOCATION_MZONE,0,1,nil) then return false end

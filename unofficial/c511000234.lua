@@ -110,7 +110,7 @@ function s.spr(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_GRAVE)
-	if Duel.GetTurnPlayer()==tp and ph==PHASE_MAIN1 then
+	if Duel.IsTurnPlayer(tp) and ph==PHASE_MAIN1 then
 		e1:SetLabel(Duel.GetTurnCount())
 		e1:SetCondition(s.risecon2)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_MAIN1+RESET_SELF_TURN,2)

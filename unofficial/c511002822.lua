@@ -13,5 +13,5 @@ function s.checkextra(tp,sg,fc)
 		and sg:FilterCount(Card.IsAngel,nil,fc,SUMMON_TYPE_FUSION,tp)==2
 end
 function s.fextra(e,tp,mg)
-	return Duel.GetMatchingGroup(Fusion.IsMonsterFilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,nil),s.checkextra
+	return Duel.GetMatchingGroup(Fusion.IsMonsterFilter,tp,LOCATION_HAND|LOCATION_GRAVE,0,nil),s.checkextra
 end

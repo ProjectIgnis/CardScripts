@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.tfilter(c,atk,e,tp)
-	return c:IsSetCard(0x3008) and c:GetAttack()==atk and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_ELEMENTAL_HERO) and c:GetAttack()==atk and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.filter(c,e,tp)
 	return c:IsFaceup() and Duel.IsExistingMatchingCard(s.tfilter,tp,LOCATION_HAND,0,1,nil,c:GetAttack(),e,tp)

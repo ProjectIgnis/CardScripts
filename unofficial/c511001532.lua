@@ -42,7 +42,7 @@ function s.atfilter(c)
 	local class=c:GetMetatable(true)
 	if class==nil then return false end
 	local no=class.xyz_number
-	return no and no>=101 and no<=107 and c:IsFaceup() and c:IsSetCard(0x1048)
+	return no and no>=101 and no<=107 and c:IsFaceup() and c:IsSetCard(SET_NUMBER_C)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local ct=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)

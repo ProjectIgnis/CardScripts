@@ -60,7 +60,7 @@ end
 s.listed_series={SET_SUPREME_KING_DRAGON}
 s.listed_names={13331639}
 function s.spfilter(c,tp)
-	return c:IsControler(1-tp) and c:IsType(TYPE_SYNCHRO) and c:IsSummonType(SUMMON_TYPE_SYNCHRO)
+	return c:IsControler(1-tp) and c:IsType(TYPE_SYNCHRO) and c:IsSynchroSummoned()
 end
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsCode(13331639)

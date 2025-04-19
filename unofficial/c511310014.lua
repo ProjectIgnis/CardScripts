@@ -24,7 +24,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x9f,0xc6}
 function s.eftg(e,c)
-	return (c:IsSetCard(0x9f) or c:IsSetCard(0xc6)) and c:IsAttackBelow(1500)
+	return (c:IsSetCard(SET_PERFORMAPAL) or c:IsSetCard(SET_PERFORMAGE)) and c:IsAttackBelow(1500)
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

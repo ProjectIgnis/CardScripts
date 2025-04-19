@@ -89,7 +89,7 @@ function s.atlimit2(e,c)
 	return lv>lsc and lv<rsc and not c:IsImmuneToEffect(e)
 end
 function s.effilter(c)
-	return c:IsFaceup() and c:IsSummonType(SUMMON_TYPE_PENDULUM) and c:IsPreviousLocation(LOCATION_HAND) and c:IsSetCard(0x154e) 
+	return c:IsFaceup() and c:IsPendulumSummoned() and c:IsPreviousLocation(LOCATION_HAND) and c:IsSetCard(0x154e) 
 		and c:GetFlagEffect(id)==0 and c:IsReleasableByEffect()
 end
 function s.eftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

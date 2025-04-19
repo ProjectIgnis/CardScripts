@@ -26,7 +26,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.chainop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
-	if re:IsHasType(EFFECT_TYPE_ACTIVATE) and rc:IsSetCard(0x46) and re:IsActiveType(TYPE_SPELL) then
+	if re:IsHasType(EFFECT_TYPE_ACTIVATE) and rc:IsSetCard(SET_FUSION) and re:IsActiveType(TYPE_SPELL) then
 		Duel.SetChainLimit(s.chainlm)
 	end
 end

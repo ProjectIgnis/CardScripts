@@ -25,7 +25,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x135}
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x135) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_IGNISTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return not chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.filter(chkc,e,tp) end
@@ -53,7 +53,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.repfilter(c,tp)
 	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE)
-		and c:IsSetCard(0x135) and c:IsType(TYPE_LINK) and not c:IsReason(REASON_REPLACE) and c:IsReason(REASON_EFFECT)
+		and c:IsSetCard(SET_IGNISTER) and c:IsType(TYPE_LINK) and not c:IsReason(REASON_REPLACE) and c:IsReason(REASON_EFFECT)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemove() and eg:IsExists(s.repfilter,1,nil,tp) end
@@ -63,7 +63,7 @@ function s.repval(e,c)
 	return s.repfilter(c,e:GetHandlerPlayer())
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x135) and c:IsType(TYPE_LINK)
+	return c:IsSetCard(SET_IGNISTER) and c:IsType(TYPE_LINK)
 end
 function s.repop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

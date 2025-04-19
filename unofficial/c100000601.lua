@@ -16,7 +16,7 @@ s.listed_series={0x84}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	local bc=tc:GetBattleTarget()
-	return #eg==1 and tc:IsControler(tp) and tc:IsSetCard(0x84)
+	return #eg==1 and tc:IsControler(tp) and tc:IsSetCard(SET_BATTLIN_BOXER)
 		and bc:IsLocation(LOCATION_GRAVE) and bc:IsReason(REASON_BATTLE)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

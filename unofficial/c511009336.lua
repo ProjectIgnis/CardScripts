@@ -41,7 +41,7 @@ s.listed_series={0x52}
 s.listed_names={511009337}
 s.material_setcode=0x52
 function s.ffilter(c,fc,sumtype,tp)
-	return c:IsSetCard(0x52) and c:IsAttribute(ATTRIBUTE_LIGHT,fc,sumtype,tp)
+	return c:IsSetCard(SET_GUARDIAN) and c:IsAttribute(ATTRIBUTE_LIGHT,fc,sumtype,tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

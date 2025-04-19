@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 s.spfilter=aux.FaceupFilter(Card.IsRace,RACE_ZOMBIE)
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

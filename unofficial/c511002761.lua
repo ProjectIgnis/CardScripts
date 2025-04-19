@@ -11,5 +11,5 @@ function s.initial_effect(c)
 end
 s.listed_series={0x84}
 function s.tgval(e,c)
-	return c:IsSetCard(0x84)
+	return c:IsSetCard(SET_BATTLIN_BOXER)
 end

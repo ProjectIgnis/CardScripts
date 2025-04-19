@@ -71,7 +71,7 @@ function s.initial_effect(c)
 	local e8=Effect.CreateEffect(c)
 	e8:SetType(EFFECT_TYPE_SINGLE)
 	e8:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-	e8:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,0x48)))
+	e8:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,SET_NUMBER)))
 	c:RegisterEffect(e8)
 	aux.GlobalCheck(s,function()
 		s[0]=0
@@ -93,7 +93,7 @@ end
 s.listed_series={0x48}
 s.xyz_number=93
 function s.chkfilter(c,tp,re)
-	return c:IsSetCard(0x48) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp)
+	return c:IsSetCard(SET_NUMBER) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local g1=eg:Filter(s.chkfilter,nil,tp)
@@ -106,7 +106,7 @@ function s.clear(e,tp,eg,ep,ev,re,r,rp)
 	s[1]=0
 end
 function s.filter(c,e,tp,ct)
-	return c:IsSetCard(0x48) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_NUMBER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and Duel.GetLocationCountFromEx(tp,tp,nil,c)>=ct
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -142,7 +142,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	c:RemoveOverlayCard(tp,1,1,REASON_EFFECT)
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x48)
+	return c:IsFaceup() and c:IsSetCard(SET_NUMBER)
 end
 function s.indcon(e)
 	return Duel.IsExistingMatchingCard(s.cfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
@@ -154,7 +154,7 @@ function s.damval(e,re,val,r,rp,rc)
 	return 0
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

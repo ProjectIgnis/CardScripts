@@ -2,7 +2,7 @@
 --Raptor's Ultimate Mace (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsSetCard,0xba))
+	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsSetCard,SET_RAIDRAPTOR))
 	--increase ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_EQUIP)
@@ -30,7 +30,7 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return false
 end
 function s.afilter(c)
-	return c:IsSetCard(0x95) and c:IsSpell() and c:IsAbleToHand()
+	return c:IsSetCard(SET_RANK_UP_MAGIC) and c:IsSpell() and c:IsAbleToHand()
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local eq=e:GetHandler():GetEquipTarget()

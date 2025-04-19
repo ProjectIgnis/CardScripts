@@ -5,7 +5,7 @@ local s,id,alias=GetID()
 function s.initial_effect(c)
 	alias=c:GetOriginalCodeRule()
 	--synchro summon
-	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsType,TYPE_SYNCHRO),1,1,Synchro.NonTuner(Card.IsSetCard,0x12f),1,99)
+	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsType,TYPE_SYNCHRO),1,1,Synchro.NonTuner(Card.IsSetCard,SET_BATTLEWASP),1,99)
 	c:EnableReviveLimit()
 	--atk
 	local e1=Effect.CreateEffect(c)
@@ -75,10 +75,10 @@ function s.atop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp,chk)
-	return Duel.GetTurnPlayer()==tp and s[0]
+	return Duel.IsTurnPlayer(tp) and s[0]
 end
 function s.filter(c)
-	return c:IsSetCard(0x12f) and c:IsMonster()
+	return c:IsSetCard(SET_BATTLEWASP) and c:IsMonster()
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,1,nil) end

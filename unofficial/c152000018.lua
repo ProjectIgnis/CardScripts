@@ -11,7 +11,7 @@ function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	--opt Register
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,0)
+	Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,0)
 	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
 	Duel.Hint(HINT_CARD,tp,id)
 	if aux.CheckSkillNegation(e,tp) then return end

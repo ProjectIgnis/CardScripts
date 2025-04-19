@@ -71,7 +71,7 @@ function s.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	c:RegisterEffect(e2,true)
 end
 function s.damfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x49) and c:IsRace(RACE_FIEND)
+	return c:IsFaceup() and c:IsSetCard(SET_SKYBLASTER) and c:IsRace(RACE_FIEND)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

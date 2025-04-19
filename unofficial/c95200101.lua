@@ -15,11 +15,11 @@ function s.filter(c,e,tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,PLAYER_ALL,LOCATION_DECK+LOCATION_EXTRA)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,PLAYER_ALL,LOCATION_DECK|LOCATION_EXTRA)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local g1=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK+LOCATION_EXTRA,0,nil,e,tp)
-	local g2=Duel.GetMatchingGroup(s.filter,1-tp,LOCATION_DECK+LOCATION_EXTRA,0,nil,e,tp)
+	local g1=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK|LOCATION_EXTRA,0,nil,e,tp)
+	local g2=Duel.GetMatchingGroup(s.filter,1-tp,LOCATION_DECK|LOCATION_EXTRA,0,nil,e,tp)
 	if #g1>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.SelectYesNo(tp,aux.Stringid(25200959,0)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg1=g1:Select(tp,1,1,nil)

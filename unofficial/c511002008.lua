@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function s.atcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetEquipTarget():IsSetCard(0x9b)
+	return e:GetHandler():GetEquipTarget():IsSetCard(SET_MELODIOUS)
 end
 function s.atlimit(e,c)
 	return c~=e:GetHandler():GetEquipTarget()

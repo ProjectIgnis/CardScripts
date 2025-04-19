@@ -2,7 +2,7 @@
 --Zero Protection
 --Scripted by Larry126
 local s,id=GetID()
-local LOCATION_DESTROY=LOCATION_ONFIELD+LOCATION_HAND+LOCATION_DECK+LOCATION_EXTRA
+local LOCATION_DESTROY=LOCATION_ONFIELD|LOCATION_HAND|LOCATION_DECK|LOCATION_EXTRA
 function s.initial_effect(c)
 	--Activation
 	local e1=Effect.CreateEffect(c)

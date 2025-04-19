@@ -43,7 +43,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0xc008}
 function s.desfilter(c)
-	return c:IsFacedown() or not c:IsSetCard(0xc008)
+	return c:IsFacedown() or not c:IsSetCard(SET_DESTINY_HERO)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -51,7 +51,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0xc008) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_DESTINY_HERO) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_MZONE,0,nil)
@@ -69,7 +69,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter(e,c)
-	return c:IsFaceup() and c:IsSetCard(0xc008)
+	return c:IsFaceup() and c:IsSetCard(SET_DESTINY_HERO)
 end
 function s.indop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -77,7 +77,7 @@ function s.indop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD)
 		e1:SetTargetRange(LOCATION_MZONE,0)
-		e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0xc008))
+		e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_DESTINY_HERO))
 		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 		e1:SetValue(1)
 		e1:SetReset(RESET_PHASE+PHASE_END)
@@ -91,7 +91,7 @@ function s.indop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.atfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xc008)
+	return c:IsFaceup() and c:IsSetCard(SET_DESTINY_HERO)
 end
 function s.val(e,c)
 	local g=Duel.GetMatchingGroup(s.atfilter,c:GetControler(),LOCATION_MZONE,0,c)

@@ -39,7 +39,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP_ATTACK)
 		local tg=g:GetFirst()
 		while tg do
-			tg:RegisterFlagEffect(id,RESET_PHASE+PHASE_END,0,1)
+			tg:RegisterFlagEffect(id,RESET_PHASE|PHASE_END,0,1)
 			tg=g:GetNext()
 		end
 		local e1=Effect.CreateEffect(e:GetHandler())

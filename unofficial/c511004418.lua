@@ -61,9 +61,9 @@ function s.op1(e,tp,eg,ev,ep,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_ATTACK)
-		if Duel.GetTurnPlayer()==tp and Duel.GetCurrentPhase()==PHASE_STANDBY then
+		if Duel.IsTurnPlayer(tp) and Duel.GetCurrentPhase()==PHASE_STANDBY then
 			e1:SetReset(RESET_PHASE+PHASE_STANDBY,4)
-		elseif Duel.GetTurnPlayer()==tp and Duel.GetCurrentPhase()~=PHASE_STANDBY then
+		elseif Duel.IsTurnPlayer(tp) and Duel.GetCurrentPhase()~=PHASE_STANDBY then
 			e1:SetReset(RESET_PHASE+PHASE_STANDBY,3)
 		elseif Duel.GetTurnPlayer()~=tp and Duel.GetCurrentPhase()==PHASE_STANDBY then
 			e1:SetReset(RESET_PHASE+PHASE_STANDBY,3)

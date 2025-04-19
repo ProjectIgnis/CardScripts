@@ -44,7 +44,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x10f}
 function s.filter(c)
-	return c:IsSetCard(0x10f) and c:IsType(TYPE_LINK)
+	return c:IsSetCard(SET_BORREL) and c:IsType(TYPE_LINK)
 end
 function s.costfilter(c,tp)
 	return c:IsType(TYPE_LINK) and Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,c)
@@ -84,7 +84,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.eqlimit(e,c)
-	return c:IsControler(e:GetOwnerPlayer()) and c:IsSetCard(0x10f) and c:IsType(TYPE_LINK)
+	return c:IsControler(e:GetOwnerPlayer()) and c:IsSetCard(SET_BORREL) and c:IsType(TYPE_LINK)
 end
 function s.efilter(e,re)
 	return e:GetOwnerPlayer()~=re:GetOwnerPlayer() and re:IsActivated()

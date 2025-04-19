@@ -83,7 +83,7 @@ function s.teop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.effilter(c)
-	return c:IsFaceup() and c:IsSummonType(SUMMON_TYPE_PENDULUM) and c:IsSummonLocation(LOCATION_HAND)
+	return c:IsFaceup() and c:IsPendulumSummoned() and c:IsSummonLocation(LOCATION_HAND)
 		and c:IsSetCard(0x154e) and c:GetFlagEffect(id)==0 and c:IsReleasableByEffect()
 end
 function s.eftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

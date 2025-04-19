@@ -91,8 +91,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	g:DeleteGroup()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.TRUE,tp,0,LOCATION_SZONE+LOCATION_HAND,1,nil) end
-	local sg=Duel.GetMatchingGroup(Card.IsTrap,tp,0,LOCATION_SZONE+LOCATION_HAND,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.TRUE,tp,0,LOCATION_SZONE|LOCATION_HAND,1,nil) end
+	local sg=Duel.GetMatchingGroup(Card.IsTrap,tp,0,LOCATION_SZONE|LOCATION_HAND,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,sg,#sg,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,#sg*300)
 end
@@ -102,7 +102,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	g1:Merge(g2)
 	Duel.ConfirmCards(tp,g1)
 	Duel.ShuffleHand(1-tp)
-	local sg=Duel.GetMatchingGroup(Card.IsTrap,tp,0,LOCATION_SZONE+LOCATION_HAND,nil)
+	local sg=Duel.GetMatchingGroup(Card.IsTrap,tp,0,LOCATION_SZONE|LOCATION_HAND,nil)
 	local ct=Duel.Destroy(sg,REASON_EFFECT)
 	Duel.Damage(1-tp,ct*300,REASON_EFFECT)
 end

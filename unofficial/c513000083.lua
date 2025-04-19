@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetDescription(aux.Stringid(6330307,0))
 	e1:SetCategory(CATEGORY_EQUIP)
 	e1:SetType(EFFECT_TYPE_IGNITION)
-	e1:SetRange(LOCATION_HAND+LOCATION_MZONE)
+	e1:SetRange(LOCATION_HAND|LOCATION_MZONE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCost(s.eqcost)
 	e1:SetTarget(s.eqtg)
@@ -44,7 +44,7 @@ function s.filter(c)
 	local class=c:GetMetatable(true)
 	if class==nil then return false end
 	local no=class.xyz_number
-	return c:IsFaceup() and c:IsSetCard(0x107f) and c:IsSetCard(0x1048) and no and no==39
+	return c:IsFaceup() and c:IsSetCard(SET_UTOPIA) and c:IsSetCard(SET_NUMBER_C) and no and no==39
 end
 function s.desfilter(c)
 	return c:IsDestructable() and c:IsSpellTrap()
@@ -99,7 +99,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetValue(ec:GetAttack()*2)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 	c:RegisterEffect(e1)
-	if not c:IsImmuneToEffect(e1) and Duel.GetTurnPlayer()==tp then
+	if not c:IsImmuneToEffect(e1) and Duel.IsTurnPlayer(tp) then
 		Duel.ChainAttack()
 	end
 end

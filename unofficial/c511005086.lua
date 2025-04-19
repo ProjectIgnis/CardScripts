@@ -27,7 +27,7 @@ function s.reg_cd(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFlagEffect(0,id)==0 and eg:IsExists(s.filter,1,nil,tp) and #eg==1
 end
 function s.reg_op(e,tp,eg,ep,ev,re,r,rp)
-	Duel.RegisterFlagEffect(0,id,RESET_PHASE+PHASE_END,0,1)
+	Duel.RegisterFlagEffect(0,id,RESET_PHASE|PHASE_END,0,1)
 end
 function s.cd(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFlagEffect(0,id)~=0

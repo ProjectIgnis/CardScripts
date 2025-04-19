@@ -16,10 +16,10 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return tp~=Duel.GetTurnPlayer() and Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsDestructable() and c:IsSetCard(0x26)
+	return c:IsFaceup() and c:IsDestructable() and c:IsSetCard(SET_MORPHTRONIC)
 end
 function s.spfilter(c,e,tp,lv)
-	return c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsSetCard(0x26) and c:GetLevel()<lv
+	return c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsSetCard(SET_MORPHTRONIC) and c:GetLevel()<lv
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil) end

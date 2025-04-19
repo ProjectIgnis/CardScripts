@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)	
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and Duel.GetCurrentPhase()==PHASE_STANDBY
+	return Duel.IsTurnPlayer(tp) and Duel.GetCurrentPhase()==PHASE_STANDBY
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetActivityCount(tp,ACTIVITY_BATTLE_PHASE)==0 end

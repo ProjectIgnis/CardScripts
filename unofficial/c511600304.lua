@@ -30,7 +30,7 @@ end
 s.listed_series={0x135}
 s.listed_names={59332125}
 function s.filter(c)
-	return c:IsSetCard(0x135) and c:IsFaceup() and c:GetSequence()<5
+	return c:IsSetCard(SET_IGNISTER) and c:IsFaceup() and c:GetSequence()<5
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil)
@@ -45,7 +45,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(e:GetHandler(),0,tp,tp,false,false,POS_FACEUP)
 end
 function s.tdfilter(c)
-	return c:IsSetCard(0x135) and c:IsLinkMonster() and c:IsAbleToExtra()
+	return c:IsSetCard(SET_IGNISTER) and c:IsLinkMonster() and c:IsAbleToExtra()
 end
 function s.thfilter(c)
 	return c:IsCode(59332125) and c:IsAbleToHand()

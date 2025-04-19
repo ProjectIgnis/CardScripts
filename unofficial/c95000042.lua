@@ -45,17 +45,17 @@ end
 s.listed_series={0x156e,0x4a}
 s.mark=3
 function s.atktg(e,c)
-	return c~=e:GetHandler() and (c:IsSetCard(0x156e) or c:IsSetCard(0x4a))
+	return c~=e:GetHandler() and (c:IsSetCard(0x156e) or c:IsSetCard(SET_TIMELORD))
 end
 function s.filter(c)
-	return c:IsFaceup() and (c:IsSetCard(0x156e) or c:IsSetCard(0x4a))
+	return c:IsFaceup() and (c:IsSetCard(0x156e) or c:IsSetCard(SET_TIMELORD))
 end
 function s.atkval(e,c)
 	local g=Duel.GetMatchingGroup(s.filter,c:GetControler(),LOCATION_MZONE,0,nil)
 	return g:GetSum(Card.GetAttack)
 end
 function s.repfilter(c)
-	return (c:IsSetCard(0x156e) or c:IsSetCard(0x4a)) and not c:IsStatus(STATUS_DESTROY_CONFIRMED+STATUS_BATTLE_DESTROYED)
+	return (c:IsSetCard(0x156e) or c:IsSetCard(SET_TIMELORD)) and not c:IsStatus(STATUS_DESTROY_CONFIRMED+STATUS_BATTLE_DESTROYED)
 end
 function s.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

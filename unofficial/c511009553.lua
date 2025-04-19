@@ -4,7 +4,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
 	c:EnableReviveLimit()
-	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTuner(Card.IsSetCard,0x9a),1,99)
+	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTuner(Card.IsSetCard,SET_SUPERHEAVY_SAMURAI),1,99)
 	--defense attack
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)

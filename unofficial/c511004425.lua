@@ -45,7 +45,7 @@ end
 function s.rumcheck(e,tp,eg,ev,ep,re,r,rp)
 	if not re then return end
 	local rc=re:GetHandler()
-	if rc:IsSetCard(0x95) and rc:IsSpell() then
+	if rc:IsSetCard(SET_RANK_UP_MAGIC) and rc:IsSpell() then
 		for ec in eg:Iter() do
 			ec:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,0)
 		end
@@ -64,7 +64,7 @@ function s.rmfilter(c)
 	return c:GetAttackedCount()==0 and c:IsAbleToRemove()
 end
 function s.rmop(e,tp,eg,ev,ep,re,r,rp)
-	if Duel.GetTurnPlayer()==tp then return end
+	if Duel.IsTurnPlayer(tp) then return end
 	local g=Duel.GetMatchingGroup(s.rmfilter,tp,0,LOCATION_MZONE,nil)
 	if #g>0 then
 		Duel.Hint(HINT_CARD,0,id)

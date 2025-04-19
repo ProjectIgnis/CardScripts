@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.spfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x27)
+	return c:IsFaceup() and c:IsSetCard(SET_TG)
 end
 function s.spcon(e,c)
 	if c==nil then return true end

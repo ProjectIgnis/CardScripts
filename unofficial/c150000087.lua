@@ -34,7 +34,7 @@ end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	for ec in aux.Next(eg) do
 		if ec:IsMonster() then
-			Duel.RegisterFlagEffect(0,id,RESET_PHASE+PHASE_END,0,1)
+			Duel.RegisterFlagEffect(0,id,RESET_PHASE|PHASE_END,0,1)
 		end
 	end
 end
@@ -49,5 +49,5 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
 		Duel.Damage(p,d*300,REASON_EFFECT)
 	end
-	Duel.RegisterFlagEffect(0,id+1,RESET_PHASE+PHASE_END,0,1)
+	Duel.RegisterFlagEffect(0,id+1,RESET_PHASE|PHASE_END,0,1)
 end

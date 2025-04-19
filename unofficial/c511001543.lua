@@ -21,7 +21,7 @@ end
 s.listed_series={0x7}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local ec=eg:GetFirst()
-	return #eg==1 and ec:IsSetCard(0x7) and ec:IsPreviousLocation(LOCATION_GRAVE) 
+	return #eg==1 and ec:IsSetCard(SET_ANCIENT_GEAR) and ec:IsPreviousLocation(LOCATION_GRAVE) 
 		and Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)<=1
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

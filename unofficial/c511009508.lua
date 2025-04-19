@@ -50,7 +50,7 @@ end
 s.listed_series={SET_SUPREME_KING_DRAGON}
 s.listed_names={13331639}
 function s.spfilter(c,tp)
-	return c:IsControler(1-tp) and c:IsType(TYPE_XYZ) and c:IsSummonType(SUMMON_TYPE_XYZ)
+	return c:IsControler(1-tp) and c:IsType(TYPE_XYZ) and c:IsXyzSummoned()
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.spfilter,1,nil,tp) and e:GetHandler():IsXyzSummonable()

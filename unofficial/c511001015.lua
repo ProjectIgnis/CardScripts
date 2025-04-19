@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	end)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetAttacker():IsSetCard(0xba) then
+	if Duel.GetAttacker():IsSetCard(SET_RAIDRAPTOR) then
 		s[0]=true
 		s[1]=true
 	end
@@ -35,7 +35,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return s[tp]
 end
 function s.filter(c)
-	return c:IsSetCard(0xba) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_RAIDRAPTOR) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

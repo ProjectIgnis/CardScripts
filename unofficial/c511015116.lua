@@ -2,7 +2,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	Fusion.AddProcMixRep(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0x36),2,99)
+	Fusion.AddProcMixRep(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_MACHINA),2,99)
 	--cannot special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
@@ -35,14 +35,14 @@ function s.splimit(e,se,sp,st)
 	return se:GetHandler():IsCode(22666164)
 end
 function s.atkfilter(c)
-	return c:IsSetCard(0x36) and c:GetAttack()>=0
+	return c:IsSetCard(SET_MACHINA) and c:GetAttack()>=0
 end
 function s.atkval(e,c)
 	local g=e:GetHandler():GetOverlayGroup():Filter(s.atkfilter,nil)
 	return g:GetSum(Card.GetAttack)
 end
 function s.deffilter(c)
-	return c:IsSetCard(0x36) and c:GetDefense()>=0
+	return c:IsSetCard(SET_MACHINA) and c:GetDefense()>=0
 end
 function s.defval(e,c)
 	local g=e:GetHandler():GetOverlayGroup():Filter(s.deffilter,nil)

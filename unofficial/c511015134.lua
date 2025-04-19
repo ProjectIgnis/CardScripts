@@ -57,7 +57,7 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	local sg=Group.CreateGroup()
-	local mg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_GRAVE+LOCATION_ONFIELD,LOCATION_GRAVE+LOCATION_ONFIELD,nil,e)
+	local mg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_GRAVE|LOCATION_ONFIELD,LOCATION_GRAVE|LOCATION_ONFIELD,nil,e)
 	if chk==0 then return mg:IsExists(s.chkfilter,1,nil,mg,sg,e,tp) end
 	local reset={}
 	local tc

@@ -29,7 +29,7 @@ function s.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
 function s.spfilter(c,e,tp)
-	return c:GetLevel()<=4 and c:IsSetCard(0x3008) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:GetLevel()<=4 and c:IsSetCard(SET_ELEMENTAL_HERO) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.NegateAttack() then

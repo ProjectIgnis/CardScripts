@@ -32,7 +32,7 @@ function s.rvop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SelectMatchingCard(tp,Card.IsFacedown,tp,LOCATION_SZONE,0,1,1,nil)
 end
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsAttackPos() and Duel.GetTurnPlayer()==tp
+	return e:GetHandler():IsAttackPos() and Duel.IsTurnPlayer(tp)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	--Decrease Tribute

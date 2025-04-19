@@ -46,7 +46,7 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_VIJAM}
 function s.condition(e,tp,eg,ev,ep,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.filter(c,sc)
 	return c:IsFaceup() and c:IsCubicSeed()

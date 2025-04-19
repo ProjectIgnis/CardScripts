@@ -54,7 +54,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then
 		if ct<3 then
 			e:SetDescription(aux.Stringid(id,0))
-			return Duel.IsExistingMatchingCard(Card.IsAbleToHand,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil)
+			return Duel.IsExistingMatchingCard(Card.IsAbleToHand,tp,LOCATION_DECK|LOCATION_GRAVE,0,1,nil)
 		else
 			e:SetDescription(aux.Stringid(id,4))
 			return Duel.IsExistingTarget(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
@@ -63,7 +63,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if ct<3 then
 		e:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 		e:SetProperty(0)
-		Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE)
+		Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK|LOCATION_GRAVE)
 	else
 		e:SetCategory(CATEGORY_ATKCHANGE)
 		e:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -82,7 +82,7 @@ function s.activate1(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local tc=Duel.SelectMatchingCard(tp,Card.IsAbleToHand,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,Card.IsAbleToHand,tp,LOCATION_DECK|LOCATION_GRAVE,0,1,1,nil):GetFirst()
 	if tc then
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,tc)

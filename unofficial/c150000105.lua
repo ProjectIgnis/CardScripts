@@ -17,8 +17,8 @@ function s.filter(c)
 		or c:IsControlerCanBeChanged() and c:IsLocation(LOCATION_ONFIELD))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_ONFIELD+LOCATION_HAND,2,nil) end
-	local g=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_ONFIELD+LOCATION_HAND,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_ONFIELD|LOCATION_HAND,2,nil) end
+	local g=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_ONFIELD|LOCATION_HAND,nil)
 	if g:IsExists(Card.IsLocation,1,nil,LOCATION_ONFIELD) then
 		Duel.SetOperationInfo(0,CATEGORY_CONTROL,g,1,0,0)
 	end
@@ -28,7 +28,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPPO)
-	local g=Duel.SelectMatchingCard(tp,s.filter,tp,0,LOCATION_ONFIELD+LOCATION_HAND,2,2,nil)
+	local g=Duel.SelectMatchingCard(tp,s.filter,tp,0,LOCATION_ONFIELD|LOCATION_HAND,2,2,nil)
 	if #g==2 then
 		local hg=g:Filter(Card.IsLocation,nil,LOCATION_HAND)
 		local fg=g-hg

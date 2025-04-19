@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xc008)
+	return c:IsFaceup() and c:IsSetCard(SET_DESTINY_HERO)
 end
 function s.condition(e,tp,eg,ev,ep,re,r,rp)
 	return eg:IsExists(Card.IsControler,1,nil,1-tp) and Duel.IsExistingMatchingCard(Card.IsSummonType,tp,0,LOCATION_MZONE,1,nil,SUMMON_TYPE_SPECIAL)

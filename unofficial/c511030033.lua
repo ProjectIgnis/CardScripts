@@ -20,7 +20,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetLP(tp)<Duel.GetLP(1-tp)
 end
 function s.tgfilter(c,tp)
-	return c:IsLevelBelow(4) and c:IsSetCard(0x119) and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,c:GetCode())
+	return c:IsLevelBelow(4) and c:IsSetCard(SET_SALAMANGREAT) and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,c:GetCode())
 end
 function s.thfilter(c,code)
 	return c:IsCode(code) and c:IsAbleToHand()

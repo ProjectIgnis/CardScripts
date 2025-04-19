@@ -20,13 +20,13 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCondition(s.dmgcon)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetOperation(s.dmgop)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x14a}
 function s.confilter(c)
-	return c:IsSetCard(0x14a) and c:IsType(TYPE_LINK) and c:IsFaceup()
+	return c:IsSetCard(SET_APPLIANCER) and c:IsType(TYPE_LINK) and c:IsFaceup()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.confilter,tp,LOCATION_MZONE,0,1,nil)

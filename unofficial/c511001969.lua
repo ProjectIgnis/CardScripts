@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.valcon(e)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
+	return e:GetHandler():IsSynchroSummoned()
 end
 function s.valop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -27,7 +27,7 @@ function s.valop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=g:GetFirst()
 	local atk=0
 	while tc do
-		if tc:IsType(TYPE_SYNCHRO) and tc:IsSetCard(0x33) then
+		if tc:IsType(TYPE_SYNCHRO) and tc:IsSetCard(SET_BLACKWING) then
 		local tatk=tc:GetTextAttack()
 		if tatk<0 then tatk=0 end
 		atk=atk+tatk

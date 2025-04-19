@@ -25,7 +25,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.Draw(p,d,REASON_EFFECT)==3 then
 		local g=Duel.GetOperatedGroup()
 		for tc in aux.Next(g) do
-			if Duel.GetLocationCount(p,LOCATION_MZONE)>0 and tc:IsSetCard(0xe6)
+			if Duel.GetLocationCount(p,LOCATION_MZONE)>0 and tc:IsSetCard(SET_FLOWER_CARDIAN)
 				and tc:IsCanBeSpecialSummoned(e,0,p,false,false)
 				and Duel.SpecialSummonStep(tc,0,p,p,false,false,POS_FACEUP) then
 				local e1=Effect.CreateEffect(e:GetHandler())
@@ -43,7 +43,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 				local e3=e2:Clone()
 				e3:SetCode(EFFECT_SET_DEFENSE_FINAL)
 				tc:RegisterEffect(e3)
-			elseif not tc:IsMonster() or not tc:IsSetCard(0xe6) then
+			elseif not tc:IsMonster() or not tc:IsSetCard(SET_FLOWER_CARDIAN) then
 				Duel.SendtoGrave(tc,REASON_EFFECT)
 				Duel.Damage(p,1000,REASON_EFFECT)
 			end

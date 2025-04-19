@@ -16,7 +16,7 @@ function s.initial_effect(c)
 end
 s.listed_names={16178681}
 function s.counterfilter(c)
-	return not c:IsSummonType(SUMMON_TYPE_PENDULUM)
+	return not c:IsPendulumSummoned()
 end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return sumtype&SUMMON_TYPE_PENDULUM==SUMMON_TYPE_PENDULUM
@@ -132,7 +132,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp,tc)
 	end
 end
 function s.atkcon(e,tp,eg,ev,ep,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and Duel.IsBattlePhase() and (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
+	return Duel.IsTurnPlayer(tp) and Duel.IsBattlePhase() and (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
 end
 function s.costfilter(c,code)
 	return c:IsCode(code) and c:IsAbleToRemoveAsCost()

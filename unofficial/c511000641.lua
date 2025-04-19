@@ -46,5 +46,5 @@ function s.recop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tg(e,c)
-	return c:IsFaceup() and c:IsType(TYPE_FUSION) and c:IsLevelBelow(4) and c:IsStatus(STATUS_SPSUMMON_TURN) and c:IsSummonType(SUMMON_TYPE_FUSION)
+	return c:IsFaceup() and c:IsType(TYPE_FUSION) and c:IsLevelBelow(4) and c:IsStatus(STATUS_SPSUMMON_TURN) and c:IsFusionSummoned()
 end

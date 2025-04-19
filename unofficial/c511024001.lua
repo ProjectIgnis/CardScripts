@@ -21,7 +21,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.filter1(c)
-	return c:IsSetCard(0x3008) and c:IsAbleToHand()
+	return c:IsSetCard(SET_ELEMENTAL_HERO) and c:IsAbleToHand()
 end
 function s.filter2(c)
 	return c:IsCode(CARD_POLYMERIZATION) and c:IsAbleToHand()

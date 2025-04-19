@@ -59,7 +59,7 @@ function s.sumlimit(e,c,sump,sumtype,sumpos,targetp)
 	return (sumpos&POS_FACEDOWN)~=0
 end
 function s.mtcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.mtop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,nil)

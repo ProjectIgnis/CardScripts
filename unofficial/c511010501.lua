@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.tgval(e,c)
-	return c:IsSetCard(0xe5)
+	return c:IsSetCard(SET_CIPHER)
 end
 function s.sprcon(e,c)
 	if c==nil then return true end

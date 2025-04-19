@@ -24,7 +24,7 @@ function s.atkcon(e)
 	return Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL and Duel.GetAttackTarget() and Duel.GetAttacker()
 end
 function s.atktg(e,c)
-	return (c==Duel.GetAttacker() and c:IsSetCard(0x3008)) or (c==Duel.GetAttackTarget() and c:IsSetCard(0x3008))
+	return (c==Duel.GetAttacker() and c:IsSetCard(SET_ELEMENTAL_HERO)) or (c==Duel.GetAttackTarget() and c:IsSetCard(SET_ELEMENTAL_HERO))
 end
 function s.atkval(e,c)
 	local d=Duel.GetAttackTarget()

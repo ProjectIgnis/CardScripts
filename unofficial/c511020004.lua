@@ -20,13 +20,13 @@ function s.initial_effect(c)
 	e2:SetCategory(CATEGORY_ATKCHANGE)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x54}
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x54) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_GAGAGA) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.spfilter(chkc,e,tp) end
@@ -53,7 +53,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
-	if tc and tc:IsSetCard(0x54) and tc:IsControler(tp) and Duel.GetAttackTarget() and not Duel.GetAttackTarget():IsControler(tp)
+	if tc and tc:IsSetCard(SET_GAGAGA) and tc:IsControler(tp) and Duel.GetAttackTarget() and not Duel.GetAttackTarget():IsControler(tp)
 		and Duel.SelectEffectYesNo(tp,e:GetHandler()) then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)

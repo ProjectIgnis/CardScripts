@@ -15,7 +15,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x1157}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x1157)
+	return c:IsFaceup() and c:IsSetCard(SET_SUNAVALON)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
@@ -36,7 +36,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(tp,tc)
 		if tc:IsTrap() and Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)>0 then
 			Duel.BreakEffect()
-			local g=Duel.GetMatchingGroup(Card.IsCode,tp,0,LOCATION_DECK+LOCATION_HAND,nil,tc:GetCode())
+			local g=Duel.GetMatchingGroup(Card.IsCode,tp,0,LOCATION_DECK|LOCATION_HAND,nil,tc:GetCode())
 			Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 		end
 	end

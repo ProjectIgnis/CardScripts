@@ -18,7 +18,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return tc and tc:GetCounter(0x91)>1
 end
 function s.filter(c,ft,tp)
-	return c:IsSummonType(SUMMON_TYPE_SPECIAL) and (ft>0 or (c:GetSequence()<5 and c:IsControler(tp)))
+	return c:IsSpecialSummoned() and (ft>0 or (c:GetSequence()<5 and c:IsControler(tp)))
 end
 function s.spfilter(c,e,tp)
 	return c:IsLevelBelow(4) and c:IsType(TYPE_NORMAL) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

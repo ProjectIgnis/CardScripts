@@ -27,7 +27,7 @@ function s.spcon(e,c)
 		and Duel.GetFieldGroupCount(tp,LOCATION_MZONE,LOCATION_MZONE)==0
 end
 function s.filter(c,e,tp)
-	return c:GetLevel()==1 and c:IsSetCard(0xf7) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:GetLevel()==1 and c:IsSetCard(SET_LYRILUSC) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sumtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

@@ -15,7 +15,7 @@ end
 function s.cfilter(c,tp)
 	local ec=c:GetPreviousEquipTarget()
 	return c:IsReason(REASON_LOST_TARGET) and ec and ec:IsPreviousControler(tp) 
-		and c:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED+LOCATION_EXTRA) and ec:IsLocation(LOCATION_GRAVE)
+		and c:IsLocation(LOCATION_GRAVE|LOCATION_REMOVED|LOCATION_EXTRA) and ec:IsLocation(LOCATION_GRAVE)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(s.cfilter,nil,tp)

@@ -29,7 +29,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_SET_PROC)
 	Duel.RegisterEffect(e2,tp)
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+	Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1)
 end
 function s.rmfilter(c)
 	return c:IsMonster() and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c)
@@ -38,16 +38,16 @@ function s.otcon(e,c,minc)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	return minc<=2 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(s.rmfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil)
-		and Duel.IsExistingMatchingCard(s.rmfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,1,nil)
+		and Duel.IsExistingMatchingCard(s.rmfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,nil)
+		and Duel.IsExistingMatchingCard(s.rmfilter,tp,0,LOCATION_MZONE|LOCATION_GRAVE,1,nil)
 end
 function s.ottg(e,c)
 	local mi=c:GetTributeRequirement()
 	return mi>0
 end
 function s.sumtg(e,tp,eg,ep,ev,re,r,rp,c)
-	local mg1=Duel.GetMatchingGroup(s.rmfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil)
-	local mg2=Duel.GetMatchingGroup(s.rmfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,nil)
+	local mg1=Duel.GetMatchingGroup(s.rmfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,nil)
+	local mg2=Duel.GetMatchingGroup(s.rmfilter,tp,0,LOCATION_MZONE|LOCATION_GRAVE,nil)
 	::restart::
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SELF)
 	local g1=mg1:Select(tp,1,1,true,nil)

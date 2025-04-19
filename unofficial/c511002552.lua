@@ -25,7 +25,7 @@ function s.initial_effect(c)
 end
 function s.poscheck(e,tp,eg,ep,ev,re,r,rp)
 	if re==nil then
-		Duel.RegisterFlagEffect(rp,id,RESET_PHASE+PHASE_END,0,1)
+		Duel.RegisterFlagEffect(rp,id,RESET_PHASE|PHASE_END,0,1)
 	end
 end
 function s.check(tp)

@@ -57,4 +57,3 @@ end
 function s.repval(e,c)
 	return e:GetLabelObject():IsContains(c)
 end
-

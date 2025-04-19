@@ -13,7 +13,7 @@ function s.initial_effect(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	return tc:IsSummonType(SUMMON_TYPE_SYNCHRO) and ep~=tp
+	return tc:IsSynchroSummoned() and ep~=tp
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return eg:GetFirst():IsAbleToExtra() end

@@ -94,7 +94,7 @@ end
 s.listed_series={0xc2}
 function s.spfilter(c,e,tp,ct)
 	return c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and (c:IsRace(RACE_DRAGON) or c:IsSetCard(0xc2))
+		and (c:IsRace(RACE_DRAGON) or c:IsSetCard(SET_POWER_TOOL))
 		and (not ct or Duel.GetLocationCountFromEx(tp,tp,nil,c)>=ct)
 end
 function s.cfilter(c,p)
@@ -121,7 +121,7 @@ end
 function s.chkop(e,tp,eg,ep,ev,re,r,rp)
 	for i=0,1 do
 		if eg:IsExists(s.cfilter,1,nil,i) then
-			Duel.RegisterFlagEffect(i,id,RESET_PHASE+PHASE_END,0,1)
+			Duel.RegisterFlagEffect(i,id,RESET_PHASE|PHASE_END,0,1)
 		end
 	end
 end
@@ -132,7 +132,7 @@ function s.sumlimit(e,c,sump,sumtype,sumpos,targetp)
 	return sumpos&POS_FACEDOWN==POS_FACEDOWN and not c:IsLocation(LOCATION_ONFIELD) and Duel.GetFlagEffect(sump,id)>0
 end
 function s.ddfilter(c)
-	return (c:IsRace(RACE_DRAGON) or c:IsSetCard(0xc2)) and c:IsFaceup()
+	return (c:IsRace(RACE_DRAGON) or c:IsSetCard(SET_POWER_TOOL)) and c:IsFaceup()
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not e:GetHandler():IsReason(REASON_REPLACE) end

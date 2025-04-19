@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	e4:SetRange(LOCATION_SZONE)
 	e4:SetCode(id)
 	e4:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e4:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x4a))
+	e4:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_TIMELORD))
 	c:RegisterEffect(e4)
 end
 s.listed_names={9409625}

@@ -20,7 +20,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x26}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x26) 
+	return c:IsFaceup() and c:IsSetCard(SET_MORPHTRONIC) 
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)

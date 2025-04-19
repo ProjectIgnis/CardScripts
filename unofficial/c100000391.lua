@@ -13,10 +13,10 @@ function s.initial_effect(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	return tc and tc:IsFaceup() and tc:IsSetCard(0x16)
+	return tc and tc:IsFaceup() and tc:IsSetCard(SET_ROID)
 end
 function s.filter(c)
-	return c:IsSetCard(0x16) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_ROID) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

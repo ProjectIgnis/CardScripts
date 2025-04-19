@@ -21,7 +21,7 @@ function s.initial_effect(c)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetBattleDamage(0)>0 or Duel.GetBattleDamage(1)>0 then
-		Duel.RegisterFlagEffect(0,id,RESET_PHASE+PHASE_END,0,1)
+		Duel.RegisterFlagEffect(0,id,RESET_PHASE|PHASE_END,0,1)
 	end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)

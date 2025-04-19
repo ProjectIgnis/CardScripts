@@ -17,7 +17,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x12f}
 function s.cfilter(c)
-	return c:IsSetCard(0x12f)
+	return c:IsSetCard(SET_BATTLEWASP)
 end
 function s.filter(c,e)
 	return c:IsFaceup() and (not e or c:IsCanBeEffectTarget(e))

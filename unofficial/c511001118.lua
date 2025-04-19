@@ -39,7 +39,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	while tc do
 		if tc:IsLocation(LOCATION_GRAVE) then
-			tc:RegisterFlagEffect(id,RESET_PHASE+PHASE_END,0,2,1)
+			tc:RegisterFlagEffect(id,RESET_PHASE|PHASE_END,0,2,1)
 		end
 		tc=eg:GetNext()
 	end

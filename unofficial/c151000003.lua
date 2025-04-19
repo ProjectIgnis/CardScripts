@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x4))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_AMAZONESS))
 	e2:SetValue(200)
 	c:RegisterEffect(e2)
 	--special summon
@@ -35,7 +35,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local lv=0
 	local tc=eg:GetFirst()
 	for tc in aux.Next(eg) do
-		if tc:IsReason(REASON_DESTROY) and tc:IsSetCard(0x4) and not tc:IsPreviousLocation(LOCATION_SZONE) then
+		if tc:IsReason(REASON_DESTROY) and tc:IsSetCard(SET_AMAZONESS) and not tc:IsPreviousLocation(LOCATION_SZONE) then
 			local tlv=tc:GetLevel()
 			if tlv>lv then lv=tlv end
 		end
@@ -44,7 +44,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return lv>0
 end
 function s.spfilter(c,e,tp,lv)
-	return c:IsLevelBelow(lv) and c:IsSetCard(0x4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsLevelBelow(lv) and c:IsSetCard(SET_AMAZONESS) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsRelateToEffect(e) and not e:GetHandler():IsStatus(STATUS_CHAINING)

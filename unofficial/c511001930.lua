@@ -14,7 +14,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker():IsControler(1-tp)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x70)
+	return c:IsFaceup() and c:IsSetCard(SET_CHRONOMALY)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,Duel.GetAttackTarget()) end

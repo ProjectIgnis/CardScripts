@@ -15,7 +15,7 @@ function s.initial_effect(c)
 end
 s.listed_names={1784686,46232525,11082056,80019195,85800949,84565800,48179391,110000100,110000101}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentChain()==0 and Duel.IsMainPhase() and Duel.GetTurnPlayer()==tp
+	return Duel.GetCurrentChain()==0 and Duel.IsMainPhase() and Duel.IsTurnPlayer(tp)
 end
 function s.costfilter(c,code)
 	return c:IsCode(code) and c:IsAbleToRemoveAsCost()
@@ -75,7 +75,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 			and Duel.IsExistingMatchingCard(s.spfilter,tp,0x33,0,1,nil,e,tp,85800949)
 			and Duel.IsExistingMatchingCard(s.spfilter,tp,0x33,0,1,nil,e,tp,84565800)
 	end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,3,tp,LOCATION_HAND+LOCATION_DECK)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,3,tp,LOCATION_HAND|LOCATION_DECK)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=2 or Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then return end

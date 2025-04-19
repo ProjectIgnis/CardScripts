@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.tgtg(e,c)
-	return c:IsFaceup() and c:IsSetCard(0x70)
+	return c:IsFaceup() and c:IsSetCard(SET_CHRONOMALY)
 end
 function s.tgval(e,c)
 	return not c:IsImmuneToEffect(e) and c:IsLevelBelow(4)

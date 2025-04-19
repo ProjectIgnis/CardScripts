@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x43))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_JUNK))
 	e2:SetValue(500)
 	c:RegisterEffect(e2)
 	--to deck
@@ -32,7 +32,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if a:IsControler(1-tp) then a,d=d,a end
 	if a:IsStatus(STATUS_BATTLE_DESTROYED) then return false end
 	return d and d:IsStatus(STATUS_BATTLE_DESTROYED) and not d:IsType(TYPE_TOKEN) and d:GetLeaveFieldDest()==0
-		and a:IsSetCard(0x43)
+		and a:IsSetCard(SET_JUNK)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()

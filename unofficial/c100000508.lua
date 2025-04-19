@@ -19,7 +19,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function s.filter(c,e,sp)
-	return c:IsFaceup() and (c:IsSetCard(0x5008) or c:IsCode(27780618)) and c:IsCanBeSpecialSummoned(e,0,sp,true,false)
+	return c:IsFaceup() and (c:IsSetCard(SET_VISION_HERO) or c:IsCode(27780618)) and c:IsCanBeSpecialSummoned(e,0,sp,true,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_SZONE) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end

@@ -60,7 +60,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	e:Reset()
 end
 function s.rtcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.rtcost(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLP(tp)>1000 and Duel.SelectYesNo(tp,aux.Stringid(24874630,0)) then

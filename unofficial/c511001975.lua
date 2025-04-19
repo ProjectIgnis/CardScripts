@@ -47,5 +47,5 @@ function s.atkcon(e)
 	return Duel.GetAttackTarget() and e:GetHandler()==Duel.GetAttackTarget()
 end
 function s.atkval(e,c)
-	return Duel.GetMatchingGroupCount(Card.IsSetCard,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil,0x10db)*300
+	return Duel.GetMatchingGroupCount(Card.IsSetCard,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil,SET_THE_PHANTOM_KNIGHTS)*300
 end

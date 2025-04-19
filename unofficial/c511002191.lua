@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.filter(c,e)
-	return c:IsFaceup() and c:IsSetCard(0xba)
+	return c:IsFaceup() and c:IsSetCard(SET_RAIDRAPTOR)
 end
 function s.tgfilter(c,e,tp)
 	local atk=0

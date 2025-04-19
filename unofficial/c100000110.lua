@@ -71,7 +71,7 @@ function s.endop(e,tp,c)
 	end
 end
 function s.ctcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.ctop(e,tp,c)
 	local c=e:GetHandler()

@@ -16,10 +16,10 @@ function s.initial_effect(c)
 end
 s.listed_series={0x41}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_END and Duel.GetTurnPlayer()==1-tp
+	return Duel.GetCurrentPhase()==PHASE_END and Duel.IsTurnPlayer(1-tp)
 end
 function s.costfilter(c,e,tp,ft)
-	if not c:IsSetCard(0x41) or not c:IsAbleToGraveAsCost() then return false end
+	if not c:IsSetCard(SET_LV) or not c:IsAbleToGraveAsCost() then return false end
 	local class=c:GetMetatable(true)
 	return (ft>0 or c:GetSequence()<5) and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,class,e,tp)
 end

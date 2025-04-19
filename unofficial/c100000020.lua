@@ -24,7 +24,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCountLimit(1)
 		e1:SetCondition(s.con)
 		e1:SetOperation(s.op)
-		if Duel.GetTurnPlayer()==tp and Duel.GetCurrentPhase()==PHASE_DRAW then
+		if Duel.IsTurnPlayer(tp) and Duel.GetCurrentPhase()==PHASE_DRAW then
 			e1:SetLabel(Duel.GetTurnCount())
 			e1:SetReset(RESET_PHASE+PHASE_DRAW+RESET_SELF_TURN,2)
 		else
@@ -35,7 +35,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
-	return ep==tp and (r&REASON_RULE)~=0 and Duel.GetTurnPlayer()==tp and Duel.GetTurnCount()~=e:GetLabel()
+	return ep==tp and (r&REASON_RULE)~=0 and Duel.IsTurnPlayer(tp) and Duel.GetTurnCount()~=e:GetLabel()
 		and Duel.GetCurrentPhase()==PHASE_DRAW
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)

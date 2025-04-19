@@ -41,17 +41,17 @@ function s.initial_effect(c)
 end
 s.listed_series={0x13c}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x13c)
+	return c:IsFaceup() and c:IsSetCard(SET_CODEBREAKER)
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x13c) and c:IsLinkMonster()
+	return c:IsFaceup() and c:IsSetCard(SET_CODEBREAKER) and c:IsLinkMonster()
 end
 function s.actcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.descon(e)
 	local tp=e:GetHandlerPlayer()
-	return Duel.GetTurnPlayer()==tp and Duel.GetCurrentPhase()==PHASE_END
+	return Duel.IsTurnPlayer(tp) and Duel.GetCurrentPhase()==PHASE_END
 		and not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.atg(e,c)

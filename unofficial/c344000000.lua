@@ -20,4 +20,3 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.PayLPCost(tp,1000)
 end
-

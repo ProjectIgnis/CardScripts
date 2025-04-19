@@ -36,7 +36,7 @@ end
 s.listed_names={83965310} --Destiny HERO - Plasma
 s.counter_place_list={0x92}
 function s.countercon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==1-tp and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,83965310),tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsTurnPlayer(1-tp) and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,83965310),tp,LOCATION_MZONE,0,1,nil)
 	 and e:GetHandler():IsCanAddCounter(0x92,1)
 end
 function s.counterop(e,tp,eg,ep,ev,re,r,rp)

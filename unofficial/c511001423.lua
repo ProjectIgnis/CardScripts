@@ -33,7 +33,7 @@ function s.atfilter(c)
 	local class=c:GetMetatable(true)
 	if class==nil then return false end
 	local no=class.xyz_number
-	return no and no>=101 and no<=107 and c:IsFaceup() and c:IsSetCard(0x1048)
+	return no and no>=101 and no<=107 and c:IsFaceup() and c:IsSetCard(SET_NUMBER_C)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c:IsControler(tp) and s.filter(chkc) end

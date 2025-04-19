@@ -24,7 +24,7 @@ function s.stage2(e,tc,tp,sg,chk)
 	end
 end
 function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetLabelObject()

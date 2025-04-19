@@ -37,7 +37,7 @@ end
 s.listed_series={0x14a}
 s.listed_names={3875465}
 function s.thfilter(c)
-	return c:IsSpell() and c:IsSetCard(0x14a) and c:IsAbleToHand() and not c:IsCode(3875465)
+	return c:IsSpell() and c:IsSetCard(SET_APPLIANCER) and c:IsAbleToHand() and not c:IsCode(3875465)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
@@ -50,13 +50,13 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.confilter(c,tp)
-	return c:IsSetCard(0x14a) and c:IsType(TYPE_LINK) and c:IsFaceup() and c:IsSummonType(SUMMON_TYPE_LINK) and c:IsControler(tp)
+	return c:IsSetCard(SET_APPLIANCER) and c:IsType(TYPE_LINK) and c:IsFaceup() and c:IsLinkSummoned() and c:IsControler(tp)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.confilter,1,nil,tp)
 end
 function s.thfilter2(c)
-	return c:IsSetCard(0x14a) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_APPLIANCER) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.thfilter2(chkc) end
@@ -73,10 +73,10 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.mvcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==1-tp
+	return Duel.IsTurnPlayer(1-tp)
 end
 function s.mvfilter(c)
-	return c:GetSequence()<5 and c:IsSetCard(0x14a) and c:IsType(TYPE_LINK) and c:IsLink(1)
+	return c:GetSequence()<5 and c:IsSetCard(SET_APPLIANCER) and c:IsType(TYPE_LINK) and c:IsLink(1)
 end
 function s.mvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return c:IsLocation(LOCATION_MZONE) and c:IsControler(tp) and s.mvfilter(chkc) end

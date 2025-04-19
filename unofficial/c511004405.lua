@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x9f) and Duel.IsExistingMatchingCard(s.ctfilter,tp,LOCATION_MZONE,0,1,c,c:GetLevel())
+	return c:IsFaceup() and c:IsSetCard(SET_PERFORMAPAL) and Duel.IsExistingMatchingCard(s.ctfilter,tp,LOCATION_MZONE,0,1,c,c:GetLevel())
 end
 function s.ctfilter(c,lv)
 	return c:IsFaceup() and c:GetLevel()>0 and c:GetLevel()<lv and c:IsControlerCanBeChanged()
@@ -37,7 +37,7 @@ function s.operation(e,tp,eg,ev,ep,re,r,rp)
 			if #ctg>ct then
 				ctg=ctg:Select(tp,ct,ct,nil)
 			end
-			Duel.GetControl(ctg,1-tp,RESET_PHASE+PHASE_END,1)
+			Duel.GetControl(ctg,1-tp,RESET_PHASE|PHASE_END,1)
 		end
 	end
 end

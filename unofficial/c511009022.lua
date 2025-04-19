@@ -52,7 +52,7 @@ function s.econ(e)
 	return e:GetHandler():IsDefensePos()
 end
 function s.efilter(e,c)
-	return c:IsSetCard(0x99)
+	return c:IsSetCard(SET_ODD_EYES)
 end
 function s.scfilter(c,tp,tc)
 	return Duel.GetLocationCountFromEx(tp,tp,tc,c)>0 and c:IsSynchroSummonable(tc)

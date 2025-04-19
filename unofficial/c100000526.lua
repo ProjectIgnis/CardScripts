@@ -18,7 +18,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,1,nil,39299733)
 end
 function s.filter(c,e,tp)
-	return c:IsFaceup() and c:IsSetCard(0x122) and not c:IsHasEffect(EFFECT_CANNOT_DIRECT_ATTACK) and not c:IsHasEffect(EFFECT_DIRECT_ATTACK)
+	return c:IsFaceup() and c:IsSetCard(SET_VALKYRIE) and not c:IsHasEffect(EFFECT_CANNOT_DIRECT_ATTACK) and not c:IsHasEffect(EFFECT_DIRECT_ATTACK)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) end

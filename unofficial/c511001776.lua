@@ -68,7 +68,7 @@ function s.initial_effect(c)
 	local e7=Effect.CreateEffect(c)
 	e7:SetType(EFFECT_TYPE_SINGLE)
 	e7:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-	e7:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,0x48)))
+	e7:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,SET_NUMBER)))
 	c:RegisterEffect(e7)
 	--Double Snare
 	local e8=Effect.CreateEffect(c)
@@ -80,13 +80,13 @@ function s.initial_effect(c)
 end
 s.xyz_number=43
 function s.eqval(ec,c,tp)
-	return ec:IsControler(tp) and ec:IsSetCard(0x48)
+	return ec:IsControler(tp) and ec:IsSetCard(SET_NUMBER)
 end
 function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ)
+	return e:GetHandler():IsXyzSummoned()
 end
 function s.filter(c)
-	return c:IsSetCard(0x48) and c:IsMonster()
+	return c:IsSetCard(SET_NUMBER) and c:IsMonster()
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -106,7 +106,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.indcon(e)
-	return e:GetHandler():GetEquipGroup():IsExists(Card.IsSetCard,1,nil,0x48)
+	return e:GetHandler():GetEquipGroup():IsExists(Card.IsSetCard,1,nil,SET_NUMBER)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==tp

@@ -44,7 +44,7 @@ function s.ntcon(e,c,minc)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x54) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_GAGAGA) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
@@ -73,14 +73,14 @@ end
 function s.efop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,id)
 	Duel.Hint(HINT_CARD,1,id)
-	local n = e:GetHandler():GetReasonCard():GetMaterial():FilterCount(Card.IsSetCard,nil,0x54)
+	local n = e:GetHandler():GetReasonCard():GetMaterial():FilterCount(Card.IsSetCard,nil,SET_GAGAGA)
 	Duel.Draw(rp,n,REASON_EFFECT)
 end
 function s.filter(c,xyz,tp)
-	return c:IsFaceup() and c:IsSetCard(0x54,xyz,SUMMON_TYPE_XYZ) and c:IsCanBeXyzMaterial(xyz,tp)
+	return c:IsFaceup() and c:IsSetCard(SET_GAGAGA,xyz,SUMMON_TYPE_XYZ) and c:IsCanBeXyzMaterial(xyz,tp)
 end
 function s.xyzfilter(c,e,tp)
-	if not (c:IsType(TYPE_XYZ) and c:IsSetCard(0x48) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,true)) then return false end
+	if not (c:IsType(TYPE_XYZ) and c:IsSetCard(SET_NUMBER) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,true)) then return false end
 	local mg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil,c,tp)
 	return mg:GetFirst() and Duel.GetMZoneCount(tp,mg)>0
 end

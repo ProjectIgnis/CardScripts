@@ -55,14 +55,14 @@ end
 function s.dogmacon(e,c)
 	if c==nil then return true end
 	local g=Duel.GetReleaseGroup(c:GetControler())
-	local d=g:FilterCount(Card.IsSetCard,nil,0xc008)
+	local d=g:FilterCount(Card.IsSetCard,nil,SET_DESTINY_HERO)
 	local d3=g:FilterCount(Card.IsHasEffect,nil,id)
 	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>-2 and d>0 and #g>1 and d3>0
 end
 function s.dogmaop(e,tp,eg,ep,ev,re,r,rp,c)
 	local g=Duel.GetReleaseGroup(tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-	local sg1=g:FilterSelect(tp,Card.IsSetCard,1,1,nil,0xc008)
+	local sg1=g:FilterSelect(tp,Card.IsSetCard,1,1,nil,SET_DESTINY_HERO)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
 	local sg2=g:FilterSelect(tp,Card.IsHasEffect,1,1,sg1:GetFirst(),id)
 	sg1:Merge(sg2)
@@ -133,5 +133,5 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.condition(e,c)
-	return c:IsSetCard(0xc008)
+	return c:IsSetCard(SET_DESTINY_HERO)
 end

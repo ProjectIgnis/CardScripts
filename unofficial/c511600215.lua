@@ -45,7 +45,7 @@ function s.initial_effect(c)
 end
 function s.indcon(e)
 	local c=e:GetHandler()
-	return c:IsSummonType(SUMMON_TYPE_LINK)
+	return c:IsLinkSummoned()
 end
 function s.indtg(e,c)
 	return c:IsFaceup() and c:IsRace(RACE_CYBERSE) and e:GetHandler():GetLinkedGroup():IsContains(c)

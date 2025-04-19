@@ -35,13 +35,13 @@ function s.initial_effect(c)
 end
 s.listed_series={0xfb}
 function s.thfilter(c)
-	return c:IsMonster() and c:IsSetCard(0xfb) and c:IsAbleToHand()
+	return c:IsMonster() and c:IsSetCard(SET_TRICKSTAR) and c:IsAbleToHand()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) or Duel.GetFlagEffect(tp,id)>0 then return end
 	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.thfilter),tp,LOCATION_GRAVE,0,nil)
 	if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(35371948,0)) then
-		Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+		Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local sg=g:Select(tp,1,1,nil)
 		Duel.SendtoHand(sg,nil,REASON_EFFECT)
@@ -49,7 +49,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter(c,e,tp)
-	return c:IsFaceup() and c:IsLinkMonster() and c:IsSetCard(0xfb)
+	return c:IsFaceup() and c:IsLinkMonster() and c:IsSetCard(SET_TRICKSTAR)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD,c:GetLinkedZone()&0x1f)>0
 end
 function s.tktg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

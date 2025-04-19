@@ -14,7 +14,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x8}
 function s.filter(c)
-	return c:IsLevelAbove(4) and c:IsSetCard(0x8)
+	return c:IsLevelAbove(4) and c:IsSetCard(SET_HERO)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,2,nil)

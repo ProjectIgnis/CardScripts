@@ -21,7 +21,7 @@ end
 s.listed_series={0x5}
 s.toss_coin=true
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x5) and c:IsAttackAbove(300)
+	return c:IsFaceup() and c:IsSetCard(SET_ARCANA_FORCE) and c:IsAttackAbove(300)
 end
 function s.ddtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end

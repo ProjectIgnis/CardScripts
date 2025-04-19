@@ -84,7 +84,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Damage(1-tp,dam,REASON_EFFECT)
 end
 function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

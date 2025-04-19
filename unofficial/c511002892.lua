@@ -60,7 +60,7 @@ end
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
 	if tc:GetFlagEffectLabel(id)==e:GetLabel() then
-		return Duel.GetTurnPlayer()==tp
+		return Duel.IsTurnPlayer(tp)
 	else
 		e:Reset()
 		return false

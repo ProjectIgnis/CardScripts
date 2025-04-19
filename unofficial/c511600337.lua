@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	e4:SetCode(EFFECT_UPDATE_ATTACK)
 	e4:SetRange(LOCATION_SZONE)
 	e4:SetTargetRange(LOCATION_MZONE,0)
-	e4:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x119))
+	e4:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_SALAMANGREAT))
 	e4:SetValue(500)
 	c:RegisterEffect(e4)
 	--set
@@ -54,7 +54,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE
 end
 function s.filter(c)
-	return c:IsSpellTrap() and c:IsSetCard(0x119) and c:IsAbleToGraveAsCost()
+	return c:IsSpellTrap() and c:IsSetCard(SET_SALAMANGREAT) and c:IsAbleToGraveAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,nil) end
@@ -66,7 +66,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Destroy(e:GetHandler(),REASON_EFFECT)
 end
 function s.immtg(e,c)
-	return c:IsSetCard(0x119) and c:IsFaceup()
+	return c:IsSetCard(SET_SALAMANGREAT) and c:IsFaceup()
 end
 function s.immval(e,te)
 	return te:IsActiveType(TYPE_MONSTER) and e:GetHandlerPlayer()~=te:GetHandlerPlayer() and te:IsActivated()

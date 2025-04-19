@@ -18,7 +18,7 @@ function s.con(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsEnvironment(CARD_NUMERON_NETWORK)
 end
 function s.filter(c,e,tp)
-	return c:IsAttackBelow(1000) and c:IsSetCard(0x14b) and c:IsType(TYPE_XYZ)
+	return c:IsAttackBelow(1000) and c:IsSetCard(SET_NUMERON) and c:IsType(TYPE_XYZ)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>3
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)

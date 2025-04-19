@@ -14,7 +14,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x4B}
 function s.rfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x4B)
+	return c:IsFaceup() and c:IsSetCard(SET_AESIR)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
@@ -61,7 +61,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.remcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.remop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

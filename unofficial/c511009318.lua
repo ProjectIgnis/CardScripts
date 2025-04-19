@@ -29,13 +29,13 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetLabelObject(e)
 	e1:SetTarget(s.sumlimit)
 	Duel.RegisterEffect(e1,tp)
-	e:GetHandler():RegisterFlagEffect(id,RESET_PHASE+PHASE_END,0,1)
+	e:GetHandler():RegisterFlagEffect(id,RESET_PHASE|PHASE_END,0,1)
 end
 function s.sumlimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return e:GetLabelObject()~=se
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x9f) and c:IsType(TYPE_PENDULUM) and c:IsFaceup() and c:GetLevel()==1 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_PERFORMAPAL) and c:IsType(TYPE_PENDULUM) and c:IsFaceup() and c:GetLevel()==1 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -92,7 +92,7 @@ function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsReason(REASON_RULE)
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x9f) and c:IsAbleToDeckAsCost() 
+	return c:IsSetCard(SET_PERFORMAPAL) and c:IsAbleToDeckAsCost() 
 		and Duel.IsExistingMatchingCard(Card.IsStatus,0,LOCATION_MZONE,LOCATION_MZONE,1,c,STATUS_SPSUMMON_TURN)
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)

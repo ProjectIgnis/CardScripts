@@ -54,7 +54,7 @@ function s.addcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
 function s.filter(c)
-	return c:IsSetCard(0x6) and c:IsAbleToHand()
+	return c:IsSetCard(SET_DARK_WORLD) and c:IsAbleToHand()
 end
 function s.addtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:GetLocation()==LOCATION_GRAVE and chkc:GetControler()==tp and c98494543.filter(chkc) end

@@ -38,7 +38,7 @@ function s.extrafilter(c,tp)
 	return c:IsLocation(LOCATION_MZONE) and c:IsControler(tp)
 end
 function s.extracon(c,e,tp,sg,mg,lc,og,chk)
-	return (sg+mg):Filter(s.extrafilter,nil,e:GetHandlerPlayer()):IsExists(Card.IsSetCard,1,og,0x103) and
+	return (sg+mg):Filter(s.extrafilter,nil,e:GetHandlerPlayer()):IsExists(Card.IsSetCard,1,og,SET_ALTERGEIST) and
 	sg:FilterCount(s.flagcheck,nil)<2
 end
 function s.flagcheck(c)
@@ -48,7 +48,7 @@ function s.extraval(chk,summon_type,e,...)
 	local c=e:GetHandler()
 	if chk==0 then
 		local tp,sc=...
-		if summon_type~=SUMMON_TYPE_LINK or not sc:IsSetCard(0x103) or Duel.GetFlagEffect(tp,id)>0 then
+		if summon_type~=SUMMON_TYPE_LINK or not sc:IsSetCard(SET_ALTERGEIST) or Duel.GetFlagEffect(tp,id)>0 then
 			return Group.CreateGroup()
 		else
 			table.insert(s.flagmap[c],c:RegisterFlagEffect(id,0,0,1))
@@ -58,7 +58,7 @@ function s.extraval(chk,summon_type,e,...)
 		local sg,sc,tp=...
 		if summon_type&SUMMON_TYPE_LINK == SUMMON_TYPE_LINK and #sg>0 then
 			Duel.Hint(HINT_CARD,tp,id)
-			Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+			Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1)
 		end
 	elseif chk==2 then
 		for _,eff in ipairs(s.flagmap[c]) do
@@ -68,7 +68,7 @@ function s.extraval(chk,summon_type,e,...)
 	end
 end
 function s.cfilter(c,tp)
-	return c:IsSetCard(0x103) and c:IsLinkMonster() and c:IsControler(tp) and c:IsSummonType(SUMMON_TYPE_LINK)
+	return c:IsSetCard(SET_ALTERGEIST) and c:IsLinkMonster() and c:IsControler(tp) and c:IsLinkSummoned()
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)

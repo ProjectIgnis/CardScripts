@@ -49,4 +49,3 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 	Duel.SetLP(tp,100,REASON_EFFECT)
 end
-

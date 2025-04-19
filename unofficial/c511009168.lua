@@ -2,7 +2,7 @@
 --fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsSetCard,0xc008))
+	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsSetCard,SET_DESTINY_HERO))
 	--
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_EQUIP)
@@ -89,4 +89,3 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-

@@ -25,7 +25,7 @@ function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return #eg==1 and s.cfilter(tg)
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x55)
+	return c:IsFaceup() and c:IsSetCard(SET_PHOTON)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=eg:GetFirst()

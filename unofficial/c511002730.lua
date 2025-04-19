@@ -49,7 +49,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.costfilter(c,e,tp)
-	return c:IsSetCard(0x107f) and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(SET_UTOPIA) and c:IsAbleToGraveAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_MZONE,0,1,nil) end

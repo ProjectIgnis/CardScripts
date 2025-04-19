@@ -15,7 +15,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_DRAW)
 	e1:SetCountLimit(1)
-	if Duel.GetTurnPlayer()==tp and ph==PHASE_DRAW then
+	if Duel.IsTurnPlayer(tp) and ph==PHASE_DRAW then
 		e1:SetLabel(Duel.GetTurnCount())
 		e1:SetCondition(s.con)
 		e1:SetReset(RESET_PHASE+PHASE_DRAW+RESET_SELF_TURN,2)

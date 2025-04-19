@@ -1,5 +1,6 @@
 --White Veil
-	local s,id=GetID()function s.initial_effect(c)
+	local s,id=GetID()
+function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_EQUIP)

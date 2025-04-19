@@ -41,7 +41,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		de:SetLabelObject(tc)
 		de:SetCondition(s.descon)
 		de:SetOperation(s.desop)
-		if Duel.GetTurnPlayer()==tp and Duel.GetCurrentPhase()==PHASE_END then
+		if Duel.IsTurnPlayer(tp) and Duel.GetCurrentPhase()==PHASE_END then
 			de:SetLabel(Duel.GetTurnCount())
 			de:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN,2)
 		else
@@ -53,7 +53,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
-	return Duel.GetTurnPlayer()==tp and Duel.GetTurnCount()~=e:GetLabel() and tc:GetFlagEffect(id+1)~=0
+	return Duel.IsTurnPlayer(tp) and Duel.GetTurnCount()~=e:GetLabel() and tc:GetFlagEffect(id+1)~=0
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()

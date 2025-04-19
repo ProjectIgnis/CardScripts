@@ -36,13 +36,13 @@ function s.initial_effect(c)
 end
 s.listed_series={0xfc}
 function s.spcfilter(c)
-	return c:GetSequence()>=5 and c:IsSetCard(0xfc)
+	return c:GetSequence()>=5 and c:IsSetCard(SET_GOUKI)
 end
 function s.condition(e)
 	return Duel.IsExistingMatchingCard(s.spcfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function s.target(e,c)
-	return c:IsSetCard(0xfc) and c:GetSequence()<5
+	return c:IsSetCard(SET_GOUKI) and c:GetSequence()<5
 end
 function s.descon(e)
 	local tp=e:GetHandlerPlayer()

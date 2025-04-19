@@ -17,7 +17,7 @@ function s.cfilter(c,lk)
 	return c:IsFaceup() and c:IsSetCard(0x579) and c:IsLink(lk)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	local ct=Duel.GetFieldGroupCount(tp,0,LOCATION_HAND+LOCATION_MZONE)
+	local ct=Duel.GetFieldGroupCount(tp,0,LOCATION_HAND|LOCATION_MZONE)
 	return ct>0 and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil,ct)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)

@@ -30,7 +30,7 @@ function s.descon(e)
 	return Duel.GetLP(1-e:GetHandlerPlayer())<=Duel.GetLP(e:GetHandlerPlayer()) or Duel.GetCurrentPhase()==PHASE_END
 end
 function s.filter(c)
-	return c:IsSetCard(0x12b) and c:IsLinkMonster() and c:IsLinkBelow(2)
+	return c:IsSetCard(SET_MARINCESS) and c:IsLinkMonster() and c:IsLinkBelow(2)
 end
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsLinkMonster() and c:IsLinkAbove(3)
@@ -49,7 +49,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.sfilter(c,g)
-	return c:IsFaceup() and c:IsSetCard(0x12b) and g:IsContains(c)
+	return c:IsFaceup() and c:IsSetCard(SET_MARINCESS) and g:IsContains(c)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

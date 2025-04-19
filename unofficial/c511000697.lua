@@ -39,7 +39,7 @@ end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	Duel.SendtoGrave(c,REASON_EFFECT|REASON_REPLACE)
-	if Duel.GetTurnPlayer()==tp and Duel.IsBattlePhase() then
+	if Duel.IsTurnPlayer(tp) and Duel.IsBattlePhase() then
 		if Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATKDEF)
 			local ec=c:GetPreviousEquipTarget()

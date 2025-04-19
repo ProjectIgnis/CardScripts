@@ -58,7 +58,7 @@ s.listed_series={0x14}
 function s.regop(e)
 	if s.global_check then return end
 	s.global_check = true
-	local g=Duel.GetMatchingGroup(Card.IsOriginalSetCard,0,0xff,0xff,nil,0x14)
+	local g=Duel.GetMatchingGroup(Card.IsOriginalSetCard,0,SET_CLEAR_WING,SET_CLEAR_WING,nil,SET_ALLURE_QUEEN)
 	for tc in aux.Next(g) do
 		local effs={tc:GetCardEffect(511310036)}
 		for _,teh in ipairs(effs) do

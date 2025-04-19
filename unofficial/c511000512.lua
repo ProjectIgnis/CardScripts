@@ -43,5 +43,5 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Damage(p,Duel.GetFieldGroupCount(p,LOCATION_HAND,0)*500,REASON_EFFECT)
 end
 function s.indes(e,c)
-	return not c:IsSetCard(0x48)
+	return not c:IsSetCard(SET_NUMBER)
 end

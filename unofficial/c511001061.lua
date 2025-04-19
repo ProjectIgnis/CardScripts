@@ -16,7 +16,7 @@ function s.cfilter(c,tp)
 	return c:IsPreviousControler(1-tp) and c:IsMonster()
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x86)
+	return c:IsFaceup() and c:IsSetCard(SET_STAR_SERAPH)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp) and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil)

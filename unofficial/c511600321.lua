@@ -24,7 +24,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x12b}
 function s.filter(c)
-	return c:IsType(TYPE_LINK) and c:IsSetCard(0x12b)
+	return c:IsType(TYPE_LINK) and c:IsSetCard(SET_MARINCESS)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,1,nil) end
@@ -35,12 +35,12 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Recover(tp,Duel.GetMatchingGroup(s.filter,tp,LOCATION_GRAVE,0,nil):GetSum(Card.GetLink)*100,REASON_EFFECT)
 end
 function s.cfilter(c)
-	return c:IsLevelAbove(5) and c:IsSetCard(0x12b) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true) 
+	return c:IsLevelAbove(5) and c:IsSetCard(SET_MARINCESS) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true) 
 end
 function s.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil,tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local rg=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil,tp)
+	local rg=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,1,nil,tp)
 	Duel.Remove(rg,POS_FACEUP,REASON_COST)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)

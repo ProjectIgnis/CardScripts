@@ -19,7 +19,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.filter(c)
 	local lv=c:GetLevel()
-	return c:IsSetCard(0x19) and lv>0 and lv<5 and c:IsAbleToHand()
+	return c:IsSetCard(SET_GLADIATOR) and lv>0 and lv<5 and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

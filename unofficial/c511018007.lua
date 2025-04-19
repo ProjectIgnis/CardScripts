@@ -30,13 +30,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.cfil(c,label)
-	return c:IsSetCard(0x10f3) and c:IsMonster() and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true) 
+	return c:IsSetCard(SET_PREDAPLANT) and c:IsMonster() and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true) 
 		and (label~=1 or Duel.IsExistingTarget(Card.IsFaceup,0,LOCATION_MZONE,LOCATION_MZONE,1,c))
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.cfil,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil,e:GetLabel()) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.cfil,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,nil,e:GetLabel()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.cfil,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil,e:GetLabel())
+	local g=Duel.SelectMatchingCard(tp,s.cfil,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,1,nil,e:GetLabel())
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

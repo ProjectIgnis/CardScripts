@@ -14,7 +14,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x9b}
 function s.filter(c,e,tp,ft)
-	return c:IsFaceup() and c:IsSetCard(0x9b) and c:IsAbleToHand() and (ft>0 or (c:IsControler(tp) and c:GetSequence()<5)) 
+	return c:IsFaceup() and c:IsSetCard(SET_MELODIOUS) and c:IsAbleToHand() and (ft>0 or (c:IsControler(tp) and c:GetSequence()<5)) 
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -27,7 +27,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x9b) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_MELODIOUS) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()

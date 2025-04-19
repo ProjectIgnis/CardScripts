@@ -17,7 +17,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x572}
 function s.cfilter(c,tp)
-	return c:IsSummonPlayer(tp) and c:IsSummonType(SUMMON_TYPE_PENDULUM) and c:GetPreviousLocation()==LOCATION_HAND
+	return c:IsSummonPlayer(tp) and c:IsPendulumSummoned() and c:GetPreviousLocation()==LOCATION_HAND
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp) and #eg==1

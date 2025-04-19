@@ -14,4 +14,3 @@ s.listed_names={27564031}
 function s.descon(e)
 	return not Duel.IsEnvironment(27564031)
 end
-

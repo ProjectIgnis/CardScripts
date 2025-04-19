@@ -17,14 +17,14 @@ function s.filter(c,tp,tid)
 	local class=c:GetMetatable(true)
 	if class==nil then return false end
 	local no=class.xyz_number
-	return no and no>=101 and no<=107 and c:IsSetCard(0x1048) and c:IsReason(REASON_DESTROY) and c:GetTurnID()==tid
+	return no and no>=101 and no<=107 and c:IsSetCard(SET_NUMBER_C) and c:IsReason(REASON_DESTROY) and c:GetTurnID()==tid
 		and c:IsPreviousControler(tp)
 end
 function s.spfilter(c,e,tp,ct)
 	local class=c:GetMetatable()
 	if class==nil then return false end
 	local no=class.xyz_number
-	return no and no>=101 and no<=107 and c:IsSetCard(0x1048) and Duel.GetLocationCountFromEx(1-tp,tp,nil,c)>=ct
+	return no and no>=101 and no<=107 and c:IsSetCard(SET_NUMBER_C) and Duel.GetLocationCountFromEx(1-tp,tp,nil,c)>=ct
 		and c:IsCanBeSpecialSummoned(e,0,1-tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

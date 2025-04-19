@@ -81,7 +81,7 @@ function s.spop(e,tp,c)
 	end
 end
 function s.spcon1(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.spop2(e,tp,c)
 	local c=e:GetHandler()

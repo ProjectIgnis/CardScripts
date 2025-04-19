@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCondition(s.bpcon)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetOperation(s.bpop)
 	c:RegisterEffect(e2)
 	aux.GlobalCheck(s,function()
@@ -44,7 +44,7 @@ function s.condition()
 	return Duel.IsBattlePhase()
 end
 function s.filter1(c)
-	return c:IsSetCard(0x135) and c:IsFaceup() and c:GetSequence()>4
+	return c:IsSetCard(SET_IGNISTER) and c:IsFaceup() and c:GetSequence()>4
 end
 function s.filter2(c)
 	return c:IsType(TYPE_LINK) and c:GetSequence()<5
@@ -111,7 +111,7 @@ function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	e:Reset()
 end
 function s.bpcon(e,tp,eg,ep,ev,re,r,rp)
-	return s.condition() and Duel.GetTurnPlayer()==1-tp and Duel.GetFlagEffect(0,id+1)>0
+	return s.condition() and Duel.IsTurnPlayer(1-tp) and Duel.GetFlagEffect(0,id+1)>0
 end
 function s.bpop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)

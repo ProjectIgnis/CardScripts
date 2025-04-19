@@ -17,10 +17,10 @@ function s.con(e,tp,eg,ep,ev,re,r,rp)
 	return a:IsControler(1-tp)
 end
 function s.cfilter(c,atk)
-	return c:IsSetCard(0x10af) and c:GetAttack()>atk
+	return c:IsSetCard(SET_DDD) and c:GetAttack()>atk
 end
 function s.costfilter(c,tp)
-	return not Duel.IsPlayerAffectedByEffect(c:GetControler(),69832741) and c:IsMonster() and c:IsSetCard(0x10af) and c:IsAbleToRemoveAsCost() 
+	return not Duel.IsPlayerAffectedByEffect(c:GetControler(),69832741) and c:IsMonster() and c:IsSetCard(SET_DDD) and c:IsAbleToRemoveAsCost() 
 		and not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,1,nil,c:GetAttack())
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -30,7 +30,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.filter(c)
-	return c:IsSetCard(0xaf) and c:IsType(TYPE_PENDULUM) and c:IsLevelBelow(4) and c:IsAbleToHand()
+	return c:IsSetCard(SET_DD) and c:IsType(TYPE_PENDULUM) and c:IsLevelBelow(4) and c:IsAbleToHand()
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end

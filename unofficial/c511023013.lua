@@ -25,7 +25,7 @@ s.listed_series={0x3008}
 s.listed_names={74711057}
 s.material_setcode={0x8,0x3008}
 function s.cfilter(c,tp)
-	return c:IsSetCard(0x3008) and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,c)
+	return c:IsSetCard(SET_ELEMENTAL_HERO) and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,c)
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsCode(74711057)

@@ -129,4 +129,3 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	if not s.PlayerIsAffectedByClearWorld(tp,ATTRIBUTE_FIRE) then return end
 	Duel.Damage(tp,1000,REASON_EFFECT)
 end
-

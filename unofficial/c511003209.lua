@@ -19,7 +19,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Draw(1-tp,1,REASON_EFFECT)
 	Duel.Draw(tp,1,REASON_EFFECT)
 	local dg=Duel.GetOperatedGroup():GetFirst()
-	if dg:IsSetCard(0x10af) then
+	if dg:IsSetCard(SET_DDD) then
 		Duel.ConfirmCards(1-tp,dg)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD)

@@ -23,7 +23,7 @@ end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	while tc do
-		if tc:IsSummonType(SUMMON_TYPE_SYNCHRO) then
+		if tc:IsSynchroSummoned() then
 			tc:RegisterFlagEffect(id,0,0,1)
 		end
 		tc=eg:GetNext()

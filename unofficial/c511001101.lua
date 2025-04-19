@@ -67,13 +67,13 @@ function s.crystalop(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RaiseEvent(c,47408488,e,0,tp,0,0)
 end
 function s.placetg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsSetCard,tp,0x33,0,1,nil,0x1034)
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsSetCard,tp,SET_BLACKWING,0,1,nil,SET_CRYSTAL_BEAST)
 		and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 end
 end
 function s.placeop(e,tp,eg,ep,ev,re,r,rp,chk)
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
-	local g=Duel.SelectMatchingCard(tp,Card.IsSetCard,tp,0x33,0,1,1,nil,0x1034)
+	local g=Duel.SelectMatchingCard(tp,Card.IsSetCard,tp,SET_BLACKWING,0,1,1,nil,SET_CRYSTAL_BEAST)
 	if #g>0 then
 		local tc=g:GetFirst()
 		Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)

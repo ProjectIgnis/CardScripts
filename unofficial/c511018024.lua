@@ -17,10 +17,10 @@ function s.initial_effect(c)
 end
 s.listed_series={0xc008}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.filter(c,e,tp,tid)
-	return c:GetReason()&0x21==0x21 and c:GetTurnID()==tid-1 and c:IsSetCard(0xc008)
+	return c:GetReason()&SET_EARTHBOUND==SET_EARTHBOUND and c:GetTurnID()==tid-1 and c:IsSetCard(SET_DESTINY_HERO)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

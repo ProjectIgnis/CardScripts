@@ -17,7 +17,7 @@ function s.initial_effect(c)
 end
 s.listed_names={id-1}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_ONFIELD+LOCATION_HAND,0,1,nil,id+1)
+	return Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_ONFIELD|LOCATION_HAND,0,1,nil,id+1)
 		and (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

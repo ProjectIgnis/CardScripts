@@ -21,7 +21,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x107b)
+	return c:IsFaceup() and c:IsSetCard(SET_GALAXY_EYES)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) end
@@ -67,7 +67,7 @@ function s.disable(e,c)
 	return c:IsType(TYPE_XYZ) or c:GetOriginalType()&TYPE_XYZ==TYPE_XYZ
 end
 function s.eqlimit(e,c)
-	return c:GetControler()==e:GetOwnerPlayer() and c:IsSetCard(0x107b)
+	return c:GetControler()==e:GetOwnerPlayer() and c:IsSetCard(SET_GALAXY_EYES)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

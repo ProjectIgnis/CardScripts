@@ -31,10 +31,10 @@ function s.initial_effect(c)
 end
 s.listed_series={0xe6}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xe6) and c:IsType(TYPE_SYNCHRO)
+	return c:IsFaceup() and c:IsSetCard(SET_FLOWER_CARDIAN) and c:IsType(TYPE_SYNCHRO)
 end
 function s.ofilter(c)
-	return c:IsSummonType(SUMMON_TYPE_SPECIAL) and c:IsSummonLocation(LOCATION_HAND)
+	return c:IsSpecialSummoned() and c:IsSummonLocation(LOCATION_HAND)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil) 

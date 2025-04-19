@@ -38,7 +38,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCondition(s.con)
 		e1:SetOperation(s.op)
 		e1:SetOwnerPlayer(tp)
-		if Duel.GetTurnPlayer()==tp and Duel.GetCurrentPhase()==PHASE_DRAW then
+		if Duel.IsTurnPlayer(tp) and Duel.GetCurrentPhase()==PHASE_DRAW then
 			e1:SetLabel(Duel.GetTurnCount())
 			e1:SetReset(RESET_PHASE+PHASE_DRAW+RESET_SELF_TURN+RESET_EVENT+RESETS_STANDARD-RESET_TOHAND,2)
 		else

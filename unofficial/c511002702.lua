@@ -57,7 +57,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local pc=Duel.GetFieldCard(tp,LOCATION_PZONE,0)
 	if pc==c then pc=Duel.GetFieldCard(tp,LOCATION_PZONE,1) end
-	if not pc or not pc:IsSetCard(0x99) or not a or not d then return end
+	if not pc or not pc:IsSetCard(SET_ODD_EYES) or not a or not d then return end
 	local atk=pc:GetAttack()
 	if atk<=0 then return end
 	local g=Group.FromCards(a,d)

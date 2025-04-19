@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x53) and c:IsType(TYPE_XYZ)
+	return c:IsFaceup() and c:IsSetCard(SET_CONSTELLAR) and c:IsType(TYPE_XYZ)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,2,nil)
@@ -37,7 +37,7 @@ function s.lpop(e,tp,eg,ep,ev,re,r,rp)
 end
 
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(Card.IsSetCard,1,nil,0x53)
+	return eg:IsExists(Card.IsSetCard,1,nil,SET_CONSTELLAR)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Destroy(e:GetHandler(),REASON_EFFECT)

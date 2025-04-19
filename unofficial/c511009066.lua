@@ -26,10 +26,10 @@ function s.initial_effect(c)
 end
 s.listed_series={0x10ec}
 function s.thfilter1(c)
-	return c:IsSetCard(0x10ec) and c:IsFaceup() and c:IsAbleToHand()
+	return c:IsSetCard(SET_ABYSS_ACTOR) and c:IsFaceup() and c:IsAbleToHand()
 end
 function s.thfilter2(c)
-	return c:IsSetCard(0x10ec) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_ABYSS_ACTOR) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter1,tp,LOCATION_EXTRA,0,1,nil) end

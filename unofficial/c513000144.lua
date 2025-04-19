@@ -66,7 +66,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e7)
 end
 function s.millcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.millop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(1-tp,LOCATION_DECK,0)

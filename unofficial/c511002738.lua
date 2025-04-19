@@ -17,7 +17,7 @@ end
 s.listed_series={0x1083}
 function s.lvfilter(c,lv)
 	local clv=c:GetLevel()
-	return c:IsFaceup() and c:IsSetCard(0x1083) and clv>0 and clv~=lv
+	return c:IsFaceup() and c:IsSetCard(SET_GIMMICK_PUPPET) and clv>0 and clv~=lv
 end
 function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.lvfilter(chkc,e:GetHandler():GetLevel()) end

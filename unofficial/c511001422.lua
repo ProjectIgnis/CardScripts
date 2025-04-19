@@ -17,7 +17,7 @@ function s.cfilter(c)
 	local class=c:GetMetatable(true)
 	if class==nil then return false end
 	local no=class.xyz_number
-	return no and no>=101 and no<=107 and c:IsSetCard(0x48)
+	return no and no>=101 and no<=107 and c:IsSetCard(SET_NUMBER)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,3,nil)
@@ -26,7 +26,7 @@ function s.filter(c,e,tp)
 	local class=c:GetMetatable(true)
 	if class==nil then return false end
 	local no=class.xyz_number
-	return no and no>=101 and no<=107 and c:IsSetCard(0x48)
+	return no and no>=101 and no<=107 and c:IsSetCard(SET_NUMBER)
 		and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

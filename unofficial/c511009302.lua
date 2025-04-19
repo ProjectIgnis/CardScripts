@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTargetRange(LOCATION_MZONE,0)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x19))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_GLADIATOR))
 	e2:SetValue(1)
 	c:RegisterEffect(e2)
 	--damage reduce

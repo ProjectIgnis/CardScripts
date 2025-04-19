@@ -19,7 +19,7 @@ function s.ddcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local rc=c:GetReasonCard()
 	return c:IsLocation(LOCATION_GRAVE) and r & REASON_LINK == REASON_LINK
-		and rc:IsSetCard(0x11a) and rc:IsLinkMonster()
+		and rc:IsSetCard(SET_DINOWRESTLER) and rc:IsLinkMonster()
 end
 function s.ddtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -28,7 +28,7 @@ end
 function s.ddop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local sync=c:GetReasonCard()
-	if sync:IsRelateToEffect(e) and sync:IsFaceup() and sync:IsSetCard(0x11a) and sync:IsLinkMonster() then
+	if sync:IsRelateToEffect(e) and sync:IsFaceup() and sync:IsSetCard(SET_DINOWRESTLER) and sync:IsLinkMonster() then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)

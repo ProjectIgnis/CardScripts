@@ -62,7 +62,7 @@ function s.dmgop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c,tp)
-	return c:IsFaceup() and c:IsControler(tp) and c:IsSetCard(0x102)
+	return c:IsFaceup() and c:IsControler(tp) and c:IsSetCard(SET_ROKKET)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)

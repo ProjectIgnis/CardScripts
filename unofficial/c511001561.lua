@@ -25,9 +25,9 @@ end
 function s.chk(e,tp,eg,ep,ev,re,r,rp)
 	for tc in aux.Next(eg) do
 		if tc:GetSummonPlayer()==0 then 
-			Duel.RegisterFlagEffect(0,id,RESET_PHASE+PHASE_END,0,1)
+			Duel.RegisterFlagEffect(0,id,RESET_PHASE|PHASE_END,0,1)
 		else 
-			Duel.RegisterFlagEffect(1,id,RESET_PHASE+PHASE_END,0,1)
+			Duel.RegisterFlagEffect(1,id,RESET_PHASE|PHASE_END,0,1)
 		end
 	end
 end
@@ -96,5 +96,5 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummonComplete()
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end

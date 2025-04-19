@@ -53,7 +53,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x119}
 function s.eqfilter(c)
-	return c:IsSetCard(0x119) and c:GetSequence()>4
+	return c:IsSetCard(SET_SALAMANGREAT) and c:GetSequence()>4
 end
 function s.immval(e,te)
 	return te:IsActiveType(TYPE_MONSTER) and not te:GetHandler():IsType(TYPE_LINK)
@@ -66,7 +66,7 @@ function s.atktg(e,c)
 	return Duel.GetAttackTarget()==c
 end
 function s.desrepfilter(c)
-	return c:IsType(TYPE_LINK) and c:GetLink()>1 and c:IsSetCard(0x119) and c:IsAbleToExtra()
+	return c:IsType(TYPE_LINK) and c:GetLink()>1 and c:IsSetCard(SET_SALAMANGREAT) and c:IsAbleToExtra()
 end
 function s.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

@@ -24,7 +24,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x5008}
 function s.cfilter(c)
-	return c:IsSetCard(0x5008) and c:IsMonster() and c:IsFaceup()
+	return c:IsSetCard(SET_VISION_HERO) and c:IsMonster() and c:IsFaceup()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)

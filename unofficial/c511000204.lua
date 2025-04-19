@@ -40,25 +40,25 @@ function s.initial_effect(c)
 end
 function s.checkop1(e,tp,eg,ep,ev,re,r,rp)
 	if re:IsActiveType(TYPE_SPELL) then
-		Duel.RegisterFlagEffect(rp,id,RESET_PHASE+PHASE_END,0,1)
+		Duel.RegisterFlagEffect(rp,id,RESET_PHASE|PHASE_END,0,1)
 	end
 end
 function s.checkop2(e,tp,eg,ep,ev,re,r,rp)
 	for ec in aux.Next(eg) do
-		Duel.RegisterFlagEffect(ec:GetReasonPlayer(),id,RESET_PHASE+PHASE_END,0,1)
+		Duel.RegisterFlagEffect(ec:GetReasonPlayer(),id,RESET_PHASE|PHASE_END,0,1)
 	end
 end
 function s.checkop3(e,tp,eg,ep,ev,re,r,rp)
 	for ec in aux.Next(eg) do
 		if ec:IsPreviousPosition(POS_FACEUP) and ec:IsFacedown() then
-			Duel.RegisterFlagEffect(ec:GetReasonPlayer(),id,RESET_PHASE+PHASE_END,0,1)
+			Duel.RegisterFlagEffect(ec:GetReasonPlayer(),id,RESET_PHASE|PHASE_END,0,1)
 		end
 	end
 end
 function s.checkop4(e,tp,eg,ep,ev,re,r,rp)
 	for ec in aux.Next(eg) do
 		if ec:IsFacedown() then
-			Duel.RegisterFlagEffect(ec:GetSummonPlayer(),id,RESET_PHASE+PHASE_END,0,1)
+			Duel.RegisterFlagEffect(ec:GetSummonPlayer(),id,RESET_PHASE|PHASE_END,0,1)
 		end
 	end
 end

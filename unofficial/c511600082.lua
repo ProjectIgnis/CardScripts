@@ -47,11 +47,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function s.cfilter(c,e)
-	return c:IsFaceup() and c:IsSummonType(SUMMON_TYPE_PENDULUM) and c:GetTurnID()==Duel.GetTurnCount()
+	return c:IsFaceup() and c:IsPendulumSummoned() and c:GetTurnID()==Duel.GetTurnCount()
 		and (not e or c:IsCanBeEffectTarget(e))
 end
 function s.cfilter2(c,tc)
-	return c:IsFaceup() and c:IsSummonType(SUMMON_TYPE_PENDULUM) and c:GetTurnID()==Duel.GetTurnCount()
+	return c:IsFaceup() and c:IsPendulumSummoned() and c:GetTurnID()==Duel.GetTurnCount()
 		and tc and c:IsLevel(tc:GetLevel()+1)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
@@ -124,7 +124,7 @@ function s.sfilter(c,tp,sc)
 		and rg:IsExists(s.filterchk,1,nil,rg,Group.CreateGroup(),tp,c,sc)
 end
 function s.pfilter(c)
-	return c:IsLevelBelow(2147483647) and c:IsType(TYPE_PENDULUM) and c:IsSummonType(SUMMON_TYPE_PENDULUM) and c:IsReleasable()
+	return c:IsLevelBelow(2147483647) and c:IsType(TYPE_PENDULUM) and c:IsPendulumSummoned() and c:IsReleasable()
 end
 function s.filterchk(c,g,sg,tp,sync,sc)
 	sg:AddCard(c)

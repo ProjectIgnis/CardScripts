@@ -50,10 +50,10 @@ function s.matcheck(g,lc,sumtype,tp)
 end
 function s.matcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsSummonType(SUMMON_TYPE_LINK) and c:GetTurnID()==Duel.GetTurnCount()
+	return c:IsLinkSummoned() and c:GetTurnID()==Duel.GetTurnCount()
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
+	return e:GetHandler():IsLinkSummoned()
 end
 function s.sfilter(c,e,tp,zone)
 	return c:IsRace(RACE_PLANT) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE,tp,zone&0x1f)
@@ -76,13 +76,13 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.atcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.atfilter(c,lg)
-	return c:IsSetCard(0x2157) and c:IsLinkMonster() and lg and lg:IsContains(c)
+	return c:IsSetCard(SET_SUNVINE) and c:IsLinkMonster() and lg and lg:IsContains(c)
 end
 function s.valfilter(c)
-	return c:IsSetCard(0x1157) and c:IsLinkMonster()
+	return c:IsSetCard(SET_SUNAVALON) and c:IsLinkMonster()
 end
 function s.attg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.atfilter(chkc,e:GetHandler():GetLinkedGroup()) end

@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c)
-	return c:GetAttackAnnouncedCount()==0 and c:IsFaceup() and c:IsSetCard(0x3008) 
+	return c:GetAttackAnnouncedCount()==0 and c:IsFaceup() and c:IsSetCard(SET_ELEMENTAL_HERO) 
 		and Duel.IsExistingMatchingCard(s.dfilter,c:GetControler(),0,LOCATION_MZONE,1,c,c:GetBaseAttack())
 end
 function s.dfilter(c,atk)

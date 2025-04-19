@@ -27,7 +27,7 @@ function s.matfilter(c,lc,sumtype,tp)
 	return c:IsLevelBelow(4) and c:IsSetCard(0x578,lc,sumtype,tp)
 end
 function s.sumcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
+	return e:GetHandler():IsLinkSummoned()
 end
 function s.sumsuc(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())

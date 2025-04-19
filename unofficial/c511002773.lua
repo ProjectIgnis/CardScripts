@@ -23,7 +23,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.filter1(c,e,tp)
-	return c:IsFaceup() and c:IsSetCard(0xba) and c:IsLevelBelow(3)
+	return c:IsFaceup() and c:IsSetCard(SET_RAIDRAPTOR) and c:IsLevelBelow(3)
 		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetCode())
 end
 function s.filter2(c,e,tp,code)

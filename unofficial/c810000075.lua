@@ -18,7 +18,7 @@ function s.initial_effect(c)
 end
 s.listed_names={39260991}
 function s.con(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.filter(c)
 	return c:IsCode(39260991) and c:IsMonster() and c:IsAbleToHand()

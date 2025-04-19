@@ -13,7 +13,7 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
 	if tc:IsControler(1-tp) then tc=Duel.GetAttackTarget() end
-	return Duel.GetBattleDamage(tp)>0 and tc and tc:IsSetCard(0x55)
+	return Duel.GetBattleDamage(tp)>0 and tc and tc:IsSetCard(SET_PHOTON)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())

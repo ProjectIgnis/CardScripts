@@ -24,7 +24,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x9f}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x9f) and c:GetSummonType()==SUMMON_TYPE_PENDULUM
+	return c:IsFaceup() and c:IsSetCard(SET_PERFORMAPAL) and c:GetSummonType()==SUMMON_TYPE_PENDULUM
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsContains(e:GetHandler()) and eg:IsExists(s.cfilter,1,nil)

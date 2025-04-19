@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_PHASE+PHASE_STANDBY)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCountLimit(1)
-	e2:SetCondition(function(_,tp) return Duel.GetTurnPlayer()==tp end)
+	e2:SetCondition(function(_,tp) return Duel.IsTurnPlayer(tp) end)
 	e2:SetOperation(s.mtop)
 	c:RegisterEffect(e2)
 	--Special Summon 1 "Cloudian" monster from your hand

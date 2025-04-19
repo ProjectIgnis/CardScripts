@@ -132,7 +132,7 @@ function s.valcheck(e,c)
 	end
 end
 function s.efcon(e)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ) and e:GetHandler():GetFlagEffect(id)>0
+	return e:GetHandler():IsXyzSummoned() and e:GetHandler():GetFlagEffect(id)>0
 end
 function s.eftg(e,c)
 	return c==e:GetHandler()

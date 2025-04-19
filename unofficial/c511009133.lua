@@ -31,7 +31,7 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 		tc=Duel.GetAttackTarget()
 	end
 	e:SetLabelObject(tc)
-	return tc and tc:IsFaceup() and tc:IsSetCard(0xe5) and tc:IsRelateToBattle()
+	return tc and tc:IsFaceup() and tc:IsSetCard(SET_CIPHER) and tc:IsRelateToBattle()
 		and Duel.IsExistingMatchingCard(s.filter,0,LOCATION_MZONE,LOCATION_MZONE,1,tc,tc:GetCode())
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)

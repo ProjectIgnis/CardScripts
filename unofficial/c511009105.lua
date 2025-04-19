@@ -4,7 +4,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0xc6),2)
+	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_PERFORMAGE),2)
 	--indes
 	local e2=Effect.CreateEffect(c)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
@@ -41,10 +41,10 @@ end
 s.listed_series={0xc6}
 s.material_setcode=0xc6
 function s.target(e,c)
-	return c:IsSetCard(0xc6)
+	return c:IsSetCard(SET_PERFORMAGE)
 end
 function s.atfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xc6)
+	return c:IsFaceup() and c:IsSetCard(SET_PERFORMAGE)
 end
 function s.atcon(e)
 	return Duel.IsExistingMatchingCard(s.atfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
@@ -55,7 +55,7 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	if not bc then return false end
 	if bc:IsControler(1-tp) then bc=tc end
 	e:SetLabelObject(bc:GetBattleTarget())
-	return bc:IsFaceup() and bc:IsSetCard(0xc6)
+	return bc:IsFaceup() and bc:IsSetCard(SET_PERFORMAGE)
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local tc=e:GetLabelObject()

@@ -26,7 +26,7 @@ function s.stage2(e,tc,tp,sg,chk)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetLabelObject():GetFlagEffect(id)==0 then e:Reset() return false end
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Damage(e:GetLabelObject():GetControler(),e:GetLabel(),REASON_EFFECT)

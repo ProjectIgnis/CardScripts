@@ -15,13 +15,13 @@ function s.initial_effect(c)
 end
 s.listed_series={0xba}
 function s.cfilter(c)
-	return c:IsSummonType(SUMMON_TYPE_SPECIAL)
+	return c:IsSpecialSummoned()
 end
 function s.xyzcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsBattlePhase() and Duel.IsExistingMatchingCard(s.cfilter,tp,0,LOCATION_MZONE,1,nil)
 end
 function s.xyzfilter(c)
-	return c:IsXyzSummonable() and c:IsSetCard(0xba)
+	return c:IsXyzSummonable() and c:IsSetCard(SET_RAIDRAPTOR)
 end
 function s.xyztg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.xyzfilter,tp,LOCATION_EXTRA,0,1,nil) end

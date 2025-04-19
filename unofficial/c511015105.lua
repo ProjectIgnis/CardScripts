@@ -16,7 +16,7 @@ function s.initial_effect(c)
 end
 s.listed_names={16178681,id+1}
 function s.counterfilter(c)
-	return not c:IsSummonType(SUMMON_TYPE_PENDULUM)
+	return not c:IsPendulumSummoned()
 end
 function s.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return sumtype&SUMMON_TYPE_PENDULUM==SUMMON_TYPE_PENDULUM

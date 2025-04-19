@@ -15,14 +15,14 @@ end
 s.listed_series={0xe5}
 function s.filter(c,e,tp)
 	local pg=aux.GetMustBeMaterialGroup(tp,Group.FromCards(c),tp,nil,nil,REASON_XYZ)
-	return #pg<=1 and c:IsSetCard(0xe5) and c:IsCanBeEffectTarget(e) and (c:GetRank()>0 or c:IsStatus(STATUS_NO_LEVEL))
+	return #pg<=1 and c:IsSetCard(SET_CIPHER) and c:IsCanBeEffectTarget(e) and (c:GetRank()>0 or c:IsStatus(STATUS_NO_LEVEL))
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,c,c:GetRank()+1,pg)
 end
 function s.spfilter(c,e,tp,mc,rk,pg)
 	if c.rum_limit and not c.rum_limit(mc,e) then return false end
 	return c:IsType(TYPE_XYZ) and mc:IsType(TYPE_XYZ,c,SUMMON_TYPE_XYZ,tp)
 		and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0
-		and c:IsSetCard(0xe5) and c:IsRank(rk) and mc:IsCanBeXyzMaterial(c,tp)
+		and c:IsSetCard(SET_CIPHER) and c:IsRank(rk) and mc:IsCanBeXyzMaterial(c,tp)
 		and (#pg<=0 or pg:IsContains(mc)) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
 end
 function s.target(e,tp,eg,ev,ep,re,r,rp,chk,chkc)

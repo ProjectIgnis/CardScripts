@@ -31,7 +31,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0xc6,0x9f}
 function s.drfil(c,tp)
-	return c:IsSummonPlayer(tp) and c:GetSummonType()==SUMMON_TYPE_PENDULUM and (c:IsSetCard(0xc6) or c:IsSetCard(0x9f)) and c:IsPreviousLocation(LOCATION_HAND)
+	return c:IsSummonPlayer(tp) and c:GetSummonType()==SUMMON_TYPE_PENDULUM and (c:IsSetCard(SET_PERFORMAGE) or c:IsSetCard(SET_PERFORMAPAL)) and c:IsPreviousLocation(LOCATION_HAND)
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.drfil,3,nil,tp)

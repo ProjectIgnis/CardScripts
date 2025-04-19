@@ -1,7 +1,7 @@
 --Golden Rule
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsSetCard,0x1034),nil,nil,nil,s.op)
+	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsSetCard,SET_CRYSTAL_BEAST),nil,nil,nil,s.op)
 	--Destroy (S/T)
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
@@ -18,10 +18,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function s.stfilter(c)
-	return c:IsLevelBelow(3) and c:IsSetCard(0x1034)
+	return c:IsLevelBelow(3) and c:IsSetCard(SET_CRYSTAL_BEAST)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x1034) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_CRYSTAL_BEAST) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

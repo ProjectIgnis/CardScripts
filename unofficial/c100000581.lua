@@ -60,7 +60,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.sdesop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetTurnPlayer()==tp and e:GetHandler():GetFlagEffect(id)==0 then
+	if Duel.IsTurnPlayer(tp) and e:GetHandler():GetFlagEffect(id)==0 then
 		Duel.Destroy(e:GetHandler(),REASON_EFFECT)
 	end
 end

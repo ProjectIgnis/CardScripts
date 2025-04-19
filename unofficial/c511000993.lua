@@ -25,7 +25,7 @@ function s.initial_effect(c)
 end
 s.listed_names={65305468}
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x48) and c:GetAttribute()~=ATTRIBUTE_LIGHT and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_NUMBER) and c:GetAttribute()~=ATTRIBUTE_LIGHT and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end
@@ -57,7 +57,7 @@ function s.eqfilter(c)
 	return c:GetFlagEffect(id)>0
 end
 function s.ufilter(c)
-	return c:IsFaceup() and (c:IsCode(65305468) or c:IsSetCard(0x7f))
+	return c:IsFaceup() and (c:IsCode(65305468) or c:IsSetCard(SET_UTOPIC))
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.eqfilter(chkc) end

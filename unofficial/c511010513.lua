@@ -15,7 +15,7 @@ end
 s.listed_series={0x48}
 function s.filter1(c,e,tp)
 	local rk=c:GetRank()
-	return rk>1 and c:IsFaceup() and c:IsSetCard(0x48)
+	return rk>1 and c:IsFaceup() and c:IsSetCard(SET_NUMBER)
 		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,c,rk)
 end
 function s.filter2(c,e,tp,mc,rk)

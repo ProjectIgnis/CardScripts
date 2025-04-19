@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.filter(c,e,pl)
-	return c:IsSetCard(0x85) and c:IsCanBeSpecialSummoned(e,0,pl,false,false)
+	return c:IsSetCard(SET_SUPER_DEFENSE_ROBOT) and c:IsCanBeSpecialSummoned(e,0,pl,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local pl=eg:GetFirst():GetSummonPlayer()

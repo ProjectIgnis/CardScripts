@@ -2,7 +2,7 @@
 --Meklord Emperor Granel ∞ (TF6)
 local s,id=GetID()
 function s.initial_effect(c)
-	c:SetUniqueOnField(1,0,aux.FilterBoolFunction(Card.IsSetCard,0x3013),LOCATION_MZONE)
+	c:SetUniqueOnField(1,0,aux.FilterBoolFunction(Card.IsSetCard,SET_MEKLORD_EMPEROR),LOCATION_MZONE)
 	--atk/def up
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -47,7 +47,7 @@ s.listed_series={0x3013}
 s.listed_names={100000067}
 function s.con(e)
 	local c=e:GetHandler()
-	return c:IsSummonType(SUMMON_TYPE_SPECIAL) and c:GetReasonEffect()
+	return c:IsSpecialSummoned() and c:GetReasonEffect()
 		and c:GetReasonEffect():GetHandler():IsCode(100000067)
 end
 function s.val(e,c)

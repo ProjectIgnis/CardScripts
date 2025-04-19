@@ -32,7 +32,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(tp,rsel)
 		Duel.ConfirmCards(1-tp,rsel)
 		if rsel:IsContains(c) then
-			if Duel.GetTurnPlayer()==tp then
+			if Duel.IsTurnPlayer(tp) then
 				Duel.SkipPhase(tp,PHASE_BATTLE,RESET_PHASE|PHASE_BATTLE_STEP,1)
 				sg:RemoveCard(c)
 				Duel.SendtoDeck(sg,nil,0,REASON_EFFECT)

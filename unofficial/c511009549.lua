@@ -28,7 +28,7 @@ function s.atkcond(e,tp,eg,ep,ev,re,r,rp)
 		tc=bc
 	end
 	e:SetLabelObject(bc)
-	return tc:IsFaceup() and tc:IsSetCard(0x10ec)
+	return tc:IsFaceup() and tc:IsSetCard(SET_ABYSS_ACTOR)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()

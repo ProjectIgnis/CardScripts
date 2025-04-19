@@ -17,7 +17,7 @@ function s.cfilter(c,tp)
 	return c:IsOnField() and c:IsControler(1-tp)
 end
 function s.confilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xad)
+	return c:IsFaceup() and c:IsSetCard(SET_FRIGHTFUR)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsExistingMatchingCard(s.confilter,tp,LOCATION_MZONE,0,1,nil) then return false end

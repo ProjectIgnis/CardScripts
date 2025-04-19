@@ -82,7 +82,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=e:GetLabel()
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e1:SetRange(LOCATION_EXTRA+LOCATION_REMOVED+LOCATION_GRAVE)
+	e1:SetRange(LOCATION_EXTRA|LOCATION_REMOVED|LOCATION_GRAVE)
 	e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
 	if Duel.IsPhase(PHASE_STANDBY) and Duel.IsTurnPlayer(tp) then
 		e1:SetLabel(-1)

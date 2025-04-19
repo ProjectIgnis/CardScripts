@@ -18,10 +18,10 @@ function s.initial_effect(c)
 end
 s.listed_series={0x12f}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x12f)
+	return c:IsFaceup() and c:IsSetCard(SET_BATTLEWASP)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	if rp~=tp or not re:GetHandler():IsSetCard(0x12f) then return end
+	if rp~=tp or not re:GetHandler():IsSetCard(SET_BATTLEWASP) then return end
 	local ex,cg,ct,cp,cv=Duel.GetOperationInfo(ev,CATEGORY_DAMAGE)
 	return ex and Duel.IsExistingMatchingCard(s.cfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
 end

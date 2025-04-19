@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentChain()==0 and Duel.IsMainPhase() and Duel.GetTurnPlayer()==tp
+	return Duel.GetCurrentChain()==0 and Duel.IsMainPhase() and Duel.IsTurnPlayer(tp)
 end
 function s.filter1(c,e,tp)
 	return Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_EXTRA,0,1,nil,c:GetCode(),e,tp,c)

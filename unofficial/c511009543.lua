@@ -20,7 +20,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x2b}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x2b) and not c:IsHasEffect(EFFECT_PIERCE)
+	return c:IsFaceup() and c:IsSetCard(SET_NINJA) and not c:IsHasEffect(EFFECT_PIERCE)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end

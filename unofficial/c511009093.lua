@@ -18,7 +18,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsAbleToEnterBP()
 end
 function s.cfilter(c,tp)
-	return c:IsFaceup() and c:IsAttackAbove(3000) and c:IsSetCard(0xe5) 
+	return c:IsFaceup() and c:IsAttackAbove(3000) and c:IsSetCard(SET_CIPHER) 
 		and Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,c)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -37,7 +37,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabelObject(tc)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0xe5) 
+	return c:IsFaceup() and c:IsSetCard(SET_CIPHER) 
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local tc=e:GetLabelObject()

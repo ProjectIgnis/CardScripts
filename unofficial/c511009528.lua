@@ -58,7 +58,7 @@ end
 s.listed_series={SET_SUPREME_KING_DRAGON}
 s.listed_names={13331639}
 function s.spfilter(c,tp)
-	return c:IsControler(1-tp) and c:IsType(TYPE_FUSION) and c:IsSummonType(SUMMON_TYPE_FUSION)
+	return c:IsControler(1-tp) and c:IsType(TYPE_FUSION) and c:IsFusionSummoned()
 end
 function s.costfilter(c,tp,sg,tc)
 	if not c:IsSetCard(SET_SUPREME_KING_DRAGON) then return false end
@@ -96,7 +96,7 @@ function s.atlimit(e,c)
 	return c:IsFaceup() and c:IsType(TYPE_FUSION) and c~=e:GetHandler()
 end
 function s.cpcon(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetTurnPlayer()==1-tp then return false end
+	if Duel.IsTurnPlayer(1-tp) then return false end
 	return Duel.IsMainPhase() or Duel.IsBattlePhase()
 end
 function s.cptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

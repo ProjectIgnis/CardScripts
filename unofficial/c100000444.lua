@@ -15,7 +15,7 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local at=Duel.GetAttackTarget()
-	return a:IsControler(tp) and a:IsSetCard(0x3013) and at:IsRelateToBattle() and not at:IsStatus(STATUS_DESTROY_CONFIRMED+STATUS_BATTLE_DESTROYED) 
+	return a:IsControler(tp) and a:IsSetCard(SET_MEKLORD_EMPEROR) and at:IsRelateToBattle() and not at:IsStatus(STATUS_DESTROY_CONFIRMED+STATUS_BATTLE_DESTROYED) 
 		and not a:IsStatus(STATUS_DESTROY_CONFIRMED+STATUS_BATTLE_DESTROYED)
 end
 function s.cfilter(c)

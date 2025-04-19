@@ -10,5 +10,5 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.tgval(e,c)
-	return c:IsSetCard(0x206f)
+	return c:IsSetCard(SET_HEROIC_CHAMPION)
 end

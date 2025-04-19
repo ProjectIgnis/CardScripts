@@ -18,7 +18,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local d=Duel.GetAttackTarget()
 	if not d then return false end
 	if d:IsControler(1-tp) then a,d=d,a end
-	if not d or d:IsControler(1-tp) or not d:IsSetCard(0xba) then return false end
+	if not d or d:IsControler(1-tp) or not d:IsSetCard(SET_RAIDRAPTOR) then return false end
 	if d:IsHasEffect(EFFECT_INDESTRUCTABLE_BATTLE) then
 		local tcind={d:GetCardEffect(EFFECT_INDESTRUCTABLE_BATTLE)}
 		for i=1,#tcind do

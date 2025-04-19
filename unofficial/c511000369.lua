@@ -66,7 +66,7 @@ s.listed_series={0x48}
 s.xyz_number=100
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttacker()
-	return at:GetControler()==1-tp and at:IsType(TYPE_XYZ) and Duel.GetAttackTarget()==nil and Duel.GetFieldGroupCount(tp,LOCATION_HAND+LOCATION_ONFIELD,0)==0
+	return at:GetControler()==1-tp and at:IsType(TYPE_XYZ) and Duel.GetAttackTarget()==nil and Duel.GetFieldGroupCount(tp,LOCATION_HAND|LOCATION_ONFIELD,0)==0
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -169,7 +169,7 @@ function s.atkupop(e,tp,eg,ep,ev,re,r,rp)
 	c:RegisterEffect(e1)
 end
 function s.indes(e,c)
-	return not c:IsSetCard(0x48)
+	return not c:IsSetCard(SET_NUMBER)
 end
 function s.stcheck(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(Card.IsType,nil,TYPE_SPELL+TYPE_TRAP)
@@ -180,7 +180,7 @@ function s.stcheck(e,tp,eg,ep,ev,re,r,rp)
 			if tc:IsPreviousLocation(LOCATION_PZONE) then
 				pzone=1
 			end
-			tc:RegisterFlagEffect(id,RESET_PHASE+PHASE_END,0,1,tc:GetPreviousPosition()+(tc:GetPreviousSequence()<<4)+(tc:GetPreviousControler()<<8)+(pzone<<16))
+			tc:RegisterFlagEffect(id,RESET_PHASE|PHASE_END,0,1,tc:GetPreviousPosition()+(tc:GetPreviousSequence()<<4)+(tc:GetPreviousControler()<<8)+(pzone<<16))
 			tc=g:GetNext()
 		end
 	end

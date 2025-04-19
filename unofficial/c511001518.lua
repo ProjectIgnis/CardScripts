@@ -28,7 +28,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x2b}
 function s.actcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x2b),tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_NINJA),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.damval(e,re,val,r,rp,rc)
 	if (r&REASON_EFFECT)~=0 and rp~=e:GetHandlerPlayer() and val<=800 then
@@ -37,7 +37,7 @@ function s.damval(e,re,val,r,rp,rc)
 	return val
 end
 function s.desfilter(c,tp)
-	return c:IsSetCard(0x2b) and c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousControler(tp)
+	return c:IsSetCard(SET_NINJA) and c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousControler(tp)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.desfilter,1,nil,tp)

@@ -21,7 +21,7 @@ function s.initial_effect(c)
 end
 s.material_setcode=SET_EARTHBOUND
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and eg:IsExists(Card.IsControler,1,nil,1-tp)
+	return Duel.IsTurnPlayer(tp) and eg:IsExists(Card.IsControler,1,nil,1-tp)
 end
 function s.desfilter(c)
 	return c:IsStatus(STATUS_SPSUMMON_TURN)

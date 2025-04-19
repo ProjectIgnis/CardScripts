@@ -88,7 +88,7 @@ function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return tp==Duel.GetTurnPlayer()
 end
 function s.filter(c)
-	return c:IsSetCard(0x10f3) and c:IsReleasableByEffect()
+	return c:IsSetCard(SET_PREDAPLANT) and c:IsReleasableByEffect()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) end

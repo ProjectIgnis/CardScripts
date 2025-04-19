@@ -16,7 +16,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x57b}
 function s.filter(c)
-	return c:IsSetCard(0x57b) and c:IsSummonType(SUMMON_TYPE_SPECIAL) and c:IsStatus(STATUS_SPSUMMON_TURN)
+	return c:IsSetCard(0x57b) and c:IsSpecialSummoned() and c:IsStatus(STATUS_SPSUMMON_TURN)
 end
 function s.spcon(e,c)
 	if c==nil then return true end

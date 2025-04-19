@@ -38,7 +38,7 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 		if ec:GetPreviousTypeOnField()&TYPE_LINK>0
 			and ec:IsPreviousSetCard(SET_SALAMANGREAT) and REASON_EFFECT&ec:GetReason()>0
 			and ec:GetPreviousControler()~=ec:GetReasonEffect():GetHandlerPlayer() then
-			Duel.RegisterFlagEffect(ec:GetPreviousControler(),id,RESET_PHASE+PHASE_END,0,1)
+			Duel.RegisterFlagEffect(ec:GetPreviousControler(),id,RESET_PHASE|PHASE_END,0,1)
 		end
 	end
 end

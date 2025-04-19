@@ -14,10 +14,10 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local rg1=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil)
 	Duel.SendtoDeck(rg1,nil,2,REASON_EFFECT)
-	rg1=Duel.GetOperatedGroup():Match(Card.IsLocation,nil,LOCATION_DECK+LOCATION_EXTRA)
+	rg1=Duel.GetOperatedGroup():Match(Card.IsLocation,nil,LOCATION_DECK|LOCATION_EXTRA)
 	local rg2=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_MZONE,nil)
 	Duel.SendtoDeck(rg2,nil,2,REASON_EFFECT)
-	rg2=Duel.GetOperatedGroup():Match(Card.IsLocation,nil,LOCATION_DECK+LOCATION_EXTRA)
+	rg2=Duel.GetOperatedGroup():Match(Card.IsLocation,nil,LOCATION_DECK|LOCATION_EXTRA)
 	Duel.BreakEffect()
 	if #rg1>0 then
 		Duel.ShuffleDeck(tp)

@@ -29,7 +29,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x11a}
 function s.ntfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x11a)
+	return c:IsFaceup() and c:IsSetCard(SET_DINOWRESTLER)
 end
 function s.ntcon(e,c,minc)
 	if c==nil then return true end
@@ -37,14 +37,14 @@ function s.ntcon(e,c,minc)
 		and Duel.IsExistingMatchingCard(s.ntfilter,c:GetControler(),LOCATION_MZONE,0,1,nil)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return rp==1-tp and Duel.GetTurnPlayer()==tp
+	return rp==1-tp and Duel.IsTurnPlayer(tp)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToHandAsCost() end
 	Duel.SendtoHand(e:GetHandler(),tp,REASON_COST)
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x11a) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_DINOWRESTLER) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc,e,tp) end

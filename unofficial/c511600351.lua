@@ -36,7 +36,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
 	e3:SetRange(LOCATION_GRAVE)
 	e3:SetCountLimit(1,{alias,200})
-	e3:SetCost(aux.bfgcost)
+	e3:SetCost(Cost.SelfBanish)
 	e3:SetTarget(s.bttg)
 	e3:SetOperation(s.btop)
 	c:RegisterEffect(e3)
@@ -86,7 +86,7 @@ function s.bttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		if not at then return false end
 		if not a:IsControler(tp) then a,at=at,a end
-		return a:IsLinkMonster() and a:IsSetCard(0x135)
+		return a:IsLinkMonster() and a:IsSetCard(SET_IGNISTER)
 			and a:IsControler(tp) and not a:IsAttack(3000)
 			and not at:IsControler(tp) and not at:IsAttack(3000)
 	end
@@ -118,7 +118,7 @@ function s.btop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spfilter(c,e,tp,lk)
-	return c:IsLinkMonster() and c:IsSetCard(0x135) and c:GetLink()<lk
+	return c:IsLinkMonster() and c:IsSetCard(SET_IGNISTER) and c:GetLink()<lk
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)

@@ -19,4 +19,3 @@ end
 function s.splimit(e,c,tp,sumtp,sumpos)
 	return (sumtp&SUMMON_TYPE_SYNCHRO)==SUMMON_TYPE_SYNCHRO
 end
-

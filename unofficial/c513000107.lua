@@ -17,7 +17,7 @@ end
 s.listed_series={0x64}
 s.listed_names={CARD_HARPIE_LADY}
 function s.counterfilter(c)
-	return not c:IsSetCard(0x64)
+	return not c:IsSetCard(SET_HARPIE)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetCustomActivityCount(id,tp,ACTIVITY_ATTACK)==0 end

@@ -63,7 +63,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
 			c:RegisterEffect(e1)
 		end
-		e:GetHandler():RegisterFlagEffect(id,RESET_PHASE+PHASE_END,0,1)
+		e:GetHandler():RegisterFlagEffect(id,RESET_PHASE|PHASE_END,0,1)
 	end
 end
 function s.tglimit(e,c)

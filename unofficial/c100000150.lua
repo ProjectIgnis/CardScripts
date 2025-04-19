@@ -32,7 +32,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0xb}
 function s.filter(c)
-	return c:IsSetCard(0xb) and c:IsMonster()
+	return c:IsSetCard(SET_INFERNITY) and c:IsMonster()
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -63,7 +63,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	until #g<=0
 end
 function s.codefilter(c,code)
-	return c:IsOriginalCode(code) and c:IsSetCard(0xb)
+	return c:IsOriginalCode(code) and c:IsSetCard(SET_INFERNITY)
 end
 function s.codefilterchk(c,sc)
 	return sc:GetFlagEffect(c:GetOriginalCode())>0

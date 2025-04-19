@@ -5,7 +5,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
-	Fusion.AddProcMix(c,true,true,s.ffilter,aux.FilterBoolFunctionEx(Card.IsSetCard,0x9f))
+	Fusion.AddProcMix(c,true,true,s.ffilter,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_PERFORMAPAL))
 	c:EnableReviveLimit()
 	--damage
 	local e1=Effect.CreateEffect(c)
@@ -44,7 +44,7 @@ function s.ffilter(c,fc,sumtype,tp)
 	return c:IsAttribute(ATTRIBUTE_DARK,fc,sumtype,tp) and c:IsLevelAbove(5)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)
+	return e:GetHandler():IsFusionSummoned()
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -59,7 +59,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsSummonType(SUMMON_TYPE_FUSION) and c:GetMaterial()
+	return c:IsFusionSummoned() and c:GetMaterial()
 		and c:GetMaterial():IsExists(Card.IsType,1,nil,TYPE_PENDULUM,c,SUMMON_TYPE_FUSION)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)

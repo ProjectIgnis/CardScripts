@@ -15,7 +15,7 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local at=Duel.GetAttackTarget()
-	return a:IsSetCard(0x70) and at and at:IsRelateToBattle() and not at:IsStatus(STATUS_BATTLE_DESTROYED)
+	return a:IsSetCard(SET_CHRONOMALY) and at and at:IsRelateToBattle() and not at:IsStatus(STATUS_BATTLE_DESTROYED)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local a=Duel.GetAttacker()
@@ -29,4 +29,3 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ChainAttack()
 	end
 end
-

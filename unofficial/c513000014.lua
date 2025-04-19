@@ -51,7 +51,7 @@ end
 s.listed_names={51447164}
 function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return c:IsSummonType(SUMMON_TYPE_SYNCHRO) and c:GetMaterialCount()>0 and c:GetFlagEffect(id)<c:GetMaterialCount() end
+	if chk==0 then return c:IsSynchroSummoned() and c:GetMaterialCount()>0 and c:GetFlagEffect(id)<c:GetMaterialCount() end
 	c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,0)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)

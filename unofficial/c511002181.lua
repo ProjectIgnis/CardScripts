@@ -64,7 +64,7 @@ function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFirstCardTarget()==nil and not e:GetHandler():IsStatus(STATUS_CHAINING)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and e:GetHandler():GetFirstCardTarget()~=nil
+	return Duel.IsTurnPlayer(tp) and e:GetHandler():GetFirstCardTarget()~=nil
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

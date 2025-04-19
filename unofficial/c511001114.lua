@@ -70,7 +70,7 @@ function s.crystalop(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RaiseEvent(c,47408488,e,0,tp,0,0)
 end
 function s.crystalstobeastfilter(c,e,sp)
-	return c:IsFaceup() and c:IsSetCard(0x1034) and c:IsCanBeSpecialSummoned(e,0,sp,true,false)
+	return c:IsFaceup() and c:IsSetCard(SET_CRYSTAL_BEAST) and c:IsCanBeSpecialSummoned(e,0,sp,true,false)
 end
 function s.crystalstobeaststg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.crystalstobeastfilter,tp,LOCATION_SZONE,0,1,nil,e,tp)

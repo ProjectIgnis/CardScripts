@@ -14,7 +14,7 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=eg:GetFirst()
 	if chk==0 then return tc:IsPreviousPosition(POS_FACEUP) and #eg==1 and tc:IsControler(tp)
-		and tc:IsLocation(LOCATION_GRAVE) and tc:IsSetCard(0xf) and tc:IsAbleToDeck() and Duel.IsPlayerCanDraw(tp,2) end
+		and tc:IsLocation(LOCATION_GRAVE) and tc:IsSetCard(SET_OJAMA) and tc:IsAbleToDeck() and Duel.IsPlayerCanDraw(tp,2) end
 	tc:CreateEffectRelation(e)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)

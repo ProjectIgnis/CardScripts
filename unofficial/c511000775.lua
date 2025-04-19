@@ -12,10 +12,10 @@ function s.initial_effect(c)
 end
 s.listed_series={0x33}
 function s.spfilter(c,e,tp,tid)
-	return c:IsSetCard(0x33) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:GetTurnID()==tid and c:IsReason(REASON_DESTROY)
+	return c:IsSetCard(SET_BLACKWING) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:GetTurnID()==tid and c:IsReason(REASON_DESTROY)
 end
 function s.eqfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x33)
+	return c:IsFaceup() and c:IsSetCard(SET_BLACKWING)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tid=Duel.GetTurnCount()

@@ -12,11 +12,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter1(c,e,tp)
-	return c:IsFaceup() and c:IsSetCard(0x70) and c:GetLevel()>0 
+	return c:IsFaceup() and c:IsSetCard(SET_CHRONOMALY) and c:GetLevel()>0 
 		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_HAND,0,1,nil,c:GetLevel(),e,tp)
 end
 function s.filter2(c,lv,e,tp)
-	return c:IsSetCard(0x70) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:GetLevel()==lv+1
+	return c:IsSetCard(SET_CHRONOMALY) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:GetLevel()==lv+1
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.filter1(chkc,e,tp) end
@@ -35,4 +35,3 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local sc=g:GetFirst()
 	Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP)
 end
-

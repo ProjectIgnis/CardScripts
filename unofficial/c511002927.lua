@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.filter(c,e,tp)
-	return c:GetLevel()>0 and c:IsFaceup() and c:IsSetCard(0x54)
+	return c:GetLevel()>0 and c:IsFaceup() and c:IsSetCard(SET_GAGAGA)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) end

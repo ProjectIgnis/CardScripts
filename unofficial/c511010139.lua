@@ -90,5 +90,5 @@ function s.descon(e)
 	return Duel.GetLP(e:GetHandlerPlayer())>=1000
 end
 function s.indes(e,c)
-	return not c:IsSetCard(0x48)
+	return not c:IsSetCard(SET_NUMBER)
 end

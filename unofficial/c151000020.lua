@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_DECREASE_TRIBUTE)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetTargetRange(LOCATION_HAND,LOCATION_HAND)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x7))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_ANCIENT_GEAR))
 	e2:SetValue(0x1)
 	c:RegisterEffect(e2)
 	--special summon
@@ -33,7 +33,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsReason(REASON_DESTROY)
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x7) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_ANCIENT_GEAR) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

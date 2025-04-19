@@ -56,7 +56,7 @@ function s.resetop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetLabelObject():SetType(EFFECT_TYPE_QUICK_O)
 end
 function s.remcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.remop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

@@ -16,7 +16,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return d and d:IsCode(69937550) and d:IsFaceup() and d:IsControler(tp)
 end
 function s.filter(c)
-	return c:IsSetCard(0x1034) and c:IsFaceup()
+	return c:IsSetCard(SET_CRYSTAL_BEAST) and c:IsFaceup()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local tc=Duel.GetAttackTarget()

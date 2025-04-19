@@ -19,7 +19,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if a:IsControler(1-tp) then
 		a,d=d,a
 	end
-	return d and a:IsControler(tp) and a:IsSetCard(0x48) and d:IsControler(1-tp) and a:GetAttack()+1000<=d:GetAttack()
+	return d and a:IsControler(tp) and a:IsSetCard(SET_NUMBER) and d:IsControler(1-tp) and a:GetAttack()+1000<=d:GetAttack()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local a=Duel.GetAttacker()

@@ -52,7 +52,7 @@ end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	for tc in aux.Next(eg) do
 		if tc:IsMonster() and tc:IsPreviousLocation(LOCATION_MZONE) and tc:IsPreviousPosition(POS_ATTACK) then
-			tc:RegisterFlagEffect(id+1,RESET_PHASE+PHASE_END,0,5)
+			tc:RegisterFlagEffect(id+1,RESET_PHASE|PHASE_END,0,5)
 		end
 	end
 end
@@ -60,7 +60,7 @@ function s.spcfilter(c,ft)
 	return c:GetFlagEffect(id+1)>0 and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local rg=Duel.GetMatchingGroup(s.spcfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil)
+	local rg=Duel.GetMatchingGroup(s.spcfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,nil)
 	if chk==0 then return #rg>2 and aux.SelectUnselectGroup(rg,e,tp,3,3,aux.ChkfMMZ(1),0) end
 	local g=aux.SelectUnselectGroup(rg,e,tp,3,3,aux.ChkfMMZ(1),1,tp,HINTMSG_REMOVE)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)

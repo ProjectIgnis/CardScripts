@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x3008) and c:IsFaceup()
+	return c:IsSetCard(SET_ELEMENTAL_HERO) and c:IsFaceup()
 end
 function s.filter(c)
 	return c:IsFaceup() and (c:GetAttack()>0 or c:GetDefense()>0)

@@ -14,10 +14,10 @@ end
 s.listed_series={0x2b}
 function s.filter1(c,e,tp)
 	local atk=c:GetAttack()
-	return atk>0 and c:IsFaceup() and c:IsSetCard(0x2b) and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_HAND,0,1,nil,atk,e,tp)
+	return atk>0 and c:IsFaceup() and c:IsSetCard(SET_NINJA) and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_HAND,0,1,nil,atk,e,tp)
 end
 function s.filter2(c,atk,e,tp)
-	return c:GetAttack()<=atk and c:IsSetCard(0x2b) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:GetAttack()<=atk and c:IsSetCard(SET_NINJA) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.filter1(chkc,e,tp) end

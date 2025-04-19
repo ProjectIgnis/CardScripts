@@ -16,7 +16,7 @@ function s.filter(c,code)
 	return c:IsCode(code) and c:IsAbleToGrave()
 end
 function s.tgfilter(c,tp)
-	return (c:IsSetCard(0xae) or c:IsSetCard(0xaf) ) and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,c:GetCode())
+	return (c:IsSetCard(SET_DARK_CONTRACT) or c:IsSetCard(SET_DD) ) and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,c:GetCode())
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.tgfilter(chkc,tp) end

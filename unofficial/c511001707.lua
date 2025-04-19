@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x54) and c:IsFaceup() and c:HasLevel()
+	return c:IsSetCard(SET_GAGAGA) and c:IsFaceup() and c:HasLevel()
 end
 function s.spfilter(c,e,tp)
 	return c:HasLevel() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

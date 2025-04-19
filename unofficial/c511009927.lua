@@ -15,10 +15,10 @@ s.listed_series={0x119}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttackTarget()
 	e:SetLabelObject(tc)
-	return tc and tc:IsControler(tp) and Duel.GetTurnPlayer()==1-tp
+	return tc and tc:IsControler(tp) and Duel.IsTurnPlayer(1-tp)
 end
 function s.filter(c,e,tp)
-	return c:GetAttack()>0 and c:IsSetCard(0x119) and c:IsMonster() and c:IsAbleToDeck()
+	return c:GetAttack()>0 and c:IsSetCard(SET_SALAMANGREAT) and c:IsMonster() and c:IsAbleToDeck()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.filter(chkc) end
@@ -47,7 +47,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			bc:RegisterEffect(e1)
 		end
 	if tc and tc:IsRelateToEffect(e) then
-		if Duel.SendtoDeck(tc,nil,0,REASON_EFFECT)>0 and tc:IsLocation(LOCATION_DECK+LOCATION_EXTRA) then
+		if Duel.SendtoDeck(tc,nil,0,REASON_EFFECT)>0 and tc:IsLocation(LOCATION_DECK|LOCATION_EXTRA) then
 			if tc:IsLocation(LOCATION_DECK) then Duel.ShuffleDeck(tp) end
 			Duel.Recover(p,d,REASON_EFFECT)
 		end

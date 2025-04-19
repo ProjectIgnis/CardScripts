@@ -51,7 +51,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetCode(100100090)
 	e1:SetTargetRange(1,0)
-	if Duel.GetTurnPlayer()==tp then
+	if Duel.IsTurnPlayer(tp) then
 		e1:SetLabel(Duel.GetTurnCount())
 		e1:SetCondition(s.turncon1)
 		res=4

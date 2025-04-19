@@ -17,8 +17,8 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.cfilter(c,tp)
 	local re=c:GetReasonEffect()
-	return c:IsFaceup() and c:IsSummonPlayer(tp) and c:IsType(TYPE_XYZ) and c:IsSummonType(SUMMON_TYPE_XYZ)
-		and re and re:GetHandler():IsSetCard(0x95) and re:IsActiveType(TYPE_SPELL)
+	return c:IsFaceup() and c:IsSummonPlayer(tp) and c:IsType(TYPE_XYZ) and c:IsXyzSummoned()
+		and re and re:GetHandler():IsSetCard(SET_RANK_UP_MAGIC) and re:IsActiveType(TYPE_SPELL)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=eg:Filter(s.cfilter,nil,tp)

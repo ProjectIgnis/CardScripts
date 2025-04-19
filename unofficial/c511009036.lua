@@ -37,7 +37,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0xaf}
 function s.thfilter(c,tp)
-	return c:IsType(TYPE_PENDULUM) and c:IsSetCard(0xaf) and c:IsPreviousControler(tp) and c:IsControler(tp) 
+	return c:IsType(TYPE_PENDULUM) and c:IsSetCard(SET_DD) and c:IsPreviousControler(tp) and c:IsControler(tp) 
 		and c:IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
@@ -58,7 +58,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Damage(p,d,REASON_EFFECT)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

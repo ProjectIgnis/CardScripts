@@ -17,7 +17,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0xad}
 function s.spfilter(c,e,tp,sc)
-	return c:IsSetCard(0xad) and c:IsLevelBelow(sc)
+	return c:IsSetCard(SET_FRIGHTFUR) and c:IsLevelBelow(sc)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.penfilter(c,e,tp)

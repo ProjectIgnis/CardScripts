@@ -43,7 +43,7 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c,tp)
-	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:IsSetCard(0xad)
+	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:IsSetCard(SET_FRIGHTFUR)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
@@ -56,10 +56,10 @@ function s.filter(c,e,tp)
 	return c:IsCanBeEffectTarget(e) and Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,c)
 end
 function s.tgfilter(c,e,tp,tc)
-	return c:IsSetCard(0xad) and c:GetLevel()==tc:GetLevel() and c:IsAbleToGrave() and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,c,e,tp,tc)
+	return c:IsSetCard(SET_FRIGHTFUR) and c:GetLevel()==tc:GetLevel() and c:IsAbleToGrave() and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,c,e,tp,tc)
 end
 function s.spfilter(c,e,tp,tc)
-	return c:IsSetCard(0xad) and c:IsType(TYPE_FUSION) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) 
+	return c:IsSetCard(SET_FRIGHTFUR) and c:IsType(TYPE_FUSION) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) 
 		and c:CheckFusionMaterial(s[0],tc,tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

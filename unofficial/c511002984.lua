@@ -13,7 +13,7 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_BLUEEYES_W_DRAGON,CARD_DARK_MAGICIAN}
 function s.filter(c,e,tp,m1,ft)
-	if (not c:IsSetCard(0xcf) and not c:IsSetCard(0x1048)) or c:GetType()&0x81~=0x81
+	if (not c:IsSetCard(SET_CHAOS) and not c:IsSetCard(SET_NUMBER_C)) or c:GetType()&SET_FIRE_KING~=SET_FIRE_KING
 		or not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true) then return false end
 	local mg=m1:Filter(Card.IsCanBeRitualMaterial,c,c)
 	if ft>0 then

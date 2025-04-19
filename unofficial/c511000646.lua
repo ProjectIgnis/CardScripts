@@ -34,7 +34,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function s.coscond(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.costop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLP(tp)>=500 then

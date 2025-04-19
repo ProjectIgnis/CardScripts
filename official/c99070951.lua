@@ -40,7 +40,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Remove(tc,POS_FACEDOWN,REASON_EFFECT)
 	tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1)
 	if c:IsLocation(LOCATION_MZONE) then
-		c:RegisterFlagEffect(id,RESET_EVENT|RESET_TOGRAVE|RESET_REMOVE,0,1)
+		c:RegisterFlagEffect(id,RESET_EVENT|RESET_TODECK|RESET_TOHAND|RESET_REMOVE,0,1)
 	end
 	e:SetLabelObject(tc)
 end

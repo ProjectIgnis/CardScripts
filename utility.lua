@@ -1443,93 +1443,54 @@ function Auxiliary.PuzzleOp(e,tp)
 	Duel.SetLP(0,0)
 end
 
-
 function Auxiliary.StatChangeDamageStepCondition()
 	return not (Duel.IsPhase(PHASE_DAMAGE) and Duel.IsDamageCalculated())
 end
 
---Default cost function for "You can Tribute this card; .."
-function Auxiliary.selfreleasecost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsReleasable() end
-	Duel.Release(c,REASON_COST)
-end
+--Functions to commonly used costs:
 
---Default cost function for "You can banish this card; .."
-function Auxiliary.bfgcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsAbleToRemoveAsCost() end
-	Duel.Remove(c,POS_FACEUP,REASON_COST)
-end
+Cost={}
 
-Auxiliary.selfbanishcost=aux.bfgcost
-Auxiliary.SelfBanishCost=aux.bfgcost
-Auxiliary.SelfReleaseCost=aux.selfreleasecost
-Auxiliary.SelfTributeCost=aux.selfreleasecost
-
-function Auxiliary.SelfToGraveCost(e,tp,eg,ep,ev,re,r,rp,chk)
+function Cost.SelfToGrave(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsAbleToGraveAsCost() end
 	Duel.SendtoGrave(c,REASON_COST)
 end
-function Auxiliary.SelfToHandCost(e,tp,eg,ep,ev,re,r,rp,chk)
+function Cost.SelfToHand(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsAbleToHandAsCost() end
 	Duel.SendtoHand(c,nil,REASON_COST)
 end
-function Auxiliary.SelfToDeckCost(e,tp,eg,ep,ev,re,r,rp,chk)
+function Cost.SelfToDeck(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsAbleToDeckAsCost() end
 	Duel.SendtoDeck(c,nil,SEQ_DECKSHUFFLE,REASON_COST)
 end
-function Auxiliary.SelfToExtraCost(e,tp,eg,ep,ev,re,r,rp,chk)
+function Cost.SelfToExtra(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsAbleToExtraAsCost() end
 	Duel.SendtoDeck(c,nil,SEQ_DECKSHUFFLE,REASON_COST)
 end
-function Auxiliary.SelfDiscardCost(e,tp,eg,ep,ev,re,r,rp,chk)
+function Cost.SelfDiscard(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsDiscardable() end
 	Duel.SendtoGrave(c,REASON_DISCARD|REASON_COST)
 end
-function Auxiliary.SelfDiscardToGraveCost(e,tp,eg,ep,ev,re,r,rp,chk)
+function Cost.SelfDiscardToGrave(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsDiscardable() and c:IsAbleToGraveAsCost() end
 	Duel.SendtoGrave(c,REASON_DISCARD|REASON_COST)
 end
-function Auxiliary.SelfRevealCost(e,tp,eg,ep,ev,re,r,rp,chk)
+function Cost.SelfReveal(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return not c:IsPublic() end
 	Duel.ConfirmCards(1-tp,c)
 	Duel.ShuffleHand(tp)
 end
 
-function Auxiliary.PayLPCost(lp_value,pay_until)
-	if not pay_until then
-		if lp_value>=1 then
-			--Pay X LP, where X is any number equal to or higher than 1
-			return function(e,tp,eg,ep,ev,re,r,rp,chk)
-				if chk==0 then return Duel.CheckLPCost(tp,lp_value) end
-				Duel.PayLPCost(tp,lp_value)
-			end
-		else
-			--Pay a fraction of your LP (half, one third, etc)
-			return function(e,tp,eg,ep,ev,re,r,rp,chk)
-				if chk==0 then return true end
-				Duel.PayLPCost(tp,math.floor(Duel.GetLP(tp)*lp_value))
-			end
-		end
-	else
-		--Pay LP so that you have X left
-		return function(e,tp,eg,ep,ev,re,r,rp,chk)
-			local pay_lp_value=math.floor(Duel.GetLP(tp)-lp_value)
-			if chk==0 then return pay_lp_value>0 and Duel.CheckLPCost(tp,pay_lp_value) end
-			Duel.PayLPCost(tp,pay_lp_value)
-		end
-	end
-end
 
-function Auxiliary.DiscardCost(filter,other,count)
+
+function Cost.Discard(filter,other,count)
 	count=count or 1
 	filter=filter and aux.AND(filter,Card.IsDiscardable) or Card.IsDiscardable
 	return function(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -1538,7 +1499,6 @@ function Auxiliary.DiscardCost(filter,other,count)
 		Duel.DiscardHand(tp,filter,count,count,REASON_COST|REASON_DISCARD,exclude)
 	end
 end
-
 -- "Detach Xyz Material Cost Generator"
 -- Generates a function to be used by Effect.SetCost in order to detach
 -- a number of Xyz Materials from the Effect's handler.
@@ -1548,7 +1508,7 @@ end
 -- `op` optional function that gets called by passing the effect and the operated
 -- group of just detached materials in order to do some additional handling with
 -- them.
-function Auxiliary.dxmcostgen(min,max,op)
+function Cost.Detach(min,max,op)
 	max=max or min
 	do --Perform some sanity checks, simplifies debugging
 		local max_type=type(max)
@@ -1579,23 +1539,45 @@ function Auxiliary.dxmcostgen(min,max,op)
 	end
 end
 
+--Default cost function for "You can banish this card; .."
+function Cost.SelfBanish(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
+	if chk==0 then return c:IsAbleToRemoveAsCost() end
+	Duel.Remove(c,POS_FACEUP,REASON_COST)
+end
 
-Cost={}
+--Default cost function for "You can Tribute this card; .."
+function Cost.SelfTribute(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
+	if chk==0 then return c:IsReleasable() end
+	Duel.Release(c,REASON_COST)
+end
 
-Cost.SelfBanish=aux.bfgcost
-Cost.SelfRelease=aux.selfreleasecost
-Cost.SelfTribute=aux.selfreleasecost
-Cost.SelfToGrave=aux.SelfToGraveCost
-Cost.SelfToHand=aux.SelfToHandCost
-Cost.SelfToDeck=aux.SelfToDeckCost
-Cost.SelfToExtra=aux.SelfToExtraCost
-Cost.SelfDiscard=aux.SelfDiscardCost
-Cost.SelfDiscardToGrave=aux.SelfDiscardToGraveCost
-Cost.SelfReveal=aux.SelfRevealCost
-
-Cost.Detach=aux.dxmcostgen
-Cost.Discard=aux.DiscardCost
-Cost.PayLP=aux.PayLPCost
+--Default cost for "You can pay X LP;"
+function Cost.PayLP(lp_value,pay_until)
+	if not pay_until then
+		if lp_value>=1 then
+			--Pay X LP, where X is any number equal to or higher than 1
+			return function(e,tp,eg,ep,ev,re,r,rp,chk)
+				if chk==0 then return Duel.CheckLPCost(tp,lp_value) end
+				Duel.PayLPCost(tp,lp_value)
+			end
+		else
+			--Pay a fraction of your LP (half, one third, etc)
+			return function(e,tp,eg,ep,ev,re,r,rp,chk)
+				if chk==0 then return true end
+				Duel.PayLPCost(tp,math.floor(Duel.GetLP(tp)*lp_value))
+			end
+		end
+	else
+		--Pay LP so that you have X left
+		return function(e,tp,eg,ep,ev,re,r,rp,chk)
+			local pay_lp_value=math.floor(Duel.GetLP(tp)-lp_value)
+			if chk==0 then return pay_lp_value>0 and Duel.CheckLPCost(tp,pay_lp_value) end
+			Duel.PayLPCost(tp,pay_lp_value)
+		end
+	end
+end
 
 function Cost.SoftOncePerChain(flag)
 	return function(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -1628,6 +1610,9 @@ function Cost.AND(...)
 		end
 	end
 end
+
+--Alias for historical reasons:
+Cost.SelfRelease=Cost.SelfTribute
 
 function Card.EquipByEffectLimit(e,c)
 	if e:GetOwner()~=c then return false end

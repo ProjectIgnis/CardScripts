@@ -5,10 +5,8 @@ end
 if not Xyz then
 	Xyz = aux.XyzProcedure
 end
--- TODO: Update when we make using '99' deprecated
--- local infToken={}
--- Xyz.InfiniteMats=infToken
-Xyz.InfiniteMats=99
+local infToken={}
+Xyz.InfiniteMats=infToken
 Xyz.ProcCancellable=false
 function Xyz.EffectXyzMaterialChk(c,xyz,tp)
 	local eff_xyzmat={c:GetCardEffect(EFFECT_XYZ_MATERIAL)}
@@ -33,12 +31,11 @@ function Xyz.AddProcedure(c,f,lv,ct,alterf,desc,maxct,op,mustbemat,exchk)
 	--exchk for special xyz, checking other materials
 	--mustbemat for Startime Magician
 	if not maxct then maxct=ct end
-	-- TODO: Update when we make using '99' deprecated
-	--[[if maxct==99 then
+	if maxct==99 then
 		maxct=Xyz.InfiniteMats
 		Debug.PrintStacktrace()
 		Debug.Message("Using 99 to represent any number of Xyz materials is deprecated, use the value Xyz.InfiniteMats instead")
-	end--]]
+	end
 	if c.xyz_filter==nil then
 		local mt=c:GetMetatable()
 		mt.xyz_filter=function(mc,ignoretoken,xyz,tp) return mc and (not f or f(mc,xyz,SUMMON_TYPE_XYZ|MATERIAL_XYZ,tp)) and (not lv or mc:IsXyzLevel(c,lv)) and (not mc:IsType(TYPE_TOKEN) or ignoretoken) end

@@ -48,7 +48,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_BORREL,SET_CODE_TALKER}
 function s.chngcon(scard,sumtype,tp)
-	return (sumtype&SUMMON_TYPE_LINK|MATERIAL_LINK)==SUMMON_TYPE_LINK|MATERIAL_LINK and scard:IsSetCard(SET_BORREL)
+	return sumtype&(SUMMON_TYPE_LINK|MATERIAL_LINK)==(SUMMON_TYPE_LINK|MATERIAL_LINK) and scard:IsSetCard(SET_BORREL)
 end
 function s.extrafilter1(c,tp)
 	return c:IsLocation(LOCATION_MZONE) and c:IsControler(tp)

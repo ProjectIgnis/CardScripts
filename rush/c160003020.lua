@@ -27,7 +27,7 @@ end
 	--If this card was summoned from hand or GY this turn and check for 4+ dragons in your GY
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(Card.IsRace,tp,LOCATION_GRAVE,0,4,nil,RACE_DRAGON)
-		and e:GetHandler():GetFlagEffect(id)>0 and e:GetHandler():IsSummonLocation(LOCATION_HAND+LOCATION_GRAVE)
+		and e:GetHandler():GetFlagEffect(id)>0 and e:GetHandler():IsSummonLocation(LOCATION_HAND|LOCATION_GRAVE)
 end
 	--Activation legality
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -38,7 +38,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			c:RegisterEffect(e1)
 			--shuffle to deck
 			local fid=c:GetFieldID()
-			c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,1,fid)
+			c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1,fid)
 			local e2=Effect.CreateEffect(c)
 			e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 			e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)

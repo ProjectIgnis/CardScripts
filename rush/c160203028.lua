@@ -47,7 +47,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			ge1:SetTarget(s.eftg)
 			ge1:SetCondition(s.con)
 			ge1:SetLabelObject(ge0)
-			ge1:SetReset(RESET_PHASE+PHASE_END)
+			ge1:SetReset(RESET_PHASE|PHASE_END)
 			Duel.RegisterEffect(ge1,tp)
 			--cannot attack directly with other cards
 			local ge2=Effect.CreateEffect(e:GetHandler())
@@ -56,7 +56,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			ge2:SetProperty(EFFECT_FLAG_OATH+EFFECT_FLAG_IGNORE_IMMUNE)
 			ge2:SetTargetRange(0,LOCATION_MZONE)
 			ge2:SetTarget(s.eftg)
-			ge2:SetReset(RESET_PHASE+PHASE_END)
+			ge2:SetReset(RESET_PHASE|PHASE_END)
 			Duel.RegisterEffect(ge2,tp)
 	end
 end

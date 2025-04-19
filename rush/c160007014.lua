@@ -33,7 +33,7 @@ local c=e:GetHandler()
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
+			e1:SetReset(RESETS_STANDARD_DISABLE_PHASE_END)
 			e1:SetValue(-800)
 			c:RegisterEffect(e1)
 			if Duel.SelectYesNo(tp,aux.Stringid(id,0)) then

@@ -19,7 +19,7 @@ function s.checkmat(tp,sg,fc)
 	return sg:GetClassCount(Card.GetLocation)==1
 end
 function s.fextra(e,tp,mg)
-	return Duel.GetMatchingGroup(s.mfilter,tp,LOCATION_ONFIELD+LOCATION_HAND,0,nil),s.checkmat
+	return Duel.GetMatchingGroup(s.mfilter,tp,LOCATION_ONFIELD|LOCATION_HAND,0,nil),s.checkmat
 end
 function s.cfilter(c)
 	return c:IsLocation(LOCATION_GRAVE) and c:IsOriginalCodeRule(160211009)

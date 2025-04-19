@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={CARD_REDEYES_B_DRAGON,CARD_SUMMONED_SKULL}
-s.material_setcode={0x3b,0x45}
+s.material_setcode={SET_RED_EYES,SET_ARCHFIEND }
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeckAsCost(tp,1) end
 end

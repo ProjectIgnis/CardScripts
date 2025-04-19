@@ -67,7 +67,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():RegisterFlagEffect(id+1,RESETS_STANDARD_PHASE_END,0,1)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetFlagEffect(id+1)>0 and DDuel.IsPhase(PHASE_MAIN2)
+	return e:GetHandler():GetFlagEffect(id+1)>0 and Duel.IsPhase(PHASE_MAIN2)
 end
 function s.filter(c)
 	return c:IsSetCard(SET_RANK_UP_MAGIC) and c:IsQuickPlaySpell() and c:IsAbleToHand()

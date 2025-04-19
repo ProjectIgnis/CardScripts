@@ -1,0 +1,66 @@
+name: Delta repository generator
+on:
+  push:
+    branches:
+      - master
+jobs:
+  commit:
+    runs-on: ubuntu-latest
+    env:
+      REMOTE: ProjectIgnis/DeltaBagooska.git
+      REPO_NAME: DeltaBagooska
+      DESTINATION: DeltaBagooska/script
+      BASE_SHA: 20250419
+    steps:
+    - uses: actions/checkout@v1
+    - name: Clone destination repository
+      run: |
+        cd $HOME
+        git clone https://${{ secrets.DEPLOY_TOKEN_BAGOOSKA }}@github.com/$REMOTE
+        mkdir -p $DESTINATION
+    - name: Copy new or changed files
+      id: copy
+      run: |
+        c1grep() { grep "$@" || test $? = 1; }
+        mv $HOME/$DESTINATION /tmp
+        mkdir -p $HOME/$DESTINATION
+        [ -f /tmp/script/VERSION ] && mv /tmp/script/VERSION $HOME/$DESTINATION/VERSION
+        ADDED=$(git diff --name-only --no-renames --diff-filter=d $BASE_SHA | c1grep -vP "(^|/)\..*" | c1grep -P "\.lua$")
+        if [[ "$ADDED" ]]; then
+          rsync -avR $ADDED $HOME/$DESTINATION
+        fi
+    - name: Remove deleted files
+      run: |
+        if [[ -f $HOME/$DESTINATION/VERSION ]]; then
+          LAST_SHA=$(cat $HOME/$DESTINATION/VERSION)
+          REMOVED=$(git diff --name-only --no-renames --diff-filter=D $LAST_SHA)
+          if [[ "$REMOVED" ]]; then
+            cd $HOME/$DESTINATION
+            git rm -rf --ignore-unmatch $REMOVED
+          fi
+        fi
+    - name: Generate mappings file
+      run: |
+        if [[ -f $HOME/$DESTINATION/VERSION ]]; then
+          LAST_SHA=$(cat $HOME/$DESTINATION/VERSION)
+          git diff --name-status --diff-filter=R $LAST_SHA | xargs python ./.github/generate_mappings.py $HOME/$REPO_NAME/mappings.json
+        fi
+    - name: Commit and push with original metadata
+      run: |
+        MESSAGE=$(git log -1 --pretty=%B)
+        AUTHOR=$(git log -1 --pretty=format:'%an')
+        EMAIL=$(git log -1 --pretty=format:'%ae')
+        COMMITTER=$(git log -1 --pretty=format'%cn')
+        CEMAIL=$(git log -1 --pretty=format:'%ce')
+        cd $HOME/$DESTINATION
+        echo $GITHUB_SHA > VERSION
+        git config user.email "$CEMAIL"
+        git config user.name "$COMMITTER"
+        git add -A .
+        if [[ -f $HOME/$REPO_NAME/mappings.json ]]; then
+            git add $HOME/$REPO_NAME/mappings.json
+        fi
+        if [[ $(git status --porcelain) ]]; then
+          git commit --author="$AUTHOR <$EMAIL>" -m "$MESSAGE"
+          git push
+        fi

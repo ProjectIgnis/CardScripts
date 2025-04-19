@@ -43,7 +43,7 @@ function s.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_IGNITION)
 	e4:SetCountLimit(1)
 	e4:SetRange(LOCATION_MZONE)
-	e4:SetCost(aux.dxmcostgen(1,1,nil))
+	e4:SetCost(Cost.Detach(1))
 	e4:SetOperation(s.regop)
 	c:RegisterEffect(e4,false,REGISTER_FLAG_DETACH_XMAT)
 	--Cannot be destroyed by battle

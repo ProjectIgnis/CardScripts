@@ -34,7 +34,7 @@ function s.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e4:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
 	e4:SetCondition(function(e,tp) return Duel.GetBattleDamage(tp)>=Duel.GetLP(tp) end)
-	e4:SetCost(aux.dxmcostgen(1,1,nil))
+	e4:SetCost(Cost.Detach(1))
 	e4:SetOperation(s.damop)
 	c:RegisterEffect(e4,false,REGISTER_FLAG_DETACH_XMAT)
 end

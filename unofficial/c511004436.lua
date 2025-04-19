@@ -18,7 +18,7 @@ function s.condition(e,tp,eg,ev,ep,re,r,rp)
 	return a and a:IsControler(1-tp) and d==nil
 end
 function s.filter1(c,e,tp)
-	return c:IsMonster() and c:IsSetCard(0xe3) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_SPECIAL,tp,true,false)
+	return c:IsMonster() and c:IsSetCard(SET_CUBIC) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_SPECIAL,tp,true,false)
 end
 function s.filter2(c,e,tp,a)
 	return c:IsMonster() and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_SPECIAL,tp,true,false) and c:IsCode(a:GetCode())

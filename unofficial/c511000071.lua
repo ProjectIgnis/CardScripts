@@ -66,7 +66,7 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and (Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2)
+	return Duel.IsTurnPlayer(tp) and Duel.IsMainPhase()
 end
 function s.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

@@ -34,7 +34,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_SKIP_BP)
 		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 		e1:SetTargetRange(1,0)
-		if Duel.GetTurnPlayer()==tp and ph>PHASE_MAIN1 and ph<PHASE_MAIN2 then
+		if Duel.IsTurnPlayer(tp) and ph>PHASE_MAIN1 and ph<PHASE_MAIN2 then
 			e1:SetLabel(Duel.GetTurnCount())
 			e1:SetCondition(s.skipcon)
 			e1:SetReset(RESET_PHASE+PHASE_BATTLE+RESET_SELF_TURN,2)

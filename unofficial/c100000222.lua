@@ -17,8 +17,8 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return tp==ep
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsSetCard,1,false,nil,nil,0x6f) end
-	local tc=Duel.SelectReleaseGroupCost(tp,Card.IsSetCard,1,1,false,nil,nil,0x6f):GetFirst()
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsSetCard,1,false,nil,nil,SET_HEROIC) end
+	local tc=Duel.SelectReleaseGroupCost(tp,Card.IsSetCard,1,1,false,nil,nil,SET_HEROIC):GetFirst()
 	local atk=tc:GetAttack()
 	Duel.Release(tc,REASON_COST)
 	e:SetLabel(atk)

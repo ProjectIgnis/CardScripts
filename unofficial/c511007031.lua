@@ -48,7 +48,7 @@ function s.atkval(e,c)
 	return 400*atkct
 end
 function s.condition1(e,tp)
-	return Duel.GetTurnPlayer()==tp and Duel.GetAttacker()==e:GetHandler():GetEquipTarget()
+	return Duel.IsTurnPlayer(tp) and Duel.GetAttacker()==e:GetHandler():GetEquipTarget()
 end
 function s.haltop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

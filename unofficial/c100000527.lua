@@ -2,7 +2,7 @@
 --Fortune Chariot (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddUnionProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x122),true)
+	aux.AddUnionProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,SET_VALKYRIE),true)
 	--direct_attack
 	local e5=Effect.CreateEffect(c)
 	e5:SetDescription(aux.Stringid(id,2))

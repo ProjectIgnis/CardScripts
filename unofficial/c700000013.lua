@@ -27,7 +27,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x10ec,0x20ec}
 function s.cfilter(c)
-	return c:IsType(TYPE_PENDULUM) and c:IsSetCard(0x10ec) and c:IsAbleToDeckOrExtraAsCost()
+	return c:IsType(TYPE_PENDULUM) and c:IsSetCard(SET_ABYSS_ACTOR) and c:IsAbleToDeckOrExtraAsCost()
 end
 function s.rvcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil) end
@@ -35,7 +35,7 @@ function s.rvcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoExtraP(g,nil,REASON_COST)
 end
 function s.thfilter(c)
-	return c:IsSpell() and c:IsSetCard(0x20ec) and c:IsAbleToHand()
+	return c:IsSpell() and c:IsSetCard(SET_ABYSS_SCRIPT) and c:IsAbleToHand()
 end
 function s.rvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc) end

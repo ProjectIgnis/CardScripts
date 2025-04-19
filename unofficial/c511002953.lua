@@ -2,7 +2,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--synchro summon
-	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0xf0),1,1,Synchro.NonTunerEx(Card.IsSetCard,0xf0),1,99)
+	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_WINDWITCH),1,1,Synchro.NonTunerEx(Card.IsSetCard,SET_WINDWITCH),1,99)
 	c:EnableReviveLimit()
 	--copy
 	local e1=Effect.CreateEffect(c)
@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	end)
 end
 function s.filter(c)
-	return c:IsMonster() and c:IsSetCard(0xf0) and c:IsLevelBelow(4)
+	return c:IsMonster() and c:IsSetCard(SET_WINDWITCH) and c:IsLevelBelow(4)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc) end

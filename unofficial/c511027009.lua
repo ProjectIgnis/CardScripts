@@ -31,7 +31,7 @@ function s.lnklimit(e,c)
 	return c:IsLink(1)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
+	return e:GetHandler():IsLinkSummoned()
 end
 function s.spfilter(c,e,tp,zone,link)
 	return c:IsSetCard(0x577) and c:IsType(TYPE_LINK) and c:GetLink()<link

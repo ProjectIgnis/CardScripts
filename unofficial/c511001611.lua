@@ -17,7 +17,7 @@ function s.spfilter(c,e,p,mg)
 	return Duel.GetLocationCountFromEx(p,p,mg,c)>0 and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,p,false,false)
 end
 function s.filter(c,mg,p,e)
-	if not c:IsSetCard(0x48) or not c:IsType(TYPE_XYZ) or type(c.xyz_number)~="number" or not s.spfilter(c,e,p,mg-c) then return false end
+	if not c:IsSetCard(SET_NUMBER) or not c:IsType(TYPE_XYZ) or type(c.xyz_number)~="number" or not s.spfilter(c,e,p,mg-c) then return false end
 	if c.xyz_number==0 then 
 		return mg:IsExists(function(c)return c.xyz_number==0 end,1,c)
 	else

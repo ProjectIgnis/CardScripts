@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
 end
 function s.filter(c)
-	return c:IsSummonType(SUMMON_TYPE_SPECIAL) and c:HasNonZeroAttack()
+	return c:IsSpecialSummoned() and c:HasNonZeroAttack()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) end

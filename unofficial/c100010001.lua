@@ -48,7 +48,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e6)
 end
 function s.splimit(e,se,sp,st)
-	return se:GetHandler():IsSetCard(0x95)
+	return se:GetHandler():IsSetCard(SET_RANK_UP_MAGIC)
 end
 function s.atkval(e,c)
 	return e:GetHandler():GetOverlayCount()*100

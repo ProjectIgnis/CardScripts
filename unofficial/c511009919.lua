@@ -74,21 +74,21 @@ function s.linkop(e,tp,eg,ep,ev,re,r,rp,c)
 	local mg=e:GetLabelObject()
 	c:SetMaterial(mg)
 	Duel.SendtoGrave(mg,REASON_MATERIAL+REASON_LINK)
-	Duel.RegisterFlagEffect(tp,alias,RESET_PHASE+PHASE_END,0,1)
+	Duel.RegisterFlagEffect(tp,alias,RESET_PHASE|PHASE_END,0,1)
 end
 function s.mattg(e,c)
-	return c:IsSetCard(0x119) and c:IsLinkMonster()
+	return c:IsSetCard(SET_SALAMANGREAT) and c:IsLinkMonster()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local d=Duel.GetAttackTarget()
-	return Duel.GetBattleDamage(tp)>0 and (Duel.GetAttacker():IsSetCard(0x119) or (d and d:IsSetCard(0x119)))
+	return Duel.GetBattleDamage(tp)>0 and (Duel.GetAttacker():IsSetCard(SET_SALAMANGREAT) or (d and d:IsSetCard(SET_SALAMANGREAT)))
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,1000) end
 	Duel.PayLPCost(tp,1000)
 end
 function s.filter(c)
-	return c:HasNonZeroAttack() and c:IsLinkMonster() and c:IsSetCard(0x119)
+	return c:HasNonZeroAttack() and c:IsLinkMonster() and c:IsSetCard(SET_SALAMANGREAT)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end

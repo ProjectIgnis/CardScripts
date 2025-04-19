@@ -72,7 +72,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.filter(c,e,tp)
 	return c:GetOriginalType()&(TYPE_LINK+TYPE_MONSTER)==(TYPE_LINK+TYPE_MONSTER)
-		and c:IsSetCard(0x12b) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+		and c:IsSetCard(SET_MARINCESS) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:GetEquipTarget()==e:GetHandler() and s.filter(chkc) end
@@ -138,10 +138,10 @@ function s.speqop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.eqval(ec,c,tp)
-	return ec:IsSetCard(0x12b) and ec:IsType(TYPE_LINK) 
+	return ec:IsSetCard(SET_MARINCESS) and ec:IsType(TYPE_LINK) 
 end
 function s.eqfilter(c,fid)
-	return c:GetFlagEffectLabel(id)==fid and c:IsFaceup() and c:IsType(TYPE_LINK) and c:IsSetCard(0x12b) and not c:IsForbidden()
+	return c:GetFlagEffectLabel(id)==fid and c:IsFaceup() and c:IsType(TYPE_LINK) and c:IsSetCard(SET_MARINCESS) and not c:IsForbidden()
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.eqfilter(chkc,e:GetHandler():GetFieldID()) end
@@ -181,7 +181,7 @@ end
 function s.cbcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local bt=eg:GetFirst()
-	return r~=REASON_REPLACE and c~=bt and bt:IsFaceup() and bt:GetControler()==c:GetControler() and bt:IsSetCard(0x12b)
+	return r~=REASON_REPLACE and c~=bt and bt:IsFaceup() and bt:GetControler()==c:GetControler() and bt:IsSetCard(SET_MARINCESS)
 end
 function s.cbtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetAttacker():GetAttackableTarget():IsContains(e:GetHandler()) end

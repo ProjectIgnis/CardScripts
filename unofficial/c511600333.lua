@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:SetUniqueOnField(1,0,id)
-	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsSetCard,0x119))
+	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsSetCard,SET_SALAMANGREAT))
 	aux.EnableCheckReincarnation(c)
 	--atk
 	local e1=Effect.CreateEffect(c)
@@ -50,7 +50,7 @@ function s.indesval(e,re)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler():GetEquipTarget()
-	return eg:GetFirst()==c and Duel.GetAttacker()==c and c:IsSetCard(0x119)
+	return eg:GetFirst()==c and Duel.GetAttacker()==c and c:IsSetCard(SET_SALAMANGREAT)
 		and c:IsType(TYPE_LINK) and c:IsReincarnationSummoned()
 		and not c:GetBattleTarget():IsControler(tp)
 end

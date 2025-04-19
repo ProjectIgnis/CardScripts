@@ -17,7 +17,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
 	return a:IsOnField() and d and d:IsFaceup() and d:IsControler(tp)
-		and (d:IsSetCard(0x55) or d:IsCode(31801517)) and d:IsAbleToRemove()
+		and (d:IsSetCard(SET_PHOTON) or d:IsCode(31801517)) and d:IsAbleToRemove()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

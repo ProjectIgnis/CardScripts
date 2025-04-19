@@ -38,7 +38,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x13c}
 function s.lfilter(c,lc,sumtype,tp)
-	return c:IsType(TYPE_LINK,lc,sumtype,tp) and c:IsSetCard(0x13c,lc,sumtype,tp)
+	return c:IsType(TYPE_LINK,lc,sumtype,tp) and c:IsSetCard(SET_CODEBREAKER,lc,sumtype,tp)
 end
 function s.lcheck(g,lc,sumtype,tp)
 	return g:IsExists(s.lfilter,1,nil,lc,sumtype,tp)
@@ -47,18 +47,18 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetMutualLinkedGroupCount()>0
 end
 function s.spfilter(c,e,tp,zones)
-	return c:IsLevelBelow(4) and c:IsSetCard(0x13c) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE,1-tp,zones)
+	return c:IsLevelBelow(4) and c:IsSetCard(SET_CODEBREAKER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE,1-tp,zones)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local zones=aux.GetMMZonesPointedTo(1-tp)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,e,tp,zones) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_GRAVE)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND|LOCATION_GRAVE,0,1,nil,e,tp,zones) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND|LOCATION_GRAVE)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local zones=aux.GetMMZonesPointedTo(1-tp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE,1-tp,LOCATION_REASON_TOFIELD,zones)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter),tp,LOCATION_HAND+LOCATION_GRAVE,0,1,math.min(ft,2),nil,e,tp,zones)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter),tp,LOCATION_HAND|LOCATION_GRAVE,0,1,math.min(ft,2),nil,e,tp,zones)
 	if #g>0 then
 		Duel.SpecialSummon(g,0,tp,1-tp,false,false,POS_FACEUP_DEFENSE,zones)
 	end
@@ -67,7 +67,7 @@ function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttackTarget()~=nil
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x13c)
+	return c:IsFaceup() and c:IsSetCard(SET_CODEBREAKER)
 end
 function s.desfilter(c)
 	return c:IsFaceup() and c:IsSpellTrap()

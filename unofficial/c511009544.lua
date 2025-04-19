@@ -74,7 +74,7 @@ function s.rstop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttacker()
-	return at:IsControler(tp) and at:IsSetCard(0x2b)
+	return at:IsControler(tp) and at:IsSetCard(SET_NINJA)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
@@ -93,7 +93,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x2b)
+	return c:IsFaceup() and c:IsSetCard(SET_NINJA)
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) end

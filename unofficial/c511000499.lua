@@ -13,10 +13,10 @@ function s.initial_effect(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	return #eg==1 and tc:IsControler(tp) and tc:IsSetCard(0x3008)
+	return #eg==1 and tc:IsControler(tp) and tc:IsSetCard(SET_ELEMENTAL_HERO)
 end
 function s.spfilter(c,e,tp)
-	return c:IsAttackBelow(1000) and c:IsSetCard(0x3008) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsAttackBelow(1000) and c:IsSetCard(SET_ELEMENTAL_HERO) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

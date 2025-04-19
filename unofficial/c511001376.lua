@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--xyz summon
-	Xyz.AddProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0xaf),8,2)
+	Xyz.AddProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,SET_DD),8,2)
 	c:EnableReviveLimit()
 	--cannot disable
 	local e0=Effect.CreateEffect(c)

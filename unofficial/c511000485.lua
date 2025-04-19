@@ -47,7 +47,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
-	if tc and tc:IsLocation(LOCATION_HAND+LOCATION_SZONE) and tc:IsControler(tp) then
+	if tc and tc:IsLocation(LOCATION_HAND|LOCATION_SZONE) and tc:IsControler(tp) then
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 		Duel.ConfirmCards(tp,tc)
 	end

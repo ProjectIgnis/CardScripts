@@ -23,7 +23,7 @@ function s.con(e,tp,eg,ev,ep,re,r,rp)
 		a,d=d,a
 	end
 	e:SetLabelObject(a)
-	return a:IsControler(1-tp) and d:IsSetCard(0xc008) and d:IsControler(tp)
+	return a:IsControler(1-tp) and d:IsSetCard(SET_DESTINY_HERO) and d:IsControler(tp)
 end
 function s.tg(e,tp,eg,ev,ep,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -36,7 +36,7 @@ end
 function s.op(e,tp,eg,ev,ep,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	local bc=tc:GetBattleTarget()
-	if not bc or not bc:IsRelateToBattle() or not bc:IsSetCard(0xc008) then return end
+	if not bc or not bc:IsRelateToBattle() or not bc:IsSetCard(SET_DESTINY_HERO) then return end
 	local c=e:GetHandler()
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()

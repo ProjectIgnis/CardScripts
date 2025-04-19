@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
 	--Fusion Summon
-	local params={aux.FilterBoolFunction(Card.IsSetCard,0x10af),Fusion.OnFieldMat}
+	local params={aux.FilterBoolFunction(Card.IsSetCard,SET_DDD),Fusion.OnFieldMat}
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
@@ -43,7 +43,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0xaf,0x10af}
 function s.filter(c)
-	return c:IsFaceup() and c:GetLevel()>0 and c:IsSetCard(0xaf)
+	return c:IsFaceup() and c:GetLevel()>0 and c:IsSetCard(SET_DD)
 end
 function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -64,7 +64,7 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

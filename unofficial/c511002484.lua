@@ -28,12 +28,12 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	for p=0,1 do
 		local tg=eg:Filter(s.cfilter,nil,p)
 		for tc in aux.Next(tg) do
-			Duel.RegisterFlagEffect(1-p,id,RESET_PHASE+PHASE_END,0,1)
+			Duel.RegisterFlagEffect(1-p,id,RESET_PHASE|PHASE_END,0,1)
 		end
 	end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetFlagEffect(tp,id)>0 and Duel.GetTurnPlayer()==tp and (Duel.IsAbleToEnterBP()
+	return Duel.GetFlagEffect(tp,id)>0 and Duel.IsTurnPlayer(tp) and (Duel.IsAbleToEnterBP()
 		or (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE))
 end
 function s.filter(c)

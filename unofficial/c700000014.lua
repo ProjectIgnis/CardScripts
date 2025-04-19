@@ -28,7 +28,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x10ec}
 function s.cfilter(c,tp)
-	return c:IsType(TYPE_PENDULUM) and c:IsSetCard(0x10ec) and c:IsAbleToDeckOrExtraAsCost() 
+	return c:IsType(TYPE_PENDULUM) and c:IsSetCard(SET_ABYSS_ACTOR) and c:IsAbleToDeckOrExtraAsCost() 
 		and Duel.IsExistingTarget(Card.IsFaceup,tp,LOCATION_MZONE,0,1,c)
 end
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -57,7 +57,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.atkfil(c)
-	return c:IsFaceup() and c:IsSetCard(0x10ec)
+	return c:IsFaceup() and c:IsSetCard(SET_ABYSS_ACTOR)
 end
 function s.atkop2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

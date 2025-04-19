@@ -21,7 +21,7 @@ s.listed_series={0x2178}
 function s.valcheck(e,c)
 	local g=c:GetMaterial()
 	local flag=0
-	if g and g:IsExists(Card.IsSetCard,1,nil,0x2178)
+	if g and g:IsExists(Card.IsSetCard,1,nil,SET_BATTLEGUARD)
 		then flag=1
 	end
 	e:SetLabel(flag)

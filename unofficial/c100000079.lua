@@ -24,7 +24,7 @@ function s.filter2(c,e,tp,m)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
-		local mg1=Duel.GetMatchingGroup(s.filter1,tp,0,LOCATION_MZONE+LOCATION_GRAVE,nil,e)
+		local mg1=Duel.GetMatchingGroup(s.filter1,tp,0,LOCATION_MZONE|LOCATION_GRAVE,nil,e)
 		local res=Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_EXTRA,LOCATION_EXTRA,1,nil,e,tp,mg1)
 		if not res then
 			local ce=Duel.GetChainMaterial(tp)
@@ -39,7 +39,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local mg1=Duel.GetMatchingGroup(s.filter1,tp,0,LOCATION_MZONE+LOCATION_GRAVE,nil,e)
+	local mg1=Duel.GetMatchingGroup(s.filter1,tp,0,LOCATION_MZONE|LOCATION_GRAVE,nil,e)
 	local sg1=Duel.GetMatchingGroup(s.filter2,tp,LOCATION_EXTRA,LOCATION_EXTRA,nil,e,tp,mg1)
 	local mg2=nil
 	local sg2=nil

@@ -32,7 +32,7 @@ function s.spfilter(c,e,tp,rg,se)
 	local minc=c.min_material_count
 	local maxc=c.max_material_count
 	if not minc then return false end
-	local mg2=Duel.GetMatchingGroup(s.matfilter,tp,LOCATION_DECK+LOCATION_EXTRA+LOCATION_GRAVE,0,nil,e,tp,c,se)
+	local mg2=Duel.GetMatchingGroup(s.matfilter,tp,LOCATION_DECK|LOCATION_EXTRA|LOCATION_GRAVE,0,nil,e,tp,c,se)
 	if Duel.IsPlayerAffectedByEffect(tp,69832741) then
 		local maxc2=math.min(#rg,maxc)
 		local mft=Duel.GetLocationCount(tp,LOCATION_MZONE)
@@ -86,7 +86,7 @@ function s.rmfilter(c)
 	return c:IsSummonLocation(LOCATION_EXTRA) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsAbleToRemove() and aux.SpElimFilter(c,true)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local rg=Duel.GetMatchingGroup(s.rmfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil)
+	local rg=Duel.GetMatchingGroup(s.rmfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,nil)
 	if chk==0 then return Duel.GetUsableMZoneCount(tp)>-1 and Duel.IsPlayerCanSpecialSummonCount(tp,2)
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,rg) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
@@ -97,12 +97,12 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local fc=Duel.GetFirstTarget()
-	local rg=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.rmfilter),tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil)
+	local rg=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.rmfilter),tp,LOCATION_MZONE|LOCATION_GRAVE,0,nil)
 	if not fc or not fc:IsRelateToEffect(e) or not s.spfilter(fc,e,tp,rg,e) then return end
 	local minc=fc.min_material_count
 	local maxc=fc.max_material_count
 	local rsg
-	local mg=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.matfilter),tp,LOCATION_DECK+LOCATION_EXTRA+LOCATION_GRAVE,0,nil,e,tp,fc,e)
+	local mg=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.matfilter),tp,LOCATION_DECK|LOCATION_EXTRA|LOCATION_GRAVE,0,nil,e,tp,fc,e)
 	if Duel.IsPlayerAffectedByEffect(tp,69832741) then
 		local maxc2=math.min(#rg,maxc)
 		local mft=Duel.GetLocationCount(tp,LOCATION_MZONE)

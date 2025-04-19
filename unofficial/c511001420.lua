@@ -50,7 +50,7 @@ function s.reset(e,tp,eg,ep,ev,re,r,rp)
 	s.retop(e:GetLabelObject(),tp,eg,ep,ev,e,r,rp)
 end
 function s.retcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()

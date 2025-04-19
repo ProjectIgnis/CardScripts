@@ -64,14 +64,14 @@ end
 function s.spcheck(sg,tp)
 	if not aux.ReleaseCheckMMZ(sg,tp) then return false end
 	if #sg==1 then
-		return sg:IsExists(Card.IsSetCard,1,nil,0x99)
+		return sg:IsExists(Card.IsSetCard,1,nil,SET_ODD_EYES)
 	else return true end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsSetCard,1,nil,aux.ReleaseCheckMMZ,nil,0x99) 
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsSetCard,1,nil,aux.ReleaseCheckMMZ,nil,SET_ODD_EYES) 
 		or Duel.CheckReleaseGroupCost(tp,nil,2,nil,aux.ReleaseCheckMMZ,nil) end
 	local sg=Duel.SelectReleaseGroupCost(tp,nil,1,2,nil,s.spcheck,nil)
 	Duel.Release(sg,REASON_COST)
@@ -87,12 +87,12 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.discfilter(c)
-	return c:IsMonster() and c:IsSetCard(0x99) and c:IsAbleToGraveAsCost()
+	return c:IsMonster() and c:IsSetCard(SET_ODD_EYES) and c:IsAbleToGraveAsCost()
 end
 function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.discfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.discfilter,tp,LOCATION_HAND|LOCATION_DECK,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,s.discfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.discfilter,tp,LOCATION_HAND|LOCATION_DECK,0,1,1,nil)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -130,7 +130,7 @@ function s.dmcon(e,tp,eg,ep,ev,re,r,rp)
 	return (a:IsControler(tp) or (d and d:IsControler(tp))) and Duel.GetFlagEffect(tp,id)==0
 end
 function s.dmfilter(c)
-	return c:IsMonster() and c:IsAbleToHandAsCost() and c:IsSetCard(0x99)
+	return c:IsMonster() and c:IsAbleToHandAsCost() and c:IsSetCard(SET_ODD_EYES)
 end
 function s.dmcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.dmfilter,tp,LOCATION_MZONE,0,1,e:GetLabelObject()) end
@@ -170,7 +170,7 @@ function s.dm2con(e,tp,eg,ep,ev,re,r,rp)
 	return (a:IsControler(tp) or (d and d:IsControler(tp))) and Duel.GetFlagEffect(tp,id+1)==0
 end
 function s.dm2filter(c)
-	return c:IsMonster() and c:IsAbleToGraveAsCost() and c:IsSetCard(0x99)
+	return c:IsMonster() and c:IsAbleToGraveAsCost() and c:IsSetCard(SET_ODD_EYES)
 end
 function s.dm2cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.dm2filter,tp,LOCATION_HAND,0,2,nil) end

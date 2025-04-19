@@ -3,7 +3,7 @@
 --original script by Hatter, rescripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
-	local e1=Fusion.CreateSummonEff(c,aux.FilterBoolFunction(Card.IsSetCard,0xc008),Fusion.OnFieldMat,nil,nil,nil,s.stage2)
+	local e1=Fusion.CreateSummonEff(c,aux.FilterBoolFunction(Card.IsSetCard,SET_DESTINY_HERO),Fusion.OnFieldMat,nil,nil,nil,s.stage2)
 	e1:SetCondition(s.condition)
 	c:RegisterEffect(e1)
 end

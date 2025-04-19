@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
 end
 function s.indes(e,c)
-	return not c:IsSetCard(0x48)
+	return not c:IsSetCard(SET_NUMBER)
 end
 function s.filter(c,seq,flag)
 	return c:GetSequence()==4-seq or (flag~=0 and c:IsLocation(LOCATION_MZONE) and (c:GetSequence()==4-seq+1 or c:GetSequence()==4-seq-1))

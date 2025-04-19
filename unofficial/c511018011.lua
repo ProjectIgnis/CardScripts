@@ -45,7 +45,7 @@ function s.clearop()
 	s[1]:Clear()
 end
 function s.condition(e,tp,eg,ev,ep,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_MAIN2 and Duel.GetTurnPlayer()==tp
+	return Duel.GetCurrentPhase()==PHASE_MAIN2 and Duel.IsTurnPlayer(tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=s[tp]

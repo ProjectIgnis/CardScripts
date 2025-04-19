@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end 
 function s.costfilter(c)
-	return c:IsSetCard(0x10f3) and c:IsLevelBelow(4) and c:IsMonster() and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(SET_PREDAPLANT) and c:IsLevelBelow(4) and c:IsMonster() and c:IsAbleToGraveAsCost()
 end
 s.listed_series={0x10f3}
 function s.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -57,7 +57,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x10f3)
+	return c:IsFaceup() and c:IsSetCard(SET_PREDAPLANT)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) end

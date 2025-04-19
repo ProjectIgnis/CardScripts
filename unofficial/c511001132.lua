@@ -66,7 +66,7 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	for tc in aux.Next(eg) do
 		if tc:IsMonster() and tc:IsPreviousLocation(LOCATION_MZONE) then
 			tc:RegisterFlagEffect(id+tc:GetPreviousControler(),RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
-			Duel.RegisterFlagEffect(tc:GetPreviousControler(),id+2,RESET_PHASE+PHASE_END,0,1)
+			Duel.RegisterFlagEffect(tc:GetPreviousControler(),id+2,RESET_PHASE|PHASE_END,0,1)
 		end
 	end
 end

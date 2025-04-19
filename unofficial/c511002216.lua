@@ -17,7 +17,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
 	if tc:IsControler(1-tp) then tc=Duel.GetAttackTarget() end
 	e:SetLabelObject(tc)
-	return tc and tc:IsFaceup() and tc:IsSetCard(0x123) and tc:GetBattleTarget()
+	return tc and tc:IsFaceup() and tc:IsSetCard(SET_ROSE) and tc:GetBattleTarget()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=e:GetLabelObject()

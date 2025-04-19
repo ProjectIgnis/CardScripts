@@ -49,7 +49,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 --atk change
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and Duel.GetAttacker()==e:GetHandler()
+	return Duel.IsTurnPlayer(tp) and Duel.GetAttacker()==e:GetHandler()
 end
 function s.atkfilter(c,code1,code2)
 	return (c:IsCode(code1) or c:IsCode(code2)) and c:IsMonster()

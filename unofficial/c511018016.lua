@@ -58,23 +58,23 @@ function s.initial_effect(c)
 end
 function s.chk(e,tp,eg,ep,ev,re,r,rp)
 	for tc in aux.Next(eg) do
-		if tc:IsSetCard(0x12) then tc:RegisterFlagEffect(id,0,0,0) end
+		if tc:IsSetCard(SET_FROG) then tc:RegisterFlagEffect(id,0,0,0) end
 	end
 end
 function s.cfilter(c,tp)
-	return c:IsSetCard(0x12) and (c:IsControler(tp) or c:IsFaceup())
+	return c:IsSetCard(SET_FROG) and (c:IsControler(tp) or c:IsFaceup())
 end
 function s.valcheck(e,c)
 	local g=c:GetMaterial()
-	e:SetLabel(g:FilterCount(Card.IsSetCard,nil,0x12))
+	e:SetLabel(g:FilterCount(Card.IsSetCard,nil,SET_FROG))
 end
 function s.cbacondition(e,tp,eg,ep,ev,re,r,rp)
 	local lo=e:GetLabelObject():GetLabel()
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_TRIBUTE) and lo>=1
+	return e:GetHandler():IsTributeSummoned() and lo>=1
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	local lo=e:GetLabelObject():GetLabel()
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_TRIBUTE) and lo>=2
+	return e:GetHandler():IsTributeSummoned() and lo>=2
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -87,14 +87,14 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local lo=e:GetLabelObject():GetLabel()
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_TRIBUTE) and lo>=3
+	return e:GetHandler():IsTributeSummoned() and lo>=3
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x12) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:GetFlagEffect(id)>0
+	return c:IsSetCard(SET_FROG) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:GetFlagEffect(id)>0
 end
 function s.spop(e,tp,eg,ep,ev,re,rp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)

@@ -18,7 +18,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD,0)==0
 end
 function s.filter(c)
-	return c:IsSetCard(0x1f) and c:IsAbleToGrave()
+	return c:IsSetCard(SET_NEO_SPACIAN) and c:IsAbleToGrave()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)

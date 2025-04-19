@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--fustion material
-	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunction(Card.IsSetCard,0xdf),2)
+	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunction(Card.IsSetCard,SET_LUNALIGHT),2)
 	c:EnableReviveLimit()
 	--attack
 	local e1=Effect.CreateEffect(c)
@@ -19,8 +19,8 @@ end
 s.listed_series={0xdf}
 s.material_setcode=0xdf
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsSetCard,1,false,nil,e:GetHandler(),0xdf) end
-	local g=Duel.SelectReleaseGroupCost(tp,Card.IsSetCard,1,1,false,nil,e:GetHandler(),0xdf)
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsSetCard,1,false,nil,e:GetHandler(),SET_LUNALIGHT) end
+	local g=Duel.SelectReleaseGroupCost(tp,Card.IsSetCard,1,1,false,nil,e:GetHandler(),SET_LUNALIGHT)
 	Duel.Release(g,REASON_COST)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)

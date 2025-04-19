@@ -105,7 +105,7 @@ function s.distarget(e,c)
 	return c:IsAttribute(e:GetHandler():GetAttribute()) and c:IsType(TYPE_EFFECT)
 end
 function s.gycon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and Duel.GetCurrentPhase()==PHASE_BATTLE_STEP
+	return Duel.IsTurnPlayer(tp) and Duel.GetCurrentPhase()==PHASE_BATTLE_STEP
 		and e:GetHandler():GetBattledGroupCount()>0 and s.checkCannotAttackEffect(e)
 end
 function s.gyfilter(c,ec)

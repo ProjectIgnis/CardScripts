@@ -21,7 +21,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsControler(1-tp) then
 		tc,bc=bc,tc
 	end
-	if not tc or not bc or tc:IsControler(1-tp) or not tc:IsSetCard(0xad) then return false end
+	if not tc or not bc or tc:IsControler(1-tp) or not tc:IsSetCard(SET_FRIGHTFUR) then return false end
 	if tc:IsHasEffect(EFFECT_INDESTRUCTABLE_BATTLE) then
 		local tcind={tc:GetCardEffect(EFFECT_INDESTRUCTABLE_BATTLE)}
 		for i=1,#tcind do
@@ -59,7 +59,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.cfilter(c,e,tp)
 	return c:IsOnField() and c:IsMonster() and c:IsControler(tp) and (not e or c:IsRelateToEffect(e)) 
-		and c:IsSetCard(0xad)
+		and c:IsSetCard(SET_FRIGHTFUR)
 end
 function s.condition2(e,tp,eg,ep,ev,re,r,rp)
 	local ex,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_DESTROY)

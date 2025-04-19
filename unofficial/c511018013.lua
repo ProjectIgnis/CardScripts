@@ -27,7 +27,7 @@ function s.condition(e,tp,eg,ev,ep,re,r,rp)
 	return Duel.GetAttacker():IsControler(1-tp) and Duel.GetAttackTarget()==nil
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x9f) and c:IsAttackBelow(800) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_PERFORMAPAL) and c:IsAttackBelow(800) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ev,ep,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 

@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and Duel.IsMainPhase() and Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>=3
+	return Duel.IsTurnPlayer(tp) and Duel.IsMainPhase() and Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>=3
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g1=Duel.GetFieldGroup(tp,0,LOCATION_MZONE):GetMinGroup(Card.GetAttack)

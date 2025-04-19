@@ -16,7 +16,7 @@ s.listed_series={0x48}
 function s.filter(c,e,tp)
 	local rk=c:GetRank()
 	local pg=aux.GetMustBeMaterialGroup(tp,Group.FromCards(c),tp,nil,nil,REASON_XYZ)
-	return #pg<=1 and rk>0 and c:IsPreviousControler(tp) and c:IsSetCard(0x48)
+	return #pg<=1 and rk>0 and c:IsPreviousControler(tp) and c:IsSetCard(SET_NUMBER)
 		and Duel.IsExistingMatchingCard(s.sfilter,tp,LOCATION_EXTRA,0,1,nil,rk,e,tp,c,pg)
 		and c:IsCanBeEffectTarget(e)
 end

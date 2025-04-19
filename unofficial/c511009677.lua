@@ -87,11 +87,11 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Damage(p,dam,REASON_EFFECT)
 end
 function s.desfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x1157)
+	return c:IsFaceup() and c:IsSetCard(SET_SUNAVALON)
 end
 function s.descon(e)
 	return not Duel.IsExistingMatchingCard(s.desfilter,0,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 end
 function s.tgtg(e,c)
-	return c:IsSetCard(0x1157) and c:IsLinkMonster()
+	return c:IsSetCard(SET_SUNAVALON) and c:IsLinkMonster()
 end

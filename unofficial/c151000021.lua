@@ -55,7 +55,7 @@ function s.dirtg(e,c)
 	return not Duel.IsExistingMatchingCard(Card.IsFaceup,c:GetControler(),0,LOCATION_MZONE,1,nil)
 end
 function s.ftarget(e,c)
-	return not c:IsSetCard(0x8d)
+	return not c:IsSetCard(SET_GHOSTRICK)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

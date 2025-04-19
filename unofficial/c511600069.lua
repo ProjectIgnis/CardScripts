@@ -100,7 +100,7 @@ function s.eqlimit(e,c)
 end
 function s.checkcon(e,tp,eg,ep,ev,re,r,rp)
 	local ec=e:GetHandler():GetEquipTarget()
-	return Duel.GetTurnPlayer()==tp and ec and ec:IsOriginalCodeRule(87756343)
+	return Duel.IsTurnPlayer(tp) and ec and ec:IsOriginalCodeRule(87756343)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -117,7 +117,7 @@ function s.checkop2(e,tp,eg,ep,ev,re,r,rp)
 	e:SetLabelObject(ec)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and e:GetHandler():GetEquipTarget() and e:GetHandler():GetTurnCounter()>=5
+	return Duel.IsTurnPlayer(tp) and e:GetHandler():GetEquipTarget() and e:GetHandler():GetTurnCounter()>=5
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Destroy(e:GetHandler():GetEquipTarget(),REASON_EFFECT)

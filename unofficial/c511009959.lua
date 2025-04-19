@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--link summon
-	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0xfc),2)
+	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_GOUKI),2)
 	c:EnableReviveLimit()
 	--immune
 	local e1=Effect.CreateEffect(c)
@@ -36,13 +36,13 @@ function s.initial_effect(c)
 end
 s.listed_series={0xfc}
 function s.econ(e)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
+	return e:GetHandler():IsLinkSummoned()
 end
 function s.efilter(e,te)
 	return te:GetOwner()~=e:GetOwner()
 end
 function s.atkfilter(c)
-	return c:IsType(TYPE_LINK) and c:IsSetCard(0xfc)
+	return c:IsType(TYPE_LINK) and c:IsSetCard(SET_GOUKI)
 end
 function s.atkval(e,c)
 	local g=Duel.GetMatchingGroup(s.atkfilter,e:GetHandlerPlayer(),LOCATION_MZONE,LOCATION_MZONE,0,c)
@@ -64,7 +64,7 @@ function s.spcheck(sg,tp,exg,dg)
 	return #dg-a>=sg:GetFirst():GetLink()
 end
 function s.cfilter(c)
-	return c:IsSetCard(0xfc) and c:IsLinkMonster()
+	return c:IsSetCard(SET_GOUKI) and c:IsLinkMonster()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

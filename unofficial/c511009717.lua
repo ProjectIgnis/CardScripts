@@ -41,7 +41,7 @@ function s.mfilter(c,lc,sumtype,tp)
 	return c:IsSetCard(0x577) and c:IsType(TYPE_LINK,lc,sumtype,tp)
 end
 function s.attcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
+	return e:GetHandler():IsLinkSummoned()
 end
 function s.cfilter(c,e,tp)
 	return c:IsSetCard(0x577) and c:IsLinkMonster() and c:IsLocation(LOCATION_GRAVE)

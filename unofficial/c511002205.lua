@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x26)
+	return c:IsFaceup() and c:IsSetCard(SET_MORPHTRONIC)
 end
 function s.value(e,c)
 	return Duel.GetMatchingGroupCount(s.filter,c:GetControler(),LOCATION_ONFIELD,0,nil)*300

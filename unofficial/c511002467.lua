@@ -17,10 +17,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.otfilter(c,tp)
-	return c:IsSetCard(0x2b) and (c:IsControler(tp) or c:IsFaceup())
+	return c:IsSetCard(SET_NINJA) and (c:IsControler(tp) or c:IsFaceup())
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x2b) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_NINJA) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

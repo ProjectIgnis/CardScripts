@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_UNSTOPPABLE_ATTACK)
 	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetCondition(function(e) return e:GetHandler():IsSummonType(SUMMON_TYPE_SPECIAL) end)
+	e3:SetCondition(function(e) return e:GetHandler():IsSpecialSummoned() end)
 	c:RegisterEffect(e3)
 	--Resurrection
 	local e4=Effect.CreateEffect(c)

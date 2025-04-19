@@ -28,5 +28,5 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.tdtg(e,c)
-	return (c:IsFacedown() or not c:IsSetCard(0xb3)) and c:IsReason(REASON_EFFECT)
+	return (c:IsFacedown() or not c:IsSetCard(SET_YOSENJU)) and c:IsReason(REASON_EFFECT)
 end

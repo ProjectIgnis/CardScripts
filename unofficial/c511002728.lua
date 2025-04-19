@@ -15,10 +15,10 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	local lv=tc:GetLevel()
-	return #eg==1 and tc:IsSetCard(0x3008) and tc:IsPreviousPosition(POS_FACEUP) and tc:IsPreviousControler(tp)
+	return #eg==1 and tc:IsSetCard(SET_ELEMENTAL_HERO) and tc:IsPreviousPosition(POS_FACEUP) and tc:IsPreviousControler(tp)
 end
 function s.filter(c,lv)
-	return c:IsLevelBelow(lv) and c:IsSetCard(0xc008) and c:IsAbleToHand()
+	return c:IsLevelBelow(lv) and c:IsSetCard(SET_DESTINY_HERO) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,eg:GetFirst():GetLevel()) end

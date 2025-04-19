@@ -27,7 +27,7 @@ function s.filter(c)
 	return not c:IsStatus(STATUS_LEAVE_CONFIRMED)
 end
 function s.adcon(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.IsExistingMatchingCard(s.filter,e:GetHandler():GetControler(),LOCATION_ONFIELD+LOCATION_HAND,0,1,e:GetHandler())
+	return not Duel.IsExistingMatchingCard(s.filter,e:GetHandler():GetControler(),LOCATION_ONFIELD|LOCATION_HAND,0,1,e:GetHandler())
 end
 function s.adval(e,c)
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,e:GetHandler():GetControler(),0,LOCATION_MZONE,e:GetHandler())

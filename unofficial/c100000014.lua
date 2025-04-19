@@ -67,10 +67,10 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x4a) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_TIMELORD) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
@@ -88,7 +88,7 @@ function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp
 end
 function s.cosfilter(c)
-	return c:IsSetCard(0x4a) and c:IsMonster() and c:IsDiscardable()
+	return c:IsSetCard(SET_TIMELORD) and c:IsMonster() and c:IsDiscardable()
 end
 function s.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cosfilter,tp,LOCATION_HAND,0,1,e:GetHandler()) end
@@ -126,5 +126,5 @@ function s.sephop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.etarget(e,c)
-	return c:IsSetCard(0x4a) and c:IsFaceup()
+	return c:IsSetCard(SET_TIMELORD) and c:IsFaceup()
 end

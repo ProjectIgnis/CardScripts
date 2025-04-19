@@ -48,7 +48,7 @@ function s.filter(c)
 	return c:IsCode(95000004,95000005,95000006,95000007,95000008) and c:IsSSetable(true)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK+LOCATION_HAND,0,1,nil):GetClassCount(Card.GetCode)==5 end
+	if chk==0 then return Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK|LOCATION_HAND,0,1,nil):GetClassCount(Card.GetCode)==5 end
 end
 function s.rescon(sg,e,tp,mg)
 	return sg:IsExists(Card.IsCode,1,nil,95000004) and sg:IsExists(Card.IsCode,1,nil,95000005) and sg:IsExists(Card.IsCode,1,nil,95000006) and sg:IsExists(Card.IsCode,1,nil,95000007) and sg:IsExists(Card.IsCode,1,nil,95000008)
@@ -56,7 +56,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<5 then return end
-	local sg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK+LOCATION_HAND,0,nil)
+	local sg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK|LOCATION_HAND,0,nil)
 	if not s.rescon(sg) then return end
 	local setg=aux.SelectUnselectGroup(sg,e,tp,5,5,s.rescon,1,tp,HINTMSG_SET)
 	if #sg>0 then

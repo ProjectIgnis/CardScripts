@@ -20,7 +20,7 @@ function s.spfilter(c,e,tp,lv)
 	return c:IsLevelBelow(lv) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.filter(c,e,tp)
-	return c:IsFaceup() and c:IsSetCard(0xf0) 
+	return c:IsFaceup() and c:IsSetCard(SET_WINDWITCH) 
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp,c:GetLevel())
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

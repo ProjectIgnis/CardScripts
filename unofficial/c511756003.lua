@@ -16,7 +16,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Draw(1-tp,2,REASON_COST)
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x41) and c:IsCanBeSpecialSummoned(e,0,tp,true,true)
+	return c:IsSetCard(SET_LV) and c:IsCanBeSpecialSummoned(e,0,tp,true,true)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 

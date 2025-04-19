@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cfilter(c,e,tp)
-	return c:IsSetCard(0x83) and c:IsControler(tp) and c:IsLocation(LOCATION_GRAVE) and c:IsReason(REASON_BATTLE)
+	return c:IsSetCard(SET_PUPPET) and c:IsControler(tp) and c:IsLocation(LOCATION_GRAVE) and c:IsReason(REASON_BATTLE)
 		and c:IsLevelBelow(4) and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,c:GetCode(),e,tp)
 end
 function s.filter(c,code,e,tp)
@@ -25,7 +25,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function s.cfilter2(c,e,tp)
-	return c:IsLevelBelow(4) and c:IsSetCard(0x83) and c:IsControler(tp) and c:IsRelateToEffect(e)
+	return c:IsLevelBelow(4) and c:IsSetCard(SET_PUPPET) and c:IsControler(tp) and c:IsRelateToEffect(e)
 		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,c:GetCode(),e,tp)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)

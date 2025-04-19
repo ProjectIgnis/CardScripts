@@ -14,11 +14,11 @@ function s.initial_effect(c)
 end
 s.listed_series={0x10af}
 function s.filter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x10af) 
+	return c:IsFaceup() and c:IsSetCard(SET_DDD) 
 		and Duel.IsExistingMatchingCard(s.deffilter,tp,0,LOCATION_MZONE,1,nil)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0x10af) and c:IsAbleToHand()
+	return c:IsSetCard(SET_DDD) and c:IsAbleToHand()
 end
 function s.deffilter(c)
 	return c:IsFaceup() and c:GetDefense()>0

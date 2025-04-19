@@ -17,7 +17,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 		and Duel.GetAttacker():IsStatus(STATUS_OPPO_BATTLE)
 end
 function s.costfilter(c)
-	return c:IsSetCard(0x33) and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(SET_BLACKWING) and c:IsAbleToGraveAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil) end

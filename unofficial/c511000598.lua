@@ -92,7 +92,7 @@ function s.skipcon(e)
 	return Duel.GetTurnCount()~=e:GetLabel()
 end
 function s.turncon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.turnop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

@@ -25,7 +25,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0xfc) and c:IsLinkMonster() and c:GetBaseAttack()<c:GetAttack()
+	return c:IsFaceup() and c:IsSetCard(SET_GOUKI) and c:IsLinkMonster() and c:GetBaseAttack()<c:GetAttack()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) end

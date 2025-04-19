@@ -23,7 +23,7 @@ end
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
 	if rc:IsType(TYPE_ACTION) and not rc:IsType(TYPE_FIELD) then
-		Duel.RegisterFlagEffect(0,id,RESET_PHASE+PHASE_END,0,1)
+		Duel.RegisterFlagEffect(0,id,RESET_PHASE|PHASE_END,0,1)
 	end
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

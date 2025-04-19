@@ -30,7 +30,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x103}
 function s.cfilter(c,tp)
-	return c:IsControler(tp) and c:IsSetCard(0x103) and c:IsType(TYPE_LINK) and c:IsSummonType(SUMMON_TYPE_LINK)
+	return c:IsControler(tp) and c:IsSetCard(SET_ALTERGEIST) and c:IsType(TYPE_LINK) and c:IsLinkSummoned()
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)
@@ -55,7 +55,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter2(c)
-	return c:IsType(TYPE_LINK) and not c:IsSetCard(0x103)
+	return c:IsType(TYPE_LINK) and not c:IsSetCard(SET_ALTERGEIST)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.filter2(chkc) end

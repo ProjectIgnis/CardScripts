@@ -33,14 +33,14 @@ end
 s.listed_series={0x14}
 s.listed_names={511310036}
 function s.atkcon(e)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
+	return e:GetHandler():IsLinkSummoned()
 end
 function s.atkval(e,c)
-	local g=e:GetHandler():GetLinkedGroup():Filter(aux.FaceupFilter(Card.IsSetCard,0x14),nil)
+	local g=e:GetHandler():GetLinkedGroup():Filter(aux.FaceupFilter(Card.IsSetCard,SET_ALLURE_QUEEN),nil)
 	return g:GetSum(Card.GetAttack)
 end
 function s.tgfilter(c,tp)
-	return c:IsOnField() and c:IsControler(tp) and c:IsFaceup() and c:IsSetCard(0x14)
+	return c:IsOnField() and c:IsControler(tp) and c:IsFaceup() and c:IsSetCard(SET_ALLURE_QUEEN)
 end
 function s.indcon(e,tp,eg,ep,ev,re,r,rp)
 	local tg=eg:Filter(s.tgfilter,nil,tp)

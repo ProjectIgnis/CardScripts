@@ -4,7 +4,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	Pendulum.AddProcedure(c,false)
-	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x10af),8,2)
+	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_DDD),8,2)
 	--xyz indes
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -71,7 +71,7 @@ function s.valcheck(e,c)
 	end
 end
 function s.xyzcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ) and e:GetLabel()==1
+	return e:GetHandler():IsXyzSummoned() and e:GetLabel()==1
 end
 function s.xyzfilter(c)
 	return c:IsFaceup() and c:IsCode(47198668)

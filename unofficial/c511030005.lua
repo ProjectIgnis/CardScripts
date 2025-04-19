@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	Fusion.AddProcMix(c,true,true,76990617,aux.FilterBoolFunctionEx(Card.IsSetCard,0x9b))
+	Fusion.AddProcMix(c,true,true,76990617,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_MELODIOUS))
 	--Banish and gain ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))

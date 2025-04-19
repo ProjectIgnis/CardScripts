@@ -19,7 +19,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker():IsControler(1-tp) and Duel.GetAttackTarget()==nil
 end
 function s.filter(c,def)
-	return c:IsSetCard(0x9f) and c:IsDefenseBelow(def) and c:IsAbleToHand()
+	return c:IsSetCard(SET_PERFORMAPAL) and c:IsDefenseBelow(def) and c:IsAbleToHand()
 end
 function s.rescon(atk)
 	return	function(sg,e,tp,mg)

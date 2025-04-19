@@ -14,11 +14,11 @@ function s.initial_effect(c)
 	
 end
 function s.filter1(c,tp)
-	return c:IsLevelAbove(1) and c:IsSetCard(0x9f)
+	return c:IsLevelAbove(1) and c:IsSetCard(SET_PERFORMAPAL)
 		and Duel.IsExistingTarget(s.filter2,tp,LOCATION_GRAVE,0,1,c,c:GetLevel())
 end
 function s.filter2(c,lvl)
-	return c:IsLevelAbove(1) and c:IsSetCard(0x9f) and (c:GetLevel()+lvl)<=12
+	return c:IsLevelAbove(1) and c:IsSetCard(SET_PERFORMAPAL) and (c:GetLevel()+lvl)<=12
 end
 
 

@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c)
-	return c:GetSummonLocation()==LOCATION_EXTRA and c:IsSummonType(SUMMON_TYPE_SPECIAL)
+	return c:GetSummonLocation()==LOCATION_EXTRA and c:IsSpecialSummoned()
 end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetLP(tp)<Duel.GetLP(1-tp) and Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,nil)

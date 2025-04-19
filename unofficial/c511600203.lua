@@ -30,7 +30,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x119}
 function s.cfilter(c)
-	return c:IsLinkMonster() and c:IsSetCard(0x119)
+	return c:IsLinkMonster() and c:IsSetCard(SET_SALAMANGREAT)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,3,nil)

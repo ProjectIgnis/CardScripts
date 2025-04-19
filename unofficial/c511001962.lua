@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	end
 function s.sumfilter(c,e,tp)
-	return c:IsLevelBelow(4) and c:IsSetCard(0x33) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsLevelBelow(4) and c:IsSetCard(SET_BLACKWING) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 s.listed_series={0x33}
 function s.sumtg(e,tp,eg,ep,ev,re,r,rp,chk)

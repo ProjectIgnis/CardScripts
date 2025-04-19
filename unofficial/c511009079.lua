@@ -42,7 +42,7 @@ s.listed_series={0xba}
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
-	return d and a and d:IsFaceup() and d:IsSetCard(0xba) and d:IsRelateToBattle() and (d:GetSummonType()&SUMMON_TYPE_XYZ)==SUMMON_TYPE_XYZ 
+	return d and a and d:IsFaceup() and d:IsSetCard(SET_RAIDRAPTOR) and d:IsRelateToBattle() and (d:GetSummonType()&SUMMON_TYPE_XYZ)==SUMMON_TYPE_XYZ 
 		and not e:GetHandler():IsStatus(STATUS_CHAINING) and d:IsControler(tp)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -63,7 +63,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp,chk)
 	d:RegisterEffect(e2)
 end
 function s.filter(c,tp)
-	return c:IsFaceup() and (c:GetSummonType()&SUMMON_TYPE_XYZ)==SUMMON_TYPE_XYZ and c:IsSetCard(0xba) 
+	return c:IsFaceup() and (c:GetSummonType()&SUMMON_TYPE_XYZ)==SUMMON_TYPE_XYZ and c:IsSetCard(SET_RAIDRAPTOR) 
 		and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)

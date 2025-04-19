@@ -25,10 +25,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.sccon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.filter(c,lsc,rsc)
-	return c:IsFaceup() and c:IsAbleToGrave() and (c:IsLevelBelow(lsc) or c:IsLevelBelow(rsc)) and c:IsSummonType(SUMMON_TYPE_PENDULUM)
+	return c:IsFaceup() and c:IsAbleToGrave() and (c:IsLevelBelow(lsc) or c:IsLevelBelow(rsc)) and c:IsPendulumSummoned()
 end
 function s.sctg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.dm_cd(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and e:GetHandler():GetFlagEffect(id)==0
+	return Duel.IsTurnPlayer(tp) and e:GetHandler():GetFlagEffect(id)==0
 end
 
 function s.dm_tg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -72,7 +72,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 		if re:GetHandler():IsRelateToEffect(re) then
 			Duel.Destroy(re:GetHandler(),REASON_EFFECT)
 		end
-		if Duel.GetCurrentPhase()==PHASE_STANDBY and Duel.GetTurnPlayer()==tp then
+		if Duel.GetCurrentPhase()==PHASE_STANDBY and Duel.IsTurnPlayer(tp) then
 			e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 		end
 	end

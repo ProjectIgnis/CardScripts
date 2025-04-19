@@ -24,8 +24,8 @@ end
 s.listed_series={0x10b}
 function s.dmcon(e,tp,eg,ep,ev,re,r,rp)
 	local a,d=Duel.GetAttacker(),Duel.GetAttackTarget()
-	return a:IsControler(tp) and a:GetSequence()<5 and a:IsFaceup() and a:IsSetCard(0x10b)
-		or d and d:IsControler(tp) and d:GetSequence()<5 and d:IsFaceup() and d:IsSetCard(0x10b)
+	return a:IsControler(tp) and a:GetSequence()<5 and a:IsFaceup() and a:IsSetCard(SET_TINDANGLE)
+		or d and d:IsControler(tp) and d:GetSequence()<5 and d:IsFaceup() and d:IsSetCard(SET_TINDANGLE)
 end
 function s.dmop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end

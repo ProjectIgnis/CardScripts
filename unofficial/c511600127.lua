@@ -39,5 +39,5 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.rtg(e,c)
-	return c:IsReason(REASON_BATTLE+REASON_DESTROY) and c:IsSetCard(0x9f)
+	return c:IsReason(REASON_BATTLE+REASON_DESTROY) and c:IsSetCard(SET_PERFORMAPAL)
 end

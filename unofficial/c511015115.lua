@@ -54,7 +54,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Overlay(tc,g)
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x36)
+	return c:IsFaceup() and c:IsSetCard(SET_MACHINA)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

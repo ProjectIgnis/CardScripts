@@ -12,7 +12,7 @@ function s.initial_effect(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local d=Duel.GetAttackTarget()
-	return d and d:IsFaceup() and d:IsControler(tp) and d:IsSetCard(0xba) and d:IsLevelBelow(4)
+	return d and d:IsFaceup() and d:IsControler(tp) and d:IsSetCard(SET_RAIDRAPTOR) and d:IsLevelBelow(4)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local d=Duel.GetAttackTarget()

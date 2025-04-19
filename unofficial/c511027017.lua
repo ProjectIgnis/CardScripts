@@ -28,10 +28,10 @@ function s.initial_effect(c)
 end
 s.listed_series={0x10f,0x102}
 function s.tgfilter(c,e,tp)
-	return c:IsSetCard(0x10f) and c:IsType(TYPE_LINK)and Duel.IsExistingMatchingCard(s.exfilter,tp,LOCATION_EXTRA,0,1,nil,c,e,tp)
+	return c:IsSetCard(SET_BORREL) and c:IsType(TYPE_LINK)and Duel.IsExistingMatchingCard(s.exfilter,tp,LOCATION_EXTRA,0,1,nil,c,e,tp)
 end
 function s.exfilter(c,rel,e,tp)
-	return c:IsSetCard(0x10f) and c:IsType(TYPE_LINK) and c:GetLink()==rel:GetLink()
+	return c:IsSetCard(SET_BORREL) and c:IsType(TYPE_LINK) and c:GetLink()==rel:GetLink()
 		and c:GetCode()~=rel:GetCode() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
 end
@@ -91,7 +91,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Destroy(tc,REASON_EFFECT)
 end
 function s.cfilter(c)
-	return c:IsMonster() and c:IsSetCard(0x102) and c:IsAbleToRemoveAsCost()
+	return c:IsMonster() and c:IsSetCard(SET_ROKKET) and c:IsAbleToRemoveAsCost()
 end
 function s.gycost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost()
@@ -102,7 +102,7 @@ function s.gycost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.borfilter(c)
-	return c:IsSetCard(0x10f) and c:IsType(TYPE_LINK)
+	return c:IsSetCard(SET_BORREL) and c:IsType(TYPE_LINK)
 end
 function s.spzone(g,p)
 	local zone=0

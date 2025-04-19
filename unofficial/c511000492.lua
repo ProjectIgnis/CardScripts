@@ -63,7 +63,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x3008)
+	return c:IsFaceup() and c:IsSetCard(SET_ELEMENTAL_HERO)
 end
 function s.value(e,c)
 	return Duel.GetMatchingGroupCount(s.filter,e:GetHandler():GetControler(),LOCATION_MZONE,0,nil)*300

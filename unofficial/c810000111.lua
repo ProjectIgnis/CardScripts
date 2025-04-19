@@ -17,10 +17,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.thfilter(c)
-	return c:IsSetCard(0xa9) and c:IsAbleToHand()
+	return c:IsSetCard(SET_FLUFFAL) and c:IsAbleToHand()
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0xa9) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_FLUFFAL) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.thfilter(chkc) end

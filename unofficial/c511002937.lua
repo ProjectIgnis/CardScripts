@@ -56,7 +56,7 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_CHANGE_POSITION)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_COPY_INHERIT)
-		if Duel.GetTurnPlayer()==tp then
+		if Duel.IsTurnPlayer(tp) then
 			e1:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN,2)
 		else
 			e1:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN)

@@ -13,7 +13,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x33}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x33)
+	return c:IsFaceup() and c:IsSetCard(SET_BLACKWING)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(Card.IsControler,1,nil,1-tp) 

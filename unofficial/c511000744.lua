@@ -34,7 +34,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local c=e:GetHandler()
 		local tuners=Duel.GetMatchingGroup(s.tunerfilter,tp,LOCATION_MZONE,0,nil)
-		local nontuners=Duel.GetMatchingGroup(s.matfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,nil)
+		local nontuners=Duel.GetMatchingGroup(s.matfilter,tp,0,LOCATION_MZONE|LOCATION_GRAVE,nil)
 		local reset={}
 		for tc in aux.Next(tuners) do
 			local e1=Effect.CreateEffect(c)
@@ -71,7 +71,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tuners=Duel.GetMatchingGroup(s.tunerfilter,tp,LOCATION_MZONE,0,nil)
-	local nontuners=Duel.GetMatchingGroup(s.matfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,nil)
+	local nontuners=Duel.GetMatchingGroup(s.matfilter,tp,0,LOCATION_MZONE|LOCATION_GRAVE,nil)
 	local reset={}
 	for tc in aux.Next(tuners) do
 		local e1=Effect.CreateEffect(c)

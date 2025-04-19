@@ -53,14 +53,13 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.actcond(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and e:GetHandler():GetTurnID()~=Duel.GetTurnCount()
+	return Duel.IsTurnPlayer(tp) and e:GetHandler():GetTurnID()~=Duel.GetTurnCount()
 end
 function s.filter(c,tp)
 	return c:IsCode(100000330) and c:GetActivateEffect():IsActivatable(tp,true,true)
 end
 function s.actop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
-	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_GRAVE+LOCATION_HAND+LOCATION_DECK,0,1,1,nil,tp):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_GRAVE|LOCATION_HAND|LOCATION_DECK,0,1,1,nil,tp):GetFirst()
 	Duel.ActivateFieldSpell(tc,e,tp,eg,ep,ev,re,r,rp)
 end
-

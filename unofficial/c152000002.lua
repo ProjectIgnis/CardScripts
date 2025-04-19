@@ -8,10 +8,10 @@ function s.initial_effect(c)
 end
 s.listed_series={0xfb}
 function s.cfilter(c)
-	return c:IsSetCard(0xfb) and c:IsAbleToGrave()
+	return c:IsSetCard(SET_TRICKSTAR) and c:IsAbleToGrave()
 end
 function s.tkfilter(c)
-	return c:IsMonster() and c:IsSetCard(0xfb)
+	return c:IsMonster() and c:IsSetCard(SET_TRICKSTAR)
 end
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	--condition

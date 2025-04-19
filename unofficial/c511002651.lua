@@ -27,7 +27,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x99}
 function s.pfilter(c)
-	return c:IsSetCard(0x99) and c:IsType(TYPE_PENDULUM)
+	return c:IsSetCard(SET_ODD_EYES) and c:IsType(TYPE_PENDULUM)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 		if chk==0 then return Duel.IsExistingMatchingCard(s.pfilter,tp,LOCATION_MZONE,0,1,c) end

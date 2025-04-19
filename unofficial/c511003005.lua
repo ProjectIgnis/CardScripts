@@ -44,7 +44,7 @@ function s.reset(e,tp,eg,ep,ev,re,r,rp)
 	s.desop(e:GetLabelObject(),tp,eg,ep,ev,e,r,rp)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -56,5 +56,5 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.atktg(e,c)
-	return c:IsSummonType(SUMMON_TYPE_SPECIAL) and c:IsPreviousLocation(LOCATION_GRAVE)
+	return c:IsSpecialSummoned() and c:IsPreviousLocation(LOCATION_GRAVE)
 end

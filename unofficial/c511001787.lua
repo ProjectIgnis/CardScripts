@@ -15,7 +15,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:GetFirst():IsControler(1-tp)
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x18) and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(SET_CLOUDIAN) and c:IsAbleToGraveAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(1)

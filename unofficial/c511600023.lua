@@ -48,7 +48,7 @@ function s.aclimit(e,re,tp)
 		and not re:GetHandler():IsImmuneToEffect(e)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x101) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
+	return c:IsSetCard(SET_CODE_TALKER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
 		and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
 end
 function s.cfilter(c)
@@ -103,7 +103,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.rccon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.rcop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

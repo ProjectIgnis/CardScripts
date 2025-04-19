@@ -29,7 +29,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x48}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x48)
+	return c:IsFaceup() and c:IsSetCard(SET_NUMBER)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,tc,chk)
 	if chk==0 then return true end

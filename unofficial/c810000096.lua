@@ -34,7 +34,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.PayLPCost(tp,800)
 end
 function s.cfilter(c,p)
-	return c:IsSetCard(0xb3) and c:IsPreviousControler(p)
+	return c:IsSetCard(SET_YOSENJU) and c:IsPreviousControler(p)
 		and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
@@ -53,7 +53,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and e:GetHandler():GetFlagEffect(id)==0
+	return Duel.IsTurnPlayer(tp) and e:GetHandler():GetFlagEffect(id)==0
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Destroy(e:GetHandler(),REASON_EFFECT)

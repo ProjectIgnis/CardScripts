@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,{id,1})
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
@@ -37,7 +37,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x119}
 function s.spfilter(c,e,tp,lk)
-	return c:IsSetCard(0x119) and c:IsType(TYPE_LINK) and c:GetLink()<lk
+	return c:IsSetCard(SET_SALAMANGREAT) and c:IsType(TYPE_LINK) and c:GetLink()<lk
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -94,7 +94,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	for ec in aux.Next(eg) do
-		if ec:GetPreviousTypeOnField()&TYPE_LINK>0 and ec:IsSummonType(SUMMON_TYPE_LINK)
+		if ec:GetPreviousTypeOnField()&TYPE_LINK>0 and ec:IsLinkSummoned()
 			and ec:IsPreviousSetCard(0x119) and REASON_EFFECT&ec:GetReason()>0
 			and ec:GetReasonEffect():GetHandlerPlayer()~=tp then
 			local lk=ec:GetLink()
@@ -113,7 +113,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	c:RegisterFlagEffect(id,RESET_CHAIN,0,1)
 end
 function s.filter(c,e,tp,lk)
-	return c:IsSetCard(0x119) and c:IsLevelBelow(lk) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_SALAMANGREAT) and c:IsLevelBelow(lk) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local lk=Duel.GetFieldGroup(tp,LOCATION_MZONE,LOCATION_MZONE):GetSum(Card.GetLink)

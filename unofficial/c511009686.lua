@@ -24,10 +24,10 @@ function s.atkcon(e)
 	return ph==PHASE_DAMAGE or ph==PHASE_DAMAGE_CAL
 end
 function s.atktg(e,c)
-	return c==Duel.GetAttacker() and c:IsSetCard(0xfc)
+	return c==Duel.GetAttacker() and c:IsSetCard(SET_GOUKI)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0xfc)
+	return c:IsFaceup() and c:IsSetCard(SET_GOUKI)
 end
 function s.atkval(e,c)
 	local sg=Duel.GetMatchingGroup(s.filter,c:GetControler(),LOCATION_MZONE,0,nil)

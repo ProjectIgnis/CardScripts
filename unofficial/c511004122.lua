@@ -14,7 +14,7 @@ local e1=Effect.CreateEffect(c)
 end
 function s.con2(e,tp,eg,ep,ev,re,r,rp)
 	local bt=eg:GetFirst()
-	return r~=REASON_BATTLE and bt:IsSetCard(0x107f)
+	return r~=REASON_BATTLE and bt:IsSetCard(SET_UTOPIA)
 end
 function s.op2(e,tp,eg,ep,ev,re,r,rp)
 local bt=Duel.GetAttackTarget()

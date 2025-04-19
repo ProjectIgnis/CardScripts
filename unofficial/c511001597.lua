@@ -32,10 +32,10 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 		and Duel.GetDrawCount(tp)>0
 end
 function s.filter(c)
-	return c:IsSetCard(0x23) and c:IsAbleToHand() and c:IsMonster()
+	return c:IsSetCard(SET_MALEFIC) and c:IsAbleToHand() and c:IsMonster()
 end
 function s.filter2(c)
-	return c:IsSetCard(0x23) and c:IsMonster()
+	return c:IsSetCard(SET_MALEFIC) and c:IsMonster()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) 
@@ -76,11 +76,11 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x23)
+	return c:IsFaceup() and c:IsSetCard(SET_MALEFIC)
 end
 function s.atcon(e)
 	return Duel.IsExistingMatchingCard(s.cfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function s.attarget(e,c)
-	return not c:IsSetCard(0x23)
+	return not c:IsSetCard(SET_MALEFIC)
 end

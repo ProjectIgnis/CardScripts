@@ -29,7 +29,7 @@ function s.defcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
 end
 function s.deffilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x9a)
+	return c:IsFaceup() and c:IsSetCard(SET_SUPERHEAVY_SAMURAI)
 end
 function s.deftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.deffilter,tp,LOCATION_MZONE,0,1,nil) end

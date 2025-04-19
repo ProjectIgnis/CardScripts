@@ -13,11 +13,11 @@ function s.initial_effect(c)
 end
 s.listed_series={0x3008,0x1f}
 function s.filter1(c,e,tp)
-	return c:IsSetCard(0x3008) and c:IsAbleToDeck()
+	return c:IsSetCard(SET_ELEMENTAL_HERO) and c:IsAbleToDeck()
 	 and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_DECK,0,1,nil,e,tp)
 end
 function s.filter2(c,e,tp)
-	return c:IsSetCard(0x1f) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_NEO_SPACIAN) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_MZONE,0,1,nil,e,tp) end

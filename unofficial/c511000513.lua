@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_SINGLE)
 	e5:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-	e5:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,0x48)))
+	e5:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,SET_NUMBER)))
 	c:RegisterEffect(e5)
 end
 s.listed_series={0x48}

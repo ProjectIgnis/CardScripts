@@ -8,7 +8,7 @@ function s.initial_effect(c)
 end
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	--condition
-	return Duel.GetCurrentChain()==0 and Duel.GetTurnPlayer()==tp and Duel.GetDrawCount(tp)==1
+	return Duel.GetCurrentChain()==0 and Duel.IsTurnPlayer(tp) and Duel.GetDrawCount(tp)==1
 		and (Duel.IsDuelType(DUEL_1ST_TURN_DRAW) or Duel.GetTurnCount()>1)
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)

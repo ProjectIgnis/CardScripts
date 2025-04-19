@@ -31,17 +31,17 @@ function s.initial_effect(c)
 end
 s.listed_series={0xfc}
 function s.matfilter(c,scard,sumtype,tp)
-	return c:IsSetCard(0xfc,lc,sumtype,tp)
+	return c:IsSetCard(SET_GOUKI,lc,sumtype,tp)
 end
 function s.indesfil(c)
-	return c:IsFaceup() and c:IsSetCard(0xfc)
+	return c:IsFaceup() and c:IsSetCard(SET_GOUKI)
 end
 function s.incon(e)
 	return e:GetHandler():GetLinkedGroupCount()>0 
 	and e:GetHandler():GetLinkedGroup():IsExists(s.indesfil,1,nil)
 end
 function s.seqfilter(c,zone)
-	return c:IsFaceup() and c:IsSetCard(0xfc) and c:GetSequence()<5 
+	return c:IsFaceup() and c:IsSetCard(SET_GOUKI) and c:GetSequence()<5 
 		and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE,c:GetControler(),LOCATION_REASON_CONTROL,zone)>0
 end
 function s.seqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

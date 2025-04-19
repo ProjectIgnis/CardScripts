@@ -14,7 +14,7 @@ end
 function s.filter1(c,e,tp,eg,ep,ev,re,r,rp)
 	local te=c:CheckActivateEffect(false,false,false)
 	if c:IsSpell() and c:IsFaceup() and te then
-		if c:IsSetCard(0x95) then
+		if c:IsSetCard(SET_RANK_UP_MAGIC) then
 			local tg=te:GetTarget()
 			return not tg or tg(e,tp,eg,ep,ev,re,r,rp,0)
 		else
@@ -26,7 +26,7 @@ end
 function s.filter2(c,e,tp,eg,ep,ev,re,r,rp)
 	local te=c:CheckActivateEffect(false,false,false)
 	if c:IsSpell() and c:IsFaceup() and not c:IsType(TYPE_EQUIP+TYPE_CONTINUOUS) and te then
-		if c:IsSetCard(0x95) then
+		if c:IsSetCard(SET_RANK_UP_MAGIC) then
 			local tg=te:GetTarget()
 			return not tg or tg(e,tp,eg,ep,ev,re,r,rp,0)
 		else
@@ -73,7 +73,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	tc:CreateEffectRelation(te)
 	if co then co(te,tp,eg,ep,ev,re,r,rp,1) end
 	if tg then
-		if tc:IsSetCard(0x95) then
+		if tc:IsSetCard(SET_RANK_UP_MAGIC) then
 			tg(e,tp,eg,ep,ev,re,r,rp,1)
 		else
 			tg(te,tp,eg,ep,ev,re,r,rp,1)
@@ -87,7 +87,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		etc=g:GetNext()
 	end
 	if op then 
-		if tc:IsSetCard(0x95) then
+		if tc:IsSetCard(SET_RANK_UP_MAGIC) then
 			op(e,tp,eg,ep,ev,re,r,rp)
 		else
 			op(te,tp,eg,ep,ev,re,r,rp)

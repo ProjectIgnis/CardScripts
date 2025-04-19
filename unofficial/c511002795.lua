@@ -33,7 +33,7 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
 	local tg=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
-	if not tg or #tg~=1 or tg:GetFirst():IsFacedown() or not tg:GetFirst():IsSetCard(0x33) or not tg:GetFirst():IsLocation(LOCATION_MZONE) 
+	if not tg or #tg~=1 or tg:GetFirst():IsFacedown() or not tg:GetFirst():IsSetCard(SET_BLACKWING) or not tg:GetFirst():IsLocation(LOCATION_MZONE) 
 		or tg:GetFirst():IsControler(1-tp) then return false end
 	return rp~=tp and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev)
 end

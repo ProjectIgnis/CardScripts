@@ -64,7 +64,7 @@ end
 s.listed_series={0x19}
 s.material_setcode=0x19
 function s.ffilter(c,fc,sumtype,tp)
-	return c:IsSetCard(0x19,fc,sumtype,tp) and c:GetLevel()>=5
+	return c:IsSetCard(SET_GLADIATOR,fc,sumtype,tp) and c:GetLevel()>=5
 end
 function s.splimit(e,se,sp,st)
 	return e:GetHandler():GetLocation()~=LOCATION_EXTRA
@@ -80,7 +80,7 @@ function s.contactop(g,tp)
 	Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST+REASON_MATERIAL)
 end
 function s.espfilter(c,e,tp)
-	return c:IsSetCard(0x19) and c:IsType(TYPE_FUSION) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0 and c:IsCanBeSpecialSummoned(e,124,tp,true,false)
+	return c:IsSetCard(SET_GLADIATOR) and c:IsType(TYPE_FUSION) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0 and c:IsCanBeSpecialSummoned(e,124,tp,true,false)
 end
 function s.esptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.espfilter,tp,LOCATION_EXTRA,LOCATION_EXTRA,1,nil,e,tp) end
@@ -94,7 +94,7 @@ function s.espop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.desconfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x19) 
+	return c:IsFaceup() and c:IsSetCard(SET_GLADIATOR) 
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.desconfilter,tp,LOCATION_MZONE,LOCATION_MZONE,2,nil)
@@ -140,7 +140,7 @@ end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
-	if (a:IsSetCard(0x19)) or (d and d:IsSetCard(0x19)) then
+	if (a:IsSetCard(SET_GLADIATOR)) or (d and d:IsSetCard(SET_GLADIATOR)) then
 		s[0]=true
 		s[1]=true
 	end
@@ -150,7 +150,7 @@ function s.clear(e,tp,eg,ep,ev,re,r,rp)
 	s[1]=false
 end
 function s.cfilter(c,ft)
-	return c:IsFaceup() and c:IsSetCard(0x19) and c:IsAbleToDeck() and (ft>0 or c:GetSequence()<5)
+	return c:IsFaceup() and c:IsSetCard(SET_GLADIATOR) and c:IsAbleToDeck() and (ft>0 or c:GetSequence()<5)
 end
 function s.spcost2(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
@@ -160,7 +160,7 @@ function s.spcost2(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST)
 end
 function s.spfilter2(c,e,tp)
-	return c:IsSetCard(0x19) and c:IsCanBeSpecialSummoned(e,124,tp,false,false)
+	return c:IsSetCard(SET_GLADIATOR) and c:IsCanBeSpecialSummoned(e,124,tp,false,false)
 end
 function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>-1

@@ -20,5 +20,5 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.filter(e,c)
-	return c:IsSetCard(0xe6)
+	return c:IsSetCard(SET_FLOWER_CARDIAN)
 end

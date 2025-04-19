@@ -16,7 +16,7 @@ end
 s.listed_series={0x1048}
 s.listed_names={56673480}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x1048)
+	return c:IsFaceup() and c:IsSetCard(SET_NUMBER_C)
 end
 function s.exscon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
@@ -35,7 +35,7 @@ function s.spfilter(c,e,tp)
 	if class==nil then return false end
 	local no=class.xyz_number
 	return c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,true,false) 
-		and no and no>=101 and no<=107 and c:IsSetCard(0x1048)
+		and no and no>=101 and no<=107 and c:IsSetCard(SET_NUMBER_C)
 		and Duel.GetLocationCountFromEx(tp,tp,nil,c)>2
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -12,7 +12,7 @@ function s.con(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local ec=e:GetHandler():GetReasonCard()
 	local ecg=ec:GetMaterial()
-	return #ecg==2 and ecg:IsExists(Card.IsSetCard,1,c,0x54) and r==REASON_XYZ
+	return #ecg==2 and ecg:IsExists(Card.IsSetCard,1,c,SET_GAGAGA) and r==REASON_XYZ
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsType(TYPE_XYZ)

@@ -21,7 +21,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local sg=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_MZONE,0,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,sg,#sg,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,5,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,5,tp,LOCATION_HAND|LOCATION_DECK|LOCATION_GRAVE)
 end
 function s.filter(c,e,tp)
 	return c:IsCode(68140974,100000051,100000052,100000053,100000054) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -35,7 +35,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Destroy(sg,REASON_EFFECT)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if ft<=0 or (ft>1 and Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)) then return end
- 	local sg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK+LOCATION_HAND+LOCATION_GRAVE,0,nil,e,tp)
+ 	local sg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK|LOCATION_HAND|LOCATION_GRAVE,0,nil,e,tp)
  	if not s.rescon(sg) then return end
  	local spg=aux.SelectUnselectGroup(sg,e,tp,5,5,s.rescon,1,tp,HINTMSG_SPSUMMON)
 	if #sg>0 then

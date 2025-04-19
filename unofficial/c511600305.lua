@@ -26,11 +26,11 @@ end
 s.material_setcode={0x135}
 s.listed_series={0x135}
 function s.matfilter(c,fcard,sumtype,tp)
-	return c:IsSetCard(0x135,fc,sumtype,tp) and c:IsAttribute(ATTRIBUTE_EARTH,fcard,sumtype,tp)
+	return c:IsSetCard(SET_IGNISTER,fc,sumtype,tp) and c:IsAttribute(ATTRIBUTE_EARTH,fcard,sumtype,tp)
 end
 function s.sumsuc(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not c:IsSummonType(SUMMON_TYPE_FUSION) then return end
+	if not c:IsFusionSummoned() then return end
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CHANGE_DAMAGE)

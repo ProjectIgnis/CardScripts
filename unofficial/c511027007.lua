@@ -25,7 +25,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x10f}
 function s.filter(c,tp)
-	return c:IsSetCard(0x10f) and c:IsType(TYPE_LINK)
+	return c:IsSetCard(SET_BORREL) and c:IsType(TYPE_LINK)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.filter,1,false,nil,nil,tp) end

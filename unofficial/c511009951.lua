@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetHintTiming(0,TIMING_END_PHASE)
 	e2:SetCondition(s.tdcon)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.tdtg)
 	e2:SetOperation(s.tdop)
 	c:RegisterEffect(e2)
@@ -43,7 +43,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x135}
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x135)
+	return c:IsFaceup() and c:IsSetCard(SET_IGNISTER)
 end
 function s.desfilter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP)

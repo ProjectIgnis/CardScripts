@@ -34,7 +34,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0xc6}
 function s.scfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xc6)
+	return c:IsFaceup() and c:IsSetCard(SET_PERFORMAGE)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local phase=Duel.GetCurrentPhase()
@@ -64,7 +64,7 @@ function s.indescon(e,tp,eg,ep,ev,re,r,rp)
 		tc=Duel.GetAttackTarget()
 		bc=Duel.GetAttacker()
 	end
-	if not tc or not bc or tc:IsControler(1-tp) or not tc:IsSetCard(0xc6) then return false end
+	if not tc or not bc or tc:IsControler(1-tp) or not tc:IsSetCard(SET_PERFORMAGE) then return false end
 	if tc:IsHasEffect(EFFECT_INDESTRUCTABLE_BATTLE) then
 		local tcind={tc:GetCardEffect(EFFECT_INDESTRUCTABLE_BATTLE)}
 		for _,te in ipairs(tcind) do
@@ -101,7 +101,7 @@ function s.indescon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.cfilter(c,e,tp)
 	return c:IsOnField() and c:IsMonster() and c:IsControler(tp) and (not e or c:IsRelateToEffect(e)) 
-		and c:IsSetCard(0xc6)
+		and c:IsSetCard(SET_PERFORMAGE)
 end
 function s.indescon2(e,tp,eg,ep,ev,re,r,rp)
 	local ex,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_DESTROY)

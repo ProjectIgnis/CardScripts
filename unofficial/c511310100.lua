@@ -43,7 +43,7 @@ function s.filter(c)
 	return c:IsCode(511310101,511310102,511310103,511310104,511310105) and c:IsSSetable(true)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK+LOCATION_HAND,0,1,nil):GetClassCount(Card.GetCode)==5 end
+	if chk==0 then return Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK|LOCATION_HAND,0,1,nil):GetClassCount(Card.GetCode)==5 end
 	local g=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_SZONE,0,e:GetHandler())
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end
@@ -57,7 +57,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Destroy(g,REASON_EFFECT)
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<5 then return end
 	Duel.BreakEffect()
-	local sg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK+LOCATION_HAND,0,1,nil)
+	local sg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK|LOCATION_HAND,0,1,nil)
 	if not s.rescon(sg) then return end
 	local setg=aux.SelectUnselectGroup(sg,e,tp,5,5,s.rescon,1,tp,HINTMSG_SET)
 	if #sg>0 then

@@ -218,15 +218,15 @@ if not ActionDuel then
 		if Duel.GetRandomNumber(0,1)==0 then table.insert(hintp,tp) end
 		for _,p in ipairs(hintp) do
 			Duel.Hint(HINT_MESSAGE,p,aux.Stringid(id,2))
-			Duel.RegisterFlagEffect(p,id,RESET_PHASE+PHASE_END,0,1)
+			Duel.RegisterFlagEffect(p,id,RESET_PHASE|PHASE_END,0,1)
 		end
 		if tokenp then
 			token=Duel.CreateToken(tokenp,e:GetLabel())
 			Duel.SendtoHand(token,nil,REASON_EFFECT)
 			if string.find(originalField.af,'m') then
 				table.remove(originalField.tableAction,e:GetLabel())
-				Duel.RegisterFlagEffect(tp,320,RESET_PHASE+PHASE_END,0,1)
-				Duel.RegisterFlagEffect(1-tp,320,RESET_PHASE+PHASE_END,0,1)
+				Duel.RegisterFlagEffect(tp,320,RESET_PHASE|PHASE_END,0,1)
+				Duel.RegisterFlagEffect(1-tp,320,RESET_PHASE|PHASE_END,0,1)
 			end
 		end
 		if token and Duel.IsExistingMatchingCard(Card.IsActionCard,tokenp,LOCATION_HAND,0,2,nil)

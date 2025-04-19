@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x4)
+	return c:IsFaceup() and c:IsSetCard(SET_AMAZONESS)
 end
 function s.descon(e)
 	return not Duel.IsExistingMatchingCard(s.cfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)

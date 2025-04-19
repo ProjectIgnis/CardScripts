@@ -30,7 +30,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCost(s.accost)
 	e1:SetTarget(s.actg)
 	e1:SetOperation(s.acop)
-	if Duel.GetTurnPlayer()==tp then
+	if Duel.IsTurnPlayer(tp) then
 		e1:SetCondition(s.accon2)
 		e1:SetLabel(Duel.GetTurnCount())
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_SELF_TURN,2)

@@ -26,7 +26,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0
 end
 function s.filter(c,e,tp,tid)
-	return c:GetTurnID()==tid and c:IsSetCard(0x7) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:GetTurnID()==tid and c:IsSetCard(SET_ANCIENT_GEAR) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and not c:IsReason(REASON_RETURN)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

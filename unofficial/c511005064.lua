@@ -55,7 +55,7 @@ function s.cfilter(c,tp)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	if eg:IsExists(s.cfilter,1,nil,Duel.GetTurnPlayer()) then
-		Duel.RegisterFlagEffect(Duel.GetTurnPlayer(),id,RESET_PHASE+PHASE_END,0,1)
+		Duel.RegisterFlagEffect(Duel.GetTurnPlayer(),id,RESET_PHASE|PHASE_END,0,1)
 	end
 end
 function s.checkop2(e,tp,eg,ep,ev,re,r,rp)
@@ -73,5 +73,5 @@ function s.checkop2(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.checkop3(e,tp,eg,ep,ev,re,r,rp)
-	Duel.RegisterFlagEffect(Duel.GetTurnPlayer(),id,RESET_PHASE+PHASE_END,0,1)
+	Duel.RegisterFlagEffect(Duel.GetTurnPlayer(),id,RESET_PHASE|PHASE_END,0,1)
 end

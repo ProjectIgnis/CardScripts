@@ -43,7 +43,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_PREDRAW)
-	e1:SetRange(LOCATION_HAND+LOCATION_DECK)
+	e1:SetRange(LOCATION_HAND|LOCATION_DECK)
 	e1:SetCountLimit(1)
 	e1:SetCondition(s.activecondition)
 	e1:SetOperation(s.activeoperation)
@@ -147,7 +147,7 @@ function s.activeoperation(e,tp,eg,ep,ev,re,r,rp)
 end
 --normal/set
 function s.normalsetcondition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2
+	return Duel.IsMainPhase()
 end
 function s.normalsettarget(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end

@@ -31,7 +31,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x48}
 function s.chkfilter(c,tid)
-	return c:IsSetCard(0x48) and c:GetTurnID()==tid
+	return c:IsSetCard(SET_NUMBER) and c:GetTurnID()==tid
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tid=Duel.GetTurnCount()
@@ -46,7 +46,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x48)
+	return c:IsFaceup() and c:IsSetCard(SET_NUMBER)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end

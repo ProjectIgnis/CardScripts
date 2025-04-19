@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.filter(c)
-	return c:IsSetCard(0x1083) and c:IsType(TYPE_XYZ)
+	return c:IsSetCard(SET_GIMMICK_PUPPET) and c:IsType(TYPE_XYZ)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ec=e:GetHandler():GetEquipTarget()

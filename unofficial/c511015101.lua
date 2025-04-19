@@ -14,7 +14,7 @@ function s.initial_effect(c)
 end
 s.listed_names={47198668}
 function s.filter2(c,e,tp,m,f)
-	return c:IsType(TYPE_FUSION) and c:IsSetCard(0x10af) and (not f or f(c))
+	return c:IsType(TYPE_FUSION) and c:IsSetCard(SET_DDD) and (not f or f(c))
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) and c:CheckFusionMaterial(m,nil,tp)
 end
 function s.fcheck(tp,sg,fc,mg)

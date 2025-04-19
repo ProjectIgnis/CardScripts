@@ -38,7 +38,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	pe:SetValue(500)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local pe=e:GetLabelObject()

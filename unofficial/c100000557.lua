@@ -33,7 +33,7 @@ function s.filter1(c,tp)
 	return Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_EXTRA,0,1,nil,c)
 end
 function s.filter2(c,mc)
-	return c.material and mc:IsCode(table.unpack(c.material)) and c:IsSetCard(0x9)
+	return c.material and mc:IsCode(table.unpack(c.material)) and c:IsSetCard(SET_NEOS)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_DECK,0,1,nil,tp) end

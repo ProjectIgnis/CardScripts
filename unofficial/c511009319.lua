@@ -13,10 +13,10 @@ function s.initial_effect(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttackTarget()
-	return tc and tc:IsControler(tp) and tc:IsFaceup() and tc:IsSetCard(0xba) and tc:IsType(TYPE_XYZ)
+	return tc and tc:IsControler(tp) and tc:IsFaceup() and tc:IsSetCard(SET_RAIDRAPTOR) and tc:IsType(TYPE_XYZ)
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xba) and c:IsType(TYPE_XYZ) and c:GetOverlayCount()~=0
+	return c:IsFaceup() and c:IsSetCard(SET_RAIDRAPTOR) and c:IsType(TYPE_XYZ) and c:GetOverlayCount()~=0
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=Duel.GetAttackTarget()

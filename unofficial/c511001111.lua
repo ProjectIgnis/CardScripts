@@ -63,7 +63,7 @@ function s.crystalop(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RaiseEvent(c,47408488,e,0,tp,0,0)
 end
 function s.returnfilter(c)
-	return c:IsSetCard(0x1034) and c:IsAbleToHand() and c:IsFaceup()
+	return c:IsSetCard(SET_CRYSTAL_BEAST) and c:IsAbleToHand() and c:IsFaceup()
 end
 function s.returntg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(tp) and s.returnfilter(chkc) end

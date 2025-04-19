@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x93)
+	return c:IsFaceup() and c:IsSetCard(SET_CYBER)
 end
 function s.value(e,c)
 	return Duel.GetMatchingGroupCount(s.filter,0,LOCATION_REMOVED,LOCATION_REMOVED,nil)*500

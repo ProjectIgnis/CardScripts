@@ -19,7 +19,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 end
 function s.filter(c)
-	return c:IsSetCard(0x16) and c:IsAbleToHand()
+	return c:IsSetCard(SET_ROID) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local rt=Duel.GetTargetCount(s.filter,tp,LOCATION_GRAVE,0,nil)

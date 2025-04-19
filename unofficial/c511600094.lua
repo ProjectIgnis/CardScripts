@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
 end
 function s.counterfilter(c)
-	return not c:IsSummonType(SUMMON_TYPE_PENDULUM)
+	return not c:IsPendulumSummoned()
 end
 function s.scfilter(c,pc)
 	return c:IsType(TYPE_PENDULUM) and not c:IsForbidden() and c:IsLevelAbove(1)

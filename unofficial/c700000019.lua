@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)	
 end
 function s.filter(c)
-	return c:IsSetCard(0x10ec) and c:IsPosition(POS_FACEUP_ATTACK)
+	return c:IsSetCard(SET_ABYSS_ACTOR) and c:IsPosition(POS_FACEUP_ATTACK)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil) end

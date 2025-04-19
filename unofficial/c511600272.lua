@@ -5,7 +5,7 @@ local s,id,alias=GetID()
 function s.initial_effect(c)
 	alias=c:GetOriginalCodeRule()
 	c:EnableReviveLimit()
-	Link.AddProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x13c),2,2)
+	Link.AddProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,SET_CODEBREAKER),2,2)
 	--special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(168917,0))
@@ -43,12 +43,12 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetMutualLinkedGroupCount()>0
 end
 function s.spfilter(c,e,tp,zones)
-	return c:IsLevelBelow(4) and c:IsSetCard(0x13c)
+	return c:IsLevelBelow(4) and c:IsSetCard(SET_CODEBREAKER)
 		and (zones[0]>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE,0,zones[0])
 		or zones[1]>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE,1,zones[1]))
 end
 function s.spfilter2(c,e,tp,sump,zone)
-	return c:IsLevelBelow(4) and c:IsSetCard(0x13c)
+	return c:IsLevelBelow(4) and c:IsSetCard(SET_CODEBREAKER)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE,sump,zone)
 end
 function s.filter(c,e,tp)
@@ -56,14 +56,14 @@ function s.filter(c,e,tp)
 	local zones={}
 	zones[0]=c:GetLinkedZone(0)&0x1f
 	zones[1]=c:GetLinkedZone(1)&0x1f
-	return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,e,tp,zones)
+	return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND|LOCATION_GRAVE,0,1,nil,e,tp,zones)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc,e,tp) end
 	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil,e,tp)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_GRAVE)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND|LOCATION_GRAVE)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
@@ -81,7 +81,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		sump=tp
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter2),tp,LOCATION_HAND+LOCATION_GRAVE,0,1,1,nil,e,tp,sump,zones[sump])
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter2),tp,LOCATION_HAND|LOCATION_GRAVE,0,1,1,nil,e,tp,sump,zones[sump])
 	if #g>0 then
 		Duel.SpecialSummon(g,0,tp,sump,false,false,POS_FACEUP_DEFENSE,zones[sump])
 	end
@@ -90,7 +90,7 @@ function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttackTarget()~=nil
 end
 function s.damfilter(c,e,tp)
-	return c:IsFaceup() and c:IsSetCard(0x13c)
+	return c:IsFaceup() and c:IsSetCard(SET_CODEBREAKER)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsFaceup() end

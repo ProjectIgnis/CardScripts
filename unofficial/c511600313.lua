@@ -39,7 +39,7 @@ function s.initial_effect(c)
 end
 s.listed_names={101011054}
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_RITUAL)
+	return e:GetHandler():IsRitualSummoned()
 end
 function s.thfilter(c)
 	return c:IsFaceup() and c:GetBaseAttack()<=2300 and c:IsAbleToHand()

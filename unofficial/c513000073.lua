@@ -85,13 +85,13 @@ function s.atcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end
 function s.afilter(c)
-	return c:IsSetCard(0x23) and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(SET_MALEFIC) and c:IsAbleToGraveAsCost()
 end
 function s.atcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.afilter,tp,LOCATION_MZONE,0,1,e:GetHandler()) end
 	local g=Duel.GetMatchingGroup(Card.IsAbleToGraveAsCost,tp,LOCATION_MZONE,0,e:GetHandler())
 	Duel.SendtoGrave(g,REASON_COST)
-	local ct=g:FilterCount(Card.IsSetCard,nil,0x23)
+	local ct=g:FilterCount(Card.IsSetCard,nil,SET_MALEFIC)
 	e:SetLabel(ct)
 end
 function s.atop(e,tp,eg,ep,ev,re,r,rp)
@@ -106,7 +106,7 @@ function s.atop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c)
-	return c:IsMonster() and c:IsSetCard(0x23) and c:IsAbleToRemoveAsCost()
+	return c:IsMonster() and c:IsSetCard(SET_MALEFIC) and c:IsAbleToRemoveAsCost()
 end
 function s.tdcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,1,nil) end

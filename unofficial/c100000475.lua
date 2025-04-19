@@ -14,7 +14,7 @@ function s.stage2(e,tc,tp,sg,chk)
 		e1:SetCategory(CATEGORY_TOHAND)
 		e1:SetType(EFFECT_TYPE_IGNITION)
 		e1:SetRange(LOCATION_GRAVE)
-		if Duel.GetTurnPlayer()==tp then
+		if Duel.IsTurnPlayer(tp) then
 			res=3
 			e1:SetLabel(Duel.GetTurnCount())
 		else

@@ -35,7 +35,7 @@ end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	while tc do
-		if tc:IsSetCard(0x10af) and (tc:GetSummonType()&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM then
+		if tc:IsSetCard(SET_DDD) and (tc:GetSummonType()&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM then
 			local p=tc:GetSummonPlayer()
 			s[p]=s[p]+1
 		end

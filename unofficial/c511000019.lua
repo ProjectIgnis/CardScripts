@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x15) and c:IsCanAddCounter(0x1f,3)
+	return c:IsFaceup() and c:IsSetCard(SET_BES) and c:IsCanAddCounter(SET_NEO_SPACIAN,3)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) end
@@ -24,7 +24,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsFaceup() and tc:IsSetCard(0x15) and tc:IsRelateToEffect(e) then
+	if tc:IsFaceup() and tc:IsSetCard(SET_BES) and tc:IsRelateToEffect(e) then
 		tc:AddCounter(0x1f,3)
 	end
 end

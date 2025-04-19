@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x2b)
+	return c:IsFaceup() and c:IsSetCard(SET_NINJA)
 end
 function s.tgfilter(c,e,tp)
 	return c:IsFaceup() and c:IsControler(1-tp) and (not e or c:IsRelateToEffect(e))

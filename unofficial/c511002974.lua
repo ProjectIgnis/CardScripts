@@ -62,7 +62,7 @@ function s.gbcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetOverlayCount()==0
 end
 function s.gbfilter(c)
-	return c:IsSetCard(0x19) and c:IsMonster()
+	return c:IsSetCard(SET_GLADIATOR) and c:IsMonster()
 end
 function s.gbtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.gbfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -94,7 +94,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Damage(p,d,REASON_EFFECT)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x19) and c:GetFlagEffect(id)==0 and c:GetFlagEffect(id+1)==0 
+	return c:IsFaceup() and c:IsSetCard(SET_GLADIATOR) and c:GetFlagEffect(id)==0 and c:GetFlagEffect(id+1)==0 
 		and c:GetFlagEffect(511002972)==0 and c:GetFlagEffect(511002973)==0
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

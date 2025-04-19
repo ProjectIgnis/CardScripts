@@ -35,7 +35,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function s.xyzfilter(c,e,tp)
-	return c:IsSetCard(0x48) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
+	return c:IsSetCard(SET_NUMBER) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,true,false)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)

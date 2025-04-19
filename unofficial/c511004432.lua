@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.ccon(e,tp,eg,ev,ep,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.cop(e,tp,eg,ev,ep,re,r,rp)
 	local str=66

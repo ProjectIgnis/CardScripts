@@ -3,7 +3,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0x16),3)
+	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_ROID),3)
 	Fusion.AddContactProc(c,s.contactfilter,s.contactop,true)
 	--damage
 	local e3=Effect.CreateEffect(c)
@@ -92,7 +92,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	e:Reset()
 end
 function s.descon(e,c)
-	return e:GetHandler():GetEquipGroup():FilterCount(Card.IsSetCard,nil,0x16)==0
+	return e:GetHandler():GetEquipGroup():FilterCount(Card.IsSetCard,nil,SET_ROID)==0
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

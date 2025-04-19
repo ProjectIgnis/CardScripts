@@ -47,7 +47,7 @@ s.listed_series={0xfb}
 function s.reccon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
 	if tc:IsControler(1-tp) then tc=Duel.GetAttackTarget() end
-	return tc and tc:IsControler(tp) and tc:IsSetCard(0xfb) and tc:IsLinkMonster() and Duel.GetBattleDamage(tp)>0
+	return tc and tc:IsControler(tp) and tc:IsSetCard(SET_TRICKSTAR) and tc:IsLinkMonster() and Duel.GetBattleDamage(tp)>0
 end
 function s.rectg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -74,10 +74,10 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local ec=eg:GetFirst()
-	return ec:IsSetCard(0xfb) and ec:IsSummonType(SUMMON_TYPE_LINK) and ec:IsSummonPlayer(tp)
+	return ec:IsSetCard(SET_TRICKSTAR) and ec:IsLinkSummoned() and ec:IsSummonPlayer(tp)
 end
 function s.spfilter(c,e,tp)
-	return c:IsLocation(LOCATION_GRAVE) and c:IsControler(tp) and c:IsSetCard(0xfb)
+	return c:IsLocation(LOCATION_GRAVE) and c:IsControler(tp) and c:IsSetCard(SET_TRICKSTAR)
 		and c:IsCanBeEffectTarget(e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

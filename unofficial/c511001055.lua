@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x10db) and c:GetLevel()==3
+	return c:IsFaceup() and c:IsSetCard(SET_THE_PHANTOM_KNIGHTS) and c:GetLevel()==3
 end
 function s.spcon(e,c)
 	if c==nil then return true end

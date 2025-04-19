@@ -35,7 +35,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetLabel(fid)
 		e2:SetOperation(s.regop)
 		tc:RegisterEffect(e2)
-		tc:RegisterFlagEffect(fid,RESET_PHASE+PHASE_END,0,1,0)
+		tc:RegisterFlagEffect(fid,RESET_PHASE|PHASE_END,0,1,0)
 	end
 	sg:KeepAlive()
 	local e2=Effect.CreateEffect(c)

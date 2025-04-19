@@ -112,7 +112,7 @@ function s.rettg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk then return tc and tc:IsAbleToHand()
 		and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,tc:GetCode()) end
 	local g=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_DECK,0,nil,tc:GetCode())
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g+tc,2,0,tc:GetLocation()+LOCATION_DECK)
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g+tc,2,0,tc:GetLocation()|LOCATION_DECK)
 end
 function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetHandler():GetPreviousEquipTarget()

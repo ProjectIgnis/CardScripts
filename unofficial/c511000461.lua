@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
 	e2:SetCode(EFFECT_BECOME_QUICK)
-	e2:SetRange(LOCATION_SZONE+LOCATION_HAND)
+	e2:SetRange(LOCATION_SZONE|LOCATION_HAND)
 	e2:SetCondition(s.condition)
 	c:RegisterEffect(e2)
 end

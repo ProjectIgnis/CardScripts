@@ -17,7 +17,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetLabel(Duel.GetTurnCount())
 	e1:SetCondition(s.spcon)
 	e1:SetOperation(s.spop)
-	if Duel.GetTurnPlayer()==tp then
+	if Duel.IsTurnPlayer(tp) then
 		e1:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN,2)
 	else
 		e1:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN,1)
@@ -25,7 +25,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnCount()>=e:GetLabel() and Duel.GetTurnPlayer()==tp
+	return Duel.GetTurnCount()>=e:GetLabel() and Duel.IsTurnPlayer(tp)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc1=Duel.GetFieldCard(tp,LOCATION_FZONE,0)

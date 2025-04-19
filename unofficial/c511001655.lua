@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.filter(c,tp)
-	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:IsSetCard(0x54)
+	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:IsSetCard(SET_GAGAGA)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return rp~=tp and re:IsActiveType(TYPE_XYZ) and eg:IsExists(s.filter,1,nil,tp) and Duel.IsChainDisablable(ev)
@@ -40,7 +40,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
 end
 function s.posfilter(c)
-	return c:IsPosition(POS_FACEUP_ATTACK) and c:IsSetCard(0x54)
+	return c:IsPosition(POS_FACEUP_ATTACK) and c:IsSetCard(SET_GAGAGA)
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(tp) and s.posfilter(chkc) end

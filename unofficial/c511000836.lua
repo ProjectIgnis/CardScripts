@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetFieldGroupCount(tp,0,LOCATION_DECK+LOCATION_EXTRA)>0 end
+	if chk==0 then return Duel.GetFieldGroupCount(tp,0,LOCATION_DECK|LOCATION_EXTRA)>0 end
 	s.announce_filter={TYPE_MONSTER,OPCODE_ISTYPE}
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CODE)
 	local ac=Duel.AnnounceCard(tp,table.unpack(s.announce_filter))
@@ -22,7 +22,7 @@ function s.filter(c,code)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local ac=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
-	local sg=Duel.GetMatchingGroup(s.filter,1-tp,LOCATION_DECK+LOCATION_EXTRA,0,nil,ac)
+	local sg=Duel.GetMatchingGroup(s.filter,1-tp,LOCATION_DECK|LOCATION_EXTRA,0,nil,ac)
 	Duel.ConfirmCards(tp,sg)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
 	local g=sg:Select(tp,1,1,nil)

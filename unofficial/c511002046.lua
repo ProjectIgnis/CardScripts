@@ -18,7 +18,7 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local at=Duel.GetAttackTarget()
-	return a:IsControler(1-tp) and at and at:IsControler(tp) and at:IsFaceup() and at:IsSetCard(0xba) and at:IsType(TYPE_XYZ)
+	return a:IsControler(1-tp) and at and at:IsControler(tp) and at:IsFaceup() and at:IsSetCard(SET_RAIDRAPTOR) and at:IsType(TYPE_XYZ)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end

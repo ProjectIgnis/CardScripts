@@ -56,7 +56,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e4,tp)
 end
 function s.turncon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==1-tp
+	return Duel.IsTurnPlayer(1-tp)
 end
 function s.turnop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=e:GetLabel()+1

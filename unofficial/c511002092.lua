@@ -45,5 +45,5 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.indes(e,c)
-	return not c:IsSetCard(0x48)
+	return not c:IsSetCard(SET_NUMBER)
 end

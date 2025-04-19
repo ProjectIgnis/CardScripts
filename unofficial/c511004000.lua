@@ -30,7 +30,7 @@ if not DestinyDraw then
 	end
 	function DestinyDraw.op(e,tp,eg,ep,ev,re,r,rp)
 		for p=0,1 do
-			local g=Duel.GetFieldGroup(p,LOCATION_DECK+LOCATION_HAND,0)
+			local g=Duel.GetFieldGroup(p,LOCATION_DECK|LOCATION_HAND,0)
 			if DestinyDraw[p]==nil and Duel.SelectYesNo(p,aux.Stringid(id,0)) then
 				DestinyDraw[p]=aux.SelectUnselectGroup(g,e,p,1,5,aux.dncheck,1,p)
 				DestinyDraw[p]:KeepAlive()

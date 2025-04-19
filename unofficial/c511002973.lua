@@ -57,20 +57,20 @@ s.listed_names={id+1,511002975}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
-	return ep==tp and (a:IsSetCard(0x19) or (d and d:IsSetCard(0x19)))
+	return ep==tp and (a:IsSetCard(SET_GLADIATOR) or (d and d:IsSetCard(SET_GLADIATOR)))
 end
 function s.desfilter(c)
-	return not c:IsSetCard(0x19) or c:IsFacedown()
+	return not c:IsSetCard(SET_GLADIATOR) or c:IsFacedown()
 end
 function s.filter(c,tid)
 	--if not c:IsCode(id+1) or c:GetFlagEffect(id)>0 then return false end
 	if c:GetFlagEffect(id)>0 then return false end
 	if c:IsHasEffect(id+1) and c:GetFieldID()<=tid then return false end
 	--return not c:IsHasEffect(id+1) or c:GetFieldID()>tid
-	return c:IsFaceup() and c:IsSetCard(0x19)
+	return c:IsFaceup() and c:IsSetCard(SET_GLADIATOR)
 end
 function s.ovfilter(c)
-	return c:IsSetCard(0x19) and c:IsMonster()
+	return c:IsSetCard(SET_GLADIATOR) and c:IsMonster()
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_ONFIELD,0,nil)
@@ -123,7 +123,7 @@ function s.effcon(e)
 	end
 end
 function s.gbtg(e,c)
-	if not c:IsSetCard(0x19) or c==e:GetHandler() or c:GetSequence()>=5 then return false end
+	if not c:IsSetCard(SET_GLADIATOR) or c==e:GetHandler() or c:GetSequence()>=5 then return false end
 	return not c:IsHasEffect(id+1) or c:GetFieldID()>e:GetHandler():GetFieldID()
 end
 function s.cfilter(c)

@@ -16,10 +16,10 @@ s.listed_series={0x1048}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
-	return ep==tp and ev>=2000 and (a:IsSetCard(0x1048) and a:IsControler(1-tp) or (d and d:IsSetCard(0x1048) and d:IsControler(1-tp)))
+	return ep==tp and ev>=2000 and (a:IsSetCard(SET_NUMBER_C) and a:IsControler(1-tp) or (d and d:IsSetCard(SET_NUMBER_C) and d:IsControler(1-tp)))
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x1048) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_NUMBER_C) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

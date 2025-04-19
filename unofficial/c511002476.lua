@@ -57,7 +57,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Draw(tp,1,REASON_EFFECT)
 		if hc then
 			Duel.ConfirmCards(1-tp,hc)
-			if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and hc:IsSetCard(0xe6) and hc:IsMonster() then
+			if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and hc:IsSetCard(SET_FLOWER_CARDIAN) and hc:IsMonster() then
 				Duel.SpecialSummonStep(hc,0,tp,tp,true,false,POS_FACEUP)
 				local e1=Effect.CreateEffect(e:GetHandler())
 				e1:SetType(EFFECT_TYPE_SINGLE)

@@ -19,7 +19,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local ex,dg=Duel.GetOperationInfo(0,CATEGORY_DESTROY)
 	local ex2,dg2=Duel.GetOperationInfo(0,CATEGORY_REMOVE)
 	e:SetLabelObject(tc)
-	return Duel.GetTurnPlayer()==tp and Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE 
+	return Duel.IsTurnPlayer(tp) and Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE 
 		and tc:IsControler(tp) and tc:IsMonster() 
 		and ((dg and #dg==1 and dg:GetFirst()==tc) or (dg2 and #dg2==1 and dg2:GetFirst()==tc))
 end

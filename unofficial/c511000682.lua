@@ -16,7 +16,7 @@ function s.cfilter(c,rk)
 end
 function s.filter(c,tp)
 	local rk=c:GetRank()
-	return c:IsFaceup() and c:IsSetCard(0x48) and not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil,rk)
+	return c:IsFaceup() and c:IsSetCard(SET_NUMBER) and not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil,rk)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end

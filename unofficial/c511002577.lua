@@ -28,10 +28,10 @@ function s.filter1(c,e,tp)
 	return (c:IsControler(tp) or c:IsFaceup()) and c:IsCode(74711057) and c:IsCanBeFusionMaterial() and not c:IsImmuneToEffect(e)
 end
 function s.filter2(c)
-	return c:IsSetCard(0x3008) and c:IsFaceup() and c:IsCanBeFusionMaterial()
+	return c:IsSetCard(SET_ELEMENTAL_HERO) and c:IsFaceup() and c:IsCanBeFusionMaterial()
 end
 function s.filter3(c,e)
-	return c:IsSetCard(0x3008) and c:IsFaceup() and c:IsCanBeFusionMaterial() and not c:IsImmuneToEffect(e)
+	return c:IsSetCard(SET_ELEMENTAL_HERO) and c:IsFaceup() and c:IsCanBeFusionMaterial() and not c:IsImmuneToEffect(e)
 end
 function s.fusfilter(c,e,tp,m1,m2,f,chkf)
 	return c:IsType(TYPE_FUSION) and (not f or f(c)) and (c:IsCode(95486586) or c:IsCode(46759931))

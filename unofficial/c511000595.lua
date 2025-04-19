@@ -52,7 +52,7 @@ function s.initial_effect(c)
 end
 function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if Duel.GetTurnPlayer()==tp and c:GetAttackedCount()==0 then
+	if Duel.IsTurnPlayer(tp) and c:GetAttackedCount()==0 then
 		Duel.Damage(tp,800,REASON_EFFECT)
 	end
 end

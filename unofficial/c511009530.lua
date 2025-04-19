@@ -4,7 +4,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,0xaf),s.ffilter)
+	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_DD),s.ffilter)
 	--spsummon
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -30,16 +30,16 @@ function s.initial_effect(c)
 end
 s.material_setcode=0xaf
 function s.ffilter(c,fc,sumtype,tp)
-	return c:IsSetCard(0xaf,fc,sumtype,tp) and c:IsLevelAbove(5)
+	return c:IsSetCard(SET_DD,fc,sumtype,tp) and c:IsLevelAbove(5)
 end
 function s.cfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0xaf) and c:IsControler(tp)
+	return c:IsFaceup() and c:IsSetCard(SET_DD) and c:IsControler(tp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return not eg:IsContains(e:GetHandler()) and eg:IsExists(s.cfilter,1,nil,tp)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0xaf) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_DD) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.spfilter(chkc,e,tp) end
@@ -56,7 +56,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0xaf)
+	return c:IsFaceup() and c:IsSetCard(SET_DD)
 end
 function s.disfilter(c)
 	return c:IsSpellTrap() and c:IsFaceup() and not c:IsDisabled()

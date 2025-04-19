@@ -24,13 +24,13 @@ end
 s.listed_series={0x5}
 s.listed_names={id+1}
 function s.cfilter(c)
-	return c:IsLevelBelow(4) and c:IsSetCard(0x5)
+	return c:IsLevelBelow(4) and c:IsSetCard(SET_ARCANA_FORCE)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,1,nil)
 end
 function s.costfilter(c)
-	return c:IsSetCard(0x5) and (c:GetLevel()==5 or c:GetLevel()==6) and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(SET_ARCANA_FORCE) and (c:GetLevel()==5 or c:GetLevel()==6) and c:IsAbleToGraveAsCost()
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil) end

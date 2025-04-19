@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	Link.AddProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x10b),3,3)
+	Link.AddProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,SET_TINDANGLE),3,3)
 	--atk
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -39,7 +39,7 @@ function s.atkval1(e,c)
 	return Duel.GetMatchingGroupCount(Card.IsCode,c:GetControler(),LOCATION_GRAVE,0,nil,31759689,68860936)*1500
 end
 function s.atkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x10b)
+	return c:IsFaceup() and c:IsSetCard(SET_TINDANGLE)
 end
 function s.atkval2(e,c)
 	return c:GetLinkedGroup():FilterCount(s.atkfilter,nil)*500

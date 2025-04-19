@@ -50,7 +50,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.mspfilter(c,e,tp)
-	return c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED+LOCATION_EXTRA)
+	return c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsLocation(LOCATION_GRAVE|LOCATION_REMOVED|LOCATION_EXTRA)
 end
 function s.lvfilter(c)
 	return c:GetLevel()~=4
@@ -85,7 +85,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 				e1:SetValue(0)
 				e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 				spgc:RegisterEffect(e1,true)
-				spgc:RegisterFlagEffect(51116005,RESET_PHASE+PHASE_END,0,1,fid)
+				spgc:RegisterFlagEffect(51116005,RESET_PHASE|PHASE_END,0,1,fid)
 				spgc=spg:GetNext()
 			end
 			Duel.SpecialSummonComplete()
@@ -181,7 +181,7 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	if #sg>0 and (r==REASON_SYNCHRO or r==REASON_XYZ) then
 		local tc=sg:GetFirst()
 		while tc do
-			tc:RegisterFlagEffect(id,RESET_PHASE+PHASE_END,0,0)
+			tc:RegisterFlagEffect(id,RESET_PHASE|PHASE_END,0,0)
 			tc=sg:GetNext()
 		end
 	end

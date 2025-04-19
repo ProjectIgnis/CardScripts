@@ -17,12 +17,12 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE
 end
 function s.tfilter(c,att,e,tp)
-	return c:IsSetCard(0xa008) and c:GetLevel()==8
+	return c:IsSetCard(SET_MASKED_HERO) and c:GetLevel()==8
 		and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
 		and c:IsAttribute(att) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0xa008)
+	return c:IsSetCard(SET_MASKED_HERO)
 		and Duel.IsExistingMatchingCard(s.tfilter,tp,LOCATION_EXTRA,0,1,nil,c:GetAttribute(),e,tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

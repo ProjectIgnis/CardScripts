@@ -28,10 +28,10 @@ end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
-	if a:IsSetCard(0xfb) then
+	if a:IsSetCard(SET_TRICKSTAR) then
 		s[a:GetControler()]=true
 	end
-	if d and d:IsSetCard(0xfb) then
+	if d and d:IsSetCard(SET_TRICKSTAR) then
 		s[d:GetControler()]=true
 	end
 end

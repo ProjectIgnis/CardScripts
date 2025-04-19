@@ -25,7 +25,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) then
-		local g=Duel.GetMatchingGroup(Card.IsCode,tp,LOCATION_HAND+LOCATION_DECK,LOCATION_HAND+LOCATION_DECK,nil,tc:GetCode())
+		local g=Duel.GetMatchingGroup(Card.IsCode,tp,LOCATION_HAND|LOCATION_DECK,LOCATION_HAND|LOCATION_DECK,nil,tc:GetCode())
 		if #g>0 then
 			Duel.SendtoGrave(g,REASON_EFFECT+REASON_DISCARD)
 		end

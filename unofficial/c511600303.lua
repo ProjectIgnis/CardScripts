@@ -85,7 +85,7 @@ function s.indval(e,re,tp)
 	return tp~=e:GetHandlerPlayer()
 end
 function s.acfilter(c,p)
-	return c:IsSummonType(SUMMON_TYPE_LINK) and c:GetSummonPlayer()==p
+	return c:IsLinkSummoned() and c:GetSummonPlayer()==p
 end
 function s.accon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.acfilter,1,nil,1-tp) and s.condition(e,tp,eg,ep,ev,re,r,rp)

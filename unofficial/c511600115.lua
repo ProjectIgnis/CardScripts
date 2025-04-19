@@ -27,7 +27,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x9f}
 function s.thfilter(c)
-	return c:IsLevelBelow(4) and c:IsSetCard(0x9f) and c:IsAbleToHand()
+	return c:IsLevelBelow(4) and c:IsSetCard(SET_PERFORMAPAL) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -43,7 +43,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter(c)
-	return c:IsSetCard(0x9f) and c:IsMonster() and c:IsLevelBelow(2147483647)
+	return c:IsSetCard(SET_PERFORMAPAL) and c:IsMonster() and c:IsLevelBelow(2147483647)
 end
 function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,nil) end

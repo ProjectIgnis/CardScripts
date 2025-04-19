@@ -30,7 +30,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return s[tp]
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x9f) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP) 
+	return c:IsSetCard(SET_PERFORMAPAL) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP) 
 		and (c:GetReason()&REASON_DESTROY)==REASON_DESTROY
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)

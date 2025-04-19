@@ -21,17 +21,17 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil)
+	return Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_HAND|LOCATION_GRAVE,0,1,nil)
 	and e:GetLabel()~=1 and e:GetHandler()==Duel.GetAttacker() and e:GetHandler():GetBattleTarget()~=nil
-	or Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil)
+	or Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_HAND|LOCATION_GRAVE,0,1,nil)
 	and e:GetLabel()~=1 and e:GetHandler()==Duel.GetAttackTarget() and e:GetHandler():GetBattleTarget()~=nil
 end
 function s.filter1(c,e,tp,eg,ep,ev,re,r,rp)
 	return c:CheckActivateEffect(false,true,false)~=nil and c:GetType()==TYPE_TRAP and c:IsAbleToRemove()
 end
 function s.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil) end
-	local tc=Duel.SelectMatchingCard(tp,s.filter1,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,1,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_HAND|LOCATION_GRAVE,0,1,nil) end
+	local tc=Duel.SelectMatchingCard(tp,s.filter1,tp,LOCATION_HAND|LOCATION_GRAVE,0,1,1,nil)
 	e:SetLabel(1)
 	local te,eg,ep,ev,re,r,rp=tc:GetFirst():CheckActivateEffect(false,true,true)
 	e:SetLabelObject(tc:GetFirst())

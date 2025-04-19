@@ -32,7 +32,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
 end
 function s.filter1(c)
-	return c:IsLevelBelow(4) and c:IsSetCard(0x29) and c:IsAbleToHand()
+	return c:IsLevelBelow(4) and c:IsSetCard(SET_DRAGUNITY) and c:IsAbleToHand()
 end
 function s.filter2(c)
 	return c:IsRace(RACE_DRAGON) and c:IsAbleToGrave()

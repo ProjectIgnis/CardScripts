@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_ATKCHANGE)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
-	e1:SetRange(LOCATION_HAND+LOCATION_MZONE)
+	e1:SetRange(LOCATION_HAND|LOCATION_MZONE)
 	e1:SetCondition(s.condition)
 	e1:SetCost(s.cost)
 	e1:SetOperation(s.operation)
@@ -23,7 +23,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if a and b then
 		local dif=b:GetAttack()-a:GetAttack()
 		return a:GetControler()~=b:GetControler() and a~=e:GetHandler()
-		and a:IsSetCard(0x11a) and a:IsRelateToBattle()
+		and a:IsSetCard(SET_DINOWRESTLER) and a:IsRelateToBattle()
 		and Duel.GetAttackTarget()~=nil and dif>=0
 	else return false end
 end

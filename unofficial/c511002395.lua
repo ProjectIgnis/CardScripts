@@ -12,10 +12,10 @@ function s.initial_effect(c)
 end
 s.listed_series={0x3008}
 function s.filter(c)
-	return c:IsFaceup() and c:IsType(TYPE_FUSION) and c:IsAbleToExtra() and c:IsSetCard(0x3008)
+	return c:IsFaceup() and c:IsType(TYPE_FUSION) and c:IsAbleToExtra() and c:IsSetCard(SET_ELEMENTAL_HERO)
 end
 function s.spfilter(c,e,tp,lv)
-	return c:IsType(TYPE_FUSION) and c:IsSetCard(0x3008) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) and c:CheckFusionMaterial()
+	return c:IsType(TYPE_FUSION) and c:IsSetCard(SET_ELEMENTAL_HERO) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) and c:CheckFusionMaterial()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil) end

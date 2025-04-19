@@ -98,7 +98,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	c:RegisterEffect(e1)
 end
 function s.matfilter(c,sc)
-	return c:IsSetCard(0xba) and c:IsType(TYPE_XYZ,sc,SUMMON_TYPE_XYZ)
+	return c:IsSetCard(SET_RAIDRAPTOR) and c:IsType(TYPE_XYZ,sc,SUMMON_TYPE_XYZ)
 end
 function s.valcheck(e,c)
 	local g=c:GetMaterial()

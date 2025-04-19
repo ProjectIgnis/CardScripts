@@ -64,7 +64,7 @@ function Auxiliary.RankUpCheckCondition(condition,...)
 		for _,flagLabel in ipairs(flagLabels) do
 			if nameFilter[flagLabel] then return true end
 		end
-		return e:GetLabel()==1 and e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ)
+		return e:GetLabel()==1 and e:GetHandler():IsXyzSummoned()
 			and (not condition or condition(e,tp,eg,ep,ev,re,r,rp))
 	end
 end
@@ -716,7 +716,7 @@ function UnofficialProc.cannotBattleIndes()
 		end
 	end
 	local function batregop(e,tp,eg,ep,ev,re,r,rp)
-		local tg=Duel.GetMatchingGroup(nil,tp,LOCATION_ONFIELD+LOCATION_GRAVE,LOCATION_ONFIELD+LOCATION_GRAVE,nil)
+		local tg=Duel.GetMatchingGroup(nil,tp,LOCATION_ONFIELD|LOCATION_GRAVE,LOCATION_ONFIELD|LOCATION_GRAVE,nil)
 		for tc in tg:Iter() do
 			local indes={tc:GetCardEffect(EFFECT_INDESTRUCTABLE)}
 			local indesBattle={tc:GetCardEffect(EFFECT_INDESTRUCTABLE_BATTLE)}

@@ -85,11 +85,11 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	if #g==0 then return end
 	Duel.SendtoHand(g,nil,REASON_EFFECT)
 	local og=Duel.GetOperatedGroup()
-	local ct=og:FilterCount(Card.IsLocation,nil,LOCATION_HAND+LOCATION_EXTRA)
+	local ct=og:FilterCount(Card.IsLocation,nil,LOCATION_HAND|LOCATION_EXTRA)
 	Duel.Damage(1-tp,ct*300,REASON_EFFECT)
 end
 function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

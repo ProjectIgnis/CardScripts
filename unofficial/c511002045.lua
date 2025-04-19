@@ -16,7 +16,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0xba}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xba) and c:HasLevel()
+	return c:IsFaceup() and c:IsSetCard(SET_RAIDRAPTOR) and c:HasLevel()
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.cfilter(chkc) end

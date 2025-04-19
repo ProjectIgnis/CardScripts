@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
@@ -37,7 +37,7 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 		if ec:IsPreviousSetCard(0x577) and ec:IsPreviousPosition(POS_FACEUP)
 			and ec:GetPreviousTypeOnField()&TYPE_LINK==TYPE_LINK
 			and ec:IsPreviousLocation(LOCATION_MZONE) and ec:IsReason(REASON_EFFECT) then
-			Duel.RegisterFlagEffect(ec:GetPreviousControler(),id,RESET_PHASE+PHASE_END,0,1)
+			Duel.RegisterFlagEffect(ec:GetPreviousControler(),id,RESET_PHASE|PHASE_END,0,1)
 		end
 	end
 end

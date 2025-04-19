@@ -37,10 +37,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function s.eqlimit(e,c)
-	return c:IsSetCard(0xba) and c:IsType(TYPE_XYZ)
+	return c:IsSetCard(SET_RAIDRAPTOR) and c:IsType(TYPE_XYZ)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0xba) and c:IsType(TYPE_XYZ)
+	return c:IsFaceup() and c:IsSetCard(SET_RAIDRAPTOR) and c:IsType(TYPE_XYZ)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) end
@@ -60,10 +60,10 @@ function s.sumcon(e,tp,eg,ep,ev,re,r,rp)
 		and not e:GetHandler():IsStatus(STATUS_CHAINING)
 end
 function s.ovfilter(c,e)
-	return c:IsSetCard(0xba) and c:IsType(TYPE_XYZ) and c:IsMonster() and (not e or c:IsCanBeEffectTarget(e))
+	return c:IsSetCard(SET_RAIDRAPTOR) and c:IsType(TYPE_XYZ) and c:IsMonster() and (not e or c:IsCanBeEffectTarget(e))
 end
 function s.spfilter(c,e,tp,e2)
-	return c:IsSetCard(0xba) and c:IsType(TYPE_XYZ) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_RAIDRAPTOR) and c:IsType(TYPE_XYZ) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and Duel.IsExistingTarget(s.ovfilter,tp,LOCATION_GRAVE,0,1,c) and (not e2 or c:IsCanBeEffectTarget(e2))
 end
 function s.sumtg(e,tp,eg,ep,ev,re,r,rp,chk)

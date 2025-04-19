@@ -45,7 +45,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
 	if not bc or c:IsStatus(STATUS_BATTLE_DESTROYED) then return end
-	if c:IsFaceup() and c:IsRelateToEffect(e) and bc and bc:IsRelateToEffect(e) and bc:IsLocation(LOCATION_SZONE+LOCATION_HAND+LOCATION_GRAVE+LOCATION_REMOVED) then
+	if c:IsFaceup() and c:IsRelateToEffect(e) and bc and bc:IsRelateToEffect(e) and bc:IsLocation(LOCATION_SZONE|LOCATION_HAND|LOCATION_GRAVE|LOCATION_REMOVED) then
 		c:EquipByEffectAndLimitRegister(e,tp,bc)
 	end
 end

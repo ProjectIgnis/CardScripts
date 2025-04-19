@@ -21,13 +21,13 @@ function s.filter(c,tid,e,tp)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsPreviousControler(tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_GRAVE+LOCATION_REMOVED,LOCATION_GRAVE+LOCATION_REMOVED,nil,Duel.GetTurnCount(),e,tp)
+	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_GRAVE|LOCATION_REMOVED,LOCATION_GRAVE|LOCATION_REMOVED,nil,Duel.GetTurnCount(),e,tp)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and #g==1 end
 	Duel.SetTargetCard(g)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_GRAVE+LOCATION_REMOVED,LOCATION_GRAVE+LOCATION_REMOVED,nil,Duel.GetTurnCount(),e,tp)
+	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_GRAVE|LOCATION_REMOVED,LOCATION_GRAVE|LOCATION_REMOVED,nil,Duel.GetTurnCount(),e,tp)
 	local tc=g:GetFirst()
 	if #g~=1 or Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	if tc and tc:IsRelateToEffect(e) then

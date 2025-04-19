@@ -54,7 +54,7 @@ function s.initial_effect(c)
 	end)
 end
 function s.cfilter(c,tp)
-	return c:IsSummonType(SUMMON_TYPE_XYZ) and c:IsSummonPlayer(tp)
+	return c:IsXyzSummoned() and c:IsSummonPlayer(tp)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	if eg:IsExists(s.cfilter,1,nil,tp) then

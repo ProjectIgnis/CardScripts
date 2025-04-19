@@ -46,8 +46,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(e:GetHandler(),0,tp,tp,false,false,POS_FACEUP,zones)
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsSetCard,1,false,nil,e:GetHandler(),0x135) end
-	local g=Duel.SelectReleaseGroupCost(tp,Card.IsSetCard,1,1,false,nil,e:GetHandler(),0x135)
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsSetCard,1,false,nil,e:GetHandler(),SET_IGNISTER) end
+	local g=Duel.SelectReleaseGroupCost(tp,Card.IsSetCard,1,1,false,nil,e:GetHandler(),SET_IGNISTER)
 	Duel.Release(g,REASON_COST)
 	e:SetLabelObject(g:GetFirst())
 end
@@ -55,7 +55,7 @@ function s.thfilter(c)
 	return c:IsCode(85327820) and c:IsAbleToHand()
 end
 function s.thfilter2(c)
-	return c:IsSetCard(0x135) and c:IsRitualMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_IGNISTER) and c:IsRitualMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

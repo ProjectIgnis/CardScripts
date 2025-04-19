@@ -14,7 +14,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x10ec}
 function s.filter(c,g)
-	return c:IsFaceup() and c:IsSetCard(0x10ec) and c:IsLevelBelow(4)
+	return c:IsFaceup() and c:IsSetCard(SET_ABYSS_ACTOR) and c:IsLevelBelow(4)
 end
 function s.target(e,tp,eg,ev,ep,re,r,rp,chk,chkc)
 	local a,d=Duel.GetAttacker(),Duel.GetAttackTarget()

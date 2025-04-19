@@ -159,7 +159,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.mtcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,1,nil,31829185)
+	return Duel.IsTurnPlayer(tp) and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,1,nil,31829185)
 		and e:GetHandler():GetFlagEffect(511000118)==0
 end
 function s.mtop(e,tp,eg,ep,ev,re,r,rp)
@@ -283,7 +283,7 @@ function s.tar(e,tp,eg,ep,ev,re,r,rp,chk)
 	local te=c:GetActivateEffect()
 	local tg=te:GetTarget()
 	local op=te:GetOperation()
-	if chk==0 then return (not tg or tg(e,tp,eg,ep,ev,re,r,rp,0)) and Duel.GetTurnPlayer()==tp
+	if chk==0 then return (not tg or tg(e,tp,eg,ep,ev,re,r,rp,0)) and Duel.IsTurnPlayer(tp)
 		and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,1,nil,31829185)
 	end
 	c:CreateEffectRelation(e)

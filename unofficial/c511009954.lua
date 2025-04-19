@@ -60,7 +60,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c,ft,tp)
-	return c:IsSetCard(0x135) and c:IsControler(tp)
+	return c:IsSetCard(SET_IGNISTER) and c:IsControler(tp)
 		and c:GetSummonLocation()==LOCATION_EXTRA and (ft>0 or c:GetSequence()<5)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -45,7 +45,7 @@ function s.filter(c,tp)
 	return Duel.IsExistingMatchingCard(s.tfilter,tp,LOCATION_MZONE,0,1,c)
 end
 function s.tfilter(c)
-	return c:IsSetCard(0x9a) and c:IsReleasableByEffect()
+	return c:IsSetCard(SET_SUPERHEAVY_SAMURAI) and c:IsReleasableByEffect()
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc,tp) end

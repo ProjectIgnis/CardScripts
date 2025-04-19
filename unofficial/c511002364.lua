@@ -15,7 +15,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return d and d:IsControler(tp)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x8)
+	return c:IsFaceup() and c:IsSetCard(SET_HERO)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,Duel.GetAttackTarget()) end

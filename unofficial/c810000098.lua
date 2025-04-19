@@ -13,14 +13,14 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCost(s.spcost)
-	e2:SetTarget(Fusion.SummonEffTG(aux.FilterBoolFunction(Card.IsSetCard,0xad)))
-	e2:SetOperation(Fusion.SummonEffOP(aux.FilterBoolFunction(Card.IsSetCard,0xad)))
+	e2:SetTarget(Fusion.SummonEffTG(aux.FilterBoolFunction(Card.IsSetCard,SET_FRIGHTFUR)))
+	e2:SetOperation(Fusion.SummonEffOP(aux.FilterBoolFunction(Card.IsSetCard,SET_FRIGHTFUR)))
 	c:RegisterEffect(e2)
 end
 s.listed_series={0x46,0xad}
 s.listed_names={CARD_POLYMERIZATION}
 function s.cfilter(c)
-	return (c:IsCode(CARD_POLYMERIZATION) or c:IsSetCard(0x46)) and c:IsAbleToRemoveAsCost()
+	return (c:IsCode(CARD_POLYMERIZATION) or c:IsSetCard(SET_FUSION)) and c:IsAbleToRemoveAsCost()
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_GRAVE,0,1,nil) end

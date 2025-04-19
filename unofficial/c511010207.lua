@@ -60,16 +60,16 @@ s.xyz_number=107
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
 	if rc then
-		rc:RegisterFlagEffect(511010207,RESET_PHASE+PHASE_END,0,1)
+		rc:RegisterFlagEffect(511010207,RESET_PHASE|PHASE_END,0,1)
 	end
 end
 function s.startop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(aux.TRUE,tp,0x7f,0x7f,nil)
 	for tc in aux.Next(g) do
-		tc:RegisterFlagEffect(511010208,RESET_PHASE+PHASE_END,0,1,tc:GetLocation())
-		tc:RegisterFlagEffect(511010209,RESET_PHASE+PHASE_END,0,1,tc:GetControler())
-		tc:RegisterFlagEffect(511010210,RESET_PHASE+PHASE_END,0,1,tc:GetPosition())
-		tc:RegisterFlagEffect(511010211,RESET_PHASE+PHASE_END,0,1,tc:GetSequence())
+		tc:RegisterFlagEffect(511010208,RESET_PHASE|PHASE_END,0,1,tc:GetLocation())
+		tc:RegisterFlagEffect(511010209,RESET_PHASE|PHASE_END,0,1,tc:GetControler())
+		tc:RegisterFlagEffect(511010210,RESET_PHASE|PHASE_END,0,1,tc:GetPosition())
+		tc:RegisterFlagEffect(511010211,RESET_PHASE|PHASE_END,0,1,tc:GetSequence())
 	end
 end
 function s.filter(c)

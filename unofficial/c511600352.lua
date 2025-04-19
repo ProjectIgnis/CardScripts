@@ -55,7 +55,7 @@ function s.aefilter(e,re)
 	return e:GetOwnerPlayer()~=re:GetOwnerPlayer() and re:IsActivated()
 end
 function s.indtg(e,c)
-	return c:IsSetCard(0x135)
+	return c:IsSetCard(SET_IGNISTER)
 end
 function s.indct(e,re,r,rp)
 	if r&REASON_EFFECT==REASON_EFFECT then

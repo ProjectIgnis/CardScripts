@@ -58,7 +58,7 @@ function s.initial_effect(c)
 	e9:SetCode(EFFECT_UNSTOPPABLE_ATTACK)
 	e9:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e9:SetRange(LOCATION_MZONE)
-	e9:SetCondition(function(e) return e:GetHandler():IsSummonType(SUMMON_TYPE_SPECIAL) end)
+	e9:SetCondition(function(e) return e:GetHandler():IsSpecialSummoned() end)
 	c:RegisterEffect(e9)
 	--Point-to-Point Transfer
 	local e10=Effect.CreateEffect(c)

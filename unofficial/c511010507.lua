@@ -26,10 +26,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={CARD_ZARC,41209827,82044279,16195942,16178681}
-local ZARC_LOC=LOCATION_ONFIELD+LOCATION_GRAVE+LOCATION_EXTRA+LOCATION_DECK
+local ZARC_LOC=LOCATION_ONFIELD|LOCATION_GRAVE|LOCATION_EXTRA|LOCATION_DECK
 function s.spcfilter(c,e,tp)
 	return c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_ONFIELD)
-		and ((c:IsCanBeEffectTarget(e) and (c:IsLocation(LOCATION_SZONE+LOCATION_GRAVE+LOCATION_MZONE) or (c:IsLocation(LOCATION_REMOVED) and c:IsFaceup()))) or (c:IsLocation(LOCATION_HAND+LOCATION_DECK) or (c:IsLocation(LOCATION_EXTRA) and c:IsFaceup())))
+		and ((c:IsCanBeEffectTarget(e) and (c:IsLocation(LOCATION_SZONE|LOCATION_GRAVE|LOCATION_MZONE) or (c:IsLocation(LOCATION_REMOVED) and c:IsFaceup()))) or (c:IsLocation(LOCATION_HAND|LOCATION_DECK) or (c:IsLocation(LOCATION_EXTRA) and c:IsFaceup())))
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -43,7 +43,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.spcfilterchk(c,tp)
 	return c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_ONFIELD)
-		and (c:IsLocation(LOCATION_SZONE+LOCATION_GRAVE+LOCATION_MZONE) or (c:IsLocation(LOCATION_REMOVED) and c:IsFaceup())) or (c:IsLocation(LOCATION_HAND+LOCATION_DECK) or (c:IsLocation(LOCATION_EXTRA) and c:IsFaceup())) and not Duel.GetFieldCard(tp,c:GetPreviousLocation(),c:GetPreviousSequence())
+		and (c:IsLocation(LOCATION_SZONE|LOCATION_GRAVE|LOCATION_MZONE) or (c:IsLocation(LOCATION_REMOVED) and c:IsFaceup())) or (c:IsLocation(LOCATION_HAND|LOCATION_DECK) or (c:IsLocation(LOCATION_EXTRA) and c:IsFaceup())) and not Duel.GetFieldCard(tp,c:GetPreviousLocation(),c:GetPreviousSequence())
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

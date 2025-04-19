@@ -35,7 +35,7 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Destroy(e:GetHandler(),REASON_EFFECT)
 end
 function s.dpop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetTurnPlayer()==tp and Duel.SelectYesNo(tp,aux.Stringid(51670553,0)) then
+	if Duel.IsTurnPlayer(tp) and Duel.SelectYesNo(tp,aux.Stringid(51670553,0)) then
 		Duel.SkipPhase(tp,PHASE_DRAW,RESET_PHASE+PHASE_DRAW,1)
 	end
 end

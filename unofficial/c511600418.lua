@@ -48,7 +48,7 @@ s.listed_series={0x3013}
 s.listed_names={100000067}
 function s.con(e)
 	local c=e:GetHandler()
-	return c:IsSummonType(SUMMON_TYPE_SPECIAL) and c:GetReasonEffect() and c:GetReasonEffect():GetHandler():IsCode(100000067)
+	return c:IsSpecialSummoned() and c:GetReasonEffect() and c:GetReasonEffect():GetHandler():IsCode(100000067)
 end
 function s.val(e,c)
 	return Duel.GetLP(c:GetControler())/2

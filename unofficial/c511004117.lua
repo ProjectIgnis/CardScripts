@@ -74,7 +74,7 @@ function s.equipop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.reeqcond(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	return (tc:IsSummonType(SUMMON_TYPE_TRIBUTE) or tc:IsSummonType(SUMMON_TYPE_FUSION))
+	return (tc:IsTributeSummoned() or tc:IsFusionSummoned())
 		and tc:GetMaterial():IsContains(e:GetHandler():GetPreviousEquipTarget())
 end
 function s.cfilter(c,e,oldec)

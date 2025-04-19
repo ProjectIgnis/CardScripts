@@ -19,7 +19,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x8e}
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x8e)
+	return c:IsFaceup() and c:IsSetCard(SET_VAMPIRE)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)

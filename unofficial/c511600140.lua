@@ -52,12 +52,12 @@ function s.initial_effect(c)
 end
 s.listed_series={0x1034}
 function s.spfilter(c)
-	return c:IsSetCard(0x1034) and (not c:IsOnField() or c:IsFaceup())
+	return c:IsSetCard(SET_CRYSTAL_BEAST) and (not c:IsOnField() or c:IsFaceup())
 end
 function s.spcon(e,c)
 	if c==nil then return true end
 	if Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)<=0 then return false end
-	local g=Duel.GetMatchingGroup(s.spfilter,c:GetControler(),LOCATION_ONFIELD+LOCATION_GRAVE,0,nil)
+	local g=Duel.GetMatchingGroup(s.spfilter,c:GetControler(),LOCATION_ONFIELD|LOCATION_GRAVE,0,nil)
 	local ct=g:GetClassCount(Card.GetCode)
 	return ct>6
 end
@@ -70,7 +70,7 @@ function s.atcon(e,tp,eg,ep,ev,re,r,rp)
 	return phase~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end
 function s.afilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x1034) and c:IsAbleToGraveAsCost()
+	return c:IsFaceup() and c:IsSetCard(SET_CRYSTAL_BEAST) and c:IsAbleToGraveAsCost()
 end
 function s.atcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.afilter,tp,LOCATION_ONFIELD,0,1,nil) end
@@ -93,11 +93,11 @@ function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(id)==0
 end
 function s.cfilter(c)
-	return c:IsSetCard(0x1034) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
+	return c:IsSetCard(SET_CRYSTAL_BEAST) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end
 function s.tdcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil) end
-	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,nil) end
+	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,nil)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)

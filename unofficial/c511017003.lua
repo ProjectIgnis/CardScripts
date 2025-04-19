@@ -14,7 +14,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x3b}
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x3b) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+	return c:IsSetCard(SET_RED_EYES) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 		and c:IsReason(REASON_DESTROY) and c:GetTurnID()==Duel.GetTurnCount()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

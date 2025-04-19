@@ -56,7 +56,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
 end
 function s.linkfilter(c)
-	return c:IsLinkSummonable() and c:IsSetCard(0x1157)
+	return c:IsLinkSummonable() and c:IsSetCard(SET_SUNAVALON)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
@@ -120,7 +120,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.atlimit(e,c)
-	return c:GetControler(e:GetOwnerPlayer()) and (not c:IsSetCard(0x2157) or c:IsFacedown())
+	return c:GetControler(e:GetOwnerPlayer()) and (not c:IsSetCard(SET_SUNVINE) or c:IsFacedown())
 end
 --------------------------------------
 function s.sfilter(c,p)

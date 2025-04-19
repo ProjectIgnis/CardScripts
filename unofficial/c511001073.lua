@@ -18,7 +18,7 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(s.cfilter,nil,e,tp)
 	local ph=Duel.GetCurrentPhase()
-	return #g==1 and Duel.GetTurnPlayer()==tp and ph>=0x08 and ph<=0x20
+	return #g==1 and Duel.IsTurnPlayer(tp) and ph>=0x08 and ph<=0x20
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDestructable,tp,0,LOCATION_MZONE,1,nil) 

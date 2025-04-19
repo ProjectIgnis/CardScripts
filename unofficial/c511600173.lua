@@ -49,7 +49,7 @@ function s.dop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.eqfilter(c)
-	return c:IsFaceup() and c:IsLinkMonster() and c:IsSetCard(0xfb)
+	return c:IsFaceup() and c:IsLinkMonster() and c:IsSetCard(SET_TRICKSTAR)
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.eqfilter(chkc) end
@@ -117,7 +117,7 @@ function s.eqlimit(e,c)
 	return c==e:GetLabelObject()
 end
 function s.cfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0xfb) and c:IsControler(tp)
+	return c:IsFaceup() and c:IsSetCard(SET_TRICKSTAR) and c:IsControler(tp)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)

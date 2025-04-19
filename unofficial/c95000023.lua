@@ -80,10 +80,10 @@ function s.cfilter(c,e,tp,eg,ep,ev,re,r,rp,chain,chk)
 end
 function s.accost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local chain=Duel.GetCurrentChain()
-	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e,tp,eg,ep,ev,re,r,rp,chain) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND|LOCATION_DECK,0,1,nil,e,tp,eg,ep,ev,re,r,rp,chain) end
 	chain=chain-1
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,e,tp,eg,ep,ev,re,r,rp,chain,true)
+	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND|LOCATION_DECK,0,1,1,nil,e,tp,eg,ep,ev,re,r,rp,chain,true)
 	copychain=0
 	Duel.SendtoGrave(g,REASON_COST)
 	Duel.SetTargetCard(g:GetFirst())

@@ -18,7 +18,7 @@ function s.initial_effect(c)
     	c:RegisterEffect(e2)
 end
 function s.indtg(e,c)
-    return c:IsMonster() and c:IsAttribute(ATTRIBUTE_WATER) and (c:IsSummonType(SUMMON_TYPE_NORMAL) or c:IsSummonType(SUMMON_TYPE_SPECIAL))
+    return c:IsMonster() and c:IsAttribute(ATTRIBUTE_WATER) and (c:IsNormalSummoned() or c:IsSpecialSummoned())
 end
 function s.indesval(e,re)
 	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP)

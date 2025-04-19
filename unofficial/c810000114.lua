@@ -32,10 +32,10 @@ function s.cfilter(c,p)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	if eg:IsExists(s.cfilter,1,nil,0) then
-		Duel.RegisterFlagEffect(0,id,RESET_PHASE+PHASE_END,0,2)
+		Duel.RegisterFlagEffect(0,id,RESET_PHASE|PHASE_END,0,2)
 	end
 	if eg:IsExists(s.cfilter,1,nil,1) then
-		Duel.RegisterFlagEffect(1,id,RESET_PHASE+PHASE_END,0,2)
+		Duel.RegisterFlagEffect(1,id,RESET_PHASE|PHASE_END,0,2)
 	end
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

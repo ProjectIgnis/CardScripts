@@ -84,7 +84,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.rmcon(chk)
 	return	function(e,tp,eg,ep,ev,re,r,rp)
-				return Duel.GetTurnPlayer()==1-tp and (chk==1 or Duel.GetTurnCount()~=e:GetLabel())
+				return Duel.IsTurnPlayer(1-tp) and (chk==1 or Duel.GetTurnCount()~=e:GetLabel())
 			end
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
@@ -96,5 +96,5 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
-	return eg:GetFirst():IsSummonType(SUMMON_TYPE_LINK)
+	return eg:GetFirst():IsLinkSummoned()
 end

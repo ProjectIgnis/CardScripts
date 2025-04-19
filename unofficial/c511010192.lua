@@ -76,7 +76,7 @@ function s.clear(e,tp,eg,ep,ev,re,r,rp)
 	s[1]=0
 end
 function s.reccon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.rectg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return s[1-tp]>0 end

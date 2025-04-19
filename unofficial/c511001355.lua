@@ -47,7 +47,7 @@ function s.clear(e,tp,eg,ep,ev,re,r,rp)
 	s[1]:Clear()
 end
 function s.filter(c,e,tp)
-	return c:IsControler(tp) and c:IsLocation(LOCATION_DECK) and c:IsSetCard(0x3008) 
+	return c:IsControler(tp) and c:IsLocation(LOCATION_DECK) and c:IsSetCard(SET_ELEMENTAL_HERO) 
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

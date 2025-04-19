@@ -34,7 +34,7 @@ function s.initial_effect(c)
 end
 function s.matcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsSummonType(SUMMON_TYPE_LINK) and c:GetTurnID()==Duel.GetTurnCount()
+	return c:IsLinkSummoned() and c:GetTurnID()==Duel.GetTurnCount()
 end
 function s.tdcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,nil,1,false,nil,nil) end

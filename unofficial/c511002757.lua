@@ -48,7 +48,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	tc1=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,eg):GetFirst()
 	if tc1 then
-		local pos=Duel.GetTurnPlayer()==tp and POS_FACEUP_ATTACK or POS_FACEUP
+		local pos=Duel.IsTurnPlayer(tp) and POS_FACEUP_ATTACK or POS_FACEUP
 		if Duel.SpecialSummonStep(tc1,0,tp,tp,false,false,pos) then
 			tc1:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE,0,1,fid)
 		end
@@ -56,7 +56,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCountFromEx(1-tp,1-tp,nil,TYPE_XYZ)>0 then
 		Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_SPSUMMON)
 		tc2=Duel.SelectMatchingCard(1-tp,s.filter,1-tp,LOCATION_EXTRA,0,1,1,nil,e,1-tp,eg):GetFirst()
-		local pos=Duel.GetTurnPlayer()==1-tp and POS_FACEUP_ATTACK or POS_FACEUP
+		local pos=Duel.IsTurnPlayer(1-tp) and POS_FACEUP_ATTACK or POS_FACEUP
 		if tc2 and Duel.SpecialSummonStep(tc2,0,1-tp,1-tp,false,false,pos) then
 			tc2:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE,0,1,fid)
 		end
@@ -71,7 +71,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Overlay(tc2,tg2)
 	end
 	if tc1 and tc2 then
-		if Duel.GetTurnPlayer()==tp then
+		if Duel.IsTurnPlayer(tp) then
 			Duel.CalculateDamage(tc1,tc2)
 		else
 			Duel.CalculateDamage(tc2,tc1)

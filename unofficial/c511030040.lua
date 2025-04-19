@@ -44,11 +44,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function s.matfilter(c,lc,sumtype,tp)
-	return c:IsSetCard(0x14a,fc,sumtype,tp) and c:IsLevel(1)
+	return c:IsSetCard(SET_APPLIANCER,fc,sumtype,tp) and c:IsLevel(1)
 end
 function s.lkcon(e)
 	local c=e:GetHandler()
-	return c:IsStatus(STATUS_SPSUMMON_TURN) and c:IsSummonType(SUMMON_TYPE_LINK)
+	return c:IsStatus(STATUS_SPSUMMON_TURN) and c:IsLinkSummoned()
 end
 function s.dacon(e)
 	return not e:GetHandler():IsLinked()

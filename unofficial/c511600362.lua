@@ -20,7 +20,7 @@ end
 s.listed_series={0x119}
 function s.lpcon(e,tp,eg,ep,ev,re,r,rp)
 	local d=Duel.GetAttackTarget()
-	return d and d:IsControler(tp) and d:IsFaceup() and d:IsSetCard(0x119)
+	return d and d:IsControler(tp) and d:IsFaceup() and d:IsSetCard(SET_SALAMANGREAT)
 end
 function s.lpcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end

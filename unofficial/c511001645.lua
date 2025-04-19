@@ -23,13 +23,13 @@ function s.neosfilter(c,fc,sumtype,tp,sub,mg,sg,contact)
 		(c:IsSummonCode(fc,sumtype,fc:GetControler(),CARD_NEOS) or (sub and c:CheckFusionSubstitute(fc)))
 end
 function s.ffilter(c,fc,sumtype,tp,sub,mg,sg)
-	return c:IsSetCard(0x1f,fc,sumtype,fc:GetControler()) and (not sg or not sg:IsExists(s.fusfilter,1,c,c:GetCode(),fc,fc:GetControler(),sumtype))
+	return c:IsSetCard(SET_NEO_SPACIAN,fc,sumtype,fc:GetControler()) and (not sg or not sg:IsExists(s.fusfilter,1,c,c:GetCode(),fc,fc:GetControler(),sumtype))
 end
 function s.fusfilter(c,code,fc,tp,sumtype)
 	return c:IsSummonCode(fc,sumtype,tp,code) and not c:IsHasEffect(511002961)
 end
 function s.contactfil(tp)
-	return Duel.GetMatchingGroup(Card.IsAbleToDeckOrExtraAsCost,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,nil)
+	return Duel.GetMatchingGroup(Card.IsAbleToDeckOrExtraAsCost,tp,LOCATION_ONFIELD|LOCATION_GRAVE,0,nil)
 end
 function s.contactop(g,tp)
 	Duel.ConfirmCards(1-tp,g)
@@ -39,7 +39,7 @@ function s.splimit(e,se,sp,st)
 	return not e:GetHandler():IsLocation(LOCATION_EXTRA)
 end
 function s.copyfilter(c)
-	return c:IsSetCard(0x1f) and c:IsMonster()
+	return c:IsSetCard(SET_NEO_SPACIAN) and c:IsMonster()
 		and not c:IsForbidden() and c:IsAbleToRemove()
 end
 function s.copytg(e,tp,eg,ep,ev,re,r,rp,chk)

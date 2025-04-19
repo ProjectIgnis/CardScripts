@@ -43,7 +43,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Damage(p,e:GetHandler():GetAttack()/2,REASON_EFFECT)
 end
 function s.sumcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)
+	return e:GetHandler():IsFusionSummoned()
 end
 function s.mgfilter(c,e,tp,fusc)
 	return c:IsControler(tp) and c:IsLocation(LOCATION_GRAVE)

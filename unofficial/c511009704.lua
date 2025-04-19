@@ -6,7 +6,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--link summon
 	c:EnableReviveLimit()
-	Link.AddProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x102),2,2)
+	Link.AddProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,SET_ROKKET),2,2)
 	--special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(1357146,0))
@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x10f) and c:IsLinkMonster()
+	return c:IsFaceup() and c:IsSetCard(SET_BORREL) and c:IsLinkMonster()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil)

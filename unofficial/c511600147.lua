@@ -52,7 +52,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spcfilter(c,tp)
-	return c:IsFaceup() and c:IsLinkMonster() and c:IsSummonType(SUMMON_TYPE_LINK) and c:IsControler(tp)
+	return c:IsFaceup() and c:IsLinkMonster() and c:IsLinkSummoned() and c:IsControler(tp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.spcfilter,1,nil,tp)

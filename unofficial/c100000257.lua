@@ -30,16 +30,16 @@ function s.cfilter(c,code)
 	return c:IsCode(code) and c:IsAbleToGraveAsCost()
 end
 function s.ctcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,nil,6007213)
-		and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,nil,32491822)
-		and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,nil,69890967) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_DECK|LOCATION_HAND,0,1,nil,6007213)
+		and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_DECK|LOCATION_HAND,0,1,nil,32491822)
+		and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_DECK|LOCATION_HAND,0,1,nil,69890967) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g1=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,1,nil,6007213)
+	local g1=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_DECK|LOCATION_HAND,0,1,1,nil,6007213)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g2=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,1,nil,32491822)
+	local g2=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_DECK|LOCATION_HAND,0,1,1,nil,32491822)
 	g1:Merge(g2)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g3=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,1,nil,69890967)
+	local g3=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_DECK|LOCATION_HAND,0,1,1,nil,69890967)
 	g1:Merge(g3)
 	Duel.SendtoGrave(g1,REASON_COST)
 end

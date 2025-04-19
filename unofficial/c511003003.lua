@@ -45,7 +45,7 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.ffilter(c,fc,sumtype,tp)
-	return c:IsRace(RACE_ROCK,fc,sumtype,tp) and c:IsSetCard(0x1047,fc,sumtype,tp)
+	return c:IsRace(RACE_ROCK,fc,sumtype,tp) and c:IsSetCard(SET_GEM_KNIGHT,fc,sumtype,tp)
 end
 function s.filter(c,e,tp)
 	return c:IsCanBeFusionMaterial() and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,c)

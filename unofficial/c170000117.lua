@@ -50,7 +50,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.SpecialSummonComplete()
 		end,
 		function()
-			return Duel.GetTurnPlayer()==tp and (ct==1 or Duel.GetTurnCount()~=tid)
+			return Duel.IsTurnPlayer(tp) and (ct==1 or Duel.GetTurnCount()~=tid)
 		end,
 		RESET_PHASE|PHASE_STANDBY|RESET_SELF_TURN,ct)
 end

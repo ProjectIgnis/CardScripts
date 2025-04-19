@@ -12,11 +12,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter1(c,tp)
-	return c:GetLevel()>0 and c:IsSetCard(0x54) 
+	return c:GetLevel()>0 and c:IsSetCard(SET_GAGAGA) 
 		and Duel.IsExistingTarget(s.filter2,tp,LOCATION_MZONE,0,1,c,c:GetLevel())
 end
 function s.filter2(c,lv)
-	return c:GetLevel()>0 and c:GetLevel()~=lv and c:IsSetCard(0x54)
+	return c:GetLevel()>0 and c:GetLevel()~=lv and c:IsSetCard(SET_GAGAGA)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

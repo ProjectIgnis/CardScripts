@@ -30,7 +30,7 @@ function s.initial_effect(c)
 end
 function s.valcheck(e,c)
 	local g=c:GetMaterial()
-	if g:IsExists(Card.IsSetCard,1,nil,0x33) then
+	if g:IsExists(Card.IsSetCard,1,nil,SET_BLACKWING) then
 		e:GetLabelObject():SetLabel(1)
 	else
 		e:GetLabelObject():SetLabel(0)
@@ -50,7 +50,7 @@ function s.tnop(e,tp,eg,ep,ev,re,r,rp)
 	c:RegisterEffect(e1)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x33)
+	return c:IsFaceup() and c:IsSetCard(SET_BLACKWING)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) and chkc:IsDestructable() end

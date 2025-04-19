@@ -31,7 +31,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x1048,0x48}
 function s.ofilter(c,tp)
-	return c:CheckRemoveOverlayCard(tp,1,REASON_COST) and c:IsSetCard(0x1048) and c:IsFaceup()
+	return c:CheckRemoveOverlayCard(tp,1,REASON_COST) and c:IsSetCard(SET_NUMBER_C) and c:IsFaceup()
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.ofilter,tp,LOCATION_MZONE,0,1,nil,tp) end
@@ -43,7 +43,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x48) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
+	return c:IsSetCard(SET_NUMBER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

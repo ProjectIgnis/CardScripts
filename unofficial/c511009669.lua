@@ -39,7 +39,7 @@ function s.matfilter(c,lc,sumtype,tp)
 	return c:IsType(TYPE_NORMAL,lc,sumtype,tp) and c:IsRace(RACE_PLANT,lc,sumtype,tp)
 end
 function s.filter(c,sc,atk)
-	return c:IsFaceup() and c:IsSetCard(0x1157) and c:IsType(TYPE_LINK) and c:GetLinkedGroup():IsContains(sc) and (not atk or c:GetLink()>0)
+	return c:IsFaceup() and c:IsSetCard(SET_SUNAVALON) and c:IsType(TYPE_LINK) and c:GetLinkedGroup():IsContains(sc) and (not atk or c:GetLink()>0)
 end
 function s.descon(e)
 	return not Duel.IsExistingMatchingCard(s.filter,e:GetHandlerPlayer(),LOCATION_MZONE,LOCATION_MZONE,1,nil,e:GetHandler())
@@ -87,7 +87,7 @@ function s.sumcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.sumop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
-	local zone=aux.GetMMZonesPointedTo(tp,Card.IsSetCard,LOCATION_MZONE,0,nil,0x1157)
+	local zone=aux.GetMMZonesPointedTo(tp,Card.IsSetCard,LOCATION_MZONE,0,nil,SET_SUNAVALON)
 	if zone>0 and tc:IsLocation(LOCATION_GRAVE) and tc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone) then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP,zone)
 	end

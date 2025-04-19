@@ -12,7 +12,7 @@ function s.initial_effect(c)
 end
 function s.filter(c,e,tp)
 	if not c:IsType(TYPE_SYNCHRO) then return false end
-	return Duel.IsExistingMatchingCard(s.matfilter1,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil,tp,c)
+	return Duel.IsExistingMatchingCard(s.matfilter1,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,nil,tp,c)
 end
 function s.matfilter1(c,tp,syncard)
 	local loc
@@ -34,7 +34,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local tc=g:Select(tp,1,1,nil):GetFirst()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SMATERIAL)
-		local g1=Duel.SelectMatchingCard(tp,s.matfilter1,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil,tp,tc)
+		local g1=Duel.SelectMatchingCard(tp,s.matfilter1,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,1,nil,tp,tc)
 		local loc
 		if g1:GetFirst():IsLocation(LOCATION_MZONE) then loc=LOCATION_GRAVE else loc=LOCATION_MZONE end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SMATERIAL)

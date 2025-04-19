@@ -54,7 +54,7 @@ function s.desfilter(c)
 	return c:IsMonster() and c:IsAttackAbove(1500)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	local conf=Duel.GetFieldGroup(tp,0,LOCATION_MZONE+LOCATION_HAND+LOCATION_DECK)
+	local conf=Duel.GetFieldGroup(tp,0,LOCATION_MZONE|LOCATION_HAND|LOCATION_DECK)
 	if #conf>0 then
 		Duel.ConfirmCards(tp,conf)
 		local dg=conf:Filter(s.desfilter,nil)

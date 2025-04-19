@@ -55,7 +55,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.hvcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.hvop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SetLP(tp,math.ceil(Duel.GetLP(tp)/2))

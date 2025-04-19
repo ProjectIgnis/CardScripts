@@ -39,7 +39,7 @@ function s.spfilter1(c)
 	return not c:IsType(TYPE_TUNER)
 end
 function s.spfilter2(c)
-	return c:IsSetCard(0x33) and c:IsType(TYPE_TUNER)
+	return c:IsSetCard(SET_BLACKWING) and c:IsType(TYPE_TUNER)
 end
 function s.spcon(e,c)
 	if c==nil then return true end
@@ -81,7 +81,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	g:DeleteGroup()
 end
 function s.filter(c,lv)
-	return c:IsSetCard(0x33) and c:IsType(TYPE_SYNCHRO) and c:IsAbleToRemove() and c:IsLevel(lv)
+	return c:IsSetCard(SET_BLACKWING) and c:IsType(TYPE_SYNCHRO) and c:IsAbleToRemove() and c:IsLevel(lv)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,e:GetHandler():GetLevel()) end

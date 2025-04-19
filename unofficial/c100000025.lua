@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--activate
-	local e1=Fusion.CreateSummonEff({handler=c,fusfilter=aux.FilterBoolFunction(Card.IsSetCard,0x14c),matfilter=aux.FALSE,extrafil=s.fextra,value=0x20,extraop=Fusion.BanishMaterial,extratg=s.extratg})
+	local e1=Fusion.CreateSummonEff({handler=c,fusfilter=aux.FilterBoolFunction(Card.IsSetCard,SET_FOSSIL),matfilter=aux.FALSE,extrafil=s.fextra,value=SET_SHIEN,extraop=Fusion.BanishMaterial,extratg=s.extratg})
 	c:RegisterEffect(e1)
 end
 s.listed_series={0x14c}

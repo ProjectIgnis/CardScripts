@@ -18,7 +18,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.AnnounceCard(tp,{id+1,OPCODE_ISCODE})
 end
 function s.spfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x107f) and c:IsSetCard(0x1048) and c:IsType(TYPE_XYZ) and c:GetFlagEffect(id)==0
+	return c:IsFaceup() and c:IsSetCard(SET_UTOPIA) and c:IsSetCard(SET_NUMBER_C) and c:IsType(TYPE_XYZ) and c:GetFlagEffect(id)==0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and s.spfilter(chkc) and chkc:IsLocation(LOCATION_MZONE) end

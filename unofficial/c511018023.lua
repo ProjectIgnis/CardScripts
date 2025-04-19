@@ -36,7 +36,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(tc,REASON_COST)
 end
 function s.filter(c)
-	return c:IsSpellTrap() and c:IsSetCard(0x46) and c:IsAbleToRemove()
+	return c:IsSpellTrap() and c:IsSetCard(SET_FUSION) and c:IsAbleToRemove()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk then return Duel.GetFieldGroupCount(tp,0,LOCATION_DECK)>0 end
@@ -60,7 +60,7 @@ end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	if rp==tp then return false end
 	local rc=re:GetHandler()
-	return rc:IsSetCard(0x46) and re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)
+	return rc:IsSetCard(SET_FUSION) and re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

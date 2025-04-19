@@ -18,7 +18,7 @@ end
 function s.filter(c,tp)
 	local mi,ma=c:GetTributeRequirement()
 	return c:GetLevel()>4 and c:IsClear()
-		and Duel.IsExistingMatchingCard(s.rfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,mi,nil) and not c:IsPublic()
+		and Duel.IsExistingMatchingCard(s.rfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,mi,nil) and not c:IsPublic()
 end
 function s.rfilter(c)
 	return c:IsMonster() and c:IsClear() and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
@@ -34,7 +34,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.ShuffleHand(tp)
 	local mi,ma=tc:GetTributeRequirement()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local rg=Duel.SelectMatchingCard(tp,s.rfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,mi,ma,nil)
+	local rg=Duel.SelectMatchingCard(tp,s.rfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,mi,ma,nil)
 	Duel.Remove(rg,POS_FACEUP,REASON_COST)
 	Duel.SetTargetCard(tc)
 end

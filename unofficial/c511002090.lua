@@ -71,13 +71,13 @@ function s.initial_effect(c)
 end
 s.xyz_number=6
 function s.eqval(ec,c,tp)
-	return ec:IsControler(tp) and ec:IsSetCard(0x48)
+	return ec:IsControler(tp) and ec:IsSetCard(SET_NUMBER)
 end
 function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ)
+	return e:GetHandler():IsXyzSummoned()
 end
 function s.filter(c)
-	return c:IsSetCard(0x48) and c:IsMonster()
+	return c:IsSetCard(SET_NUMBER) and c:IsMonster()
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc) end
@@ -143,5 +143,5 @@ function s.lpchk(e,tp,eg,ep,ev,re,r,rp)
 	s[1-tp]=Duel.GetLP(1-tp)
 end
 function s.indes(e,c)
-	return not c:IsSetCard(0x48)
+	return not c:IsSetCard(SET_NUMBER)
 end

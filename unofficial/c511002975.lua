@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function s.filter(c)
-	return c:IsSetCard(0x19) and c:IsMonster()
+	return c:IsSetCard(SET_GLADIATOR) and c:IsMonster()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -71,7 +71,7 @@ function s.atcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker():IsControler(1-tp)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(0x19) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_GLADIATOR) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.attg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=e:GetHandler():GetOverlayGroup()

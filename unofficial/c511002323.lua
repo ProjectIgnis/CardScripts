@@ -30,7 +30,7 @@ function s.spfilter(c,e,tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local chkcost=e:GetLabel()==1 and true or false
-	local rg=Duel.GetMatchingGroup(s.costfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil)
+	local rg=Duel.GetMatchingGroup(s.costfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,nil)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if chk==0 then 
 		if chkcost then

@@ -54,7 +54,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(s.damop)
 		e1:SetReset(RESET_CHAIN)
 		Duel.RegisterEffect(e1,tp)
-		Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+		Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1)
 	end
 end
 function s.damop(e,re,val,r,rp,rc)

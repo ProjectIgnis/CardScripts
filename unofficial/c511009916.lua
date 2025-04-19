@@ -16,7 +16,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x119}
 function s.filter(c,ft)
-	return c:IsFaceup() and (ft>0 or c:GetSequence()<5) and c:IsSetCard(0x119) and c:IsAbleToHand()
+	return c:IsFaceup() and (ft>0 or c:GetSequence()<5) and c:IsSetCard(SET_SALAMANGREAT) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)

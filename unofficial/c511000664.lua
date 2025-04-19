@@ -37,7 +37,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
 		e1:SetCountLimit(1)
-		if Duel.GetTurnPlayer()==tp and Duel.GetCurrentPhase()==PHASE_STANDBY then
+		if Duel.IsTurnPlayer(tp) and Duel.GetCurrentPhase()==PHASE_STANDBY then
 			e1:SetLabel(Duel.GetTurnCount())
 			e1:SetCondition(s.retcon)
 			e1:SetReset(RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN,2)

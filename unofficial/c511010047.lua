@@ -37,12 +37,12 @@ function s.matfilter(c)
 	return (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and not c:IsType(TYPE_TOKEN) and c:GetLevel()==3 and c:IsAttribute(ATTRIBUTE_WATER)
 end
 function s.mattg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.matfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.matfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,1,nil) end
 end
 function s.matop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
-	local g=Duel.SelectMatchingCard(tp,s.matfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.matfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,1,1,nil)
 	if #g>=0 then
 		Duel.Overlay(e:GetHandler(),g)
 	end
@@ -86,5 +86,5 @@ function s.ftarget(e,c)
 	return e:GetLabel()~=c:GetFieldID()
 end
 function s.indes(e,c)
-	return not c:IsSetCard(0x48)
+	return not c:IsSetCard(SET_NUMBER)
 end

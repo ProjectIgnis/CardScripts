@@ -18,7 +18,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return r~=REASON_REPLACE and eg:GetFirst():IsControler(tp)
 end
 function s.filter(c)
-	return c:IsSetCard(0x5008) and c:IsFaceup() and Duel.GetAttacker():GetAttackableTarget():IsContains(c)
+	return c:IsSetCard(SET_VISION_HERO) and c:IsFaceup() and Duel.GetAttacker():GetAttackableTarget():IsContains(c)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp)

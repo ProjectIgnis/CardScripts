@@ -26,5 +26,5 @@ function s.ntcon(e,c)
 	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
 end
 function s.nttg(e,c)
-	return c:IsLevelAbove(5) and c:IsSetCard(0x99)
+	return c:IsLevelAbove(5) and c:IsSetCard(SET_ODD_EYES)
 end

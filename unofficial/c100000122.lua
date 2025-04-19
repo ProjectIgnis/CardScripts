@@ -16,11 +16,11 @@ function s.initial_effect(c)
 end
 s.listed_series={0x12e}
 function s.tfilter(c,lv,e,tp)
-	return c:IsSetCard(0x12e) and c:GetLevel()==lv-1 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_FORTUNE_FAIRY) and c:GetLevel()==lv-1 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.filter(c,e,tp)
-	return c:IsFaceup() and c:IsSetCard(0x12e)
-		and Duel.IsExistingMatchingCard(s.tfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,nil,c:GetLevel(),e,tp)
+	return c:IsFaceup() and c:IsSetCard(SET_FORTUNE_FAIRY)
+		and Duel.IsExistingMatchingCard(s.tfilter,tp,LOCATION_DECK|LOCATION_HAND,0,1,nil,c:GetLevel(),e,tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc,e,tp) end
@@ -28,14 +28,14 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		and Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil,e,tp)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK+LOCATION_HAND)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK|LOCATION_HAND)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	local tc=Duel.GetFirstTarget()
 	if not tc:IsRelateToEffect(e) or tc:IsFacedown() then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local sg=Duel.SelectMatchingCard(tp,s.tfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,1,nil,tc:GetLevel(),e,tp)
+	local sg=Duel.SelectMatchingCard(tp,s.tfilter,tp,LOCATION_DECK|LOCATION_HAND,0,1,1,nil,tc:GetLevel(),e,tp)
 	if #sg>0 then
 		Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
 	end

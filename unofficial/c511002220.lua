@@ -28,4 +28,3 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,e:GetHandler())
 	end
 end
-

@@ -35,7 +35,7 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 		and re and re:GetOwner()==e:GetOwner()
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x10db)
+	return c:IsFaceup() and c:IsSetCard(SET_THE_PHANTOM_KNIGHTS)
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end

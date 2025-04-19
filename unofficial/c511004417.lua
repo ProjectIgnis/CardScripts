@@ -13,8 +13,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsSetCard,1,false,nil,nil,0x9f) end
-	local g=Duel.SelectReleaseGroupCost(tp,Card.IsSetCard,1,1,false,nil,nil,0x9f)
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsSetCard,1,false,nil,nil,SET_PERFORMAPAL) end
+	local g=Duel.SelectReleaseGroupCost(tp,Card.IsSetCard,1,1,false,nil,nil,SET_PERFORMAPAL)
 	Duel.Release(g,REASON_COST)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
@@ -52,7 +52,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoGrave(g2,REASON_EFFECT)
 	local lv1=0
 	local lv2=0
-	local dam=Duel.GetMatchingGroupCount(Card.IsMonster,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE,nil)*200
+	local dam=Duel.GetMatchingGroupCount(Card.IsMonster,tp,LOCATION_MZONE|LOCATION_GRAVE,LOCATION_MZONE|LOCATION_GRAVE,nil)*200
 	local tc1=g1:GetFirst()
 	while tc1 do
 		if tc1:IsMonster() then

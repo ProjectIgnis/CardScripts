@@ -64,7 +64,7 @@ function s.thop1(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.effcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsSummonType(SUMMON_TYPE_PENDULUM) and c:IsPosition(POS_FACEUP_ATTACK) and c:IsPreviousLocation(LOCATION_HAND)
+	return c:IsPendulumSummoned() and c:IsPosition(POS_FACEUP_ATTACK) and c:IsPreviousLocation(LOCATION_HAND)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
@@ -94,7 +94,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsSummonType(SUMMON_TYPE_PENDULUM) and c:IsPreviousLocation(LOCATION_EXTRA)
+	return c:IsPendulumSummoned() and c:IsPreviousLocation(LOCATION_EXTRA)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsRelateToEffect(e) end

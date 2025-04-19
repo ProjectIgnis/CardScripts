@@ -23,7 +23,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x99}
 function s.spcon(e)
-	return Duel.IsExistingMatchingCard(Card.IsSetCard,e:GetHandlerPlayer(),LOCATION_EXTRA,0,1,nil,0x99)
+	return Duel.IsExistingMatchingCard(Card.IsSetCard,e:GetHandlerPlayer(),LOCATION_EXTRA,0,1,nil,SET_ODD_EYES)
 end
 function s.atkfilter(c)
 	return c:IsType(TYPE_PENDULUM) and c:IsFaceup()

@@ -36,8 +36,8 @@ function s.spcon(e,c)
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return eg:IsExists(Card.IsPreviousLocation,1,nil,LOCATION_HAND+LOCATION_DECK+LOCATION_ONFIELD) end
-	local ct=eg:FilterCount(Card.IsPreviousLocation,nil,LOCATION_HAND+LOCATION_DECK+LOCATION_ONFIELD)
+	if chk==0 then return eg:IsExists(Card.IsPreviousLocation,1,nil,LOCATION_HAND|LOCATION_DECK|LOCATION_ONFIELD) end
+	local ct=eg:FilterCount(Card.IsPreviousLocation,nil,LOCATION_HAND|LOCATION_DECK|LOCATION_ONFIELD)
 	Duel.SetTargetParam(ct*300)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,PLAYER_ALL,ct*300)
 end

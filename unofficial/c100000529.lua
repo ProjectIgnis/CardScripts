@@ -15,7 +15,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x122}
 function s.filter(c)
-	return c:IsSetCard(0x122) and c:IsFaceup() and c:IsPosition(POS_FACEUP_ATTACK) and c:IsCanChangePosition()
+	return c:IsSetCard(SET_VALKYRIE) and c:IsFaceup() and c:IsPosition(POS_FACEUP_ATTACK) and c:IsCanChangePosition()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

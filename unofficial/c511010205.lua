@@ -104,7 +104,7 @@ function s.atkct(e,c)
 	return e:GetHandler():GetFlagEffect(id)-1
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and Duel.IsBattlePhase() and not e:GetHandler():IsStatus(STATUS_CHAINING)
+	return Duel.IsTurnPlayer(tp) and Duel.IsBattlePhase() and not e:GetHandler():IsStatus(STATUS_CHAINING)
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_DECK,1,nil) end
@@ -180,14 +180,14 @@ function s.matfilter(c,tc,tid)
 end
 function s.mattg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tid=Duel.GetTurnCount()
-	if Duel.GetTurnPlayer()==tp then tid=tid-1 end
+	if Duel.IsTurnPlayer(tp) then tid=tid-1 end
 	if chk==0 then return Duel.IsExistingMatchingCard(s.matfilter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil,e:GetHandler(),tid) end
 	local g=Duel.GetMatchingGroup(s.matfilter,tp,LOCATION_GRAVE,LOCATION_GRAVE,nil,e:GetHandler(),tid)
 	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,g,#g,tp,0)
 end
 function s.matop(e,tp,eg,ep,ev,re,r,rp)
 	local tid=Duel.GetTurnCount()
-	if Duel.GetTurnPlayer()==tp then tid=tid-1 end
+	if Duel.IsTurnPlayer(tp) then tid=tid-1 end
 	local c=e:GetHandler()
 	local g=Duel.GetMatchingGroup(s.matfilter,tp,LOCATION_GRAVE,LOCATION_GRAVE,nil,c,tid)
 	if c:IsRelateToEffect(e) then

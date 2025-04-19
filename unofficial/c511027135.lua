@@ -26,7 +26,7 @@ function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	return tp==Duel.GetTurnPlayer() and Duel.GetActivityCount(tp,ACTIVITY_ATTACK)==0
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x25) and c:HasLevel()
+	return c:IsFaceup() and c:IsSetCard(SET_IRON_CHAIN) and c:HasLevel()
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil)

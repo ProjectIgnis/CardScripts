@@ -28,7 +28,7 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
-	return Duel.GetTurnPlayer()==tp and ph>=0x08 and ph<=0x20
+	return Duel.IsTurnPlayer(tp) and ph>=0x08 and ph<=0x20
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsType(TYPE_SYNCHRO)

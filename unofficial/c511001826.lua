@@ -29,19 +29,19 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end
 function s.filter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x48) and c:IsType(TYPE_XYZ) and c:GetOverlayCount()==0 
+	return c:IsFaceup() and c:IsSetCard(SET_NUMBER) and c:IsType(TYPE_XYZ) and c:GetOverlayCount()==0 
 		and c:GetFlagEffect(511001825+tp)>0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc,tp) end
 	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,1,nil,tp) 
-		and Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil,0x48) end
+		and Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil,SET_NUMBER) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil,tp)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	local ct=Duel.GetMatchingGroupCount(Card.IsSetCard,tp,LOCATION_GRAVE,LOCATION_GRAVE,nil,0x48)
+	local ct=Duel.GetMatchingGroupCount(Card.IsSetCard,tp,LOCATION_GRAVE,LOCATION_GRAVE,nil,SET_NUMBER)
 	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -70,7 +70,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	if not dc then return end
 	if ev<=0 then return end
 	local bc=dc:GetBattleTarget()
-	if not bc:IsSetCard(0x48) or not bc:IsType(TYPE_XYZ) or not dc:IsSetCard(0x48) or not dc:IsType(TYPE_XYZ) 
+	if not bc:IsSetCard(SET_NUMBER) or not bc:IsType(TYPE_XYZ) or not dc:IsSetCard(SET_NUMBER) or not dc:IsType(TYPE_XYZ) 
 		or bc:GetOverlayCount()>0 or dc:GetOverlayCount()>0 then return end
 	if ep==tp then
 		if dc:IsControler(1-tp) and bc:IsStatus(STATUS_BATTLE_DESTROYED) 
@@ -97,7 +97,7 @@ function s.desop2(e,tp,eg,ep,ev,re,r,rp)
 	local dc=Duel.GetAttackTarget()
 	if not dc then return end
 	local bc=dc:GetBattleTarget()
-	if not bc:IsSetCard(0x48) or not bc:IsType(TYPE_XYZ) or not dc:IsSetCard(0x48) or not dc:IsType(TYPE_XYZ) 
+	if not bc:IsSetCard(SET_NUMBER) or not bc:IsType(TYPE_XYZ) or not dc:IsSetCard(SET_NUMBER) or not dc:IsType(TYPE_XYZ) 
 		or bc:GetOverlayCount()>0 or dc:GetOverlayCount()>0 then return end
 	if dc:IsControler(1-tp) then dc,bc=bc,dc end
 	if dc:IsControler(tp) then

@@ -31,12 +31,12 @@ function s.initial_effect(c)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:GetAttackedCount()==0 and Duel.GetTurnPlayer()==tp then
+	if c:GetAttackedCount()==0 and Duel.IsTurnPlayer(tp) then
 		e:SetLabel(1)
 	end
 end
 function s.clear(e,tp,eg,ep,ev,re,r,rp)
-	if e:GetLabelObject():GetLabel()==1 and Duel.GetTurnPlayer()==tp then
+	if e:GetLabelObject():GetLabel()==1 and Duel.IsTurnPlayer(tp) then
 		e:GetLabelObject():SetLabel(0)
 	end
 end

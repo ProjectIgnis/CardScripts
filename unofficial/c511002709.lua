@@ -31,7 +31,7 @@ s.collection={
 	[71625222]=true;[54941203]=true;
 }
 function s.cfilter(c)
-	return c:IsSetCard(0x98) or c:IsSetCard(0xa2) or s.collection[c:GetCode()]
+	return c:IsSetCard(SET_MAGICIAN) or c:IsSetCard(0xa2) or s.collection[c:GetCode()]
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

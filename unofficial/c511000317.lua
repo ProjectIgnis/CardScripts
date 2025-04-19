@@ -13,7 +13,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local p=e:GetHandler():GetControler()
 	local at=Duel.GetAttackTarget()
 	local a=Duel.GetAttacker()
-	return Duel.GetBattleDamage(p)>=Duel.GetLP(p) and ((at and at:IsSetCard(0x8) and at:IsControler(p)) or (a and a:IsSetCard(0x8) and a:IsControler(p))) 
+	return Duel.GetBattleDamage(p)>=Duel.GetLP(p) and ((at and at:IsSetCard(SET_HERO) and at:IsControler(p)) or (a and a:IsSetCard(SET_HERO) and a:IsControler(p))) 
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local p=e:GetHandler():GetControler()

@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.mfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x1083) and c:IsType(TYPE_XYZ)
+	return c:IsFaceup() and c:IsSetCard(SET_GIMMICK_PUPPET) and c:IsType(TYPE_XYZ)
 end
 function s.filter(c,e,tp)
 	return c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsType(TYPE_XYZ)

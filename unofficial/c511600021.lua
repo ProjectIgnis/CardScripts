@@ -76,7 +76,7 @@ function s.sumlimit(e,c)
 	return c:IsLinkMonster() and c:GetLink()>e:GetHandler():GetCounter(0x48)
 end
 function s.dfilter(c,tp,ct)
-	return c:IsFaceup() and c:IsSummonPlayer(tp) and c:IsRace(RACE_DRAGON) and c:IsSummonType(SUMMON_TYPE_LINK) and c:GetLink()<ct
+	return c:IsFaceup() and c:IsSummonPlayer(tp) and c:IsRace(RACE_DRAGON) and c:IsLinkSummoned() and c:GetLink()<ct
 end
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.dfilter,1,nil,tp,e:GetHandler():GetCounter(0x48))

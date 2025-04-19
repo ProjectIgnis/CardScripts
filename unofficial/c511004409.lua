@@ -73,7 +73,7 @@ function s.spop(e,tp,eg,ev,ep,re,r,rp)
 	end
 end
 function s.mtcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.tgfilter(c)
 	return c:IsSpell() and c:IsType(TYPE_CONTINUOUS) and c:IsFaceup() and c:IsAbleToGrave()

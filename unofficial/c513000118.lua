@@ -191,7 +191,7 @@ end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
-	Duel.RegisterFlagEffect(tp,id+1000,RESET_PHASE+PHASE_END,0,1)
+	Duel.RegisterFlagEffect(tp,id+1000,RESET_PHASE|PHASE_END,0,1)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,LOCATION_GRAVE)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
@@ -209,7 +209,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_SPSUMMON)
 		local g2=Duel.SelectMatchingCard(1-tp,s.spfilter,1-tp,LOCATION_GRAVE,0,1,1,nil,e,1-tp)
 		Duel.SpecialSummonStep(g2:GetFirst(),0,1-tp,1-tp,false,false,POS_FACEUP)
-		Duel.RegisterFlagEffect(1-tp,id+1000,RESET_PHASE+PHASE_END,0,1)
+		Duel.RegisterFlagEffect(1-tp,id+1000,RESET_PHASE|PHASE_END,0,1)
 	end
 	Duel.SpecialSummonComplete()
 end

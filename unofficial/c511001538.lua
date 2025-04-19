@@ -19,7 +19,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x7}
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	if rp~=tp or not re:GetHandler():IsSetCard(0x7) then return end
+	if rp~=tp or not re:GetHandler():IsSetCard(SET_ANCIENT_GEAR) then return end
 	local ex,cg,ct,cp,cv=Duel.GetOperationInfo(ev,CATEGORY_DAMAGE)
 	return ex
 end

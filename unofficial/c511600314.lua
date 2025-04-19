@@ -35,7 +35,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0x135}
 function s.tgfilter(c,tp)
-	return c:IsControler(tp) and c:IsSetCard(0x135) and c:IsFaceup(0x135)
+	return c:IsControler(tp) and c:IsSetCard(SET_IGNISTER) and c:IsFaceup(SET_IGNISTER)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
@@ -52,7 +52,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 				e1:SetValue(800)
 				tc:RegisterEffect(e1)
 			end
-			if Duel.GetTurnPlayer()==1-tp then
+			if Duel.IsTurnPlayer(1-tp) then
 				local e1=Effect.CreateEffect(e:GetHandler())
 				e1:SetType(EFFECT_TYPE_FIELD)
 				e1:SetCode(EFFECT_MUST_ATTACK)
@@ -73,7 +73,7 @@ function s.atklimit(e,c)
 	return c:IsRelateToEffect(e)
 end
 function s.check(c,tp)
-	return c and c:IsControler(tp) and c:IsSetCard(0x135)
+	return c and c:IsControler(tp) and c:IsSetCard(SET_IGNISTER)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetAttackTarget()~=nil

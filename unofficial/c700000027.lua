@@ -24,7 +24,7 @@ function s.filter(c,e)
 	return c:HasNonZeroAttack() and (not e or not c:IsImmuneToEffect(e))
 end
 function s.atkfilter(c)
-	return c:IsSetCard(0xba) and c:IsMonster()
+	return c:IsSetCard(SET_RAIDRAPTOR) and c:IsMonster()
 end
 function s.target(e,tp,ep,eg,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.HasNonZeroAttack,tp,0,LOCATION_MZONE,1,nil) 

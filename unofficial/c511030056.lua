@@ -36,11 +36,11 @@ function s.initial_effect(c)
 end
 s.listed_series={0x14a}
 function s.matfilter(c,lc,sumtype,tp)
-	return c:IsSetCard(0x14a,fc,sumtype,tp) and c:IsLevel(1)
+	return c:IsSetCard(SET_APPLIANCER,fc,sumtype,tp) and c:IsLevel(1)
 end
 function s.lkcon(e)
 	local c=e:GetHandler()
-	return c:IsStatus(STATUS_SPSUMMON_TURN) and c:IsSummonType(SUMMON_TYPE_LINK)
+	return c:IsStatus(STATUS_SPSUMMON_TURN) and c:IsLinkSummoned()
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetMutualLinkedGroupCount()>0
@@ -50,7 +50,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function s.spfilter(c,e,tp,colinked)
-	return c:IsSetCard(0x14a) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
+	return c:IsSetCard(SET_APPLIANCER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
 		and ((c:IsType(TYPE_LINK) and colinked) or (c:IsLevelBelow(4) and not colinked))
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

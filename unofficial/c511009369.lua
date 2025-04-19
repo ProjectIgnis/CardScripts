@@ -39,7 +39,7 @@ end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return #eg==1 and eg:GetFirst()==c
-		and c:IsSummonType(SUMMON_TYPE_PENDULUM) and c:IsPreviousLocation(LOCATION_HAND)
+		and c:IsPendulumSummoned() and c:IsPreviousLocation(LOCATION_HAND)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

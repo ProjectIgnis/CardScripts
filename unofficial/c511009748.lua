@@ -34,7 +34,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetValue(s.val)
 	e1:SetReset(RESET_PHASE+PHASE_END,1)
 	Duel.RegisterEffect(e1,tp)
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+	Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1)
 end
 function s.val(e,re,dam,r,rp,rc)
 	if s[e:GetOwnerPlayer()]==1 or (r&REASON_BATTLE)~=0 then

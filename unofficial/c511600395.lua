@@ -34,8 +34,8 @@ function s.pencon(e,c,og)
 	local rscale=rpz:GetRightScale()
 	if lscale>rscale then lscale,rscale=rscale,lscale end
 	local loc=0
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then loc=loc+LOCATION_HAND end
-	if Duel.GetLocationCountFromEx(tp)>0 then loc=loc+LOCATION_EXTRA end
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then loc=loc|LOCATION_HAND end
+	if Duel.GetLocationCountFromEx(tp)>0 then loc=loc|LOCATION_EXTRA end
 	if loc==0 then return false end
 	local g=nil
 	if og then
@@ -57,8 +57,8 @@ function s.penop(e,tp,eg,ep,ev,re,r,rp,c,sg,inchain)
 	if ft2>0 then ft2=1 end
 	if ft>0 then ft=1 end
 	local loc=0
-	if ft1>0 then loc=loc+LOCATION_HAND end
-	if ft2>0 then loc=loc+LOCATION_EXTRA end
+	if ft1>0 then loc=loc|LOCATION_HAND end
+	if ft2>0 then loc=loc|LOCATION_EXTRA end
 	local tg=nil
 	if og then
 		tg=og:Filter(Card.IsLocation,nil,loc):Filter(s.penfilter,nil,e,tp,lscale,rscale)
@@ -75,8 +75,8 @@ function s.penop(e,tp,eg,ep,ev,re,r,rp,c,sg,inchain)
 		if ct1>ft1 then ct=math.min(ct,ft1) end
 		if ct2>ft2 then ct=math.min(ct,ft2) end
 		local loc=0
-		if ft1>0 then loc=loc+LOCATION_HAND end
-		if ft2>0 then loc=loc+LOCATION_EXTRA end
+		if ft1>0 then loc=loc|LOCATION_HAND end
+		if ft2>0 then loc=loc|LOCATION_EXTRA end
 		local g=tg:Filter(Card.IsLocation,sg,loc)
 		if #g==0 or ft==0 then break end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

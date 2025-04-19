@@ -66,7 +66,7 @@ function s.hspcon(e,c)
 		and Duel.IsExistingMatchingCard(Card.IsSummonType,tp,0,LOCATION_MZONE,1,nil,SUMMON_TYPE_SPECIAL)
 end
 function s.atkcon2(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_SPECIAL)
+	return e:GetHandler():IsSpecialSummoned()
 end
 function s.atkfilter(c)
 	return c:IsFaceup() and c:IsAttackAbove(2500)

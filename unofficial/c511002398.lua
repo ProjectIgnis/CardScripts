@@ -17,7 +17,7 @@ end
 s.listed_series={0x3008}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
-	return Duel.GetTurnPlayer()==tp and ph>=0x08 and ph<=0x20 
+	return Duel.IsTurnPlayer(tp) and ph>=0x08 and ph<=0x20 
 		and (ph~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
 end
 function s.filter(c,tp)
@@ -27,7 +27,7 @@ function s.filter2(c,atk)
 	return c:IsFaceup() and c:IsAttackAbove(atk+1000)
 end
 function s.rfilter(c)
-	return c:IsSetCard(0x3008) and c:IsAbleToRemove()
+	return c:IsSetCard(SET_ELEMENTAL_HERO) and c:IsAbleToRemove()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc,tp) end

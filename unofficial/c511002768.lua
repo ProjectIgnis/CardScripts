@@ -39,7 +39,7 @@ function s.filter2(c,e,tp,mc,rk,pg)
 	if c.rum_limit and not c.rum_limit(mc,e) then return false end
 	return c:IsType(TYPE_XYZ) and mc:IsType(TYPE_XYZ,c,SUMMON_TYPE_XYZ,tp)
 		and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0
-		and c:IsRank(rk) and mc:IsCanBeXyzMaterial(c,tp) and c:IsSetCard(0xba)
+		and c:IsRank(rk) and mc:IsCanBeXyzMaterial(c,tp) and c:IsSetCard(SET_RAIDRAPTOR)
 		and (#pg<=0 or pg:IsContains(mc)) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

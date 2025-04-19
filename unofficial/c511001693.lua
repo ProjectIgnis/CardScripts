@@ -16,7 +16,7 @@ end
 s.listed_series={SET_FLOWER_CARDIAN}
 function s.filter(c)
 	local re=c:GetReasonEffect()
-	return c:IsLevel(12) and c:IsSetCard(SET_FLOWER_CARDIAN) and (not c:IsSummonType(SUMMON_TYPE_SPECIAL)
+	return c:IsLevel(12) and c:IsSetCard(SET_FLOWER_CARDIAN) and (not c:IsSpecialSummoned()
 		or (not re or not re:GetHandler():IsSetCard(SET_FLOWER_CARDIAN) or not re:GetHandler():IsMonster()))
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)

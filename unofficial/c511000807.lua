@@ -61,14 +61,14 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if Duel.GetTurnPlayer()==tp and Duel.GetActivityCount(tp,ACTIVITY_SUMMON)==0
+	if Duel.IsTurnPlayer(tp) and Duel.GetActivityCount(tp,ACTIVITY_SUMMON)==0
 		and Duel.GetActivityCount(tp,ACTIVITY_FLIPSUMMON)==0 and Duel.GetActivityCount(tp,ACTIVITY_SPSUMMON)==0
 		and Duel.GetActivityCount(tp,ACTIVITY_ATTACK)==0 then
 		Duel.RaiseEvent(e:GetHandler(),id,e,0,0,tp,0)
 	end
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

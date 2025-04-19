@@ -42,7 +42,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 		end
 		og:KeepAlive()
 		local c=e:GetHandler()
-		local res=Duel.GetTurnPlayer()==1-tp and 4 or 3
+		local res=Duel.IsTurnPlayer(1-tp) and 4 or 3
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_PHASE+PHASE_END)
@@ -72,7 +72,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetOperation(s.retop)
 		e3:SetReset(RESET_PHASE+PHASE_BATTLE+RESET_OPPO_TURN,res)
 		Duel.RegisterEffect(e3,tp)
-		Duel.RegisterFlagEffect(0,e1:GetFieldID()+id,RESET_PHASE+PHASE_END,0,1)
+		Duel.RegisterFlagEffect(0,e1:GetFieldID()+id,RESET_PHASE|PHASE_END,0,1)
 	end
 end
 function s.reset(e,tp,eg,ep,ev,re,r,rp)

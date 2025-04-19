@@ -46,7 +46,7 @@ function s.indes(e,c)
 	return c:GetAttack()==e:GetHandler():GetAttack()
 end
 function s.filter(c,e,tp,zone)
-	return c:IsSetCard(0x135) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
+	return c:IsSetCard(SET_IGNISTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
 end
 function s.sptg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local zone=e:GetHandler():GetLinkedZone(tp)
@@ -87,7 +87,7 @@ function s.spcheck(sg,e,tp,mg)
 	return sg:GetClassCount(Card.GetCode)==#sg
 end
 function s.spfilter(c,e,tp,zone)
-	return c:IsLevelBelow(4) and c:IsSetCard(0x135) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
+	return c:IsLevelBelow(4) and c:IsSetCard(SET_IGNISTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
 end
 function s.ltgfilter(c,e,tp)
 	return c:IsLinkMonster() and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,c:GetLinkedZone(tp))

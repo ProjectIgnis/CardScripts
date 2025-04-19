@@ -75,5 +75,5 @@ function s.indesval(e,re)
 	return re:IsActiveType(TYPE_SPELL)
 end
 function s.damcon2(e,tp,eg,ep,ev,re,r,rp)
-	return s.damcon(e,tp,eg,ep,ev,re,r,rp) and Duel.GetTurnPlayer()==tp
+	return s.damcon(e,tp,eg,ep,ev,re,r,rp) and Duel.IsTurnPlayer(tp)
 end

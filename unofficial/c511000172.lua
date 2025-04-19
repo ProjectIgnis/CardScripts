@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cfilter(c,tp)
-	return c:IsControler(1-tp) and c:IsPreviousLocation(LOCATION_DECK+LOCATION_ONFIELD+LOCATION_GRAVE+LOCATION_REMOVED)
+	return c:IsControler(1-tp) and c:IsPreviousLocation(LOCATION_DECK|LOCATION_ONFIELD|LOCATION_GRAVE|LOCATION_REMOVED)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return (r&REASON_EFFECT)~=0 and eg:IsExists(s.cfilter,1,nil,tp)

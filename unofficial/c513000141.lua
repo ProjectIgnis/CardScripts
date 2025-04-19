@@ -45,7 +45,7 @@ function s.initial_effect(c)
 	local e6=Effect.CreateEffect(c)
 	e6:SetType(EFFECT_TYPE_SINGLE)
 	e6:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-	e6:SetValue(function(e,c) return not c:IsSetCard(0x48) end)
+	e6:SetValue(function(e,c) return not c:IsSetCard(SET_NUMBER) end)
 	c:RegisterEffect(e6)
 	--copy
 	local e7=Effect.CreateEffect(c)

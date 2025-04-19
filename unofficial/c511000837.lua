@@ -18,4 +18,3 @@ function s.initial_effect(c)
 	e2:SetValue(DOUBLE_DAMAGE)
 	c:RegisterEffect(e2)
 end
-

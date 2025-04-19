@@ -19,13 +19,13 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetCondition(s.negcon)
-	e2:SetCost(aux.bfgcost)
+	e2:SetCost(Cost.SelfBanish)
 	e2:SetOperation(s.negop)
 	c:RegisterEffect(e2)
 end
 function s.cfilter(c,e,tp)
 	return c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE) 
-		and c:IsPreviousSetCard(0x33) and c:IsType(TYPE_SYNCHRO) and c:IsCanBeEffectTarget(e) and c:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED)
+		and c:IsPreviousSetCard(0x33) and c:IsType(TYPE_SYNCHRO) and c:IsCanBeEffectTarget(e) and c:IsLocation(LOCATION_GRAVE|LOCATION_REMOVED)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return eg:IsContains(chkc) and s.cfilter(chkc,e,tp) end
@@ -52,7 +52,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetAttacker() and Duel.GetAttacker():IsSetCard(0x33)
+	return Duel.GetAttacker() and Duel.GetAttacker():IsSetCard(SET_BLACKWING)
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

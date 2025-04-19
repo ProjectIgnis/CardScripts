@@ -18,18 +18,18 @@ end
 s.listed_series={0x1034}
 function s.cfilter(c,tp)
 	return c:IsLocation(LOCATION_DECK) and c:IsPreviousControler(tp) and c:IsControler(tp) 
-		and c:IsMonster() and c:IsSetCard(0x1034)
+		and c:IsMonster() and c:IsSetCard(SET_CRYSTAL_BEAST)
 end
 function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(s.cfilter,nil,tp)
 	local tc=g:GetFirst()
-	return #g==1 and Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_DECK,0,2,tc,0x1034)
+	return #g==1 and Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_DECK,0,2,tc,SET_CRYSTAL_BEAST)
 end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local gc=eg:Filter(s.cfilter,nil,tp)
 	local tc=gc:GetFirst()
 	if not e:GetHandler():IsRelateToEffect(e) then return end
-	local g=Duel.GetMatchingGroup(Card.IsSetCard,tp,LOCATION_DECK,0,tc,0x1034)
+	local g=Duel.GetMatchingGroup(Card.IsSetCard,tp,LOCATION_DECK,0,tc,SET_CRYSTAL_BEAST)
 	if #g>1 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 		local sg=g:Select(tp,2,2,nil)

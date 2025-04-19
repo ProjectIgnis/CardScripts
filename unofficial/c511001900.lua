@@ -13,14 +13,14 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cfilter(c,tp)
-	return c:IsSetCard(0x4) and c:IsReason(REASON_DESTROY) and c:IsPreviousControler(tp)
+	return c:IsSetCard(SET_AMAZONESS) and c:IsReason(REASON_DESTROY) and c:IsPreviousControler(tp)
 		and c:GetPreviousLocation()==LOCATION_MZONE and (c:GetPreviousPosition()&POS_FACEUP)~=0
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)
 end
 function s.filter(c,e,tp)
-	return c:IsSetCard(0x4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_AMAZONESS) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

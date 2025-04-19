@@ -27,7 +27,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY,0,2)
 end
 function s.con(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and Duel.GetLP(tp)<Duel.GetLP(1-tp) and e:GetHandler():GetFlagEffect(id)>0
+	return Duel.IsTurnPlayer(tp) and Duel.GetLP(tp)<Duel.GetLP(1-tp) and e:GetHandler():GetFlagEffect(id)>0
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

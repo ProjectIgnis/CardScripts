@@ -22,12 +22,12 @@ function s.initial_effect(c)
 end
 s.listed_series={0x3013}
 function s.sdcon(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x3013),e:GetHandlerPlayer(),LOCATION_MZONE,LOCATION_MZONE,1,nil)
+	return not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_MEKLORD_EMPEROR),e:GetHandlerPlayer(),LOCATION_MZONE,LOCATION_MZONE,1,nil)
 end
 function s.cacon(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
-	return d and d:IsPreviousPosition(POS_DEFENSE) and a:IsControler(tp) and a:IsSetCard(0x3013) and a:CanChainAttack()
+	return d and d:IsPreviousPosition(POS_DEFENSE) and a:IsControler(tp) and a:IsSetCard(SET_MEKLORD_EMPEROR) and a:CanChainAttack()
 end
 function s.caop(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=Duel.GetAttacker()

@@ -30,7 +30,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
 	e1:SetCountLimit(1)
 	e1:SetOperation(s.thop)
-	if Duel.GetTurnPlayer()==tp and Duel.GetCurrentPhase()==PHASE_STANDBY then
+	if Duel.IsTurnPlayer(tp) and Duel.GetCurrentPhase()==PHASE_STANDBY then
 		e1:SetCondition(s.skipcon)
 		e1:SetLabel(Duel.GetTurnCount())
 		e1:SetReset(RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN,2)

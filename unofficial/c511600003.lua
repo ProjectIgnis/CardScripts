@@ -52,12 +52,12 @@ function s.filter(c)
 	return c:IsMonster() and c:IsAbleToRemove() and aux.SpElimFilter(c)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE,1,nil) end
-	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE|LOCATION_GRAVE,LOCATION_MZONE|LOCATION_GRAVE,1,nil) end
+	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE|LOCATION_GRAVE,LOCATION_MZONE|LOCATION_GRAVE,nil)
 	if g:FilterCount(Card.IsControler,nil,1-tp)==0 then
-		Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,#g,tp,LOCATION_MZONE+LOCATION_GRAVE)
+		Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,#g,tp,LOCATION_MZONE|LOCATION_GRAVE)
 	elseif g:FilterCount(Card.IsControler,nil,tp)==0 then
-		Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,#g,1-tp,LOCATION_MZONE+LOCATION_GRAVE)
+		Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,#g,1-tp,LOCATION_MZONE|LOCATION_GRAVE)
 	else
 		Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,#g,PLAYER_ALL,LOCATION_GRAVE)
 	end
@@ -67,7 +67,7 @@ function s.spfilter(c,e,tp)
 		and c:IsLocation(LOCATION_REMOVED) and c:GetLevel()>0
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE,nil)
+	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE|LOCATION_GRAVE,LOCATION_MZONE|LOCATION_GRAVE,nil)
 	if Duel.Remove(g,POS_FACEUP,REASON_EFFECT)>0 then
 		local og=Duel.GetOperatedGroup():Filter(s.spfilter,nil,e,tp)
 		if #og>0 and Duel.SelectYesNo(tp,aux.Stringid(511500003,0)) then

@@ -49,7 +49,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.filter(c,e)
-	return c:IsFaceup() and c:IsType(TYPE_TOKEN) and not c:IsImmuneToEffect(e) and c:IsSetCard(0x48)
+	return c:IsFaceup() and c:IsType(TYPE_TOKEN) and not c:IsImmuneToEffect(e) and c:IsSetCard(SET_NUMBER)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local sg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil,e)

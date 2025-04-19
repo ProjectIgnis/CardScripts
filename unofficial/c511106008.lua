@@ -6,7 +6,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	Fusion.AddProcMix(c,true,true,81846636,aux.FilterBoolFunctionEx(Card.IsSetCard,0x1047))
+	Fusion.AddProcMix(c,true,true,81846636,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_GEM_KNIGHT))
 	--damage
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DAMAGE)
@@ -25,7 +25,7 @@ function s.filter(c,e)
 	return c:IsCode(name) and c:IsAbleToGraveAsCost()
 end
 function s.ctfilter(c)
-	return c:IsSummonType(SUMMON_TYPE_SPECIAL) and c:IsSummonLocation(LOCATION_EXTRA)
+	return c:IsSpecialSummoned() and c:IsSummonLocation(LOCATION_EXTRA)
 end
 function s.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,e) end

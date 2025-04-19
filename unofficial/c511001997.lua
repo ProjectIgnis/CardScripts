@@ -89,7 +89,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.eqfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x48)
+	return c:IsFaceup() and c:IsSetCard(SET_NUMBER)
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.eqfilter(chkc) end
@@ -127,5 +127,5 @@ function s.eqlimit(e,c)
 	return c==e:GetLabelObject()
 end
 function s.indes(e,c)
-	return not c:IsSetCard(0x48)
+	return not c:IsSetCard(SET_NUMBER)
 end

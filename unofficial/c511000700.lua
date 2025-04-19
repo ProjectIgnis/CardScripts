@@ -33,7 +33,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 s.listed_series={0x48}
 function s.cfilter(c)
-	return c:IsSetCard(0x48) and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEUP) 
+	return c:IsSetCard(SET_NUMBER) and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEUP) 
 		and (c:GetReason()&REASON_DESTROY)==REASON_DESTROY
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)

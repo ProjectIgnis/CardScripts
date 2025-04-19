@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x12e))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_FORTUNE_FAIRY))
 	e2:SetValue(s.val)
 	c:RegisterEffect(e2)
 	--attack res
@@ -26,8 +26,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.val(e,c)
-	return Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,0x12e),c:GetControler(),LOCATION_MZONE,LOCATION_MZONE,nil)*1000
+	return Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,SET_FORTUNE_FAIRY),c:GetControler(),LOCATION_MZONE,LOCATION_MZONE,nil)*1000
 end
 function s.atktg(e,c)
-	return c:IsStatus(STATUS_SPSUMMON_TURN) and c:IsSetCard(0x12e) and (c:GetSummonType()&SUMMON_TYPE_SPECIAL)~=0 
+	return c:IsStatus(STATUS_SPSUMMON_TURN) and c:IsSetCard(SET_FORTUNE_FAIRY) and (c:GetSummonType()&SUMMON_TYPE_SPECIAL)~=0 
 end

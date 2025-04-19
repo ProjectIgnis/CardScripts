@@ -15,10 +15,10 @@ s.listed_series={0x10af}
 s.listed_names={47198668}
 function s.filter(c,e,tp,rel)
 	if not c:IsType(TYPE_SYNCHRO) then return false end
-	if not c:IsSetCard(0x10af) then
+	if not c:IsSetCard(SET_DDD) then
 		return c:IsSynchroSummonable(nil)
 	else
-		local mg=Duel.GetMatchingGroup(Card.IsCanBeSynchroMaterial,tp,LOCATION_MZONE+LOCATION_HAND,0,nil,c)
+		local mg=Duel.GetMatchingGroup(Card.IsCanBeSynchroMaterial,tp,LOCATION_MZONE|LOCATION_HAND,0,nil,c)
 		if c:IsSynchroSummonable(nil,mg) then return true end
 		local mc=e:GetHandler()
 		if not (e:IsHasType(EFFECT_TYPE_ACTIVATE) and (not rel or mc:IsRelateToEffect(e))) then return false end
@@ -52,10 +52,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local tc=g:Select(tp,1,1,nil):GetFirst()
-		if not tc:IsSetCard(0x10af) then
+		if not tc:IsSetCard(SET_DDD) then
 			Duel.SynchroSummon(tp,tc,nil)
 		else
-			local mg=Duel.GetMatchingGroup(Card.IsCanBeSynchroMaterial,tp,LOCATION_MZONE+LOCATION_HAND,0,nil,tc)
+			local mg=Duel.GetMatchingGroup(Card.IsCanBeSynchroMaterial,tp,LOCATION_MZONE|LOCATION_HAND,0,nil,tc)
 			local c=e:GetHandler()
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)

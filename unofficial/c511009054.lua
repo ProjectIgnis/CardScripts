@@ -53,7 +53,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		sc:SetMaterial(tc)
 		Duel.Overlay(sc,tc)
 		Duel.SpecialSummon(sc,SUMMON_TYPE_XYZ,tp,tp,false,false,POS_FACEUP)
-		if (tc:IsSetCard(0x10db) or tc:IsCode(16195942)) and Duel.SelectYesNo(tp,aux.Stringid(95100814,0)) then
+		if (tc:IsSetCard(SET_THE_PHANTOM_KNIGHTS) or tc:IsCode(16195942)) and Duel.SelectYesNo(tp,aux.Stringid(95100814,0)) then
 		e:GetHandler():CancelToGrave()
 		Duel.Overlay(sc,e:GetHandler())
 		end
@@ -62,7 +62,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and e:GetLabelObject() and e:GetLabelObject():IsLocation(LOCATION_MZONE)
+	return Duel.IsTurnPlayer(tp) and e:GetLabelObject() and e:GetLabelObject():IsLocation(LOCATION_MZONE)
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=e:GetLabelObject()

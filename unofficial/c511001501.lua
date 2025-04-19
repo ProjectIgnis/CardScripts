@@ -25,7 +25,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTargetRange(0,1)
 	e1:SetCondition(s.sumcon)
 	e1:SetLabel(Duel.GetTurnCount())
-	if Duel.GetTurnPlayer()==tp then
+	if Duel.IsTurnPlayer(tp) then
 		e1:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
 	else
 		e1:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN,2)

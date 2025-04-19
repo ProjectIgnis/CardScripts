@@ -12,7 +12,7 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFieldCard(tp,LOCATION_FZONE,0)
 	return rp~=tp and re:IsHasType(EFFECT_TYPE_ACTIVATE)
-		and re:GetHandler():IsSetCard(0x500) and tc and tc:GetCounter(0x91)<7
+		and re:GetHandler():IsSetCard(0x500) and tc and tc:GetCounter(SET_NECROVALLEY)<7
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFieldCard(tp,LOCATION_FZONE,0)

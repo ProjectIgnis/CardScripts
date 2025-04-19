@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_PIERCE)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetTargetRange(LOCATION_MZONE,0)
-	e3:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x3013))
+	e3:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_MEKLORD_EMPEROR))
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x3013}
@@ -52,5 +52,5 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	g:DeleteGroup()
 end
 function s.sdcon(e)
-	return not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0x3013),0,LOCATION_MZONE,LOCATION_MZONE,1,nil)
+	return not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_MEKLORD_EMPEROR),0,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 end

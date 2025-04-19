@@ -26,7 +26,7 @@ function s.initial_effect(c)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	if r&REASON_BATTLE~=0 then
-		Duel.RegisterFlagEffect(ep,id,RESET_PHASE+PHASE_END,0,1)
+		Duel.RegisterFlagEffect(ep,id,RESET_PHASE|PHASE_END,0,1)
 	end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)

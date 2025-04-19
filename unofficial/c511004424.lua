@@ -54,7 +54,7 @@ function s.initial_effect(c)
 end
 s.listed_series={0xf8}
 function s.atcon(e,tp,eg,ev,ep,re,r,rp)
-	return Duel.GetTurnPlayer()==1-tp and Duel.IsBattlePhase()
+	return Duel.IsTurnPlayer(1-tp) and Duel.IsBattlePhase()
 		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0xf8),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.filter(c)

@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)	
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.filter(c,e,tp)
 	return c:IsCode(alias) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

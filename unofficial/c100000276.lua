@@ -16,7 +16,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE
 end
 function s.filter(c)
-	return c:IsSetCard(0xc008) and c:GetAttackAnnouncedCount()>0 and c:GetEquipCount()>0 
+	return c:IsSetCard(SET_DESTINY_HERO) and c:GetAttackAnnouncedCount()>0 and c:GetEquipCount()>0 
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) end
@@ -33,7 +33,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local eqg=tc:GetEquipGroup()
 		if #eqg>0 then
 			local des=Duel.Destroy(eqg,REASON_EFFECT)
-			if tc:IsSetCard(0xc008) then
+			if tc:IsSetCard(SET_DESTINY_HERO) then
 				local atk=tc:GetAttack()
 				local e1=Effect.CreateEffect(e:GetHandler())
 				e1:SetType(EFFECT_TYPE_SINGLE)

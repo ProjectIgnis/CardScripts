@@ -30,7 +30,7 @@ function s.sdcon(e)
 	return Duel.GetFieldGroupCount(e:GetHandlerPlayer(),LOCATION_MZONE,0)==0
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x10b)
+	return c:IsFaceup() and c:IsSetCard(SET_TINDANGLE)
 end
 function s.atcon(e)
 	return Duel.IsExistingMatchingCard(s.cfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)

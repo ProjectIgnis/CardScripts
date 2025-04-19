@@ -29,7 +29,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONTROL)
 		sg=sg:Select(tp,1,1,nil)
 	end
-	if Duel.GetTurnPlayer()==tp then
+	if Duel.IsTurnPlayer(tp) then
 		Duel.GetControl(sg:GetFirst(),tp,PHASE_STANDBY)
 	else
 		Duel.GetControl(sg:GetFirst(),tp,PHASE_STANDBY,2)

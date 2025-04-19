@@ -21,7 +21,7 @@ function s.cfilter(c)
 	return c:IsAttribute(ATTRIBUTE_FIRE) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end
 function s.spfilter(c,e,tp,sg)
-	return c:IsAttribute(ATTRIBUTE_FIRE) and c:IsType(TYPE_FUSION) and c:IsSetCard(0x3008)
+	return c:IsAttribute(ATTRIBUTE_FIRE) and c:IsType(TYPE_FUSION) and c:IsSetCard(SET_ELEMENTAL_HERO)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCountFromEx(tp,tp,sg,c)>0
 end
 function s.rescon(sg,e,tp,mg)
@@ -29,7 +29,7 @@ function s.rescon(sg,e,tp,mg)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local chkcost=e:GetLabel()==1
-	local cg=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil)
+	local cg=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,nil)
 	if chk==0 then
 		if chkcost then
 			e:SetLabel(0)

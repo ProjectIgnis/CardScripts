@@ -51,7 +51,7 @@ function s.spcheck(g,lc,sumtype,tp)
 	return g:CheckSameProperty(Card.GetAttribute,lc,sumtype,tp)
 end
 function s.attcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
+	return e:GetHandler():IsLinkSummoned()
 end
 function s.atttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

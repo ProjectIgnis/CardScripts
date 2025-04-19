@@ -48,7 +48,7 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 		tc:AddCounter(0x1024,1)
 		tc=g:GetNext()
 	end
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,2)
+	Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,2)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFlagEffect(tp,id)~=0 and Duel.GetTurnPlayer()~=tp
@@ -83,5 +83,5 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Damage(1-tp,dam2,REASON_EFFECT)
 end
 function s.indes(e,c)
-	return not c:IsSetCard(0x48)
+	return not c:IsSetCard(SET_NUMBER)
 end

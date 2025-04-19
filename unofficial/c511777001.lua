@@ -41,7 +41,7 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.ccon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.IsTurnPlayer(tp)
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -72,4 +72,3 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 
 	end
 end
-

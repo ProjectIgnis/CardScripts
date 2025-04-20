@@ -10,7 +10,7 @@ jobs:
       REMOTE: ProjectIgnis/DeltaBagooska.git
       REPO_NAME: DeltaBagooska
       DESTINATION: DeltaBagooska/script
-      BASE_SHA: 20250419
+      BASE_SHA: 20250420
     steps:
     - uses: actions/checkout@v1
     - name: Clone destination repository

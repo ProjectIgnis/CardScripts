@@ -2,7 +2,7 @@
 --Alien Dog
 local s,id=GetID()
 function s.initial_effect(c)
-	--summon success
+	--Special Summon this card from your hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--counter
+	--Place 2 counters on face-up monster(s) your opponent controls
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_COUNTER)
@@ -29,9 +29,10 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==tp and eg:GetFirst():IsSetCard(SET_ALIEN)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and e:GetHandler():IsCanBeSpecialSummoned(e,1,tp,false,false) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
+		and c:IsCanBeSpecialSummoned(e,1,tp,false,false) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,tp,0)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -44,9 +45,13 @@ end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
 	if #g==0 then return end
-	for i=1,2 do
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-		local sg=g:Select(tp,1,1,nil)
-		sg:GetFirst():AddCounter(COUNTER_A,1)
+	if #g==1 then
+		g:GetFirst():AddCounter(COUNTER_A,2)
+	else
+		for i=1,2 do
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_COUNTER)
+			local sg=g:Select(tp,1,1,nil)
+			sg:GetFirst():AddCounter(COUNTER_A,1)
+		end
 	end
 end

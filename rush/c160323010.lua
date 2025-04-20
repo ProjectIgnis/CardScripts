@@ -18,7 +18,7 @@ function s.tdfilter(c,tp)
 	return c:IsMonster() and c:IsAbleToDeckOrExtraAsCost()
 end
 function s.spfilter(c,e,tp)
-	return c:IsLevel(7) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsLevel(7) and c:IsType(TYPE_RITUAL) and c:IsAttack(2300) and c:IsDefense(2500) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and Duel.IsExistingMatchingCard(s.tdfilter,tp,LOCATION_GRAVE,0,2,c,tp)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)

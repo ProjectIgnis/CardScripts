@@ -20,7 +20,7 @@ function s.tgfilter(c,e)
 	return c:IsAbleToGrave() and c:IsCanBeEffectTarget(e)
 end
 function s.setfilter(c,e,tp)
-	return c:IsCanBeEffectTarget(e) and ((c:IsSpellTrap() and c:IsSSetable(true))
+	return c:IsCanBeEffectTarget(e) and ((c:IsSpellTrap() and c:IsSSetable(true,1-tp))
 		or c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE,1-tp))
 end
 function s.rescon(sg,e,tp)
@@ -60,7 +60,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 		if sc:IsMonster() and Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0
 			and Duel.SpecialSummon(sc,0,tp,1-tp,false,false,POS_FACEDOWN_DEFENSE)>0 then
 			Duel.ConfirmCards(1-tp,sc)
-		elseif sc:IsSpellTrap() and sc:IsSSetable() then
+		elseif sc:IsSpellTrap() and sc:IsSSetable(false,1-tp) then
 			Duel.SSet(tp,sc,1-tp)
 		end
 	end

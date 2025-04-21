@@ -3,7 +3,7 @@
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Your opponent can Set 1 Trap from their hand or Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -29,12 +29,12 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
-function s.setfilter(c)
-	return c:IsTrap() and c:IsSSetable(true)
+function s.setfilter(c,tp)
+	return c:IsTrap() and c:IsSSetable(false,1-tp)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local summon=false
-	local g=Duel.GetMatchingGroup(s.setfilter,tp,0,LOCATION_HAND|LOCATION_DECK,nil)
+	local g=Duel.GetMatchingGroup(s.setfilter,tp,0,LOCATION_HAND|LOCATION_DECK,nil,tp)
 	if Duel.GetLocationCount(1-tp,LOCATION_SZONE,1-tp,LOCATION_REASON_TOFIELD)>0 and #g>0 and Duel.SelectYesNo(1-tp,aux.Stringid(id,1)) then
 		Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_SET)
 		local sg=g:Select(1-tp,1,1,nil)

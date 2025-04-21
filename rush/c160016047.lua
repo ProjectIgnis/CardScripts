@@ -16,6 +16,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
+s.named_material={28279543}
 function s.matfilter(c,scard,sumtype,tp)
 	return c:IsRace(RACE_WARRIOR,scard,sumtype,tp) and c:IsDefense(2100)
 end

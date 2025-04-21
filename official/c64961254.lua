@@ -49,7 +49,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetTargetParam(Duel.SelectOption(tp,DECLTYPE_MONSTER,DECLTYPE_SPELL,DECLTYPE_TRAP))
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetFieldGroupCount(1-tp,0,LOCATION_DECK)<=0 return end
+	if Duel.GetFieldGroupCount(1-tp,0,LOCATION_DECK)<=0 then return end
 	Duel.DisableShuffleCheck()
 	Duel.ConfirmDecktop(1-tp,1)
 	local g=Duel.GetDecktopGroup(1-tp,1)

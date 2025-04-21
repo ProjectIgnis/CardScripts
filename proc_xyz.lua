@@ -224,7 +224,7 @@ function Xyz.RecursionChk(c,mg,xyz,tp,min,max,minc,maxc,sg,matg,ct,matct,mustbem
 			for i,te in ipairs({c:IsHasEffect(EFFECT_DOUBLE_XYZ_MATERIAL,tp)}) do
 				local tgf=te:GetOperation()
 				local val=te:GetValue()
-				if val>0 and not retchknum[val] and (not maxc or xmatct+val<=maxc) and (not tgf or tgf(te,xyz,matg)) then
+				if val>0 and not retchknum[val] and (not maxc or maxc==infToken or xmatct+val<=maxc) and (not tgf or tgf(te,xyz,matg)) then
 					retchknum[val]=true
 					te:UseCountLimit(tp)
 					local chk=(xct+val>=min and xmatct+val>=minc and Xyz.CheckMaterialSet(matg,xyz,tp,exchk,mustg,lv))
@@ -377,7 +377,7 @@ function Xyz.Target(f,lv,minc,maxc,mustbemat,exchk)
 									if val>0 and (not tgf or tgf(te,c,matg)) then
 										local newCount=matct+1+val
 										te:UseCountLimit(tp)
-										local chk=(minc<=newCount and newCount<=maxc and sg:Includes(mustg))
+										local chk=(minc<=newCount and (maxc==infToken or newCount<=maxc) and sg:Includes(mustg))
 													or mg:IsExists(Xyz.RecursionChk,1,sg,mg,c,tp,min,max,minc,maxc,sg,matg,ct+1,newCount,mustbemat,exchk,f,mustg,lv,eqmg,equips_inverse)
 										if chk then
 											if not multi[1+val] then

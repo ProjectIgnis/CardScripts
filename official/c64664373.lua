@@ -36,7 +36,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local tc=Duel.SelectTarget(tp,s.cfilter,tp,0,LOCATION_MZONE,1,1,nil,e,tp):GetFirst()
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND|LOCATION_DECK|LOCATION_EXTRA)
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,tc,1,tp,0)
-	Duel.SetPossibleOperationInfo(0,CATEGORY_REMOVE,g,2,tp,0)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_REMOVE,nil,2,tp,0)
 	--Your opponent cannot activate the targeted monster's effects in response to this card's activation
 	if e:IsHasType(EFFECT_TYPE_ACTIVATE) then
 		Duel.SetChainLimit(function(e,tp,p) return e:GetHandler()~=tc end)

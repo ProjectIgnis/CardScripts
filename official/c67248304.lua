@@ -1,7 +1,6 @@
 --リバースポッド
 --Reverse Jar
---Logical Nonsense
---Substitute ID
+--scripted by Logical Nonsense
 local s,id=GetID()
 function s.initial_effect(c)
 	--Change as many other monsters to face-down defense
@@ -17,16 +16,15 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local fdg=Duel.GetMatchingGroup(Card.IsCanTurnSet,tp,LOCATION_MZONE,LOCATION_MZONE,e:GetHandler())
-	local thg=Duel.GetMatchingGroup(aux.AND(Card.IsAbleToHand,aux.FaceupFilter(Card.IsType,TYPE_SPELL|TYPE_TRAP)),tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
+	local thg=Duel.GetMatchingGroup(aux.AND(Card.IsAbleToHand,aux.FaceupFilter(Card.IsSpellTrap)),tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,fdg,#fdg,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,thg,#thg,0,0)
 end
-	--Change as many other monsters to face-down defense
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsCanTurnSet,tp,LOCATION_MZONE,LOCATION_MZONE,e:GetHandler())
 	if #g==0 then return end
 	if Duel.ChangePosition(g,POS_FACEDOWN_DEFENSE)==0 then return end
-	local g2=Duel.GetMatchingGroup(aux.AND(Card.IsAbleToHand,aux.FaceupFilter(Card.IsType,TYPE_SPELL|TYPE_TRAP)),tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
+	local g2=Duel.GetMatchingGroup(aux.AND(Card.IsAbleToHand,aux.FaceupFilter(Card.IsSpellTrap)),tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
 	if #g2==0 then return end
 	Duel.BreakEffect()
 	if Duel.SendtoHand(g2,nil,REASON_EFFECT)==0 then return end
@@ -38,7 +36,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local turn_p=Duel.GetTurnPlayer()
 	local step=turn_p==0 and 1 or -1
 	for p=turn_p,1-turn_p,step do
-		local setg=Duel.GetMatchingGroup(Card.IsSSetable,p,LOCATION_HAND,0,nil)
+		local setg=Duel.GetMatchingGroup(Card.IsSSetable,p,LOCATION_HAND,0,nil,false,p)
 		local setmax_ct=0
 		if p==tp then
 			setmax_ct=math.min(#setg,ct1)
@@ -55,7 +53,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.rescon(sg,e,tp,mg)
-	return sg:FilterCount(Card.IsSSetable,nil)==#sg
+	return sg:FilterCount(Card.IsSSetable,nil,false,tp)==#sg
 		and sg:FilterCount(aux.NOT(Card.IsType),nil,TYPE_FIELD)<=Duel.GetLocationCount(tp,LOCATION_SZONE)
 		and sg:FilterCount(Card.IsType,nil,TYPE_FIELD)<=1
 end

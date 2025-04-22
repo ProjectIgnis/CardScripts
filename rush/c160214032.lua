@@ -38,8 +38,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_names={CARD_HARPIE_LADY}
+function s.filter(c)
+	return c:IsFaceup() and c:IsAbleToDeckOrExtraAsCost() and not c:IsHasEffect(EFFECT_CANNOT_BE_FUSION_MATERIAL)
+end
 function s.contactfil(tp)
-	return Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsAbleToDeckOrExtraAsCost),tp,LOCATION_ONFIELD,0,nil)
+	return Duel.GetMatchingGroup(s.filter,tp,LOCATION_ONFIELD,0,nil)
 end
 function s.contactop(g,tp)
 	Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST+REASON_MATERIAL)

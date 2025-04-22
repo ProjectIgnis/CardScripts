@@ -2,7 +2,7 @@
 --Phantom of Chaos
 local s,id=GetID()
 function s.initial_effect(c)
-	--Copy
+	--Banish a monster and this card's name/original ATK become that monster's, and replace this effect with that monster's original effects
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_REMOVE)
@@ -14,14 +14,14 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	--No battle damage
+	--Your opponent takes no battle damage from attacks involving this card
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_NO_BATTLE_DAMAGE)
 	c:RegisterEffect(e2)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():GetFlagEffect(id)==0 end
+	if chk==0 then return not e:GetHandler():HasFlagEffect(id) end
 	e:GetHandler():RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 end
 function s.filter(c)
@@ -32,30 +32,52 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,e:GetHandler()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,1,e:GetHandler())
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,tp,0)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if c:IsRelateToEffect(e) and c:IsFaceup() and tc and tc:IsRelateToEffect(e) then
-		if Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)~=1 then return end
+	if tc:IsRelateToEffect(e) and Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)>0 and c:IsFaceup() and c:IsRelateToEffect(e) then
 		local code=tc:GetOriginalCode()
-		local ba=tc:GetBaseAttack()
+		local atk=tc:GetBaseAttack()
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		e1:SetCode(EFFECT_CHANGE_CODE)
 		e1:SetValue(code)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		c:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e2:SetReset(RESETS_STANDARD_PHASE_END)
-		e2:SetLabelObject(e1)
 		e2:SetCode(EFFECT_SET_BASE_ATTACK)
-		e2:SetValue(ba)
+		e2:SetValue(atk)
+		e2:SetLabelObject(e1)
+		e2:SetReset(RESETS_STANDARD_PHASE_END)
 		c:RegisterEffect(e2)
-		c:CopyEffect(code,RESETS_STANDARD_PHASE_END,1)
+		local cid=c:CopyEffect(code,RESETS_STANDARD_PHASE_END,1)
+		--Reset the effects manually (to handle interactions with mandatory effects)
+		local e3=Effect.CreateEffect(c)
+		e3:SetDescription(aux.Stringid(id,1))
+		e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		e3:SetCode(EVENT_PHASE+PHASE_END)
+		e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e3:SetRange(LOCATION_MZONE)
+		e3:SetCountLimit(1)
+		e3:SetLabel(cid)
+		e3:SetLabelObject(e1)
+		e3:SetOperation(s.resettop)
+		e3:SetReset(RESETS_STANDARD_PHASE_END)
+		c:RegisterEffect(e3)
 	end
+end
+function s.resettop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local cid=e:GetLabel()
+	c:ResetEffect(cid,RESET_COPY)
+	c:ResetEffect(RESET_DISABLE,RESET_EVENT)
+	local e1=e:GetLabelObject()
+	e1:Reset()
+	Duel.HintSelection(Group.FromCards(c))
+	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 end

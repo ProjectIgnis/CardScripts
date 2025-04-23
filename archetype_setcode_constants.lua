@@ -584,11 +584,11 @@ SET_MITSURUGI                     = 0x1bd
 SET_DOMINUS                       = 0x1bf
 SET_APOPHIS                       = 0x1c2
 SET_SERKET                        = 0x1c3
---Released but the official English name is unconfirmed
 SET_REGENESIS                     = 0x1be
 SET_DRAGONTAIL                    = 0x1c0
 SET_YUMMY                         = 0x1c1
 SET_K9                            = 0x1c4
+--Released but the official English name is unconfirmed
 --Pre-release archetypes
 SET_TELEPORT                      = 0x1c5
 SET_IMPRISONED_DEITY              = 0x1c6

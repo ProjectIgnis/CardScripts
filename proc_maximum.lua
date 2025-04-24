@@ -323,6 +323,15 @@ function Card.AddSideMaximumHandler(c,eff)
 	e16:SetValue(-1000000)
 	c:RegisterEffect(e16)
 
+	--cannot be tributed for a cost or a Ritual Summon
+	local e17=Effect.CreateEffect(c)
+	e17:SetType(EFFECT_TYPE_SINGLE)
+	e17:SetCode(EFFECT_UNRELEASABLE_NONSUM)
+	e17:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e17:SetCondition(Maximum.sideCon)
+	e17:SetValue(1)
+	c:RegisterEffect(e17)
+
 	baseeff:Reset()
 end
 function Maximum.SelfDestructCondition(e)

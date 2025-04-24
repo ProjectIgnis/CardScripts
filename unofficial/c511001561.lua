@@ -35,7 +35,7 @@ function s.tokenfilter(c,tp)
 	return c:IsFaceup() and c:HasLevel()
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,c:GetOriginalSetCard(),c:GetOriginalType(),c:GetBaseAttack(),c:GetBaseDefense(),c:GetOriginalLevel(),c:GetOriginalRace(),c:GetOriginalAttribute())
 end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.tokentg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=Duel.GetFlagEffect(1-tp,id)
 	if ct>1 and Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then return false end
 	if chk==0 then return ct>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>=ct
@@ -43,7 +43,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,ct,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,ct,0,0)
 end
-function s.operation(e,tp,eg,ep,ev,re,r,rp)
+function s.tokenop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=Duel.GetFlagEffect(1-tp,id)
 	if (ct>1 and Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)) or Duel.GetLocationCount(tp,LOCATION_MZONE)<ct
 		or not Duel.IsExistingMatchingCard(s.tokenfilter,tp,LOCATION_MZONE,0,1,nil,tp) then return end

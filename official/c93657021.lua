@@ -3,26 +3,27 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
+	--Fusion materials: 1 "Destiny HERO" Fusion Monster + 1 "Destiny HERO" monster
 	Fusion.AddProcMix(c,true,true,s.matfilter,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_DESTINY_HERO))
-	--fusion success
+	--Fusion Summon 1 Fusion Monster from your Extra Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e1:SetCondition(s.spcon)
+	e1:SetCondition(function(e) return e:GetHandler():IsFusionSummoned() and not Duel.IsPhase(PHASE_DAMAGE) end)
 	e1:SetTarget(Fusion.SummonEffTG())
 	e1:SetOperation(Fusion.SummonEffOP())
 	c:RegisterEffect(e1)
-	--indes
+	--Make a monster on the field unable to be destroyed by battle or card effects
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCountLimit(1)
 	e2:SetCode(EVENT_FREE_CHAIN)
+	e2:SetCountLimit(1)
 	e2:SetTarget(s.indtg)
 	e2:SetOperation(s.indop)
 	c:RegisterEffect(e2)
@@ -32,9 +33,6 @@ s.material_setcode={SET_HERO,SET_DESTINY_HERO}
 function s.matfilter(c,fc,sumtype,tp)
 	return c:IsType(TYPE_FUSION,fc,sumtype,tp) and c:IsSetCard(SET_DESTINY_HERO,fc,sumtype,tp)
 end
-function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsFusionSummoned()
-end
 function s.indtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) end
 	if chk==0 then return Duel.IsExistingTarget(nil,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
@@ -43,8 +41,10 @@ function s.indtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.indop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) then
+		--Cannot be destroyed by battle or card effects
 		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetDescription(3008)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
@@ -54,7 +54,9 @@ function s.indop(e,tp,eg,ep,ev,re,r,rp)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 		tc:RegisterEffect(e2)
+		--Neither player takes any battle damage from attacks involving it
 		local e3=e1:Clone()
+		e3:SetDescription(3213)
 		e3:SetCode(EFFECT_NO_BATTLE_DAMAGE)
 		tc:RegisterEffect(e3)
 		local e4=e1:Clone()

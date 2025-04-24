@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	Pendulum.AddProcedure(c)
-	--Special Summon self
+	--Special Summon this card from the Pendulum Zone to your Main Monster Zone in its same column
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
-	--Fusion Summon 1 "Valiants" monster
+	--Fusion Summon 1 "Vaylantz" Fusion Monster
 	local fusparams={aux.FilterBoolFunction(Card.IsSetCard,SET_VAYLANTZ),nil,s.fextra}
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
@@ -86,5 +86,5 @@ function s.fextra(e,tp,mg)
 end
 function s.fuscon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsLocation(LOCATION_MZONE) and c:IsPreviousLocation(LOCATION_MZONE)
+	return not Duel.IsPhase(PHASE_DAMAGE) and c:IsLocation(LOCATION_MZONE) and c:IsPreviousLocation(LOCATION_MZONE)
 end

@@ -78,13 +78,13 @@ end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsReason(REASON_DESTROY) then
-		--Search 1 "Cipher Wing" 
+		--Search 1 "Cipher Wing"
 		local e1=Effect.CreateEffect(c)
 		e1:SetDescription(aux.Stringid(id,0))
 		e1:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
 		e1:SetType(EFFECT_TYPE_IGNITION)
 		e1:SetRange(LOCATION_GRAVE)
-		e1:SetCost(aux.selfbanishcost)
+		e1:SetCost(Cost.SelfBanish)
 		e1:SetTarget(s.thtg)
 		e1:SetOperation(s.tgop)
 		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)

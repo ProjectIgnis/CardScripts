@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(s.damcon)
-	e1:SetCost(aux.selfbanishcost)
+	e1:SetCost(Cost.SelfBanish)
 	e1:SetOperation(s.dmop)
 	c:RegisterEffect(e1)
 	--Search 1 "Gouki" card

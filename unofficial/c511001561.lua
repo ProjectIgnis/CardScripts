@@ -84,7 +84,7 @@ function s.tokenop(e,tp,eg,ep,ev,re,r,rp)
 		e7:SetCode(EFFECT_CHANGE_TYPE)
 		e7:SetValue(tc:GetOriginalType())
 		token:RegisterEffect(e7)
-		Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP_ATTACK)
+		Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)
 		--"Copy Tokens" cannot attack during your turn
 		local e7=Effect.CreateEffect(c)
 		e7:SetType(EFFECT_TYPE_SINGLE)

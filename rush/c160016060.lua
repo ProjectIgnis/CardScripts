@@ -6,8 +6,8 @@ function s.initial_effect(c)
 	--Reveal 1 set card in opponent's S/T zones
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCategory(CATEGORY_DESTROY)
+	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
@@ -23,8 +23,10 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Effect
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectMatchingCard(tp,s.filter,tp,0,LOCATION_SZONE,1,1,nil)
-	Duel.HintSelection(g,true)
-	if g:GetFirst():IsFacedown() then Duel.ConfirmCards(tp,g) end
-	if g:GetFirst():IsSpell() then Duel.Destroy(g,REASON_EFFECT) end
+	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,0,LOCATION_SZONE,1,1,nil):GetFirst()
+	if tc then
+		Duel.HintSelection(tc)
+		if tc:IsFacedown() then Duel.ConfirmCards(tp,tc) end
+		if tc:IsSpell() then Duel.Destroy(tc,REASON_EFFECT) end
+	end
 end

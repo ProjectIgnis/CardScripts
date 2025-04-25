@@ -38,7 +38,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 		local ct=tc.minxyzct
 		local ct2=tc.maxxyzct
-		local og=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.atfilter),tp,LOCATION_GRAVE,0,ct,ct2,nil)
-		Duel.Overlay(tc,og)
+		local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.atfilter),tp,LOCATION_GRAVE,0,nil)
+		if ct2==Xyz.InfiniteMats then ct2=#g end
+		Duel.Overlay(tc,g:Select(tp,ct,ct2,nil))
 	end
 end

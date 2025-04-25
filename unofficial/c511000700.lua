@@ -27,13 +27,13 @@ function s.initial_effect(c)
 			s[1]=false
 		end)
 	end)
-end 
+end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()==PHASE_END and s[tp]
 end
 s.listed_series={0x48}
 function s.cfilter(c)
-	return c:IsSetCard(SET_NUMBER) and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEUP) 
+	return c:IsSetCard(SET_NUMBER) and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEUP)
 		and (c:GetReason()&REASON_DESTROY)==REASON_DESTROY
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
@@ -44,7 +44,7 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.filter(c,e,tp,ft,g,pg)
 	local ct=c.minxyzct
-	return ft>=ct and c:IsRankBelow(4) and c:IsAttribute(ATTRIBUTE_DARK) and c:IsRace(RACE_FIEND) and c:IsType(TYPE_XYZ) 
+	return ft>=ct and c:IsRankBelow(4) and c:IsAttribute(ATTRIBUTE_DARK) and c:IsRace(RACE_FIEND) and c:IsType(TYPE_XYZ)
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
 		and aux.SelectUnselectGroup(g,e,tp,ct,ct,aux.FilterBoolFunction(Group.Includes,pg),0)
 end
@@ -69,6 +69,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 		local ct=tc.minxyzct
 		local ct2=tc.maxxyzct
+		if ct2==Xyz.InfiniteMats then ct2=ft end
 		if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then if ct>1 then return end ct2=math.min(ct2,1) end
 		if ft<ct then return end
 		if ft<ct2 then ct2=ft end

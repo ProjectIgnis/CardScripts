@@ -74,8 +74,8 @@ function s.equipop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.reeqcond(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	return (tc:IsTributeSummoned() or tc:IsFusionSummoned())
-		and tc:GetMaterial():IsContains(e:GetHandler():GetPreviousEquipTarget())
+	local ec=e:GetHandler():GetPreviousEquipTarget()
+	return (tc:IsTributeSummoned() or tc:IsFusionSummoned()) and ec and tc:GetMaterial():IsContains(ec)
 end
 function s.cfilter(c,e,oldec)
 	return c:IsFaceup() and c:IsCanBeEffectTarget(e) and c:GetMaterial():IsContains(oldec)

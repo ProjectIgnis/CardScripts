@@ -49,7 +49,8 @@ function s.eqconignition(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.eqconquick(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:HasFlagEffect(id) and not c:GetEquipGroup():IsExists(Card.HasFlagEffect,1,nil,id) and c:IsOriginalSetCard(SET_ALLURE_QUEEN) and Duel.IsPlayerAffectedByEffect(tp,EFFECT_GOLDEN_ALLURE_QUEEN)
+	return c:HasFlagEffect(id) and not c:GetEquipGroup():IsExists(Card.HasFlagEffect,1,nil,id)
+		and c:IsOriginalSetCard(SET_ALLURE_QUEEN) and Duel.IsPlayerAffectedByEffect(e:GetHandlerPlayer(),EFFECT_GOLDEN_ALLURE_QUEEN)
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsAbleToChangeControler() end

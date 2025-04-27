@@ -25,7 +25,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,s.rmfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,max_ct,nil)
-	local ct=Duel.Remove(cg,POS_FACEUP,REASON_EFFECT)
+	local ct=Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 	if ct>0 and c:IsFaceup() and c:IsRelateToEffect(e) then
 		--This card gains 400 ATK for each, until the end of this turn
 		local e1=Effect.CreateEffect(c)

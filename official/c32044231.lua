@@ -49,6 +49,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not sc then return end
 	sc:SetMaterial(tc)
 	Duel.Overlay(sc,tc)
+	Duel.BreakEffect()
 	if Duel.SpecialSummonStep(sc,SUMMON_TYPE_XYZ,tp,tp,false,false,POS_FACEUP) then
 		sc:CompleteProcedure()
 		if Duel.SpecialSummonComplete()==0 or not (c:IsRelateToEffect(e) and c:IsCanBeXyzMaterial(sc,tp,REASON_EFFECT)) then return end

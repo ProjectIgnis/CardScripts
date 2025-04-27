@@ -4,33 +4,30 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
+	c:AddCannotBeSpecialSummoned()
 	Spirit.AddProcedure(c,EVENT_SPSUMMON_SUCCESS)
-	--Cannot be Special Summoned
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
-	c:RegisterEffect(e1)
-	--Special Summon procedure
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_FIELD)
-	e2:SetProperty(EFFECT_FLAG_UNCOPYABLE)
-	e2:SetCode(EFFECT_SPSUMMON_PROC)
-	e2:SetRange(LOCATION_HAND)
-	e2:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
-	e2:SetCondition(s.spcon)
-	c:RegisterEffect(e2)
+	--Must be Special Summoned (from your hand) by controlling a Spirit monster
+	local e0=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
+	e0:SetType(EFFECT_TYPE_FIELD)
+	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e0:SetCode(EFFECT_SPSUMMON_PROC)
+	e0:SetRange(LOCATION_HAND)
+	e0:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
+	e0:SetCondition(s.spcon)
+	c:RegisterEffect(e0)
 	--Targeted Spirit's effects cannot be activated
-	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(id,0))
-	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e3:SetRange(LOCATION_GRAVE)
-	e3:SetCode(EVENT_PHASE+PHASE_END)
-	e3:SetCost(Cost.SelfBanish)
-	e3:SetTarget(s.aclimtg)
-	e3:SetOperation(s.aclimop)
-	c:RegisterEffect(e3)
+	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e1:SetCode(EVENT_PHASE+PHASE_END)
+	e1:SetRange(LOCATION_GRAVE)
+	e1:SetCountLimit(1)
+	e1:SetCost(Cost.SelfBanish)
+	e1:SetTarget(s.actlimtg)
+	e1:SetOperation(s.actlimop)
+	c:RegisterEffect(e1)
 end
 s.listed_card_types={TYPE_SPIRIT}
 function s.spcon(e,c)
@@ -39,16 +36,20 @@ function s.spcon(e,c)
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsType,TYPE_SPIRIT),tp,LOCATION_MZONE,0,1,nil)
 end
-function s.aclimtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c:IsFaceup() and c:IsType(TYPE_SPIRIT) end
-	if chk==0 then return Duel.IsExistingTarget(aux.FaceupFilter(Card.IsType,TYPE_SPIRIT),tp,LOCATION_MZONE,0,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	Duel.SelectTarget(tp,aux.FaceupFilter(Card.IsType,TYPE_SPIRIT),tp,LOCATION_MZONE,0,1,1,nil)
+function s.tgfilter(c)
+	return c:IsType(TYPE_SPIRIT) and c:IsFaceup() and not c:HasFlagEffect(id)
 end
-function s.aclimop(e,tp,eg,ep,ev,re,r,rp)
+function s.actlimtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.tgfilter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(s.tgfilter,tp,LOCATION_MZONE,0,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
+	Duel.SelectTarget(tp,s.tgfilter,tp,LOCATION_MZONE,0,1,1,nil)
+end
+function s.actlimop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
-		--Cannot activate its effects
+		tc:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
+		--Neither player can activate that face-up monster's effects on the field for the rest of this turn
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetDescription(3302)
 		e1:SetType(EFFECT_TYPE_SINGLE)

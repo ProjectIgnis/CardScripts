@@ -2,24 +2,26 @@
 --Key Man the Key Warrior
 local s,id=GetID()
 function s.initial_effect(c)
-	--lv change
+	--Make this card Level 3 until the End Phase
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetCategory(CATEGORY_LVCHANGE)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
-	e1:SetCondition(s.condition)
-	e1:SetOperation(s.operation)
+	e1:SetCondition(s.lvcon)
+	e1:SetOperation(s.lvop)
 	c:RegisterEffect(e1)
 end
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetLevel()~=3
+function s.lvcon(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	return c:HasLevel() and not c:IsLevel(3)
 end
-function s.operation(e,tp,eg,ep,ev,re,r,rp)
+function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and c:IsFaceup() then
-		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		--This card becomes Level 3 until the End Phase
+		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_LEVEL)
 		e1:SetValue(3)

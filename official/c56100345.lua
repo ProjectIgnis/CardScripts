@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={CARD_CYBER_DRAGON}
-s.listed_series={SET_CYBER,SET_CYBER_DRAGON}
+s.listed_series={SET_CYBER,SET_CYBERNETIC,SET_CYBER_DRAGON}
 function s.cybermachinefilter(c)
 	return c:IsSetCard(SET_CYBER) and c:IsRace(RACE_MACHINE) and c:IsFaceup()
 end

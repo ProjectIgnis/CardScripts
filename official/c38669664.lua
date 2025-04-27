@@ -67,8 +67,9 @@ function s.excop(e,tp,eg,ep,ev,re,r,rp)
 		if #g>0 then
 			Duel.BreakEffect()
 			Duel.SendtoHand(g,nil,REASON_EFFECT)
-			Duel.ConfirmCards(1-tp,g)
-			Duel.ShuffleHand(tp)
+			local owner=g:GetFirst():GetControler()
+			Duel.ConfirmCards(1-owner,g)
+			Duel.ShuffleHand(owner)
 		end
 	end
 end

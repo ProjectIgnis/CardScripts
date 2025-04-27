@@ -280,11 +280,11 @@ if not AnimeArchetype then
 	}
 	Card.IsElf=MakeCheck({0x51b,0xe4},AnimeArchetype.OCGElf)
 
-	-- Emissary of Darkness  (Checked 13/05/2024)
+	-- Emissary of Darkness  (Checked 26/04/2025)
 	-- 冥府の使者
 	-- めいふのししゃ
 	-- Gorz the Emissary of Darkness/Emissary of Darkness Token
-	Card.IsEmissaryOfDarkness=MakeCheck({0x51c,0xe4},{44330098,44330099})
+	Card.IsEmissaryOfDarkness=MakeCheck({0x51c},{44330098,44330099})
 
 	-- Fairy (archetype) フェアリー
 	-- Ancient Fairy Dragon/CXyz Dark Fairy Cheer Girl/Nekogal #1

@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e0:SetCode(EFFECT_FORCE_MZONE)
 	e0:SetRange(LOCATION_MZONE)
 	e0:SetTargetRange(1,0)
-	e0:SetValue(function(e,fp,rp,r) return r==LOCATION_REASON_CONTROL and ~(ZONES_MMZ|ZONES_EMZ) or ~e:GetHandler():GetLinkedZone() end)
+	e0:SetValue(function(e,fp,rp,r) return r==LOCATION_REASON_CONTROL and (ZONES_MMZ|ZONES_EMZ)|~(ZONES_MMZ|ZONES_EMZ) or ~e:GetHandler():GetLinkedZone() end)
 	c:RegisterEffect(e0)
 	--Monsters this card points to cannot attack, also their activated effects are negated
 	local e1=Effect.CreateEffect(c)

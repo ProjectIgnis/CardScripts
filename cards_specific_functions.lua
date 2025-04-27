@@ -38,12 +38,7 @@ end
 
 --return if Card c was special summoned by the effect of a "Nouvelles" monster
 function Card.IsNouvellesSummoned(c)
-	return c:IsSummonType(SUMMON_BY_NOUVELLES)
-end
-
---sp_summon condition for "Nouvellez" monsters
-function Auxiliary.nouvspcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsNouvellesSummoned()
+	return c:HasFlagEffect(c:GetOriginalCode())
 end
 
 --check for Spirit Elimination

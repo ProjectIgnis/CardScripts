@@ -77,7 +77,7 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.HintSelection(g)
 			Duel.ChangePosition(g,POS_FACEUP_DEFENSE)
 		end
-	elseif op==2
+	elseif op==2 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
 		local g=Duel.SelectMatchingCard(tp,aux.FaceupFilter(Card.IsCanTurnSet),tp,LOCATION_MZONE,0,1,1,nil)
 		if #g>0 then

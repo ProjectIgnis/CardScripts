@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp) 
-	return ep==tp and Duel.GetAttackTarget()==nil and Duel.GetFieidGroupCount(tp,LOCATION_MZONE,0)==0 
+	return ep==tp and Duel.GetAttackTarget()==nil and Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0 
 end
 function s.spfilter(c,e,tp)
 	return c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsEmissaryOfDarkness()

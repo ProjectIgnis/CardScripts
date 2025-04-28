@@ -3,8 +3,9 @@
 --Scripted by AlphaKretin, extra material by edo9300
 local s,id=GetID()
 function s.initial_effect(c)
-	--Extra Material
+	--If a Cyberse monster you control would be used as Link Material for a "Code Talker" monster, this card in your hand can also be used as material
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCode(EFFECT_EXTRA_MATERIAL)
@@ -19,9 +20,9 @@ function s.initial_effect(c)
 	if s.flagmap[c]==nil then
 		s.flagmap[c] = {}
 	end
-	--Send to grave
+	--Send OR Add to your hand 1 Cyberse monster with 1200 or less ATK from your Deck to the GY
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,0))
+	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TOGRAVE+CATEGORY_SEARCH+CATEGORY_TOHAND)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
@@ -70,7 +71,8 @@ function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	e:SetLabel(0)
 	if c:IsPreviousLocation(LOCATION_ONFIELD) then e:SetLabel(1) end
-	return c:IsLocation(LOCATION_GRAVE) and c:IsPreviousLocation(LOCATION_ONFIELD|LOCATION_HAND) and r==REASON_LINK and c:GetReasonCard():IsSetCard(SET_CODE_TALKER)
+	return c:IsLocation(LOCATION_GRAVE) and c:IsPreviousLocation(LOCATION_ONFIELD|LOCATION_HAND)
+		and r==REASON_LINK and c:GetReasonCard():IsSetCard(SET_CODE_TALKER)
 end
 function s.tgfilter(c,chk)
 	return c:IsRace(RACE_CYBERSE) and c:IsAttackBelow(1200) and (c:IsAbleToGrave() or (chk==1 and c:IsAbleToHand()))
@@ -81,10 +83,11 @@ function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 end
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_DECK,0,1,1,nil,e:GetLabel())
-	if #g>0 then
-		local tc=g:GetFirst()
-		if e:GetLabel()==1 and tc:IsAbleToHand() and (not tc:IsAbleToGrave() or Duel.SelectYesNo(tp,aux.Stringid(id,1))) then
+	local hint_msg=(e:GetLabel()==1 and aux.Stringid(id,2) or HINTMSG_SPSUMMON)
+	Duel.Hint(HINT_SELECTMSG,tp,hint_msg)
+	local tc=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_DECK,0,1,1,nil,e:GetLabel()):GetFirst()
+	if tc then
+		if e:GetLabel()==1 and tc:IsAbleToHand() and (not tc:IsAbleToGrave() or Duel.SelectYesNo(tp,aux.Stringid(id,3))) then
 			Duel.SendtoHand(tc,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,tc)
 		else

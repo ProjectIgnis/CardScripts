@@ -1031,6 +1031,17 @@ Card.RegisterEffect=(function()
 	end
 end)()
 
+function Card.GetEffectsWithRegisterFlag(c,code)
+	local effs={}
+	for _,flag_eff in ipairs({c:GetOwnEffects()}) do
+		if flag_eff:GetCode()==code and flag_eff:IsHasType(EFFECT_TYPE_SINGLE) then
+			local eff=flag_eff:GetLabelObject()
+			if eff then table.insert(effs,eff) end
+		end
+	end
+	return effs
+end
+
 function Card.ListsCodeAsMaterial(c,...)
 	if not c.material then return false end
 	local codes={...}

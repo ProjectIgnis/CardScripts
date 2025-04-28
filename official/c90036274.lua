@@ -44,11 +44,16 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={SET_SPEEDROID}
+function s.filter(filter_func)
+	return function(c)
+		return c:IsFaceup() and c:IsLevelAbove(0) and c:IsAbleToGraveAsCost() and filter_func(c)
+	end
+end
 function s.cfilter1(c)
-	return c:IsFaceup() and c:IsSetCard(SET_SPEEDROID) and c:IsType(TYPE_TUNER) and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(SET_SPEEDROID) and c:IsType(TYPE_TUNER)
 end
 function s.cfilter2(c)
-	return c:IsFaceup() and (not c:IsType(TYPE_TUNER) or c:IsHasEffect(EFFECT_NONTUNER)) and c:IsAbleToGraveAsCost()
+	return (not c:IsType(TYPE_TUNER) or c:IsHasEffect(EFFECT_NONTUNER))
 end
 function s.rescon(sg,e,tp,mg)
 	return aux.ChkfMMZ(1)(sg,e,tp,mg) and sg:IsExists(s.chk,1,nil,sg) and sg:CheckWithSumEqual(Card.GetLevel,7,2,2)
@@ -57,13 +62,11 @@ function s.chk(c,sg)
 	return s.cfilter1(c) and sg:IsExists(s.cfilter2,1,c)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g1=Duel.GetMatchingGroup(s.cfilter1,tp,LOCATION_MZONE,0,nil)
-	local g2=Duel.GetMatchingGroup(s.cfilter2,tp,LOCATION_MZONE,0,nil)
-	local g=g1:Clone()
-	g:Merge(g2)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>-2 and #g1>0 and #g2>0 
-		and aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,0) end
-	local sg=aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,1,tp,HINTMSG_TOGRAVE)
+	local g1=Duel.GetMatchingGroup(s.filter(s.cfilter1),tp,LOCATION_MZONE,0,nil)
+	local g2=Duel.GetMatchingGroup(s.filter(s.cfilter2),tp,LOCATION_MZONE,0,nil)
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>-2 and #g1>0 and #g2>0
+		and aux.SelectUnselectGroup(g1+g2,e,tp,2,2,s.rescon,0) end
+	local sg=aux.SelectUnselectGroup(g1+g2,e,tp,2,2,s.rescon,1,tp,HINTMSG_TOGRAVE)
 	Duel.SendtoGrave(sg,REASON_COST)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

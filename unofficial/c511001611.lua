@@ -1,5 +1,5 @@
 --ナンバーズ・エヴァイユ
---Numbers Evaille
+--Numbers Eveil (Manga)
 --Rescripted by edo9300
 local s,id=GetID()
 function s.initial_effect(c)
@@ -16,20 +16,20 @@ s.listed_series={0x48}
 function s.spfilter(c,e,p,mg)
 	return Duel.GetLocationCountFromEx(p,p,mg,c)>0 and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,p,false,false)
 end
-function s.filter(c,mg,p,e)
+function s.filter(c,mg,mg0,p,e)
 	if not c:IsSetCard(SET_NUMBER) or not c:IsType(TYPE_XYZ) or type(c.xyz_number)~="number" or not s.spfilter(c,e,p,mg-c) then return false end
-	if c.xyz_number==0 then 
-		return mg:IsExists(function(c)return c.xyz_number==0 end,1,c)
+	if c.xyz_number==0 then
+		return #mg0>0
 	else
-		return (mg-c):CheckWithSumEqual(function(c)return c.xyz_number end,c.xyz_number,1,99999)
+		return (mg-c):CheckWithSumEqual(function(c)return c.xyz_number end,c.xyz_number,1,#mg)
 	end
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local pg=aux.GetMustBeMaterialGroup(tp,Group.CreateGroup(),tp,nil,nil,REASON_XYZ)
-		local mg=Duel.GetMatchingGroup(function(c) return type(c.xyz_number)=="number" end,tp,LOCATION_EXTRA,0,nil)
-		if #(pg-mg)>0 then return false end
-		return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,mg,tp,e)
+		local mg,mg0=Duel.GetMatchingGroup(function(c) return type(c.xyz_number)=="number" end,tp,LOCATION_EXTRA,0,nil):Split(function(c)return c.xyz_number>0 end,nil)
+		if (#pg-(#mg+#mg0))>0 then return false end
+		return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_EXTRA,0,1,nil,mg,mg0,tp,e)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,LOCATION_EXTRA)
 end
@@ -43,7 +43,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local pg=aux.GetMustBeMaterialGroup(tp,Group.CreateGroup(),tp,nil,nil,REASON_XYZ)
 	local mg,mg0=Duel.GetMatchingGroup(function(c) return type(c.xyz_number)=="number" end,tp,LOCATION_EXTRA,0,nil):Split(function(c)return c.xyz_number>0 end,nil)
-	if #(pg-(mg+mg0))>0 then return false end
+	if (#pg-(#mg+#mg0))>0 then return false end
 	local mat=Group.CreateGroup()
 	if #mg==0 and #mg0>1 then
 		mat=aux.SelectUnselectGroup(mg0,e,tp,1,#mg0-1,s.rescon,1,tp,HINTMSG_XMATERIAL)

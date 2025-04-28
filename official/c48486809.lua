@@ -42,6 +42,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.desop2)
 	c:RegisterEffect(e4)
 end
+s.LVnum=6
 s.listed_names={57116033} --Winged Kuriboh
 s.listed_series={SET_ELEMENTAL_HERO,SET_FAVORITE}
 function s.spcfilter(c)

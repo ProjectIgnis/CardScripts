@@ -30,19 +30,17 @@ s.listed_series={SET_THUNDER_DRAGON}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsLinkSummoned()
 end
+function s.runfn(fn,eff,tp,re,chk)
+	return not fn or fn(eff,tp,Group.CreateGroup(),PLAYER_NONE,0,re,REASON_EFFECT,PLAYER_NONE,chk)
+end
 function s.filter(c,e,tp)
 	if not (c:IsSetCard(SET_THUNDER_DRAGON) and c:IsMonster()
 		and (c:IsFaceup() or not c:IsLocation(LOCATION_REMOVED))
-		and c:IsHasEffect(id) and c:IsCanBeEffectTarget(e) and c:IsAbleToDeck()) then 
+		and c:IsHasEffect(REGISTER_FLAG_THUNDRA) and c:IsCanBeEffectTarget(e) and c:IsAbleToDeck()) then
 		return false
 	end
-	local eff={c:GetCardEffect(id)}
-	for _,teh in ipairs(eff) do
-		local te=teh:GetLabelObject()
-		local con=te:GetCondition()
-		local tg=te:GetTarget()
-		if (not con or con(te,tp,Group.CreateGroup(),PLAYER_NONE,0,teh,REASON_EFFECT,PLAYER_NONE,0)) 
-			and (not tg or tg(te,tp,Group.CreateGroup(),PLAYER_NONE,0,teh,REASON_EFFECT,PLAYER_NONE,0)) then return true end
+	for _,eff in ipairs(c:GetEffectsWithRegisterFlag(REGISTER_FLAG_THUNDRA)) do
+		if s.runfn(eff:GetCondition(),eff,tp,e,0) and s.runfn(eff:GetTarget(),eff,tp,e,0) then return true end
 	end
 	return false
 end
@@ -55,49 +53,28 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
-		local eff={tc:GetCardEffect(id)}
-		local te=nil
-		local acd={}
-		local ac={}
-		for _,teh in ipairs(eff) do
-			local temp=teh:GetLabelObject()
-			local con=temp:GetCondition()
-			local tg=temp:GetTarget()
-			if (not con or con(temp,tp,Group.CreateGroup(),PLAYER_NONE,0,teh,REASON_EFFECT,PLAYER_NONE,0)) 
-				and (not tg or tg(temp,tp,Group.CreateGroup(),PLAYER_NONE,0,teh,REASON_EFFECT,PLAYER_NONE,0)) then
-				table.insert(ac,teh)
-				table.insert(acd,temp:GetDescription())
-			end
-		end
-		if #ac==1 then te=ac[1] elseif #ac>1 then
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EFFECT)
-			op=Duel.SelectOption(tp,table.unpack(acd))
-			op=op+1
-			te=ac[op]
-		end
-		if not te then return end
-		Duel.ClearTargetCard()
-		local teh=te
-		te=teh:GetLabelObject()
-		local tg=te:GetTarget()
-		local op=te:GetOperation()
-		if tg then tg(te,tp,Group.CreateGroup(),PLAYER_NONE,0,teh,REASON_EFFECT,PLAYER_NONE,1) end
-		Duel.BreakEffect()
-		tc:CreateEffectRelation(te)
-		Duel.BreakEffect()
-		local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-		for etc in aux.Next(g) do
-			etc:CreateEffectRelation(te)
-		end
-		if op then op(te,tp,Group.CreateGroup(),PLAYER_NONE,0,teh,REASON_EFFECT,PLAYER_NONE,1) end
-		tc:ReleaseEffectRelation(te)
-		for etc in aux.Next(g) do
-			etc:ReleaseEffectRelation(te)
-		end
-		local opt=Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2))
-		Duel.SendtoDeck(tc,nil,opt,REASON_EFFECT)
+	if not tc:IsRelateToEffect(e) then return end
+	local effs=tc:GetEffectsWithRegisterFlag(REGISTER_FLAG_THUNDRA)
+	local options={}
+	for _,eff in ipairs(effs) do
+		local eff_chk=s.runfn(eff:GetCondition(),eff,tp,e,0) and s.runfn(eff:GetTarget(),eff,tp,e,0)
+		table.insert(options,{eff_chk,eff:GetDescription()})
 	end
+	local op=Duel.SelectEffect(tp,table.unpack(options))
+	if not op then return end
+	local te=effs[op]
+	if not te then return end
+	Duel.ClearTargetCard()
+	s.runfn(te:GetTarget(),te,tp,e)
+	Duel.BreakEffect()
+	tc:CreateEffectRelation(te)
+	Duel.BreakEffect()
+	local tg=Duel.GetTargetCards(te)
+	tg:ForEach(Card.CreateEffectRelation,te)
+	s.runfn(te:GetOperation(),te,tp,e,1)
+	tg:ForEach(Card.ReleaseEffectRelation,te)
+	local opt=Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2))
+	Duel.SendtoDeck(tc,nil,opt,REASON_EFFECT)
 end
 function s.repfilter(c,tp)
 	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:IsRace(RACE_THUNDER)

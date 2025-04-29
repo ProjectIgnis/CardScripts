@@ -3,7 +3,7 @@
 --scripted by Rundas
 local s,id=GetID()
 function s.initial_effect(c)
-	--To Grave
+	--Send 1 "Stardust" monster from your Deck to the GY, or if you control "Stardust Dragon" or a Synchro Monster that mentions it, you can Special Summon it instead
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOGRAVE+CATEGORY_SPECIAL_SUMMON)
@@ -13,9 +13,10 @@ function s.initial_effect(c)
 	e1:SetTarget(s.tgtg)
 	e1:SetOperation(s.tgop)
 	c:RegisterEffect(e1)
-	--Level Change
+	--Increase or decrease the Level of a "Stardust" monster you control by 1
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,3))
+	e2:SetDescription(aux.Stringid(id,1))
+	e2:SetCategory(CATEGORY_LVCHANGE)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
@@ -27,7 +28,6 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_STARDUST_DRAGON}
 s.listed_series={SET_STARDUST}
---To Grave
 function s.ssfilter(c)
 	return c:IsFaceup() and (c:IsCode(CARD_STARDUST_DRAGON) or (c:ListsCode(CARD_STARDUST_DRAGON) and c:IsType(TYPE_SYNCHRO)))
 end
@@ -42,24 +42,25 @@ function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local ss,mz=Duel.IsExistingMatchingCard(s.ssfilter,tp,LOCATION_MZONE,0,1,nil),Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,1))
+	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,2))
 	local g=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp,ss,mz)
 	if #g>0 then
-		if ss and mz and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
+		if ss and mz and Duel.SelectYesNo(tp,aux.Stringid(id,3)) then
 			Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 		else
 			Duel.SendtoGrave(g,REASON_EFFECT)
 		end
 	end
 end
---Level Change
 function s.lvfilter(c)
 	return c:IsFaceup() and c:IsSetCard(SET_STARDUST) and c:IsMonster() and c:HasLevel()
 end
 function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.lvfilter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(s.lvfilter,tp,LOCATION_MZONE,0,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local tc=Duel.SelectTarget(tp,s.lvfilter,tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
+	Duel.SetOperationInfo(0,CATEGORY_LVCHANGE,tc,1,tp,1)
 end
 function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

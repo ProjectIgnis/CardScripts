@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--Fusion Summon procedure
+	--Fusion materials: "Fallen of Albaz" + 1 monster with 2500 or more ATK
 	Fusion.AddProcMix(c,true,true,CARD_ALBAZ,aux.FilterBoolFunctionEx(Card.IsAttackAbove,2500))
 	--Verify materials
 	local e1=Effect.CreateEffect(c)
@@ -37,12 +37,7 @@ end
 s.listed_names={CARD_ALBAZ}
 s.listed_series={SET_DOGMATIKA}
 function s.valcheck(e,c)
-	local g=c:GetMaterial()
-	local atk=0
-	for tc in g:Iter() do
-		atk=atk+tc:GetOriginalLevel()
-	end
-	e:SetLabel(atk)
+	e:SetLabel(c:GetMaterial():GetSum(Card.GetOriginalLevel))
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -59,7 +54,7 @@ end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsFusionSummoned() then return end
-	--immune
+	--Unaffected by the activated effects of any other monsters Special Summoned from the Extra Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -100,14 +95,14 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,1))
 	local tc=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp,ft):GetFirst()
 	if tc then
 		aux.ToHandOrElse(tc,tp,function(c)
 			return tc:IsCanBeSpecialSummoned(e,0,tp,false,false) and ft>0 end,
 		function(c)
 			Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP) end,
-		aux.Stringid(id,1))
+		aux.Stringid(id,2))
 	end
 end

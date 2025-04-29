@@ -31,7 +31,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function s.eqfilter(c)
-	return c:IsFaceup() and not c:IsMaximumModeSide()
+	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsRace(RACE_THUNDER) and not c:IsMaximumModeSide()
 end
 function s.eqlimit(e,c)
 	return c:IsFaceup()

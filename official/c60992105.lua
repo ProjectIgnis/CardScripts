@@ -31,7 +31,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local ct=Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)
 	if ct>5 then ct=5 end
-	local ac=Duel.AnnounceNumberRange(tp,1,ct)
+	local ac=ct==1 and 1 or Duel.AnnounceNumberRange(tp,1,ct)
 	if Duel.DiscardDeck(tp,ac,REASON_EFFECT)==0 then return end
 	local og=Duel.GetOperatedGroup()
 	if og:IsExists(s.monfilter,1,nil) and c:IsFaceup() and c:IsRelateToEffect(e) then

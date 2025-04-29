@@ -54,7 +54,7 @@ function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
 	local bc1=Duel.GetBattleMonster(tp)
 	if not bc1 then return false end
 	local bc2=bc1:GetBattleTarget()
-	return bc1 and bc1:IsType(TYPE_SYNCHRO) and bc1:IsFaceup() and bc1:HasFlagEffect(id)
+	return bc1:IsType(TYPE_SYNCHRO) and bc1:IsFaceup() and bc1:HasFlagEffect(id)
 		and bc2 and bc2:IsControler(1-tp)
 end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)

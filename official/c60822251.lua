@@ -2,8 +2,8 @@
 --Kaiki the Unity Star
 local s,id=GetID()
 function s.initial_effect(c)
-	--Fusion Summon 1 Warrior Fusion Monster from your Extra Deck
-	local params = {aux.FilterBoolFunction(Card.IsRace,RACE_WARRIOR)}
+	--Fusion Summon 1 Warrior Fusion Monster from your Extra Deck, using monsters from your hand or field as material
+	local params={aux.FilterBoolFunction(Card.IsRace,RACE_WARRIOR)}
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetTarget(Fusion.SummonEffTG(table.unpack(params)))
 	e1:SetOperation(Fusion.SummonEffOP(table.unpack(params)))
 	c:RegisterEffect(e1)
-	--Special Summon this card from the GY
+	--Special Summon this card
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -24,16 +24,17 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,{id,1})
+	e2:SetHintTiming(0,TIMING_STANDBY_PHASE|TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E)
 	e2:SetCondition(s.spcon)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-function s.cfilter(c)
-	return c:IsFaceup() and c:IsRace(RACE_WARRIOR)and c:IsLevelAbove(5) and c:GetAttack()~=c:GetBaseAttack()
+function s.spconfilter(c)
+	return c:IsLevelAbove(5) and c:IsRace(RACE_WARRIOR) and not c:IsAttack(c:GetBaseAttack()) and c:IsFaceup()
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsTurnPlayer(1-tp) and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsTurnPlayer(1-tp) and Duel.IsExistingMatchingCard(s.spconfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

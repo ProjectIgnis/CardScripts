@@ -3,71 +3,63 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetCode(EVENT_FREE_CHAIN)
-	c:RegisterEffect(e1)
-	--atk&def
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_ACTIVATE)
+	e0:SetCode(EVENT_FREE_CHAIN)
+	c:RegisterEffect(e0)
+	--All "True Draco" and "True King" monsters on the field gain 300 ATK/DEF
+	local e1a=Effect.CreateEffect(c)
+	e1a:SetType(EFFECT_TYPE_FIELD)
+	e1a:SetCode(EFFECT_UPDATE_ATTACK)
+	e1a:SetRange(LOCATION_FZONE)
+	e1a:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
+	e1a:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_TRUE_DRACO_KING))
+	e1a:SetValue(300)
+	c:RegisterEffect(e1a)
+	local e1b=e1a:Clone()
+	e1b:SetCode(EFFECT_UPDATE_DEFENSE)
+	c:RegisterEffect(e1b)
+	--The first time each Tribute Summoned "True Draco" or "True King" monster would be destroyed by battle each turn, it is not destroyed
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
-	e2:SetCode(EFFECT_UPDATE_ATTACK)
+	e2:SetCode(EFFECT_INDESTRUCTABLE_COUNT)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_TRUE_DRACO_KING))
-	e2:SetValue(300)
+	e2:SetTarget(function(e,c) return c:IsTributeSummoned() and c:IsSetCard(SET_TRUE_DRACO_KING) end)
+	e2:SetValue(function(e,re,r,rp) return (r&REASON_BATTLE)>0 and 1 or 0 end)
 	c:RegisterEffect(e2)
-	local e3=e2:Clone()
-	e3:SetCode(EFFECT_UPDATE_DEFENSE)
+	--Destroy 1 other card you control or in your hand, and if you do, add 1 "True Draco" or "True King" card from your Deck to your hand
+	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(id,0))
+	e3:SetCategory(CATEGORY_DESTROY+CATEGORY_TOHAND+CATEGORY_SEARCH)
+	e3:SetType(EFFECT_TYPE_IGNITION)
+	e3:SetRange(LOCATION_FZONE)
+	e3:SetCountLimit(1)
+	e3:SetTarget(s.destg)
+	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
-	--indes
-	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_FIELD)
-	e4:SetCode(EFFECT_INDESTRUCTABLE_COUNT)
-	e4:SetRange(LOCATION_FZONE)
-	e4:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e4:SetTarget(s.indtg)
-	e4:SetValue(s.indct)
-	c:RegisterEffect(e4)
-	--destroy
-	local e5=Effect.CreateEffect(c)
-	e5:SetDescription(aux.Stringid(id,0))
-	e5:SetCategory(CATEGORY_DESTROY+CATEGORY_TOHAND+CATEGORY_SEARCH)
-	e5:SetType(EFFECT_TYPE_IGNITION)
-	e5:SetRange(LOCATION_FZONE)
-	e5:SetCountLimit(1)
-	e5:SetTarget(s.destg)
-	e5:SetOperation(s.desop)
-	c:RegisterEffect(e5)
 end
 s.listed_series={SET_TRUE_DRACO_KING}
-function s.indtg(e,c)
-	return c:IsTributeSummoned() and c:IsSetCard(SET_TRUE_DRACO_KING)
-end
-function s.indct(e,re,r,rp)
-	if (r&REASON_BATTLE)~=0 then
-		return 1
-	else return 0 end
-end
 function s.thfilter(c)
 	return c:IsSetCard(SET_TRUE_DRACO_KING) and c:IsAbleToHand()
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(nil,tp,LOCATION_HAND|LOCATION_ONFIELD,0,1,e:GetHandler())
-		and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
 	local g=Duel.GetMatchingGroup(nil,tp,LOCATION_HAND|LOCATION_ONFIELD,0,e:GetHandler())
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
+	if chk==0 then return #g>0 and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,tp,0)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
+	local c=e:GetHandler()
+	local exc=c:IsRelateToEffect(e) and c or nil
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectMatchingCard(tp,nil,tp,LOCATION_HAND|LOCATION_ONFIELD,0,1,1,e:GetHandler())
-	if #g>0 and Duel.Destroy(g,REASON_EFFECT)~=0 then
+	local g=Duel.SelectMatchingCard(tp,nil,tp,LOCATION_HAND|LOCATION_ONFIELD,0,1,1,exc)
+	if #g>0 and Duel.Destroy(g,REASON_EFFECT)>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-		local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil)
-		if #g>0 then
-			Duel.SendtoHand(g,nil,REASON_EFFECT)
-			Duel.ConfirmCards(1-tp,g)
+		local sg=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil)
+		if #sg>0 then
+			Duel.SendtoHand(sg,nil,REASON_EFFECT)
+			Duel.ConfirmCards(1-tp,sg)
 		end
 	end
 end

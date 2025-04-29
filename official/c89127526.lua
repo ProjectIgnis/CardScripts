@@ -27,7 +27,7 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.effop(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) then
 		tc:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 		--It cannot be destroyed by battle this turn
 		local e1=Effect.CreateEffect(e:GetHandler())

@@ -3,57 +3,44 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
+	--There can only be 1 face-up "Super Crashbug" on the field
 	c:SetUniqueOnField(1,1,id)
-	--special summon
+	--Must first be Special Summoned (from your hand) in face-up Defense Position, by banishing "Crashbug X", "Crashbug Y", and "Crashbug Z" from your GY
+	local e0=Effect.CreateEffect(c)
+	e0:SetDescription(aux.Stringid(id,0))
+	e0:SetType(EFFECT_TYPE_FIELD)
+	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_SPSUM_PARAM)
+	e0:SetCode(EFFECT_SPSUMMON_PROC)
+	e0:SetRange(LOCATION_HAND)
+	e0:SetTargetRange(POS_FACEUP_DEFENSE,0)
+	e0:SetCondition(s.spcon)
+	e0:SetTarget(s.sptg)
+	e0:SetOperation(s.spop)
+	c:RegisterEffect(e0)
+	--Switch the ATK and DEF of all face-up Attack Position monsters on the field
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetCode(EFFECT_SPSUMMON_PROC)
-	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_SPSUM_PARAM)
-	e1:SetRange(LOCATION_HAND)
-	e1:SetTargetRange(POS_FACEUP_DEFENSE,0)
-	e1:SetCondition(s.spcon)
-	e1:SetTarget(s.sptg)
-	e1:SetOperation(s.spop)
+	e1:SetCode(EFFECT_SWAP_AD)
+	e1:SetRange(LOCATION_MZONE)
+	e1:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
+	e1:SetTarget(function(e,c) return c:IsPosition(POS_FACEUP_ATTACK) end)
 	c:RegisterEffect(e1)
-	--swap ad
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_FIELD)
-	e2:SetCode(EFFECT_SWAP_AD)
-	e2:SetRange(LOCATION_MZONE)
-	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e2:SetTarget(s.adfilter)
-	c:RegisterEffect(e2)
+end
+s.listed_names={87526784,23915499,50319138,id} --"Crashbug X", "Crashbug Y", "Crashbug Z"
+function s.spcostfilter(c)
+	return c:IsCode(87526784,23915499,50319138) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end
 function s.rescon(sg,e,tp,mg)
-	return aux.ChkfMMZ(1)(sg,e,tp,mg) and sg:IsExists(s.chk,1,nil,sg,Group.CreateGroup(),87526784,23915499,50319138)
-end
-function s.chk(c,sg,g,code,...)
-	if not c:IsCode(code) then return false end
-	local res=true
-	if ... then
-		g:AddCard(c)
-		res=sg:IsExists(s.chk,1,g,sg,g,...)
-		g:RemoveCard(c)
-	end
-	return res
-end
-function s.spfilter(c,...)
-	return c:IsCode(...) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
+	return Duel.GetMZoneCount(tp,sg)>0 and sg:GetClassCount(Card.GetCode)==3
 end
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	local rg1=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,nil,87526784)
-	local rg2=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,nil,23915499)
-	local rg3=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,nil,50319138)
-	local rg=rg1:Clone()
-	rg:Merge(rg2)
-	rg:Merge(rg3)
-	return Duel.GetLocationCount(tp,LOCATION_MZONE)>-3 and #rg1>0 and #rg2>0 and #rg3>0 
-		and aux.SelectUnselectGroup(rg,e,tp,3,3,s.rescon,0)
+	local rg=Duel.GetMatchingGroup(s.spcostfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,nil)
+	return #rg>=3 and Duel.GetMZoneCount(tp,rg)>0 and aux.SelectUnselectGroup(rg,e,tp,3,3,s.rescon,0)
 end
-function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
-	local rg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,nil,87526784,23915499,50319138)
+function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,c)
+	local rg=Duel.GetMatchingGroup(s.spcostfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,nil)
 	local g=aux.SelectUnselectGroup(rg,e,tp,3,3,s.rescon,1,tp,HINTMSG_REMOVE,nil,nil,true)
 	if #g>0 then
 		g:KeepAlive()
@@ -67,7 +54,4 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	if not g then return end
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 	g:DeleteGroup()
-end
-function s.adfilter(e,c)
-	return c:IsPosition(POS_FACEUP_ATTACK)
 end

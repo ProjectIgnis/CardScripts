@@ -78,22 +78,23 @@ function s.drwop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoDeck(g,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
 	end
 end
-function s.selffilter(c,tp)
+function s.selffilter(c,e,tp)
 	return c:IsSetCard(SET_YUMMY) and c:IsAbleToChangeControler() and c:IsFaceup() and Duel.GetMZoneCount(tp,c,tp,LOCATION_REASON_CONTROL)>0
+		and c:IsCanBeEffectTarget(e)
 end
-function s.oppfilter(c,tp)
-	return c:IsAbleToChangeControler() and Duel.GetMZoneCount(tp,c,tp,LOCATION_REASON_CONTROL)>0
+function s.oppfilter(c,e,tp)
+	return c:IsAbleToChangeControler() and Duel.GetMZoneCount(tp,c,tp,LOCATION_REASON_CONTROL)>0 and c:IsCanBeEffectTarget(e)
 end
 function s.ctrltg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	if chk==0 then return Duel.IsExistingTarget(s.selffilter,tp,LOCATION_MZONE,0,1,nil,tp)
-		and Duel.IsExistingTarget(s.oppfilter,tp,0,LOCATION_MZONE,1,nil,1-tp) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONTROL)
-	local g1=Duel.SelectTarget(tp,s.selffilter,tp,LOCATION_MZONE,0,1,1,nil,tp)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONTROL)
-	local g2=Duel.SelectTarget(tp,s.oppfilter,tp,0,LOCATION_MZONE,1,1,nil,1-tp)
+	if chk==0 then return Duel.IsExistingTarget(s.selffilter,tp,LOCATION_MZONE,0,1,nil,e,tp)
+		and Duel.IsExistingTarget(s.oppfilter,tp,0,LOCATION_MZONE,1,nil,e,1-tp) end
+	local g1=Duel.GetMatchingGroup(s.selffilter,tp,LOCATION_MZONE,0,nil,e,tp)
+	local g2=Duel.GetMatchingGroup(s.oppfilter,tp,0,LOCATION_MZONE,nil,e,1-tp)
 	g1:Merge(g2)
-	Duel.SetOperationInfo(0,CATEGORY_CONTROL,g1,2,tp,0)
+	local tg=aux.SelectUnselectGroup(g1,e,tp,2,2,aux.dpcheck(Card.GetControler),1,tp,HINTMSG_CONTROL)
+	Duel.SetTargetCard(tg)
+	Duel.SetOperationInfo(0,CATEGORY_CONTROL,tg,2,tp,0)
 end
 function s.ctrlop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetTargetCards(e)

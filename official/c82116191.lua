@@ -2,7 +2,7 @@
 --Gigantic Cephalotus
 local s,id=GetID()
 function s.initial_effect(c)
-	--atkup
+	--Make this card gain 200 ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_ATKCHANGE)
@@ -10,22 +10,19 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_TO_GRAVE)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCondition(s.atkcon)
-	e1:SetTarget(s.atktg)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
 end
-function s.filter(c)
-	return c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousRaceOnField()&RACE_PLANT~=0 and c:IsRace(RACE_PLANT) and c:IsPreviousLocation(LOCATION_ONFIELD)
+function s.atkconfilter(c)
+	return c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousRaceOnField(RACE_PLANT) and c:IsRace(RACE_PLANT) and c:IsPreviousLocation(LOCATION_MZONE)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.filter,1,nil)
-end
-function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsRelateToEffect(e) and e:GetHandler():IsFaceup() end
+	return eg:IsExists(s.atkconfilter,1,nil)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsFaceup() and c:IsRelateToEffect(e) then
+		--This card gains 200 ATK
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)

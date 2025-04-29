@@ -57,7 +57,9 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local sc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter),tp,LOCATION_GRAVE|LOCATION_REMOVED,0,1,1,nil,tp):GetFirst()
-	if sc and Duel.SpecialSummonStep(sc,0,tp,tp,true,false,POS_FACEUP) then
+	if not sc then return end
+	sc:AssumeProperty(ASSUME_CODE,id)
+	if Duel.SpecialSummonStep(sc,0,tp,tp,true,false,POS_FACEUP) then
 		--Special Summon it as Normal Monster (Rock/EARTH/Level 4/ATK 1000/DEF 1000) and its name becomes "Tiki Peace" (even while face-down)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)

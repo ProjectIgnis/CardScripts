@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetHintTiming(0,TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E|TIMING_DAMAGE_STEP)
-	e1:SetCondition(s.atkcond)
+	e1:SetCondition(s.atkcon)
 	e1:SetCost(Cost.SelfBanish)
 	e1:SetTarget(s.atktg)
 	e1:SetOperation(s.atkop)
@@ -36,9 +36,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={SET_ARGOSTARS}
-function s.atkcond(e,tp,eg,ep,ev,re,r,rp,chk)
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsContinuousTrap),tp,LOCATION_ONFIELD,0,1,nil)
-		and Duel.IsTurnPlayer(1-tp) and aux.StatChangeDamageStepCondition()
+function s.atkcon(e,tp,eg,ep,ev,re,r,rp,chk)
+	return Duel.IsTurnPlayer(1-tp) and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsContinuousTrap),tp,LOCATION_ONFIELD,0,1,nil)
+		and aux.StatChangeDamageStepCondition()
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsAttackAbove,1),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end

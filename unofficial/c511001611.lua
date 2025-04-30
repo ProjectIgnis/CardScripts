@@ -54,8 +54,9 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			end,mat,mg,mat)+(mg0-mat)
 			if #cg==0 then break end
 			local cancel = ((mg0:Includes(mat) and #(mg0-mat)>0) or mg:IsExists(function(c,mg,sg)
-				Duel.SetSelectedCard(sg-mg0)
-				return sg:CheckWithSumEqual(function(c)return c.xyz_number end,c.xyz_number,0,0)
+				local without_num0=sg-mg0
+				Duel.SetSelectedCard(without_num0)
+				return without_num0:CheckWithSumEqual(function(c)return c.xyz_number end,c.xyz_number,0,0)
 			end,1,mat,mg,mat)) and #mat>0
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
 			local tc=cg:SelectUnselect(mat,tp,cancel,cancel)

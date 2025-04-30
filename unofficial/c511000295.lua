@@ -137,7 +137,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local xyz=xyzg:Select(tp,1,1,nil):GetFirst()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
-		Duel.XyzSummon(tp,xyz,matg,nil,5,5)
+		Duel.XyzSummon(tp,xyz,matg,matg,5,5)
 	else
 		for _,eff in ipairs(reset) do
 			eff:Reset()

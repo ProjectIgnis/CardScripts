@@ -5,6 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -34,19 +35,20 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local fid=e:GetHandler():GetFieldID()
-	local c=Duel.GetFirstTarget()
-	local zone=c:GetFreeLinkedZone()&ZONES_MMZ
+	local tc=Duel.GetFirstTarget()
+	local zone=tc:GetFreeLinkedZone()&ZONES_MMZ
 	local count=s.zone_count(zone)
-	local sg=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.spfilter),tp,LOCATION_GRAVE,0,nil,e,tp,c)
+	local sg=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.spfilter),tp,LOCATION_GRAVE,0,nil,e,tp,tc)
 	if #sg<count then count=#sg end
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then count=1 end
-	if c and c:IsFaceup() and c:IsRelateToEffect(e) and zone~=0 then
+	if tc:IsFaceup() and tc:IsRelateToEffect(e) and zone~=0 then
 		for i=0,count,1 do
-			local tc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp,c):GetFirst()
-			if tc then
-				local zone=c:GetFreeLinkedZone()&ZONES_MMZ
-				if zone>0 and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP,zone) then
-					tc:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1,fid)
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+			local sc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp,tc):GetFirst()
+			if sc then
+				local zone=tc:GetFreeLinkedZone()&ZONES_MMZ
+				if zone>0 and Duel.SpecialSummonStep(sc,0,tp,tp,false,false,POS_FACEUP,zone) then
+					sc:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1,fid)
 				end
 			end
 		end

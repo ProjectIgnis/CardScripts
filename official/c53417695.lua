@@ -3,7 +3,7 @@
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
-	--destroy
+	--Destroy 1 "Unchained" monster you control and 1 card on the field
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.destg)
 	e1:SetOperation(s.desop)
 	c:RegisterEffect(e1)
-	--special summon
+	--Special Summon 1 "Unchained" monster from your Deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -32,22 +32,24 @@ s.listed_series={SET_UNCHAINED}
 function s.desfilter(c,tp,oc)
 	return c:IsFaceup() and c:IsSetCard(SET_UNCHAINED) and Duel.IsExistingTarget(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,Group.FromCards(c,oc))
 end
+function s.unchainedfilter(c,tp)
+	return c:IsSetCard(SET_UNCHAINED) and c:IsMonster() and c:IsControler(tp)
+end
+function s.rescon(sg,e,tp,mg)
+	return sg:IsExists(s.unchainedfilter,1,nil,tp)
+end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
 	if chkc then return false end
 	if chk==0 then return Duel.IsExistingTarget(s.desfilter,tp,LOCATION_MZONE,0,1,nil,tp,c) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(tp,s.desfilter,tp,LOCATION_MZONE,0,1,1,nil,tp,c)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	g:AddCard(c)
-	local g2=Duel.SelectTarget(tp,aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,g)
-	g:RemoveCard(c)
-	g:Merge(g2)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,2,0,0)
+	local g=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,c)
+	local tg=aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,1,tp,HINTMSG_DESTROY)
+	Duel.SetTargetCard(tg)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,tg,#tg,tp,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetTargetCards(e)
-	if #tg==2 and tg:FilterCount(Card.IsRelateToEffect,nil,e)==2 then
+	if #tg==2 then
 		Duel.Destroy(tg,REASON_EFFECT)
 	end
 end

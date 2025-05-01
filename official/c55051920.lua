@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(0,TIMING_END_PHASE)
 	c:RegisterEffect(e1)
-	--Targeted "Orcust" or "World Legacy" card cannot be targeted by card effects
+	--Neither player can target 1 "Orcust" or "World Legacy" card you control with card effects this turn
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_QUICK_O)
@@ -38,23 +38,25 @@ function s.cfilter(c,tp)
 		and Duel.IsExistingTarget(s.filter,tp,LOCATION_ONFIELD,0,1,c)
 end
 function s.filter(c)
-	return c:IsFaceup() and (c:IsSetCard(SET_ORCUST) or c:IsSetCard(SET_WORLD_LEGACY)) and not c:IsCode(id)
+	return c:IsFaceup() and c:IsSetCard({SET_ORCUST,SET_WORLD_LEGACY}) and not c:IsCode(id)
 end
 function s.immcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,nil,tp) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,1,nil,tp)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function s.immtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_ONFIELD) and chkc:IsControler(tp) and s.filter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_ONFIELD,0,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_APPLYTO)
 	Duel.SelectTarget(tp,s.filter,tp,LOCATION_ONFIELD,0,1,1,nil)
 end
 function s.immop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then
-		local e1=Effect.CreateEffect(c)
+	if tc:IsRelateToEffect(e) then
+		--Neither player can target it with card effects this turn
+		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetDescription(3002)
 		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e1:SetType(EFFECT_TYPE_SINGLE)

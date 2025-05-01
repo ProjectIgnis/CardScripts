@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.target)
 	c:RegisterEffect(e3)
 end
-s.listed_names={46427957,72426662}
+s.listed_names={46427957,72426662} --"Ruin, Queen of Oblivion", "Demise, King of Armageddon"
 function s.lvfilter(c,tp)
 	return c:IsFaceup() and c:IsType(TYPE_RITUAL)
 		and Duel.IsExistingMatchingCard(s.lvcfilter,tp,LOCATION_HAND,0,1,nil,c)
@@ -49,7 +49,6 @@ function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	e:SetLabelObject(cg:GetFirst())
 end
 function s.lvop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
 	local pc=e:GetLabelObject()
 	if tc:IsRelateToEffect(e) then
@@ -98,6 +97,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Draw(p,d,REASON_EFFECT)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectMatchingCard(tp,nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
 	if #g>0 then
 		Duel.Destroy(g,REASON_EFFECT)

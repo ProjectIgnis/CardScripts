@@ -5,6 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Destroy all cards on the field, except the targeted "Vendread" ritual monster
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -28,6 +29,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,0,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,1))
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil)
 	if #g==0 then return end
 	Duel.HintSelection(g)
@@ -35,10 +37,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #dg~=0 then
 		Duel.Destroy(dg,REASON_EFFECT)
 	end
+	--It cannot attack directly
 	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetDescription(3207)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
 	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
-	g:GetFirst():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,0))
 	g:GetFirst():RegisterEffect(e1)
 end

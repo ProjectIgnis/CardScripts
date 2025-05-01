@@ -253,6 +253,7 @@ function Xyz.Condition(f,lv,minc,maxc,mustbemat,exchk)
 	--og: use specific material
 	return function(e,c,must,og,min,max)
 				if c==nil then return true end
+				if (maxc~=infToken and min and min>maxc) then return false end
 				if c:IsType(TYPE_PENDULUM) and c:IsFaceup() then return false end
 				local tp=c:GetControler()
 				local mg

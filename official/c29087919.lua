@@ -18,21 +18,21 @@ s.listed_series={SET_GEARGIANO}
 function s.gyspfilter(c,e,tp)
 	return c:IsSetCard(SET_GEARGIANO) and c:IsCanBeEffectTarget(e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
-function s.xyzfilter(c,mg,ct)
-	return c:IsXyzSummonable(nil,mg,ct,ct)
+function s.xyzfilter(c,mg,minct,maxct)
+	return c:IsXyzSummonable(nil,mg,minct,maxct)
 end
 function s.rescon(exg)
 	return function(sg)
 		if #sg<2 then return false end
 		if not sg:CheckDifferentProperty(Card.GetCode) then return false,false end
-		return sg:GetClassCount(Card.GetCode)==#sg and exg:IsExists(s.xyzfilter,tp,LOCATION_EXTRA,1,nil,sg,#sg)
+		return exg:IsExists(s.xyzfilter,1,nil,sg,#sg,#sg)
 	end
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	local mg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_GRAVE,0,nil,e,tp)
+	local mg=Duel.GetMatchingGroup(s.gyspfilter,tp,LOCATION_GRAVE,0,nil,e,tp)
 	local ct=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local exg=Duel.GetMatchingGroup(s.xyzfilter,tp,LOCATION_EXTRA,0,nil,mg,ct)
+	local exg=Duel.GetMatchingGroup(s.xyzfilter,tp,LOCATION_EXTRA,0,nil,mg,1,ct)
 	local rescon=s.rescon(exg)
 	if chk==0 then return Duel.IsPlayerCanSpecialSummonCount(tp,2)
 		and not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
@@ -51,11 +51,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 	local ct=Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
 	if ct<1 then return end
-	local xyzg=Duel.GetMatchingGroup(s.xyzfilter,tp,LOCATION_EXTRA,0,nil,sg,ct)
+	local xyzg=Duel.GetMatchingGroup(s.xyzfilter,tp,LOCATION_EXTRA,0,nil,sg,ct,ct)
 	if #xyzg>0 then
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local xyzc=xyzg:Select(tp,1,1,nil):GetFirst()
-		Duel.XyzSummon(tp,xyzc,g,nil,#g,#g)
+		Duel.XyzSummon(tp,xyzc,sg,nil,#sg,#sg)
 	end
 end

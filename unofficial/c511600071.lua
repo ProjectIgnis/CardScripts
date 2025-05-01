@@ -19,9 +19,9 @@ function s.matfilter(c,e)
 end
 function s.rescon(xyzg)
 	return function(sg,e,tp,g)
+		if xyzg:IsExists(Card.IsXyzSummonable,1,nil,nil,sg,#sg,#sg) then return true end
 		--If no xyz can be summoned using at least the currently seelcted cards as forced materials, stop
-		return xyzg:IsExists(Card.IsXyzSummonable,1,nil,nil,sg,#sg,#sg),
-				not xyzg:IsExists(Card.IsXyzSummonable,1,nil,sg,g,#sg,#g)
+		return false,not xyzg:IsExists(Card.IsXyzSummonable,1,nil,sg,g,#sg,#g)
 	end
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -42,8 +42,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		notSg:ForEach(function(_c) _c:ResetEffect(id,RESET_CARD) end)
 		return #xyzg>0
 	end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	local tg=aux.SelectUnselectGroup(mg,e,tp,1,#mg,s.rescon(xyzg),1,tp,HINTMSG_XMATERIAL,s.rescon(xyzg))
+	local tg=aux.SelectUnselectGroup(mg,e,tp,1,#mg,s.rescon(xyzg),1,tp,HINTMSG_TARGET,s.rescon(xyzg))
 	Duel.SetTargetCard(tg)
 	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,tg,#tg,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)

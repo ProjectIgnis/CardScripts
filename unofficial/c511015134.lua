@@ -18,134 +18,89 @@ function s.filter(c,e)
 	return c:IsSetCard(SET_NUMBER_C) and c:IsType(TYPE_XYZ) and (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup())
 		and (c:GetRank()>0 or c:IsStatus(STATUS_NO_LEVEL)) and c:IsCanBeEffectTarget(e)
 end
-function s.xyzfilter(c,sg,e,tp)
-	if not c:IsSetCard(SET_NUMBER_C) or Duel.GetLocationCountFromEx(tp,tp,sg,c)<=0 then return false end
-	if c.rum_limit and not sg:IsExists(function(mc) return c.rum_limit(mc,e) end,1,nil) then return false end
+function s.xyzcheck(c,sg,og,minc,maxc,e)
+	if c.rum_limit and not sg:IsExists(c.rum_limit,1,nil,e) then return false end
 	local se=nil
 	if c.rum_xyzsummon then
 		se=c.rum_xyzsummon(c)
 	end
-	local res=c:IsXyzSummonable(nil,sg,#sg,#sg)
+	local res=c:IsXyzSummonable(sg,og,minc,maxc)
 	if se then
 		se:Reset()
 	end
 	return res
 end
-function s.chkfilter(c,g,sg,e,tp)
-	sg:AddCard(c)
-	local e1=Effect.CreateEffect(e:GetHandler())
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_XYZ_LEVEL)
-	e1:SetValue(c:GetRank()+1)
-	e1:SetReset(RESET_CHAIN)
-	c:RegisterEffect(e1)
-	local e2=nil
-	if c:IsControler(1-tp) then
-		e2=Effect.CreateEffect(e:GetHandler())
-		e2:SetType(EFFECT_TYPE_SINGLE)
-		e2:SetCode(EFFECT_XYZ_MATERIAL)
-		e2:SetReset(RESET_CHAIN)
-		c:RegisterEffect(e2)
+function s.rescon(xyzg)
+	return function(sg,e,tp,g)
+		if xyzg:IsExists(s.xyzcheck,1,nil,nil,sg,#sg,#sg,e) then return true end
+		--If no xyz can be summoned using at least the currently seelcted cards as forced materials, stop
+		return false,not xyzg:IsExists(s.xyzcheck,1,nil,sg,g,#sg,#g,e)
 	end
-	local res=Duel.IsExistingMatchingCard(s.xyzfilter,tp,LOCATION_EXTRA,0,1,nil,sg,e,tp)
-		or g:IsExists(s.chkfilter,1,sg,g,sg,e,tp)
-	e1:Reset()
-	if e2 then e2:Reset() end
-	sg:RemoveCard(c)
-	return res
+end
+function s.xyzfilter(c,mg,minc,maxc)
+	return c:IsSetCard(SET_NUMBER_C) and c:IsXyzSummonable(nil,mg,minc,maxc)
+end
+function s.register_effects(c,mg,tp)
+	local xyz_mat_eff
+	if mg:IsExists(Card.IsControler,1,nil,1-tp) then
+		xyz_mat_eff=Effect.CreateEffect(c)
+		xyz_mat_eff:SetType(EFFECT_TYPE_FIELD)
+		xyz_mat_eff:SetCode(EFFECT_XYZ_MATERIAL)
+		xyz_mat_eff:SetTargetRange(LOCATION_GRAVE|LOCATION_ONFIELD,LOCATION_GRAVE|LOCATION_ONFIELD)
+		xyz_mat_eff:SetTarget(function(e,c) return mg:IsContains(c) end)
+		xyz_mat_eff:SetReset(RESETS_STANDARD)
+		xyz_mat_eff:SetProperty(EFFECT_FLAG_UNCOPYABLE|EFFECT_FLAG_CANNOT_DISABLE|EFFECT_FLAG_IGNORE_IMMUNE|EFFECT_FLAG_SET_AVAILABLE)
+		Duel.RegisterEffect(xyz_mat_eff,tp)
+	end
+	local xyz_level_eff=Effect.CreateEffect(c)
+	xyz_level_eff:SetType(EFFECT_TYPE_FIELD)
+	xyz_level_eff:SetCode(EFFECT_XYZ_LEVEL)
+	xyz_level_eff:SetTargetRange(LOCATION_GRAVE|LOCATION_ONFIELD,LOCATION_GRAVE|LOCATION_ONFIELD)
+	xyz_level_eff:SetTarget(function(e,c) return mg:IsContains(c) end)
+	xyz_level_eff:SetReset(RESETS_STANDARD)
+	xyz_level_eff:SetProperty(EFFECT_FLAG_UNCOPYABLE|EFFECT_FLAG_CANNOT_DISABLE|EFFECT_FLAG_IGNORE_IMMUNE|EFFECT_FLAG_SET_AVAILABLE)
+	xyz_level_eff:SetValue(function(e,c) if a then Debug.Message("b") end return c:GetRank()+1 end)
+	Duel.RegisterEffect(xyz_level_eff,tp)
+	return xyz_mat_eff,xyz_level_eff
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	local sg=Group.CreateGroup()
 	local mg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_GRAVE|LOCATION_ONFIELD,LOCATION_GRAVE|LOCATION_ONFIELD,nil,e)
-	if chk==0 then return mg:IsExists(s.chkfilter,1,nil,mg,sg,e,tp) end
-	local reset={}
-	local tc
-	local e1
-	local e2
-	::start::
-		local cancel=#sg>0 and Duel.IsExistingMatchingCard(s.xyzfilter,tp,LOCATION_EXTRA,0,1,nil,sg,e,tp)
-		local tg=mg:Filter(s.chkfilter,sg,mg,sg,e,tp)
-		if #tg<=0 then goto jump end
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
-		tc=Group.SelectUnselect(tg,sg,tp,cancel,cancel)
-		if not tc then goto jump end
-		if sg:IsContains(tc) then
-			sg:RemoveCard(tc)
-			reset[tc][0]:Reset()
-			if reset[tc][1] then
-				reset[tc][1]:Reset()
-			end
-			reset[tc]=nil
-		else
-			sg:AddCard(tc)
-			reset[tc]={}
-			e1=Effect.CreateEffect(e:GetHandler())
-			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetCode(EFFECT_XYZ_LEVEL)
-			e1:SetValue(tc:GetRank()+1)
-			e1:SetReset(RESET_CHAIN)
-			tc:RegisterEffect(e1)
-			reset[tc][0]=e1
-			e2=nil
-			if tc:IsControler(1-tp) then
-				e2=Effect.CreateEffect(e:GetHandler())
-				e2:SetType(EFFECT_TYPE_SINGLE)
-				e2:SetCode(EFFECT_XYZ_MATERIAL)
-				e2:SetReset(RESET_CHAIN)
-				tc:RegisterEffect(e2)
-			end
-			reset[tc][1]=e2
-		end
-		goto start
-	::jump::
-	Duel.SetTargetCard(sg)
-	for _,t in ipairs(reset) do
-		t[0]:Reset()
-		if t[1] then t[1]:Reset() end
+	local xyz_mat_eff,xyz_level_eff=s.register_effects(e:GetHandler(),mg,tp)
+	local xyzg=Duel.GetMatchingGroup(s.xyzfilter,tp,LOCATION_EXTRA,0,nil,mg)
+	if chk==0 then
+		xyz_level_eff:Reset()
+		if xyz_mat_eff then xyz_mat_eff:Reset() end
+		return #xyzg>0
 	end
+	local sg=aux.SelectUnselectGroup(mg,e,tp,1,#mg,s.rescon(xyzg),1,tp,HINTMSG_TARGET,s.rescon(xyzg))
+	Duel.SetTargetCard(sg)
+	xyz_level_eff:Reset()
+	if xyz_mat_eff then xyz_mat_eff:Reset() end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetTargetCards(e)
+	local mg=Duel.GetTargetCards(e)
 	local c=e:GetHandler()
-	local reset={}
-	for tc in aux.Next(g) do
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_XYZ_LEVEL)
-		e1:SetValue(tc:GetRank()+1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-		tc:RegisterEffect(e1)
-		table.insert(reset,e1)
-		if tc:IsControler(1-tp) then
-			local e2=Effect.CreateEffect(c)
-			e2:SetType(EFFECT_TYPE_SINGLE)
-			e2:SetCode(EFFECT_XYZ_MATERIAL)
-			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
-			tc:RegisterEffect(e2)
-			table.insert(reset,e2)
-		end
-	end
-	local xyzg=Duel.GetMatchingGroup(s.xyzfilter,tp,LOCATION_EXTRA,0,nil,g,e,tp)
-	if #xyzg>0 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local xyz=xyzg:Select(tp,1,1,nil):GetFirst()
+	local xyz_mat_eff,xyz_level_eff=s.register_effects(c,mg,tp)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+	local xyz=Duel.SelectMatchingCard(tp,s.xyzfilter,tp,LOCATION_EXTRA,0,1,1,nil,mg,#mg,#mg):GetFirst()
+	if xyz then
+		mg:KeepAlive()
 		aux.RankUpComplete(xyz,aux.Stringid(id,1))
-		Duel.XyzSummon(tp,xyz,g,nil,#g,#g)
+		Duel.XyzSummon(tp,xyz,mg,mg,#mg,#mg)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SPSUMMON_COST)
 		e1:SetOperation(function()
-			for _,eff in ipairs(reset) do
-				eff:Reset()
-			end
+			xyz_level_eff:Reset()
+			if xyz_mat_eff then xyz_mat_eff:Reset() end
+			mg:DeleteGroup()
 		end)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		xyz:RegisterEffect(e1,true)
 	else
-		for _,eff in ipairs(reset) do
-			eff:Reset()
-		end
+		xyz_level_eff:Reset()
+		if xyz_mat_eff then xyz_mat_eff:Reset() end
 	end
 end

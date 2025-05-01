@@ -49,7 +49,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)>0 then
+	if c:IsRelateToEffect(e) and Duel.SpecialSummonStep(c,0,tp,tp,false,false,POS_FACEUP) then
 		--Its Level becomes 4
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -63,6 +63,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetValue(1800)
 		c:RegisterEffect(e2)
 	end
+	Duel.SpecialSummonComplete()
 	--You cannot Special Summon monsters from the Extra Deck for the rest of this turn, except Xyz Monsters
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,2))

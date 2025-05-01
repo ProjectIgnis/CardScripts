@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCountLimit(3)
+	e1:SetCountLimit(3,0,EFFECT_COUNT_CODE_SINGLE)
 	e1:SetCondition(function(e,tp,eg) return not eg:IsContains(e:GetHandler()) and eg:IsExists(Card.IsSummonPlayer,1,nil,1-tp) end)
 	e1:SetTarget(s.postg)
 	e1:SetOperation(s.posop)
@@ -40,11 +40,15 @@ end
 function s.postg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return eg:IsContains(chkc) and s.posfilter(chkc,e,tp) end
 	if chk==0 then return eg:IsExists(s.posfilter,1,nil,e,tp) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
-	local g=eg:FilterSelect(tp,s.posfilter,1,1,nil,e,tp)
-	Duel.SetTargetCard(g)
+	local g=eg:Filter(s.posfilter,nil,e,tp)
+	local tg=g:GetFirst()
+	if #g>1 then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
+		tg=g:Select(tp,1,1,nil)
+	end
+	Duel.SetTargetCard(tg)
 	Duel.SetOperationInfo(0,CATEGORY_COIN,nil,0,tp,1)
-	Duel.SetOperationInfo(0,CATEGORY_POSITION,g,1,tp,0)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_POSITION,tg,1,tp,0)
 end
 function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
@@ -61,10 +65,14 @@ end
 function s.postg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return eg:IsContains(chkc) and chkc:IsLocation(LOCATION_MZONE) and s.posfilter2(chkc,e) end
 	if chk==0 then return eg:IsExists(s.posfilter2,1,nil,e) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
-	local g=eg:FilterSelect(tp,s.posfilter2,1,1,nil,e)
-	Duel.SetTargetCard(g)
-	Duel.SetOperationInfo(0,CATEGORY_POSITION,g,1,tp,0)
+	local g=eg:Filter(s.posfilter2,nil,e,tp)
+	local tg=g:GetFirst()
+	if #g>1 then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
+		tg=g:Select(tp,1,1,nil)
+	end
+	Duel.SetTargetCard(tg)
+	Duel.SetOperationInfo(0,CATEGORY_POSITION,tg,1,tp,0)
 end
 function s.posop2(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()

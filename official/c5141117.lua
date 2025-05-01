@@ -39,49 +39,58 @@ end
 function s.splimit(e,se,sp,st)
 	if not se:IsMonsterEffect() then return false end
 	local rc=se:GetHandler()
-	return rc:IsRelateToEffect(se) and rc:IsRace(RACE_WYRM) or rc:GetPreviousRaceOnField()&RACE_WYRM>0
+	local trig_eff,trig_race=Duel.GetChainInfo(0,CHAININFO_TRIGGERING_EFFECT,CHAININFO_TRIGGERING_RACE)
+	if trig_eff==se then
+		if rc:IsRelateToEffect(se) then
+			return rc:IsRace(RACE_WYRM)
+		else
+			return trig_race&RACE_WYRM>0
+		end
+	else
+		return rc:IsRace(RACE_WYRM)
+	end
 end
-function s.spcfilter(c)
+function s.spconfilter(c)
 	return c:IsReason(REASON_EFFECT) and c:IsFaceup() and c:IsMonster()
 		and (not c:IsPreviousLocation(LOCATION_ONFIELD) or c:GetPreviousTypeOnField()&TYPE_MONSTER>0)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.spcfilter,1,nil,tp)
+	return eg:IsExists(s.spconfilter,1,nil,tp)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,tp,0)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)>0 then
 		c:CompleteProcedure()
-		--Banish it if it leaves the field
+		--Banish it when it leaves the field
 		local e1=Effect.CreateEffect(c)
 		e1:SetDescription(3300)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
-		e1:SetReset(RESET_EVENT|RESETS_REDIRECT)
 		e1:SetValue(LOCATION_REMOVED)
+		e1:SetReset(RESET_EVENT|RESETS_REDIRECT)
 		c:RegisterEffect(e1,true)
 	end
 end
-function s.rmrescon(sg,e,tp,mg)
-	return sg:FilterCount(Card.IsLocation,nil,LOCATION_FZONE)==1
-end
 function s.rmfilter(c,e)
 	return c:IsCanBeEffectTarget(e) and c:IsAbleToRemove() and (c:IsMonster() or c:IsLocation(LOCATION_FZONE))
+end
+function s.rmrescon(sg,e,tp,mg)
+	return sg:FilterCount(Card.IsLocation,nil,LOCATION_FZONE)==1
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	local g=Duel.GetMatchingGroup(s.rmfilter,tp,LOCATION_FZONE,LOCATION_FZONE|LOCATION_MZONE|LOCATION_GRAVE,nil,e)
 	if chk==0 then return aux.SelectUnselectGroup(g,e,tp,2,2,s.rmrescon,0) end
-	local sg=aux.SelectUnselectGroup(g,e,tp,2,2,s.rmrescon,1,tp,HINTMSG_REMOVE)
-	Duel.SetTargetCard(sg)
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,sg,#sg,0,0)
+	local tg=aux.SelectUnselectGroup(g,e,tp,2,2,s.rmrescon,1,tp,HINTMSG_REMOVE)
+	Duel.SetTargetCard(tg)
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,tg,2,tp,0)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetTargetCards(e)

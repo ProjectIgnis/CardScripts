@@ -17,8 +17,12 @@ s.listed_series={SET_NUMBER,SET_NUMBER_S}
 function s.matfilter(c,e)
 	return c:IsSetCard(SET_NUMBER) and c:IsCanBeEffectTarget(e)
 end
-function s.rescon(sg,e,tp,g)
-	return Duel.IsExistingMatchingCard(Card.IsXyzSummonable,tp,LOCATION_EXTRA,0,1,nil,nil,sg,#sg,#sg)
+function s.rescon(xyzg)
+	return function(sg,e,tp,g)
+		--If no xyz can be summoned using at least the currently seelcted cards as forced materials, stop
+		return xyzg:IsExists(Card.IsXyzSummonable,1,nil,nil,sg,#sg,#sg),
+				not xyzg:IsExists(Card.IsXyzSummonable,1,nil,sg,g,#sg,#g)
+	end
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
@@ -33,13 +37,13 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		_c:RegisterEffect(e1,true)
 		_c:AssumeProperty(ASSUME_RANK,_c:GetRank()+1)
 	end
+	local xyzg=Duel.GetMatchingGroup(Card.IsXyzSummonable,tp,LOCATION_EXTRA,0,nil,nil,mg)
 	if chk==0 then
-		local res=Duel.IsExistingMatchingCard(Card.IsXyzSummonable,tp,LOCATION_EXTRA,0,1,nil,nil,mg)
 		notSg:ForEach(function(_c) _c:ResetEffect(id,RESET_CARD) end)
-		return res
+		return #xyzg>0
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	local tg=aux.SelectUnselectGroup(mg,e,tp,1,99,s.rescon,1,tp,HINTMSG_XMATERIAL,s.rescon)
+	local tg=aux.SelectUnselectGroup(mg,e,tp,1,#mg,s.rescon(xyzg),1,tp,HINTMSG_XMATERIAL,s.rescon(xyzg))
 	Duel.SetTargetCard(tg)
 	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,tg,#tg,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)

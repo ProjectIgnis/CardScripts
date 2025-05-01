@@ -1760,7 +1760,7 @@ function Auxiliary.SelectUnselectGroup(g,e,tp,minc,maxc,rescon,chk,seltp,hintmsg
 	local hintmsg=hintmsg or 0
 	local sg=Group.CreateGroup()
 	while true do
-		local finishable = #sg>=minc and (not finishcon or finishcon(sg,e,tp,g))
+		local finishable = #sg>=minc and (not finishcon or (finishcon(sg,e,tp,g)))
 		local mg=g:Filter(Auxiliary.SelectUnselectLoop,sg,sg,g,e,tp,minc,maxc,rescon)
 		if (breakcon and breakcon(sg,e,tp,mg)) or #mg<=0 or #sg>=maxc then break end
 		Duel.Hint(HINT_SELECTMSG,seltp,hintmsg)

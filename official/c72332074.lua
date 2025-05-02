@@ -2,7 +2,7 @@
 --Super Quantal Alphan Spike
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Shuffle as many cards your opponent controls as possible into the Deck, then your opponent Special Summons 1 monster from their Extra Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TODECK)
@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	--activate field spell
+	--Activate 1 "Super Quantal Mech Ship Magnacarrier" from your Deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_IGNITION)
@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_SUPER_QUANTUM}
-s.listed_names={58753372,10424147}
+s.listed_names={58753372,10424147} --"Super Quantal Fairy Alphan", "Super Quantal Mech Ship Magnacarrier"
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(SET_SUPER_QUANTUM)
 end
@@ -59,7 +59,7 @@ function s.costfilter(c)
 end
 function s.actcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return aux.bfgcost(e,tp,eg,ep,ev,re,r,rp,0)
+	if chk==0 then return Cost.SelfBanish(e,tp,eg,ep,ev,re,r,rp,0)
 		and Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,c) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,1,c)
@@ -73,6 +73,7 @@ function s.acttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.actfilter,tp,LOCATION_DECK,0,1,nil,tp) end
 end
 function s.actop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,2))
 	local tc=Duel.SelectMatchingCard(tp,s.actfilter,tp,LOCATION_DECK,0,1,1,nil,tp):GetFirst()
 	Duel.ActivateFieldSpell(tc,e,tp,eg,ep,ev,re,r,rp)
 end

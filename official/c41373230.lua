@@ -82,12 +82,8 @@ function s.thspop(e,tp,eg,ep,ev,re,r,rp)
 	local sc=Duel.SelectMatchingCard(tp,s.thspfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp,mmz_chk):GetFirst()
 	if not sc then return end
 	aux.ToHandOrElse(sc,tp,
-		function()
-			return mmz_chk and sc:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		end,
-		function()
-			Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP)
-		end,
+		function() return mmz_chk and sc:IsCanBeSpecialSummoned(e,0,tp,false,false) end,
+		function() Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP) end,
 		aux.Stringid(id,3)
 	)
 end

@@ -48,7 +48,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if op==1 then
 		e:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 		Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
-	elseif op==2
+	elseif op==2 then
 		local g=Duel.GetMatchingGroup(s.tgfilter,tp,LOCATION_REMOVED,0,nil)
 		e:SetCategory(CATEGORY_TOGRAVE)
 		Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,g,1,tp,0)

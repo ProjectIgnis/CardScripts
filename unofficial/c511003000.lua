@@ -1,5 +1,5 @@
 --ペンデュラム・エクシーズ
---Pendulum XYZ
+--Pendulum Xyz (Manga)
 --fixed by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
@@ -47,7 +47,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if g and #g>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local xyz=g:Select(tp,1,1,nil):GetFirst()
-		Duel.XyzSummon(tp,xyz,pg,nil,2,2)
+		Duel.XyzSummon(tp,xyz,pg,pg,2,2)
 	else
 		if e1 then e1:Reset() end
 		if e2 then e2:Reset() end

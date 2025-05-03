@@ -73,8 +73,12 @@ function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tohand_chk=e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil,tohand_chk) end
 	e:SetLabel(tohand_chk and 1 or 0)
-	Duel.SetPossibleOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
-	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
+	if not tohand_chk then
+		Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
+	else
+		Duel.SetPossibleOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
+		Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
+	end
 end
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local tohand_chk=e:GetLabel()==1

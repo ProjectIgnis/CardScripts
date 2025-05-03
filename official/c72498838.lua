@@ -64,7 +64,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			Duel.SendtoHand(g,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,g)
 		end
-	elseif op==2
+	elseif op==2 then
 		--Return 1 of your banished Level 4 or lower Spellcaster monsters to your GY
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOGRAVE)
 		local tg=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_REMOVED,0,1,1,nil)

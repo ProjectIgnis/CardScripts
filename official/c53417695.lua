@@ -3,15 +3,15 @@
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
-	--Destroy 1 "Unchained" monster you control and 1 card on the field
+	--Destroy both 1 "Unchained" monster you control and 1 card on the field
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER|TIMING_END_PHASE)
+	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,id)
+	e1:SetHintTiming(0,TIMING_STANDBY_PHASE|TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E)
 	e1:SetTarget(s.destg)
 	e1:SetOperation(s.desop)
 	c:RegisterEffect(e1)
@@ -20,8 +20,8 @@ function s.initial_effect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e2:SetCode(EVENT_DESTROYED)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
+	e2:SetCode(EVENT_DESTROYED)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetCondition(s.spcon)
 	e2:SetTarget(s.sptg)
@@ -29,23 +29,19 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_UNCHAINED}
-function s.desfilter(c,tp,oc)
-	return c:IsFaceup() and c:IsSetCard(SET_UNCHAINED) and Duel.IsExistingTarget(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,Group.FromCards(c,oc))
-end
-function s.unchainedfilter(c,tp)
-	return c:IsSetCard(SET_UNCHAINED) and c:IsMonster() and c:IsControler(tp)
+function s.resconfilter(c,tp)
+	return c:IsSetCard(SET_UNCHAINED) and c:IsMonster() and c:IsControler(tp) and c:IsFaceup()
 end
 function s.rescon(sg,e,tp,mg)
-	return sg:IsExists(s.unchainedfilter,1,nil,tp)
+	return sg:IsExists(s.resconfilter,1,nil,tp)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local c=e:GetHandler()
 	if chkc then return false end
-	if chk==0 then return Duel.IsExistingTarget(s.desfilter,tp,LOCATION_MZONE,0,1,nil,tp,c) end
-	local g=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,c)
+	local g=Duel.GetMatchingGroup(Card.IsCanBeEffectTarget,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,e:GetHandler(),e)
+	if chk==0 then return aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,0) end
 	local tg=aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,1,tp,HINTMSG_DESTROY)
 	Duel.SetTargetCard(tg)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,tg,#tg,tp,0)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,tg,2,tp,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetTargetCards(e)

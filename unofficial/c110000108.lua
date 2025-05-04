@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(function(_,tp) return Duel.GetBattleDamage(tp)>0 end)
-	e1:SetCost(aux.selfreleasecost)
+	e1:SetCost(Cost.SelfRelease)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end

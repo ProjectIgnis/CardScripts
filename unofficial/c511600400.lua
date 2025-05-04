@@ -286,8 +286,9 @@ function s.payatkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.dfcon(e)
+	if e:GetLabel()==100 then return false end
 	if e:GetHandler():HasFlagEffect(FLAG_RA_DEFUSION) then
-		e:Reset()
+		e:SetLabel(100)
 		return false
 	end
 	return true

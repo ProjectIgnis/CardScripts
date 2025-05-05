@@ -2,7 +2,7 @@
 --Defender of Nephthys
 local s,id=GetID()
 function s.initial_effect(c)
-	--Destroy 1 card in your hand, and if you do, Special Summon 1 Level 4 or lower "Nephthys" monster from your hand, except "Defender of Nephthys
+	--Destroy 1 card in your hand, and if you do, Special Summon 1 Level 4 or lower "Nephthys" monster from your hand, except "Defender of Nephthys"
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_SPECIAL_SUMMON)
@@ -12,82 +12,62 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--Register when this card is destroyed by card effect and sent to the GY
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e2:SetCode(EVENT_TO_GRAVE)
-	e2:SetOperation(s.regop)
-	c:RegisterEffect(e2)
+	--Register when this card is destroyed
+	local e2a=Effect.CreateEffect(c)
+	e2a:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e2a:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e2a:SetCode(EVENT_DESTROYED)
+	e2a:SetOperation(function(e,tp) local ct=(Duel.IsTurnPlayer(tp) and Duel.IsPhase(PHASE_STANDBY)) and 2 or 1 e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_STANDBY|RESET_SELF_TURN,0,ct,ct) end)
+	c:RegisterEffect(e2a)
 	--Destroy 1 "Nephthys" monster in your Deck, except "Defender of Nephthys"
-	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(id,1))
-	e3:SetCategory(CATEGORY_DESTROY)
-	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e3:SetCode(EVENT_PHASE|PHASE_STANDBY)
-	e3:SetRange(LOCATION_GRAVE)
-	e3:SetCountLimit(1,{id,1})
-	e3:SetCondition(s.descon)
-	e3:SetTarget(s.destg)
-	e3:SetOperation(s.desop)
-	e3:SetLabelObject(e2)
-	c:RegisterEffect(e3)
+	local e2b=Effect.CreateEffect(c)
+	e2b:SetDescription(aux.Stringid(id,1))
+	e2b:SetCategory(CATEGORY_DESTROY)
+	e2b:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e2b:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e2b:SetRange(LOCATION_GRAVE)
+	e2b:SetCountLimit(1,{id,1})
+	e2b:SetCondition(function(e,tp) local c=e:GetHandler() return Duel.IsTurnPlayer(tp) and c:IsReason(REASON_EFFECT) and c:HasFlagEffect(id) and (c:GetFlagEffectLabel(id)==1 or c:GetTurnID()~=Duel.GetTurnCount()) end)
+	e2b:SetTarget(s.destg)
+	e2b:SetOperation(s.desop)
+	c:RegisterEffect(e2b)
 end
 s.listed_series={SET_NEPHTHYS}
 s.listed_names={id}
-function s.spfilter(c,e,tp)
-	return c:IsSetCard(SET_NEPHTHYS) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsCode(id)
+function s.handdesfilter(c,e,tp,res_chk)
+	return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND,0,1,c,e,tp) or res_chk
 end
-function s.filter(c,e,tp,chk,sp)
-	return ((chk==0 or sp) and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND,0,1,c,e,tp))
-		or (chk==1 and not sp)
+function s.spfilter(c,e,tp)
+	return c:IsLevelBelow(4) and c:IsSetCard(SET_NEPHTHYS) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,nil,e,tp,0) end
+		and Duel.IsExistingMatchingCard(s.handdesfilter,tp,LOCATION_HAND,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,tp,LOCATION_HAND)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
-	local sp=Duel.GetMatchingGroupCount(nil,tp,LOCATION_HAND,0,nil)>1 and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp)
+	local res_chk=Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 or not Duel.IsExistingMatchingCard(s.handdesfilter,tp,LOCATION_HAND,0,1,nil,e,tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND,0,1,1,nil,e,tp,1,sp)
-	if #g==0 then return end
-	if Duel.Destroy(g,REASON_EFFECT)>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
+	local g=Duel.SelectMatchingCard(tp,s.handdesfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp,res_chk)
+	if #g>0 and Duel.Destroy(g,REASON_EFFECT)>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local sc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp):GetFirst()
-		if sc then
-			Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP)
+		local sg=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
+		if #sg>0 then
+			Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
 		end
 	end
 end
-function s.regop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	if (r&(REASON_DESTROY|REASON_EFFECT)~=(REASON_DESTROY|REASON_EFFECT)) then return end
-	if Duel.IsTurnPlayer(tp) and Duel.IsPhase(PHASE_STANDBY) then
-		e:SetLabel(Duel.GetTurnCount())
-		c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_STANDBY|RESET_SELF_TURN,0,2)
-	else
-		e:SetLabel(0)
-		c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_STANDBY|RESET_SELF_TURN,0,1)
-	end
-end
-function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	return e:GetLabelObject():GetLabel()~=Duel.GetTurnCount() and Duel.IsTurnPlayer(tp) and c:GetFlagEffect(id)>0
-end
-function s.desfilter(c)
+function s.deckdesfilter(c)
 	return c:IsSetCard(SET_NEPHTHYS) and c:IsMonster() and not c:IsCode(id)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.desfilter,tp,LOCATION_DECK,0,1,nil) end
-	e:GetHandler():ResetFlagEffect(id)
-	local g=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_DECK,0,nil)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,tp,0)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.deckdesfilter,tp,LOCATION_DECK,0,1,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,tp,LOCATION_DECK)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectMatchingCard(tp,s.desfilter,tp,LOCATION_DECK,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.deckdesfilter,tp,LOCATION_DECK,0,1,1,nil)
 	if #g>0 then
 		Duel.Destroy(g,REASON_EFFECT)
 	end

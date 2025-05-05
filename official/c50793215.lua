@@ -69,13 +69,13 @@ function s.thspop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,2))
 	local sc=Duel.SelectMatchingCard(tp,s.thspfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp,mzone_chk):GetFirst()
 	if not sc then return end
-	local tc=Duel.GetFirstTarget()
-	local hand_or_ss_chk=aux.ToHandOrElse(sc,tp,
+	local tohand_or_ss_chk=aux.ToHandOrElse(sc,tp,
 		function() return mzone_chk and sc:IsCanBeSpecialSummoned(e,0,tp,false,false) end,
 		function() return Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP) end,
 		aux.Stringid(id,3)
 	)
-	if hand_or_ss_chk and tc:IsRelateToEffect(e) then
+	local tc=Duel.GetFirstTarget()
+	if tohand_or_ss_chk and tc:IsRelateToEffect(e) then
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 	end
 end

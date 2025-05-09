@@ -72,7 +72,7 @@ function s.selfspcon(e,c)
 	if not c then return true end
 	local tp=c:GetControler()
 	return (Duel.GetCustomActivityCount(id,tp,ACTIVITY_CHAIN)>0 or Duel.GetCustomActivityCount(id,1-tp,ACTIVITY_CHAIN)>0)
-		and Duel.IsExistingMatchingCard(s.selfspcostfilter,tp,LOCATION_MZONE,0,1,nil,tp,sc)
+		and Duel.IsExistingMatchingCard(s.selfspcostfilter,tp,LOCATION_MZONE,0,1,nil,tp,c)
 end
 function s.selfsptg(e,tp,eg,ep,ev,re,r,rp,chk,c)
 	local g=Duel.SelectMatchingCard(tp,s.selfspcostfilter,tp,LOCATION_MZONE,0,1,1,true,nil,tp,c)

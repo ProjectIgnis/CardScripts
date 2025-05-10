@@ -3,10 +3,10 @@
 --scripted by Rundas
 local s,id=GetID()
 function s.initial_effect(c)
-	--Tribute + search + deck stack + potentially Normal Summon
+	--Add 1 "Witch of the Black Rose" from your Deck to your hand, and if you do, take 1 Level 3 or lower Plant monster from your Deck and place it on top of your Deck, then immediately after this effect resolves, you can Normal Summon 1 "Witch of the Black Rose" from your hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
+	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1,id)
@@ -14,69 +14,68 @@ function s.initial_effect(c)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
-	--To Extra Deck
+	--Return 1 of your "Black Rose Dragon" or "Ruddy Rose Dragon" that is banished or in your GY to the Extra Deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
-	e2:SetCategory(CATEGORY_TODECK)
+	e2:SetCategory(CATEGORY_TOEXTRA)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetCost(Cost.SelfBanish)
-	e2:SetTarget(s.tedtg)
-	e2:SetOperation(s.tedop)
+	e2:SetTarget(s.textg)
+	e2:SetOperation(s.texop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={id,17720747,CARD_BLACK_ROSE_DRAGON,40139997}
---Tribute + search + deck stack + potentially Normal Summon
-function s.thfilter(c)
-	return c:IsAbleToHand() and c:IsCode(17720747)
+s.listed_names={17720747,CARD_BLACK_ROSE_DRAGON,40139997} --"Witch of the Black Rose", "Ruddy Rose Dragon"
+function s.thfilter(c,tp)
+	return c:IsCode(17720747) and c:IsAbleToHand() and Duel.IsExistingMatchingCard(s.topdeckfilter,tp,LOCATION_DECK,0,1,c)
 end
-function s.filter(c)
-	return c:IsRace(RACE_PLANT) and c:IsLevelBelow(3)
-end
-function s.sfilter(c)
-	return c:IsCode(17720747) and c:IsSummonable(true,nil)
+function s.topdeckfilter(c)
+	return c:IsLevelBelow(3) and c:IsRace(RACE_PLANT)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_SUMMON,nil,1,tp,LOCATION_HAND)
+end
+function s.sumfilter(c)
+	return c:IsCode(17720747) and c:IsSummonable(true,nil)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil)
-	if #g>0 then
-		if Duel.SendtoHand(g,nil,REASON_EFFECT)>0 and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) then
-			Duel.ConfirmCards(1-tp,g)
-			local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil):GetFirst()
-			if tc then
-				Duel.ShuffleDeck(tp)
-				Duel.MoveSequence(tc,0)
-				Duel.ConfirmDecktop(tp,1)
+	local sc=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil,tp):GetFirst()
+	if sc and Duel.SendtoHand(sc,nil,REASON_EFFECT)>0 and sc:IsLocation(LOCATION_HAND) then
+		Duel.ConfirmCards(1-tp,sc)
+		Duel.ShuffleHand(tp)
+		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,2))
+		local topc=Duel.SelectMatchingCard(tp,s.topdeckfilter,tp,LOCATION_DECK,0,1,1,nil):GetFirst()
+		if topc then
+			Duel.ShuffleDeck(tp)
+			Duel.MoveSequence(topc,0)
+			Duel.ConfirmDecktop(tp,1)
+			if Duel.IsExistingMatchingCard(s.sumfilter,tp,LOCATION_HAND,0,1,nil)
+				and Duel.SelectYesNo(tp,aux.Stringid(id,3)) then
+				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SUMMON)
+				local sumc=Duel.SelectMatchingCard(tp,s.sumfilter,tp,LOCATION_HAND,0,1,1,nil):GetFirst()
+				if sumc then
+					Duel.Summon(tp,sumc,true,nil)
+				end
 			end
-		else Duel.ConfirmCards(1-tp,g)
-		end
-	end
-	local g2=Duel.GetMatchingGroup(s.sfilter,tp,LOCATION_HAND,0,nil)
-	if #g2>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SUMMON)
-		local tc=Duel.SelectMatchingCard(tp,s.sfilter,tp,LOCATION_HAND,0,1,1,nil):GetFirst()
-		if tc then
-			Duel.Summon(tp,tc,true,nil)
 		end
 	end
 end
---To Extra Deck
-function s.tedfilter(c,tp)
-	return (c:IsCode(CARD_BLACK_ROSE_DRAGON) or c:IsCode(40139997)) and c:IsAbleToExtra()
-		and (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE))
+function s.texfilter(c)
+	return c:IsCode(CARD_BLACK_ROSE_DRAGON,40139997) and c:IsFaceup() and c:IsAbleToExtra()
 end
-function s.tedtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.tedfilter,tp,LOCATION_GRAVE|LOCATION_REMOVED,0,1,nil,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,tp,LOCATION_GRAVE|LOCATION_REMOVED)
+function s.textg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.texfilter,tp,LOCATION_GRAVE|LOCATION_REMOVED,0,1,e:GetHandler()) end
+	Duel.SetOperationInfo(0,CATEGORY_TOEXTRA,nil,1,tp,LOCATION_GRAVE|LOCATION_REMOVED)
 end
-function s.tedop(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.tedfilter),tp,LOCATION_GRAVE|LOCATION_REMOVED,0,1,1,nil,tp):GetFirst()
-	if tc then
-		Duel.SendtoDeck(tc,tp,SEQ_DECKSHUFFLE,REASON_EFFECT)
+function s.texop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.texfilter),tp,LOCATION_GRAVE|LOCATION_REMOVED,0,1,1,nil)
+	if #g>0 then
+		Duel.HintSelection(g)
+		Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	end
 end

@@ -2,17 +2,17 @@
 --Super Quantal Alphan Spike
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Shuffle as many cards your opponent controls as possible into the Deck, then your opponent Special Summons 1 monster from their Extra Deck, ignoring its Summoning conditions
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TODECK)
+	e1:SetCategory(CATEGORY_TODECK+CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCondition(s.condition)
+	e1:SetCondition(function(e,tp) return Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,SET_SUPER_QUANTUM),tp,LOCATION_MZONE,0,nil):GetClassCount(Card.GetCode)>=3 end)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	--activate field spell
+	--Activate 1 "Super Quantal Mech Ship Magnacarrier" from your Deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_IGNITION)
@@ -23,48 +23,37 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_SUPER_QUANTUM}
-s.listed_names={58753372,10424147}
-function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(SET_SUPER_QUANTUM)
-end
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE,0,nil)
-	return g:GetClassCount(Card.GetCode)>=3
-end
+s.listed_names={58753372,10424147} --"Super Quantal Fairy Alphan", "Super Quantal Mech Ship Magnacarrier"
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToDeck,tp,0,LOCATION_ONFIELD,1,nil)
 		and Duel.GetFieldGroupCount(tp,0,LOCATION_EXTRA)>0 and Duel.IsPlayerCanSpecialSummon(1-tp) end
-	local g=Duel.GetMatchingGroup(Card.IsAbleToDeck,tp,0,LOCATION_ONFIELD,nil)
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,#g,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,1-tp,LOCATION_ONFIELD)
 end
-function s.spfilter(c,e,tp)
-	return c:IsMonster() and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+function s.spfilter(c,e,opp)
+	return c:IsMonster() and Duel.GetLocationCountFromEx(opp,opp,nil,c)>0 and c:IsCanBeSpecialSummoned(e,0,opp,true,false)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
+	local opp=1-tp
 	local g=Duel.GetMatchingGroup(Card.IsAbleToDeck,tp,0,LOCATION_ONFIELD,nil)
-	if Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)~=0
-		and Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(s.spfilter,1-tp,LOCATION_EXTRA,0,1,nil,e,1-tp) then
-		Duel.BreakEffect()
-		Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_SPSUMMON)
-		local g=Duel.SelectMatchingCard(1-tp,s.spfilter,1-tp,LOCATION_EXTRA,0,1,1,nil,e,1-tp)
-		local tc=g:GetFirst()
-		if tc then
-			Duel.SpecialSummon(tc,0,1-tp,1-tp,true,false,POS_FACEUP)
+	if #g>0 and Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>0 and Duel.GetOperatedGroup():IsExists(Card.IsLocation,1,nil,LOCATION_DECK|LOCATION_EXTRA) then
+		Duel.Hint(HINT_SELECTMSG,opp,HINTMSG_SPSUMMON)
+		local sg=Duel.SelectMatchingCard(opp,s.spfilter,opp,LOCATION_EXTRA,0,1,1,nil,e,opp)
+		if #sg>0 then
+			Duel.BreakEffect()
+			Duel.SpecialSummon(sg,0,opp,opp,true,false,POS_FACEUP)
 		end
 	end
 end
-function s.costfilter(c)
+function s.actcostfilter(c)
 	return c:IsCode(58753372) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end
 function s.actcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return aux.bfgcost(e,tp,eg,ep,ev,re,r,rp,0)
-		and Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,c) end
+	if chk==0 then return c:IsAbleToRemoveAsCost()
+		and Duel.IsExistingMatchingCard(s.actcostfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,c) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,1,c)
-	g:AddCard(c)
-	Duel.Remove(g,POS_FACEUP,REASON_COST)
+	local g=Duel.SelectMatchingCard(tp,s.actcostfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,1,c)
+	Duel.Remove(g+c,POS_FACEUP,REASON_COST)
 end
 function s.actfilter(c,tp)
 	return c:IsCode(10424147) and c:GetActivateEffect():IsActivatable(tp,true,true)
@@ -73,6 +62,9 @@ function s.acttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.actfilter,tp,LOCATION_DECK,0,1,nil,tp) end
 end
 function s.actop(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.SelectMatchingCard(tp,s.actfilter,tp,LOCATION_DECK,0,1,1,nil,tp):GetFirst()
-	Duel.ActivateFieldSpell(tc,e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,2))
+	local sc=Duel.SelectMatchingCard(tp,s.actfilter,tp,LOCATION_DECK,0,1,1,nil,tp):GetFirst()
+	if sc then
+		Duel.ActivateFieldSpell(sc,e,tp,eg,ep,ev,re,r,rp)
+	end
 end

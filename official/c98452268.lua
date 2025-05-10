@@ -4,10 +4,13 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
+	--You can only Special Summon "Odd-Eyes Rebellion Dragon Overlord(s)" once per turn.
 	c:SetSPSummonOnce(id)
+	--Xyz Summon Procedure: 2 Level 7 monsters OR 1 "Rebellion" Xyz Monster you control
 	Xyz.AddProcedure(c,nil,7,2,s.ovfilter,aux.Stringid(id,0))
+	--Pendulum Summon Procedure
 	Pendulum.AddProcedure(c,false)
-	--special summon
+	--Special Summon this card from your Pendulum Zone, then Special Summon from your Extra Deck, 1 "Rebellion" or "The Phantom Knights" monster, using this card as material
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -17,12 +20,12 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--multi attack
+	--This card that was Xyz Summoned using a Rank 7 Xyz Monster as material can make up to 3 attacks during each Battle Phase
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e2:SetCondition(s.condition)
+	e2:SetCondition(function(e) return e:GetHandler():IsXyzSummoned() end)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 	local e3=Effect.CreateEffect(c)
@@ -31,7 +34,7 @@ function s.initial_effect(c)
 	e3:SetValue(s.valcheck)
 	e3:SetLabelObject(e2)
 	c:RegisterEffect(e3)
-	--pendulum zone
+	--Place this card in your Pendulum Zone
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,2))
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -42,8 +45,8 @@ function s.initial_effect(c)
 	e4:SetOperation(s.penop)
 	c:RegisterEffect(e4)
 end
-s.listed_names={}
 s.pendulum_level=7
+s.listed_names={id}
 s.listed_series={SET_REBELLION,SET_THE_PHANTOM_KNIGHTS}
 function s.ovfilter(c)
 	return c:IsFaceup() and c:IsSetCard(SET_REBELLION) and c:IsType(TYPE_XYZ)
@@ -79,6 +82,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		sc:CompleteProcedure()
 		local xg=Duel.GetFieldGroup(tp,LOCATION_PZONE,0)
 		if #xg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,3)) then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTACH)
 			local cd=Duel.SelectMatchingCard(tp,aux.TRUE,tp,LOCATION_PZONE,0,1,1,nil):GetFirst()
 			Duel.BreakEffect()
 			Duel.Overlay(sc,cd)
@@ -90,9 +94,6 @@ function s.valfilter(c)
 end
 function s.valcheck(e,c)
 	e:GetLabelObject():SetLabel(c:GetMaterial():FilterCount(s.valfilter,nil))
-end
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsXyzSummoned()
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -110,7 +111,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.pencon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return (r&REASON_EFFECT+REASON_BATTLE)~=0 and c:IsPreviousLocation(LOCATION_MZONE) and c:IsFaceup()
+	return r&(REASON_EFFECT|REASON_BATTLE)>=0 and c:IsPreviousLocation(LOCATION_MZONE) and c:IsFaceup()
 end
 function s.pentg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckPendulumZones(tp) end

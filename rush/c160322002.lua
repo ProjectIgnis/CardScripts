@@ -20,6 +20,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={CARD_HARPIE_LADY}
+s.material={CARD_HARPIE_LADY}
 function s.matfilter1(c,fc,sumtype,tp)
 	return c:IsCode(CARD_HARPIE_LADY) and c:IsLevel(4)
 end

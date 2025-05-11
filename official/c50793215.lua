@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.thsptg)
 	e2:SetOperation(s.thspop)
 	c:RegisterEffect(e2)
-	--If sent to GY, shuffle 1 banished card into deck
+	--Shuffle 1 banished card into the Deck
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_TODECK)

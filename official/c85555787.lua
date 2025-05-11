@@ -5,6 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -34,20 +35,21 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local atk=e:GetLabel()
 	local ct=math.floor(atk/500)
+	Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_DESTROY)
 	local g=Duel.SelectMatchingCard(1-tp,nil,1-tp,LOCATION_DECK|LOCATION_HAND,0,ct,ct,nil)
-	if #g~=0 and Duel.Destroy(g,REASON_EFFECT)~=0 then
+	if #g>0 and Duel.Destroy(g,REASON_EFFECT)>=0 then
 		local og=Duel.GetOperatedGroup():Filter(Card.IsLocation,nil,LOCATION_GRAVE)
-		for oc in aux.Next(og) do
+		for tc in og:Iter() do
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_CANNOT_TRIGGER)
 			e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 			e1:SetRange(LOCATION_GRAVE)
 			e1:SetReset(RESET_EVENT|RESETS_STANDARD_EXC_GRAVE|RESET_PHASE|PHASE_END)
-			oc:RegisterEffect(e1)
+			tc:RegisterEffect(e1)
 			local e2=e1:Clone()
 			e2:SetCode(EFFECT_CANNOT_ACTIVATE)
-			oc:RegisterEffect(e2)
+			tc:RegisterEffect(e2)
 		end
 	end
 	if atk>=2000 then
@@ -84,19 +86,19 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	if #hg==0 then return end
 	Duel.ConfirmCards(1-ep,hg)
 	local dg=hg:Filter(Card.IsMonster,nil)
-	if Duel.Destroy(dg,REASON_EFFECT)~=0 then
+	if Duel.Destroy(dg,REASON_EFFECT)>0 then
 		local og=Duel.GetOperatedGroup():Filter(Card.IsLocation,nil,LOCATION_GRAVE)
-		for oc in aux.Next(og) do
+		for tc in og:Iter() do
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_CANNOT_TRIGGER)
 			e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 			e1:SetRange(LOCATION_GRAVE)
 			e1:SetReset(RESET_EVENT|RESETS_STANDARD_EXC_GRAVE|RESET_PHASE|PHASE_END)
-			oc:RegisterEffect(e1)
+			tc:RegisterEffect(e1)
 			local e2=e1:Clone()
 			e2:SetCode(EFFECT_CANNOT_ACTIVATE)
-			oc:RegisterEffect(e2)
+			tc:RegisterEffect(e2)
 		end
 	end
 	Duel.ShuffleHand(ep)

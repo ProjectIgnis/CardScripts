@@ -36,6 +36,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
 	local tc=Duel.SelectMatchingCard(tp,s.rvlfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
 	Duel.ConfirmCards(1-tp,tc)
+	Duel.ShuffleHand(tp)
 	--Effect
 	Duel.DiscardDeck(tp,3,REASON_EFFECT)
 	if Duel.GetOperatedGroup():FilterCount(s.cfilter,nil)>0

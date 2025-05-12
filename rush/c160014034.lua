@@ -23,7 +23,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,2,tp,0)
 end
 function s.atkfilter(c)
-	return c:IsMonster() and c:IsFaceup() and c:GetAttack()>0
+	return c:IsMonster() and c:IsFaceup()
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.DiscardDeck(tp,2,REASON_EFFECT)==0 then return end

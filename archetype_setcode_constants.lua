@@ -593,3 +593,4 @@ SET_K9                            = 0x1c4
 SET_TELEPORT                      = 0x1c5
 SET_IMPRISONED_DEITY              = 0x1c6
 SET_ARTMEGIA                      = 0x1c7
+SET_DOOM_KING                     = 0x1c8

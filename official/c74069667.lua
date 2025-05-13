@@ -72,9 +72,10 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local label=e:GetLabel()
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)>0 and label==1 then
+	if tc:IsRelateToEffect(e) and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) and label==1 then
 		Duel.Damage(tp,1000,REASON_EFFECT)
 	end
+	Duel.SpecialSummonComplete()
 	if label==2 then return end
 	--Any battle damage your opponent takes becomes halved for the rest of this turn
 	local e1=Effect.CreateEffect(e:GetHandler())

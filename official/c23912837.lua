@@ -68,6 +68,7 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,nil,1,tp,0)
 end
 function s.effop(e,tp,eg,ep,ev,re,r,rp)
+	local op=e:GetLabel()
 	if op==1 then
 		--Change 1 face-down monster you control to face-up Defense Position
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)

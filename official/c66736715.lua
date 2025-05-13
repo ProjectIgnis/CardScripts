@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.tdtg)
 	e1:SetOperation(s.tdop)
 	c:RegisterEffect(e1)
-	--Gain an additional Pendulum Summon this turn
+	--You can Pendulum Summon a monster(s) from your hand in addition to your Pendulum Summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -47,11 +47,9 @@ function s.pendscost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not e:GetHandler():IsPublic() end
 end
 function s.pendstg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetFlagEffect(tp,id+100)==0 end
+	if chk==0 then return not Duel.HasFlagEffect(tp,id) and Pendulum.CanGainAdditionalPendulumSummon(tp) end
 end
 function s.pendsop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	Pendulum.RegisterAdditionalPendulumSummon(c,tp,id,aux.Stringid(id,2),function(c) return c:IsLocation(LOCATION_HAND) end)
-	Duel.RegisterFlagEffect(tp,id+100,RESET_PHASE|PHASE_END|RESET_SELF_TURN,0,1)
-	aux.RegisterClientHint(c,0,tp,1,0,aux.Stringid(id,4))
+	Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END|RESET_SELF_TURN,0,1)
+	Pendulum.RegisterAdditionalPendulumSummon(e:GetHandler(),tp,id,aux.Stringid(id,5),function(c) return c:IsLocation(LOCATION_HAND) end)
 end

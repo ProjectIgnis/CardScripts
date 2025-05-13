@@ -13,8 +13,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetFlagEffect(tp,id+100)==0 end
+	if chk==0 then return not Duel.HasFlagEffect(tp,id) and Pendulum.CanGainAdditionalPendulumSummon(tp) end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
+	Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END|RESET_SELF_TURN,0,1)
 	Pendulum.RegisterAdditionalPendulumSummon(e:GetHandler(),tp,id,aux.Stringid(id,1),function(c) return c:IsLocation(LOCATION_EXTRA) end)
 end

@@ -42,8 +42,8 @@ function s.initial_effect(c)
 	e5:SetDescription(aux.Stringid(id,3))
 	e5:SetType(EFFECT_TYPE_IGNITION)
 	e5:SetRange(LOCATION_SZONE)
-	e5:SetCondition(s.apscondition)
 	e5:SetCost(s.apscost)
+	e5:SetTarget(s.apstarget)
 	e5:SetOperation(s.apsoperation)
 	c:RegisterEffect(e5)
 end
@@ -106,9 +106,10 @@ function s.apscost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return c:IsCanRemoveCounter(tp,COUNTER_SOUL_PENDULUM,3,REASON_COST) end
 	c:RemoveCounter(tp,COUNTER_SOUL_PENDULUM,3,REASON_COST)
 end
-function s.apscondition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetFlagEffect(tp,29432356)==0
+function s.apstarget(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return not Duel.HasFlagEffect(tp,id) and Pendulum.CanGainAdditionalPendulumSummon(tp) end
 end
 function s.apsoperation(e,tp,eg,ep,ev,re,r,rp)
+	Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END|RESET_SELF_TURN,0,1)
 	Pendulum.RegisterAdditionalPendulumSummon(e:GetHandler(),tp,id,aux.Stringid(id,4))
 end

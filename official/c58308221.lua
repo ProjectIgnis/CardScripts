@@ -16,5 +16,5 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFlagEffect(tp,id+100)==0 end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	Pendulum.RegisterAdditionalPendulumSummon(e:GetHandler(),tp,id,function(c) return c:IsLocation(LOCATION_EXTRA) end)
+	Pendulum.RegisterAdditionalPendulumSummon(e:GetHandler(),tp,id,aux.Stringid(id,1),function(c) return c:IsLocation(LOCATION_EXTRA) end)
 end

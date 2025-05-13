@@ -152,7 +152,7 @@ function Pendulum.Operation()
 				end
 			end
 end
-function Pendulum.RegisterAdditionalPendulumSummon(rc,tp,id,summonfilter,resets,resetcount)
+function Pendulum.RegisterAdditionalPendulumSummon(rc,tp,id,desc,summonfilter,resets,resetcount)
 	local CARD_HARMONIC_OSCILATION=31531170
 	local CARD_ZEFRAATH=29432356
 	summonfilter=summonfilter or aux.TRUE
@@ -341,7 +341,7 @@ function Pendulum.RegisterAdditionalPendulumSummon(rc,tp,id,summonfilter,resets,
 		if lpz and not lpz:HasFlagEffect(id) then
 			--Provide the effect to the left pendulum scale
 			local e1=Effect.CreateEffect(rc)
-			e1:SetDescription(aux.Stringid(id,1))
+			e1:SetDescription(desc)
 			e1:SetType(EFFECT_TYPE_FIELD)
 			e1:SetCode(EFFECT_SPSUMMON_PROC_G)
 			e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
@@ -360,7 +360,7 @@ function Pendulum.RegisterAdditionalPendulumSummon(rc,tp,id,summonfilter,resets,
 			and opp_lpz:GetFlagEffectLabel(CARD_HARMONIC_OSCILATION)==opp_rpz:GetFieldID()
 			and opp_rpz:GetFlagEffectLabel(CARD_HARMONIC_OSCILATION)==opp_lpz:GetFieldID() then
 			local e2=Effect.CreateEffect(rc)
-			e2:SetDescription(aux.Stringid(id,1))
+			e2:SetDescription(desc)
 			e2:SetType(EFFECT_TYPE_FIELD)
 			e2:SetCode(EFFECT_SPSUMMON_PROC_G)
 			e2:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_BOTH_SIDE)

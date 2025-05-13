@@ -152,22 +152,29 @@ function Pendulum.Operation()
 				end
 			end
 end
+
+local CARD_ZEFRAATH=29432356
+function Pendulum.CanGainAdditionalPendulumSummon(tp)
+	return not Duel.HasFlagEffect(tp,CARD_ZEFRAATH)
+end
+
 function Pendulum.RegisterAdditionalPendulumSummon(rc,tp,id,desc,summonfilter,resets,resetcount)
-	local CARD_HARMONIC_OSCILATION=31531170
-	local CARD_ZEFRAATH=29432356
 	summonfilter=summonfilter or aux.TRUE
 	resets=resets or (RESET_PHASE|PHASE_END)
 	resetcount=resetcount or 1
-	
+
+	local CARD_HARMONIC_OSCILATION=31531170
+
+	--Called if the effect provides an Extra Pendulum Summon only for cards that match "summonfilter"
 	local function AdditionalPendulumFilter(c,e,tp,lscale,rscale)
 		return summonfilter(c,e,tp) and Pendulum.Filter(c,e,tp,lscale,rscale)
 	end
-	
+
 	local function SelfAdditionalPendulumCond(e,c,og)
 		if c==nil then return true end
 		local tp=c:GetControler()
 		local rpz=Duel.GetFieldCard(tp,LOCATION_PZONE,1)
-		if rpz==nil or c==rpz or Duel.GetFlagEffect(tp,CARD_ZEFRAATH)>0 then return false end
+		if rpz==nil or c==rpz or Duel.HasFlagEffect(tp,CARD_ZEFRAATH) then return false end
 		local lscale=c:GetLeftScale()
 		local rscale=rpz:GetRightScale()
 		if lscale>rscale then lscale,rscale=rscale,lscale end
@@ -183,7 +190,7 @@ function Pendulum.RegisterAdditionalPendulumSummon(rc,tp,id,desc,summonfilter,re
 		end
 		return g:IsExists(AdditionalPendulumFilter,1,nil,e,tp,lscale,rscale)
 	end
-	
+
 	local function SelfAdditionalPendulumOp(e,tp,eg,ep,ev,re,r,rp,c,sg,og)
 		local rpz=Duel.GetFieldCard(tp,LOCATION_PZONE,1)
 		local lscale=c:GetLeftScale()
@@ -243,12 +250,13 @@ function Pendulum.RegisterAdditionalPendulumSummon(rc,tp,id,desc,summonfilter,re
 		end
 		if #sg>0 then
 			Duel.Hint(HINT_CARD,0,id)
+			--Registers a flag with Zefraath's ID to indicate that the player has already performed an additional Pendulum Summon this turn
 			Duel.RegisterFlagEffect(tp,CARD_ZEFRAATH,RESET_PHASE|PHASE_END|RESET_SELF_TURN,0,1)
 			Duel.HintSelection(Group.FromCards(c))
 			Duel.HintSelection(Group.FromCards(rpz))
 		end
 	end
-	
+
 	local function OppoAdditionalPendulumCond(e,c,og)
 		if c==nil then return true end
 		local tp=e:GetOwnerPlayer()
@@ -269,7 +277,7 @@ function Pendulum.RegisterAdditionalPendulumSummon(rc,tp,id,desc,summonfilter,re
 		end
 		return g:IsExists(AdditionalPendulumFilter,1,nil,e,tp,lscale,rscale)
 	end
-	
+
 	local function OppoAdditionalPendulumOp(e,tp,eg,ep,ev,re,r,rp,c,sg,og)
 		local tp=e:GetOwnerPlayer()
 		local rpz=Duel.GetFieldCard(1-tp,LOCATION_PZONE,1)
@@ -330,12 +338,13 @@ function Pendulum.RegisterAdditionalPendulumSummon(rc,tp,id,desc,summonfilter,re
 		end
 		if #sg>0 then
 			Duel.Hint(HINT_CARD,0,id)
+			--Registers a flag with Zefraath's ID to indicate that the player has already performed an additional Pendulum Summon this turn
 			Duel.RegisterFlagEffect(tp,CARD_ZEFRAATH,RESET_PHASE|PHASE_END|RESET_SELF_TURN,0,1)
 			Duel.HintSelection(Group.FromCards(c))
 			Duel.HintSelection(Group.FromCards(rpz))
 		end
 	end
-	
+
 	local function AdditionPendulumSummonProc()
 		local lpz=Duel.GetFieldCard(tp,LOCATION_PZONE,0)
 		if lpz and not lpz:HasFlagEffect(id) then
@@ -373,7 +382,6 @@ function Pendulum.RegisterAdditionalPendulumSummon(rc,tp,id,desc,summonfilter,re
 			opp_lpz:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 		end
 	end
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1)
 	--Continuously provide an EFFECT_SPSUMMON_PROC_G to the left Pendulum Zone
 	local additionalpeff=Effect.CreateEffect(rc)
 	additionalpeff:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)

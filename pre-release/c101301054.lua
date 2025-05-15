@@ -49,18 +49,18 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local fcs=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,SET_ARTMEGIA),tp,LOCATION_MZONE,0,nil):GetClass(Card.GetCode)
 	local g=Duel.GetMatchingGroup(s.declfilter,tp,LOCATION_DECK,0,nil,fcs,s.declared_names[tp])
 	if chk==0 then return #g>0 end
-	local announce_filter={}
+	s.announce_filter={}
 	for _,code in ipairs(g:GetClass(Card.GetCode)) do
-		if #announce_filter==0 then
-			table.insert(announce_filter,code)
-			table.insert(announce_filter,OPCODE_ISCODE)
+		if #s.announce_filter==0 then
+			table.insert(s.announce_filter,code)
+			table.insert(s.announce_filter,OPCODE_ISCODE)
 		else
-			table.insert(announce_filter,code)
-			table.insert(announce_filter,OPCODE_ISCODE)
-			table.insert(announce_filter,OPCODE_OR)
+			table.insert(s.announce_filter,code)
+			table.insert(s.announce_filter,OPCODE_ISCODE)
+			table.insert(s.announce_filter,OPCODE_OR)
 		end
 	end
-	local ac=Duel.AnnounceCard(tp,table.unpack(announce_filter))
+	local ac=Duel.AnnounceCard(tp,table.unpack(s.announce_filter))
 	table.insert(s.declared_names[tp],ac)
 	Duel.SetTargetParam(ac)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)

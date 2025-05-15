@@ -128,12 +128,20 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local sg=aux.SelectUnselectGroup(g,e,tp,1,ft,s.rescon(mmz_ct,linkmz_ct),1,tp,HINTMSG_SPSUMMON)
 	if #sg==0 then return end
 	local fup,fdown=sg:Split(aux.FaceupFilter(Card.IsLocation,LOCATION_EXTRA),nil)
-	for fup_c in fup:Iter() do
-		Duel.SpecialSummonStep(fup_c,0,tp,tp,false,false,POS_FACEUP)
-	end
 	local fdown_main,fdown_ex=fdown:Split(Card.IsLocation,nil,LOCATION_DECK)
-	for fdown_main_c in fdown_main:Iter() do
-		Duel.SpecialSummonStep(fdown_main_c,0,tp,tp,false,false,POS_FACEUP)
+	local priority_0,priority_1
+	if linkmz_ct<mmz_ct then
+		priority_0=fup
+		priority_1=fdown_main
+	else
+		priority_0=fdown_main
+		priority_1=fup
+	end
+	for prio0_c in priority_0:Iter() do
+		Duel.SpecialSummonStep(prio0_c,0,tp,tp,false,false,POS_FACEUP)
+	end
+	for prio1_c in priority_1:Iter() do
+		Duel.SpecialSummonStep(prio1_c,0,tp,tp,false,false,POS_FACEUP)
 	end
 	for fdown_ex_c in fdown_ex:Iter() do
 		Duel.SpecialSummonStep(fdown_ex_c,0,tp,tp,false,false,POS_FACEUP)

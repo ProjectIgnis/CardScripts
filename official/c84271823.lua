@@ -55,7 +55,7 @@ function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,2))
 	e:SetLabel(Duel.AnnounceLevel(tp,1,8,lv))
 	e:SetLabelObject(g)
-	Duel.SetOperationInfo(0,CATEGORY_LVCHANGE,g,#dg,0,e:GetLabel())
+	Duel.SetOperationInfo(0,CATEGORY_LVCHANGE,g,#g,0,e:GetLabel())
 end
 function s.opfilter(c,e)
 	return c:IsFaceup() and c:IsRelateToEffect(e)

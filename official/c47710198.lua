@@ -115,7 +115,7 @@ function s.rmcon2(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.rmtg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return re:GetHandler():IsAbleToRemove() end
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,rg,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,re:GetHandler(),1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,1200)
 end
 function s.rmop2(e,tp,eg,ep,ev,re,r,rp)

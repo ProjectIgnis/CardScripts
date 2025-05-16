@@ -50,7 +50,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		e:SetProperty(0)
 		e:SetOperation(s.spop1)
 		s.sptg1(e,tp,eg,ep,ev,re,r,rp,1)
-	else
+	elseif op==2
 		e:SetProperty(EFFECT_FLAG_CARD_TARGET)
 		e:SetOperation(s.spop2)
 		s.sptg2(e,tp,eg,ep,ev,re,r,rp,1)

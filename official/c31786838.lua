@@ -49,6 +49,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local alt=Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_REGENESIS),tp,LOCATION_MZONE,0,1,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,2))
 	local sc=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil,alt):GetFirst()
+	if not sc then return end
 	if sc:IsSetCard(SET_REGENESIS) then
 		aux.ToHandOrElse(sc,tp)
 	else

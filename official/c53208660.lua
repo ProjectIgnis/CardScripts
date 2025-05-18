@@ -2,8 +2,9 @@
 --Pendulum Call
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Add 2 "Magician" monsters with different names from your Deck to your hand
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -19,7 +20,7 @@ s.listed_series={SET_MAGICIAN}
 function s.chainfilter(re,tp,cid)
 	local rc=re:GetHandler()
 	local loc=Duel.GetChainInfo(cid,CHAININFO_TRIGGERING_LOCATION)
-	return not (re:GetActiveType()==TYPE_PENDULUM+TYPE_SPELL and not re:IsHasType(EFFECT_TYPE_ACTIVATE)
+	return not (re:GetActiveType()==(TYPE_PENDULUM|TYPE_SPELL) and not re:IsHasType(EFFECT_TYPE_ACTIVATE)
 		and (loc&LOCATION_PZONE)==LOCATION_PZONE and rc:IsSetCard(SET_MAGICIAN))
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
@@ -41,15 +42,12 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_DECK,0,nil)
-	if g:GetClassCount(Card.GetCode)>=2 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-		local g1=g:Select(tp,1,1,nil)
-		g:Remove(Card.IsCode,nil,g1:GetFirst():GetCode())
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-		local g2=g:Select(tp,1,1,nil)
-		g1:Merge(g2)
-		Duel.SendtoHand(g1,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,g1)
+	if #g>=2 then
+		local thg=aux.SelectUnselectGroup(g,e,tp,2,2,aux.dncheck,1,tp,HINTMSG_ATOHAND)
+		if #thg>0 then
+			Duel.SendtoHand(thg,nil,REASON_EFFECT)
+			Duel.ConfirmCards(1-tp,thg)
+		end
 	end
 	if e:IsHasType(EFFECT_TYPE_ACTIVATE) then
 		local e1=Effect.CreateEffect(e:GetHandler())

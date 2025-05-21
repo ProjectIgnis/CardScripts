@@ -138,6 +138,7 @@ FLAG_DOUBLE_TRIB_LEGEND=160212047 -- Legend Scout
 FLAG_DOUBLE_TRIB_FAIRY=160019009 -- Dice Key Lilith
 FLAG_DOUBLE_TRIB_OBLIVION=160020004 -- Chaos Coolstars
 FLAG_DOUBLE_TRIB_REQUIEM=160020104
+FLAG_DOUBLE_TRIB_EARTH=160021008 --Mamabot
 function Card.AddDoubleTribute(c,id,otfilter,eftg,reset,...)
 	for i,flag in ipairs{...} do
 		c:RegisterFlagEffect(flag,reset,0,1)

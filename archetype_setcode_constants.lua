@@ -588,9 +588,9 @@ SET_REGENESIS                     = 0x1be
 SET_DRAGONTAIL                    = 0x1c0
 SET_YUMMY                         = 0x1c1
 SET_K9                            = 0x1c4
---Released but the official English name is unconfirmed
---Pre-release archetypes
 SET_TELEPORT                      = 0x1c5
+--Released but the official English name is unconfirmed
 SET_IMPRISONED_DEITY              = 0x1c6
 SET_ARTMEGIA                      = 0x1c7
+--Pre-release archetypes
 SET_DOOM_KING                     = 0x1c8

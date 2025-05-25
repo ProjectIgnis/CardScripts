@@ -32,7 +32,7 @@ function s.initial_effect(c)
 	e3:SetOperation(function(e) Duel.SendtoGrave(e:GetHandler(),REASON_EFFECT|REASON_REPLACE) end)
 	c:RegisterEffect(e3)
 end
-s.listed_names={CARD_MEDIUS_THE_INNOCENT,101301054} --"Artmegia the Academy City of Divine Arts"
+s.listed_names={CARD_MEDIUS_THE_INNOCENT,74733322} --"Artmegia the Academy City of Divine Arts"
 s.listed_series={SET_ARTMEGIA}
 function s.thfilter(c)
 	return c:IsCode(CARD_MEDIUS_THE_INNOCENT) and c:IsAbleToHand()
@@ -69,7 +69,7 @@ function s.fusmatop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.repfilter(c,tp)
-	return c:IsCode(101301054) and c:IsFaceup() and c:IsControler(tp) and c:IsOnField()
+	return c:IsCode(74733322) and c:IsFaceup() and c:IsControler(tp) and c:IsOnField()
 		and c:IsReason(REASON_EFFECT) and not c:IsReason(REASON_REPLACE)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -1,7 +1,6 @@
 --アルトメギアの獄神獣
 --Imprisoned Deity Beast of Artmegia
 --scripted by Naim
-local CARD_NERVA=101301033
 local s,id=GetID()
 function s.initial_effect(c)
 	--You cannot Special Summon from the Extra Deck, except Fusion Monsters
@@ -41,9 +40,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={SET_ARTMEGIA}
-s.listed_names={CARD_NERVA}
+s.listed_names={53589300} --"Nerva the Imprisoned Deity of Creation"
 function s.fusionfilter(c)
-	return c:IsSetCard(SET_ARTMEGIA) or c:IsCode(CARD_NERVA)
+	return c:IsSetCard(SET_ARTMEGIA) or c:IsCode(53589300)
 end
 function s.thfilter(c,tp)
 	return c:IsSetCard(SET_ARTMEGIA) and c:IsSpellTrap() and c:IsAbleToHand()

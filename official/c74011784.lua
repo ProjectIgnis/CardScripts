@@ -27,25 +27,25 @@ function s.initial_effect(c)
 	e2:SetOperation(s.negop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={CARD_MEDIUS_THE_INNOCENT,101301054,id} --"Artmegia the Academy City of Divine Arts"
+s.listed_names={CARD_MEDIUS_THE_INNOCENT,74733322,id} --"Artmegia the Academy City of Divine Arts"
 s.listed_series={SET_ARTMEGIA}
 function s.plthfilter(c,tohand_chk)
-	return (c:IsCode(101301054) and not c:IsForbidden()) or (tohand_chk and c:IsSetCard(SET_ARTMEGIA) and c:IsAbleToHand() and c:IsLocation(LOCATION_DECK) and not c:IsCode(id))
+	return (c:IsCode(74733322) and not c:IsForbidden()) or (tohand_chk and c:IsSetCard(SET_ARTMEGIA) and c:IsAbleToHand() and c:IsLocation(LOCATION_DECK) and not c:IsCode(id))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
-		local tohand_chk=Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,101301054),tp,LOCATION_ONFIELD,0,1,nil)
+		local tohand_chk=Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,74733322),tp,LOCATION_ONFIELD,0,1,nil)
 		return Duel.IsExistingMatchingCard(s.plthfilter,tp,LOCATION_DECK|LOCATION_GRAVE,0,1,nil,tohand_chk)
 	end
 	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local tohand_chk=Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,101301054),tp,LOCATION_ONFIELD,0,1,nil)
+	local tohand_chk=Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,74733322),tp,LOCATION_ONFIELD,0,1,nil)
 	local hint_desc=tohand_chk and aux.Stringid(id,2) or HINTMSG_TOFIELD
 	Duel.Hint(HINT_SELECTMSG,tp,hint_desc)
 	local sc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.plthfilter),tp,LOCATION_DECK|LOCATION_GRAVE,0,1,1,nil,tohand_chk):GetFirst()
 	if not sc then return end
-	if sc:IsCode(101301054) then
+	if sc:IsCode(74733322) then
 		if not tohand_chk then
 			Duel.MoveToField(sc,tp,tp,LOCATION_FZONE,POS_FACEUP,true)
 		else

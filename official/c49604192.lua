@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.rmop)
 	c:RegisterEffect(e1)
 end
-s.listed_names={19899073,55397172,101208092}
+s.listed_names={19899073,55397172,13332685}
 --"Ame no Murakumo no Mitsurugi", "Futsu no Mitama no Mitsurugi", "Ame no Habakiri no Mitsurugi"
 s.listed_series={SET_MITSURUGI}
 function s.rmconfilter(c)
@@ -26,8 +26,8 @@ function s.rmcostrescon(sg)
 	return sg:GetClassCount(Card.GetOriginalCodeRule)==3
 end
 function s.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsOriginalCodeRule,3,false,s.rmcostrescon,nil,19899073,55397172,101208092) end
-	local g=Duel.SelectReleaseGroupCost(tp,Card.IsOriginalCodeRule,3,3,false,s.rmcostrescon,nil,19899073,55397172,101208092)
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsOriginalCodeRule,3,false,s.rmcostrescon,nil,19899073,55397172,13332685) end
+	local g=Duel.SelectReleaseGroupCost(tp,Card.IsOriginalCodeRule,3,3,false,s.rmcostrescon,nil,19899073,55397172,13332685)
 	Duel.Release(g,REASON_COST)
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)

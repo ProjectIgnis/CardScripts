@@ -21,10 +21,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tdop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={19899073,55397172,101208092}
+s.listed_names={19899073,55397172,13332685}
 --"Ame no Murakumo no Mitsurugi", "Futsu no Mitama no Mitsurugi", "Ame no Habakiri no Mitsurugi"
 function s.tdconfilter(c,tp)
-	return c:IsPreviousCodeOnField(19899073,55397172,101208092) and c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousControler(tp)
+	return c:IsPreviousCodeOnField(19899073,55397172,13332685) and c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousControler(tp)
 		and c:IsPreviousLocation(LOCATION_ONFIELD)
 end
 function s.tdcon(e,tp,eg,ep,ev,re,r,rp)

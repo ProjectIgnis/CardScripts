@@ -39,19 +39,19 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b1=(cost_skip or not Duel.HasFlagEffect(tp,id))
 		and Duel.IsExistingMatchingCard(nil,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 	--Destroy up to 2 Spells/Traps on the field
-	local b2=(cost_skip or not Duel.HasFlagEffect(tp,id+100))
+	local b2=(cost_skip or not Duel.HasFlagEffect(tp,id+1))
 		and Duel.IsExistingMatchingCard(Card.IsSpellTrap,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
 	--Discard 1 random card from your opponent's hand
-	local b3=(cost_skip or not Duel.HasFlagEffect(tp,id+200))
+	local b3=(cost_skip or not Duel.HasFlagEffect(tp,id+2))
 		and Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,0,LOCATION_HAND,1,nil,REASON_EFFECT)
 	--Destroy 1 face-down card on the field
-	local b4=(cost_skip or not Duel.HasFlagEffect(tp,id+300))
+	local b4=(cost_skip or not Duel.HasFlagEffect(tp,id+3))
 		and Duel.IsExistingMatchingCard(Card.IsFacedown,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,e:GetHandler())
 	--Place 1 card on the field on top of the Deck
-	local b5=(cost_skip or not Duel.HasFlagEffect(tp,id+400))
+	local b5=(cost_skip or not Duel.HasFlagEffect(tp,id+4))
 		and Duel.IsExistingMatchingCard(Card.IsAbleToDeck,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
 	--Banish 1 card on the field
-	local b6=(cost_skip or not Duel.HasFlagEffect(tp,id+500))
+	local b6=(cost_skip or not Duel.HasFlagEffect(tp,id+5))
 		and Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
 	if chk==0 then e:SetLabel(0) return Duel.IsExistingMatchingCard(Card.IsTributeSummoned,tp,LOCATION_MZONE,0,1,nil)
 		and (b1 or b2 or b3 or b4 or b5 or b6) end
@@ -72,29 +72,29 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	elseif op==2 then
 		--Destroy up to 2 Spells/Traps on the field
 		e:SetCategory(CATEGORY_DESTROY)
-		if not cost_skip then Duel.RegisterFlagEffect(tp,id+100,RESET_PHASE|PHASE_END,0,1) end
+		if not cost_skip then Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE|PHASE_END,0,1) end
 		local g=Duel.GetMatchingGroup(Card.IsSpellTrap,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,tp,0)
 	elseif op==3 then
 		--Discard 1 random card from your opponent's hand
 		e:SetCategory(CATEGORY_HANDES)
-		if not cost_skip then Duel.RegisterFlagEffect(tp,id+200,RESET_PHASE|PHASE_END,0,1) end
+		if not cost_skip then Duel.RegisterFlagEffect(tp,id+2,RESET_PHASE|PHASE_END,0,1) end
 		Duel.SetOperationInfo(0,CATEGORY_HANDES,nil,0,1-tp,1)
 	elseif op==4 then
 		--Destroy 1 face-down card on the field
 		e:SetCategory(CATEGORY_DESTROY)
-		if not cost_skip then Duel.RegisterFlagEffect(tp,id+300,RESET_PHASE|PHASE_END,0,1) end
+		if not cost_skip then Duel.RegisterFlagEffect(tp,id+3,RESET_PHASE|PHASE_END,0,1) end
 		local g=Duel.GetMatchingGroup(Card.IsFacedown,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,tp,0)
 	elseif op==5 then
 		--Place 1 card on the field on top of the Deck
 		e:SetCategory(CATEGORY_TODECK)
-		if not cost_skip then Duel.RegisterFlagEffect(tp,id+400,RESET_PHASE|PHASE_END,0,1) end
+		if not cost_skip then Duel.RegisterFlagEffect(tp,id+4,RESET_PHASE|PHASE_END,0,1) end
 		Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,tp,LOCATION_ONFIELD)
 	elseif op==6 then
 		--Banish 1 card on the field
 		e:SetCategory(CATEGORY_REMOVE)
-		if not cost_skip then Duel.RegisterFlagEffect(tp,id+500,RESET_PHASE|PHASE_END,0,1) end
+		if not cost_skip then Duel.RegisterFlagEffect(tp,id+5,RESET_PHASE|PHASE_END,0,1) end
 		Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,tp,LOCATION_ONFIELD)
 	end
 end

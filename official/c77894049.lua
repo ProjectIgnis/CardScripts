@@ -45,19 +45,19 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge1,0)
 	end)
 end
-s.listed_names={28168628} -- "Rock of the Vanquisher"
+s.listed_names={28168628} --"Rock of the Vanquisher"
 s.listed_series={SET_VANQUISH_SOUL}
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local a,b=Duel.GetBattleMonster(0)
 	if (a and a:IsSetCard(SET_VANQUISH_SOUL)) or (b and b:IsSetCard(SET_VANQUISH_SOUL)) then
-		Duel.RegisterFlagEffect(0,id+100,RESET_PHASE|PHASE_END,0,1)
+		Duel.RegisterFlagEffect(0,id+1,RESET_PHASE|PHASE_END,0,1)
 	end
 end
 function s.ovfilter(c,tp,lc)
 	return (c:IsSetCard(SET_VANQUISH_SOUL,lc,SUMMON_TYPE_XYZ,tp) or c:IsCode(28168628)) and c:IsFaceup()
 end
 function s.xyzop(e,tp,chk)
-	if chk==0 then return not Duel.HasFlagEffect(tp,id) and Duel.HasFlagEffect(0,id+100) end
+	if chk==0 then return not Duel.HasFlagEffect(tp,id) and Duel.HasFlagEffect(0,id+1) end
 	return Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,EFFECT_FLAG_OATH,1)
 end
 function s.attrcon(attr)

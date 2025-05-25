@@ -32,7 +32,7 @@ function s.initial_effect(c)
 	e3a:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_LVCHANGE)
 	e3a:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3a:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
-	e3a:SetCode(EVENT_CUSTOM+id+1)
+	e3a:SetCode(EVENT_CUSTOM+id)
 	e3a:SetRange(LOCATION_SZONE)
 	e3a:SetCountLimit(1)
 	e3a:SetCondition(function() return not Duel.IsPhase(PHASE_DAMAGE) end)
@@ -42,7 +42,7 @@ function s.initial_effect(c)
 	local g=Group.CreateGroup()
 	g:KeepAlive()
 	e3a:SetLabelObject(g)
-	--Register your Special Summoned Ritual monsters
+	--Register your Special Summoned Ritual Monsters
 	local e3b=Effect.CreateEffect(c)
 	e3b:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e3b:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
@@ -113,13 +113,13 @@ function s.regsumop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=eg:Filter(s.lvfilter,nil,e,tp)
 	if #tg>0 then
 		for tc in tg:Iter() do
-			tc:RegisterFlagEffect(id+1,RESET_CHAIN,0,1)
+			tc:RegisterFlagEffect(id,RESET_CHAIN,0,1)
 		end
 		local g=e:GetLabelObject():GetLabelObject()
 		if Duel.GetCurrentChain()==0 then g:Clear() end
 		g:Merge(tg)
-		g:Remove(function(c) return c:GetFlagEffect(id+1)==0 end,nil)
+		g:Remove(function(c) return c:GetFlagEffect(id)==0 end,nil)
 		e:GetLabelObject():SetLabelObject(g)
-		Duel.RaiseSingleEvent(e:GetHandler(),EVENT_CUSTOM+id+1,e,0,tp,tp,0)
+		Duel.RaiseSingleEvent(e:GetHandler(),EVENT_CUSTOM+id,e,0,tp,tp,0)
 	end
 end

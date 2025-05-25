@@ -50,7 +50,7 @@ function s.initial_effect(c)
 end
 s.xyz_number=0
 function s.xyzcheck(g,tp,xyz)
-	local mg=g:Filter(function(c) return not c:IsHasEffect(511001175) end,nil)
+	local mg=g:Filter(function(c) return not c:IsHasEffect(EFFECT_EQUIP_SPELL_XYZ_MAT) end,nil)
 	return mg:GetClassCount(Card.GetRank)==1
 end
 function s.ctcon(e,tp,eg,ep,ev,re,r,rp)

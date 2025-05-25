@@ -26,10 +26,10 @@ function s.effcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(-100)
 	local b1=not Duel.HasFlagEffect(tp,id)
 		and Duel.IsExistingTarget(aux.AND(Card.IsAttackPos,Card.IsCanChangePosition),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
-	local b2=not Duel.HasFlagEffect(tp,id+100) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	local b2=not Duel.HasFlagEffect(tp,id+1) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_SUPER_QUANT),tp,LOCATION_MZONE,0,1,nil)
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp)
-	local b3=not Duel.HasFlagEffect(tp,id+200)
+	local b3=not Duel.HasFlagEffect(tp,id+2)
 		and (e:GetHandler():IsLocation(LOCATION_SZONE) or Duel.GetLocationCount(tp,LOCATION_SZONE)>=2)
 		and Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_DECK,0,1,nil)
 	if chk==0 then return b1 or b2 or b3 end
@@ -39,11 +39,11 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local cost_skip=e:GetLabel()~=-100
 	local b1=(cost_skip or not Duel.HasFlagEffect(tp,id))
 		and Duel.IsExistingTarget(aux.AND(Card.IsAttackPos,Card.IsCanChangePosition),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
-	local b2=(cost_skip or (not Duel.HasFlagEffect(tp,id+100)
+	local b2=(cost_skip or (not Duel.HasFlagEffect(tp,id+1)
 		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_SUPER_QUANT),tp,LOCATION_MZONE,0,1,nil)))
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp)
-	local b3=(cost_skip or not Duel.HasFlagEffect(tp,id+200))
+	local b3=(cost_skip or not Duel.HasFlagEffect(tp,id+2))
 		and (not e:IsHasType(EFFECT_TYPE_ACTIVATE) or e:GetHandler():IsLocation(LOCATION_SZONE) or Duel.GetLocationCount(tp,LOCATION_SZONE)>=2)
 		and Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_DECK,0,1,nil)
 	if chk==0 then e:SetLabel(0) return b1 or b2 or b3 end
@@ -62,12 +62,12 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	elseif op==2 then
 		e:SetCategory(CATEGORY_SPECIAL_SUMMON)
 		e:SetProperty(0)
-		if not cost_skip then Duel.RegisterFlagEffect(tp,id+100,RESET_PHASE|PHASE_END,0,1) end
+		if not cost_skip then Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE|PHASE_END,0,1) end
 		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 	elseif op==3 then
 		e:SetCategory(0)
 		e:SetProperty(0)
-		if not cost_skip then Duel.RegisterFlagEffect(tp,id+200,RESET_PHASE|PHASE_END,0,1) end
+		if not cost_skip then Duel.RegisterFlagEffect(tp,id+2,RESET_PHASE|PHASE_END,0,1) end
 	end
 end
 function s.effop(e,tp,eg,ep,ev,re,r,rp)

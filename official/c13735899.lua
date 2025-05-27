@@ -3,8 +3,8 @@
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
-	--Fusion Summon
 	c:EnableReviveLimit()
+	--Fusion Materials: 1 Spellcaster monster + 1 Dragon monster
 	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsRace,RACE_SPELLCASTER),aux.FilterBoolFunctionEx(Card.IsRace,RACE_DRAGON))
 	--Cannot be used as Fusion Material
 	local e0=Effect.CreateEffect(c)
@@ -13,37 +13,38 @@ function s.initial_effect(c)
 	e0:SetCode(EFFECT_CANNOT_BE_FUSION_MATERIAL)
 	e0:SetValue(1)
 	c:RegisterEffect(e0)
-	--Decreak ATK by 100 per banished card
+	--This card loses 100 ATK for each of your banished cards
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetValue(function(e,cc) return Duel.GetFieldGroupCount(e:GetHandlerPlayer(),LOCATION_REMOVED,0)*-100 end)
 	c:RegisterEffect(e1)
-	--Banish monsters
-	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,0))
-	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e2:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
-	e2:SetCode(EVENT_CUSTOM+id)
-	e2:SetRange(LOCATION_MZONE)
-	e2:SetCountLimit(1,id)
-	e2:SetTarget(s.rmtg)
-	e2:SetOperation(s.rmop)
-	c:RegisterEffect(e2)
+	--Banish 1 Special Summoned monster, also banish all monsters from the field with its same original Type
+	local e2a=Effect.CreateEffect(c)
+	e2a:SetDescription(aux.Stringid(id,0))
+	e2a:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e2a:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
+	e2a:SetCode(EVENT_CUSTOM+id)
+	e2a:SetRange(LOCATION_MZONE)
+	e2a:SetCountLimit(1,id)
+	e2a:SetCondition(function() return not Duel.IsPhase(PHASE_DAMAGE) end)
+	e2a:SetTarget(s.rmtg)
+	e2a:SetOperation(s.rmop)
+	c:RegisterEffect(e2a)
 	local g=Group.CreateGroup()
 	g:KeepAlive()
-	e2:SetLabelObject(g)
+	e2a:SetLabelObject(g)
 	--Register summons
-	local e2a=Effect.CreateEffect(c)
-	e2a:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e2a:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e2a:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e2a:SetRange(LOCATION_MZONE)
-	e2a:SetLabelObject(e2)
-	e2a:SetOperation(s.regop)
-	c:RegisterEffect(e2a)
+	local e2b=Effect.CreateEffect(c)
+	e2b:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e2b:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e2b:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e2b:SetRange(LOCATION_MZONE)
+	e2b:SetLabelObject(e2a)
+	e2b:SetOperation(s.regop)
+	c:RegisterEffect(e2b)
 end
 function s.tgfilter(c,rc,e)
 	return c:IsLocation(LOCATION_MZONE) and (rc==c or (c:IsFaceup() and rc:IsOriginalRace(c:GetOriginalRace())))
@@ -57,7 +58,6 @@ function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=e:GetLabelObject():Filter(s.tgfilter2,nil,e)
 	if chkc then return g:IsContains(chkc) and s.tgfilter(chkc,nil) end
 	if chk==0 then return #g>0 end
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1)
 	local tc=nil
 	if #g==1 then
 		tc=g:GetFirst()
@@ -67,21 +67,18 @@ function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		tc=g:Select(tp,1,1,nil)
 		Duel.SetTargetCard(tc)
 	end
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,tc,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,tc,1,tp,0)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
-		local g=Group.FromCards(tc)
-		if tc:IsFaceup() then
-			g=g+Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsOriginalRace,tc:GetOriginalRace()),tp,LOCATION_MZONE,LOCATION_MZONE,tc)
-		end
+	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
+		local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsOriginalRace,tc:GetOriginalRace()),tp,LOCATION_MZONE,LOCATION_MZONE,tc)+tc
 		Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 	end
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if Duel.HasFlagEffect(tp,id) or eg:IsContains(c) then return end
+	if eg:IsContains(c) then return end
 	local rc=re:GetHandler()
 	if not (re and re:IsActivated() and re:IsMonsterEffect() and rc) then return end
 	local tg=eg:Filter(s.tgfilter,nil,rc)

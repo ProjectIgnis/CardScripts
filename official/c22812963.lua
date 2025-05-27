@@ -1,5 +1,5 @@
 --創世の神 デウテロノミオン
---Regenesis God Deuteronomion
+--Regenesis Lord
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

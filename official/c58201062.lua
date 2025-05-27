@@ -1,5 +1,5 @@
 --光征竜－スペクトル
---Spector, Dragon Ruler of Rays
+--Spectral, Dragon Ruler of Flickers
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --再世の戦神 ベレシート
---Regenesis Warrior Beresheet
+--Regenesis Warrior
 --Scripted by Satella
 local s,id=GetID()
 function s.initial_effect(c)

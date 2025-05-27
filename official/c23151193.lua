@@ -1,5 +1,5 @@
 --断罪のディアベルスター
---Diabellstar the Sin Adjudicator
+--Diabellstar Vengeance
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

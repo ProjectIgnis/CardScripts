@@ -1,5 +1,5 @@
 --超征竜－ディザスター
---Disaster, Dragon Ruler of Paranormalities
+--Disaster, Dragon Ruler of All Apocalypses
 --Scripted by The Razgriz
 local s,id=GetID()
 function s.initial_effect(c)

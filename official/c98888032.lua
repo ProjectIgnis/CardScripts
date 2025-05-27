@@ -1,5 +1,5 @@
 --妖精胞スポーア
---Spore the Fairy Cell
+--Spore the Fairy Seed
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --白き森の魔女
---Witches of the White Forest
+--Witch of the White Forest
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

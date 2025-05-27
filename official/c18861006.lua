@@ -1,5 +1,5 @@
 --紅天馬ファイヤー・ウイング・ペガサス
---Firewing Pegasus, the Crimson Heavenly Horse
+--Crimson Firewing Pegasus
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

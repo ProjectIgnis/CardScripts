@@ -1,5 +1,5 @@
 --白き森の幻妖
---Mystic Mystery of the White Forest
+--Poplar of the White Forest
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

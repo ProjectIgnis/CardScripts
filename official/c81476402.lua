@@ -1,5 +1,5 @@
 --邪悪龍エビルナイト・ドラゴン
---Serpent Night Dragon, the Wicked Dragon
+--Wicked Serpent Night Dragon
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

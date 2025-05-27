@@ -1,5 +1,5 @@
 --再世神
---Torah Regenesis
+--Regenesis Code
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

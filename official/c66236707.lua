@@ -1,5 +1,5 @@
 --械刀婪魔皇断
---Gordian Schneider
+--Gordian Slicer
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

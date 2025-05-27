@@ -1,5 +1,5 @@
 --貴き黄金郷のエルドリクシル
---Eldlixir of the Exalted Golden Land
+--Eldlixir of the Glorious Golden Land
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

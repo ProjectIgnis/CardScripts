@@ -1,5 +1,5 @@
 --アコード・トーカー＠イグニスター
---Accode Talker @Ignister
+--Allied Code Talker @Ignister
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

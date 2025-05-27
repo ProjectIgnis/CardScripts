@@ -1,5 +1,5 @@
 --蛇眼の断罪龍
---Snake-Eyes Execute Dragon
+--Snake-Eyes Vengeance Dragon
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

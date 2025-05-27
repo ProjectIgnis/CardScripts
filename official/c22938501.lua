@@ -1,5 +1,5 @@
 --再世の導神 シェモース
---Regenesis Sage Shemot
+--Regenesis Sage
 --Scripted by Satella
 local s,id=GetID()
 function s.initial_effect(c)

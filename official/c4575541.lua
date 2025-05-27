@@ -1,5 +1,5 @@
 --超竜災禍
---Dragocalamity
+--Here There Be Dragons
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

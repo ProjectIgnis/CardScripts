@@ -1,5 +1,5 @@
 --再世の魔神 ベミドバル
---Regenesis Archfiend Bemidbar
+--Regenesis Archfiend
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

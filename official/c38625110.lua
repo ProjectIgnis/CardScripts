@@ -1,5 +1,5 @@
 --夙めてはしろ 二人ではしろ
---Do it Early, Do it Together
+--Let's Go Together
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

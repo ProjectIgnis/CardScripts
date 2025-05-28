@@ -80,8 +80,14 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetCode(EVENT_LEAVE_FIELD_P)
 		e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e3:SetReset(RESET_EVENT|RESETS_STANDARD)
-		e3:SetOperation(function(e) if e:GetLabelObject() then e:GetLabelObject():Reset() end end)
+		e3:SetOperation(s.reseteffect)
 		e3:SetLabelObject(e2)
 		tc:RegisterEffect(e3)
+	end
+end
+function s.reseteffect(tp,eg,ep,ev,re,r,rp)
+	local on_act_eff=e:GetLabelObject()
+	if on_act_eff and not on_act_eff:IsDeleted() then
+		on_act_eff:Reset()
 	end
 end

@@ -1,8 +1,8 @@
---SPYGAL Misty
+--ＳＰＹＧＡＬ－ミスティ
 --SPYGAL Misty
 local s,id=GetID()
 function s.initial_effect(c)
-	--draw
+	--Reveal the top card of your opponent's Deck, and if you do, draw 1 card if it is a card of a declared type
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DRAW)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	local e2=e1:Clone()
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2)
-	--to hand
+	--Return 1 "SPYRAL Super Agent" you control and 1 monster your opponent controls to the hand
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_TOHAND)
@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
-s.listed_names={41091257}
+s.listed_names={41091257} --"SPYRAL Super Agent"
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1)
 		and Duel.GetFieldGroupCount(tp,0,LOCATION_DECK)>0 end

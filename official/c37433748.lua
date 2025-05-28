@@ -1,4 +1,4 @@
---SPYRAL GEAR - Last Resort
+--ＳＰＹＲＡＬ ＧＥＡＲ－ラスト・リゾート
 --SPYRAL GEAR - Last Resort
 local s,id=GetID()
 function s.initial_effect(c)

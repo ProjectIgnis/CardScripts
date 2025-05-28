@@ -1,13 +1,14 @@
---SPYRAL GEAR - Utility Wire
+--ＳＰＹＲＡＬ ＧＥＡＲ－マルチワイヤー
 --SPYRAL GEAR - Utility Wire
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Place 1 card your opponent controls on top of the Deck
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TODECK)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E)
 	e1:SetCondition(s.condition)
@@ -15,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_names={41091257}
+s.listed_names={41091257} --"SPYRAL Super Agent"
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsCode(41091257)
 end

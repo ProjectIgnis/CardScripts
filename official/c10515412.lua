@@ -85,7 +85,7 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e3)
 	end
 end
-function s.reseteffect(tp,eg,ep,ev,re,r,rp)
+function s.reseteffect(e,tp,eg,ep,ev,re,r,rp)
 	local on_act_eff=e:GetLabelObject()
 	if on_act_eff and not on_act_eff:IsDeleted() then
 		on_act_eff:Reset()

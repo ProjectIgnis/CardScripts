@@ -48,8 +48,11 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.setop(ag,e,tp,eg,ep,ev,re,r,rp)
 	local c=ag:GetFirst()
-	if c:IsLocation(LOCATION_MZONE) and c:IsSSetable(true) then
+	if not (c:IsLocation(LOCATION_MZONE) and Duel.CanPlayerSetSpellTrap(tp,c)) then return end
+	if c:IsSSetable() then
 		Duel.SSet(tp,c,tp,false)
+	else
+		Duel.SendtoGrave(c,REASON_RULE)
 	end
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -1,12 +1,11 @@
 --エーリアン・ソルジャー M/フレーム
 --Alien Shocktrooper M-Frame
 --scripted by Logical Nonsense
---Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_REPTILE),2,2)
-	--Discard to place A-counters, quick-play effect
+	--Place A-Counters equal to the original Level of a discarded monster on face-up monster(s) on the field
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_COUNTER)
@@ -19,7 +18,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	--If destroyed, reptile Soul Charge, trigger effect
+	--Special Summon non-Link Reptile monsters with different names from your GY, up to the number of monsters your opponent controls with A-Counters
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -33,11 +32,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.counter_place_list={COUNTER_A}
-	--Defining cost
 function s.costfilter(c)
 	return c:IsMonster() and c:IsDiscardable() and c:GetOriginalLevel()>0
 end
-	--Cost of discarding a monster card with a level
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
@@ -45,40 +42,38 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(g:GetFirst():GetOriginalLevel())
 	Duel.SendtoGrave(g,REASON_COST|REASON_DISCARD)
 end
-	--Activation legality
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 end
-	--Performing the effect of placing counters
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	if #g==0 then return end
-	for i=1,e:GetLabel() do
-		local sg=g:Select(tp,1,1,nil)
-		sg:GetFirst():AddCounter(COUNTER_A,1)
+	if #g==1 then
+		g:GetFirst():AddCounter(COUNTER_A,1)
+	else
+		for i=1,e:GetLabel() do
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_COUNTER)
+			local tc=g:Select(tp,1,1,nil):GetFirst()
+			tc:AddCounter(COUNTER_A,1)
+		end
 	end
 end
-	--Check if this card was destroyed
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsReason(REASON_DESTROY) and c:IsReason(REASON_BATTLE|REASON_EFFECT)
 end
-	--Check for opponent's monsters with A-Counters
 function s.acfilter(c)
 	return c:GetCounter(COUNTER_A)>0
 end
-	--Check for non-link reptile monsters that can be special summoned
 function s.spfilter(c,e,tp)
 	return c:IsRace(RACE_REPTILE) and not c:IsLinkMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
-	--Activation legality
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(s.acfilter,tp,0,LOCATION_MZONE,1,nil)
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 end
-	--Special summon reptile monsters from the GY
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local ct=Duel.GetMatchingGroupCount(s.acfilter,tp,0,LOCATION_MZONE,nil)

@@ -47,7 +47,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if not (c:IsRelateToEffect(e)
 		and Duel.GetLocationCount(ep,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(s.spfilter,ep,LOCATION_HAND|LOCATION_DECK,0,1,nil,e,ep)
-		and Duel.SelectYesNo(ep,aux.Stringid(id,1)) then return end
+		and Duel.SelectYesNo(ep,aux.Stringid(id,1))) then return end
 	Duel.Hint(HINT_SELECTMSG,ep,HINTMSG_SPSUMMON)
 	local sg=Duel.SelectMatchingCard(ep,s.spfilter,ep,LOCATION_HAND|LOCATION_DECK,0,1,1,nil,e,ep)
 	if #sg>0 and Duel.SpecialSummon(sg,0,ep,ep,false,false,POS_FACEUP)>0 then

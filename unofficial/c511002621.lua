@@ -149,7 +149,7 @@ function s.wincon(e,tp,eg,ep,ev,re,r,rp)
 		and Duel.GetActivityCount(p,ACTIVITY_SPSUMMON)==0 and Duel.GetActivityCount(p,ACTIVITY_FLIPSUMMON)==0
 end
 function s.winop(e,tp,eg,ep,ev,re,r,rp)
-	local WIN_REASON=0x58
+	local WIN_REASON=0x5a
 	local p=Duel.GetTurnPlayer()
 	if Duel.GetFieldGroupCount(p,LOCATION_MZONE,0)==0 and Duel.GetActivityCount(p,ACTIVITY_NORMALSUMMON)==0 
 		and Duel.GetActivityCount(p,ACTIVITY_SPSUMMON)==0 and Duel.GetActivityCount(p,ACTIVITY_FLIPSUMMON)==0 then

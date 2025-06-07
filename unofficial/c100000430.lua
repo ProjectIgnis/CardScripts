@@ -1,5 +1,5 @@
 --地縛解放
---Earthbound Release
+--Earthbound Release (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -19,8 +19,8 @@ end
 s.listed_series={SET_EARTHBOUND_IMMORTAL}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local dg=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_MZONE,nil)
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsSetCard,1,false,aux.ReleaseCheckTarget,nil,dg,SET_EARTHBOUND_IMMORTAL) end
-	local g=Duel.SelectReleaseGroupCost(tp,Card.IsSetCard,1,1,false,aux.ReleaseCheckTarget,nil,dg,SET_EARTHBOUND_IMMORTAL)
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsSetCard,1,false,aux.ReleaseCheckTarget,dg,SET_EARTHBOUND_IMMORTAL) end
+	local g=Duel.SelectReleaseGroupCost(tp,Card.IsSetCard,1,1,false,aux.ReleaseCheckTarget,dg,SET_EARTHBOUND_IMMORTAL)
 	Duel.Release(g,REASON_COST)
 end
 function s.filter(c,p)

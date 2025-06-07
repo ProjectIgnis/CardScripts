@@ -2,7 +2,7 @@
 --Contagion of Madness
 local s,id=GetID()
 function s.initial_effect(c)
-	-Activate when your opponent's monster declares an attack
+	--Activate when your opponent's monster declares an attack
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DAMAGE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)

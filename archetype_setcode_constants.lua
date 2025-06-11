@@ -594,4 +594,4 @@ SET_IMPRISONED_DEITY              = 0x1c6
 SET_ARTMEGIA                      = 0x1c7
 --Pre-release archetypes
 SET_DOOM_KING                     = 0x1c8
-SET_MAGNIFISTOR                   = 0x1c9
+SET_MAGNIFISTORM                  = 0x1c9

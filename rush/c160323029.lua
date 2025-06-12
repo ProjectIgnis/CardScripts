@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c)
-	return c:IsFaceup() and not c:IsMaximumMode() and c:IsControlerCanBeChanged(true)
+	return c:IsFaceup() and not c:IsMaximumMode()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -28,18 +28,17 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #g==0 then return end
 	local tc=g:GetFirst()
 	Duel.HintSelection(g)
-	if Duel.GetControl(tc,tp) then
-		local e1=Effect.CreateEffect(c)
-		local reset=RESETS_STANDARD_PHASE_END&~RESET_TURN_SET
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_UNRELEASABLE_SUM)
-		e1:SetReset(reset)
-		e1:SetValue(1)
-		tc:RegisterEffect(e1)
-		local e3=Effect.CreateEffect(c)
-		e3:SetType(EFFECT_TYPE_SINGLE)
-		e3:SetCode(EFFECT_CANNOT_ATTACK)
-		e3:SetReset(reset)
-		tc:RegisterEffect(e3)
-	end
+	Duel.GetControl(tc,tp)
+	local e1=Effect.CreateEffect(c)
+	local reset=RESETS_STANDARD_PHASE_END&~RESET_TURN_SET
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_UNRELEASABLE_SUM)
+	e1:SetReset(reset)
+	e1:SetValue(1)
+	tc:RegisterEffect(e1)
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_SINGLE)
+	e2:SetCode(EFFECT_CANNOT_ATTACK)
+	e2:SetReset(reset)
+	tc:RegisterEffect(e2)
 end

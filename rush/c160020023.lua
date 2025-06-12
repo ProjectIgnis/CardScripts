@@ -35,7 +35,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_CONTROL,nil,1,0,0)
 end
 function s.ctrlfilter(c)
-	return c:IsFaceup() and c:IsLevelBelow(8) and not c:IsType(TYPE_MAXIMUM) and c:IsControlerCanBeChanged(true)
+	return c:IsFaceup() and c:IsLevelBelow(8) and not c:IsType(TYPE_MAXIMUM)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

@@ -47,7 +47,7 @@ function s.revop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.ctrlfilter(c)
-	return c:IsFaceup() and c:IsRace(RACE_FAIRY) and not c:IsType(TYPE_MAXIMUM) and c:IsControlerCanBeChanged(true)
+	return c:IsFaceup() and c:IsRace(RACE_FAIRY) and not c:IsType(TYPE_MAXIMUM)
 end
 function s.ctrltg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

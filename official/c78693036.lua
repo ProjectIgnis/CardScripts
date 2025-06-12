@@ -45,7 +45,7 @@ function s.lpop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g1=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
-	local g2=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSpellTrap),tp,0,LOCATION_ONFIELD,nil)
+	local g2=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSpellTrap),tp,0,LOCATION_ONFIELD,e:GetHandler():GetEquipGroup())
 	local b1=#g1>0
 	local b2=#g2>0
 	if chk==0 then return b1 or b2 end

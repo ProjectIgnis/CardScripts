@@ -7,7 +7,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--direct attack
+	--Level 2 or lower Spellcaster-Type monsters you control can attack your opponent directly
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetRange(LOCATION_SZONE)
@@ -18,6 +18,7 @@ function s.initial_effect(c)
 end
 function s.attg(e,c)
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,e:GetHandlerPlayer(),0,LOCATION_MZONE,nil)
+	if #g==0 then return false end
 	local _,atk=Group.GetMinGroup(g,Card.GetAttack)
 	return c:IsMonster() and c:IsFaceup() and c:IsLevelBelow(2) and c:IsRace(RACE_SPELLCASTER)
 		and not c:IsHasEffect(EFFECT_CANNOT_ATTACK) and c:GetAttack()<atk

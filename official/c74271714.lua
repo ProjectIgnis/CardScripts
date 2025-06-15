@@ -30,7 +30,7 @@ end
 function s.rmtgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local g=Duel.GetMatchingGroup(s.rmtgfilter,tp,LOCATION_DECK,0,nil)
-		return aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,0) 
+		return aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,0)
 	end
 	Duel.SetPossibleOperationInfo(0,CATEGORY_REMOVE,nil,2,1-tp,LOCATION_HAND)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_REMOVE,nil,2,tp,LOCATION_DECK)

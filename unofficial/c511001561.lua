@@ -22,13 +22,10 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge1,0)
 	end)
 end
+s.listed_names={id+1} --"Copy Token"
 function s.sumchk(e,tp,eg,ep,ev,re,r,rp)
 	for tc in eg:Iter() do
-		if tc:GetSummonPlayer()==0 then 
-			Duel.RegisterFlagEffect(0,id,RESET_PHASE|PHASE_END,0,1)
-		else 
-			Duel.RegisterFlagEffect(1,id,RESET_PHASE|PHASE_END,0,1)
-		end
+		Duel.RegisterFlagEffect(tc:GetSummonPlayer(),id,RESET_PHASE|PHASE_END,0,1)
 	end
 end
 function s.tokenfilter(c,tp)
@@ -91,9 +88,9 @@ function s.tokenop(e,tp,eg,ep,ev,re,r,rp)
 		e7:SetCode(EFFECT_CANNOT_ATTACK)
 		e7:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e7:SetCondition(function(e) return Duel.IsTurnPlayer(e:GetHandlerPlayer()) end)
-		e7:SetReset(RESET_EVENT|RESETS_STANDARD&~RESET_TOFIELD)
+		e7:SetReset(RESET_EVENT|(RESETS_STANDARD&~RESET_TOFIELD))
 		token:RegisterEffect(e7)
-		token:CopyEffect(tc:GetOriginalCode(),RESET_EVENT|RESETS_STANDARD&~RESET_TOFIELD,1)
+		token:CopyEffect(tc:GetOriginalCode(),RESET_EVENT|(RESETS_STANDARD&~RESET_TOFIELD),1)
 	end
 	Duel.SpecialSummonComplete()
 end

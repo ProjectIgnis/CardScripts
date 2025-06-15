@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_FIELD)
 	e4:SetCode(EFFECT_CANNOT_DISEFFECT)
 	e4:SetRange(LOCATION_FZONE)
-	e4:SetValue(s.effectfilter)	
+	e4:SetValue(s.effectfilter)
 	c:RegisterEffect(e4)
 	--(Hidden Effect) Return all other Spell/Trap cards on the field to the hand
 	local e5=Effect.CreateEffect(c)
@@ -49,7 +49,7 @@ function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetMatchingGroup(s.setfilter,tp,LOCATION_HAND|LOCATION_DECK,0,1,nil):GetClassCount(Card.GetCode)==5 end
 end
 function s.rescon(sg,e,tp,mg)
-	return sg:IsExists(Card.IsCode,1,nil,95000004) and sg:IsExists(Card.IsCode,1,nil,95000005) and sg:IsExists(Card.IsCode,1,nil,95000006) 
+	return sg:IsExists(Card.IsCode,1,nil,95000004) and sg:IsExists(Card.IsCode,1,nil,95000005) and sg:IsExists(Card.IsCode,1,nil,95000006)
 		and sg:IsExists(Card.IsCode,1,nil,95000007) and sg:IsExists(Card.IsCode,1,nil,95000008)
 end
 function s.setop(e,tp,eg,ep,ev,re,r,rp)
@@ -63,13 +63,13 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.effectfilter(e,ct)
-	local trig_e=Duel.GetChainInfo(ct,CHAININFO_TRIGGERING_EFFECT)	
+	local trig_e=Duel.GetChainInfo(ct,CHAININFO_TRIGGERING_EFFECT)
 	local trig_c=trig_e:GetHandler()
 	if not (trig_e:IsTrapEffect() and trig_c:IsContinuousTrap()) then return false end
 	return trig_c:IsControler(e:GetHandlerPlayer()) and trig_c:IsLocation(LOCATION_ONFIELD) and trig_c:IsFaceup()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.AND(Card.IsSpellTrap,Card.IsAbleToHand),tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,e:GetHandler()) end 
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.AND(Card.IsSpellTrap,Card.IsAbleToHand),tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,e:GetHandler()) end
 	local g=Duel.GetMatchingGroup(aux.AND(Card.IsSpellTrap,Card.IsAbleToHand),tp,LOCATION_ONFIELD,LOCATION_ONFIELD,e:GetHandler())
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,#g,0,0)
 end

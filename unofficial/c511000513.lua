@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCode(EFFECT_SEND_REPLACE)
 	e3:SetTarget(s.reptg)
-	c:RegisterEffect(e3)	
+	c:RegisterEffect(e3)
 end
 s.listed_series={SET_NUMBER}
 s.xyz_number=77
@@ -51,7 +51,7 @@ end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:GetDestination()==LOCATION_REMOVED and c:CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	if Duel.SelectYesNo(tp,aux.Stringid(77631175,0)) then
+	if Duel.SelectEffectYesNo(tp,e:GetHandler(),96) then
 		c:RemoveOverlayCard(tp,1,1,REASON_COST)
 		return true
 	else return false end

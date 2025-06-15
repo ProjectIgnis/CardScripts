@@ -26,7 +26,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_MONARCH}
 s.listed_names={id,51945556,4929256,26205777,60229110,73125233,9748752}
---"Zaborg the Thunder Monarch", "Mobius the Frost Monarch", "Thestalos the Firestorm Monarch", "Granmarg the Rock Monarch", "Raiza the Storm Monarch", "Caius the Shadow Monarch" 
+--"Zaborg the Thunder Monarch", "Mobius the Frost Monarch", "Thestalos the Firestorm Monarch", "Granmarg the Rock Monarch", "Raiza the Storm Monarch", "Caius the Shadow Monarch"
 function s.tgfilter(c)
 	return c:IsSetCard(SET_MONARCH) and c:IsSpellTrap() and not c:IsCode(id) and c:IsAbleToGrave()
 end
@@ -72,7 +72,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SUMMON)
 			local sumc=sg:Select(tp,1,1,nil):GetFirst()
 			Duel.BreakEffect()
-			Duel.Summon(tp,sumc,true,nil) 
+			Duel.Summon(tp,sumc,true,nil)
 		end
 	end
 end

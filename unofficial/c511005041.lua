@@ -17,7 +17,7 @@ end
 function s.spcon(e,c)
 	if c==nil then return true end
 	local g=Duel.GetMatchingGroup(aux.AND(Card.IsContinuousTrap,Card.IsReleasable),c:GetControler(),LOCATION_ONFIELD,0,nil)
-	return not Duel.IsPlayerAffectedByEffect(c:GetControler(),EFFECT_CANNOT_RELEASE) and #g>0 
+	return not Duel.IsPlayerAffectedByEffect(c:GetControler(),EFFECT_CANNOT_RELEASE) and #g>0
 		and Duel.GetMZoneCount(e:GetHandlerPlayer())>0
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)

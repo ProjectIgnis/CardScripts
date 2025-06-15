@@ -41,7 +41,7 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if c:IsRelateToEffect(e) and c:IsFaceup() and c:IsAttackAbove(600) and tc:IsRelateToEffect(e) and tc:IsFaceup()
-		and c:UpdateAttack(-600)==-600 then 
+		and c:UpdateAttack(-600)==-600 then
 		--That monster gains 600 ATK
 		tc:UpdateAttack(600,nil,c)
 	end

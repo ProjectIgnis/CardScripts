@@ -58,7 +58,7 @@ function s.tdfilter(c,tp)
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return Duel.IsExistingMatchingCard(s.tdfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,1,nil,tp) 
+	if chk==0 then return Duel.IsExistingMatchingCard(s.tdfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,1,nil,tp)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,tp,LOCATION_HAND|LOCATION_MZONE)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,tp,0)
@@ -70,9 +70,9 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	if sc:IsLocation(LOCATION_HAND) then Duel.ConfirmCards(1-tp,sc)
 	else Duel.HintSelection(sc) end
 	local c=e:GetHandler()
-	if Duel.SendtoDeck(sc,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>0 
+	if Duel.SendtoDeck(sc,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>0
 		and sc:IsLocation(LOCATION_DECK|LOCATION_EXTRA)
-		and c:IsRelateToEffect(e) 
+		and c:IsRelateToEffect(e)
 		and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)>0 then
 		--Banish it when it leaves the field
 		local e1=Effect.CreateEffect(c)

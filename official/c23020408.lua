@@ -43,7 +43,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		if tc:IsLocation(LOCATION_DECK) then
 			Duel.ShuffleDeck(tp)
 			Duel.MoveToDeckTop(tc)
-		else 
+		else
 			Duel.HintSelection(tc,true)
 			Duel.SendtoDeck(tc,nil,SEQ_DECKTOP,REASON_EFFECT)
 		end

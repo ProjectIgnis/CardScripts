@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_VALKYRIE}
-s.listed_names={92182447,id} --"Mischief of the Time Goddess" 
+s.listed_names={92182447,id} --"Mischief of the Time Goddess"
 function s.thfilter(c)
 	return c:IsCode(92182447) and c:IsAbleToHand()
 end

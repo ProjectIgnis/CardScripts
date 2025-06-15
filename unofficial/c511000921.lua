@@ -3,7 +3,7 @@
 Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
-	--Special Summon 2 "Emissary of Darkness" monsters from your Deck 
+	--Special Summon 2 "Emissary of Darkness" monsters from your Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -25,8 +25,8 @@ function s.initial_effect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	c:RegisterEffect(e3)
 end
-function s.spcon(e,tp,eg,ep,ev,re,r,rp) 
-	return ep==tp and Duel.GetAttackTarget()==nil and Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0 
+function s.spcon(e,tp,eg,ep,ev,re,r,rp)
+	return ep==tp and Duel.GetAttackTarget()==nil and Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0
 end
 function s.spfilter(c,e,tp)
 	return c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsEmissaryOfDarkness()

@@ -67,7 +67,7 @@ end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
-end 
+end
 function s.spfilter(c,e,tp)
 	return c:IsCode(CARD_MEDIUS_THE_INNOCENT) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

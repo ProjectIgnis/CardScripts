@@ -41,7 +41,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.SendtoDeck(tg,nil,SEQ_DECKBOTTOM,REASON_EFFECT)<1 then return end
 	--Effect
 	local tc=eg:GetFirst()
-	if Duel.ChangePosition(tc,POS_FACEDOWN_DEFENSE)>0 
+	if Duel.ChangePosition(tc,POS_FACEDOWN_DEFENSE)>0
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then

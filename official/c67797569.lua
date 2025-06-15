@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.drtg)
 	e1:SetOperation(s.drop)
 	c:RegisterEffect(e1)
-	--Cchange face-up monsters your opponent controls, up to the number of "Laval" monsters you control, to face-down Defense Position
+	--Change face-up monsters your opponent controls, up to the number of "Laval" monsters you control, to face-down Defense Position
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_POSITION)
@@ -37,7 +37,7 @@ function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,2)
 end
 function s.rescon(sg,e,tp,mg)
-	return sg:IsExists(Card.IsAttribute,1,nil,ATTRIBUTE_FIRE) 
+	return sg:IsExists(Card.IsAttribute,1,nil,ATTRIBUTE_FIRE)
 end
 function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)

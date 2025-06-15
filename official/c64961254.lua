@@ -28,7 +28,7 @@ function s.thcfilter(c)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)>0
-		and not Duel.IsExistingMatchingCard(s.thcfilter,tp,LOCATION_MZONE,0,1,nil) 
+		and not Duel.IsExistingMatchingCard(s.thcfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.thfilter(c)
 	return c:IsCode(91969909) and c:IsAbleToHand()

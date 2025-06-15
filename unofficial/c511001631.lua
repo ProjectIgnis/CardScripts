@@ -17,7 +17,7 @@ function s.tgfilter(c,e,tp)
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,c:GetLevel(),e,tp,c)
 end
 function s.spfilter(c,lv,e,tp,tc)
-	return c:IsRank(lv) and Duel.GetLocationCountFromEx(tp,tp,tc,c)>0 
+	return c:IsRank(lv) and Duel.GetLocationCountFromEx(tp,tp,tc,c)>0
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)

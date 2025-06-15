@@ -62,7 +62,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 				s.eqop(ec,e,tp,sc,atk)
 			end
 		end
-	end	 
+	end
 end
 function s.eqop(c,e,tp,tc,atk)
 	if not c:EquipByEffectAndLimitRegister(e,tp,tc,nil,false) then return end

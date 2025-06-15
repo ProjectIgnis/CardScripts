@@ -140,7 +140,7 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.applyfilter(c)
-	return c:IsRitualSpell() and c:IsSetCard(SET_RECIPE) and c:IsAbleToRemoveAsCost() and c:CheckActivateEffect(true,true,false)~=nil 
+	return c:IsRitualSpell() and c:IsSetCard(SET_RECIPE) and c:IsAbleToRemoveAsCost() and c:CheckActivateEffect(true,true,false)~=nil
 end
 function s.applycost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.applyfilter,tp,LOCATION_HAND|LOCATION_DECK|LOCATION_GRAVE,0,1,nil) end

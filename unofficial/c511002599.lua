@@ -22,7 +22,6 @@ function s.initial_effect(c)
 	e2:SetCost(Cost.Detach(1))
 	e2:SetOperation(function(e,tp,eg,ep,ev,re,r,rp) Duel.NegateAttack() end)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
-	
 end
 s.listed_series={SET_NUMBER}
 s.xyz_number=39

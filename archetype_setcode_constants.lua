@@ -595,3 +595,4 @@ SET_ARTMEGIA                      = 0x1c7
 --Pre-release archetypes
 SET_DOOM_KING                     = 0x1c8
 SET_MAGNIFISTORM                  = 0x1c9
+SET_RB                            = 0x1ca

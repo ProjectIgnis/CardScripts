@@ -58,11 +58,11 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,sdg:Match(Card.IsLocation,nil,LOCATION_HAND))
 		Duel.ShuffleHand(tp)
 		local ct=Duel.GetLocationCount(tp,LOCATION_MZONE)
-		if #sdg~=2 or ct==0 then return end
+		if ct==0 then return end
 		local hg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_HAND,0,nil,e,tp)
 		if #hg==0 or not Duel.SelectYesNo(tp,aux.Stringid(id,4)) then return end
-		ct=Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) and 1 or (Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)+1)
-		ct=math.min(ct,ct)
+		ct=math.min(ct,Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)+1)
+		if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ct=1 end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local shg=hg:Select(tp,1,ct,nil)
 		if #shg>0 then

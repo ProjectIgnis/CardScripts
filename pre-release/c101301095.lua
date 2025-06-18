@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetCondition(s.lpcon)
 	e2:SetOperation(function(e) Duel.Hint(HINT_CARD,0,id) Duel.Recover(e:GetHandlerPlayer(),500,REASON_EFFECT) end)
 	c:RegisterEffect(e2)
-	--Special Summon 1 "R.B." monster from your Deck if a face-up "R.B." monster(s) you control leaves the field
+	--Special Summon 1 "R.B." monster from your Deck
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -60,6 +60,7 @@ function s.lpcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spconfilter(c,tp)
 	return c:IsPreviousSetCard(SET_RB) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousControler(tp)
+		and c:IsReason(REASON_EFFECT)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.spconfilter,1,nil,tp)

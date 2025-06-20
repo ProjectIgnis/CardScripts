@@ -17,12 +17,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
 	local ritual_params={
-							handler=c,
-							filter=function(c) return c:IsSetCard(SET_MEGALITH) and not c:IsCode(id) end,
-							lvtype=RITPROC_GREATER,
-							location=LOCATION_GRAVE,
-							forcedselection=function(e,tp,g,sc) return g:IsContains(e:GetHandler()) end
-						}
+		handler=c,
+		filter=function(c) return c:IsSetCard(SET_MEGALITH) and not c:IsCode(id) end,
+		lvtype=RITPROC_GREATER,
+		location=LOCATION_GRAVE,
+		forcedselection=function(e,tp,g,sc) return g:IsContains(e:GetHandler()) end
+	}
 	--Ritual Summon 1 "Megalith" Ritual Monster from your GY, by Tributing monsters from your hand or field, including this card on your field, whose total Levels equal or exceed the Level of the Ritual Monster
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
@@ -35,12 +35,7 @@ function s.initial_effect(c)
 	e2:SetCondition(function() return Duel.IsMainPhase() end)
 	e2:SetCost(Cost.HardOncePerChain(id))
 	e2:SetTarget(Ritual.Target(ritual_params))
-	e2:SetOperation(function(e,tp,eg,ep,ev,re,r,rp)
-						local c=e:GetHandler()
-						if c:IsRelateToEffect(e) and c:IsControler(tp) then
-							Ritual.Operation(ritual_params)(e,tp,eg,ep,ev,re,r,rp)
-						end
-					end)
+	e2:SetOperation(s.ritop(Ritual.Operation(ritual_params)))
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_MEGALITH}

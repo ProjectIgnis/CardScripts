@@ -3,12 +3,14 @@
 --Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Special Summon 1 of your banished Xyz Monsters
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_LEAVE_GRAVE+CATEGORY_DAMAGE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetHintTiming(0,TIMING_STANDBY_PHASE|TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E)
 	e1:SetCost(s.cost)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
@@ -27,9 +29,9 @@ function s.spfilter(c,e,tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_REMOVED) and s.spfilter(chkc,e,tp) end
-	local sg=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_MZONE,0,nil,TYPE_XYZ)
 	if chk==0 then
 		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+		local sg=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_MZONE,0,nil,TYPE_XYZ)
 		if e:GetLabel()==1 then ft=Duel.GetMZoneCount(tp,sg) end
 		e:SetLabel(0)
 		return ft>0 and Duel.IsExistingTarget(s.spfilter,tp,LOCATION_REMOVED,0,1,nil,e,tp)
@@ -37,30 +39,29 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	e:SetLabel(0)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectTarget(tp,s.spfilter,tp,LOCATION_REMOVED,0,1,1,nil,e,tp)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,tp,LOCATION_REMOVED)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,tp,0)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_DAMAGE,nil,0,PLAYER_ALL,300)
 end
-function s.atfilter(c)
-	if not c:IsType(TYPE_XYZ) or not c:IsSetCard(SET_NUMBER) then return false end
+function s.attachfilter(c)
 	local no=c.xyz_number
-	return no and no>=101 and no<=107 and (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup())
+	return c:IsSetCard(SET_NUMBER) and c:IsType(TYPE_XYZ) and no and no>=101 and no<=107 and c:IsFaceup()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if not tc:IsRelateToEffect(e) then return end
 	local ct=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
-	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.atfilter),tp,LOCATION_REMOVED|LOCATION_GRAVE,0,tc)
-	if Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)>0
-		and ct>0 and #g>0 and not tc:IsImmuneToEffect(e)
-		and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.attachfilter),tp,LOCATION_REMOVED|LOCATION_GRAVE,0,tc)
+	if tc:IsRelateToEffect(e) and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)>0
+		and ct>0 and #g>0 and not tc:IsImmuneToEffect(e) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
 		local mg=g:Select(tp,1,ct,nil)
 		if #mg>0 then
+			Duel.HintSelection(mg)
 			Duel.BreakEffect()
 			Duel.Overlay(tc,mg)
 		end
 	end
 	if not e:IsHasType(EFFECT_TYPE_ACTIVATE) then return end
-	--Each player takes 300 damage for each card in their hand
+	--During the End Phase of the turn you activated this card, each player takes 300 damage for each card in their hand
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_PHASE+PHASE_END)

@@ -2,10 +2,10 @@
 --Number C5: Chaos Chimera Dragon
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
-	Xyz.AddProcedure(c,nil,6,3,nil,nil,Xyz.InfiniteMats)
 	c:EnableReviveLimit()
-	--atk
+	--Xyz Summon procedure: 3+ Level 6 monsters
+	Xyz.AddProcedure(c,nil,6,3,nil,nil,Xyz.InfiniteMats)
+	--Gains 1000 ATK for each material attached to it
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetValue(s.atkval)
 	c:RegisterEffect(e1)
-	--chain attack
+	--This card can attack an opponent's monster again in a row
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -22,7 +22,9 @@ function s.initial_effect(c)
 	e2:SetCost(Cost.Detach(1))
 	e2:SetOperation(s.atop)
 	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
+	--Place 1 card from the GY on the top of the Deck, and if you do, attach another to this card as material
 	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_TODECK)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)

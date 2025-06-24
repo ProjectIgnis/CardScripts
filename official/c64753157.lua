@@ -2,7 +2,7 @@
 --Charming Resort Staff
 local s,id=GetID()
 function s.initial_effect(c)
-	--Can change the ATK of an opponent's monster to 0
+	--Change the ATK of an opponent's monster to 0
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_ATKCHANGE)
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.atktg)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
-	-- Special Summon 1 "SPYRAL Super Agent" from your Deck
+	--Special Summon 1 "SPYRAL Super Agent" from your Deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)

@@ -1,6 +1,5 @@
 --タイラント・ドラゴン
 --Tyrant Dragon
---Tyrant Dragon
 local s,id=GetID()
 function s.initial_effect(c)
 	--disable

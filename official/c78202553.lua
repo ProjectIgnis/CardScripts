@@ -1,4 +1,4 @@
---Subterror Behemoth Stalagmo
+--サブテラーマリス・ジブラタール
 --Subterror Behemoth Stalagmo
 local s,id=GetID()
 function s.initial_effect(c)

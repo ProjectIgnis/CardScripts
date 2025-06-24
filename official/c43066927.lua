@@ -1,4 +1,4 @@
---Japanese name
+--ミミグル・フェアリー
 --Mimighoul Fairy
 --scripted by Hatter
 local s,id=GetID()

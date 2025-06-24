@@ -1,4 +1,4 @@
---Japanese name
+--優麗なる霊鏡姫
 --Necroquip Princess
 --Scripted by Hatter
 local s,id=GetID()

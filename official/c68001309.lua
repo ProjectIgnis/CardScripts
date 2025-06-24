@@ -1,4 +1,4 @@
---Subterror Cave Clash
+--サブテラーの激闘
 --Subterror Cave Clash
 local s,id=GetID()
 function s.initial_effect(c)

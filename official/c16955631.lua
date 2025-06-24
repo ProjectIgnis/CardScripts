@@ -1,4 +1,4 @@
---Japanese name
+--ジャイアント・ミミグル
 --Giant Mimighoul
 --Scripted by the Razgriz
 local s,id=GetID()

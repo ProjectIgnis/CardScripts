@@ -1,4 +1,4 @@
---Japanese name
+--ミミグル・ドラゴン
 --Mimighoul Dragon
 --Scripted by Hatter
 local s,id=GetID()

@@ -1,4 +1,4 @@
---Japanese name
+--ミミグル・ケルベロス
 --Mimighoul Cerberus
 --Scripted by Hatter
 local s,id=GetID()

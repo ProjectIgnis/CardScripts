@@ -1,4 +1,4 @@
---
+--ミュートリア反射作用
 --Myutant Blast
 --Scripted by senpaizuri
 local s,id=GetID()

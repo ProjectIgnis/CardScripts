@@ -1,4 +1,4 @@
---Kozmo Lightsword
+--Ｋｏｚｍｏ－レイブレード
 --Kozmo Lightsword
 local s,id=GetID()
 function s.initial_effect(c)

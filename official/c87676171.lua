@@ -1,4 +1,4 @@
---
+--神蝕む光 ティスティナ
 --Tistina, the Divinity that Defies Darkness
 --Scripted by Hatter
 local s,id=GetID()

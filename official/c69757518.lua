@@ -1,4 +1,4 @@
---Number C5: Chaos Chimera Dragon
+--ＣＮｏ．５ 亡朧龍 カオス・キマイラ・ドラゴン
 --Number C5: Chaos Chimera Dragon
 local s,id=GetID()
 function s.initial_effect(c)

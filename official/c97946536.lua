@@ -1,4 +1,4 @@
---
+--ゼクトライク－紅黄
 --Zektrike Kou-ou
 --scripted by pyrQ
 local s,id=GetID()

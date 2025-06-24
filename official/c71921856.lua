@@ -1,4 +1,4 @@
---Number 79: Battlin' Boxer Nova Kaiser
+--Ｎｏ．７９ ＢＫ 新星のカイザー
 --Number 79: Battlin' Boxer Nova Kaiser
 local s,id=GetID()
 function s.initial_effect(c)

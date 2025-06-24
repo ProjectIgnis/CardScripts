@@ -1,4 +1,4 @@
---
+--リブロマンサー・ファイアバースト
 --Libromancer Fireburst
 --scripted by Naim
 local s,id=GetID()

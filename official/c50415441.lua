@@ -1,4 +1,4 @@
---Japanese name
+--ミミグル・デーモン
 --Mimighoul Archfiend
 --Scripted by Hatter
 local s,id=GetID()

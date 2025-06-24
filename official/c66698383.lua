@@ -1,8 +1,8 @@
---Vermillion Dragon Mech
+--灼銀の機竜
 --Vermillion Dragon Mech
 local s,id=GetID()
 function s.initial_effect(c)
-	--synchro summon
+	--synchro summon : 1 Tuner + 1+ non-Tuner monsters
 	c:EnableReviveLimit()
 	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTuner(nil),1,99)
 	--destroy

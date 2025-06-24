@@ -1,4 +1,4 @@
---
+--ゴーティスの守人イーノック
 --Eanoc, Sentry of the Ghoti
 --scripted by Naim
 local s,id=GetID()

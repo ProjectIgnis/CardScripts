@@ -1,4 +1,4 @@
---Expendable Dai
+--刺し違ＧＵＹ
 --Expendable Dai
 local s,id=GetID()
 function s.initial_effect(c)

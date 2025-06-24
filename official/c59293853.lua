@@ -1,4 +1,4 @@
---Japanese name
+--ミミグル・ルーム
 --Mimighoul Room
 --Scripted by Hatter
 local s,id=GetID()

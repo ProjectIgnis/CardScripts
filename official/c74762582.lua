@@ -1,4 +1,4 @@
---Subterror Fiendess
+--サブテラーの妖魔
 --Subterror Fiendess
 local s,id=GetID()
 function s.initial_effect(c)

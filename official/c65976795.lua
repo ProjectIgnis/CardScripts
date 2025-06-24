@@ -1,4 +1,4 @@
---Subterror Behemoth Stygokraken
+--サブテラーマリス・アクエドリア
 --Subterror Behemoth Stygokraken
 local s,id=GetID()
 function s.initial_effect(c)

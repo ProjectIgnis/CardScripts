@@ -1,4 +1,4 @@
---
+--碧鋼の機竜
 --Navy Dragon Mech
 --scripted by Naim
 local s,id=GetID()

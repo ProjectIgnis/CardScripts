@@ -1,4 +1,4 @@
---Japanese name
+--ミミグル・アーマー
 --Mimighoul Armor
 --scripted by Hatter
 local s,id=GetID()

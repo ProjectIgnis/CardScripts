@@ -1,4 +1,4 @@
---Japanese name
+--ＱＱエニアゴン
 --QQ Enneagon
 --Scripted by The Razgriz
 local s,id=GetID()

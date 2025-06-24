@@ -1,4 +1,4 @@
---Pendulum Encore
+--ペンデュラム・アンコール
 --Pendulum Encore
 local s,id=GetID()
 function s.initial_effect(c)

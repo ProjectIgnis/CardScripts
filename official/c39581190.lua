@@ -1,8 +1,8 @@
---Subterror Nemesis Archer
+--サブテラーの射手
 --Subterror Nemesis Archer
 local s,id=GetID()
 function s.initial_effect(c)
-	--to deck
+	--Shuffle an opponent's face-down Defense Position monster into the Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TODECK)
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.tdtg)
 	e1:SetOperation(s.tdop)
 	c:RegisterEffect(e1)
-	--spsummon
+	--Special Summon 1 "Subterror" monster from your Deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)

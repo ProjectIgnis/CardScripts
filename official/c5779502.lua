@@ -1,4 +1,4 @@
---Underdog
+--形勢反転
 --Underdog
 local s,id=GetID()
 function s.initial_effect(c)

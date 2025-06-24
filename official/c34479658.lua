@@ -23,7 +23,6 @@ function s.initial_effect(c)
 	e2:SetValue(s.valcheck)
 	c:RegisterEffect(e2)
 	e2:SetLabelObject(e1)
-	e2:SetLabelObject(e1)
 	--Add to hand
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
@@ -36,7 +35,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
-s.listed_names={34479659}
+s.listed_names={34479659} --"Alligator Token"
 function s.otfilter(c)
 	return c:IsRace(RACE_REPTILE)
 end

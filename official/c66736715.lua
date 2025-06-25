@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	Pendulum.AddProcedure(c)
-	--Return itself from the Pendulum Zone to the Deck
+	--Place this card on either the top or bottom of the Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TODECK)
@@ -15,22 +15,21 @@ function s.initial_effect(c)
 	e1:SetTarget(s.tdtg)
 	e1:SetOperation(s.tdop)
 	c:RegisterEffect(e1)
-	--You can Pendulum Summon a monster(s) from your hand in addition to your Pendulum Summon
+	--During your Main Phase this turn, you can conduct 1 Pendulum Summon of a monster(s) from your hand in addition to your Pendulum Summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_DRAW)
-	e2:SetCondition(function(e,tp) return Duel.IsTurnPlayer(tp) and Duel.GetCurrentPhase()<PHASE_END end)
-	e2:SetCost(s.pendscost)
-	e2:SetTarget(s.pendstg)
-	e2:SetOperation(s.pendsop)
+	e2:SetCondition(function(e,tp) return Pendulum.PlayerCanGainAdditionalPendulumSummon(tp,id) end)
+	e2:SetCost(Cost.SelfReveal)
+	e2:SetOperation(function(e,tp) Pendulum.GrantAdditionalPendulumSummon(e:GetHandler(),nil,tp,LOCATION_HAND,aux.Stringid(id,2),aux.Stringid(id,3),id) end)
 	c:RegisterEffect(e2)
 end
-function s.cfilter(c,tp)
+function s.tdconfilter(c,tp)
 	return c:IsPendulumSummoned() and c:IsSummonPlayer(tp)
 end
 function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.cfilter,1,nil,tp)
+	return eg:IsExists(s.tdconfilter,1,nil,tp)
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -39,17 +38,10 @@ end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and c:IsAbleToDeck() then
-		local seq_op=Duel.SelectOption(tp,aux.Stringid(id,2),aux.Stringid(id,3))
+		local seq_op=0
+		if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>0 then
+			seq_op=Duel.SelectOption(tp,aux.Stringid(id,4),aux.Stringid(id,5))
+		end
 		Duel.SendtoDeck(c,nil,seq_op,REASON_EFFECT)
 	end
-end
-function s.pendscost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return not e:GetHandler():IsPublic() end
-end
-function s.pendstg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return not Duel.HasFlagEffect(tp,id) and Pendulum.CanGainAdditionalPendulumSummon(tp) end
-end
-function s.pendsop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END|RESET_SELF_TURN,0,1)
-	Pendulum.RegisterAdditionalPendulumSummon(e:GetHandler(),tp,id,aux.Stringid(id,5),function(c) return c:IsLocation(LOCATION_HAND) end)
 end

@@ -31,7 +31,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(g,REASON_EFFECT)
 		local dg=Duel.GetOperatedGroup():Filter(Card.IsPreviousPosition,nil,POS_FACEUP)
 		local sum=dg:GetSum(Card.GetPreviousAttackOnField)
-		if #sum>0 then
+		if sum>0 then
 			Duel.Damage(tp,sum/2,REASON_EFFECT)
 		end
 	end

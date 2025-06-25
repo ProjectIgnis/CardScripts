@@ -1,5 +1,5 @@
 --紋章の明滅
---Heraldry Flash
+--Flash of Heraldry
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

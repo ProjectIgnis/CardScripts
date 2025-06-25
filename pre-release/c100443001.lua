@@ -35,7 +35,7 @@ function s.initial_effect(c)
 end
 function s.effcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:GetBattleTarget() and c:IsStatus(STATUS_OPPO_BATTLE) 
+	return c:GetBattleTarget() and c:IsStatus(STATUS_OPPO_BATTLE)
 end
 function s.controlfilter(c)
 	return c:HasCounter(COUNTER_MAIDEN) and c:IsControlerCanBeChanged()
@@ -74,6 +74,5 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 		if sc then
 			Duel.GetControl(sc,tp)
 		end
-	
 	end
 end

@@ -1,5 +1,5 @@
 --Ａｉ－ボウ
---PA.I.rtners
+--SA.I.dekick
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --真紅眼の鋼爪竜
---Red-Eyes Metal Claw Dragon
+--Red-Eyes Metal Claws Dragon
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

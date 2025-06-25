@@ -1,5 +1,5 @@
 --罪なき罪宝
---Sinless Sinful Spoils
+--Sinful Spoils Sanctification
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

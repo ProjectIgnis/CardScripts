@@ -1,5 +1,5 @@
 --黄金郷のアンヘルカイド
---Angelcaido of the Golden Land
+--Fallen Angel of the Golden Land
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

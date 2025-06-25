@@ -49,7 +49,7 @@ local pack={}
 --before anything
 if not BoosterDraft then
 	BoosterDraft={}
-	local function finish_setup() 
+	local function finish_setup()
 		--Pre-draw
 		local e1=Effect.GlobalEffect()
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -87,7 +87,6 @@ if not BoosterDraft then
 		counts[1]=Duel.GetPlayersCount(1)
 		Duel.DisableShuffleCheck()
 		Duel.Hint(HINT_CARD,0,id)
-		
 		for p=z,o do
 			for team=1,counts[p] do
 				Duel.RemoveCards(Duel.GetFieldGroup(p,0xff,0),0,-2,REASON_RULE)
@@ -96,7 +95,6 @@ if not BoosterDraft then
 				end
 			end
 		end
-		
 		local groups={}
 		groups[0]={}
 		groups[1]={}
@@ -106,7 +104,6 @@ if not BoosterDraft then
 		for i=1,counts[1] do
 			groups[1][i]={}
 		end
-		
 		local function generate_packs()
 			local total=(counts[0]+counts[1])*3
 			local retpacks={}

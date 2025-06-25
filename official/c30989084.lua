@@ -100,7 +100,7 @@ function s.rmvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local tc=Duel.SelectTarget(tp,Card.IsAbleToRemove,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,tc,1,tp,0)
-	Duel.SetOperationInfo(0,CATEGORY_RECOVER,tp,1,tp,1000)
+	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,1,tp,1000)
 end
 function s.rmvop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()

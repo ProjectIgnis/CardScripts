@@ -42,7 +42,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		end
 		if Duel.SendtoGrave(mc,REASON_EFFECT)==0 or not mc:IsLocation(LOCATION_GRAVE) then return end
 		local code=mc:GetCode()
-		if mc:IsPreviousLocation(LOCATION_ONFIELD) and mc:IsPreviousPosition(POS_FACEUP) then 
+		if mc:IsPreviousLocation(LOCATION_ONFIELD) and mc:IsPreviousPosition(POS_FACEUP) then
 			code=mc:GetPreviousCodeOnField()
 		end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

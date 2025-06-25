@@ -1,5 +1,5 @@
 --凶征竜－エクレプシス
---Eclepsis, Dragon Ruler of Woes
+--Eclipse, Dragon Ruler of Catastrophes
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

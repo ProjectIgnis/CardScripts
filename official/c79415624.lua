@@ -1,5 +1,5 @@
 --蛇眼の断罪龍
---Snake-Eyes Execute Dragon
+--Snake-Eyes Vengeance Dragon
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -74,7 +74,7 @@ function s.desfilter(c,e)
 	return c:IsCanBeEffectTarget(e) and (c:IsMonster() or (c:IsContinuousSpell() and c:IsFaceup()))
 end
 function s.rescon(sg,e,tp,mg)
-	return sg:IsExists(Card.IsMonster,1,nil) and sg:IsExists(Card.IsContinuousSpell,1,nil) 
+	return sg:IsExists(Card.IsMonster,1,nil) and sg:IsExists(Card.IsContinuousSpell,1,nil)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

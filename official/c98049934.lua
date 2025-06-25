@@ -36,7 +36,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.qpovop)
 	c:RegisterEffect(e3)
 end
-s.listed_names={29599813} --Purrely Pretty Memory
+s.listed_names={29599813} --"Purrely Pretty Memory"
 s.listed_series={SET_PURRELY}
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:IsHasType(EFFECT_TYPE_QUICK_O)==e:GetHandler():GetOverlayGroup():IsExists(Card.IsCode,1,nil,29599813)
@@ -49,7 +49,7 @@ function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingTarget(s.negfilter,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_NEGATE)
 	local g=Duel.SelectTarget(tp,s.negfilter,tp,0,LOCATION_MZONE,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_DISABLE,tg,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,1,tp,0)
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()

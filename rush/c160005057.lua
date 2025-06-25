@@ -1,10 +1,10 @@
--- 花牙踏み
+--花牙踏み
 --Shadow Flower Stance
-
 local s,id=GetID()
 function s.initial_effect(c)
 	--change pos
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCategory(CATEGORY_POSITION)
 	e1:SetCode(EVENT_ATTACK_ANNOUNCE)
@@ -29,20 +29,21 @@ end
 function s.tdfilter(c)
 	return c:IsMonster() and c:IsRace(RACE_PLANT) and c:IsAbleToDeckOrExtraAsCost()
 end
+function s.posfilter(c)
+	return c:IsAttackPos() and c:IsCanChangePositionRush()
+end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
 	local td=Duel.SelectMatchingCard(tp,s.tdfilter,tp,LOCATION_GRAVE,0,2,2,nil)
 	Duel.HintSelection(td)
-	if Duel.SendtoDeck(td,nil,SEQ_DECKBOTTOM,REASON_COST)~0 then
-		Duel.SortDeckbottom(tp,tp,2)
-		
-		local g=Duel.GetMatchingGroup(s.posfilter,tp,0,LOCATION_MZONE,nil)
-		if #g>0 then
-			Duel.ChangePosition(g,POS_FACEUP_DEFENSE)
-		end
-		
+	Duel.SendtoDeck(td,nil,SEQ_DECKBOTTOM,REASON_COST)
+	local g2=Duel.GetOperatedGroup():Filter(Card.IsLocation,nil,LOCATION_DECK)
+	if #g2>1 then
+		Duel.SortDeckbottom(tp,tp,#g2)
 	end
-end
-function s.posfilter(c)
-	return c:IsAttackPos() and c:IsCanChangePositionRush()
+	--Effect
+	local g=Duel.GetMatchingGroup(s.posfilter,tp,0,LOCATION_MZONE,nil)
+	if #g>0 then
+		Duel.ChangePosition(g,POS_FACEUP_DEFENSE)
+	end
 end

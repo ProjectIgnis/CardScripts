@@ -2,79 +2,62 @@
 --Crusadia Vanguard
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate
+	--When you activate this card: You can also Tribute 1 "Crusadia" or "World Legacy" monster; if you did, Special Summon 1 "Crusadia" or "World Legacy" monster, with a different original name, from your Deck or GY
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(0,TIMING_END_PHASE)
+	e1:SetHintTiming(0,TIMING_STANDBY_PHASE|TIMING_MAIN_END|TIMING_BATTLE_START|TIMINGS_CHECK_MONSTER_E)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
+	e1:SetCost(s.cost)
 	e1:SetTarget(s.target)
+	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	--cannot select, except link thing
+	--While you control a "Crusadia" Link Monster, your opponent's monsters can only target Link Monsters for attacks
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
+	e2:SetCode(EFFECT_CANNOT_SELECT_BATTLE_TARGET)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTargetRange(0,LOCATION_MZONE)
-	e2:SetCode(EFFECT_CANNOT_SELECT_BATTLE_TARGET)
-	e2:SetCondition(s.catcondition)
-	e2:SetValue(s.catlimit)
+	e2:SetCondition(function(e) return Duel.IsExistingMatchingCard(function(c) return c:IsSetCard(SET_CRUSADIA) and c:IsLinkMonster() end,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil) end)
+	e2:SetValue(function(e,c) return not c:IsLinkMonster() end)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_CRUSADIA,SET_WORLD_LEGACY}
+function s.spcostfilter(c,e,tp)
+	return c:IsSetCard({SET_CRUSADIA,SET_WORLD_LEGACY}) and Duel.GetMZoneCount(tp,c)>0
+		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK|LOCATION_GRAVE,0,1,nil,e,tp,c:GetOriginalCodeRule())
+end
+function s.spfilter(c,e,tp,code)
+	return c:IsSetCard({SET_CRUSADIA,SET_WORLD_LEGACY}) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+		and not c:IsOriginalCodeRule(code)
+end
+function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	if Duel.CheckReleaseGroupCost(tp,s.spcostfilter,1,false,nil,nil,e,tp)
+		and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+		local sc=Duel.SelectReleaseGroupCost(tp,s.spcostfilter,1,1,false,nil,nil,e,tp):GetFirst()
+		e:SetLabel(sc:GetOriginalCodeRule())
+		Duel.Release(sc,REASON_COST)
+	else
+		e:SetLabel(-1)
+	end
+end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	if s.spcost(e,tp,eg,ep,ev,re,r,rp,0) and s.sptarget(e,tp,eg,ep,ev,re,r,rp,0)
-		and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+	if e:GetLabel()>0 then
 		e:SetCategory(CATEGORY_SPECIAL_SUMMON)
-		s.spcost(e,tp,eg,ep,ev,re,r,rp,1)
-		s.sptarget(e,tp,eg,ep,ev,re,r,rp,1)
-		e:SetOperation(s.spoperation)
+		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK|LOCATION_GRAVE)
 	else
 		e:SetCategory(0)
-		e:SetOperation(nil)
 	end
 end
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	e:SetLabel(1)
-	if chk==0 then return true end
-end
-function s.costfilter(c,e,tp)
-	return c:IsMonster() and (c:IsSetCard(SET_CRUSADIA) or c:IsSetCard(SET_WORLD_LEGACY))
-		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK|LOCATION_GRAVE,0,1,nil,e,tp,c)
-end
-function s.spfilter(c,e,tp,tc)
-	return c:IsMonster() and (c:IsSetCard(SET_CRUSADIA) or c:IsSetCard(SET_WORLD_LEGACY)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and not c:IsOriginalCode(tc:GetOriginalCode())
-end
-function s.sptarget(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then
-		if e:GetLabel()~=1 then return false end
-		e:SetLabel(0)
-		return Duel.GetLocationCount(tp,LOCATION_MZONE)>-1
-			and Duel.CheckReleaseGroupCost(tp,s.costfilter,1,false,nil,nil,e,tp)
-	end
-	e:SetLabel(0)
-	local g=Duel.SelectReleaseGroupCost(tp,s.costfilter,1,1,false,nil,nil,e,tp)
-	Duel.Release(g,REASON_COST)
-	Duel.SetTargetCard(g)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
-end
-function s.spoperation(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
-	local c=e:GetHandler()
-	local tc=Duel.GetFirstTarget()
+function s.activate(e,tp,eg,ep,ev,re,r,rp)
+	local label=e:GetLabel()
+	if label==-1 or Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK|LOCATION_GRAVE,0,1,1,nil,e,tp,tc)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter),tp,LOCATION_DECK|LOCATION_GRAVE,0,1,1,nil,e,tp,label)
 	if #g>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
-end
-function s.catfilter(c)
-	return c:IsFaceup() and c:IsSetCard(SET_CRUSADIA) and c:IsLinkMonster()
-end
-function s.catcondition(e)
-	return Duel.IsExistingMatchingCard(s.catfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
-end
-function s.catlimit(e,c)
-	return not c:IsLinkMonster()
 end

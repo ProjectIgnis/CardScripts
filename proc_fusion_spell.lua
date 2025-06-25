@@ -330,6 +330,9 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 				local efmg=fmg_all:Filter(GetExtraMatEff,nil)
 				local extragroup=nil
 				local repl_flag=false
+				local function filter_material_immunity_and_necrovalley(card,fvalue,feffect)
+					return card:IsCanBeFusionMaterial(nil,fvalue) and not card:IsImmuneToEffect(feffect) and aux.nvfilter(card)
+				end
 				if #efmg>0 then
 					local extra_feff=GetExtraMatEff(efmg:GetFirst())
 					if extra_feff and extra_feff:GetLabelObject() then
@@ -344,7 +347,7 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 									ret[1]:Match(repl_function[2],nil,e,tp)
 									efmg:Match(repl_function[2],nil,e,tp)
 								end
-								Fusion.ExtraGroup=ret[1]:Filter(Card.IsCanBeFusionMaterial,nil,nil,value):Match(aux.NOT(Card.IsImmuneToEffect),nil,e)
+								Fusion.ExtraGroup=ret[1]:Filter(filter_material_immunity_and_necrovalley,nil,value,e)
 								mg1:Merge(ret[1])
 							end
 							checkAddition=ret[2]
@@ -355,7 +358,7 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 							if ret[1] then
 								repl[1]:Match(matfilter,nil,e,tp,1)
 								ret[1]:Merge(repl[1])
-								Fusion.ExtraGroup=ret[1]:Filter(Card.IsCanBeFusionMaterial,nil,nil,value):Match(aux.NOT(Card.IsImmuneToEffect),nil,e)
+								Fusion.ExtraGroup=ret[1]:Filter(filter_material_immunity_and_necrovalley,nil,value,e)
 								mg1:Merge(ret[1])
 							end
 							if ret[2] then
@@ -370,13 +373,13 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 				if not repl_flag and extrafil then
 					local ret = {extrafil(e,tp,mg1)}
 					if ret[1] then
-						Fusion.ExtraGroup=ret[1]:Filter(Card.IsCanBeFusionMaterial,nil,nil,value):Match(aux.NOT(Card.IsImmuneToEffect),nil,e)
+						Fusion.ExtraGroup=ret[1]:Filter(filter_material_immunity_and_necrovalley,nil,value,e)
 						extragroup=ret[1]
 						mg1:Merge(ret[1])
 					end
 					checkAddition=ret[2]
 				end
-				mg1:Match(Card.IsCanBeFusionMaterial,nil,nil,value):Match(aux.NOT(Card.IsImmuneToEffect),nil,e)
+				mg1:Match(filter_material_immunity_and_necrovalley,nil,value,e)
 				if gc and (not mg1:Includes(gc) or gc:IsExists(Fusion.ForcedMatValidity,1,nil,e)) then
 					Fusion.ExtraGroup=nil
 					return false

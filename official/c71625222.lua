@@ -2,7 +2,7 @@
 --Time Wizard
 local s,id=GetID()
 function s.initial_effect(c)
-	--destroy
+	--Destroy monsters on the field
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_COIN+CATEGORY_DAMAGE)
@@ -19,6 +19,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetFieldGroup(tp,LOCATION_MZONE,LOCATION_MZONE)
 	Duel.SetOperationInfo(0,CATEGORY_COIN,nil,0,tp,1)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_DAMAGE,nil,1,tp,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.CallCoin(tp) then
@@ -28,8 +29,10 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	else
 		local g=Duel.GetFieldGroup(tp,LOCATION_MZONE,0)
 		Duel.Destroy(g,REASON_EFFECT)
-		local dg=Duel.GetOperatedGroup()
-		local sum=dg:GetSum(Card.GetAttack)
-		Duel.Damage(tp,sum/2,REASON_EFFECT)
+		local dg=Duel.GetOperatedGroup():Filter(Card.IsPreviousPosition,nil,POS_FACEUP)
+		local sum=dg:GetSum(Card.GetPreviousAttackOnField)
+		if sum>0 then
+			Duel.Damage(tp,sum/2,REASON_EFFECT)
+		end
 	end
 end

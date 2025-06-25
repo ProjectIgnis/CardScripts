@@ -1,5 +1,5 @@
 --七星天流抜刀術－「破軍」
---Seven Star Sky Style Battojutsu - "Hagun"
+--Seven Stars Slash - Army Annihilator Hagun
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

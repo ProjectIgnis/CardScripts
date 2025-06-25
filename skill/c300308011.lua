@@ -20,7 +20,7 @@ end
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_STZONE)
 	local b1=Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_MZONE,0,1,nil)
-	local b2=Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_STZONE,0,1,nil) and Duel.IsExistingMatchingCard(s.eqfilter,tp,0,LOCATION_MZONE,1,1,nil) and ft>-1 and Duel.GetFlagEffect(tp,id)==0
+	local b2=Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_SZONE,0,1,nil) and Duel.IsExistingMatchingCard(s.eqfilter,tp,0,LOCATION_MZONE,1,1,nil) and ft>-1 and Duel.GetFlagEffect(tp,id)==0
 	return aux.CanActivateSkill(tp) and (b1 or b2)
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
@@ -29,15 +29,16 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local ft=Duel.GetLocationCount(tp,LOCATION_STZONE)
 	local b1=Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_MZONE,0,1,nil)
-	local b2=Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_STZONE,0,1,nil) and Duel.IsExistingMatchingCard(Card.IsMonster,tp,0,LOCATION_MZONE,1,1,nil) and ft>-1 and Duel.GetFlagEffect(tp,id)==0
+	local b2=Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_SZONE,0,1,nil) and Duel.IsExistingMatchingCard(Card.IsMonster,tp,0,LOCATION_MZONE,1,1,nil) and ft>-1 and Duel.GetFlagEffect(tp,id)==0
 	local op=Duel.SelectEffect(tp,{b1,aux.Stringid(id,0)},{b2,aux.Stringid(id,1)})
 	if op==1 then
+		--Return 1 "Cyberdark" monster you control to your hand to Normal Summon 1 "Cyberdark" monster from your hand
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 		local tc=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
 		if tc:IsFacedown() then
 			Duel.ConfirmCards(tp,tc)
 		end
-		if tc and Duel.SendtoHand(tc,tp,REASON_COST)>0 and tc:IsLocation(LOCATION_HAND) and Duel.IsExistingMatchingCard(s.nsfilter,tp,LOCATION_HAND,0,1,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
+		if tc and Duel.SendtoHand(tc,tp,REASON_EFFECT)>0 and tc:IsLocation(LOCATION_HAND) and Duel.IsExistingMatchingCard(s.nsfilter,tp,LOCATION_HAND,0,1,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SUMMON)
 			local sc=Duel.SelectMatchingCard(tp,s.nsfilter,tp,LOCATION_HAND,0,1,1,nil):GetFirst()
@@ -46,12 +47,14 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 			end
 		end
 	elseif op==2 then
+		--OPD register
 		Duel.RegisterFlagEffect(tp,id,0,0,0)
+		--Equip 1 monster your opponent controls to a "Cyberdark"
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-		local gc=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_STZONE,0,1,1,nil):GetFirst()
+		local gc=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_SZONE,0,1,1,nil):GetFirst()
 		if Duel.SendtoGrave(gc,REASON_COST)>0 then
 			local ec=gc:GetPreviousEquipTarget()
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SELECT)
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 			local sc=Duel.SelectMatchingCard(tp,s.eqfilter,tp,0,LOCATION_MZONE,1,1,nil):GetFirst()
 			if sc and sc:IsAbleToChangeControler() then
 				Duel.HintSelection(sc)
@@ -59,7 +62,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 				s.eqop(ec,e,tp,sc,atk)
 			end
 		end
-	end	 
+	end
 end
 function s.eqop(c,e,tp,tc,atk)
 	if not c:EquipByEffectAndLimitRegister(e,tp,tc,nil,false) then return end
@@ -75,10 +78,7 @@ function s.eqop(c,e,tp,tc,atk)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_EQUIP_LIMIT)
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e2:SetValue(s.eqlimit)
+	e2:SetValue(function(e,c) return c:GetControler()==e:GetHandlerPlayer() end)
 	e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 	tc:RegisterEffect(e2)
-end
-function s.eqlimit(e,c)
-	return c:GetControler()==e:GetHandlerPlayer()
 end

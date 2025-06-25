@@ -1,5 +1,5 @@
 --列王詩篇
---The Psalms of Kings
+--Songs of the Dominators
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

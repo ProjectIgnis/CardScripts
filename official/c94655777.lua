@@ -1,5 +1,5 @@
 --闇征竜－ネビュラス
---Nebulous, Dragon Ruler of Shadows
+--Nebulus, Dragon Ruler of Mishaps
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

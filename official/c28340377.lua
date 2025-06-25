@@ -1,4 +1,4 @@
---Court of Cards
+--絵札の絆
 --Court of Cards
 local s,id=GetID()
 function s.initial_effect(c)
@@ -7,7 +7,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--Special Summon
+	--Special Summon 1 "Queen's Knight", "King's Knight", or "Jack's Knight" from your hand or GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	--Draw
+	--Draw cards equal to the number of cards you banish to activate this effect
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_DRAW)
@@ -59,8 +59,7 @@ function s.drcostfilter(c)
 		and c:IsAbleToRemoveAsCost() and (c:IsLocation(LOCATION_HAND) or aux.SpElimFilter(c,true))
 end
 function s.rescon(sg,e,tp,mg)
-	return Duel.IsPlayerCanDraw(tp,#sg)
-		and sg:GetClassCount(Card.GetCode)==#sg
+	return Duel.IsPlayerCanDraw(tp,#sg) and sg:GetClassCount(Card.GetCode)==#sg
 end
 function s.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local cg=Duel.GetMatchingGroup(s.drcostfilter,tp,LOCATION_HAND|LOCATION_MZONE|LOCATION_GRAVE,0,nil)

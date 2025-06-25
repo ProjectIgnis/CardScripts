@@ -1,8 +1,8 @@
---Subterror Behemoth Voltelluric
+--サブテラーマリス・ボルティニア
 --Subterror Behemoth Voltelluric
 local s,id=GetID()
 function s.initial_effect(c)
-	--flip
+	--Take control of 1 Set monster your opponent controls until your next End Phase
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_CONTROL)
@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	--special summon
+	--Special Summon this card from your hand in Defense Position
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	--turn set
+	--Change this card to face-down Defense Position
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetCategory(CATEGORY_POSITION)
@@ -41,15 +41,18 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONTROL)
 	local g=Duel.SelectTarget(tp,s.filter,tp,0,LOCATION_MZONE,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_CONTROL,g,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_CONTROL,g,1,tp,0)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	local tct=1
-	if Duel.IsTurnPlayer(1-tp) then tct=2
-	elseif Duel.IsPhase(PHASE_END) then tct=3 end
+	local turn_count=1
+	if Duel.IsTurnPlayer(1-tp) then
+		turn_count=2
+	elseif Duel.IsPhase(PHASE_END) then
+		turn_count=3
+	end
 	if tc:IsFacedown() and tc:IsRelateToEffect(e) then
-		Duel.GetControl(tc,tp,PHASE_END,tct)
+		Duel.GetControl(tc,tp,PHASE_END,turn_count)
 	end
 end
 function s.cfilter(c,tp)
@@ -73,7 +76,7 @@ end
 function s.postg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsCanTurnSet() and c:GetFlagEffect(id)==0 end
-	c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD-RESET_TURN_SET|RESET_PHASE|PHASE_END,0,1)
+	c:RegisterFlagEffect(id,RESET_EVENT|(RESETS_STANDARD&~RESET_TURN_SET)|RESET_PHASE|PHASE_END,0,1)
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,c,1,0,0)
 end
 function s.posop(e,tp,eg,ep,ev,re,r,rp)

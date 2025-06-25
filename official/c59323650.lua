@@ -1,5 +1,5 @@
 --再世の龍神 ワイクラー
---Regenesis Dragon Vayikra
+--Regenesis Dragon
 --Scripted by Satella
 local s,id=GetID()
 function s.initial_effect(c)

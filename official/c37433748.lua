@@ -1,8 +1,8 @@
---SPYRAL GEAR - Last Resort
+--ＳＰＹＲＡＬ ＧＥＡＲ－ラスト・リゾート
 --SPYRAL GEAR - Last Resort
 local s,id=GetID()
 function s.initial_effect(c)
-	--equip
+	--Equip this card to 1 "SPYRAL" monster you control
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_EQUIP)
@@ -29,7 +29,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	if c:IsLocation(LOCATION_MZONE) and c:IsFacedown() then return end
 	local tc=Duel.GetFirstTarget()
-	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 or tc:GetControler()~=tp or tc:IsFacedown() or not tc:IsRelateToEffect(e) then
+	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 or tc:IsControler(1-tp) or tc:IsFacedown() or not tc:IsRelateToEffect(e) then
 		Duel.SendtoGrave(c,REASON_EFFECT)
 		return
 	end
@@ -42,7 +42,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetValue(s.eqlimit)
 	e1:SetLabelObject(tc)
 	c:RegisterEffect(e1)
-	--destroy sub
+	--The equipped monster cannot be destroyed by battle or card effects
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_EQUIP)
 	e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
@@ -53,18 +53,18 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local e3=e2:Clone()
 	e3:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	c:RegisterEffect(e3)
-	--cannot be targeted
+	--Your opponent cannot target the equipped monster with card effects
 	local e4=e2:Clone()
 	e4:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
 	e4:SetValue(aux.tgoval)
 	c:RegisterEffect(e4)
-	--direct attack
+	--Allo the equipped monster to attack directly this turn
 	local e5=Effect.CreateEffect(c)
 	e5:SetDescription(aux.Stringid(id,1))
 	e5:SetType(EFFECT_TYPE_IGNITION)
 	e5:SetRange(LOCATION_SZONE)
 	e5:SetCountLimit(1)
-	e5:SetCondition(s.dircon)
+	e5:SetCondition(function() return Duel.IsAbleToEnterBP() end)
 	e5:SetCost(s.dircost)
 	e5:SetOperation(s.dirop)
 	e5:SetReset(RESET_EVENT|RESETS_STANDARD)
@@ -73,16 +73,13 @@ end
 function s.eqlimit(e,c)
 	return c==e:GetLabelObject()
 end
-function s.dircon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsAbleToEnterBP()
-end
 function s.dircost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	local g=Group.FromCards(c,c:GetEquipTarget()) 
+	local g=Group.FromCards(c,c:GetEquipTarget())
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_ONFIELD,0,1,g) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToGraveAsCost,tp,LOCATION_ONFIELD,0,1,1,g)
-	Duel.SendtoGrave(g,REASON_COST)
+	local tg=Duel.SelectMatchingCard(tp,Card.IsAbleToGraveAsCost,tp,LOCATION_ONFIELD,0,1,1,g)
+	Duel.SendtoGrave(tg,REASON_COST)
 end
 function s.dirop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

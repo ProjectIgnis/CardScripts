@@ -1,5 +1,5 @@
 --機動石器ドグラード
---Dogurado the Moving Stone Relic
+--Dogurad, the Stonetrooper
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

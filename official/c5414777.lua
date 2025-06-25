@@ -1,5 +1,5 @@
 --精霊の世界
---The World of Spirits
+--World of Spirits
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

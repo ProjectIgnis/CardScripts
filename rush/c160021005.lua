@@ -26,7 +26,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.SelectMatchingCard(tp,s.revealfilter,tp,LOCATION_EXTRA,0,1,1,nil):GetFirst()
 	Duel.ConfirmCards(1-tp,tc)
 	Duel.ShuffleExtra(tp)
-	--Effect	
+	--Effect
 	local announceFilter={}
 	for _,name in pairs(tc.material) do
 		if #announceFilter==0 then

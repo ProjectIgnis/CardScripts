@@ -19,7 +19,7 @@ function s.cfilter(c,tp)
 	return c:IsType(TYPE_XYZ) and c:IsC() and c:GetOverlayCount()>0 and c:IsSummonPlayer(tp)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return #eg==1 and eg:IsExists(s.cfilter,1,nil,1-tp) 
+	return #eg==1 and eg:IsExists(s.cfilter,1,nil,1-tp)
 end
 function s.thfilter(c)
 	return c:IsCode(111011002) and c:IsAbleToHand()

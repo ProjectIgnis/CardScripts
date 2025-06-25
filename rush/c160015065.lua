@@ -24,16 +24,16 @@ function s.filter1(c,tp)
 	return c:IsSummonPlayer(1-tp) and c:IsLocation(LOCATION_MZONE)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.filter1,1,nil,tp) and Duel.IsTurnPlayer(1-tp)
+	return eg:IsExists(s.filter1,1,nil,tp) and Duel.IsTurnPlayer(1-tp) and Duel.GetFlagEffect(1-tp,id)==0
 end
 function s.condition2(e,tp,eg,ep,ev,re,r,rp)
-	return ep==1-tp and Duel.IsTurnPlayer(1-tp)
+	return ep==1-tp and Duel.IsTurnPlayer(1-tp) and Duel.GetFlagEffect(ep,id)==0
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_MZONE,0,1,nil) end
 end
 function s.ctrlfilter(c)
-	return c:IsFaceup() and c:IsRace(RACE_MAGICALKNIGHT) and c:IsLevelAbove(9) and c:IsType(TYPE_FUSION) and c:GetBaseAttack()==3000 and c:IsControlerCanBeChanged(true)
+	return c:IsFaceup() and c:IsRace(RACE_MAGICALKNIGHT) and c:IsLevelAbove(9) and c:IsType(TYPE_FUSION) and c:GetBaseAttack()==3000
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
@@ -41,6 +41,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	g=g:AddMaximumCheck()
 	local ct=Duel.SendtoGrave(g,REASON_COST)
 	if ct>0 then
+		Duel.RegisterFlagEffect(1-tp,id,RESET_PHASE|PHASE_END,0,1)
 		--can attack once
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetDescription(aux.Stringid(id,2))
@@ -59,11 +60,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetReset(RESET_PHASE|PHASE_END)
 		e2:SetLabelObject(e1)
 		Duel.RegisterEffect(e2,tp)
-		if Duel.IsExistingMatchingCard(s.ctrlfilter,tp,0,LOCATION_MZONE,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+		if Duel.IsExistingMatchingCard(s.ctrlfilter,tp,0,LOCATION_MZONE,1,nil) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONTROL)
 			local dg=Duel.SelectMatchingCard(tp,s.ctrlfilter,tp,0,LOCATION_MZONE,1,1,nil)
 			if #dg>0 then
-				Duel.HintSelection(dg,true)
+				Duel.HintSelection(dg)
 				Duel.GetControl(dg,tp)
 			end
 		end

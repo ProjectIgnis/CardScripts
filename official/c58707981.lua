@@ -37,7 +37,7 @@ function s.initial_effect(c)
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	local seq,p,loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_SEQUENCE,CHAININFO_TRIGGERING_CONTROLER,CHAININFO_TRIGGERING_LOCATION)
-	if loc&(LOCATION_MZONE|LOCATION_SZONE)==0 then return end --triggering outside the field or in the Field Zone
+	if loc&(LOCATION_MZONE|LOCATION_SZONE)==0 or (loc&LOCATION_FZONE)>0 then return end --triggering outside the field or in the Field Zone
 	if (seq==5 or seq==6) then --First, correct effects triggering in the Extra Monster Zone
 		if seq==5 then
 			seq=1

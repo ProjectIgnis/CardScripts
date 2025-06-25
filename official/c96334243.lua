@@ -1,4 +1,4 @@
---Sea Monster of Theseus
+--テセウスの魔棲物
 --Sea Monster of Theseus
 local s,id=GetID()
 function s.initial_effect(c)

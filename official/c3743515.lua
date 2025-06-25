@@ -1,5 +1,5 @@
 --怒髪天衝セイバーザウルス
---Ferociously Angered Sabersaurus
+--Steamed Sabersaurus
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

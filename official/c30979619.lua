@@ -1,8 +1,8 @@
---SPYRAL GEAR - Big Red
+--ＳＰＹＲＡＬ ＧＥＡＲ－ビッグ・レッド
 --SPYRAL GEAR - Big Red
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Special Summon 1 "SPYRAL" monster from the GY and equip it with this card
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	--indes
+	--The monster equipped with this card cannot be destroyed by battle
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_EQUIP)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)

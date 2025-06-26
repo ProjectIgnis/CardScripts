@@ -4,70 +4,35 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetCondition(function(e,tp) return Duel.GetFieldGroupCount(tp,0,LOCATION_PZONE)==2 end)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+function s.tgfilter(c)
+	return not c:HasFlagEffect(id) or c:GetFlagEffectLabel(id)~=Duel.GetMatchingGroup(nil,c:GetControler(),LOCATION_PZONE,0,c):GetFirst():GetFlagEffectLabel(id)
+end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	if chk==0 then return Duel.IsExistingTarget(nil,tp,0,LOCATION_PZONE,2,nil) end
-	local g=Duel.GetFieldGroup(tp,0,LOCATION_PZONE)
-	Duel.SetTargetCard(g)
+	if chk==0 then return Duel.IsExistingTarget(s.tgfilter,tp,0,LOCATION_PZONE,2,nil) end
+	Duel.SetTargetCard(Duel.GetFieldGroup(tp,0,LOCATION_PZONE))
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local tc1=Duel.GetFieldCard(1-tp,LOCATION_PZONE,0)
-	local tc2=Duel.GetFieldCard(1-tp,LOCATION_PZONE,1)
-	if not tc1 or not tc2 or not tc1:IsRelateToEffect(e) or not tc2:IsRelateToEffect(e) then return end
-	local e1=Effect.CreateEffect(e:GetHandler())
-	e1:SetDescription(1163)
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetCode(EFFECT_SPSUMMON_PROC_G)
-	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_BOTH_SIDE)
-	e1:SetRange(LOCATION_PZONE)
-	e1:SetCondition(s.pendcon)
-	e1:SetOperation(s.pendop)
-	e1:SetValue(SUMMON_TYPE_PENDULUM)
-	e1:SetReset(RESETS_STANDARD_PHASE_END)
-	tc1:RegisterEffect(e1)
-	tc1:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1,tc2:GetFieldID())
-	tc2:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1,tc1:GetFieldID())
-end
-function s.pendcon(e,c,inchain,re,rp)
-	if c==nil then return true end
-	local tp=e:GetOwnerPlayer()
-	if inchain and tp~=rp then return false end
-	local rpz=Duel.GetFieldCard(1-tp,LOCATION_PZONE,1)
-	if rpz==nil or rpz:GetFieldID()~=c:GetFlagEffectLabel(id) or (not inchain and Duel.GetFlagEffect(tp,10000000)>0) then return false end
-	local lscale=c:GetLeftScale()
-	local rscale=rpz:GetRightScale()
-	if lscale>rscale then lscale,rscale=rscale,lscale end
-	local ft=Duel.GetLocationCountFromEx(tp)
-	if ft<=0 then return false end
-	return Duel.IsExistingMatchingCard(Pendulum.Filter,tp,LOCATION_EXTRA,0,1,nil,e,tp,lscale,rscale)
-end
-function s.pendop(e,tp,eg,ep,ev,re,r,rp,c,sg,inchain)
-	local tp=e:GetOwnerPlayer()
-	local rpz=Duel.GetFieldCard(1-tp,LOCATION_PZONE,1)
-	local lscale=c:GetLeftScale()
-	local rscale=rpz:GetRightScale()
-	if lscale>rscale then lscale,rscale=rscale,lscale end
-	local ft=Duel.GetLocationCountFromEx(tp)
-	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
-	ft=math.min(ft,aux.CheckSummonGate(tp) or ft)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,Pendulum.Filter,tp,LOCATION_EXTRA,0,Duel.IsSummonCancelable() and 0 or 1,ft,nil,e,tp,lscale,rscale)
-	if g then
-		sg:Merge(g)
+	local tg=Duel.GetTargetCards(e)
+	if #tg~=2 then return end
+	local fid=e:GetFieldID()
+	for pc in tg:Iter() do
+		pc:ResetFlagEffect(id)
+		pc:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,EFFECT_FLAG_CLIENT_HINT,1,fid,aux.Stringid(id,1))
 	end
-	if #sg>0 then
-		Duel.Hint(HINT_CARD,0,id)
-		if not inchain then
-			Duel.RegisterFlagEffect(tp,10000000,RESET_PHASE|PHASE_END|RESET_SELF_TURN,0,1)
-		end
-		Duel.HintSelection(Group.FromCards(c))
-		Duel.HintSelection(Group.FromCards(rpz))
-	end
+	local left_scale_card=Duel.GetFieldCard(1-tp,LOCATION_PZONE,0)
+	local right_scale_card=Duel.GetFieldCard(1-tp,LOCATION_PZONE,1)
+	--While both targets are in their Pendulum Zones, you can Pendulum Summon using their Pendulum Scales this turn, but only from the Extra Deck
+	local e1,e2=Pendulum.CreateHarmonicOscillationEffect(e:GetHandler(),nil,nil,nil,10000000)
+	left_scale_card:RegisterEffect(e1)
+	right_scale_card:RegisterEffect(e2)
 end

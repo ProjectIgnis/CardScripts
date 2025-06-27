@@ -4,15 +4,15 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--Fusion Summon Procedure
+	--Fusion materials: 2 monsters with the same Type and Attribute, but different names
 	Fusion.AddProcMixN(c,true,true,s.ffilter,2)
-	--Double battle damage
+	--Any battle damage your opponent takes from battles involving this card is doubled
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
 	e1:SetValue(aux.ChangeBattleDamage(1,DOUBLE_DAMAGE))
 	c:RegisterEffect(e1)
-	--Draw 1 card when sent to the GY
+	--Draw 1 card
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_DRAW)
@@ -25,8 +25,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.ffilter(c,fc,sumtype,sump,sub,matg,sg)
-	return not sg or sg:FilterCount(aux.TRUE,c)==0 or (sg:IsExists(Card.IsAttribute,1,c,c:GetAttribute(),fc,sumtype,sump)
-		and sg:IsExists(Card.IsRace,1,c,c:GetRace(),fc,sumtype,sump)
+	return not sg or sg:FilterCount(aux.TRUE,c)==0 or (sg:IsExists(Card.IsAttribute,1,c,c:GetAttribute(fc,sumtype,sump),fc,sumtype,sump)
+		and sg:IsExists(Card.IsRace,1,c,c:GetRace(fc,sumtype,sump),fc,sumtype,sump)
 		and not sg:IsExists(s.fusfilter,1,c,c:GetCode(fc,sumtype,sump),fc,sumtype,sump))
 end
 function s.fusfilter(c,code,fc,sumtype,sump)

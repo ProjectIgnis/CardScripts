@@ -33,7 +33,7 @@ function s.initial_effect(c)
 end
 s.listed_names={27288416}
 function s.cfilter(c,tp)
-	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
+	return not c:IsReason(REASON_BATTLE) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
 		and c:IsPreviousControler(tp) and c:IsRace(RACE_FAIRY)
 end
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)

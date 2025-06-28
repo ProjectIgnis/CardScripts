@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.cfilter(c)
-	return not c:IsBattleDestroyed() and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
+	return not c:IsReason(REASON_BATTLE) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
 		and (c:GetPreviousRaceOnField()&RACE_BEAST)~=0
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)

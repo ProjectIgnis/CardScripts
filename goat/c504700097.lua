@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	local e2=e1:Clone()
 	e2:SetCode(EVENT_BATTLED)
-	e2:SetCondition(s.atkcon)
+	e2:SetCondition(s.atkcon2)
 	c:RegisterEffect(e2)
 end
 function s.cfilter(c)

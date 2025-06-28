@@ -3,8 +3,9 @@
 --scripted by Shad3, fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)
-	--Special Summon 1 Xyz Monster from your GY, then attach this card and all materials from 1 Xyz Monster on your field to 1 other Xyz Monster on the field
+	--Special Summon 1 Xyz Monster from your GY, then you can attach this card and all materials from 1 Xyz Monster on your field to 1 other Xyz Monster on the field
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -15,7 +16,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cfilter(c,tp)
-	return c:IsType(TYPE_XYZ) and c:IsControler(tp)
+	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsControler(tp)
+end
+function s.nomatfilter(c)
+	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:GetOverlayCount()==0
 end
 function s.spfilter(c,e,tp)
 	return c:IsType(TYPE_XYZ) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -36,22 +40,25 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if not tc or not tc:IsRelateToEffect(e) or Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)<=0 then return end
-	Duel.BreakEffect()
-	local tg=Duel.GetMatchingGroup(s.detachfilter,tp,LOCATION_MZONE,0,nil,tp)
-	if #tg>0 then
+	local g=Duel.GetMatchingGroup(s.detachfilter,tp,LOCATION_MZONE,0,nil,tp)
+	if #g==0 then return end
+	if not c:IsStatus(STATUS_DESTROY_CONFIRMED) and c:IsOnField() and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+		Duel.BreakEffect()
 		c:CancelToGrave()
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DEATTACHFROM)
-		local detachxyz=tg:FilterSelect(tp,Card.CheckRemoveOverlayCard,1,1,nil,tp,1,REASON_EFFECT):GetFirst()
-		local attachxyz=Duel.SelectMatchingCard(tp,aux.FaceupFilter(Card.IsType,TYPE_XYZ),tp,LOCATION_MZONE,0,1,1,detachxyz):GetFirst()
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTACH)
-		local attach_group=detachxyz:GetOverlayGroup()
-		if #attach_group>0 and c:IsOnField() then attach_group:AddCard(c) end
-		Duel.Overlay(attachxyz,attach_group)
-		Duel.RaiseSingleEvent(detachxyz,EVENT_DETACH_MATERIAL,e,0,0,0,0)
-	else
-		c:CancelToGrave()
-		local attachxyz=Duel.SelectMatchingCard(tp,aux.FaceupFilter(Card.IsType,TYPE_XYZ),tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
-		Duel.Overlay(attachxyz,c)
+		local og=Duel.GetOverlayGroup(tp,1,0)
+		og:AddCard(c)
+		if Duel.IsExistingMatchingCard(s.nomatfilter,tp,LOCATION_MZONE,0,1,nil) and #g==1 then
+        		local attach_xyz=Duel.SelectMatchingCard(tp,s.nomatfilter,tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
+        		Duel.Overlay(attach_xyz,og)
+        		Duel.RaiseSingleEvent(g:GetFirst(),EVENT_DETACH_MATERIAL,e,0,0,0,0)
+		else
+			local attach_xyz=Duel.SelectMatchingCard(tp,aux.FaceupFilter(Card.IsType,TYPE_XYZ),tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
+			if attach_xyz:GetOverlayCount()>0 then g:RemoveCard(attach_xyz) end
+			Duel.Overlay(attach_xyz,og)
+        		for tc in g:Iter() do
+        			Duel.RaiseSingleEvent(tc,EVENT_DETACH_MATERIAL,e,0,0,0,0)
+			end
+		end
 	end
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)

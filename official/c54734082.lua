@@ -1,9 +1,10 @@
---Magnet Induction
+--マグネット・インダクション
 --Magnet Induction
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Special Summon 1 Level 4 or lower "Magnet Warrior" monster from your Deck with a different name than the cards you control
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -13,6 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_series={SET_MAGNET_WARRIOR,SET_MAGNA_WARRIOR}
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(SET_MAGNET_WARRIOR) and c:GetOriginalLevel()<=4
 end
@@ -29,14 +31,13 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	--Cannot be destroyed by battle or the opponent's card effects
-	local e1=Effect.CreateEffect(e:GetHandler())
+	--"Magnet Warrior" and "Magna Warrior" monsters you control cannot be destroyed by battle or your opponent's card effects
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e1:SetTargetRange(LOCATION_MZONE,0)
 	e1:SetReset(RESET_PHASE|PHASE_END)
-	e1:SetTarget(s.tg)
+	e1:SetTarget(function(e,c) return c:IsSetCard({SET_MAGNET_WARRIOR,SET_MAGNA_WARRIOR}) end)
 	e1:SetValue(1)
 	Duel.RegisterEffect(e1,tp)
 	local e2=e1:Clone()
@@ -49,7 +50,4 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
-end
-function s.tg(e,c)
-	return c:IsFaceup() and (c:IsSetCard(SET_MAGNET_WARRIOR) or c:IsSetCard(SET_MAGNA_WARRIOR))
 end

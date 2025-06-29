@@ -97,7 +97,6 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 		{b2,aux.Stringid(id,3)},
 		{b3,aux.Stringid(id,4)})
 	e:SetLabel(op)
-	e:SetLabel(op)
 	if op==1 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		local g=Duel.SelectMatchingCard(tp,s.costfilter1,tp,LOCATION_MZONE,0,1,1,nil,e,tp)

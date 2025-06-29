@@ -1,4 +1,4 @@
---Proof of Pruflas
+--プルーフ・プルフラス
 --Proof of Pruflas
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,4 +1,4 @@
---Japanese name
+--ミミグル・チャーム
 --Mimighoul Charm
 --Scripted by Hatter
 local s,id=GetID()

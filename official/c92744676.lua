@@ -1,4 +1,4 @@
---Japanese name
+--デンジエビ
 --Zapper Shrimp
 --scripted by Naim
 local s,id=GetID()

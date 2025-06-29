@@ -1,4 +1,4 @@
---
+--竜咬蟲
 --Dragonbite
 --Scripted by Zefile
 local s,id=GetID()

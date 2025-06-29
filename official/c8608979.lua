@@ -1,4 +1,4 @@
---Super Team Buddy Force Unite!
+--一族の結集
 --Super Team Buddy Force Unite!
 local s,id=GetID()
 function s.initial_effect(c)

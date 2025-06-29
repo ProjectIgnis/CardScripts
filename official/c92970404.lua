@@ -1,4 +1,4 @@
---Subterror Behemoth Ultramafus
+--サブテラーマリス・バレスアッシュ
 --Subterror Behemoth Ultramafus
 local s,id=GetID()
 function s.initial_effect(c)

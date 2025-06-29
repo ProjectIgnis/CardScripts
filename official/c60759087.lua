@@ -1,9 +1,9 @@
---Evil★Twin Present
+--Ｅｖｉｌ★Ｔｗｉｎ プレゼント
 --Evil★Twin Present
 --Scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
-	--Switch control
+	--Switch control of 1 "Ki-sikil" monster or 1 "Lil-la" monster you control and 1 face-up monster your opponent controls
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_CONTROL)
@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.conttg)
 	e1:SetOperation(s.contop)
 	c:RegisterEffect(e1)
-	--Shuffle a set Spell/Trap into the Deck
+	--Shuffle 1 Set Spell/Trap into the Deck
 	local e2=e1:Clone()
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TODECK)
@@ -69,7 +69,7 @@ function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) then
 		Duel.SendtoDeck(tc,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	end
 end

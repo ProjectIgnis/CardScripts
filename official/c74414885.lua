@@ -1,4 +1,4 @@
---NEXT
+--ＮＥＸＴ
 --NEXT
 --Scripted by AlphaKretin
 local s,id=GetID()

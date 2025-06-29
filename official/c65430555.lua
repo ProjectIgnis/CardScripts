@@ -1,4 +1,4 @@
---Beetrooper Sting Lancer
+--騎甲虫スティンギー・ランス
 --Beetrooper Sting Lancer
 local s,id=GetID()
 function s.initial_effect(c)
@@ -12,11 +12,11 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetHintTiming(0,TIMING_MAIN_END)
 	e1:SetCountLimit(1,id)
-	e1:SetCondition(s.spcon)
+	e1:SetCondition(function() return Duel.IsMainPhase() end)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--Add 1 "Beetrooper" S/T from Deck
+	--Add 1 "Beetrooper" Spell/Trap from Deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -32,28 +32,27 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={SET_BEETROOPER}
-function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsMainPhase()
+function s.insectfilter(c,tp)
+	return c:IsRace(RACE_INSECT) and c:IsControler(tp)
 end
-function s.insectfilter(c)
-	return c:IsMonster() and c:IsRace(RACE_INSECT) and c:IsAbleToDeck()
+function s.tdfilter(c,e)
+	return c:IsMonster() and c:IsAbleToDeck() and c:IsCanBeEffectTarget(e)
 end
-function s.tgfilter(c)
-	return c:IsMonster() and c:IsAbleToDeck()
+function s.rescon(sg,e,tp,mg)
+	return sg:IsExists(s.insectfilter,1,nil,tp)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chkc then return false end
+	local g=Duel.GetMatchingGroup(s.tdfilter,tp,LOCATION_GRAVE,LOCATION_GRAVE,nil,e)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and Duel.IsExistingTarget(s.tgfilter,tp,0,LOCATION_GRAVE,1,nil)
-		and Duel.IsExistingTarget(s.insectfilter,tp,LOCATION_GRAVE,0,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local g1=Duel.SelectTarget(tp,s.insectfilter,tp,LOCATION_GRAVE,0,1,1,nil)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local g2=Duel.SelectTarget(tp,s.tgfilter,tp,0,LOCATION_GRAVE,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,g1+g2,2,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
+		and #g>=2 and g:IsExists(Card.IsControler,1,nil,1-tp)
+		and g:IsExists(s.insectfilter,1,nil,tp) end
+	local sg=aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,1,HINTMSG_TODECK)
+	Duel.SetTargetCard(sg)
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,sg,#sg,PLAYER_ALL,0)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,tp,0)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

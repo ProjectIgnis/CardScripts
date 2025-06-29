@@ -1,4 +1,4 @@
---Japanese name
+--バタフライ・フィッシュ
 --Butterfly Fish
 --scripted by pyrQ
 local s,id=GetID()

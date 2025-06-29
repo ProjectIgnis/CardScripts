@@ -1,4 +1,4 @@
---Japanese name
+--ミミグル・フォーク
 --Mimighoul Fork
 --scripted by Naim
 local s,id=GetID()

@@ -1,4 +1,4 @@
---Japanese name
+--超人伝－マントマン
 --Mantman the Ultrahuman
 --scripted by pyrQ
 local s,id=GetID()

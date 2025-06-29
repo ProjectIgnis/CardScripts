@@ -1,4 +1,4 @@
---Reinforcement of the Army's Troops
+--増援部隊
 --Reinforcement of the Army's Troops
 local s,id=GetID()
 function s.initial_effect(c)

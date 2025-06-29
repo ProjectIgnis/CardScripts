@@ -1,4 +1,4 @@
---
+--最果てのゴーティス
 --Ghoti of the Deep Beyond
 --scripted by Naim
 local s,id=GetID()

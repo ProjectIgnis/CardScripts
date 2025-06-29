@@ -1,4 +1,4 @@
---Japanese name
+--ミミグル・ダンジョン
 --Mimighoul Dungeon
 --Scripted by Hatter
 local s,id=GetID()

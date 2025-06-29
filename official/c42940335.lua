@@ -1,4 +1,4 @@
---Japanese name
+--ミミグル・スローン
 --Mimighoul Throne
 --Scripted by the Razgriz
 local s,id=GetID()

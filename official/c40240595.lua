@@ -1,9 +1,9 @@
---Cocoon of Evolution
+--進化の繭
 --Cocoon of Evolution
 --fixed by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
-	--equip
+	--Equip this card to 1 "Petit Moth" you control
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -31,7 +31,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.checkop2)
 	c:RegisterEffect(e3)
 end
-s.listed_names={58192742,id}
+s.listed_names={58192742,id} --"Petit Moth"
 function s.checkcon(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetHandler():GetCardTarget()
 	return Duel.IsTurnPlayer(tp) and g and g:IsExists(Card.IsCode,1,nil,58192742)

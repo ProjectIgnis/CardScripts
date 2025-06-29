@@ -1,4 +1,4 @@
---Japanese name
+--ミミグル・マスター
 --Mimighoul Master
 --Scripted by Hatter
 local s,id=GetID()

@@ -1,4 +1,4 @@
---War Rock Ordeal
+--ウォークライ・オーディール
 --War Rock Ordeal
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,4 +1,4 @@
---Japanese name
+--同姓同名同盟罷業
 --The League of Uniform Nomenclature Strikes
 --scripted by Naim
 local s,id=GetID()

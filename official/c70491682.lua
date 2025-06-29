@@ -1,4 +1,4 @@
---Vendread Anima
+--ヴェンデット・アニマ
 --Vendread Anima
 local s,id=GetID()
 function s.initial_effect(c)

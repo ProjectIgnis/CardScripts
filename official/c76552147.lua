@@ -1,4 +1,4 @@
---D.D.D. - Different Dimension Derby
+--Ｄ・Ｄ・Ｄ
 --D.D.D. - Different Dimension Derby
 local s,id=GetID()
 function s.initial_effect(c)

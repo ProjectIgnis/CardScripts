@@ -1,4 +1,4 @@
---Japanese name
+--ミミグル・メーカー
 --Mimighoul Maker
 --Scripted by Hatter
 local s,id=GetID()

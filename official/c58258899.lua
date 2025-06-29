@@ -1,4 +1,4 @@
---TGX300
+--ＴＧＸ３００
 --TGX300
 local s,id=GetID()
 function s.initial_effect(c)
@@ -7,7 +7,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--atk up
+	--Face-up monsters you control gain 300 ATK for each "T.G." monster you control
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)

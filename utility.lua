@@ -1031,7 +1031,7 @@ Card.RegisterEffect=(function()
 	end
 end)()
 
-function Card.GetEffectsWithRegisterFlag(c,code)
+function Card.GetMarkedEffects(c,code)
 	local effs={}
 	for _,flag_eff in ipairs({c:GetOwnEffects()}) do
 		if flag_eff:GetCode()==code and flag_eff:IsHasType(EFFECT_TYPE_SINGLE) then

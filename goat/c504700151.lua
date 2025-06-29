@@ -16,11 +16,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	local e2=e1:Clone()
 	e2:SetCode(EVENT_BATTLED)
-	e2:SetCondition(s.atkcon)
+	e2:SetCondition(s.atkcon2)
 	c:RegisterEffect(e2)
 end
 function s.cfilter(c,tp)
-	return not c:IsBattleDestroyed() and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE)
+	return not c:IsReason(REASON_BATTLE) and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE)
 		and c:IsPreviousPosition(POS_FACEUP) and (c:GetPreviousRaceOnField()&RACE_WINGEDBEAST)~=0
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)

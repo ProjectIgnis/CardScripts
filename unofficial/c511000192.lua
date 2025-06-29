@@ -41,7 +41,7 @@ function s.initial_effect(c)
 	e4:SetCountLimit(1)
 	e4:SetCost(s.cost)
 	e4:SetOperation(s.op2)
-	c:RegisterEffect(e4,false,REGISTER_FLAG_DETACH_XMAT)
+	c:RegisterEffect(e4,false,EFFECT_MARKER_DETACH_XMAT)
 	--Prevent Effect damage
 	local e5=Effect.CreateEffect(c)
 	e5:SetDescription(aux.Stringid(20450925,0))
@@ -51,7 +51,7 @@ function s.initial_effect(c)
 	e5:SetCountLimit(1)
 	e5:SetCost(s.cost)
 	e5:SetOperation(s.op3)
-	c:RegisterEffect(e5,false,REGISTER_FLAG_DETACH_XMAT)
+	c:RegisterEffect(e5,false,EFFECT_MARKER_DETACH_XMAT)
 end
 s.xyz_number=0
 function s.xyzfilter(c,xyz,sumtype,tp)

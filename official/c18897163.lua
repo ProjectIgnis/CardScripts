@@ -45,7 +45,7 @@ function s.initial_effect(c)
 	e4:SetCost(Cost.Detach(1))
 	e4:SetTarget(s.destg)
 	e4:SetOperation(s.desop)
-	c:RegisterEffect(e4,false,REGISTER_FLAG_DETACH_XMAT)
+	c:RegisterEffect(e4,false,EFFECT_MARKER_DETACH_XMAT)
 	--move to the pendulum zone
 	local e5=Effect.CreateEffect(c)
 	e5:SetDescription(aux.Stringid(id,3))

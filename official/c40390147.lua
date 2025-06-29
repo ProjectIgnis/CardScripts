@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1)
 	e1:SetCost(s.sptg)
 	e1:SetOperation(s.spop)
-	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
+	c:RegisterEffect(e1,false,EFFECT_MARKER_DETACH_XMAT)
 end
 s.listed_series={SET_PHOTON}
 s.listed_names={CARD_GALAXYEYES_P_DRAGON}

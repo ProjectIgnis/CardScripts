@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	e3:SetCondition(function(e) return not e:GetHandler():IsBaseAttack(1500) end)
 	e3:SetCost(Cost.Detach(1,1))
 	e3:SetOperation(s.atkop)
-	c:RegisterEffect(e3,false,REGISTER_FLAG_DETACH_XMAT)
+	c:RegisterEffect(e3,false,EFFECT_MARKER_DETACH_XMAT)
 end
 s.listed_names={63767246} --"Number 38: Hope Harbinger Dragon Titanic Galaxy"
 s.xyz_number=38

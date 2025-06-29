@@ -1,222 +1,90 @@
 --魂のペンデュラム
 --Soul Pendulum
---scripted started by andré
-local COUNTER_SOUL_PENDULUM=0x200
+--scripted by andré
 local s,id=GetID()
+local COUNTER_SOUL_PENDULUM=0x200
 function s.initial_effect(c)
 	c:EnableCounterPermit(COUNTER_SOUL_PENDULUM)
 	--Activate
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_ACTIVATE)
+	e0:SetCode(EVENT_FREE_CHAIN)
+	c:RegisterEffect(e0)
+	--Change the Pendulum Scale of each card in your Pendulum Zones by 1 (min. 1)
 	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetType(EFFECT_TYPE_IGNITION)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e1:SetRange(LOCATION_SZONE)
+	e1:SetCountLimit(1,id)
+	e1:SetTarget(s.pendscaletg)
+	e1:SetOperation(s.pendscaleop)
 	c:RegisterEffect(e1)
-	--Change each Pendulum Scale by 1
+	--Each time your Pendulum Monster(s) is Pendulum Summoned, place 1 counter on this card
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,0))
-	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e2:SetType(EFFECT_TYPE_IGNITION)
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e2:SetRange(LOCATION_SZONE)
-	e2:SetTarget(s.cpstarget)
-	e2:SetOperation(s.cpsoperation)
-	e2:SetCountLimit(1,id)
+	e2:SetCondition(s.countercon)
+	e2:SetOperation(function(e) e:GetHandler():AddCounter(COUNTER_SOUL_PENDULUM,1) end)
 	c:RegisterEffect(e2)
-	--Place 1 counter on this card
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e3:SetRange(LOCATION_SZONE)
-	e3:SetCondition(s.acotccondition)
-	e3:SetOperation(s.acotcoperation)
-	c:RegisterEffect(e3)
 	--Pendulum Monsters on the field gain 300 ATK for each counter on this card
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_FIELD)
+	e3:SetCode(EFFECT_UPDATE_ATTACK)
+	e3:SetRange(LOCATION_SZONE)
+	e3:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
+	e3:SetTarget(function(e,c) return c:IsType(TYPE_PENDULUM) end)
+	e3:SetValue(function(e,c) return e:GetHandler():GetCounter(COUNTER_SOUL_PENDULUM)*300 end)
+	c:RegisterEffect(e3)
+	--During your Main Phase this turn, you can conduct 1 Pendulum Summon of a monster(s) in addition to your Pendulum Summon
 	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_FIELD)
-	e4:SetCode(EFFECT_UPDATE_ATTACK)
+	e4:SetDescription(aux.Stringid(id,1))
+	e4:SetType(EFFECT_TYPE_IGNITION)
 	e4:SetRange(LOCATION_SZONE)
-	e4:SetTargetRange(LOCATION_ONFIELD,LOCATION_ONFIELD)
-	e4:SetTarget(s.iatarget)
-	e4:SetValue(s.iavalue)
+	e4:SetCondition(function(e,tp) return Pendulum.PlayerCanGainAdditionalPendulumSummon(tp,id) end)
+	e4:SetCost(s.extrapendcost)
+	e4:SetOperation(function(e,tp) Pendulum.GrantAdditionalPendulumSummon(e:GetHandler(),nil,tp,LOCATION_HAND|LOCATION_EXTRA,aux.Stringid(id,2),aux.Stringid(id,3),id) end)
 	c:RegisterEffect(e4)
-	--You can conduct 1 Pendulum Summon of a monster(s) in addition to your Pendulum Summon
-	local e5=Effect.CreateEffect(c)
-	e5:SetDescription(aux.Stringid(id,3))
-	e5:SetType(EFFECT_TYPE_IGNITION)
-	e5:SetRange(LOCATION_SZONE)
-	e5:SetCondition(s.apscondition)
-	e5:SetCost(s.apscost)
-	e5:SetOperation(s.apsoperation)
-	c:RegisterEffect(e5)
 end
-function s.cpstarget(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+function s.pendscaletg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	if chk==0 then return Duel.IsExistingTarget(aux.TRUE,tp,LOCATION_PZONE,0,2,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	Duel.SelectTarget(tp,aux.TRUE,tp,LOCATION_PZONE,0,2,2,nil)
+	if chk==0 then return Duel.IsExistingTarget(nil,tp,LOCATION_PZONE,0,2,nil) end
+	Duel.SetTargetCard(Duel.GetFieldGroup(tp,LOCATION_PZONE,0))
 end
-function s.getscale(c)
-	if c==Duel.GetFieldCard(0,LOCATION_PZONE,0) or c==Duel.GetFieldCard(1,LOCATION_PZONE,0) then
-		return c:GetLeftScale()
-	else
-		return c:GetRightScale()
-	end
-end
-function s.cpsoperation(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) then return end
+function s.pendscaleop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetTargetCards(e)
-	for tc in tg:Iter() do
-		Duel.HintSelection(Group.FromCards(tc))
-		Duel.Hint(HINT_CARD,tp,tc:GetOriginalCode())
-		local scale = s.getscale(tc)
-		local opt = (scale <= 1) and 1 or 2
-		if opt == 2 then
-			opt = Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2))
-		else
-			opt = Duel.SelectOption(tp,aux.Stringid(id,1))
-		end
+	if #tg==0 then return end
+	local c=e:GetHandler()
+	for sc in tg:Iter() do
+		Duel.HintSelection(sc)
+		local b1=true
+		local b2=sc:GetScale()>1
+		local op=Duel.SelectEffect(tp,
+			{b1,aux.Stringid(id,4)},
+			{b2,aux.Stringid(id,5)})
+		local scale=op==1 and 1 or -1
+		--Change each target's Pendulum Scale by 1 (min. 1)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetCode(EFFECT_UPDATE_LSCALE)
-		e1:SetValue((opt==0) and 1 or -1)
+		e1:SetValue(scale)
 		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
-		tc:RegisterEffect(e1)
+		sc:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_UPDATE_RSCALE)
-		tc:RegisterEffect(e2)
+		sc:RegisterEffect(e2)
 	end
 end
-function s.acotcfilter(c,tp)
-	return c:IsType(TYPE_PENDULUM) and c:IsSummonPlayer(tp) and c:IsPendulumSummoned()
+function s.counterconfilter(c,tp)
+	return c:IsType(TYPE_PENDULUM) and c:IsPendulumSummoned() and c:IsSummonPlayer(tp)
 end
-function s.acotccondition(e,tp,eg,ep,ev,re,r,rp)
-	return eg and eg:IsExists(s.acotcfilter,1,nil,tp)
+function s.countercon(e,tp,eg,ep,ev,re,r,rp)
+	return eg:IsExists(s.counterconfilter,1,nil,tp)
 end
-function s.acotcoperation(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	c:AddCounter(COUNTER_SOUL_PENDULUM,1)
-end
-function s.iatarget(e,c)
-	return c:IsMonster() and c:IsType(TYPE_PENDULUM)
-end
-function s.iavalue(e,c)
-	local oc=e:GetHandler()
-	return oc:GetCounter(COUNTER_SOUL_PENDULUM)*300
-end
-function s.apscost(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.extrapendcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsCanRemoveCounter(tp,COUNTER_SOUL_PENDULUM,3,REASON_COST) end
 	c:RemoveCounter(tp,COUNTER_SOUL_PENDULUM,3,REASON_COST)
-end
-function s.apscondition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetFlagEffect(tp,29432356)==0
-end
-function s.apsoperation(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
-	e1:SetCode(EVENT_ADJUST)
-	e1:SetOperation(s.checkop)
-	e1:SetReset(RESET_PHASE|PHASE_END)
-	Duel.RegisterEffect(e1,tp)
-end
-function s.checkop(e,tp)
-	local lpz=Duel.GetFieldCard(tp,LOCATION_PZONE,0)
-	if lpz~=nil and lpz:GetFlagEffect(id)<=0 then
-		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetDescription(aux.Stringid(id,4))
-		e1:SetType(EFFECT_TYPE_FIELD)
-		e1:SetCode(EFFECT_SPSUMMON_PROC_G)
-		e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetRange(LOCATION_PZONE)
-		e1:SetCondition(s.pencon)
-		e1:SetOperation(s.penop)
-		e1:SetValue(SUMMON_TYPE_PENDULUM)
-		e1:SetReset(RESET_PHASE|PHASE_END)
-		lpz:RegisterEffect(e1)
-		lpz:RegisterFlagEffect(id,RESET_PHASE|PHASE_END,0,1)
-	end
-end
-function s.pencon(e,c,og)
-	if c==nil then return true end
-	local tp=c:GetControler()
-	local rpz=Duel.GetFieldCard(tp,LOCATION_PZONE,1)
-	if rpz==nil or c==rpz or Duel.GetFlagEffect(tp,29432356)>0 then return false end
-	local lscale=c:GetLeftScale()
-	local rscale=rpz:GetRightScale()
-	if lscale>rscale then lscale,rscale=rscale,lscale end
-	local loc=0
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then loc=loc|LOCATION_HAND end
-	if Duel.GetLocationCountFromEx(tp)>0 then loc=loc|LOCATION_EXTRA end
-	if loc==0 then return false end
-	local g=nil
-	if og then
-		g=og:Filter(Card.IsLocation,nil,loc)
-	else
-		g=Duel.GetFieldGroup(tp,loc,0)
-	end
-	return g:IsExists(Pendulum.Filter,1,nil,e,tp,lscale,rscale)
-end
-function s.penop(e,tp,eg,ep,ev,re,r,rp,c,sg,og)
-	local rpz=Duel.GetFieldCard(tp,LOCATION_PZONE,1)
-	local lscale=c:GetLeftScale()
-	local rscale=rpz:GetRightScale()
-	if lscale>rscale then lscale,rscale=rscale,lscale end
-	local ft1=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local ft2=Duel.GetLocationCountFromEx(tp)
-	local ft=Duel.GetUsableMZoneCount(tp)
-	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then
-		if ft1>0 then ft1=1 end
-		if ft2>0 then ft2=1 end
-		ft=1
-	end
-	local loc=0
-	if ft1>0 then loc=loc|LOCATION_HAND end
-	if ft2>0 then loc=loc|LOCATION_EXTRA end
-	local tg=nil
-	if og then
-		tg=og:Filter(Card.IsLocation,nil,loc):Filter(Pendulum.Filter,nil,e,tp,lscale,rscale)
-	else
-		tg=Duel.GetMatchingGroup(Pendulum.Filter,tp,loc,0,nil,e,tp,lscale,rscale)
-	end
-	ft1=math.min(ft1,tg:FilterCount(Card.IsLocation,nil,LOCATION_HAND))
-	ft2=math.min(ft2,tg:FilterCount(Card.IsLocation,nil,LOCATION_EXTRA))
-	ft2=math.min(ft2,aux.CheckSummonGate(tp) or ft2)
-	while true do
-		local ct1=tg:FilterCount(Card.IsLocation,nil,LOCATION_HAND)
-		local ct2=tg:FilterCount(Card.IsLocation,nil,LOCATION_EXTRA)
-		local ct=ft
-		if ct1>ft1 then ct=math.min(ct,ft1) end
-		if ct2>ft2 then ct=math.min(ct,ft2) end
-		local loc=0
-		if ft1>0 then loc=loc|LOCATION_HAND end
-		if ft2>0 then loc=loc|LOCATION_EXTRA end
-		local g=tg:Filter(Card.IsLocation,sg,loc)
-		if #g==0 or ft==0 then break end
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local tc=Group.SelectUnselect(g,sg,tp,true,true)
-		if not tc then break end
-		if sg:IsContains(tc) then
-				sg:RemoveCard(tc)
-				if tc:IsLocation(LOCATION_HAND) then
-				ft1=ft1+1
-			else
-				ft2=ft2+1
-			end
-			ft=ft+1
-		else
-			sg:AddCard(tc)
-			if tc:IsLocation(LOCATION_HAND) then
-				ft1=ft1-1
-			else
-				ft2=ft2-1
-			end
-			ft=ft-1
-		end
-	end
-	if #sg>0 then
-		Duel.Hint(HINT_CARD,0,id)
-		Duel.RegisterFlagEffect(tp,29432356,RESET_PHASE|PHASE_END|RESET_SELF_TURN,0,1)
-		Duel.HintSelection(Group.FromCards(c))
-		Duel.HintSelection(Group.FromCards(rpz))
-	end
 end

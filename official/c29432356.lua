@@ -4,76 +4,46 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	Pendulum.AddProcedure(c)
-	--change scale
+	c:AddMustBeSpecialSummoned()
+	--Must be Special Summoned (from your face-up Extra Deck) by Tributing all monsters you control, including at least 3 "Zefra" monsters
+	local e0=Effect.CreateEffect(c)
+	e0:SetDescription(aux.Stringid(id,0))
+	e0:SetType(EFFECT_TYPE_FIELD)
+	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e0:SetCode(EFFECT_SPSUMMON_PROC)
+	e0:SetRange(LOCATION_EXTRA)
+	e0:SetCondition(s.selfspcon)
+	e0:SetOperation(s.selfspop)
+	c:RegisterEffect(e0)
+	--Add 1 "Zefra" Pendulum Monster from your Deck to your Extra Deck, face-up, and if you do, change this card's Pendulum Scale to be the same as that Pendulum Monster's, until the end of this turn
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_PZONE)
-	e1:SetCountLimit(1,{id,1})
-	e1:SetTarget(s.sctg)
-	e1:SetOperation(s.scop)
+	e1:SetCountLimit(1,id)
+	e1:SetTarget(s.textg)
+	e1:SetOperation(s.texop)
 	c:RegisterEffect(e1)
-	--spsummon condition
+	--After you Special Summon this card, you can conduct 1 Pendulum Summon of a "Zefra" monster(s) during your Main Phase this turn, in addition to your Pendulum Summon
 	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e2:SetCode(EFFECT_SPSUMMON_CONDITION)
+	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e2:SetOperation(function(e,tp) Pendulum.GrantAdditionalPendulumSummon(e:GetHandler(),function(c) return c:IsSetCard(SET_ZEFRA) end,tp,LOCATION_HAND|LOCATION_EXTRA,aux.Stringid(id,2),aux.Stringid(id,3),id) end)
 	c:RegisterEffect(e2)
-	--special summon
+	--Special Summon 1 "Zefra" monster from your Deck
 	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_FIELD)
-	e3:SetCode(EFFECT_SPSUMMON_PROC)
-	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e3:SetRange(LOCATION_EXTRA)
-	e3:SetCondition(s.hspcon)
-	e3:SetOperation(s.hspop)
+	e3:SetDescription(aux.Stringid(id,4))
+	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e3:SetType(EFFECT_TYPE_IGNITION)
+	e3:SetRange(LOCATION_MZONE)
+	e3:SetCountLimit(1)
+	e3:SetCost(s.deckspcost)
+	e3:SetTarget(s.decksptg)
+	e3:SetOperation(s.deckspop)
 	c:RegisterEffect(e3)
-	--pendulum
-	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e4:SetOperation(s.penop)
-	c:RegisterEffect(e4)
-	--special summon
-	local e5=Effect.CreateEffect(c)
-	e5:SetDescription(aux.Stringid(id,3))
-	e5:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e5:SetType(EFFECT_TYPE_IGNITION)
-	e5:SetRange(LOCATION_MZONE)
-	e5:SetCountLimit(1)
-	e5:SetCost(s.spcost)
-	e5:SetTarget(s.sptg)
-	e5:SetOperation(s.spop)
-	c:RegisterEffect(e5)
 end
 s.listed_series={SET_ZEFRA}
-function s.scfilter(c,pc)
-	return c:IsType(TYPE_PENDULUM) and c:IsSetCard(SET_ZEFRA) and not c:IsForbidden()
-		and c:GetLeftScale()~=pc:GetLeftScale()
-end
-function s.sctg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.scfilter,tp,LOCATION_DECK,0,1,nil,e:GetHandler()) end
-end
-function s.scop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) then return end
-	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,1))
-	local g=Duel.SelectMatchingCard(tp,s.scfilter,tp,LOCATION_DECK,0,1,1,nil,c)
-	local tc=g:GetFirst()
-	if tc and Duel.SendtoExtraP(tc,tp,REASON_EFFECT)>0 then
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_CHANGE_LSCALE)
-		e1:SetValue(tc:GetLeftScale())
-		e1:SetReset(RESETS_STANDARD_PHASE_END)
-		c:RegisterEffect(e1)
-		local e2=e1:Clone()
-		e2:SetCode(EFFECT_CHANGE_RSCALE)
-		e2:SetValue(tc:GetRightScale())
-		c:RegisterEffect(e2)
-	end
-end
-function s.hspcon(e,c)
+function s.selfspcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	local g=Duel.GetFieldGroup(tp,LOCATION_MZONE,0)
@@ -81,201 +51,50 @@ function s.hspcon(e,c)
 	return (#g>0 or #rg>0) and g:FilterCount(Card.IsReleasable,nil)==#g
 		and g:FilterCount(Card.IsSetCard,nil,SET_ZEFRA)>=3
 end
-function s.hspop(e,tp,eg,ep,ev,re,r,rp,c)
-	local g=Duel.GetReleaseGroup(tp)
+function s.selfspop(e,tp,eg,ep,ev,re,r,rp,c)
+	local rg=Duel.GetReleaseGroup(tp)
+	Duel.Release(rg,REASON_COST)
+end
+function s.texfilter(c,scale)
+	return c:IsSetCard(SET_ZEFRA) and c:IsType(TYPE_PENDULUM) and not c:IsScale(scale)
+end
+function s.textg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.texfilter,tp,LOCATION_DECK,0,1,nil,e:GetHandler():GetScale()) end
+end
+function s.texop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,5))
+	local sc=Duel.SelectMatchingCard(tp,s.texfilter,tp,LOCATION_DECK,0,1,1,nil,c:GetScale()):GetFirst()
+	if sc and Duel.SendtoExtraP(sc,tp,REASON_EFFECT)>0 and sc:IsLocation(LOCATION_EXTRA) then
+		--Change this card's Pendulum Scale to be the same as that Pendulum Monster's, until the end of this turn
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_CHANGE_LSCALE)
+		e1:SetValue(sc:GetLeftScale())
+		e1:SetReset(RESETS_STANDARD_DISABLE_PHASE_END)
+		c:RegisterEffect(e1)
+		local e2=e1:Clone()
+		e2:SetCode(EFFECT_CHANGE_RSCALE)
+		e2:SetValue(sc:GetRightScale())
+		c:RegisterEffect(e2)
+	end
+end
+function s.deckspcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,nil,1,false,aux.ReleaseCheckMMZ,nil) end
+	local g=Duel.SelectReleaseGroupCost(tp,nil,1,1,false,aux.ReleaseCheckMMZ,nil)
 	Duel.Release(g,REASON_COST)
 end
-function s.penop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
-	e1:SetCode(EVENT_ADJUST)
-	e1:SetOperation(s.checkop)
-	e1:SetReset(RESET_PHASE|PHASE_END)
-	Duel.RegisterEffect(e1,tp)
-	s.checkop(e,tp)
-end
-function s.checkop(e,tp)
-	local lpz=Duel.GetFieldCard(tp,LOCATION_PZONE,0)
-	if lpz~=nil and lpz:GetFlagEffect(id)<=0 then
-		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetDescription(aux.Stringid(id,2))
-		e1:SetType(EFFECT_TYPE_FIELD)
-		e1:SetCode(EFFECT_SPSUMMON_PROC_G)
-		e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetRange(LOCATION_PZONE)
-		e1:SetCondition(s.pencon1)
-		e1:SetOperation(s.penop1)
-		e1:SetValue(SUMMON_TYPE_PENDULUM)
-		e1:SetReset(RESET_PHASE|PHASE_END)
-		lpz:RegisterEffect(e1)
-		lpz:RegisterFlagEffect(id,RESET_PHASE|PHASE_END,0,1)
-	end
-	local olpz=Duel.GetFieldCard(1-tp,LOCATION_PZONE,0)
-	local orpz=Duel.GetFieldCard(1-tp,LOCATION_PZONE,1)
-	if olpz~=nil and orpz~=nil and olpz:GetFlagEffect(id)<=0
-		and olpz:GetFlagEffectLabel(31531170)==orpz:GetFieldID()
-		and orpz:GetFlagEffectLabel(31531170)==olpz:GetFieldID() then
-		local e2=Effect.CreateEffect(e:GetHandler())
-		e2:SetDescription(aux.Stringid(id,2))
-		e2:SetType(EFFECT_TYPE_FIELD)
-		e2:SetCode(EFFECT_SPSUMMON_PROC_G)
-		e2:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_BOTH_SIDE)
-		e2:SetRange(LOCATION_PZONE)
-		e2:SetCondition(s.pencon2)
-		e2:SetOperation(s.penop2)
-		e2:SetValue(SUMMON_TYPE_PENDULUM)
-		e2:SetReset(RESETS_STANDARD_PHASE_END)
-		olpz:RegisterEffect(e2)
-		olpz:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
-	end
-end
-function s.penfilter(c,e,tp,lscale,rscale)
-	return c:IsSetCard(SET_ZEFRA) and Pendulum.Filter(c,e,tp,lscale,rscale)
-end
-function s.pencon1(e,c,og)
-	if c==nil then return true end
-	local tp=c:GetControler()
-	local rpz=Duel.GetFieldCard(tp,LOCATION_PZONE,1)
-	if rpz==nil or c==rpz or Duel.GetFlagEffect(tp,id)>0 then return false end
-	local lscale=c:GetLeftScale()
-	local rscale=rpz:GetRightScale()
-	if lscale>rscale then lscale,rscale=rscale,lscale end
-	local loc=0
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then loc=loc|LOCATION_HAND end
-	if Duel.GetLocationCountFromEx(tp)>0 then loc=loc|LOCATION_EXTRA end
-	if loc==0 then return false end
-	local g=nil
-	if og then
-		g=og:Filter(Card.IsLocation,nil,loc)
-	else
-		g=Duel.GetFieldGroup(tp,loc,0)
-	end
-	return g:IsExists(s.penfilter,1,nil,e,tp,lscale,rscale)
-end
-function s.penop1(e,tp,eg,ep,ev,re,r,rp,c,sg,inchain)
-	local rpz=Duel.GetFieldCard(tp,LOCATION_PZONE,1)
-	local lscale=c:GetLeftScale()
-	local rscale=rpz:GetRightScale()
-	if lscale>rscale then lscale,rscale=rscale,lscale end
-	local ft1=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local ft2=Duel.GetLocationCountFromEx(tp)
-	local ft=Duel.GetUsableMZoneCount(tp)
-	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then
-		if ft1>0 then ft1=1 end
-		if ft2>0 then ft2=1 end
-		ft=1
-	end
-	local loc=0
-	if ft1>0 then loc=loc|LOCATION_HAND end
-	if ft2>0 then loc=loc|LOCATION_EXTRA end
-	local tg=nil
-	if og then
-		tg=og:Filter(Card.IsLocation,nil,loc):Filter(s.penfilter,nil,e,tp,lscale,rscale)
-	else
-		tg=Duel.GetMatchingGroup(s.penfilter,tp,loc,0,nil,e,tp,lscale,rscale)
-	end
-	ft1=math.min(ft1,tg:FilterCount(Card.IsLocation,nil,LOCATION_HAND))
-	ft2=math.min(ft2,tg:FilterCount(Card.IsLocation,nil,LOCATION_EXTRA))
-	ft2=math.min(ft2,aux.CheckSummonGate(tp) or ft2)
-	while true do
-		local ct1=tg:FilterCount(Card.IsLocation,nil,LOCATION_HAND)
-		local ct2=tg:FilterCount(Card.IsLocation,nil,LOCATION_EXTRA)
-		local ct=ft
-		if ct1>ft1 then ct=math.min(ct,ft1) end
-		if ct2>ft2 then ct=math.min(ct,ft2) end
-		local loc=0
-		if ft1>0 then loc=loc|LOCATION_HAND end
-		if ft2>0 then loc=loc|LOCATION_EXTRA end
-		local g=tg:Filter(Card.IsLocation,sg,loc)
-		if #g==0 or ft==0 then break end
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local tc=Group.SelectUnselect(g,sg,tp,#sg>0,Duel.IsSummonCancelable())
-		if not tc then break end
-		if sg:IsContains(tc) then
-				sg:RemoveCard(tc)
-				if tc:IsLocation(LOCATION_HAND) then
-				ft1=ft1+1
-			else
-				ft2=ft2+1
-			end
-			ft=ft+1
-		else
-			sg:AddCard(tc)
-			if tc:IsLocation(LOCATION_HAND) then
-				ft1=ft1-1
-			else
-				ft2=ft2-1
-			end
-			ft=ft-1
-		end
-	end
-	if #sg>0 then
-	Duel.Hint(HINT_CARD,0,id)
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END|RESET_SELF_TURN,0,1)
-	Duel.HintSelection(Group.FromCards(c))
-	Duel.HintSelection(Group.FromCards(rpz))
-	end
-end
-function s.pencon2(e,c,inchain,re,rp)
-	if c==nil then return true end
-	local tp=e:GetOwnerPlayer()
-	if inchain and tp~=rp then return false end
-	local rpz=Duel.GetFieldCard(1-tp,LOCATION_PZONE,1)
-	if rpz==nil or rpz:GetFieldID()~=c:GetFlagEffectLabel(31531170) or Duel.GetFlagEffect(tp,id)>0 then return false end
-	local lscale=c:GetLeftScale()
-	local rscale=rpz:GetRightScale()
-	if lscale>rscale then lscale,rscale=rscale,lscale end
-	local ft=Duel.GetLocationCountFromEx(tp)
-	if ft<=0 then return false end
-	if og then
-		return og:IsExists(s.penfilter,1,nil,e,tp,lscale,rscale)
-	else
-		return Duel.IsExistingMatchingCard(s.penfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,lscale,rscale)
-	end
-end
-function s.penop2(e,tp,eg,ep,ev,re,r,rp,c,sg,inchain)
-	local tp=e:GetOwnerPlayer()
-	local rpz=Duel.GetFieldCard(1-tp,LOCATION_PZONE,1)
-	local lscale=c:GetLeftScale()
-	local rscale=rpz:GetRightScale()
-	if lscale>rscale then lscale,rscale=rscale,lscale end
-	local ft=Duel.GetLocationCountFromEx(tp)
-	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
-	ft=math.min(ft,aux.CheckSummonGate(tp) or ft)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.penfilter,tp,LOCATION_EXTRA,0,inchain and 1 or 0,ft,nil,e,tp,lscale,rscale)
-	if g then
-		sg:Merge(g)
-	end
-	if #sg>0 then
-		Duel.Hint(HINT_CARD,0,31531170)
-		Duel.Hint(HINT_CARD,0,id)
-		Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END|RESET_SELF_TURN,0,1)
-		Duel.HintSelection(Group.FromCards(c))
-		Duel.HintSelection(Group.FromCards(rpz))
-	end
-end
-function s.spcfilter(c,ft,tp)
-	return ft>0 or (c:IsControler(tp) and c:GetSequence()<5)
-end
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	if chk==0 then return ft>-1 and Duel.CheckReleaseGroupCost(tp,s.spcfilter,1,false,nil,nil,ft,tp) end
-	local sg=Duel.SelectReleaseGroupCost(tp,s.spcfilter,1,1,false,nil,nil,ft,tp)
-	Duel.Release(sg,REASON_COST)
-end
-function s.spfilter(c,e,tp)
+function s.deckspfilter(c,e,tp)
 	return c:IsSetCard(SET_ZEFRA) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
-function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp) end
+function s.decksptg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.deckspfilter,tp,LOCATION_DECK,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
-function s.spop(e,tp,eg,ep,ev,re,r,rp)
+function s.deckspop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
+	local g=Duel.SelectMatchingCard(tp,s.deckspfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 	if #g>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end

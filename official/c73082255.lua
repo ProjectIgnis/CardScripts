@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	e3:SetCost(Cost.Detach(1,1,nil))
 	e3:SetTarget(s.gytg)
 	e3:SetOperation(s.gyop)
-	c:RegisterEffect(e3,false,REGISTER_FLAG_DETACH_XMAT)
+	c:RegisterEffect(e3,false,EFFECT_MARKER_DETACH_XMAT)
 end
 function s.lvtg(e,c)
 	return c:IsLevelAbove(1) and c:GetOwner()~=e:GetHandlerPlayer()

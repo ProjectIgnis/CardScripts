@@ -24,7 +24,7 @@ function s.filter1(c,tp)
 	return c:IsSummonPlayer(1-tp) and c:IsLocation(LOCATION_MZONE)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.filter1,1,nil,tp) and Duel.IsTurnPlayer(1-tp) and Duel.GetFlagEffect(ep,id)==0
+	return eg:IsExists(s.filter1,1,nil,tp) and Duel.IsTurnPlayer(1-tp) and Duel.GetFlagEffect(1-tp,id)==0
 end
 function s.condition2(e,tp,eg,ep,ev,re,r,rp)
 	return ep==1-tp and Duel.IsTurnPlayer(1-tp) and Duel.GetFlagEffect(ep,id)==0
@@ -41,7 +41,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	g=g:AddMaximumCheck()
 	local ct=Duel.SendtoGrave(g,REASON_COST)
 	if ct>0 then
-		Duel.RegisterFlagEffect(ep,id,RESET_PHASE|PHASE_END,0,1)
+		Duel.RegisterFlagEffect(1-tp,id,RESET_PHASE|PHASE_END,0,1)
 		--can attack once
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetDescription(aux.Stringid(id,2))

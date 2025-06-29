@@ -32,7 +32,7 @@ function s.initial_effect(c)
 	e3:SetCondition(s.atkcon)
 	e3:SetCost(s.atkcost)
 	e3:SetOperation(s.atkop)
-	c:RegisterEffect(e3,false,REGISTER_FLAG_DETACH_XMAT)
+	c:RegisterEffect(e3,false,EFFECT_MARKER_DETACH_XMAT)
 end
 s.listed_series={SET_UTOPIA}
 s.xyz_number=39

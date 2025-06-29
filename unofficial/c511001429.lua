@@ -43,13 +43,13 @@ function s.initial_effect(c)
 	e5:SetType(EFFECT_TYPE_SINGLE)
 	e5:SetCode(EFFECT_RANKUP_EFFECT)
 	e5:SetLabelObject(e2)
-	c:RegisterEffect(e5,false,REGISTER_FLAG_DETACH_XMAT)
+	c:RegisterEffect(e5,false,EFFECT_MARKER_DETACH_XMAT)
 	local e6=e5:Clone()
 	e6:SetLabelObject(e3)
-	c:RegisterEffect(e6,false,REGISTER_FLAG_DETACH_XMAT)
+	c:RegisterEffect(e6,false,EFFECT_MARKER_DETACH_XMAT)
 	local e7=e5:Clone()
 	e7:SetLabelObject(e4)
-	c:RegisterEffect(e7,false,REGISTER_FLAG_DETACH_XMAT)
+	c:RegisterEffect(e7,false,EFFECT_MARKER_DETACH_XMAT)
 end
 s.listed_series={SET_NUMBER}
 s.xyz_number=102

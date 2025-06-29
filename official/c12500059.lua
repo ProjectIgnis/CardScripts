@@ -59,7 +59,7 @@ function s.deckspcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(-100)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsReleasable() and c:HasLevel() and Duel.GetCustomActivityCount(id,tp,ACTIVITY_SPSUMMON)==0
-		and Duel.CheckReleaseGroupCost(tp,s.deckspcostfilter,1,false,s.rescon,nil,e,c) end
+		and Duel.CheckReleaseGroupCost(tp,s.deckspcostfilter,1,99,false,s.rescon,nil,e,c) end
 	local g=Duel.SelectReleaseGroupCost(tp,s.deckspcostfilter,1,99,false,s.rescon,nil,e,c)
 	g:AddCard(c)
 	e:SetLabel(g:GetSum(Card.GetLevel))

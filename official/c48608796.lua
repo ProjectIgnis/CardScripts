@@ -34,7 +34,7 @@ function s.initial_effect(c)
 	e4:SetCountLimit(1)
 	e4:SetCost(Cost.Detach(1))
 	e4:SetOperation(s.indop)
-	c:RegisterEffect(e4,false,REGISTER_FLAG_DETACH_XMAT)
+	c:RegisterEffect(e4,false,EFFECT_MARKER_DETACH_XMAT)
 end
 s.listed_series={SET_LYRILUSC}
 function s.atkval(e,c)

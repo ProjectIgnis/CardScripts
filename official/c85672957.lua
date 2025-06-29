@@ -40,6 +40,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.setop)
 	c:RegisterEffect(e3)
 end
+s.listed_names={21143940} --"Mask Change"
 s.listed_series={SET_MASKED_HERO,SET_CHANGE}
 function s.spfilter(c,e,tp)
 	return c:IsAttributeExcept(ATTRIBUTE_FIRE) and c:IsSetCard(SET_MASKED_HERO) and c:IsFaceup() and c:IsCanBeSpecialSummoned(e,0,tp,true,false,POS_FACEUP_DEFENSE)

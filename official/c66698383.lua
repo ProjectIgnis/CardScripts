@@ -33,7 +33,7 @@ function s.cfilter(c,tp)
 	return (c:IsLocation(LOCATION_HAND|LOCATION_GRAVE) or c:IsFaceup())
 		and c:IsType(TYPE_TUNER) and c:IsAbleToRemoveAsCost()
 		and (c:IsLocation(LOCATION_HAND) or aux.SpElimFilter(c,true,true))
-		and Duel.IsExistingTarget(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,Group.FromCards(c,c:GetEquipGroup()))
+		and Duel.IsExistingTarget(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c+c:GetEquipGroup())
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND|LOCATION_ONFIELD|LOCATION_GRAVE,0,1,nil,tp) end

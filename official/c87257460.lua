@@ -36,7 +36,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.sptg)
 	e3:SetOperation(s.spop)
 	e3:SetLabelObject(e1)
-	c:RegisterEffect(e3,false,REGISTER_FLAG_ALLURE_LVUP)
+	c:RegisterEffect(e3,false,EFFECT_MARKER_ALLURE_LVUP)
 end
 s.listed_names={23756165} --"Allure Queen LV5"
 s.LVnum=3

@@ -36,7 +36,7 @@ function s.initial_effect(c)
 	e3:SetCost(s.spcost)
 	e3:SetTarget(s.sptg)
 	e3:SetOperation(s.spop)
-	c:RegisterEffect(e3,false,REGISTER_FLAG_DRAGON_RULER)
+	c:RegisterEffect(e3,false,EFFECT_MARKER_DRAGON_RULER)
 	--Add 1 EARTH Dragon-Type monster from your Deck to your hand
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,3))

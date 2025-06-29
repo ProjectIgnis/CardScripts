@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
 	e1:SetTarget(s.tg)
 	e1:SetOperation(s.op)
-	c:RegisterEffect(e1,false,REGISTER_FLAG_TELLAR)
+	c:RegisterEffect(e1,false,EFFECT_MARKER_TELLAR)
 end
 s.listed_series={SET_CONSTELLAR}
 function s.filter(c)

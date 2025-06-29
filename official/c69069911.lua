@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.atcon)
 	e1:SetCost(Cost.Detach(1))
 	e1:SetOperation(s.atop)
-	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
+	c:RegisterEffect(e1,false,EFFECT_MARKER_DETACH_XMAT)
 end
 function s.atcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

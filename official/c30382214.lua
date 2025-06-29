@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.spcon)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
-	c:RegisterEffect(e1,false,REGISTER_FLAG_CARDIAN)
+	c:RegisterEffect(e1,false,EFFECT_MARKER_CARDIAN)
 	--Draw 1 and search or Special Summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))

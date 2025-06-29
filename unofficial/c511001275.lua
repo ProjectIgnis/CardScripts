@@ -34,7 +34,7 @@ function s.initial_effect(c)
 	e3:SetCondition(s.con)
 	e3:SetCost(s.cost)
 	e3:SetOperation(s.op)
-	c:RegisterEffect(e3,false,REGISTER_FLAG_DETACH_XMAT)
+	c:RegisterEffect(e3,false,EFFECT_MARKER_DETACH_XMAT)
 	--gain atk
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,3))

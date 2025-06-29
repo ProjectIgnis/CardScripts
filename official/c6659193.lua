@@ -36,7 +36,7 @@ function s.initial_effect(c)
 	e4:SetCondition(s.atkcon)
 	e4:SetCost(Cost.Detach(1,1,nil))
 	e4:SetOperation(s.atkop)
-	c:RegisterEffect(e4,false,REGISTER_FLAG_DETACH_XMAT)
+	c:RegisterEffect(e4,false,EFFECT_MARKER_DETACH_XMAT)
 end
 s.listed_names={17016362} --"Performage Trapeze Magician"
 function s.reflectcond(e)

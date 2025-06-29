@@ -36,7 +36,7 @@ function s.initial_effect(c)
 	e3:SetCost(s.descost)
 	e3:SetTarget(s.destg)
 	e3:SetOperation(s.desop)
-	c:RegisterEffect(e3,false,REGISTER_FLAG_DRAGON_RULER)
+	c:RegisterEffect(e3,false,EFFECT_MARKER_DRAGON_RULER)
 	--Add 1 FIRE Dragon monster from your Deck to your han
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,3))

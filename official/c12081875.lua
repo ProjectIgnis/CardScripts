@@ -34,10 +34,10 @@ end
 function s.applyfilter(c,e,tp)
 	if not (c:IsSetCard(SET_THUNDER_DRAGON) and c:IsMonster()
 		and (c:IsFaceup() or not c:IsLocation(LOCATION_REMOVED))
-		and c:IsHasEffect(REGISTER_FLAG_THUNDRA) and c:IsCanBeEffectTarget(e) and c:IsAbleToDeck()) then
+		and c:IsHasEffect(EFFECT_MARKER_THUNDRA) and c:IsCanBeEffectTarget(e) and c:IsAbleToDeck()) then
 		return false
 	end
-	for _,eff in ipairs(c:GetMarkedEffects(REGISTER_FLAG_THUNDRA)) do
+	for _,eff in ipairs(c:GetMarkedEffects(EFFECT_MARKER_THUNDRA)) do
 		if s.runfn(eff:GetCondition(),eff,tp,0) and s.runfn(eff:GetTarget(),eff,tp,0) then return true end
 	end
 end
@@ -51,7 +51,7 @@ end
 function s.applyop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not tc:IsRelateToEffect(e) then return end
-	local effs=tc:GetMarkedEffects(REGISTER_FLAG_THUNDRA)
+	local effs=tc:GetMarkedEffects(EFFECT_MARKER_THUNDRA)
 	local options={}
 	for _,eff in ipairs(effs) do
 		local eff_chk=s.runfn(eff:GetCondition(),eff,tp,0) and s.runfn(eff:GetTarget(),eff,tp,0)

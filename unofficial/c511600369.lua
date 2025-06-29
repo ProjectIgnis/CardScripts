@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetCost(s.atcost)
 	e1:SetTarget(s.attg)
 	e1:SetOperation(s.atop)
-	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
+	c:RegisterEffect(e1,false,EFFECT_MARKER_DETACH_XMAT)
 	--change target
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))

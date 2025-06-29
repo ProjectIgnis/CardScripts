@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetCost(s.cost1)
 	e1:SetTarget(s.target1)
 	e1:SetOperation(s.operation1)
-	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
+	c:RegisterEffect(e1,false,EFFECT_MARKER_DETACH_XMAT)
 	--destroy2
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e2:SetCost(s.cost2)
 	e2:SetTarget(s.target2)
 	e2:SetOperation(s.operation2)
-	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
+	c:RegisterEffect(e2,false,EFFECT_MARKER_DETACH_XMAT)
 end
 s.xyz_number=91
 function s.cost1(e,tp,eg,ep,ev,re,r,rp,chk)

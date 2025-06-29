@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetCost(s.thcost)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
-	c:RegisterEffect(e1,false,REGISTER_FLAG_DRAGON_RULER)
+	c:RegisterEffect(e1,false,EFFECT_MARKER_DRAGON_RULER)
 	--Special Summon 1 "Chasmatis, Dragon Ruler of Auroras" from your GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))

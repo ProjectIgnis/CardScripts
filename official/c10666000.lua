@@ -41,7 +41,7 @@ function s.initial_effect(c)
 	e3:SetCost(Cost.Detach(1,1,nil))
 	e3:SetTarget(s.destg)
 	e3:SetOperation(s.desop)
-	c:RegisterEffect(e3,false,REGISTER_FLAG_DETACH_XMAT)
+	c:RegisterEffect(e3,false,EFFECT_MARKER_DETACH_XMAT)
 end
 s.xyz_number=1
 function s.mattg(e,tp,eg,ep,ev,re,r,rp,chk)

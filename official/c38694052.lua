@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	e1:SetCost(Cost.AND(Cost.Detach(2),s.descost))
 	e1:SetTarget(s.destg)
 	e1:SetOperation(s.desop)
-	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
+	c:RegisterEffect(e1,false,EFFECT_MARKER_DETACH_XMAT)
 	--This is a Quick Effect if this card has a Dragon monster as material
 	local e2=e1:Clone()
 	e2:SetType(EFFECT_TYPE_QUICK_O)

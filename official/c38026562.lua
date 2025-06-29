@@ -47,7 +47,7 @@ function s.initial_effect(c)
 	e4:SetCost(Cost.Detach(1,1,nil))
 	e4:SetTarget(s.tgtg)
 	e4:SetOperation(s.tgop)
-	c:RegisterEffect(e4,false,REGISTER_FLAG_DETACH_XMAT)
+	c:RegisterEffect(e4,false,EFFECT_MARKER_DETACH_XMAT)
 end
 function s.spfilter(c,e,tp)
 	return c:IsType(TYPE_GEMINI) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

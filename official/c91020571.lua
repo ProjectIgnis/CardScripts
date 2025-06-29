@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetCost(s.spcost)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
-	c:RegisterEffect(e1,false,REGISTER_FLAG_DRAGON_RULER)
+	c:RegisterEffect(e1,false,EFFECT_MARKER_DRAGON_RULER)
 end
 s.listed_names={90411554} --"Redox, Dragon Ruler of Boulders" 
 function s.costfilter(c)

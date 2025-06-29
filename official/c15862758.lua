@@ -51,7 +51,7 @@ function s.initial_effect(c)
 	e7:SetCost(Cost.Detach(1))
 	e7:SetTarget(s.natg)
 	e7:SetOperation(s.naop)
-	c:RegisterEffect(e7,false,REGISTER_FLAG_DETACH_XMAT)
+	c:RegisterEffect(e7,false,EFFECT_MARKER_DETACH_XMAT)
 end
 s.listed_names={89477759}
 s.xyz_number=1000

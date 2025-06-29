@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetCost(s.ctcost)
 	e1:SetTarget(s.cttg)
 	e1:SetOperation(s.ctop)
-	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
+	c:RegisterEffect(e1,false,EFFECT_MARKER_DETACH_XMAT)
 	--destroy & damage
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(75433814,1))

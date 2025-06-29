@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetCost(Cost.SelfDiscard)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
-	c:RegisterEffect(e1,false,REGISTER_FLAG_THUNDRA)
+	c:RegisterEffect(e1,false,EFFECT_MARKER_THUNDRA)
 	--Add to hand when banished or sent to the GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))

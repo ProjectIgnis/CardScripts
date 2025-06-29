@@ -39,7 +39,7 @@ function s.initial_effect(c)
 	e4:SetCost(Cost.Detach(1,1,nil))
 	e4:SetTarget(s.settg)
 	e4:SetOperation(s.setop)
-	c:RegisterEffect(e4,false,REGISTER_FLAG_DETACH_XMAT)
+	c:RegisterEffect(e4,false,EFFECT_MARKER_DETACH_XMAT)
 end
 s.listed_series={SET_ABYSS}
 function s.spfilter(c,e,tp)

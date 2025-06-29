@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	e3:SetCost(s.damcost)
 	e3:SetTarget(s.damtg2)
 	e3:SetOperation(s.damop2)
-	c:RegisterEffect(e3,false,REGISTER_FLAG_DETACH_XMAT)
+	c:RegisterEffect(e3,false,EFFECT_MARKER_DETACH_XMAT)
 	--material
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,2))

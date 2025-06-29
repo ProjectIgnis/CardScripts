@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	e4:SetCondition(s.efcon)
 	e4:SetTarget(s.eftg)
 	e4:SetLabelObject(e3)
-	c:RegisterEffect(e4,false,REGISTER_FLAG_DETACH_XMAT)
+	c:RegisterEffect(e4,false,EFFECT_MARKER_DETACH_XMAT)
 end
 s.listed_series={0x48}
 s.listed_names={86532744}

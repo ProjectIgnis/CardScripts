@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetTarget(s.decktg)
 	e2:SetOperation(s.deckop)
-	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
+	c:RegisterEffect(e2,false,EFFECT_MARKER_DETACH_XMAT)
 end
 s.xyz_number=104
 function s.condition(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -40,7 +40,7 @@ function s.initial_effect(c)
 	e3:SetCost(Cost.Detach(1))
 	e3:SetTarget(s.thtg)
 	e3:SetOperation(s.thop)
-	c:RegisterEffect(e3,false,REGISTER_FLAG_DETACH_XMAT)
+	c:RegisterEffect(e3,false,EFFECT_MARKER_DETACH_XMAT)
 end
 s.listed_series={SET_EXOSISTER}
 function s.valcheck(e,c)

@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetCost(s.effcost)
 	e1:SetTarget(s.efftg)
 	e1:SetOperation(s.effop)
-	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
+	c:RegisterEffect(e1,false,EFFECT_MARKER_DETACH_XMAT)
 end
 function s.effcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

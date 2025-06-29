@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetCost(s.descost)
 	e2:SetTarget(s.destg)
 	e2:SetOperation(s.desop)
-	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
+	c:RegisterEffect(e2,false,EFFECT_MARKER_DETACH_XMAT)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetLP(tp)<=Duel.GetLP(1-tp)-3000 and e:GetHandler():GetSummonType()==SUMMON_TYPE_XYZ

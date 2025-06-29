@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetCost(Cost.Detach(1))
 	e2:SetTarget(s.rettg)
 	e2:SetOperation(s.retop)
-	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
+	c:RegisterEffect(e2,false,EFFECT_MARKER_DETACH_XMAT)
 end
 function s.incon(e)
 	return e:GetHandler():GetOverlayCount()>0

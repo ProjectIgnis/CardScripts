@@ -47,7 +47,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 	local e6=e5:Clone()
 	e6:SetLabelObject(e4)
-	c:RegisterEffect(e6,false,REGISTER_FLAG_DETACH_XMAT)
+	c:RegisterEffect(e6,false,EFFECT_MARKER_DETACH_XMAT)
 	--To Pendulum
 	local e7=Effect.CreateEffect(c)
 	e7:SetDescription(aux.Stringid(id,2))

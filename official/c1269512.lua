@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	e3:SetCondition(s.exatkcon)
 	e3:SetCost(Cost.Detach(1,1,nil))
 	e3:SetOperation(function() Duel.ChainAttack() end)
-	c:RegisterEffect(e3,false,REGISTER_FLAG_DETACH_XMAT)
+	c:RegisterEffect(e3,false,EFFECT_MARKER_DETACH_XMAT)
 end
 s.listes_names={id}
 function s.ovfilter(c,tp,xyzc)

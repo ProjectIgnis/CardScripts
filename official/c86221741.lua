@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCost(Cost.Detach(1,1,nil))
 	e2:SetOperation(s.operation)
-	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
+	c:RegisterEffect(e2,false,EFFECT_MARKER_DETACH_XMAT)
 	--Minus 1000 ATK for opp cards, optionally inflict damage
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)

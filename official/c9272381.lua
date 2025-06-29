@@ -43,7 +43,7 @@ function s.initial_effect(c)
 	e4:SetCost(Cost.Detach(1))
 	e4:SetTarget(s.target)
 	e4:SetOperation(s.operation)
-	c:RegisterEffect(e4,false,REGISTER_FLAG_DETACH_XMAT)
+	c:RegisterEffect(e4,false,EFFECT_MARKER_DETACH_XMAT)
 end
 function s.ovfilter(c,tp,xyzc)
 	return c:IsFaceup() and c:IsSetCard(SET_TELLARKNIGHT,xyzc,SUMMON_TYPE_XYZ,tp) and c:IsType(TYPE_XYZ,xyzc,SUMMON_TYPE_XYZ,tp)

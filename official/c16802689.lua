@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.hspcon)
 	e1:SetTarget(s.hsptg)
 	e1:SetOperation(s.hspop)
-	c:RegisterEffect(e1,false,REGISTER_FLAG_CARDIAN)
+	c:RegisterEffect(e1,false,EFFECT_MARKER_CARDIAN)
 	--draw and special summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))

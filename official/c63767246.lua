@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e2:SetCondition(function(e,tp) return Duel.GetAttacker():IsControler(1-tp) and Duel.GetAttackTarget()~=e:GetHandler() end)
 	e2:SetCost(Cost.Detach(1,1,nil))
 	e2:SetOperation(s.chngtgop)
-	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
+	c:RegisterEffect(e2,false,EFFECT_MARKER_DETACH_XMAT)
 	--Make 1 of your Xyz monsters gain ATK
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))

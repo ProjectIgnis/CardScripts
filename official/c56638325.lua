@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	e3:SetCost(Cost.Detach(1))
 	e3:SetTarget(s.destg)
 	e3:SetOperation(s.desop)
-	c:RegisterEffect(e3,false,REGISTER_FLAG_DETACH_XMAT)
+	c:RegisterEffect(e3,false,EFFECT_MARKER_DETACH_XMAT)
 	--spsummon
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))

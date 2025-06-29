@@ -1007,41 +1007,40 @@ end
 --for additional registers
 Card.RegisterEffect=(function()
 	local oldf=Card.RegisterEffect
-	local function map_to_effect_code(val)
-		if val==1 then return 511002571 end -- access to effects that activate that detach an Xyz Material as cost
-		if val==2 then return 511001692 end -- access to Cardian Summoning conditions/effects
-		if val==4 then return  12081875 end -- access to Thunder Dragon effects that activate by discarding
-		if val==8 then return 511310036 end -- access to Allure Queen effects that activate by sending themselves to GY
-		if val==16 then return 58858807 end -- access to tellarknights/constellar effects that activate when Normal Summoned
-		if val==32 then return 4965193 end -- access to Dragon Ruler effects that activate by discarding
-		return nil
-	end
 	return function(c,e,forced,...)
 		local reg_e=oldf(c,e,forced)
 		if not reg_e or reg_e<=0 then return reg_e end
+		local prop=EFFECT_FLAG_CANNOT_DISABLE|EFFECT_FLAG_IGNORE_IMMUNE|EFFECT_FLAG_SET_AVAILABLE
+		if e:IsHasProperty(EFFECT_FLAG_UNCOPYABLE) then prop=prop|EFFECT_FLAG_UNCOPYABLE end
 		local resetflag,resetcount=e:GetReset()
-		for _,val in ipairs{...} do
-			local code=map_to_effect_code(val)
-			if code then
-				local prop=EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_SET_AVAILABLE
-				if e:IsHasProperty(EFFECT_FLAG_UNCOPYABLE) then prop=prop|EFFECT_FLAG_UNCOPYABLE end
-				local e2=Effect.CreateEffect(c)
-				e2:SetType(EFFECT_TYPE_SINGLE)
-				e2:SetProperty(prop,EFFECT_FLAG2_MAJESTIC_MUST_COPY)
-				e2:SetCode(code)
-				e2:SetLabelObject(e)
-				e2:SetLabel(c:GetOriginalCode())
-				if resetflag and resetcount then
-					e2:SetReset(resetflag,resetcount)
-				elseif resetflag then
-					e2:SetReset(resetflag)
-				end
-				c:RegisterEffect(e2)
+		for _,code in ipairs({...}) do
+			local e2=Effect.CreateEffect(c)
+			e2:SetType(EFFECT_TYPE_SINGLE)
+			e2:SetProperty(prop,EFFECT_FLAG2_MAJESTIC_MUST_COPY)
+			e2:SetCode(code)
+			e2:SetLabelObject(e)
+			e2:SetLabel(c:GetOriginalCode())
+			if resetflag and resetcount then
+				e2:SetReset(resetflag,resetcount)
+			elseif resetflag then
+				e2:SetReset(resetflag)
 			end
+			c:RegisterEffect(e2)
 		end
 		return reg_e
 	end
 end)()
+
+function Card.GetMarkedEffects(c,code)
+	local effs={}
+	for _,flag_eff in ipairs({c:GetOwnEffects()}) do
+		if flag_eff:GetCode()==code and flag_eff:IsHasType(EFFECT_TYPE_SINGLE) then
+			local eff=flag_eff:GetLabelObject()
+			if eff then table.insert(effs,eff) end
+		end
+	end
+	return effs
+end
 
 function Card.ListsCodeAsMaterial(c,...)
 	if not c.material then return false end

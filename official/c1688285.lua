@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetCost(Cost.Detach(1,1))
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
-	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
+	c:RegisterEffect(e2,false,EFFECT_MARKER_DETACH_XMAT)
 	--Attach 1 monster to this card
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))

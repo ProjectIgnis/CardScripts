@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetHintTiming(TIMING_DAMAGE_STEP)
 	e2:SetCost(Cost.Detach(1))
 	e2:SetOperation(s.operation)
-	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
+	c:RegisterEffect(e2,false,EFFECT_MARKER_DETACH_XMAT)
 end
 function s.efilter(e,te)
 	return te:IsMonsterEffect() and te:GetOwner()~=e:GetOwner()

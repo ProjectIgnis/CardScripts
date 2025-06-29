@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetCost(Cost.Detach(1,1,nil))
 	e2:SetTarget(s.tdtg)
 	e2:SetOperation(s.tdop)
-	c:RegisterEffect(e2,false,REGISTER_FLAG_DETACH_XMAT)
+	c:RegisterEffect(e2,false,EFFECT_MARKER_DETACH_XMAT)
 	--ATK gain on battle
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
@@ -34,7 +34,7 @@ function s.initial_effect(c)
 	e3:SetCondition(s.atkcon)
 	e3:SetCost(s.atkcost)
 	e3:SetOperation(s.atkop)
-	c:RegisterEffect(e3,false,REGISTER_FLAG_DETACH_XMAT)
+	c:RegisterEffect(e3,false,EFFECT_MARKER_DETACH_XMAT)
 end
 --ATK gain
 function s.atkval(e,c)

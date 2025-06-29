@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	e1:SetCost(s.cost)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
-	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
+	c:RegisterEffect(e1,false,EFFECT_MARKER_DETACH_XMAT)
 	--pendulum
 	local e7=Effect.CreateEffect(c)
 	e7:SetDescription(aux.Stringid(90036274,0))

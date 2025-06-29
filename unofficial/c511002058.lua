@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetCost(s.adcost)
 	e1:SetTarget(s.adtg)
 	e1:SetOperation(s.adop)
-	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
+	c:RegisterEffect(e1,false,EFFECT_MARKER_DETACH_XMAT)
 	--to defense
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_POSITION)

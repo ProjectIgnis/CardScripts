@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetCost(s.eqcost)
 	e1:SetTarget(s.eqtg)
 	e1:SetOperation(s.eqop)
-	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
+	c:RegisterEffect(e1,false,EFFECT_MARKER_DETACH_XMAT)
 	--direct
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_EQUIP)

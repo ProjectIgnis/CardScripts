@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetCost(s.spcost)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
-	c:RegisterEffect(e1,false,REGISTER_FLAG_CARDIAN)
+	c:RegisterEffect(e1,false,EFFECT_MARKER_CARDIAN)
 end
 function s.filter(c)
     local re=c:GetReasonEffect()

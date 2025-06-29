@@ -39,7 +39,7 @@ function s.initial_effect(c)
 	e4:SetCost(s.atkcost)
 	e4:SetTarget(s.atktg)
 	e4:SetOperation(s.atkop)
-	c:RegisterEffect(e4,false,REGISTER_FLAG_DETACH_XMAT)
+	c:RegisterEffect(e4,false,EFFECT_MARKER_DETACH_XMAT)
 	--To Pendulum
 	local e5=Effect.CreateEffect(c)
 	e5:SetDescription(aux.Stringid(35952884,1))

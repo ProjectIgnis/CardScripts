@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetCost(Cost.Detach(1))
 	e1:SetTarget(s.rettg)
 	e1:SetOperation(s.retop)
-	c:RegisterEffect(e1,false,REGISTER_FLAG_DETACH_XMAT)
+	c:RegisterEffect(e1,false,EFFECT_MARKER_DETACH_XMAT)
 end
 s.listed_series={SET_BUTTERSPY}
 function s.rettg(e,tp,eg,ep,ev,re,r,rp,chk)

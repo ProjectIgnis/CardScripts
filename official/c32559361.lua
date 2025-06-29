@@ -36,7 +36,7 @@ function s.initial_effect(c)
 	e3:SetCost(Cost.Detach(1,s.mxmc,s.slwc))
 	e3:SetTarget(s.damtg2)
 	e3:SetOperation(s.damop2)
-	c:RegisterEffect(e3,false,REGISTER_FLAG_DETACH_XMAT)
+	c:RegisterEffect(e3,false,EFFECT_MARKER_DETACH_XMAT)
 end
 s.xyz_number=9
 s.listed_names={1992816}

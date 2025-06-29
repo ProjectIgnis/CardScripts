@@ -49,7 +49,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and #g>=2 and g:IsExists(Card.IsControler,1,nil,1-tp)
 		and g:IsExists(s.insectfilter,1,nil,tp) end
-	local sg=aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,1,HINTMSG_TODECK)
+	local sg=aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,1,tp,HINTMSG_TODECK)
 	Duel.SetTargetCard(sg)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,sg,#sg,PLAYER_ALL,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,tp,0)

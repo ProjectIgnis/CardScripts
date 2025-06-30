@@ -49,7 +49,7 @@ function s.initial_effect(c)
 	e4:SetCost(Cost.Detach(1))
 	e4:SetTarget(s.sptg2)
 	e4:SetOperation(s.spop2)
-	c:RegisterEffect(e4,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e4)
 end
 s.listed_series={SET_PHOTON}
 s.listed_names={CARD_GALAXYEYES_P_DRAGON}

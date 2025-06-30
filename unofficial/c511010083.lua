@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCost(s.cost)
 	e1:SetOperation(s.operation)
-	c:RegisterEffect(e1,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e1)
 	--battle indestructable
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)

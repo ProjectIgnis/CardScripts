@@ -51,7 +51,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 	local e6=e5:Clone()
 	e6:SetLabelObject(e4)
-	c:RegisterEffect(e6,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e6)
 end
 s.listed_series={SET_NUMBER}
 s.listed_names={84013237}

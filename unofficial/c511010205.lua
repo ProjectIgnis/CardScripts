@@ -40,7 +40,7 @@ function s.initial_effect(c)
 	e4:SetCondition(s.atkcon)
 	e4:SetTarget(s.atktg)
 	e4:SetOperation(s.atkop)
-	c:RegisterEffect(e4,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e4)
 	--halve atk
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)

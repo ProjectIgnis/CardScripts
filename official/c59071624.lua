@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e2:SetCost(Cost.Detach(2))
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
-	c:RegisterEffect(e2,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e2)
 	--If an opponent's monster is in GY/banished due to your effect, special summon
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
@@ -40,10 +40,10 @@ function s.initial_effect(c)
 	e3:SetCondition(s.sscon)
 	e3:SetTarget(s.sstg)
 	e3:SetOperation(s.ssop)
-	c:RegisterEffect(e3,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e3)
 	local e4=e3:Clone()
 	e4:SetCode(EVENT_REMOVE)
-	c:RegisterEffect(e4,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e4)
 end
 	--Part of "Traptrix" archetype
 s.listed_series={SET_TRAPTRIX}

@@ -41,7 +41,7 @@ function s.initial_effect(c)
 	e6:SetCondition(s.actcon)
 	e6:SetCost(Cost.Detach(1))
 	e6:SetOperation(s.actop)
-	c:RegisterEffect(e6,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e6)
 end
 s.listed_series={SET_NUMBER,SET_RANK_UP_MAGIC,SET_UTOPIA}
 s.xyz_number=0

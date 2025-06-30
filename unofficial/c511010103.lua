@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetCost(Cost.Detach(1))
 	e2:SetTarget(s.destg)
 	e2:SetOperation(s.desop)
-	c:RegisterEffect(e2,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e2)
 end
 s.listed_series={SET_NUMBER}
 s.xyz_number=103

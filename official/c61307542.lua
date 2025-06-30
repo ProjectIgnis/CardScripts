@@ -39,7 +39,7 @@ function s.initial_effect(c)
 	e3:SetCost(Cost.Detach(1,1,nil))
 	e3:SetTarget(s.destg)
 	e3:SetOperation(s.desop)
-	c:RegisterEffect(e3,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e3)
 end
 function s.efilter(e,re)
 	return re:IsMonsterEffect() and re:GetOwner()~=e:GetOwner()

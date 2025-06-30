@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e2:SetCost(Cost.Detach(1))
 	e2:SetTarget(s.tgtg)
 	e2:SetOperation(s.tgop)
-	c:RegisterEffect(e2,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e2)
 end
 function s.eqcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsXyzSummoned()

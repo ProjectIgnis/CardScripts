@@ -34,7 +34,7 @@ function s.initial_effect(c)
 	e4:SetCondition(s.atcon)
 	e4:SetCost(Cost.Detach(1))
 	e4:SetOperation(s.atop)
-	c:RegisterEffect(e4,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e4)
 end
 s.listed_series={SET_MIKANKO}
 function s.thfilter(c)

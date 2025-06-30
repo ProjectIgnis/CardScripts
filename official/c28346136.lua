@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetCost(Cost.Detach(2,2,nil))
 	e1:SetTarget(s.cannottgtg)
 	e1:SetOperation(s.cannottgop)
-	c:RegisterEffect(e1,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e1)
 	--Return 1 Rank 9 or lower Dragon Xyz Monster from your GY to the Extra Deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,2))

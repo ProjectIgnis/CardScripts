@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetCost(Cost.Detach(1))
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
-	c:RegisterEffect(e1,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e1)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_CHAIN,function(re,tp,cid) return not re:IsMonsterEffect() end)
 	--Negate an opponent's monster effect activated in the hand or GY
 	local e2=Effect.CreateEffect(c)
@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e2:SetCost(Cost.Detach(1))
 	e2:SetTarget(s.distg)
 	e2:SetOperation(function(e,tp,eg,ep,ev,re,r,rp) Duel.NegateEffect(ev) end)
-	c:RegisterEffect(e2,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e2)
 end
 s.listed_series={SET_K9}
 function s.thfilter(c)

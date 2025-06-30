@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetCost(Cost.Detach(1))
 	e2:SetTarget(s.eftg)
 	e2:SetOperation(s.efop)
-	c:RegisterEffect(e2,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e2)
 end
 s.roll_dice=true
 s.xyz_number=85

@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.atkcon)
 	e1:SetCost(s.atkcost)
 	e1:SetOperation(s.atkop)
-	c:RegisterEffect(e1,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e1)
 	--battle indestructable
 	local e6=Effect.CreateEffect(c)
 	e6:SetType(EFFECT_TYPE_SINGLE)

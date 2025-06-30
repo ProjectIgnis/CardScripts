@@ -36,7 +36,7 @@ function s.initial_effect(c)
 	e3:SetCondition(s.dacon)
 	e3:SetCost(Cost.Detach(1))
 	e3:SetOperation(s.daop)
-	c:RegisterEffect(e3,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e3)
 	--Cannot be destroyed by battle, except by "Number" monsters
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE)

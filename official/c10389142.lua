@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetCost(s.spcost)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
-	c:RegisterEffect(e1,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e1)
 end
 s.listed_names={10389143}
 s.xyz_number=42

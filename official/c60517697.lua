@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetCost(s.thcost)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
-	c:RegisterEffect(e1,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e1)
 	--Special Summon 3 Level 3 or lower Fish, Sea Serpent, and/or Aqua monsters from your hand and/or GY.
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,2))

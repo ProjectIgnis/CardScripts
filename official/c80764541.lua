@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetCost(Cost.Detach(1,1,nil))
 	e1:SetTarget(s.destg)
 	e1:SetOperation(s.desop)
-	c:RegisterEffect(e1,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e1)
 end
 s.xyz_number=44
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

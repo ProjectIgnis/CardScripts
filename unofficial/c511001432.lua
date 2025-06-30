@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetCost(s.damcost)
 	e1:SetTarget(s.damtg)
 	e1:SetOperation(s.damop)
-	c:RegisterEffect(e1,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e1)
 end
 function s.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end

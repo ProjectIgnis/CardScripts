@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetCost(Cost.Detach(1,1,nil))
 	e1:SetTarget(s.efftg)
 	e1:SetOperation(s.effop)
-	c:RegisterEffect(e1,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e1)
 end
 function s.spfilter(c,e,tp)
 	return c:IsNonEffectMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

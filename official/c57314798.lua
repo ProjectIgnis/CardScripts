@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetCost(Cost.Detach(1,1,nil))
 	e1:SetTarget(s.atktg)
 	e1:SetOperation(s.atkop)
-	c:RegisterEffect(e1,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e1)
 	--Destroy as many monsters on the field as possible and each player sets 1 Spell/Trap from the GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))

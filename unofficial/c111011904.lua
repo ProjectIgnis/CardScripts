@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetCost(Cost.Detach(1))
 	e2:SetTarget(s.actg)
 	e2:SetOperation(s.acop)
-	c:RegisterEffect(e2,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e2)
 end
 function s.thfilter(c)
 	return c:IsSpellTrap() and c:IsAbleToHand()

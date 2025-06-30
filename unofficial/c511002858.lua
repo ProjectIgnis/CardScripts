@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e3:SetCost(s.descost)
 	e3:SetTarget(s.destg2)
 	e3:SetOperation(s.desop2)
-	c:RegisterEffect(e3,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e3)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp

@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetCost(Cost.Detach(1,1,nil))
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
-	c:RegisterEffect(e1,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e1)
 	--Return itself to the Extra Deck and Special Summon "Gold Pride - Captain Carrie"
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))

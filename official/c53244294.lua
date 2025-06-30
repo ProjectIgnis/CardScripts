@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetCost(Cost.Detach(1))
 	e2:SetTarget(s.ztg)
 	e2:SetOperation(s.zop)
-	c:RegisterEffect(e2,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e2)
 end
 s.xyz_number=57
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetCost(Cost.Detach(1,1,nil))
 	e2:SetTarget(s.target)
 	e2:SetOperation(s.operation)
-	c:RegisterEffect(e2,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e2)
 end
 function s.cfilter(c,lv)
 	return c:IsRace(RACE_PLANT) and c:IsLevelBelow(lv) and (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and c:IsAbleToGraveAsCost()

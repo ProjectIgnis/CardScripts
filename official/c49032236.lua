@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	e1:SetHintTiming(TIMING_STANDBY_PHASE|TIMING_END_PHASE)
-	c:RegisterEffect(e1,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e1)
 end
 s.xyz_number=81
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

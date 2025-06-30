@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e3:SetCondition(s.atcon)
 	e3:SetCost(s.atcost)
 	e3:SetOperation(s.atop)
-	c:RegisterEffect(e3,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e3)
 	--remove
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,2))

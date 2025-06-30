@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e2:SetCost(Cost.Detach(1))
 	e2:SetTarget(s.postg)
 	e2:SetOperation(s.posop)
-	c:RegisterEffect(e2,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e2)
 end
 s.listed_names={14152862}
 function s.efilter(e,te)

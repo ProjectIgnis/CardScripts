@@ -40,7 +40,7 @@ function s.initial_effect(c)
 	e4:SetCost(Cost.Detach(1,1,nil))
 	e4:SetTarget(s.sptg)
 	e4:SetOperation(s.spop)
-	c:RegisterEffect(e4,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e4)
 end
 s.listed_series={SET_RED_EYES}
 function s.indcon(e)

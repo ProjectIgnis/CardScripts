@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e1:SetCost(Cost.Detach(1,1,nil))
 	e1:SetTarget(s.atktg)
 	e1:SetOperation(s.atkop)
-	c:RegisterEffect(e1,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e1)
 	--Negate monster effect activation and special summon 1 Xyz monster
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e2:SetCost(Cost.Detach(1,1,nil))
 	e2:SetTarget(s.distg)
 	e2:SetOperation(s.disop)
-	c:RegisterEffect(e2,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e2)
 end
 s.listed_names={16195942}
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)

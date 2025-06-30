@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_BATTLE_START)
 	e2:SetCost(s.cost)
 	e2:SetOperation(s.op)
-	c:RegisterEffect(e2,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e2)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end

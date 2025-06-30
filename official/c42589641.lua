@@ -40,7 +40,7 @@ function s.initial_effect(c)
 	e4:SetCost(Cost.Detach(1))
 	e4:SetTarget(s.hdtg)
 	e4:SetOperation(s.hdop)
-	c:RegisterEffect(e4,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e4)
 	--spsummon
 	local e5=Effect.CreateEffect(c)
 	e5:SetDescription(aux.Stringid(id,2))

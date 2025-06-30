@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e1:SetCost(s.negcost)
 	e1:SetTarget(s.negtg)
 	e1:SetOperation(s.negop)
-	c:RegisterEffect(e1,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e1)
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)

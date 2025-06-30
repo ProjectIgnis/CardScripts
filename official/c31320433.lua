@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e2:SetCost(Cost.Detach(1,1,nil))
 	e2:SetTarget(s.datg)
 	e2:SetOperation(s.daop)
-	c:RegisterEffect(e2,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e2)
 end
 s.xyz_number=47
 function s.matfilter(c)

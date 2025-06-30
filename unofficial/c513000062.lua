@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetCost(s.rmcost)
 	e2:SetTarget(s.rmtg)
 	e2:SetOperation(s.rmop)
-	c:RegisterEffect(e2,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e2)
 	--battle indestructable
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)

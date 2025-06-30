@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e2:SetCost(Cost.Detach(1,1,function(e,og) e:SetLabel(og:GetFirst():IsSetCard(SET_GALAXY) and 1 or 0) end))
 	e2:SetTarget(s.distg)
 	e2:SetOperation(s.disop)
-	c:RegisterEffect(e2,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e2)
 	--Take 1 "Photon" or "Galaxy" card from your Deck, and either add it to your hand or attach it to this card as material
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))

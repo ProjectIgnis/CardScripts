@@ -34,7 +34,7 @@ function s.initial_effect(c)
 	e3:SetCondition(s.damcon2)
 	e3:SetCost(s.damcost2)
 	e3:SetOperation(s.damop2)
-	c:RegisterEffect(e3,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e3)
 end
 s.xyz_number=54
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)

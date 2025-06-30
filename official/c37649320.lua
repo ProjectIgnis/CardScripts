@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetCost(Cost.Detach(1,1,nil))
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
-	c:RegisterEffect(e2,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e2)
 	--"Paleozoic" Trap cards can be activated from the hand
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))

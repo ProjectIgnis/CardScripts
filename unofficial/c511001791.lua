@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--Xyz Summon procedure: 2 Level 7 Dragon monsters 
+	--Xyz Summon procedure: 2 Level 7 Dragon monsters
 	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_DRAGON),7,2)
 	--Pendulum procedure
 	Pendulum.AddProcedure(c,false)
@@ -50,7 +50,7 @@ function s.initial_effect(c)
 	e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e5:SetProperty(EFFECT_FLAG_DELAY)
 	e5:SetCode(EVENT_LEAVE_FIELD)
-	e5:SetCondition(function(e) return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD) end) 
+	e5:SetCondition(function(e) return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD) end)
 	e5:SetTarget(s.pentg)
 	e5:SetOperation(s.penop)
 	c:RegisterEffect(e5)

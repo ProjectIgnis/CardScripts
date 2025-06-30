@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetCountLimit(1,id)
 	e2:SetCost(Cost.Detach(1,1,nil))
 	e2:SetOperation(s.atkop)
-	c:RegisterEffect(e2,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e2)
 	--Special Summon this card from the GY in Defense Position
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))

@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1)
 	e1:SetCost(Cost.Detach(1,1,nil))
 	e1:SetOperation(s.atkop)
-	c:RegisterEffect(e1,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e1)
 	--multi attack
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)

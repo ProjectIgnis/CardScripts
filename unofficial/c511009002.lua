@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e2:SetCost(s.btcost)
 	e2:SetTarget(s.bttg)
 	e2:SetOperation(s.btop)
-	c:RegisterEffect(e2,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e2)
 end
 function s.filter(c)
 	return c:IsSpecialSummoned() and c:HasNonZeroAttack()

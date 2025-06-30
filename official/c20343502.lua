@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.immtg)
 	e1:SetOperation(s.immop)
 	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER|TIMING_END_PHASE)
-	c:RegisterEffect(e1,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e1)
 	--Shuffle up to 2 cards from either GY into deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_TODECK)

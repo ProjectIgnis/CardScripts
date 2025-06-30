@@ -36,7 +36,7 @@ function s.initial_effect(c)
 	e4:SetCondition(s.spcon)
 	e4:SetTarget(s.sptg)
 	e4:SetOperation(s.spop)
-	c:RegisterEffect(e4,false,EFFECT_MARKER_DETACH_XMAT)	
+	c:RegisterEffect(e4)
 	--control or destroy
 	local e5=Effect.CreateEffect(c)
 	e5:SetCategory(CATEGORY_DESTROY)

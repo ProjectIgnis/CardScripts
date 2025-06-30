@@ -63,7 +63,7 @@ function s.initial_effect(c)
 	e6:SetCost(s.discost)
 	e6:SetTarget(s.distg)
 	e6:SetOperation(s.disop)
-	c:RegisterEffect(e6,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e6)
 	--battle indestructable
 	local e7=Effect.CreateEffect(c)
 	e7:SetType(EFFECT_TYPE_SINGLE)

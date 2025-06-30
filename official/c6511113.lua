@@ -43,7 +43,7 @@ function s.initial_effect(c)
 	e5:SetCost(s.cost)
 	e5:SetTarget(s.target)
 	e5:SetOperation(s.operation)
-	c:RegisterEffect(e5,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e5)
 end
 s.listed_names={id}
 s.listed_series={SET_TRAPTRIX,SET_TRAP_HOLE,SET_HOLE}

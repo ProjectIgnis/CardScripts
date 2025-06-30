@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetCost(Cost.Detach(1))
 	e2:SetTarget(s.settg)
 	e2:SetOperation(s.setop)
-	c:RegisterEffect(e2,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e2)
 	--This is a Quick effect if this card has "Super Quantum Green Layer" as Xyz Material
 	local e3=e2:Clone()
 	e3:SetType(EFFECT_TYPE_QUICK_O)

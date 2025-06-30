@@ -61,7 +61,7 @@ function s.initial_effect(c)
 	e7:SetCost(s.nacost)
 	e7:SetTarget(s.natg)
 	e7:SetOperation(s.naop)
-	c:RegisterEffect(e7,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e7)
 	--number generic effect
 	local e8=Effect.CreateEffect(c)
 	e8:SetType(EFFECT_TYPE_SINGLE)

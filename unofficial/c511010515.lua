@@ -58,7 +58,7 @@ function s.initial_effect(c)
 	e7:SetCost(s.descost)
 	e7:SetTarget(s.destg)
 	e7:SetOperation(s.desop)
-	c:RegisterEffect(e7,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e7)
 end
 s.listed_series={0x10af}
 s.listed_names={47198668}

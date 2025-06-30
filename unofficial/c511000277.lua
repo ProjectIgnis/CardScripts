@@ -98,7 +98,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetOperation(s.damop)
 		e1:SetLabel(e:GetLabel())
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD)
-		c:RegisterEffect(e1,false,EFFECT_MARKER_DETACH_XMAT)
+		c:RegisterEffect(e1)
 		Duel.SpecialSummon(c,1,tp,tp,false,false,POS_FACEUP)
 	end
 end

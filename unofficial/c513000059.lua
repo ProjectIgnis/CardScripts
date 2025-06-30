@@ -48,7 +48,7 @@ function s.initial_effect(c)
 	e5:SetType(EFFECT_TYPE_SINGLE)
 	e5:SetCode(EFFECT_RANKUP_EFFECT)
 	e5:SetLabelObject(e4)
-	c:RegisterEffect(e5,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e5)
 end
 s.listed_series={SET_NUMBER}
 s.listed_names={48739166}

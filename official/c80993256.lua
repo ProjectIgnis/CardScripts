@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	e3:SetCost(Cost.Detach(1,1,nil))
 	e3:SetTarget(s.negtg)
 	e3:SetOperation(s.negop)
-	c:RegisterEffect(e3,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e3)
 end
 function s.matkval(e,c)
 	local oc=e:GetHandler():GetOverlayCount()

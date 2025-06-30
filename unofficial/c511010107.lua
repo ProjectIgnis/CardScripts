@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetCost(Cost.Detach(1))
 	e2:SetTarget(s.distg)
 	e2:SetOperation(s.disop)
-	c:RegisterEffect(e2,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e2)
 	--Workaround to make the extra attack part work on your turn
 	local e3=e2:Clone()
 	e3:SetType(EFFECT_TYPE_QUICK_O)
@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	e3:SetCountLimit(1)
 	e3:SetCondition(s.discon)
 	e3:SetCost(s.discost)
-	c:RegisterEffect(e3,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e3)
 	--Global effects to keep track of total effect resolutions and the last attacker
 	aux.GlobalCheck(s,function()
 		--Keep track of how many effects have resolved during each Battle Phase

@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	e3:SetCost(Cost.Detach(1,1,nil))
 	e3:SetTarget(s.namechangetg)
 	e3:SetOperation(s.namechangeop)
-	c:RegisterEffect(e3,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e3)
 	--Negate the activated effects of "Unknown" your opponent controls
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)

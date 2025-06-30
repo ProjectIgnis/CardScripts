@@ -32,7 +32,7 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetCode(EFFECT_RANKUP_EFFECT)
 	e3:SetLabelObject(e2)
-	c:RegisterEffect(e3,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e3)
 end
 s.listed_names={30741334}
 function s.uncon(e,tp,eg,ep,ev,re,r,rp)

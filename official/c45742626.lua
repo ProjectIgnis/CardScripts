@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e3:SetCost(Cost.Detach(1))
 	e3:SetTarget(s.target)
 	e3:SetOperation(s.operation)
-	c:RegisterEffect(e3,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e3)
 end
 function s.value(e,c)
 	return Duel.GetMatchingGroupCount(Card.IsAttribute,0,LOCATION_GRAVE,LOCATION_GRAVE,nil,ATTRIBUTE_DARK)*200

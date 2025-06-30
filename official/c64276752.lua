@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetCost(Cost.Detach(1))
 	e2:SetTarget(s.atktg)
 	e2:SetOperation(s.atkop)
-	c:RegisterEffect(e2,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e2)
 end
 function s.indescon(e)
 	return e:GetHandler():IsXyzSummoned()

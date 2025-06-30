@@ -36,7 +36,7 @@ function s.initial_effect(c)
 	e4:SetCondition(function(e,tp) return Duel.GetBattleDamage(tp)>=Duel.GetLP(tp) end)
 	e4:SetCost(Cost.Detach(1))
 	e4:SetOperation(s.damop)
-	c:RegisterEffect(e4,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e4)
 end
 s.listed_series={SET_NUMBER}
 s.xyz_number=54

@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e3:SetCost(Cost.Detach(2))
 	e3:SetTarget(s.cftg)
 	e3:SetOperation(s.cfop)
-	c:RegisterEffect(e3,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e3)
 end
 s.listed_series={SET_BATTLIN_BOXER}
 function s.atfilter(c)

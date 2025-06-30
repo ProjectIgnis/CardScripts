@@ -34,7 +34,7 @@ function s.initial_effect(c)
 	e4:SetCost(Cost.Detach(1,1,nil))
 	e4:SetTarget(s.destg)
 	e4:SetOperation(s.desop)
-	c:RegisterEffect(e4,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e4)
 	--Register flag in order to avoid some loops with certain anime cards
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_SINGLE)

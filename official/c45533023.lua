@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetCondition(s.descon)
 	e2:SetTarget(s.destg1)
 	e2:SetOperation(s.desop1)
-	c:RegisterEffect(e2,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e2)
 	--destroy
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_DESTROY+CATEGORY_DAMAGE)

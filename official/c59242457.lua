@@ -31,7 +31,7 @@ function s.initial_effect(c)
 	e2:SetCost(Cost.Detach(1,1,nil))
 	e2:SetTarget(s.rmtg)
 	e2:SetOperation(s.rmop)
-	c:RegisterEffect(e2,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e2)
 	--Return material to Extra Deck
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))

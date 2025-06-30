@@ -31,7 +31,7 @@ function s.initial_effect(c)
 	e3:SetCost(Cost.Detach(1))
 	e3:SetTarget(s.target)
 	e3:SetOperation(s.operation)
-	c:RegisterEffect(e3,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e3)
 end
 function s.ovfilter(c,tp,xyzc)
 	return c:IsFaceup() and c:GetRank()==5 and c:IsAttribute(ATTRIBUTE_WATER,xyzc,SUMMON_TYPE_XYZ,tp)

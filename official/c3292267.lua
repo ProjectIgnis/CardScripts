@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	e1:SetCost(Cost.Detach(1))
 	e1:SetTarget(s.distg)
 	e1:SetOperation(s.disop)
-	c:RegisterEffect(e1,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e1)
 end
 function s.tfilter(c,tp)
 	return (c:IsOnField() or c:IsLocation(LOCATION_GRAVE) or c:IsLocation(LOCATION_REMOVED)) and c:IsControler(tp)

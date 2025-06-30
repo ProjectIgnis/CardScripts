@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCost(s.lpcost)
 	e2:SetOperation(s.lpop)
-	c:RegisterEffect(e2,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e2)
 	--lp - 0 materials
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(52090844,0))

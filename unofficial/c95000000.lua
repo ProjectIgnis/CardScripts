@@ -145,7 +145,7 @@ function s.stop(e)
 		local hct=Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)
 		Duel.Remove(c,POS_FACEUP,REASON_RULE)
 		Duel.Hint(HINT_CARD,0,id)
-		local g=Duel.GetMatchingGroup(aux.NOT(Card.IsSetCard),tp,SET_CLEAR_WING,0,c,0x602)
+		local g=Duel.GetMatchingGroup(aux.NOT(Card.IsSetCard),tp,LOCATION_ALL,0,c,0x602)
 		if #g>0 then
 			Duel.SendtoDeck(g,nil,-2,REASON_RULE)
 		end

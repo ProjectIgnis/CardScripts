@@ -2,7 +2,6 @@
 --Allure Palace
 --Scripted by AlphaKretin
 local s,id=GetID()
-local SET_ALLURE_QUEEN=0x14
 function s.initial_effect(c)
 	--workaround for e4
 	local e0=Effect.CreateEffect(c)
@@ -10,7 +9,7 @@ function s.initial_effect(c)
 	e0:SetCode(EVENT_ADJUST)
 	e0:SetCountLimit(1)
 	e0:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_NO_TURN_RESET)
-	e0:SetRange(0xff)
+	e0:SetRange(LOCATION_ALL)
 	e0:SetOperation(s.regop)
 	c:RegisterEffect(e0)
 	--Activate
@@ -54,12 +53,12 @@ function s.initial_effect(c)
 	e6:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e6)
 end
-s.listed_series={0x14}
+s.listed_series={SET_ALLURE_QUEEN}
 function s.regop(e)
 	if s.global_check then return end
 	s.global_check = true
-	local g=Duel.GetMatchingGroup(Card.IsOriginalSetCard,0,SET_CLEAR_WING,SET_CLEAR_WING,nil,SET_ALLURE_QUEEN)
-	for tc in aux.Next(g) do
+	local g=Duel.GetMatchingGroup(Card.IsOriginalSetCard,0,LOCATION_ALL,LOCATION_ALL,nil,SET_ALLURE_QUEEN)
+	for tc in g:Iter() do
 		local effs={tc:GetCardEffect(511310036)}
 		for _,teh in ipairs(effs) do
 			local eff=teh:GetLabelObject()

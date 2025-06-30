@@ -1510,31 +1510,30 @@ function Cost.Discard(filter,other,count)
 		Duel.DiscardHand(tp,filter,count,count,REASON_COST|REASON_DISCARD,exclude)
 	end
 end
--- "Detach Xyz Material Cost Generator"
--- Generates a function to be used by Effect.SetCost in order to detach
--- a number of Xyz Materials from the Effect's handler.
--- `min` minimum number of materials to check for detachment.
--- `max` maximum number of materials to detach or a function that gets called
--- as if by doing max(e,tp) in order to get the value of max detachments.
--- `op` optional function that gets called by passing the effect and the operated
--- group of just detached materials in order to do some additional handling with
--- them.
+
+local detach_costs={}
 function Cost.Detach(min,max,op)
 	max=max or min
+
 	do --Perform some sanity checks, simplifies debugging
+		local min_type=type(min)
 		local max_type=type(max)
 		local op_type=type(op)
-		if type(min)~="number" then
-			error("Parameter 1 should be an Integer",2)
+		if min_type~="number" and min_type~="function" then
+			error("Parameter 1 should be an Integer|function",2)
 		end
 		if max_type~="number" and max_type~="function" then
 			error("Parameter 2 should be Integer|function",2)
 		end
 		if op_type~="nil" and op_type~="function" then
-			error("Parameter 2 should be nil|function",2)
+			error("Parameter 3 should be nil|function",2)
 		end
 	end
-	return function(e,tp,eg,ep,ev,re,r,rp,chk)
+
+	local function cost_func(e,tp,eg,ep,ev,re,r,rp,chk)
+		if min_type=="function" then min=min(e,tp) end
+		if max_type=="function" then max=max(e,tp) end
+
 		local c=e:GetHandler()
 		local nn=c:IsSetCard(SET_NUMERON) and c:IsType(TYPE_XYZ) and Duel.IsPlayerAffectedByEffect(tp,CARD_NUMERON_NETWORK)
 		local crm=c:CheckRemoveOverlayCard(tp,min,REASON_COST)
@@ -1543,11 +1542,18 @@ function Cost.Detach(min,max,op)
 			--Do not execute `op`, hint at "Numeron Network" being applied
 			return Duel.Hint(HINT_CARD,tp,CARD_NUMERON_NETWORK)
 		end
-		local m=type(max)=="number" and max or max(e,tp)
-		if c:RemoveOverlayCard(tp,min,m,REASON_COST)>0 and op then
+
+		if c:RemoveOverlayCard(tp,min,max,REASON_COST)>0 and op then
 			op(e,Duel.GetOperatedGroup())
 		end
 	end
+
+	detach_costs[cost_func]=true
+	return cost_func
+end
+
+function Effect.HasDetachCost(e)
+	return detach_costs[e:GetCost()]
 end
 
 --Default cost for "You can pay X LP;"
@@ -1593,7 +1599,8 @@ end
 
 function Cost.AND(...)
 	local fns={...}
-	return function(e,tp,eg,ep,ev,re,r,rp,chk)
+
+	local function full_cost(e,tp,eg,ep,ev,re,r,rp,chk)
 		--when checking, stop at the first falsy value
 		if chk==0 then
 			for _,fn in ipairs(fns) do
@@ -1606,6 +1613,11 @@ function Cost.AND(...)
 			fn(e,tp,eg,ep,ev,re,r,rp,1)
 		end
 	end
+
+	for _,fn in ipairs(fns) do
+		if detach_costs[fn] then detach_costs[full_cost]=true end
+	end
+	return full_cost
 end
 
 

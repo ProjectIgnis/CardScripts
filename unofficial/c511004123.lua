@@ -58,29 +58,26 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.RegisterEffect(e1,tp)
 	end
 end
-function s.src_check(src_eff)
-	if src_eff:IsDeleted() or not src_eff:HasDetachCost() then return false end
-	local src_c=src_eff:GetHandler()
-	return src_c:IsFaceup() and src_c:IsType(TYPE_XYZ)
-end
 function s.copyop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetOwner()
 	local tc=c:GetEquipTarget()
 	local effs=e:GetLabelObject()
 	--it the card is no longer equipped, reset everything including this effect
 	if not tc or tc:GetFlagEffectLabel(id)~=e:GetLabel() then
-		for src_eff,eff in pairs(effs) do eff:Reset() end
+		for _,eff in pairs(effs) do eff:Reset() end
 		return e:Reset()
 	end
 	--reset copied effects that are no longer applicable, or if the equip card is currently negated
+	local xg=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsType,TYPE_XYZ),tp,LOCATION_MZONE,0,tc)
 	for src_eff,eff in pairs(effs) do
-		if c:IsDisabled() or not tc:IsCode(84013237) or not s.src_check(src_eff) then
+		if c:IsDisabled() or not tc:IsCode(84013237)
+			or src_eff:IsDeleted() or not src_eff:HasDetachCost()
+			or not xg:IsContains(src_eff:GetHandler()) then
 			eff:Reset()
 			effs[src_eff]=nil
 		end
 	end
 	--copy effects that have not been copied already
-	local xg=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsType,TYPE_XYZ),tp,LOCATION_MZONE,0,tc)
 	for xc in xg:Iter() do
 		for _,eff in ipairs({xc:GetOwnEffects()}) do
 			if not effs[eff] and eff:HasDetachCost() then

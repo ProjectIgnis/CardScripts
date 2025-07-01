@@ -56,7 +56,7 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	end
 	if chkc then
 		for _,eff in ipairs(effs) do
-			if eff:GetLabel()==ev then return eff:GetTarget()(e,tp,eg,ep,ev,re,r,rp,chk,chkc) end
+			if eff:GetFieldID()==e:GetLabel() then return eff:GetTarget()(e,tp,eg,ep,ev,re,r,rp,chk,chkc) end
 		end
 		return false
 	end
@@ -81,6 +81,7 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if not op then return end
 	local te=effs[op]
 	if not te then return end
+	e:SetLabel(te:GetFieldID())
 	e:SetCategory(te:GetCategory())
 	e:SetProperty(te:GetProperty())
 	local cost=te:GetCost()

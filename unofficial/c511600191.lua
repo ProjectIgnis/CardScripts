@@ -1,18 +1,21 @@
 --エクシーズ・ウイング
 --XYZ Wings
---Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsType,TYPE_XYZ))
-	--twice per turn
+	--You can activate the equipped monster's "once per turn" effects that are activated by detaching its own Xyz Material(s) once again per turn
 	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e1:SetCode(EVENT_ADJUST)
-	e1:SetRange(LOCATION_SZONE)
-	e1:SetCondition(function(e,tp,eg,ep,ev,re,r,rp) return e:GetHandler():GetEquipTarget():GetFlagEffect(id)>0 end)
-	e1:SetOperation(s.tptop)
+	e1:SetType(EFFECT_TYPE_EQUIP)
+	e1:SetCode(id)
 	c:RegisterEffect(e1)
-	--damage
+	aux.GlobalCheck(s,function()
+		local ge1=Effect.CreateEffect(c)
+		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		ge1:SetCode(EVENT_ADJUST)
+		ge1:SetOperation(s.checkop)
+		Duel.RegisterEffect(ge1,0)
+	end)
+	--Inflict 500 damage to your opponent
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_DAMAGE)
@@ -23,103 +26,42 @@ function s.initial_effect(c)
 	e2:SetTarget(s.damtg)
 	e2:SetOperation(s.damop)
 	c:RegisterEffect(e2)
-	--Halve Battle Damage
+	--Any battle damage you take becomes halved
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
-	e3:SetCode(EVENT_LEAVE_FIELD)
 	e3:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+	e3:SetCode(EVENT_LEAVE_FIELD)
 	e3:SetOperation(s.bdop)
 	c:RegisterEffect(e3)
-	aux.GlobalCheck(s,function()
-		OPTEffs={}
-		AffectedEffs={}
-		local ge1=Effect.CreateEffect(c)
-		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge1:SetCode(EVENT_CHAINING)
-		ge1:SetOperation(s.checkop)
-		Duel.RegisterEffect(ge1,0)
-		local ge2=Effect.CreateEffect(c)
-		ge2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge2:SetCode(EVENT_ADJUST)
-		ge2:SetCountLimit(1)
-		ge2:SetOperation(s.clear)
-		Duel.RegisterEffect(ge2,0)
-	end)
+end
+s.affected_effects={}
+function s.xyzfilter(c)
+	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsHasEffect(id)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
-	local rc=re:GetHandler()
-	if not rc:IsHasEffect(511002571) or re:IsHasProperty(EFFECT_FLAG_NO_TURN_RESET) then return end
-	local effs={rc:GetCardEffect(511002571)}
-	local chk=true
-	for _,eff in ipairs(effs) do
-		local temp=eff:GetLabelObject()
-		if temp:GetCode()&511001822==511001822 or temp:GetLabel()==511001822 then temp=temp:GetLabelObject() end
-		if temp==re then
-			chk=false
-		end
-	end
-	if chk then return end
-	local _,ctmax,_,ctflag=re:GetCountLimit()
-	if ctflag&~EFFECT_COUNT_CODE_SINGLE>0 or ctmax~=1 then return end
-	if rc:GetFlagEffect(id)==0 then
-		OPTEffs[rc]={}
-		AffectedEffs[rc]={}
-		rc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END,0,1)
-	end
-	for _,te in ipairs(OPTEffs[rc]) do
-		if te==re then return end
-	end
-	table.insert(OPTEffs[rc],re)
-	if ctflag&EFFECT_COUNT_CODE_SINGLE>0 then
-		for _,eff in ipairs(effs) do
-			local te=eff:GetLabelObject()
-			if te:GetCode()&511001822==511001822 or te:GetLabel()==511001822 then te=te:GetLabelObject() end
-			local _,_,_,ctlflag=te:GetCountLimit()
-			if ctlflag&EFFECT_COUNT_CODE_SINGLE>0 then
-				local chk=true
-				for _,te2 in ipairs(OPTEffs[rc]) do
-					if te==te2 then chk=false end
-				end
-				if chk then
-					table.insert(OPTEffs[rc],te)
-				end
+	--affect the effects of Xyz monsters that are equipped
+	local xg=Duel.GetMatchingGroup(s.xyzfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	for xc in xg:Iter() do
+		for _,eff in ipairs({xc:GetOwnEffects()}) do
+			local usect,ctmax,ctcode,ctflag,hopt=eff:GetCountLimit()
+			if eff:HasDetachCost() and not eff:IsHasProperty(EFFECT_FLAG_NO_TURN_RESET)
+				and ctmax==1 and (ctflag&~EFFECT_COUNT_CODE_SINGLE)==0
+				and not s.affected_effects[eff] then
+				eff:SetCountLimit(2,{ctcode,hopt},ctflag)
+				if usect==0 then eff:UseCountLimit(eff:GetHandlerPlayer()) end
+				s.affected_effects[eff]=true
 			end
 		end
 	end
-end
-function s.clear(e,tp,eg,ep,ev,re,r,rp)
-	OPTEffs={}
-	for _,c in pairs(AffectedEffs) do
-		for _,te in ipairs(c) do
-			local _,_,ctcode,ctflag,hopt=te:GetCountLimit()
-			if ctflag&EFFECT_COUNT_CODE_SINGLE>0 then
-				te:SetCountLimit(1,{ctcode,hopt},ctflag)
-			end
+	--stop affecting effects that are no longer applicable
+	for eff in pairs(s.affected_effects) do
+		if not eff:HasDetachCost() or not xg:IsContains(eff:GetHandler()) then
+			local usect,_,ctcode,ctflag,hopt=eff:GetCountLimit()
+			eff:SetCountLimit(1,{ctcode,hopt},ctflag)
+			if usect<2 then eff:UseCountLimit(eff:GetHandlerPlayer()) end
+			s.affected_effects[eff]=nil
 		end
 	end
-	AffectedEffs={}
-end
-function s.tptop(e,tp,eg,ep,ev,re,r,rp)
-	local eqc=e:GetHandler():GetEquipTarget()
-	for _,te in ipairs(OPTEffs[eqc]) do
-		local chk=true
-		for _,te2 in ipairs(AffectedEffs[eqc]) do
-			if te2==te then chk=false end
-		end
-		if chk then
-			local _,ctmax,ctcode,ctflag,hopt=te:GetCountLimit()
-			if ctflag&EFFECT_COUNT_CODE_SINGLE>0 then
-				te:SetCountLimit(ctmax+1,{ctcode,hopt},ctflag)
-			else
-				te:SetCountLimit(ctmax,{ctcode,hopt},ctflag)
-			end
-			table.insert(AffectedEffs[eqc],te)
-		end
-	end
-end
-function s.filter(c,eqc)
-	return c:GetPreviousTypeOnField()&TYPE_MONSTER==TYPE_MONSTER
-		and (c:GetReasonCard()==eqc or c:GetReasonEffect() and c:GetReasonEffect():GetHandler()==eqc)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local ec=e:GetHandler():GetEquipTarget()
@@ -136,18 +78,14 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Damage(p,d,REASON_EFFECT)
 end
 function s.bdop(e,tp,eg,ep,ev,re,r,rp)
+	--For the rest of this turn, any battle damage you take becomes halved
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetCode(EFFECT_CHANGE_DAMAGE)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
+	e1:SetCode(EFFECT_CHANGE_DAMAGE)
 	e1:SetTargetRange(1,0)
-	e1:SetValue(s.val)
+	e1:SetValue(function(_,_,dam,r) return (r&REASON_BATTLE)~=0 and (dam//2) or dam end)
 	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
-end
-function s.val(e,re,dam,r,rp,rc)
-	if (r&REASON_BATTLE)~=0 then
-		return math.floor(dam/2)
-	else return dam end
 end

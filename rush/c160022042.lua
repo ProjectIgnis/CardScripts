@@ -42,5 +42,5 @@ function s.target(e,c)
 end
 function s.indescon(e)
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,e:GetHandlerPlayer(),LOCATION_MZONE,0,nil)
-	return g:GetClassCount(Card.GetRace)==3
+	return g:GetClassCount(Card.GetRace)==3 and Duel.IsTurnPlayer(1-e:GetHandlerPlayer())
 end

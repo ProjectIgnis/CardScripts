@@ -22,18 +22,9 @@ function s.target(rtg,rtop)
 			and Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsType,TYPE_RITUAL),tp,LOCATION_MZONE,LOCATION_MZONE,nil)>0
 		local b2=rtg(e,tp,eg,ep,ev,re,r,rp,0)
 		if chk==0 then return b1 or b2 end
-		local stable={}
-		local dtable={}
-		if b1 then
-			table.insert(stable,1)
-			table.insert(dtable,aux.Stringid(id,0))
-		end
-		if b2 then
-			table.insert(stable,2)
-			table.insert(dtable,aux.Stringid(id,1))
-		end
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EFFECT)
-		local op=stable[Duel.SelectOption(tp,table.unpack(dtable))+1]
+		local op=Duel.SelectEffect(tp,
+			{b1,aux.Stringid(id,0)},
+			{b2,aux.Stringid(id,1)})
 		e:SetLabel(op)
 		if op==1 then
 			e:SetCategory(CATEGORY_ATKCHANGE)

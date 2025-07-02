@@ -2,42 +2,34 @@
 --Number F0: Utopic Future Slash
 local s,id=GetID()
 function s.initial_effect(c)
-	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
-	--Xyz summon procedure
+	--Xyz summon procedure: 2 Xyz Monsters with the same Rank, except "Number" monsters
 	Xyz.AddProcedure(c,s.xyzfilter,nil,2,s.ovfilter,aux.Stringid(id,1),nil,nil,false,s.xyzcheck)
 	--Gains 500 ATK per "Number" Xyz monsters in the GYs
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e1:SetCode(EFFECT_UPDATE_ATTACK)
+	e1:SetRange(LOCATION_MZONE)
+	e1:SetValue(function(e,c) return Duel.GetMatchingGroupCount(s.atkfilter,c:GetControler(),LOCATION_GRAVE,LOCATION_GRAVE,nil)*500 end)
+	c:RegisterEffect(e1)
+	--Cannot be destroyed by battle
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e2:SetCode(EFFECT_UPDATE_ATTACK)
-	e2:SetRange(LOCATION_MZONE)
-	e2:SetValue(s.atkval)
+	e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
+	e2:SetValue(1)
 	c:RegisterEffect(e2)
-	--Cannot be destroyed by battle
+	--Make this card able to make a second attack
 	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_SINGLE)
-	e3:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-	e3:SetValue(1)
+	e3:SetDescription(aux.Stringid(id,0))
+	e3:SetType(EFFECT_TYPE_IGNITION)
+	e3:SetRange(LOCATION_MZONE)
+	e3:SetCountLimit(1)
+	e3:SetCondition(function() return Duel.IsAbleToEnterBP() end)
+	e3:SetCost(Cost.Detach(1))
+	e3:SetTarget(s.atktg)
+	e3:SetOperation(s.atkop)
 	c:RegisterEffect(e3)
-	--Make itself be able to make a second attack
-	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(id,0))
-	e4:SetType(EFFECT_TYPE_IGNITION)
-	e4:SetRange(LOCATION_MZONE)
-	e4:SetCountLimit(1)
-	e4:SetCondition(s.atkcon)
-	e4:SetCost(Cost.Detach(1))
-	e4:SetTarget(s.atktg)
-	e4:SetOperation(s.atkop)
-	c:RegisterEffect(e4)
-	local e5=Effect.CreateEffect(c)
-	e5:SetType(EFFECT_TYPE_SINGLE)
-	e5:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_SET_AVAILABLE)
-	e5:SetCode(511002571)
-	e5:SetLabelObject(e4)
-	e5:SetLabel(c:GetOriginalCode())
-	c:RegisterEffect(e5)
 end
 s.listed_series={SET_NUMBER,SET_UTOPIA}
 s.xyz_number=0
@@ -55,19 +47,13 @@ end
 function s.atkfilter(c)
 	return c:IsType(TYPE_XYZ) and c:IsSetCard(SET_NUMBER)
 end
-function s.atkval(e,c)
-	return Duel.GetMatchingGroupCount(s.atkfilter,c:GetControler(),LOCATION_GRAVE,LOCATION_GRAVE,nil)*500
-end
-function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsAbleToEnterBP()
-end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetEffectCount(EFFECT_EXTRA_ATTACK)==0 end
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then
-		--Can make a second attack
+		--This card can make a second attack during each Battle Phase this turn
 		local e1=Effect.CreateEffect(c)
 		e1:SetDescription(3201)
 		e1:SetType(EFFECT_TYPE_SINGLE)

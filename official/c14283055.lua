@@ -85,7 +85,8 @@ end
 function s.sumlimit(e,sumc,sumtype,sumplayer)
 	if not sumc then return false end
 	local tp=e:GetHandlerPlayer()
-	return sumplayer==tp and sumc:IsControler(tp) and (sumtype&(SUMMON_TYPE_FUSION|SUMMON_TYPE_SYNCHRO|SUMMON_TYPE_XYZ|SUMMON_TYPE_LINK))>0
+	return sumplayer==tp and sumc:IsControler(tp)
+		and aux.cannotmatfilter(SUMMON_TYPE_FUSION,SUMMON_TYPE_SYNCHRO,SUMMON_TYPE_XYZ,SUMMON_TYPE_LINK)(e,sumc,sumtype,sumplayer)
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local ct=Duel.GetMatchingGroupCount(Card.IsSetCard,tp,LOCATION_GRAVE,LOCATION_GRAVE,nil,SET_RECIPE)

@@ -34,11 +34,11 @@ end
 function s.applyfilter(c,e,tp)
 	if not (c:IsSetCard(SET_THUNDER_DRAGON) and c:IsMonster()
 		and (c:IsFaceup() or not c:IsLocation(LOCATION_REMOVED))
-		and c:IsHasEffect(EFFECT_MARKER_THUNDRA) and c:IsCanBeEffectTarget(e) and c:IsAbleToDeck()) then
+		and c:IsCanBeEffectTarget(e) and c:IsAbleToDeck()) then
 		return false
 	end
-	for _,eff in ipairs(c:GetMarkedEffects(EFFECT_MARKER_THUNDRA)) do
-		if s.runfn(eff:GetCondition(),eff,tp,0) and s.runfn(eff:GetTarget(),eff,tp,0) then return true end
+	for _,eff in ipairs({c:GetOwnEffects()}) do
+		if eff:HasSelfDiscardCost() and s.runfn(eff:GetCondition(),eff,tp,0) and s.runfn(eff:GetTarget(),eff,tp,0) then return true end
 	end
 end
 function s.applytg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -51,24 +51,27 @@ end
 function s.applyop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not tc:IsRelateToEffect(e) then return end
-	local effs=tc:GetMarkedEffects(EFFECT_MARKER_THUNDRA)
+	local effs={}
 	local options={}
-	for _,eff in ipairs(effs) do
-		local eff_chk=s.runfn(eff:GetCondition(),eff,tp,0) and s.runfn(eff:GetTarget(),eff,tp,0)
-		table.insert(options,{eff_chk,eff:GetDescription()})
+	for _,eff in ipairs({tc:GetOwnEffects()}) do
+		if eff:HasSelfDiscardCost() then
+			table.insert(effs,eff)
+			local eff_chk=s.runfn(eff:GetCondition(),eff,tp,0) and s.runfn(eff:GetTarget(),eff,tp,0)
+			table.insert(options,{eff_chk,eff:GetDescription()})
+		end
 	end
 	local op=#options==1 and 1 or Duel.SelectEffect(tp,table.unpack(options))
 	if not op then return end
 	local te=effs[op]
 	if not te then return end
 	Duel.ClearTargetCard()
-	s.runfn(te:GetTarget(),te,tp)
+	s.runfn(te:GetTarget(),te,tp,1)
 	Duel.BreakEffect()
 	tc:CreateEffectRelation(te)
 	Duel.BreakEffect()
-	local tg=Duel.GetTargetCards(te)
+	local tg=Duel.GetTargetCards(e)
 	tg:ForEach(Card.CreateEffectRelation,te)
-	s.runfn(te:GetOperation(),te,tp,1)
+	s.runfn(te:GetOperation(),te,tp)
 	tg:ForEach(Card.ReleaseEffectRelation,te)
 	local opt=Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2))
 	Duel.SendtoDeck(tc,nil,opt,REASON_EFFECT)

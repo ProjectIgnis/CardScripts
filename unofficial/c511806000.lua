@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e1b:SetCost(Cost.AND(Cost.PayLP(1/2),Cost.SelfToGrave))
 	e1b:SetOperation(s.noeffectdamop)
 	c:RegisterEffect(e1b)
-	--Send 1 "Photon" monster from your hand to the GY to add this card from your GY to your hand
+	--Send 1 "Photon" card from your hand to the GY to add this card from your GY to your hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,2))
 	e2:SetCategory(CATEGORY_TOHAND)
@@ -68,7 +68,7 @@ function s.effdamval(e,re,val,r,rp,rc)
 	return 0
 end
 function s.thcostfilter(c)
-	return c:IsSetCard(SET_PHOTON) and c:IsMonster() and c:IsAbleToGraveAsCost()
+	return c:IsSetCard(SET_PHOTON) and c:IsAbleToGraveAsCost()
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thcostfilter,tp,LOCATION_HAND,0,1,nil) end

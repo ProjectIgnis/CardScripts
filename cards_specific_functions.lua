@@ -1239,3 +1239,30 @@ function Infernoid.RegisterSummonProcedure(c,monstersToBanish)
 	e2:SetOperation(InfernoidInt.summonOperation)
 	c:RegisterEffect(e2)
 end
+
+DragonRuler={}
+do
+	local function discard_with_other_cost(filter)
+		return function(e,tp,eg,ep,ev,re,r,rp,chk)
+			local c=e:GetHandler()
+			if chk==0 then return Duel.IsExistingMatchingCard(filter,tp,LOCATION_HAND,0,1,c) end
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
+			local g=Duel.SelectMatchingCard(tp,filter,tp,LOCATION_HAND,0,1,1,c)
+			Duel.SendtoGrave(g+c,REASON_COST|REASON_DISCARD)
+		end
+	end
+	--For Level 7 monsters (can only discard to GY, and does not allow Dragons)
+	function DragonRuler.SelfDiscardToGraveCost(attr)
+		local function other_discard_to_grave_filter(c)
+			return c:IsAttribute(attr) and c:IsDiscardable() and c:IsAbleToGraveAsCost()
+		end
+		return Cost.AND(discard_with_other_cost(other_discard_to_grave_filter),Cost.SelfDiscardToGrave)
+	end
+	--For lower Level monsters (not limited to discarding to GY, and allows Dragons)
+	function DragonRuler.SelfDiscardCost(attr)
+		local function other_discard_filter(c)
+			return (c:IsAttribute(attr) or c:IsRace(RACE_DRAGON)) and c:IsDiscardable()
+		end
+		return Cost.AND(discard_with_other_cost(other_discard_filter),Cost.SelfDiscardToGrave)
+	end
+end

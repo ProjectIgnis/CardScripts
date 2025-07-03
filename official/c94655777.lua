@@ -11,10 +11,10 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,id)
-	e1:SetCost(s.rmspcost)
+	e1:SetCost(DragonRuler.SelfDiscardCost(ATTRIBUTE_DARK))
 	e1:SetTarget(s.rmsptg)
 	e1:SetOperation(s.rmspop)
-	c:RegisterEffect(e1,false,EFFECT_MARKER_DRAGON_RULER)
+	c:RegisterEffect(e1)
 	--Special Summon 1 "Eclepsis, Dragon Ruler of Woes" from your GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
@@ -30,17 +30,6 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_DRAGON_RULER}
 s.listed_names={id,30350202} --"Eclepsis, Dragon Ruler of Woes"
-function s.rmcostfilter(c)
-	return (c:IsAttribute(ATTRIBUTE_DARK) or c:IsRace(RACE_DRAGON)) and c:IsDiscardable()
-end
-function s.rmspcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsDiscardable() and Duel.IsExistingMatchingCard(s.rmcostfilter,tp,LOCATION_HAND,0,1,c) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
-	local g=Duel.SelectMatchingCard(tp,s.rmcostfilter,tp,LOCATION_HAND,0,1,1,c)
-	g:AddCard(c)
-	Duel.SendtoGrave(g,REASON_COST|REASON_DISCARD)
-end
 function s.rmspfilter(c,e,tp)
 	return c:IsSetCard(SET_DRAGON_RULER) and c:IsFaceup() and c:IsCanBeEffectTarget(e) and not c:IsCode(id)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

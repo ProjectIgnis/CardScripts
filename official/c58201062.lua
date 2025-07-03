@@ -10,10 +10,10 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,id)
-	e1:SetCost(s.thcost)
+	e1:SetCost(DragonRuler.SelfDiscardCost(ATTRIBUTE_LIGHT))
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
-	c:RegisterEffect(e1,false,EFFECT_MARKER_DRAGON_RULER)
+	c:RegisterEffect(e1)
 	--Special Summon 1 "Chasmatis, Dragon Ruler of Auroras" from your GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
@@ -29,17 +29,6 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_DRAGON_RULER}
 s.listed_names={id,4965193} --"Chasmatis, Dragon Ruler of Auroras"
-function s.thcostfilter(c)
-	return (c:IsAttribute(ATTRIBUTE_LIGHT) or c:IsRace(RACE_DRAGON)) and c:IsDiscardable()
-end
-function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsDiscardable() and Duel.IsExistingMatchingCard(s.thcostfilter,tp,LOCATION_HAND,0,1,c) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
-	local g=Duel.SelectMatchingCard(tp,s.thcostfilter,tp,LOCATION_HAND,0,1,1,c)
-	g:AddCard(c)
-	Duel.SendtoGrave(g,REASON_COST|REASON_DISCARD)
-end
 function s.thfilter(c)
 	return c:IsSetCard(SET_DRAGON_RULER) and c:IsMonster() and c:IsAbleToHand() and not c:IsCode(id)
 end

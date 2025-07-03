@@ -1481,22 +1481,27 @@ function Cost.SelfToExtra(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return c:IsAbleToExtraAsCost() end
 	Duel.SendtoDeck(c,nil,SEQ_DECKSHUFFLE,REASON_COST)
 end
-function Cost.SelfDiscard(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsDiscardable() end
-	Duel.SendtoGrave(c,REASON_DISCARD|REASON_COST)
-end
-function Cost.SelfDiscardToGrave(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsDiscardable() and c:IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(c,REASON_DISCARD|REASON_COST)
-end
 function Cost.SelfReveal(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return not c:IsPublic() end
 	Duel.ConfirmCards(1-tp,c)
 	Duel.ShuffleHand(tp)
 end
+
+local self_discard_costs={}
+function Cost.SelfDiscard(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
+	if chk==0 then return c:IsDiscardable() end
+	Duel.SendtoGrave(c,REASON_DISCARD|REASON_COST)
+end
+self_discard_costs[Cost.SelfDiscard]=true
+function Cost.SelfDiscardToGrave(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
+	if chk==0 then return c:IsDiscardable() and c:IsAbleToGraveAsCost() end
+	Duel.SendtoGrave(c,REASON_DISCARD|REASON_COST)
+end
+self_discard_costs[Cost.SelfDiscardToGrave]=true
+
 --Aliases for historical reasons:
 Cost.SelfRelease=Cost.SelfTribute
 Auxiliary.bfgcost=Cost.SelfBanish
@@ -1552,9 +1557,12 @@ function Cost.Detach(min,max,op)
 	return cost_func
 end
 
-function Effect.HasDetachCost(e)
-	return detach_costs[e:GetCost()]
+local function cost_table_check(t)
+	return function(eff) return t[eff:GetCost()] end
 end
+
+Effect.HasSelfDiscardCost=cost_table_check(self_discard_costs)
+Effect.HasDetachCost=cost_table_check(detach_costs)
 
 --Default cost for "You can pay X LP;"
 function Cost.PayLP(lp_value,pay_until)
@@ -1616,6 +1624,7 @@ function Cost.AND(...)
 
 	for _,fn in ipairs(fns) do
 		if detach_costs[fn] then detach_costs[full_cost]=true end
+		if self_discard_costs[fn] then self_discard_costs[full_cost]=true end
 	end
 	return full_cost
 end

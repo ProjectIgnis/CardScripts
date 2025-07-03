@@ -32,7 +32,8 @@ function s.runfn(fn,eff,tp,chk)
 	return not fn or fn(eff,tp,Group.CreateGroup(),PLAYER_NONE,0,nil,REASON_EFFECT,PLAYER_NONE,chk)
 end
 function s.applyfilter(c,e,tp)
-	if not (c:IsSetCard(SET_THUNDER_DRAGON) and c:IsMonster() and c:IsAbleToDeck()
+	if not (c:IsSetCard(SET_THUNDER_DRAGON) and c:IsMonster()
+		and c:IsAbleToDeck() and c:IsCanBeEffectTarget(e)
 		and (c:IsFaceup() or not c:IsLocation(LOCATION_REMOVED))) then return false end
 	for _,eff in ipairs({c:GetOwnEffects()}) do
 		if eff:HasSelfDiscardCost() and s.runfn(eff:GetCondition(),eff,tp,0) and s.runfn(eff:GetTarget(),eff,tp,0) then return true end
@@ -42,7 +43,7 @@ function s.applytg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	if chk==0 then return Duel.IsExistingTarget(s.applyfilter,tp,LOCATION_GRAVE|LOCATION_REMOVED,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	local tc=Duel.SelectTarget(tp,s.applyfilter,tp,LOCATION_GRAVE|LOCATION_REMOVED,0,1,1,nil,e,tp):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,s.applyfilter,tp,LOCATION_GRAVE|LOCATION_REMOVED,0,1,1,nil,e,tp):GetFirst()
 	local effs={}
 	local options={}
 	for _,eff in ipairs({tc:GetOwnEffects()}) do
@@ -55,27 +56,28 @@ function s.applytg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local op=#options==1 and 1 or Duel.SelectEffect(tp,table.unpack(options))
 	local te=effs[op]
 	Duel.Hint(HINT_OPSELECTED,1-tp,te:GetDescription())
-	local tg=te:GetTarget()
-	if tg then
+	local targ_fn=te:GetTarget()
+	if targ_fn then
 		e:SetLabel(0)
 		e:SetLabelObject(nil)
-		Duel.ClearTargetCard()
-		tc:CreateEffectRelation(e)
-		s.runfn(tg,e,tp,1)
+		s.runfn(targ_fn,e,tp,1)
 		te:SetLabel(e:GetLabel())
 		te:SetLabelObject(e:GetLabelObject())
 		Duel.ClearOperationInfo(0)
 	end
-	e:SetLabelObject({tc,te})
+	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
+	e:SetLabelObject({tc,te,tg and tg:Clone() or nil})
+	Duel.SetTargetCard(tc)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,tc,1,tp,0)
 end
 function s.applyop(e,tp,eg,ep,ev,re,r,rp)
-	local tc,te=table.unpack(e:GetLabelObject())
+	local tc,te,tg=table.unpack(e:GetLabelObject())
 	if not tc:IsRelateToEffect(e) then return end
 	local op=te:GetOperation()
 	if op then
 		e:SetLabel(te:GetLabel())
 		e:SetLabelObject(te:GetLabelObject())
+		if tg then Duel.ChangeTargetCard(ev,tg) end
 		op(e,tp,eg,ep,ev,re,r,rp)
 	end
 	if tc:IsAbleToDeck() then

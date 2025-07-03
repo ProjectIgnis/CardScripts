@@ -26,9 +26,16 @@ function s.initial_effect(c)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
+function s.doubletribfilter(c)
+	return c:HasFlagEffect(FLAG_HAS_DOUBLE_TRIBUTE) and (
+		c:HasFlagEffect(FLAG_DOUBLE_TRIB)
+		or c:HasFlagEffect(FLAG_DOUBLE_TRIB_DARK+FLAG_DOUBLE_TRIB_GALAXY)
+		or c:HasFlagEffect(FLAG_DOUBLE_TRIB_LEVEL8+FLAG_DOUBLE_TRIB_GALAXY)
+	)
+end
 function s.rescon(sg,e,tp,mg)
 	return aux.ChkfMMZ(1)(sg,e,tp,mg) and sg:GetClassCount(Card.GetAttribute,nil)==1
-		and (#sg==3 or (#sg==2 and sg:IsExists(Card.HasFlagEffect,1,nil,FLAG_HAS_DOUBLE_TRIBUTE)) or (#sg==1 and sg:IsExists(Card.HasFlagEffect,1,nil,160015135)))
+		and (#sg==3 or (#sg==2 and sg:IsExists(s.doubletribfilter,1,nil)) or (#sg==1 and sg:IsExists(Card.HasFlagEffect,1,nil,160015135)))
 end
 function s.nscondition(e)
 	local c=e:GetHandler()

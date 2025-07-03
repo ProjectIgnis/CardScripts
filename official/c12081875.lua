@@ -15,8 +15,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(function(e) return e:GetHandler():IsLinkSummoned() end)
-	e1:SetTarget(s.applytg)
-	e1:SetOperation(s.applyop)
+	e1:SetTarget(s.applytg(nil))
 	c:RegisterEffect(e1)
 	--If a Thunder monster(s) you control would be destroyed by battle or card effect, you can banish 3 cards from your GY instead
 	local e2=Effect.CreateEffect(c)
@@ -41,40 +40,48 @@ function s.applyfilter(c,e,tp)
 		if eff:HasSelfDiscardCost() and s.runfn(eff:GetCondition(),eff,tp,0) and s.runfn(eff:GetTarget(),eff,tp,0) then return true end
 	end
 end
-function s.applytg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE|LOCATION_REMOVED) and chkc:IsControler(tp) and s.applyfilter(chkc,e,tp) end
-	if chk==0 then return Duel.IsExistingTarget(s.applyfilter,tp,LOCATION_GRAVE|LOCATION_REMOVED,0,1,nil,e,tp) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	local g=Duel.SelectTarget(tp,s.applyfilter,tp,LOCATION_GRAVE|LOCATION_REMOVED,0,1,1,nil,e,tp)
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,1,tp,0)
-end
-function s.applyop(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.GetFirstTarget()
-	if not tc:IsRelateToEffect(e) then return end
-	local effs={}
-	local options={}
-	for _,eff in ipairs({tc:GetOwnEffects()}) do
-		if eff:HasSelfDiscardCost() then
-			table.insert(effs,eff)
-			local eff_chk=s.runfn(eff:GetCondition(),eff,tp,0) and s.runfn(eff:GetTarget(),eff,tp,0)
-			table.insert(options,{eff_chk,eff:GetDescription()})
+function s.applytg(chkc_tg)
+	return function(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+		if chkc then return not chkc_tg or chkc_tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc) end
+		if chk==0 then return Duel.IsExistingTarget(s.applyfilter,tp,LOCATION_GRAVE|LOCATION_REMOVED,0,1,nil,e,tp) end
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
+		local tc=Duel.SelectTarget(tp,s.applyfilter,tp,LOCATION_GRAVE|LOCATION_REMOVED,0,1,1,nil,e,tp):GetFirst()
+		Duel.SetOperationInfo(0,CATEGORY_TODECK,tc,1,tp,0)
+		local effs={}
+		local options={}
+		for _,eff in ipairs({tc:GetOwnEffects()}) do
+			if eff:HasSelfDiscardCost() then
+				table.insert(effs,eff)
+				local eff_chk=s.runfn(eff:GetCondition(),eff,tp,0) and s.runfn(eff:GetTarget(),eff,tp,0)
+				table.insert(options,{eff_chk,eff:GetDescription()})
+			end
 		end
+		local op=#options==1 and 1 or Duel.SelectEffect(tp,table.unpack(options))
+		local te=effs[op]
+		Duel.Hint(HINT_OPSELECTED,1-tp,te:GetDescription())
+		local targ_fn=te:GetTarget()
+		if targ_fn then
+			Duel.ClearTargetCard()
+			tc:CreateEffectRelation(e)
+			s.runfn(targ_fn,te,tp,1)
+		end
+		e:SetTarget(s.applytg(targ_fn))
+		e:SetOperation(s.applyop(tc,te:GetOperation()))
 	end
-	local op=#options==1 and 1 or Duel.SelectEffect(tp,table.unpack(options))
-	if not op then return end
-	local te=effs[op]
-	if not te then return end
-	Duel.ClearTargetCard()
-	s.runfn(te:GetTarget(),te,tp,1)
-	Duel.BreakEffect()
-	tc:CreateEffectRelation(te)
-	Duel.BreakEffect()
-	local tg=Duel.GetTargetCards(e)
-	tg:ForEach(Card.CreateEffectRelation,te)
-	s.runfn(te:GetOperation(),te,tp)
-	tg:ForEach(Card.ReleaseEffectRelation,te)
-	local opt=Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2))
-	Duel.SendtoDeck(tc,nil,opt,REASON_EFFECT)
+end
+function s.applyop(tc,op)
+	return function(e,tp,eg,ep,ev,re,r,rp)
+		if tc:IsRelateToEffect(e) then
+			if op then op(e,tp,eg,ep,ev,re,r,rp) end
+			if tc:IsAbleToDeck() then
+				local opt=Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2))
+				Duel.BreakEffect()
+				Duel.SendtoDeck(tc,nil,opt,REASON_EFFECT)
+			end
+		end
+		e:SetTarget(s.applytg(nil))
+		e:SetOperation(nil)
+	end
 end
 function s.repfilter(c,tp)
 	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:IsRace(RACE_THUNDER)

@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1b)
 	--Send 1 "Photon" monster from your hand to the GY to add this card from your GY to your hand
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,1))
+	e2:SetDescription(aux.Stringid(id,2))
 	e2:SetCategory(CATEGORY_TOHAND)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)

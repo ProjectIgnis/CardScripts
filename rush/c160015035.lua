@@ -44,7 +44,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.otfilter(c,tp)
-	return c:IsDoubleTribute(FLAG_DOUBLE_TRIB_LEVEL8|FLAG_DOUBLE_TRIB_GALAXY) and (c:IsControler(tp) or c:IsFaceup())
+	return c:IsDoubleTribute(FLAG_DOUBLE_TRIB_LEVEL8+FLAG_DOUBLE_TRIB_GALAXY) and (c:IsControler(tp) or c:IsFaceup())
 end
 function s.eftg(e,c)
 	return c:IsRace(RACE_GALAXY) and c:IsLevel(8) and c:IsSummonableCard()

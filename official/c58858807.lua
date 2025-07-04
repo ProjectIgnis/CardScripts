@@ -109,6 +109,8 @@ function s.applytg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if tg then
 		tg(e,tp,eg,ep,ev,re,r,rp,1)
 	end
+	eff:SetLabel(e:GetLabel())
+	eff:SetLabelObject(e:GetLabelObject())
 	e:SetLabelObject(eff)
 	Duel.ClearOperationInfo(0)
 end

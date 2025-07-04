@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_BATTLE_DESTROYING)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCondition(aux.bdocon)
-	e2:SetCost(Cost.Detach(1,s.cost,function(e,og) e:SetLabel(#og) end))
+	e2:SetCost(Cost.Detach(1,function(e,tp) return Duel.GetFieldGroupCount(tp,0,LOCATION_DECK) end,function(e,og) e:SetLabel(#og) end))
 	e2:SetTarget(s.target)
 	e2:SetOperation(s.operation)
 	local e3=Effect.CreateEffect(c)
@@ -91,9 +91,6 @@ function s.unop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetReset(RESET_CHAIN)
 		c:RegisterEffect(e2)
 	end
-end
-function s.cost(e,tp)
-	return Duel.GetFieldGroupCount(tp,0,LOCATION_DECK)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(1-tp,1) end

@@ -34,7 +34,7 @@ function s.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_IGNITION)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetCountLimit(1)
-	e4:SetCost(Cost.Detach(s.descost))
+	e4:SetCost(Cost.Detach(function(e,tp) return e:GetHandler():GetOverlayCount() end))
 	e4:SetTarget(s.destg)
 	e4:SetOperation(s.desop)
 	local e5=Effect.CreateEffect(c)
@@ -75,9 +75,6 @@ function s.pcop(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 then
 		Duel.MoveToField(g:GetFirst(),tp,tp,LOCATION_PZONE,POS_FACEUP,true)
 	end
-end
-function s.descost(e,tp)
-	return #e:GetHandler():GetOverlayGroup()
 end
 function s.negfilter(c)
 	return c:IsSpellTrap() and c:IsFaceup() and not c:IsDisabled()

@@ -41,7 +41,7 @@ function s.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_IGNITION)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetLabelObject(e4)
-	e4:SetCost(Cost.Detach(s.spcost)
+	e4:SetCost(Cost.Detach(function(e,tp) return e:GetHandler():GetOverlayCount() end)
 	e4:SetTarget(s.sptg2)
 	e4:SetOperation(s.spop2)
 	local e5=Effect.CreateEffect(c)
@@ -87,9 +87,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 		Duel.Recover(p,d,REASON_EFFECT)
 	end
-end
-function s.spcost(e,tp)
-	return #e:GetHandler():GetOverlayGroup()
 end
 function s.spfilter(c,e,tp)
 	return c:IsCode(48739166) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

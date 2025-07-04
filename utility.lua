@@ -1521,10 +1521,11 @@ end
 local detach_costs={}
 function Cost.Detach(min,max,op)
 	max=max or min
+	
+	local min_type=type(min)
+	local max_type=type(max)
 
 	do --Perform some sanity checks, simplifies debugging
-		local min_type=type(min)
-		local max_type=type(max)
 		local op_type=type(op)
 		if min_type~="number" and min_type~="function" then
 			error("Parameter 1 should be an Integer|function",2)
@@ -1538,19 +1539,11 @@ function Cost.Detach(min,max,op)
 	end
 
 	local function cost_func(e,tp,eg,ep,ev,re,r,rp,chk)
-		if min_type=="function" then min=min(e,tp) end
-		if max_type=="function" then max=max(e,tp) end
-
 		local c=e:GetHandler()
-		local nn=c:IsSetCard(SET_NUMERON) and c:IsType(TYPE_XYZ) and Duel.IsPlayerAffectedByEffect(tp,CARD_NUMERON_NETWORK)
-		local crm=c:CheckRemoveOverlayCard(tp,min,REASON_COST)
-		if chk==0 then return (nn and c:IsLocation(LOCATION_MZONE)) or crm end
-		if nn and (not crm or Duel.SelectYesNo(tp,aux.Stringid(CARD_NUMERON_NETWORK,1))) then
-			--Do not execute `op`, hint at "Numeron Network" being applied
-			return Duel.Hint(HINT_CARD,tp,CARD_NUMERON_NETWORK)
-		end
-
-		if c:RemoveOverlayCard(tp,min,max,REASON_COST)>0 and op then
+		local min_count=min_type=="function" and min(e,tp) or min
+		local max_count=max_type=="function" and max(e,tp) or max
+		if chk==0 then return min_count>0 and c:CheckRemoveOverlayCard(tp,min_count,REASON_COST) end
+		if c:RemoveOverlayCard(tp,min_count,max_count,REASON_COST)>0 and op then
 			op(e,Duel.GetOperatedGroup())
 		end
 	end

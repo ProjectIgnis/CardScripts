@@ -37,7 +37,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.destg)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
-	--Add 1 FIRE Dragon monster from your Deck to your han
+	--Add 1 FIRE Dragon monster from your Deck to your hand
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,3))
 	e4:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)

@@ -57,7 +57,6 @@ function s.applycost(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 	local op=#options==1 and 1 or Duel.SelectEffect(tp,table.unpack(options))
 	local te=effs[op]
-	e:SetProperty(te:IsHasProperty(EFFECT_FLAG_CARD_TARGET) and EFFECT_FLAG_CARD_TARGET or 0)
 	e:SetLabelObject(te)
 	Duel.SendtoGrave(sc,REASON_COST)
 end
@@ -65,8 +64,9 @@ function s.applytg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local te=e:GetLabelObject()
 	if chkc then return te and te:GetTarget() and te:GetTarget()(e,tp,eg,ep,ev,re,r,rp,0,chkc) end
 	if chk==0 then return true end
-	e:SetLabel(0)
-	e:SetLabelObject(nil)
+	e:SetLabel(te:GetLabel())
+	e:SetLabelObject(te:GetLabelObject())
+	e:SetProperty(te:IsHasProperty(EFFECT_FLAG_CARD_TARGET) and EFFECT_FLAG_CARD_TARGET or 0)
 	local tg=te:GetTarget()
 	if tg then
 		tg(e,tp,eg,ep,ev,re,r,rp,1)
@@ -78,6 +78,7 @@ function s.applytg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.applyop(e,tp,eg,ep,ev,re,r,rp)
 	local te=e:GetLabelObject()
+	if not te then return end
 	local op=te:GetOperation()
 	if op then
 		e:SetLabel(te:GetLabel())
@@ -85,6 +86,8 @@ function s.applyop(e,tp,eg,ep,ev,re,r,rp)
 		op(e,tp,eg,ep,ev,re,r,rp)
 	end
 	e:SetProperty(0)
+	e:SetLabel(0)
+	e:SetLabelObject(nil)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

@@ -75,7 +75,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Damage(p,ct*500,REASON_EFFECT)
 end
 function s.damcost(e,tp)
-	return #e:GetHandler():GetOverlayGroup()
+	return e:GetHandler():GetOverlayCount()
 end
 function s.damtg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

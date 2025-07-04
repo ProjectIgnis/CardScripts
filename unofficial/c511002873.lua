@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCost(Cost.Detach(s.eqcost))
+	e2:SetCost(Cost.Detach(function(e,tp) return e:GetHandler():GetOverlayCount() end))
 	e2:SetTarget(s.eqtg)
 	e2:SetOperation(s.eqop)
 	c:RegisterEffect(e2)
@@ -43,9 +43,6 @@ function s.initial_effect(c)
 end
 s.xyz_number=58
 s.listed_series={SET_NUMBER}
-function s.eqcost(e,tp)
-	return #e:GetHandler():GetOverlayGroup()
-end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and chkc:IsFaceup() and chkc~=e:GetHandler() end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0

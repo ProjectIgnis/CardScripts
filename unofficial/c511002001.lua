@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
-	e1:SetCost(Cost.AND(Cost.Detach(s.detachcost),s.lpcost))
+	e1:SetCost(Cost.AND(Cost.Detach(function(e,tp) return e:GetHandler():GetOverlayCount() end),s.lpcost))
 	e1:SetTarget(s.rmtg)
 	e1:SetOperation(s.rmop)
 	c:RegisterEffect(e1)
@@ -29,9 +29,6 @@ s.listed_names={84013237} --"Number 39: Utopia"
 s.listed_series={SET_NUMBER}
 function s.ovfilter(c,tp,lc)
 	return c:IsSummonCode(lc,SUMMON_TYPE_XYZ,tp,84013237) and c:IsFaceup()
-end
-function s.detachcost(e,tp)
-	return #e:GetHandler():GetOverlayGroup()
 end
 function s.lpcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLP(tp)>1 end

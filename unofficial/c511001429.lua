@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1,0,EFFECT_COUNT_CODE_SINGLE)
 	e3:SetCondition(s.indescon)
-	e3:SetCost(Cost.Detach(s.indescost))
+	e3:SetCost(Cost.Detach(function(e,tp) return e:GetHandler():GetOverlayCount() end))
 	e3:SetTarget(s.indestg)
 	e3:SetOperation(s.indesop)
 	local e4=e3:Clone()
@@ -126,9 +126,6 @@ end
 function s.indescon2(e,tp,eg,ep,ev,re,r,rp)
 	local ex,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_DESTROY)
 	return ex and tg and tg:IsContains(e:GetHandler())
-end
-function s.indescost(e,tp)
-	return #e:GetHandler():GetOverlayGroup()
 end
 function s.indestg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

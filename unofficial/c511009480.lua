@@ -51,7 +51,7 @@ function s.initial_effect(c)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetCode(EVENT_CHAINING)
 	e4:SetCondition(s.rmcon)
-	e4:SetCost(Cost.Detach(s.rmcost))
+	e4:SetCost(Cost.Detach(function(e,tp) return e:GetHandler():GetOverlayCount() end))
 	e4:SetTarget(s.rmtg)
 	e4:SetOperation(s.rmop)
 	c:RegisterEffect(e4)
@@ -135,9 +135,6 @@ end
 function s.rmcon(e,tp,eg,ep,ev,re,r,rp,chk)
 	local loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and ep~=tp
-end
-function s.rmcost(e,tp)
-	return #e:GetHandler():GetOverlayGroup()
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and s.filter(chkc) end

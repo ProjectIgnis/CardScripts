@@ -1263,6 +1263,6 @@ do
 		local function other_discard_filter(c)
 			return (c:IsAttribute(attr) or c:IsRace(RACE_DRAGON)) and c:IsDiscardable()
 		end
-		return Cost.AND(discard_with_other_cost(other_discard_filter),Cost.SelfDiscardToGrave)
+		return Cost.AND(discard_with_other_cost(other_discard_filter),Cost.SelfDiscard)
 	end
 end

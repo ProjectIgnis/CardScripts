@@ -4,12 +4,12 @@
 Duel.LoadCardScript("c41309158.lua")
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
-	Xyz.AddProcedure(c,nil,4,3)
 	c:EnableReviveLimit()
+	--Xyz Summon procedure: 3 Level 4 monsters
+	Xyz.AddProcedure(c,nil,4,3)
 	--Rank Up Check
 	aux.EnableCheckRankUp(c,nil,nil,15914410)
-	--damage
+	--Inflict 500 damage to your opponent for each Xyz Material detached
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DAMAGE)
@@ -17,8 +17,8 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetCode(EVENT_BATTLE_DAMAGE)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCondition(s.damcon)
-	e1:SetCost(s.damcost)
+	e1:SetCondition(function(e,tp,eg,ep,ev,re,r,rp) return ep==1-tp end)
+	e1:SetCost(Cost.Detach(s.damcost,s.damcost,function(e,og) e:SetLabel(#og) end))
 	e1:SetTarget(s.damtg)
 	e1:SetOperation(s.damop)
 	local e2=Effect.CreateEffect(c)
@@ -28,15 +28,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={15914410}
-function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp
-end
-function s.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	local ct=c:GetOverlayCount()
-	if chk==0 then return c:CheckRemoveOverlayCard(tp,ct,REASON_COST) end
-	c:RemoveOverlayCard(tp,ct,ct,REASON_COST)
-	e:SetLabel(ct)
+function s.damcost(e,tp)
+	return #e:GetHandler():GetOverlayGroup()
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

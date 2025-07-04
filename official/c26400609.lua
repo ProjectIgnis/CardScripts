@@ -36,7 +36,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.tgtg)
 	e3:SetOperation(s.tgop)
 	c:RegisterEffect(e3)
-	--Add 1 FIRE Dragon monster from your Deck to your han
+	--Add 1 WATER Dragon monster from your Deck to your hand
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,3))
 	e4:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -80,7 +80,7 @@ function s.rthop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	--Excluding itself for a correct interaction with "Chasmatis, Dragon Ruler of Poles"
+	--Excluding itself for a correct interaction with "Chasma, Dragon Ruler of Auroras" [04965193]
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.AND(Card.IsMonster,Card.IsAbleToGrave),tp,LOCATION_DECK,0,1,e:GetHandler()) end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 end

@@ -36,7 +36,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.dthtg)
 	e3:SetOperation(s.dthop)
 	c:RegisterEffect(e3)
-	--Add 1 WIND Dragon monster from your Deck to your han
+	--Add 1 WIND Dragon monster from your Deck to your hand
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,3))
 	e4:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -83,6 +83,7 @@ function s.dthfilter(c)
 	return c:IsRace(RACE_DRAGON) and c:IsAbleToHand()
 end
 function s.dthtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	--Excluding itself for a correct interaction with "Chasma, Dragon Ruler of Auroras" [04965193]
 	if chk==0 then return Duel.IsExistingMatchingCard(s.dthfilter,tp,LOCATION_DECK,0,1,e:GetHandler()) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end

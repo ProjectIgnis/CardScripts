@@ -1461,11 +1461,13 @@ function Cost.SelfTribute(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return c:IsReleasable() end
 	Duel.Release(c,REASON_COST)
 end
+local self_tograve_costs={}
 function Cost.SelfToGrave(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsAbleToGraveAsCost() end
 	Duel.SendtoGrave(c,REASON_COST)
 end
+self_tograve_costs[Cost.SelfToGrave]=true
 function Cost.SelfToHand(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsAbleToHandAsCost() end
@@ -1561,6 +1563,7 @@ local function cost_table_check(t)
 	return function(eff) return t[eff:GetCost()] end
 end
 
+Effect.HasSelfToGraveCost=cost_table_check(self_tograve_costs)
 Effect.HasSelfDiscardCost=cost_table_check(self_discard_costs)
 Effect.HasDetachCost=cost_table_check(detach_costs)
 
@@ -1625,6 +1628,7 @@ function Cost.AND(...)
 	for _,fn in ipairs(fns) do
 		if detach_costs[fn] then detach_costs[full_cost]=true end
 		if self_discard_costs[fn] then self_discard_costs[full_cost]=true end
+		if self_tograve_costs[fn] then self_tograve_costs[full_cost]=true end
 	end
 	return full_cost
 end

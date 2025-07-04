@@ -4,18 +4,18 @@
 Duel.LoadCardScript("c12744567.lua")
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
-	Xyz.AddProcedure(c,nil,5,3)
 	c:EnableReviveLimit()
+	--Xyz Summon procedure: 3 Level 5 monsters
+	Xyz.AddProcedure(c,nil,5,3)
 	--Rank Up Check
 	aux.EnableCheckRankUp(c,nil,nil,48739166)
-	--battle indestructable
+	--Cannot be destroyed by battle except with "Number" monsters
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e1:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,SET_NUMBER)))
 	c:RegisterEffect(e1)
-	--spsummon
+	--Special Summon this card from your GY, and if you do, gain LP equal to its original ATK
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_RECOVER)
@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	--material
+	--Attach 1 monster your opponent controls to this card as material
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetType(EFFECT_TYPE_IGNITION)
@@ -34,14 +34,14 @@ function s.initial_effect(c)
 	e3:SetTarget(s.target)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
-	--spsummon2
+	--Special Summon 1 "Number 101: Silent Honor ARK" from your GY
 	local e4=Effect.CreateEffect(c)
-	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e4:SetDescription(aux.Stringid(id,2))
+	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e4:SetType(EFFECT_TYPE_IGNITION)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetLabelObject(e4)
-	e4:SetCost(s.spcost)
+	e4:SetCost(Cost.Detach(s.spcost)
 	e4:SetTarget(s.sptg2)
 	e4:SetOperation(s.spop2)
 	local e5=Effect.CreateEffect(c)
@@ -88,11 +88,8 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Recover(p,d,REASON_EFFECT)
 	end
 end
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	local ct=c:GetOverlayCount()
-	if chk==0 then return ct>0 and c:CheckRemoveOverlayCard(tp,ct,REASON_COST) end
-	c:RemoveOverlayCard(tp,ct,ct,REASON_COST)
+function s.spcost(e,tp)
+	return #e:GetHandler():GetOverlayGroup()
 end
 function s.spfilter(c,e,tp)
 	return c:IsCode(48739166) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

@@ -4,8 +4,9 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	Pendulum.AddProcedure(c,false)
+	--Xyz Summon procedure: 2 Level 7 Dragon monstes
 	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_DRAGON),7,2)
-	--pendulum set
+	--Place 1 Pendulum Monster from your Deck in your Pendulum Zone
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -14,26 +15,26 @@ function s.initial_effect(c)
 	e1:SetTarget(s.pctg)
 	e1:SetOperation(s.pcop)
 	c:RegisterEffect(e1)
-	--material check
+	--Material check
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_MATERIAL_CHECK)
 	e2:SetValue(s.valcheck)
 	e2:SetLabelObject(e2)
 	c:RegisterEffect(e2)
-	--extra att
+	--This card can make a second attack during each Battle Phase
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetCode(EFFECT_EXTRA_ATTACK)
 	e3:SetValue(1)
-	--destroy
+	--Negate the effects of all face-up Spells/Traps on the field, and if you do, destroy as many other cards on the field as possible, then this card gains 200 ATK for each card destroyed until the end of this turn
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DESTROY)
 	e4:SetType(EFFECT_TYPE_IGNITION)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetCountLimit(1)
-	e4:SetCost(s.descost)
+	e4:SetCost(Cost.Detach(s.descost))
 	e4:SetTarget(s.destg)
 	e4:SetOperation(s.desop)
 	local e5=Effect.CreateEffect(c)
@@ -48,7 +49,7 @@ function s.initial_effect(c)
 	local e6=e5:Clone()
 	e6:SetLabelObject(e4)
 	c:RegisterEffect(e6)
-	--To Pendulum
+	--Destroy as many cards in your Pendulum Zones as possible (min. 1), and if you do, place this card in your Pendulum Zone
 	local e7=Effect.CreateEffect(c)
 	e7:SetDescription(aux.Stringid(id,2))
 	e7:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_SINGLE)
@@ -75,10 +76,8 @@ function s.pcop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.MoveToField(g:GetFirst(),tp,tp,LOCATION_PZONE,POS_FACEUP,true)
 	end
 end
-function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ct=e:GetHandler():GetOverlayCount()
-	if chk==0 then return ct>0 and e:GetHandler():CheckRemoveOverlayCard(tp,ct,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,ct,ct,REASON_COST)
+function s.descost(e,tp)
+	return #e:GetHandler():GetOverlayGroup()
 end
 function s.negfilter(c)
 	return c:IsSpellTrap() and c:IsFaceup() and not c:IsDisabled()

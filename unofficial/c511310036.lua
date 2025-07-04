@@ -58,7 +58,7 @@ function s.regop(e,tp)
 	for allure_card in g:Iter() do
 		local effs={allure_card:GetOwnEffects()}
 		for _,eff in ipairs(effs) do
-			if eff:GetCost()==Cost.SelfToGrave and eff:GetCode()&(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)>0 then
+			if eff:HasSelfToGraveCost() and eff:GetCode()&(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)>0 then
 				allure_card:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1)
 				local condition=eff:GetCondition()
 				--Ignition Effect version of the "Allure Queen" monster's Trigger Effect

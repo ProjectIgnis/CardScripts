@@ -3,9 +3,9 @@
 --Scripted by The Razgriz
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
-	Xyz.AddProcedure(c,nil,3,2)
 	c:EnableReviveLimit()
+	--Xyz Summon procedure: 2 Level 3 monsters
+	Xyz.AddProcedure(c,nil,3,2)
 	--Change battle position/attack target
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_BATTLE_CONFIRM)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCondition(s.condition)
-	e2:SetCost(s.cost)
+	e2:SetCost(Cost.Detach(s.cost))
 	e2:SetTarget(s.target)
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
@@ -56,10 +56,8 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return Duel.GetAttacker()~=c and Duel.GetAttackTarget() and Duel.GetAttackTarget()~=c
 end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	Duel.SendtoGrave(c:GetOverlayGroup(),REASON_COST)
+function s.cost(e,tp)
+	return #e:GetHandler():GetOverlayGroup()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)>0 end

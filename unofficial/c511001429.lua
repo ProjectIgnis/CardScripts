@@ -5,7 +5,7 @@ Duel.LoadCardScript("c67173574.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--Xyz Summon Procedure
+	--Xyz Summon procedure: 4 Level 5 LIGHT monsters
 	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsAttribute,ATTRIBUTE_LIGHT),5,4)
 	--Rank Up Check
 	aux.EnableCheckRankUp(c,nil,nil,49678559)
@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetCost(Cost.Detach(1))
 	e2:SetTarget(s.tg)
 	e2:SetOperation(s.op)
-	--indes
+	--Make this card unable to be destroyed by that battle or effect and inflict damage to your opponent equal to this card's ATK
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_DAMAGE)
@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1,0,EFFECT_COUNT_CODE_SINGLE)
 	e3:SetCondition(s.indescon)
-	e3:SetCost(s.indescost)
+	e3:SetCost(Cost.Detach(s.indescost))
 	e3:SetTarget(s.indestg)
 	e3:SetOperation(s.indesop)
 	local e4=e3:Clone()
@@ -127,11 +127,8 @@ function s.indescon2(e,tp,eg,ep,ev,re,r,rp)
 	local ex,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_DESTROY)
 	return ex and tg and tg:IsContains(e:GetHandler())
 end
-function s.indescost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	local ct=c:GetOverlayCount()
-	if chk==0 then return ct>0 and c:CheckRemoveOverlayCard(tp,ct,REASON_COST) end
-	c:RemoveOverlayCard(tp,ct,ct,REASON_COST)
+function s.indescost(e,tp)
+	return #e:GetHandler():GetOverlayGroup()
 end
 function s.indestg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

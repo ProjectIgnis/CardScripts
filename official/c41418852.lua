@@ -24,11 +24,11 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_OVERLAY_REMOVE_REPLACE)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetCondition(function(e,tp,eg,ep,ev,re,r,rp)
-						local rc=re:GetHandler()
-						return (r&REASON_COST)>0 and re:IsActivated()
-							and re:IsActiveType(TYPE_XYZ) and rc:IsSetCard(SET_NUMERON)
-							and ep==e:GetOwnerPlayer() and ev>=1 and rc:GetOverlayCount()>=ev-1
-					end)
+				local rc=re:GetHandler()
+				return (r&REASON_COST)>0 and re:IsActivated()
+					and re:IsActiveType(TYPE_XYZ) and rc:IsSetCard(SET_NUMERON)
+					and ep==e:GetOwnerPlayer() and ev>=1 and rc:GetOverlayCount()>=ev-1
+			end)
 	e2:SetOperation(function() Duel.Hint(HINT_CARD,0,id) return true end)
 	c:RegisterEffect(e2)
 end

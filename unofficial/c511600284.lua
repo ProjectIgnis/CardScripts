@@ -29,7 +29,7 @@ function s.initial_effect(c)
 end
 s.listed_names={15914410}
 function s.damcost(e,tp)
-	return #e:GetHandler():GetOverlayGroup()
+	return e:GetHandler():GetOverlayCount()
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

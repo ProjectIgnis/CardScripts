@@ -1,11 +1,11 @@
---CNo.73 激瀧瀑神アビス・スープラ
+--ＣＮｏ．７３ 激瀧瀑神アビス・スープラ
 --Number C73: Abyss Supra Splash
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
-	Xyz.AddProcedure(c,nil,6,3)
 	c:EnableReviveLimit()
-	--atk up
+	--Xyz Summon procedure: 3 Level 6 monsters
+	Xyz.AddProcedure(c,nil,6,3)
+	--Your battling monster gains ATK equal to the ATK of the opponent's monster it is battling, during that damage calculation only
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_ATKCHANGE)
@@ -13,45 +13,28 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCondition(s.atkcon)
-	e1:SetCost(s.atkcost)
+	e1:SetCost(Cost.AND(Cost.Detach(1),Cost.SoftOncePerBattle(id)))
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
-	--indes
+	--This card cannot be destroyed by card effects
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e2:SetRange(LOCATION_MZONE)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
-	e2:SetCondition(s.indcon)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetCondition(function(e) return e:GetHandler():GetOverlayGroup():IsExists(Card.IsCode,1,nil,36076683) end)
 	e2:SetValue(1)
 	c:RegisterEffect(e2)
 end
 s.xyz_number=73
-s.listed_names={36076683}
+s.listed_names={36076683} --"Number C73: Abyss Supra Splash"
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	local a=Duel.GetAttacker()
-	local d=Duel.GetAttackTarget()
-	return d and a:GetControler()~=d:GetControler()
-end
-function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:CheckRemoveOverlayCard(tp,1,REASON_COST) and c:GetFlagEffect(id)==0 end
-	c:RemoveOverlayCard(tp,1,1,REASON_COST)
-	c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_DAMAGE_CAL,0,1)
+	local a,b=Duel.GetBattleMonster(tp)
+	return a and b and a:GetControler()~=b:GetControler()
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
-	local a=Duel.GetAttacker()
-	local d=Duel.GetAttackTarget()
-	if not a:IsRelateToBattle() or a:IsFacedown() or not d:IsRelateToBattle() or d:IsFacedown() then return end
-	if a:IsControler(1-tp) then a,d=d,a end
-	local e1=Effect.CreateEffect(e:GetHandler())
-	e1:SetOwnerPlayer(tp)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_UPDATE_ATTACK)
-	e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_DAMAGE_CAL)
-	e1:SetValue(d:GetAttack())
-	a:RegisterEffect(e1)
-end
-function s.indcon(e)
-	return e:GetHandler():GetOverlayGroup():IsExists(Card.IsCode,1,nil,36076683)
+	local a,b=Duel.GetBattleMonster(tp)
+	if a:IsRelateToBattle() and a:IsFaceup() and b:IsRelateToBattle() and b:IsFaceup() then
+		a:UpdateAttack(b:GetAttack(),RESET_PHASE|PHASE_DAMAGE_CAL,e:GetHandler())
+	end
 end

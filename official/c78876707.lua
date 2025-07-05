@@ -4,9 +4,9 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--Xyz Summon Procedure
+	--Xyz Summon procedure: 2+ Level 4 "Noble Knight" monsters
 	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_NOBLE_KNIGHT),4,2,nil,nil,Xyz.InfiniteMats)
-	--Return cards to the hand
+	--Return cards your opponent controls to the hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND)
@@ -14,14 +14,14 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1,id)
-	e1:SetCost(s.thcost)
+	e1:SetCost(Cost.Detach(1,s.thcostmax,function(e,og) e:SetLabel(#og) end))
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
-	--Special Summon 1 "Noble Knight" Xyz Monster from your Extra Deck
+	--Special Summon 1 "Noble Knight" Xyz Monster from your Extra Deck, except "Sacred Noble Knight of King Custennin"
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
-	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_LEAVE_GRAVE)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_TO_GRAVE)
@@ -34,15 +34,10 @@ end
 s.listed_series={SET_NOBLE_KNIGHT}
 s.listed_names={id}
 function s.thfilter(c,e)
-	return c:IsAbleToHand() and (not e or c:IsCanBeEffectTarget(e))
+	return c:IsAbleToHand() and c:IsCanBeEffectTarget(e)
 end
-function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	local g=Duel.GetMatchingGroup(s.thfilter,tp,0,LOCATION_ONFIELD,nil,e)
-	if chk==0 then return #g>0 and c:CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	local rt=math.min(#g,c:GetOverlayCount())
-	local ct=c:RemoveOverlayCard(tp,1,rt,REASON_COST)
-	e:SetLabel(ct)
+function s.thcostmax(e,tp)
+	return Duel.GetMatchingGroupCount(s.thfilter,tp,0,LOCATION_ONFIELD,nil,e)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) and chkc:IsAbleToHand() end
@@ -63,7 +58,8 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsReason(REASON_DESTROY) and c:IsReason(REASON_BATTLE|REASON_EFFECT)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(SET_NOBLE_KNIGHT) and c:IsType(TYPE_XYZ) and not c:IsCode(id) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
+	return c:IsSetCard(SET_NOBLE_KNIGHT) and c:IsType(TYPE_XYZ)
+		and not c:IsCode(id) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

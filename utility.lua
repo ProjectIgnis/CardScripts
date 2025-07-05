@@ -1502,6 +1502,7 @@ function Cost.SelfDiscardToGrave(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return c:IsDiscardable() and c:IsAbleToGraveAsCost() end
 	Duel.SendtoGrave(c,REASON_DISCARD|REASON_COST)
 end
+self_tograve_costs[Cost.SelfDiscardToGrave]=true
 self_discard_costs[Cost.SelfDiscardToGrave]=true
 
 --Aliases for historical reasons:
@@ -1521,7 +1522,7 @@ end
 local detach_costs={}
 function Cost.Detach(min,max,op)
 	max=max or min
-	
+
 	local min_type=type(min)
 	local max_type=type(max)
 
@@ -1542,7 +1543,7 @@ function Cost.Detach(min,max,op)
 		local c=e:GetHandler()
 		local min_count=min_type=="function" and min(e,tp) or min
 		local max_count=max_type=="function" and max(e,tp) or max
-		if chk==0 then return min_count>0 and c:CheckRemoveOverlayCard(tp,min_count,REASON_COST) end
+		if chk==0 then return min_count>0 and max_count>=min_count and c:CheckRemoveOverlayCard(tp,min_count,REASON_COST) end
 		if c:RemoveOverlayCard(tp,min_count,max_count,REASON_COST)>0 and op then
 			op(e,Duel.GetOperatedGroup())
 		end
@@ -1586,20 +1587,32 @@ function Cost.PayLP(lp_value,pay_until)
 	end
 end
 
-function Cost.SoftOncePerChain(flag)
-	return function(e,tp,eg,ep,ev,re,r,rp,chk)
-		local c=e:GetHandler()
-		if chk==0 then return not c:HasFlagEffect(flag) end
-		c:RegisterFlagEffect(flag,RESET_EVENT|RESETS_STANDARD|RESET_CHAIN,0,1)
+local function use_limit_cost(reset,soft)
+	return function(flag,ct)
+		ct=ct or 1
+		return function(e,tp,eg,ep,ev,re,r,rp,chk)
+			local c=e:GetHandler()
+			if chk==0 then return (soft and c:GetFlagEffect(flag) or Duel.GetFlagEffect(tp,flag))<ct end
+			if soft then
+				c:RegisterFlagEffect(flag,RESET_EVENT|RESETS_STANDARD|reset,0,1)
+			else
+				Duel.RegisterFlagEffect(tp,flag,reset,0,1)
+			end
+		end
 	end
 end
 
-function Cost.HardOncePerChain(flag)
-	return function(e,tp,eg,ep,ev,re,r,rp,chk)
-		if chk==0 then return not Duel.HasFlagEffect(tp,flag) end
-		Duel.RegisterFlagEffect(tp,flag,RESET_CHAIN,0,1)
-	end
-end
+Cost.SoftUseLimitPerChain=use_limit_cost(RESET_CHAIN,true)
+Cost.SoftUseLimitPerBattle=use_limit_cost(PHASE_DAMAGE_CAL,true)
+
+Cost.HardUseLimitPerChain=use_limit_cost(RESET_CHAIN)
+Cost.HardUseLimitPerBattle=use_limit_cost(PHASE_DAMAGE_CAL)
+
+--since the ct defaults to one, the "once per chain" variants can be aliases
+Cost.SoftOncePerChain=Cost.SoftUseLimitPerChain
+Cost.SoftOncePerBattle=Cost.SoftUseLimitPerBattle
+Cost.HardOncePerChain=Cost.HardUseLimitPerChain
+Cost.HardOncePerBattle=Cost.HardUseLimitPerBattle
 
 function Cost.AND(...)
 	local fns={...}

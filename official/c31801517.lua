@@ -12,17 +12,19 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCondition(s.atkcon)
+	e1:SetCondition(function(e) return e:GetHandler():IsRelateToBattle() end)
 	e1:SetCost(Cost.AND(Cost.Detach(1),Cost.SoftOncePerBattle(id)))
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
 	--Special Summon this card during your 2nd Standby Phase after activation and double its ATK
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
+	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_ATKCHANGE)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
+	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_DESTROYED)
 	e2:SetCondition(s.spcon)
+	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 	--Any battle damage this card inflicts to your opponent is halved unless it has "Galaxy-Eyes Photon Dragon" as material
@@ -33,42 +35,43 @@ function s.initial_effect(c)
 	e3:SetValue(aux.ChangeBattleDamage(1,HALF_DAMAGE))
 	c:RegisterEffect(e3)
 end
-s.listed_names={CARD_GALAXYEYES_P_DRAGON}
 s.xyz_number=62
-function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	return c==Duel.GetAttacker() or c==Duel.GetAttackTarget()
-end
+s.listed_names={CARD_GALAXYEYES_P_DRAGON}
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and c:IsFaceup() then
 		local rks=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,nil):GetSum(Card.GetRank)
 		if rks>0 then
-			c:UpdateAttack(rks*200,RESET_PHASE|PHASE_DAMAGE_CAL)
+			--This card gains ATK equal to the combined Ranks of all Xyz Monsters currently on the field x 200, during that damage calculation only
+			c:UpdateAttack(rks*200,RESET_EVENT|RESETS_STANDARD_DISABLE|RESET_PHASE|PHASE_DAMAGE_CAL)
 		end
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousControler(tp) and rp==1-tp and c:IsReason(REASON_EFFECT)
-		and c:IsPreviousLocation(LOCATION_MZONE) and c:GetOverlayGroup():IsExists(Card.IsCode,1,nil,CARD_GALAXYEYES_P_DRAGON)
-		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsPreviousControler(tp) and rp==1-tp and c:IsReason(REASON_EFFECT) and c:IsPreviousLocation(LOCATION_MZONE)
+		and c:GetOverlayGroup():IsExists(Card.IsCode,1,nil,CARD_GALAXYEYES_P_DRAGON)
+end
+function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,tp,0)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then
+		c:SetTurnCounter(0)
+		local turn_count=Duel.GetTurnCount()
 		local reset_count=(Duel.IsPhase(PHASE_STANDBY) and Duel.IsTurnPlayer(tp)) and 3 or 2
 		--Special Summon this card during your 2nd Standby Phase after activation
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e1:SetRange(LOCATION_REMOVED|LOCATION_GRAVE)
-		e1:SetCode(EVENT_PHASE|PHASE_STANDBY)
-		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_STANDBY|RESET_SELF_TURN,reset_count)
+		e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
+		e1:SetRange(c:GetLocation())
 		e1:SetCountLimit(1)
-		e1:SetCondition(function(e,tp) return Duel.IsTurnPlayer(tp) end)
+		e1:SetCondition(function(e,tp) return Duel.IsTurnPlayer(tp) and (reset_count==2 or Duel.GetTurnCount()~=turn_count) end)
 		e1:SetOperation(s.standbyspop)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_STANDBY|RESET_SELF_TURN,reset_count)
 		c:RegisterEffect(e1)
-		c:SetTurnCounter(0)
 	end
 end
 function s.standbyspop(e,tp,eg,ep,ev,re,r,rp)
@@ -79,7 +82,6 @@ function s.standbyspop(e,tp,eg,ep,ev,re,r,rp)
 		--Double its ATK
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
 		e1:SetCode(EFFECT_SET_ATTACK)
 		e1:SetValue(c:GetAttack()*2)
 		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)

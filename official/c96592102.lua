@@ -12,7 +12,8 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e1:SetCondition(function(e,tp) return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ) and Duel.GetLP(tp)<=Duel.GetLP(1-tp)-3000 end)
+	e1:SetCondition(function(e) return e:GetHandler():IsXyzSummoned() end)
+	e1:SetTarget(function(e,tp,eg,ep,ev,re,r,rp,chk) if chk==0 then return Duel.GetLP(1-tp)>=Duel.GetLP(tp)+3000 end end)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
 	--Destroy monsters your opponent controls
@@ -30,20 +31,21 @@ end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and c:IsFaceup() then
+		--This card gains 3000 ATK
 		c:UpdateAttack(3000)
 	end
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local g=Duel.GetFieldGroup(tp,0,LOCATION_MZONE)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,e:GetLabel(),0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,e:GetLabel(),tp,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=e:GetLabel()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectMatchingCard(tp,nil,tp,0,LOCATION_MZONE,ct,ct,nil)
-	if #g>0 then
-		Duel.HintSelection(g,true)
+	if #g==ct then
+		Duel.HintSelection(g)
 		Duel.Destroy(g,REASON_EFFECT)
 	end
 end

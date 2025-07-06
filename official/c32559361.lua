@@ -5,7 +5,7 @@ function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--Xyz Summon procedure: 3 Level 10 monsters
 	Xyz.AddProcedure(c,nil,10,3)
-	--Attach battled monster to this card as an Xyz material
+	--Attach an opponent's monster this card battles to this card
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.attachtg)
 	e1:SetOperation(s.attachop)
 	c:RegisterEffect(e1)
-	--Inflict 300 damage to your opponent for each Xyz Material attached to this card
+	--Inflict 300 damage to your opponent for each material attached to this card
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DAMAGE)
@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.dam300tg)
 	e2:SetOperation(s.dam300op)
 	c:RegisterEffect(e2)
-	--Inflict 800 damage to your opponent for each detached material
+	--Inflict 800 damage to your opponent for each material detached
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetCategory(CATEGORY_DAMAGE)
@@ -37,24 +37,19 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.xyz_number=9
-s.listed_names={1992816}
+s.listed_names={1992816} --"Number 9: Dyson Sphere"
 function s.attachtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local tc=e:GetHandler():GetBattleTarget()
-	if chk==0 then return tc and c:IsType(TYPE_XYZ) and not tc:IsType(TYPE_TOKEN) and tc:IsAbleToChangeControler() end
+	if chk==0 then
+		local c=e:GetHandler()
+		local bc=c:GetBattleTarget()
+		return bc and bc:IsControler(1-tp) and bc:IsCanBeXyzMaterial(c,tp,REASON_EFFECT)
+	end
 end
 function s.attachop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local tc=c:GetBattleTarget()
-	if c:IsRelateToEffect(e) and c:IsFaceup() and tc:IsRelateToBattle() and not tc:IsImmuneToEffect(e) then
-		Duel.Overlay(c,tc,true)
-	end
-end
-function s.damtg(amt,ct)
-	return function(e,tp,eg,ep,ev,re,r,rp,chk)
-		local ct=e:GetHandler():GetOverlayCount()
-		if chk==0 then return ct>0 end
-		Duel.SetTargetPlayer(1-tp)
-		Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,ct*300)
+	local bc=c:GetBattleTarget()
+	if c:IsRelateToEffect(e) and bc:IsRelateToBattle() and not bc:IsImmuneToEffect(e) then
+		Duel.Overlay(c,bc,true)
 	end
 end
 function s.dam300tg(e,tp,eg,ep,ev,re,r,rp,chk)

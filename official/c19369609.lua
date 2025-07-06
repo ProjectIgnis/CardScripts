@@ -37,11 +37,11 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return s.filter(chkc) and chkc:IsLocation(LOCATION_ONFIELD) and chkc:IsControler(1-tp) end
+	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) and chkc:IsSpellTrap() and chkc:IsAbleToDeck() end
 	if chk==0 then return Duel.IsExistingTarget(aux.AND(Card.IsSpellTrap,Card.IsAbleToDeck),tp,0,LOCATION_ONFIELD,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectTarget(tp,aux.AND(Card.IsSpellTrap,Card.IsAbleToDeck),tp,0,LOCATION_ONFIELD,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,1,tp,0)
 end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
@@ -49,13 +49,14 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoDeck(tc,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	end
 end
-function s.atkcon(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local bc=Duel.GetBattleMonster(tp)
-	return bc and bc:IsFaceup()
+	return bc and bc:IsFaceup() end bc~=e:GetHandler()
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local bc=Duel.GetBattleMonster(tp)
-	if bc and bc:IsFaceup() and bc:IsRelateToBattle() then
-		bc:UpdateAttack(e:GetLabel()*300,RESET_PHASE|PHASE_END,e:GetHandler())
+	if bc and bc:IsFaceup() and bc:IsControler(tp) and bc:IsRelateToBattle() then
+		--That monster you control gains 300 ATK for each material detached, until the end of this turn
+		bc:UpdateAttack(e:GetLabel()*300,RESETS_STANDARD_PHASE_END,e:GetHandler())
 	end
 end

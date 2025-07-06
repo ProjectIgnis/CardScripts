@@ -27,14 +27,15 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.xyz_number=73
-s.listed_names={36076683} --"Number C73: Abyss Supra Splash"
+s.listed_names={36076683} --"Number 73: Abyss Splash"
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	local a,b=Duel.GetBattleMonster(tp)
-	return a and b and a:GetControler()~=b:GetControler()
+	local bc1,bc2=Duel.GetBattleMonster(tp)
+	return bc1 and bc2 and bc2:GetAttack()>0
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
-	local a,b=Duel.GetBattleMonster(tp)
-	if a:IsRelateToBattle() and a:IsFaceup() and b:IsRelateToBattle() and b:IsFaceup() then
-		a:UpdateAttack(b:GetAttack(),RESET_PHASE|PHASE_DAMAGE_CAL,e:GetHandler())
+	local bc1,bc2=Duel.GetBattleMonster(tp)
+	if bc1:IsRelateToBattle() and bc1:IsFaceup() and bc2:IsRelateToBattle() and bc2:IsFaceup() then
+		--Your battling monster gains ATK equal to the ATK of the opponent's monster it is battling, during that damage calculation only
+		bc1:UpdateAttack(bc2:GetAttack(),RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_DAMAGE_CAL,e:GetHandler())
 	end
 end

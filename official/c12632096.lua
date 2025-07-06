@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--Xyz Summon procedure 3 Level 9 monsters
+	--Xyz Summon procedure: 3 Level 9 monsters
 	Xyz.AddProcedure(c,nil,9,3)
 	--Monsters you control cannot attack your opponent directly for the rest of this turn, except this card, also for each Material detached, take control of 1 opponent's face-up monster until the End Phase
 	local e1=Effect.CreateEffect(c)
@@ -27,11 +27,11 @@ function s.ctcostmax(e,tp)
 end
 function s.cttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_CONTROL,nil,e:GetLabel(),0,0)
+	Duel.SetOperationInfo(0,CATEGORY_CONTROL,nil,e:GetLabel(),tp,0)
 end
 function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local fid=c:GetFieldID()
+	local fid=c:IsRelateToEffect(e) and c:GetFieldID() or -1
 	--Monsters you control cannot attack your opponent directly for the rest of this turn, except this card
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -44,27 +44,25 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=math.min(e:GetLabel(),Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_CONTROL))
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONTROL)
 	local g=Duel.SelectMatchingCard(tp,aux.FaceupFilter(Card.IsAbleToChangeControler),tp,0,LOCATION_MZONE,ct,ct,nil)
-	Duel.GetControl(g,tp,PHASE_END,1)
-	local og=Duel.GetOperatedGroup()
-	if #og==0 then return end
-	for tc in og:Iter() do
-		if tc:IsNegatableMonster() then
-			---Negate their effects
-			tc:NegateEffects(c,RESET_PHASE|PHASE_END)
+	if #g==ct and Duel.GetControl(g,tp,PHASE_END,1) then
+		local og=Duel.GetOperatedGroup()
+		if #og==0 then return end
+		for tc in og:Iter() do
+			---Their effects are negated
+			tc:NegateEffects(c,RESET_CONTROL)
+			--Their ATK's become 4500
+			local e1=Effect.CreateEffect(c)
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+			e1:SetCode(EFFECT_SET_ATTACK_FINAL)
+			e1:SetValue(4500)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_CONTROL)
+			tc:RegisterEffect(e1)
+			--Their names become "Neo Galaxy-Eyes Cipher Dragon"
+			local e2=e1:Clone()
+			e2:SetCode(EFFECT_CHANGE_CODE)
+			e2:SetValue(id)
+			tc:RegisterEffect(e2)
 		end
-		--Their ATK's become 4500
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
-		e1:SetValue(4500)
-		e1:SetReset(RESETS_STANDARD_PHASE_END)
-		tc:RegisterEffect(e1)
-		--Their names become "Neo Galaxy-Eyes Cipher Dragon"
-		local e2=Effect.CreateEffect(c)
-		e2:SetType(EFFECT_TYPE_SINGLE)
-		e2:SetCode(EFFECT_CHANGE_CODE)
-		e2:SetValue(id)
-		e2:SetReset(RESETS_STANDARD_PHASE_END)
-		tc:RegisterEffect(e2)
 	end
 end

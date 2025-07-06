@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetHintTiming(0,TIMING_MAIN_END)
 	e2:SetCondition(s.mtcon)
-	e2:SetCost(s.mtcost)
+	e2:SetCost(Cost.Detach(1))
 	e2:SetTarget(s.mttg)
 	e2:SetOperation(s.mtop)
 	c:RegisterEffect(e2)
@@ -32,10 +32,6 @@ function s.damval(e,re,val,r,rp,rc)
 end
 function s.mtcon(e,tp,eg,ep,ev,re,r,rp)
 	return (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE) or Duel.IsAbleToEnterBP()
-end
-function s.mtcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.mtfilter(c)
 	return c:IsFaceup() and not c:IsHasEffect(EFFECT_EXTRA_ATTACK) and c:GetFlagEffect(id)==0

@@ -22,7 +22,7 @@ s.ritparams={
 	matfilter=aux.FilterBoolFunction(Card.IsLocation,LOCATION_MZONE)
 }
 function s.rescon(sg,tp)
-	return Duel.IsExistingTarget(Card.IsFaceup,tp,0,LOCATION_ONFIELD,1,sg)
+	return Duel.IsExistingTarget(Card.IsFaceup,tp,0,LOCATION_ONFIELD,1,sg+sg:GetFirst():GetEquipGroup())
 end
 function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) and chkc:IsFaceup() end

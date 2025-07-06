@@ -51,7 +51,7 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local bc=Duel.GetBattleMonster(tp)
-	return bc and bc:IsFaceup() end bc~=e:GetHandler()
+	return bc and bc:IsFaceup() and bc~=e:GetHandler()
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local bc=Duel.GetBattleMonster(tp)

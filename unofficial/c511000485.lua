@@ -62,5 +62,5 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoGrave(tc,REASON_EFFECT)
 end
 function s.actcon(e,tp,eg,ep,ev,re,r,rp)
-	return rp==tp and re:GetHandler()==e:GetLabelObject() and re:GetHandler():GetFlagEffect(id>0
+	return rp==tp and re:GetHandler()==e:GetLabelObject() and re:GetHandler():GetFlagEffect(id)>0
 end

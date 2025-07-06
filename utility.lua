@@ -494,10 +494,11 @@ function Card.IsColumn(c,seq,tp,loc)
 	end
 end
 
-function Card.UpdateAttack(c,amt,reset,rc)
+function Card.UpdateAttack(c,amt,reset,rc,reset_count)
 	rc=rc or c
 	local r=(c==rc) and RESETS_STANDARD_DISABLE or RESETS_STANDARD
 	reset=reset or RESET_EVENT+r
+	reset_count=reset_count or 1
 	local atk=c:GetAttack()
 	if atk>=-amt then --If amt is positive, it would become negative and always be lower than or equal to atk, if amt is negative, it would become postive and if it is too much it would be higher than atk
 		local e1=Effect.CreateEffect(rc)
@@ -507,17 +508,18 @@ function Card.UpdateAttack(c,amt,reset,rc)
 			e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
 		end
 		e1:SetValue(amt)
-		e1:SetReset(reset)
+		e1:SetReset(reset,reset_count)
 		c:RegisterEffect(e1)
 		return c:GetAttack()-atk
 	end
 	return 0
 end
 
-function Card.UpdateDefense(c,amt,reset,rc)
+function Card.UpdateDefense(c,amt,reset,rc,reset_count)
 	rc=rc or c
 	local r=(c==rc) and RESETS_STANDARD_DISABLE or RESETS_STANDARD
 	reset=reset or RESET_EVENT+r
+	reset_count=reset_count or 1
 	local def=c:GetDefense()
 	if def and def>=-amt then --See Card.UpdateAttack
 		local e1=Effect.CreateEffect(rc)
@@ -527,7 +529,7 @@ function Card.UpdateDefense(c,amt,reset,rc)
 			e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
 		end
 		e1:SetValue(amt)
-		e1:SetReset(reset)
+		e1:SetReset(reset,reset_count)
 		c:RegisterEffect(e1)
 		return c:GetDefense()-def
 	end

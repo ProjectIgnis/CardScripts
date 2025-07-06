@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_IGNITION)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetCountLimit(1)
-	e4:SetCost(s.cost)
+	e4:SetCost(Cost.Detach(1))
 	e4:SetTarget(s.target)
 	e4:SetOperation(s.operation)
 	c:RegisterEffect(e4)
@@ -39,10 +39,6 @@ function s.bttg(e,c)
 end
 function s.atkfilter(e,c)
 	return c:IsSpecialSummoned()
-end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.filter(c)
 	return c:IsSpecialSummoned() and c:IsFaceup() and c:GetAttack()>0

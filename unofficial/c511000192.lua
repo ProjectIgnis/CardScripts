@@ -39,7 +39,7 @@ function s.initial_effect(c)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e4:SetCountLimit(1)
-	e4:SetCost(s.cost)
+	e4:SetCost(Cost.Detach(1))
 	e4:SetOperation(s.op2)
 	c:RegisterEffect(e4)
 	--Prevent Effect damage
@@ -49,7 +49,7 @@ function s.initial_effect(c)
 	e5:SetCode(EVENT_FREE_CHAIN)
 	e5:SetRange(LOCATION_MZONE)
 	e5:SetCountLimit(1)
-	e5:SetCost(s.cost)
+	e5:SetCost(Cost.Detach(1))
 	e5:SetOperation(s.op3)
 	c:RegisterEffect(e5)
 end
@@ -68,10 +68,6 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	if bc and bc:IsRelateToBattle() then
 		Duel.GetControl(bc,tp,PHASE_BATTLE,1)
 	end
-end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.op2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

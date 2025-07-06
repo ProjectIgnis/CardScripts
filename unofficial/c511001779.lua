@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCost(s.cost)
+	e1:SetCost(Cost.Detach(1))
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
@@ -22,10 +22,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.xyz_number=19
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
-end
 function s.filter(c)
 	local g=c:GetMaterial():Filter(Card.IsLocation,nil,LOCATION_GRAVE)
 	return c:IsFaceup() and c:IsType(TYPE_XYZ) and #g>0

@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetDescription(aux.Stringid(95100120,0))
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCost(s.adcost)
+	e1:SetCost(Cost.Detach(1))
 	e1:SetTarget(s.adtg)
 	e1:SetOperation(s.adop)
 	c:RegisterEffect(e1)
@@ -32,10 +32,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.xyz_number=52
-function s.adcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
-end
 function s.adtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return e:GetHandler():IsDefenseAbove(100) end
 end

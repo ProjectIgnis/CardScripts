@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_CHAINING)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCost(s.negcost)
+	e2:SetCost(Cost.Detach(1))
 	e2:SetCondition(s.negcon)
 	e2:SetTarget(s.negtg)
 	e2:SetOperation(s.negop)
@@ -81,10 +81,6 @@ function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	local eb,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_TOHAND)
 	if eb and tg and tg:IsContains(e:GetHandler()) then return true end
 	return eb and tg and tg:IsContains(e:GetHandler())
-end
-function s.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_DAMAGE_STEP_END)
 	e3:SetCondition(s.atcon)
-	e3:SetCost(s.atcost)
+	e3:SetCost(Cost.Detach(1))
 	e3:SetOperation(s.atop)
 	c:RegisterEffect(e3)
 	--remove
@@ -92,10 +92,6 @@ end
 function s.atcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return Duel.GetAttacker()==c and c:CanChainAttack()
-end
-function s.atcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.atop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ChainAttack()

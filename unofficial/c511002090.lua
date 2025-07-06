@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetCountLimit(1)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCost(s.lpcost)
+	e2:SetCost(Cost.Detach(1))
 	e2:SetOperation(s.lpop)
 	c:RegisterEffect(e2)
 	--lp - 0 materials
@@ -108,10 +108,6 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsFaceup() and c:IsRelateToEffect(e) and tc and tc:IsRelateToEffect(e) then
 		s.equipop(c,e,tp,tc)
 	end
-end
-function s.lpcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.lpop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SetLP(1-tp,Duel.GetLP(1-tp)/2)

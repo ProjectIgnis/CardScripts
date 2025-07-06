@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetDescription(aux.Stringid(10389142,0))
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCost(s.spcost)
+	e1:SetCost(Cost.Detach(1))
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
@@ -23,10 +23,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.xyz_number=42
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
-end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,10389143,0,TYPES_TOKEN,2000,0,6,RACE_MACHINE,ATTRIBUTE_WIND) end

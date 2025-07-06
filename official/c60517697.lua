@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--Xyz Summon procedure: 3 Level 7 monsters
+	--Xyz Summon procedure: 3 Level 7 monsters OR 1 "Atlantean" or "Mermail" Xyz Monster you control
 	Xyz.AddProcedure(c,nil,7,3,s.ovfilter,aux.Stringid(id,0),3,s.xyzop)
 	--Return up to 3 cards your opponent controls to the hand
 	local e1=Effect.CreateEffect(c)
@@ -13,9 +13,9 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
-	e1:SetCost(s.thcost)
-	e1:SetTarget(s.thtg)
-	e1:SetOperation(s.thop)
+	e1:SetCost(Cost.AND(Cost.Detach(2),s.rthcost))
+	e1:SetTarget(s.rthtg)
+	e1:SetOperation(s.rthop)
 	c:RegisterEffect(e1)
 	--Special Summon 3 Level 3 or lower Fish, Sea Serpent, and/or Aqua monsters from your hand and/or GY.
 	local e2=Effect.CreateEffect(c)
@@ -33,30 +33,26 @@ end
 s.listed_series={SET_ATLANTEAN,SET_MERMAIL}
 s.listed_names={id}
 function s.ovfilter(c,tp,lc)
-	return c:IsFaceup() and c:IsSetCard(s.listed_series,lc,SUMMON_TYPE_XYZ,tp) and c:IsType(TYPE_XYZ,lc,SUMMON_TYPE_XYZ,tp) 
+	return c:IsSetCard(s.listed_series,lc,SUMMON_TYPE_XYZ,tp) and c:IsType(TYPE_XYZ,lc,SUMMON_TYPE_XYZ,tp) and c:IsFaceup()
 end
 function s.xyzop(e,tp,chk)
 	if chk==0 then return not Duel.HasFlagEffect(tp,id) end
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,EFFECT_FLAG_OATH,1)
-	return true
+	return Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,EFFECT_FLAG_OATH,1)
 end
-function s.thcostfilter(c)
+function s.rthcostfilter(c)
 	return c:IsAttribute(ATTRIBUTE_WATER) and c:IsAbleToGraveAsCost()
 end
-function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:CheckRemoveOverlayCard(tp,2,REASON_COST)
-		and Duel.IsExistingMatchingCard(s.thcostfilter,tp,LOCATION_HAND|LOCATION_DECK,0,1,nil) end
-	c:RemoveOverlayCard(tp,2,2,REASON_COST)
+function s.rthcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.rthcostfilter,tp,LOCATION_HAND|LOCATION_DECK,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,s.thcostfilter,tp,LOCATION_HAND|LOCATION_DECK,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.rthcostfilter,tp,LOCATION_HAND|LOCATION_DECK,0,1,1,nil)
 	Duel.SendtoGrave(g,REASON_COST)
 end
-function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.rthtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToHand,tp,0,LOCATION_ONFIELD,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,1-tp,LOCATION_ONFIELD)
 end
-function s.thop(e,tp,eg,ep,ev,re,r,rp)
+function s.rthop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToHand,tp,0,LOCATION_ONFIELD,1,3,nil)
 	if #g>0 then

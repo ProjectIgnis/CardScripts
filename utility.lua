@@ -1592,7 +1592,7 @@ local function use_limit_cost(reset,soft)
 		ct=ct or 1
 		return function(e,tp,eg,ep,ev,re,r,rp,chk)
 			local c=e:GetHandler()
-			if chk==0 then return (soft and c:GetFlagEffect(flag) or Duel.GetFlagEffect(tp,flag))<ct end
+			if chk==0 then return (soft and not c:HasFlagEffect(flag,ct)) or (not soft and not Duel.HasFlagEffect(tp,flag,ct)) end
 			if soft then
 				c:RegisterFlagEffect(flag,RESET_EVENT|RESETS_STANDARD|reset,0,1)
 			else
@@ -1603,10 +1603,10 @@ local function use_limit_cost(reset,soft)
 end
 
 Cost.SoftUseLimitPerChain=use_limit_cost(RESET_CHAIN,true)
-Cost.SoftUseLimitPerBattle=use_limit_cost(PHASE_DAMAGE_CAL,true)
+Cost.SoftUseLimitPerBattle=use_limit_cost(RESET_PHASE|PHASE_DAMAGE,true)
 
 Cost.HardUseLimitPerChain=use_limit_cost(RESET_CHAIN)
-Cost.HardUseLimitPerBattle=use_limit_cost(PHASE_DAMAGE_CAL)
+Cost.HardUseLimitPerBattle=use_limit_cost(RESET_PHASE|PHASE_DAMAGE)
 
 --since the ct defaults to one, the "once per chain" variants can be aliases
 Cost.SoftOncePerChain=Cost.SoftUseLimitPerChain

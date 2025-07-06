@@ -1,3 +1,4 @@
+--潜入！スパイ・ヒーロー
 --Spy Hero
 local s,id=GetID()
 function s.initial_effect(c)
@@ -12,43 +13,54 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-function s.cfilter(c)
-	return c:IsAbleToGrave()
-end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_DECK,0,2,nil) end
-	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_DECK,0,nil):RandomSelect(tp,2)
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_DECK,0,2,nil) end
+	local g=Duel.GetMatchingGroup(Card.IsAbleToGraveAsCost,tp,LOCATION_DECK,0,nil):RandomSelect(tp,2)
 	Duel.SendtoGrave(g,REASON_COST)
 end
-function s.filter(c)
-	return c:IsSpell() and c:IsAbleToHand()
-end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chkc then return chkc:GetLocation()==LOCATION_GRAVE and chkc:GetControler()~=tp and s.filter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,0,LOCATION_GRAVE,1,nil) end
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(1-tp) and chkc:IsSpell() and chkc:IsAbleToHand() end
+	if chk==0 then return Duel.IsExistingTarget(aux.AND(Card.IsSpell,Card.IsAbleToHand),tp,0,LOCATION_GRAVE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectTarget(tp,s.filter,tp,0,LOCATION_GRAVE,1,1,nil)
+	local g=Duel.SelectTarget(tp,aux.AND(Card.IsSpell,Card.IsAbleToHand),tp,0,LOCATION_GRAVE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,#g,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) then
 		Duel.SendtoHand(tc,tp,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,tc)
+		tc:RegisterFlagEffect(id,RESET_EVENT|RESET_TOGRAVE|RESET_REMOVE|RESET_TEMP_REMOVE|RESET_TODECK|RESET_PHASE|PHASE_END,0,1)
+		--Send this card back to your opponent's GY if you do not use it from your hand
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 		e1:SetCode(EVENT_PHASE+PHASE_END)
 		e1:SetCountLimit(1)
-		e1:SetReset(RESET_PHASE+PHASE_END)
+		e1:SetCondition(s.tgcon)
+		e1:SetOperation(s.tgop)
 		e1:SetLabelObject(tc)
-		e1:SetOperation(s.retop)
+		e1:SetReset(RESET_EVENT|RESET_TOGRAVE|RESET_REMOVE|RESET_TEMP_REMOVE|RESET_TODECK|RESET_PHASE|PHASE_END)
 		Duel.RegisterEffect(e1,tp)
+		--Reset the effect if you activate the added card
+		local e2=Effect.CreateEffect(e:GetHandler())
+		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		e2:SetCode(EVENT_CHAINING)
+		e2:SetCondition(s.actcon)
+		e2:SetOperation(function(e) e:Reset() end)
+		e2:SetLabelObject(tc)
+		e2:SetReset(RESET_PHASE|PHASE_END)
+		Duel.RegisterEffect(e2,tp)
 	end
 end
-function s.retop(e,tp,eg,ep,ev,re,r,rp)
+function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
-	if tc and tc:IsLocation(LOCATION_HAND|LOCATION_SZONE) and tc:IsControler(tp) then
-		Duel.SendtoHand(tc,nil,REASON_EFFECT)
-		Duel.ConfirmCards(tp,tc)
-	end
+	return tc:GetControler()~=tc:GetOwner() and tc:GetFlagEffect(id)>0
+end
+function s.tgop(e,tp,eg,ep,ev,re,r,rp)
+	local tc=e:GetLabelObject()
+	Duel.SendtoGrave(tc,REASON_EFFECT)
+end
+function s.actcon(e,tp,eg,ep,ev,re,r,rp)
+	return rp==tp and re:GetHandler()==e:GetLabelObject() and re:GetHandler():GetFlagEffect(id>0
 end

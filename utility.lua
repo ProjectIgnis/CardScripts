@@ -1639,6 +1639,37 @@ function Cost.AND(...)
 	return full_cost
 end
 
+function Cost.Choice(...)
+    --{ { cost_function, desc, additional_check } }
+    local choices={...}
+
+    local function full_cost(e,tp,eg,ep,ev,re,r,rp,chk)
+        local ops={}
+        local has_choice=false
+        for _,choice in ipairs(choices) do
+            local fn,desc,additional_check=table.unpack(choice)
+            local check=fn(e,tp,eg,ep,ev,re,r,rp,0) and (not additional_check or additional_check(e,tp,eg,ep,ev,re,r,rp,0))
+            table.insert(ops,{check,desc})
+            has_choice=has_choice or check
+        end
+
+        if chk==0 then return has_choice end
+
+        local op=Duel.SelectEffect(tp,table.unpack(ops))
+        choices[op][1](e,tp,eg,ep,ev,re,r,rp,1)
+        e:SetLabel(op)
+    end
+
+    detach_costs[full_cost]=true
+    self_discard_costs[full_cost]=true
+    for _,choice in ipairs(choices) do
+        local fn=choice[1]
+        if not detach_costs[fn] then detach_costs[full_cost]=false end
+        if not self_discard_costs[fn] then self_discard_costs[full_cost]=false end
+    end
+
+    return full_cost
+end
 
 function Card.EquipByEffectLimit(e,c)
 	if e:GetOwner()~=c then return false end

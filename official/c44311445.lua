@@ -2,11 +2,12 @@
 --Madolche Puddingcess Chocolat-a-la-Mode
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
-	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsAttribute,ATTRIBUTE_EARTH),5,2,s.ovfilter,aux.Stringid(id,0))
 	c:EnableReviveLimit()
-	--todeck
+	--xyz Summon procedure: 2 Level 5 EARTH monsters OR 1 Rank 4 or lower "Madolche" Xyz Monster you control
+	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsAttribute,ATTRIBUTE_EARTH),5,2,s.ovfilter,aux.Stringid(id,0))
+	--Shuffle 1 "Madolche" card from your GY into the Deck
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TODECK)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -15,22 +16,24 @@ function s.initial_effect(c)
 	e1:SetTarget(s.tdtg)
 	e1:SetOperation(s.tdop)
 	c:RegisterEffect(e1)
-	--spsummon
+	--Special Summon 1 "Madolche" monster from your Deck in Attack Position or face-down Defense Position
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e2:SetRange(LOCATION_MZONE)
 	e2:SetCode(EVENT_TO_DECK)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetCountLimit(1,0,EFFECT_COUNT_CODE_CHAIN)
 	e2:SetCondition(s.spcon)
-	e2:SetCost(s.spcost)
+	e2:SetCost(Cost.Detach(1))
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_MADOLCHE}
-s.listed_names={74641045}
+s.listed_names={74641045} --"Madolche Puddingcess"
 function s.ovfilter(c,tp,lc)
-	return c:IsFaceup() and c:IsRankBelow(4) and c:IsSetCard(SET_MADOLCHE,lc,SUMMON_TYPE_XYZ,tp)
+	return c:IsRankBelow(4) and c:IsSetCard(SET_MADOLCHE,lc,SUMMON_TYPE_XYZ,tp) and c:IsFaceup()
 end
 function s.tdfilter(c)
 	return c:IsSetCard(SET_MADOLCHE) and c:IsAbleToDeck()
@@ -40,7 +43,7 @@ function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingTarget(s.tdfilter,tp,LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectTarget(tp,s.tdfilter,tp,LOCATION_GRAVE,0,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,1,tp,0)
 end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
@@ -48,18 +51,12 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoDeck(tc,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	end
 end
-function s.cfilter(c,tp)
-	return c:IsSetCard(SET_MADOLCHE) and c:IsLocation(LOCATION_DECK)
-		and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_GRAVE)
+function s.spconfilter(c,tp)
+	return c:IsSetCard(SET_MADOLCHE) and c:IsLocation(LOCATION_DECK) and c:IsPreviousControler(tp)
+		and c:IsPreviousLocation(LOCATION_GRAVE)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetOverlayGroup():IsExists(Card.IsCode,1,nil,74641045) and eg:IsExists(s.cfilter,1,nil,tp)
-end
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:CheckRemoveOverlayCard(tp,1,REASON_COST) and c:GetFlagEffect(id)==0 end
-	c:RemoveOverlayCard(tp,1,1,REASON_COST)
-	c:RegisterFlagEffect(id,RESET_CHAIN,0,1)
+	return e:GetHandler():GetOverlayGroup():IsExists(Card.IsCode,1,nil,74641045) and eg:IsExists(s.spconfilter,1,nil,tp)
 end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(SET_MADOLCHE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_ATTACK|POS_FACEDOWN_DEFENSE)
@@ -72,11 +69,9 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
-	local tc=g:GetFirst()
-	if tc and  Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP_ATTACK|POS_FACEDOWN_DEFENSE)~=0 then
-		if tc:IsFacedown() then
-			Duel.ConfirmCards(1-tp,tc)
-		end
+	local sc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp):GetFirst()
+	if sc and Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP_ATTACK|POS_FACEDOWN_DEFENSE)>0
+		and sc:IsFacedown() then
+		Duel.ConfirmCards(1-tp,tc)
 	end
 end

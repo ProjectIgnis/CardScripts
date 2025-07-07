@@ -36,9 +36,11 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		{b2,aux.Stringid(id,2)},
 		{true,aux.Stringid(id,3)})
 	e:SetLabel(op)
+	e:SetProperty(0)
 	if op==1 then
 		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 	elseif op==2 then
+		e:SetProperty(EFFECT_FLAG_CARD_TARGET)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONTROL)
 		local g=Duel.SelectTarget(tp,s.ctfilter,tp,0,LOCATION_MZONE,1,1,nil)
 		Duel.SetOperationInfo(0,CATEGORY_CONTROL,g,1,0,0)
@@ -60,6 +62,7 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 		if tc:IsRelateToEffect(e) then
 			Duel.GetControl(tc,tp)
 		end
+		e:SetProperty(0)
 	elseif op==3 then
 		local c=e:GetHandler()
 		--Dragon-Type monsters your opponent controls cannot activate their effects until the end of your opponent's turn

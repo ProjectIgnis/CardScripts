@@ -1509,6 +1509,12 @@ self_discard_costs[Cost.SelfDiscardToGrave]=true
 Cost.SelfRelease=Cost.SelfTribute
 Auxiliary.bfgcost=Cost.SelfBanish
 
+
+function Cost.HintSelectedEffect(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
+end
+
 function Cost.Discard(filter,other,count)
 	count=count or 1
 	filter=filter and aux.AND(filter,Card.IsDiscardable) or Card.IsDiscardable

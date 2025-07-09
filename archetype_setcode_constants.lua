@@ -597,4 +597,4 @@ SET_DOOM_KING                     = 0x1c8
 SET_MAGNIFISTORM                  = 0x1c9
 SET_RB                            = 0x1ca
 SET_DOOM_Z                        = 0x1cb
-
+SET_HECATONCHEIRE                 = 0x1cc

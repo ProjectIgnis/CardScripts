@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
-	e1:SetHintTiming(TIMING_DAMAGE_STEP)
+	e1:SetHintTiming(TIMING_DAMAGE_STEP|TIMING_SSET,TIMING_DAMAGE_STEP|TIMING_SSET|TIMING_STANDBY_PHASE|TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E)
 	e1:SetCost(Cost.Detach(1))
 	e1:SetTarget(s.efftg)
 	e1:SetOperation(s.effop)
@@ -21,7 +21,7 @@ function s.initial_effect(c)
 end
 s.xyz_number=87
 function s.setfilter(c)
-	return c:IsFaceup() and c:IsRace(RACE_PLANT) and c:IsCanTurnSet()
+	return c:IsRace(RACE_PLANT) and c:IsCanTurnSet()
 end
 function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then
@@ -34,10 +34,10 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 			return chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup()
 		end
 	end
-	local not_dmg_step=Duel.GetCurrentPhase()~=PHASE_DAMAGE
+	local not_dmg_step=not Duel.IsPhase(PHASE_DAMAGE)
 	local b1=not_dmg_step and Duel.IsExistingTarget(Card.IsFacedown,tp,0,LOCATION_SZONE,1,nil)
 	local b2=not_dmg_step and Duel.IsExistingTarget(s.setfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
-	local b3=aux.StatChangeDamageStepCondition(e,tp,eg,ep,ev,re,r,rp)
+	local b3=aux.StatChangeDamageStepCondition()
 		and Duel.IsExistingTarget(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 	if chk==0 then return b1 or b2 or b3 end
 	local op=Duel.SelectEffect(tp,
@@ -53,34 +53,35 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		e:SetCategory(CATEGORY_POSITION)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
 		local g=Duel.SelectTarget(tp,s.setfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
-		Duel.SetOperationInfo(0,CATEGORY_POSITION,g,1,0,0)
+		Duel.SetOperationInfo(0,CATEGORY_POSITION,g,1,tp,0)
 	elseif op==3 then
 		e:SetCategory(CATEGORY_ATKCHANGE)
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATKDEF)
 		Duel.SelectTarget(tp,Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
 	end
 end
 function s.effop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not tc:IsRelateToEffect(e) then return end
-	local c=e:GetHandler()
 	local op=e:GetLabel()
+	local c=e:GetHandler()
 	if op==1 then
 		--Target 1 Set Spell/Trap your opponent controls; while this card is face-up on the field, that Set card cannot be activated
 		if c:IsRelateToEffect(e) and tc:IsFacedown() then
 			c:SetCardTarget(tc)
+			--While this card is face-up on the field, that Set card cannot be activated
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetProperty(EFFECT_FLAG_OWNER_RELATE)
 			e1:SetCode(EFFECT_CANNOT_TRIGGER)
-			e1:SetCondition(function(e) return e:GetOwner():IsHasCardTarget(e:GetHandler()) end)
+			e1:SetCondition(function() return c:IsHasCardTarget(tc) and tc:IsFacedown() end)
 			e1:SetValue(1)
 			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 			tc:RegisterEffect(e1)
 		end
 	elseif op==2 then
 		--Target 1 Plant monster on the field; change that target to face-down Defense Position
-		if tc:IsFaceup() then
+		if tc:IsRace(RACE_PLANT) then
 			Duel.ChangePosition(tc,POS_FACEDOWN_DEFENSE)
 		end
 	elseif op==3 then

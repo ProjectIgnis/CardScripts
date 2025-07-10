@@ -53,7 +53,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g2=Duel.GetMatchingGroup(s.cfilter,tp,locs,0,nil,SET_PATISSCIEL)
 	local g=g1+g2
 	if chk==0 then return #g1>0 and #g2>0
-		and Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
+		and not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
 		and aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,0) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,tp,locs)
 end

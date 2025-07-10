@@ -62,7 +62,7 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 	elseif op==2 then
 		--Target 1 Dragon monster your opponent controls; take control of that target
 		local tc=Duel.GetFirstTarget()
-		if tc:IsRelateToEffect(e) and tc:IsRace(RACE_DRAGON) then
+		if tc:IsRelateToEffect(e) and tc:IsRace(RACE_DRAGON) and tc:IsFaceup() then
 			Duel.GetControl(tc,tp)
 		end
 	elseif op==3 then

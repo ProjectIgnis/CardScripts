@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetOperation(s.chainop)
 	c:RegisterEffect(e2)
-	--Attach 1 Xyz Monster from your Extra Deck or GY to a Xyz Monster(s) is Special Summoned to your field
+	--Attach 1 Xyz Monster from your Extra Deck or GY to a Xyz Monster(s) Special Summoned to your field
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)

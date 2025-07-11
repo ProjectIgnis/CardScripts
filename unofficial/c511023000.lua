@@ -13,15 +13,10 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCost(s.copycost)
+	e1:SetCost(Cost.Detach(1))
 	e1:SetTarget(s.copytg)
 	e1:SetOperation(s.copyop)
 	c:RegisterEffect(e1)
-end
-function s.copycost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	c:RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.copyfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_EFFECT) and not c:IsType(TYPE_TRAPMONSTER) and not c:IsType(TYPE_TOKEN) 

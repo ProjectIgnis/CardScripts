@@ -11,7 +11,10 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_COUNTER)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_BE_BATTLE_TARGET)
-	e1:SetCost(s.cost)
+	e1:SetCost(Cost.Choice(
+		{Cost.Detach(1),aux.Stringid(id,1),
+		{s.cost,aux.Stringid(id,2)}
+	))
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
@@ -25,14 +28,7 @@ end
 s.xyz_number=2
 s.counter_place_list={0x1101}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local op1Con=e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST)
-	local op2Con=Duel.GetAttacker():GetCounter(0x1101)>0
-	if chk==0 then return op1Con or op2Con end
-	local op=Duel.SelectEffect(tp,{op1Con,aux.Stringid(id,1)},{op2Con,aux.Stringid(id,2)})
-	if op==1 then
-		e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
-	end
-	e:SetLabel(op)
+	if chk==0 then return Duel.GetAttacker():GetCounter(0x1101)>0 end
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

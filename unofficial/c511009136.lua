@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetCountLimit(1)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCost(s.cost)
+	e1:SetCost(Cost.Detach(s.cost,s.cost))
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	local e2=Effect.CreateEffect(c)
@@ -59,10 +59,8 @@ function s.valcheck(e,c)
 		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD_DISABLE-RESET_TOFIELD,0,1)
 	end
 end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ct=e:GetHandler():GetOverlayCount()
-	if chk==0 then return ct>0 and e:GetHandler():CheckRemoveOverlayCard(tp,ct,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,ct,ct,REASON_COST)
+function s.cost(e,tp)
+	return e:GetHandler():GetOverlayCount()
 end
 function s.filter(c)
 	return c:IsFaceup() and c:IsControlerCanBeChanged()

@@ -1,6 +1,5 @@
 --ＣＸ 冀望皇バリアン (Anime)
 --CXyz Barian Hope (Anime)
---Rescripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -18,10 +17,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e0a)
 	local e0b=e0a:Clone()
 	e0b:SetCode(EFFECT_XYZ_LEVEL)
-	e0b:SetValue(function(e,mc,rc)
-		if rc==e:GetHandler() then return 7,mc:GetLevel() end
-		return mc:GetLevel()
-	end)
+	e0b:SetValue(function(e,mc,rc) return rc==e:GetHandler() and 7,mc:GetLevel() or mc:GetLevel() end)
 	c:RegisterEffect(e0b)
 	--This card's ATK is equal to the number of Xyz Materials attached to it x 1000
 	local e1=Effect.CreateEffect(c)

@@ -31,8 +31,7 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1,0,EFFECT_COUNT_CODE_SINGLE)
 	e3:SetCondition(s.indescon)
-	e3:SetCost(s.indescost)
-	e3:SetTarget(s.indestg)
+	e3:SetCost(Cost.Detach(s.indescost,s.indescost))
 	e3:SetOperation(s.indesop)
 	c:RegisterEffect(e3)
 	--Detach all materials from this to prevent this card's destruction (Card effect)
@@ -104,14 +103,8 @@ function s.indescon2(e,tp,eg,ep,ev,re,r,rp)
 	local ex,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_DESTROY)
 	return ex and tg and tg:IsContains(e:GetHandler())
 end
-function s.indescost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	local ct=c:GetOverlayCount()
-	if chk==0 then return ct>0 and c:CheckRemoveOverlayCard(tp,ct,REASON_COST) end
-	c:RemoveOverlayCard(tp,ct,ct,REASON_COST)
-end
-function s.indestg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
+function s.indescost(e,tp)
+	return e:GetHandler():GetOverlayCount()
 end
 function s.indesop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

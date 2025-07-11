@@ -58,7 +58,7 @@ function s.initial_effect(c)
 	e5:SetDescription(aux.Stringid(id,3))
 	e5:SetType(EFFECT_TYPE_IGNITION)
 	e5:SetRange(LOCATION_MZONE)
-	e5:SetCost(s.lpcost)
+	e5:SetCost(Cost.AND(Cost.Detach(3),s.lpcost))
 	e5:SetTarget(s.lptg)
 	e5:SetOperation(s.lpop)
 	--spsummon
@@ -88,7 +88,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e10)
 	local e11=e7:Clone()
 	e11:SetLabelObject(e5)
-	c:RegisterEffect(e11)
+	c:RegisterEffect(e11,false,EFFECT_MARKER_DETACH_XMAT)
 	local e12=e7:Clone()
 	e12:SetLabelObject(e6)
 	c:RegisterEffect(e12)
@@ -163,15 +163,14 @@ function s.lptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLP(1-tp)~=1 end
 end
 function s.lpcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:CheckRemoveOverlayCard(tp,3,REASON_COST) and Duel.GetActivityCount(tp,ACTIVITY_ATTACK)==0 end
-	c:RemoveOverlayCard(tp,3,3,REASON_COST)
+	if chk==0 then return Duel.GetActivityCount(tp,ACTIVITY_ATTACK)==0 end
+	--You canno declare an attack during the turn you activate this effect
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetCode(EFFECT_CANNOT_ATTACK_ANNOUNCE)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
+	e1:SetCode(EFFECT_CANNOT_ATTACK_ANNOUNCE)
 	e1:SetTargetRange(1,0)
-	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.lpop(e,tp,eg,ep,ev,re,r,rp)

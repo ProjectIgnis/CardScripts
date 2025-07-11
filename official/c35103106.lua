@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetCondition(function(e) return e:GetHandler():GetOverlayCount()>0 end)
 	e1:SetValue(function(e,re,rp) return rp==1-e:GetHandlerPlayer() and re:IsMonsterEffect() end)
 	c:RegisterEffect(e1)
-	--Negate the effects of 1 face-up card your opponent controls
+	--Negate the effects of 1 face-up card your opponent controls until the end of this turn
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_DISABLE)
@@ -23,26 +23,27 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCode(EVENT_CHAINING)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCondition(function(_,tp,_,_,_,_,_,rp) return rp==1-tp end)
-	e2:SetCost(Cost.Detach(s.negcostmin,2))
-	e2:SetTarget(s.negtg)
-	e2:SetOperation(s.negop)
+	e2:SetCondition(function(e,tp,eg,ep,ev,re,r,rp) return rp==1-tp end)
+	e2:SetCost(Cost.Detach(s.discostmin,2))
+	e2:SetTarget(s.distg)
+	e2:SetOperation(s.disop)
 	c:RegisterEffect(e2)
 end
-function s.negcostmin(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.discostmin(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=e:GetHandler():GetOverlayGroup()
 	return #g==g:FilterCount(Card.IsRace,nil,RACE_REPTILE|RACE_DINOSAUR) and 1 or 2
 end
-function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+function s.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsOnField() and chkc:IsNegatable() end
 	if chk==0 then return Duel.IsExistingTarget(Card.IsNegatable,tp,0,LOCATION_ONFIELD,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_NEGATE)
 	local g=Duel.SelectTarget(tp,Card.IsNegatable,tp,0,LOCATION_ONFIELD,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,1,tp,0)
 end
-function s.negop(e,tp,eg,ep,ev,re,r,rp)
+function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and tc:IsFaceup() and tc:IsCanBeDisabledByEffect(e) then
-		tc:NegateEffects(e:GetHandler(),nil,true)
+	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
+		--Negate its effects until the end of this turn
+		tc:NegateEffects(e:GetHandler(),RESET_PHASE|PHASE_END,true)
 	end
 end

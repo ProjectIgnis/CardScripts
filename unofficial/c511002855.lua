@@ -2,39 +2,40 @@
 --CXyz Coach Lord Ultimatrainer (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
-	Xyz.AddProcedure(c,nil,9,4)
 	c:EnableReviveLimit()
+	--Xyz Summon procedure: 4 Level 9 monsters
+	Xyz.AddProcedure(c,nil,9,4)
 	--Rank Up Check
 	aux.EnableCheckRankUp(c,nil,nil,30741334)
-	--negate
+	--Make this card become unaffected by a monster effect
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_QUICK_O)
-	e1:SetCode(EVENT_CHAINING)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
+	e1:SetCode(EVENT_CHAINING)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
 	e1:SetCondition(s.uncon)
 	e1:SetOperation(s.unop)
 	c:RegisterEffect(e1)
-	--draw
+	--Your opponent draws cards equal to the number of Xyz Materials detached
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DRAW+CATEGORY_DAMAGE)
-	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_BATTLE_DESTROYING)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCondition(s.condition)
-	e2:SetCost(s.cost)
+	e2:SetCondition(aux.bdocon)
+	e2:SetCost(Cost.DetachFromSelf(1,function(e,tp) return Duel.GetFieldGroupCount(tp,0,LOCATION_DECK) end,function(e,og) e:SetLabel(#og) end))
 	e2:SetTarget(s.target)
 	e2:SetOperation(s.operation)
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetCode(EFFECT_RANKUP_EFFECT)
 	e3:SetLabelObject(e2)
-	c:RegisterEffect(e3,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e3)
 end
-s.listed_names={30741334}
+s.listed_names={30741334} --"Coach King Giantrainer"
 function s.uncon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not re:IsActiveType(TYPE_MONSTER) then return false end
@@ -86,26 +87,13 @@ function s.unop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 		e2:SetRange(LOCATION_MZONE)
 		e2:SetCode(EFFECT_IMMUNE_EFFECT)
+		e2:SetValue(function(e,te) return te:IsMonsterEffect() end)
 		e2:SetReset(RESET_CHAIN)
-		e2:SetValue(s.efilter)
 		c:RegisterEffect(e2)
 	end
 end
-function s.efilter(e,te)
-	return te:IsActiveType(TYPE_MONSTER)
-end
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return aux.bdocon(e,tp,eg,ep,ev,re,r,rp)
-end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ct=Duel.GetFieldGroupCount(tp,0,LOCATION_DECK)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,ct,REASON_COST)
-	local ct=Duel.GetOperatedGroup():GetCount()
-	e:SetLabel(ct)
-end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
+	if chk==0 then return Duel.IsPlayerCanDraw(1-tp,1) end
 	Duel.SetTargetPlayer(1-tp)
 	Duel.SetTargetParam(e:GetLabel())
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,e:GetLabel())

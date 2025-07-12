@@ -57,10 +57,10 @@ function s.initial_effect(c)
 	e6:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e6:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_DAMAGE_STEP)
 	e6:SetCode(id+1)
-	e6:SetCost(s.bdcost)
+	e6:SetCost(Cost.DetachFromSelf(1))
 	e6:SetTarget(s.rectg)
 	e6:SetOperation(s.recop)
-	c:RegisterEffect(e6,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e6)
 	--battle damage
 	local e7=Effect.CreateEffect(c)
 	e7:SetDescription(aux.Stringid(93730230,0))
@@ -71,10 +71,10 @@ function s.initial_effect(c)
 	e7:SetRange(LOCATION_MZONE)
 	e7:SetCountLimit(1)
 	e7:SetCondition(s.bdcon)
-	e7:SetCost(s.bdcost)
+	e7:SetCost(Cost.DetachFromSelf(1))
 	e7:SetTarget(s.bdtg)
 	e7:SetOperation(s.bdop)
-	c:RegisterEffect(e7,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e7)
 	--93 Summon
 	local e8=Effect.CreateEffect(c)
 	e8:SetDescription(aux.Stringid(64414267,0))
@@ -168,11 +168,6 @@ function s.recop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.bdcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==tp
-end
-function s.bdcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	c:RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.bdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

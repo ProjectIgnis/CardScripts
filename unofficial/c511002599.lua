@@ -19,9 +19,9 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCondition(function(e) return Duel.GetAttacker() and not e:GetHandler():IsStatus(STATUS_CHAINING) end)
-	e2:SetCost(Cost.Detach(1))
+	e2:SetCost(Cost.DetachFromSelf(1))
 	e2:SetOperation(function(e,tp,eg,ep,ev,re,r,rp) Duel.NegateAttack() end)
-	c:RegisterEffect(e2,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e2)
 end
 s.listed_series={SET_NUMBER}
 s.xyz_number=39

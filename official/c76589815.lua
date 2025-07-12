@@ -25,10 +25,10 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCondition(s.cfcon)
-	e3:SetCost(Cost.Detach(2))
+	e3:SetCost(Cost.DetachFromSelf(2))
 	e3:SetTarget(s.cftg)
 	e3:SetOperation(s.cfop)
-	c:RegisterEffect(e3,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e3)
 end
 s.listed_series={SET_BATTLIN_BOXER}
 function s.atfilter(c)

@@ -12,32 +12,30 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(3,id)
-	e1:SetCost(s.cost)
-	e1:SetTarget(s.target)
-	e1:SetOperation(s.operation)
-	c:RegisterEffect(e1,false,EFFECT_MARKER_DETACH_XMAT)
+	e1:SetCost(Cost.AND(Cost.DetachFromSelf(1),s.drcost))
+	e1:SetTarget(s.drtg)
+	e1:SetOperation(s.drop)
+	c:RegisterEffect(e1)
 end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsPhase(PHASE_MAIN1) end
 	local c=e:GetHandler()
-	if chk==0 then return Duel.IsPhase(PHASE_MAIN1)
-		and c:CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	c:RemoveOverlayCard(tp,1,1,REASON_COST)
+	aux.RegisterClientHint(c,nil,tp,1,0,aux.Stringid(id,1))
 	--You cannot conduct your Battle Phase the turn you activate this effect
-	local e1=Effect.CreateEffect(e:GetHandler())
+	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetCode(EFFECT_CANNOT_BP)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
+	e1:SetCode(EFFECT_CANNOT_BP)
 	e1:SetTargetRange(1,0)
 	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
-	aux.RegisterClientHint(c,nil,tp,1,0,aux.Stringid(id,1),nil)
 end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_DAMAGE,nil,1,1-tp,800)
 end
-function s.operation(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.drop(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=Duel.Draw(tp,1,REASON_EFFECT)
 	if ct==0 then return end
 	local dc=Duel.GetOperatedGroup():GetFirst()

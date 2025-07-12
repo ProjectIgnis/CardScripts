@@ -1461,11 +1461,13 @@ function Cost.SelfTribute(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return c:IsReleasable() end
 	Duel.Release(c,REASON_COST)
 end
+local self_tograve_costs={}
 function Cost.SelfToGrave(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsAbleToGraveAsCost() end
 	Duel.SendtoGrave(c,REASON_COST)
 end
+self_tograve_costs[Cost.SelfToGrave]=true
 function Cost.SelfToHand(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsAbleToHandAsCost() end
@@ -1481,25 +1483,37 @@ function Cost.SelfToExtra(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return c:IsAbleToExtraAsCost() end
 	Duel.SendtoDeck(c,nil,SEQ_DECKSHUFFLE,REASON_COST)
 end
-function Cost.SelfDiscard(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsDiscardable() end
-	Duel.SendtoGrave(c,REASON_DISCARD|REASON_COST)
-end
-function Cost.SelfDiscardToGrave(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsDiscardable() and c:IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(c,REASON_DISCARD|REASON_COST)
-end
 function Cost.SelfReveal(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return not c:IsPublic() end
 	Duel.ConfirmCards(1-tp,c)
 	Duel.ShuffleHand(tp)
 end
+
+local self_discard_costs={}
+function Cost.SelfDiscard(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
+	if chk==0 then return c:IsDiscardable() end
+	Duel.SendtoGrave(c,REASON_DISCARD|REASON_COST)
+end
+self_discard_costs[Cost.SelfDiscard]=true
+function Cost.SelfDiscardToGrave(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
+	if chk==0 then return c:IsDiscardable() and c:IsAbleToGraveAsCost() end
+	Duel.SendtoGrave(c,REASON_DISCARD|REASON_COST)
+end
+self_tograve_costs[Cost.SelfDiscardToGrave]=true
+self_discard_costs[Cost.SelfDiscardToGrave]=true
+
 --Aliases for historical reasons:
 Cost.SelfRelease=Cost.SelfTribute
 Auxiliary.bfgcost=Cost.SelfBanish
+
+
+function Cost.HintSelectedEffect(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
+end
 
 function Cost.Discard(filter,other,count)
 	count=count or 1
@@ -1510,45 +1524,48 @@ function Cost.Discard(filter,other,count)
 		Duel.DiscardHand(tp,filter,count,count,REASON_COST|REASON_DISCARD,exclude)
 	end
 end
--- "Detach Xyz Material Cost Generator"
--- Generates a function to be used by Effect.SetCost in order to detach
--- a number of Xyz Materials from the Effect's handler.
--- `min` minimum number of materials to check for detachment.
--- `max` maximum number of materials to detach or a function that gets called
--- as if by doing max(e,tp) in order to get the value of max detachments.
--- `op` optional function that gets called by passing the effect and the operated
--- group of just detached materials in order to do some additional handling with
--- them.
-function Cost.Detach(min,max,op)
+
+local detach_costs={}
+function Cost.DetachFromSelf(min,max,op)
 	max=max or min
+
+	local min_type=type(min)
+	local max_type=type(max)
+
 	do --Perform some sanity checks, simplifies debugging
-		local max_type=type(max)
 		local op_type=type(op)
-		if type(min)~="number" then
-			error("Parameter 1 should be an Integer",2)
+		if min_type~="number" and min_type~="function" then
+			error("Parameter 1 should be an Integer|function",2)
 		end
 		if max_type~="number" and max_type~="function" then
 			error("Parameter 2 should be Integer|function",2)
 		end
 		if op_type~="nil" and op_type~="function" then
-			error("Parameter 2 should be nil|function",2)
+			error("Parameter 3 should be nil|function",2)
 		end
 	end
-	return function(e,tp,eg,ep,ev,re,r,rp,chk)
+
+	local function cost_func(e,tp,eg,ep,ev,re,r,rp,chk)
 		local c=e:GetHandler()
-		local nn=c:IsSetCard(SET_NUMERON) and c:IsType(TYPE_XYZ) and Duel.IsPlayerAffectedByEffect(tp,CARD_NUMERON_NETWORK)
-		local crm=c:CheckRemoveOverlayCard(tp,min,REASON_COST)
-		if chk==0 then return (nn and c:IsLocation(LOCATION_MZONE)) or crm end
-		if nn and (not crm or Duel.SelectYesNo(tp,aux.Stringid(CARD_NUMERON_NETWORK,1))) then
-			--Do not execute `op`, hint at "Numeron Network" being applied
-			return Duel.Hint(HINT_CARD,tp,CARD_NUMERON_NETWORK)
-		end
-		local m=type(max)=="number" and max or max(e,tp)
-		if c:RemoveOverlayCard(tp,min,m,REASON_COST)>0 and op then
+		local min_count=min_type=="function" and min(e,tp) or min
+		local max_count=max_type=="function" and max(e,tp) or max
+		if chk==0 then return min_count>0 and max_count>=min_count and c:CheckRemoveOverlayCard(tp,min_count,REASON_COST) end
+		if c:RemoveOverlayCard(tp,min_count,max_count,REASON_COST)>0 and op then
 			op(e,Duel.GetOperatedGroup())
 		end
 	end
+
+	detach_costs[cost_func]=true
+	return cost_func
 end
+
+local function cost_table_check(t)
+	return function(eff) return t[eff:GetCost()] end
+end
+
+Effect.HasSelfToGraveCost=cost_table_check(self_tograve_costs)
+Effect.HasSelfDiscardCost=cost_table_check(self_discard_costs)
+Effect.HasDetachCost=cost_table_check(detach_costs)
 
 --Default cost for "You can pay X LP;"
 function Cost.PayLP(lp_value,pay_until)
@@ -1576,24 +1593,37 @@ function Cost.PayLP(lp_value,pay_until)
 	end
 end
 
-function Cost.SoftOncePerChain(flag)
-	return function(e,tp,eg,ep,ev,re,r,rp,chk)
-		local c=e:GetHandler()
-		if chk==0 then return not c:HasFlagEffect(flag) end
-		c:RegisterFlagEffect(flag,RESET_EVENT|RESETS_STANDARD|RESET_CHAIN,0,1)
+local function use_limit_cost(reset,soft)
+	return function(flag,ct)
+		ct=ct or 1
+		return function(e,tp,eg,ep,ev,re,r,rp,chk)
+			local c=e:GetHandler()
+			if chk==0 then return (soft and not c:HasFlagEffect(flag,ct)) or (not soft and not Duel.HasFlagEffect(tp,flag,ct)) end
+			if soft then
+				c:RegisterFlagEffect(flag,RESET_EVENT|RESETS_STANDARD|reset,0,1)
+			else
+				Duel.RegisterFlagEffect(tp,flag,reset,0,1)
+			end
+		end
 	end
 end
 
-function Cost.HardOncePerChain(flag)
-	return function(e,tp,eg,ep,ev,re,r,rp,chk)
-		if chk==0 then return not Duel.HasFlagEffect(tp,flag) end
-		Duel.RegisterFlagEffect(tp,flag,RESET_CHAIN,0,1)
-	end
-end
+Cost.SoftUseLimitPerChain=use_limit_cost(RESET_CHAIN,true)
+Cost.SoftUseLimitPerBattle=use_limit_cost(RESET_PHASE|PHASE_DAMAGE,true)
+
+Cost.HardUseLimitPerChain=use_limit_cost(RESET_CHAIN)
+Cost.HardUseLimitPerBattle=use_limit_cost(RESET_PHASE|PHASE_DAMAGE)
+
+--since the ct defaults to one, the "once per chain" variants can be aliases
+Cost.SoftOncePerChain=Cost.SoftUseLimitPerChain
+Cost.SoftOncePerBattle=Cost.SoftUseLimitPerBattle
+Cost.HardOncePerChain=Cost.HardUseLimitPerChain
+Cost.HardOncePerBattle=Cost.HardUseLimitPerBattle
 
 function Cost.AND(...)
 	local fns={...}
-	return function(e,tp,eg,ep,ev,re,r,rp,chk)
+
+	local function full_cost(e,tp,eg,ep,ev,re,r,rp,chk)
 		--when checking, stop at the first falsy value
 		if chk==0 then
 			for _,fn in ipairs(fns) do
@@ -1606,8 +1636,46 @@ function Cost.AND(...)
 			fn(e,tp,eg,ep,ev,re,r,rp,1)
 		end
 	end
+
+	for _,fn in ipairs(fns) do
+		if detach_costs[fn] then detach_costs[full_cost]=true end
+		if self_discard_costs[fn] then self_discard_costs[full_cost]=true end
+		if self_tograve_costs[fn] then self_tograve_costs[full_cost]=true end
+	end
+	return full_cost
 end
 
+function Cost.Choice(...)
+    --{ { cost_function, desc, additional_check } }
+    local choices={...}
+
+    local function full_cost(e,tp,eg,ep,ev,re,r,rp,chk)
+        local ops={}
+        local has_choice=false
+        for _,choice in ipairs(choices) do
+            local fn,desc,additional_check=table.unpack(choice)
+            local check=fn(e,tp,eg,ep,ev,re,r,rp,0) and (not additional_check or additional_check(e,tp,eg,ep,ev,re,r,rp,0))
+            table.insert(ops,{check,desc})
+            has_choice=has_choice or check
+        end
+
+        if chk==0 then return has_choice end
+
+        local op=Duel.SelectEffect(tp,table.unpack(ops))
+        choices[op][1](e,tp,eg,ep,ev,re,r,rp,1)
+        e:SetLabel(op)
+    end
+
+    detach_costs[full_cost]=true
+    self_discard_costs[full_cost]=true
+    for _,choice in ipairs(choices) do
+        local fn=choice[1]
+        if not detach_costs[fn] then detach_costs[full_cost]=false end
+        if not self_discard_costs[fn] then self_discard_costs[full_cost]=false end
+    end
+
+    return full_cost
+end
 
 function Card.EquipByEffectLimit(e,c)
 	if e:GetOwner()~=c then return false end

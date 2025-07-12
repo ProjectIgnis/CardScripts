@@ -46,10 +46,10 @@ function s.initial_effect(c)
 	e4:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e4:SetCountLimit(1)
 	e4:SetCondition(s.spcon2)
-	e4:SetCost(Cost.Detach(1))
+	e4:SetCost(Cost.DetachFromSelf(1))
 	e4:SetTarget(s.sptg2)
 	e4:SetOperation(s.spop2)
-	c:RegisterEffect(e4,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e4)
 end
 s.listed_series={SET_PHOTON}
 s.listed_names={CARD_GALAXYEYES_P_DRAGON}

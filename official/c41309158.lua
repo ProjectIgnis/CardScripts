@@ -22,10 +22,10 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_BATTLE_DAMAGE)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCondition(s.damcon)
-	e2:SetCost(Cost.Detach(1))
+	e2:SetCost(Cost.DetachFromSelf(1))
 	e2:SetTarget(s.damtg)
 	e2:SetOperation(s.damop)
-	c:RegisterEffect(e2,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e2)
 end
 s.listed_names={15914410}
 function s.poscon(e,tp,eg,ep,ev,re,r,rp)

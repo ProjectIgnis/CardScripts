@@ -38,10 +38,10 @@ function s.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1,{id,1})
-	e3:SetCost(Cost.Detach(1,1,nil))
+	e3:SetCost(Cost.DetachFromSelf(1,1,nil))
 	e3:SetTarget(s.destg)
 	e3:SetOperation(s.desop)
-	c:RegisterEffect(e3,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e3)
 end
 s.xyz_number=1
 function s.mattg(e,tp,eg,ep,ev,re,r,rp,chk)

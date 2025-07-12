@@ -13,10 +13,10 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1,id)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCost(Cost.Detach(2))
+	e1:SetCost(Cost.DetachFromSelf(2))
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
-	c:RegisterEffect(e1,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e1)
 end
 s.listed_series={SET_FIRE_FIST,SET_FIRE_FORMATION}
 function s.filter1(c)

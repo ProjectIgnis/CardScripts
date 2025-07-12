@@ -33,58 +33,73 @@ function s.runfn(fn,eff,tp,chk)
 end
 function s.applyfilter(c,e,tp)
 	if not (c:IsSetCard(SET_THUNDER_DRAGON) and c:IsMonster()
-		and (c:IsFaceup() or not c:IsLocation(LOCATION_REMOVED))
-		and c:IsHasEffect(EFFECT_MARKER_THUNDRA) and c:IsCanBeEffectTarget(e) and c:IsAbleToDeck()) then
-		return false
-	end
-	for _,eff in ipairs(c:GetMarkedEffects(EFFECT_MARKER_THUNDRA)) do
-		if s.runfn(eff:GetCondition(),eff,tp,0) and s.runfn(eff:GetTarget(),eff,tp,0) then return true end
+		and c:IsAbleToDeck() and c:IsFaceup()) then return false end
+	for _,eff in ipairs({c:GetOwnEffects()}) do
+		if eff:HasSelfDiscardCost() and s.runfn(eff:GetCondition(),eff,tp,0) and s.runfn(eff:GetTarget(),eff,tp,0) then return true end
 	end
 end
 function s.applytg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE|LOCATION_REMOVED) and chkc:IsControler(tp) and s.applyfilter(chkc,e,tp) end
+	if chkc then return false end
 	if chk==0 then return Duel.IsExistingTarget(s.applyfilter,tp,LOCATION_GRAVE|LOCATION_REMOVED,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	local g=Duel.SelectTarget(tp,s.applyfilter,tp,LOCATION_GRAVE|LOCATION_REMOVED,0,1,1,nil,e,tp)
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,1,tp,0)
-end
-function s.applyop(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.GetFirstTarget()
-	if not tc:IsRelateToEffect(e) then return end
-	local effs=tc:GetMarkedEffects(EFFECT_MARKER_THUNDRA)
+	local tc=Duel.SelectTarget(tp,s.applyfilter,tp,LOCATION_GRAVE|LOCATION_REMOVED,0,1,1,nil,e,tp):GetFirst()
+	local effs={}
 	local options={}
-	for _,eff in ipairs(effs) do
-		local eff_chk=s.runfn(eff:GetCondition(),eff,tp,0) and s.runfn(eff:GetTarget(),eff,tp,0)
-		table.insert(options,{eff_chk,eff:GetDescription()})
+	for _,eff in ipairs({tc:GetOwnEffects()}) do
+		if eff:HasSelfDiscardCost() then
+			table.insert(effs,eff)
+			local eff_chk=s.runfn(eff:GetCondition(),eff,tp,0) and s.runfn(eff:GetTarget(),eff,tp,0)
+			table.insert(options,{eff_chk,eff:GetDescription()})
+		end
 	end
 	local op=#options==1 and 1 or Duel.SelectEffect(tp,table.unpack(options))
-	if not op then return end
 	local te=effs[op]
-	if not te then return end
+	Duel.Hint(HINT_OPSELECTED,1-tp,te:GetDescription())
 	Duel.ClearTargetCard()
-	s.runfn(te:GetTarget(),te,tp)
-	Duel.BreakEffect()
-	tc:CreateEffectRelation(te)
-	Duel.BreakEffect()
-	local tg=Duel.GetTargetCards(te)
-	tg:ForEach(Card.CreateEffectRelation,te)
-	s.runfn(te:GetOperation(),te,tp,1)
-	tg:ForEach(Card.ReleaseEffectRelation,te)
-	local opt=Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2))
-	Duel.SendtoDeck(tc,nil,opt,REASON_EFFECT)
+	tc:CreateEffectRelation(e)
+	e:SetLabel(te:GetLabel())
+	e:SetLabelObject(te:GetLabelObject())
+	local targ_fn=te:GetTarget()
+	if targ_fn then
+		s.runfn(targ_fn,e,tp,1)
+		te:SetLabel(e:GetLabel())
+		te:SetLabelObject(e:GetLabelObject())
+		Duel.ClearOperationInfo(0)
+	end
+	e:SetLabelObject(te)
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,tc,1,tp,0)
+end
+function s.applyop(e,tp,eg,ep,ev,re,r,rp)
+	local te=e:GetLabelObject()
+	if not te then return end
+	local tc=te:GetHandler()
+	if not tc:IsRelateToEffect(e) then return end
+	local op=te:GetOperation()
+	if op then
+		e:SetLabel(te:GetLabel())
+		e:SetLabelObject(te:GetLabelObject())
+		op(e,tp,eg,ep,ev,re,r,rp)
+	end
+	if tc:IsAbleToDeck() then
+		local opt=Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>0 and Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2)) or 0
+		Duel.BreakEffect()
+		Duel.SendtoDeck(tc,nil,opt,REASON_EFFECT)
+	end
+	e:SetLabel(0)
+	e:SetLabelObject(nil)
 end
 function s.repfilter(c,tp)
-	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:IsRace(RACE_THUNDER)
-		and not c:IsReason(REASON_REPLACE) and c:IsReason(REASON_EFFECT|REASON_BATTLE)
+	return c:IsRace(RACE_THUNDER) and c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE)
+		and not c:IsReason(REASON_REPLACE) and c:IsReason(REASON_BATTLE|REASON_EFFECT)
 end
 function s.repcostfilter(c)
 	return c:IsAbleToRemove() and aux.SpElimFilter(c,true)
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return eg:IsExists(s.repfilter,1,nil,tp) and Duel.IsExistingMatchingCard(s.repcostfilter,tp,LOCATION_GRAVE,0,3,nil) end
+	if chk==0 then return eg:IsExists(s.repfilter,1,nil,tp) and Duel.IsExistingMatchingCard(s.repcostfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,3,nil) end
 	if Duel.SelectEffectYesNo(tp,e:GetHandler(),96) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESREPLACE)
-		local g=Duel.SelectMatchingCard(tp,s.repcfilter,tp,LOCATION_GRAVE,0,3,3,nil)
+		local g=Duel.SelectMatchingCard(tp,s.repcostfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,3,3,nil)
 		Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 		return true
 	else return false end

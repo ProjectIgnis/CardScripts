@@ -24,10 +24,10 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_BATTLE_DESTROYING)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetCondition(s.damcon)
-	e2:SetCost(Cost.Detach(1))
+	e2:SetCost(Cost.DetachFromSelf(1))
 	e2:SetTarget(s.damtg)
 	e2:SetOperation(s.damop)
-	c:RegisterEffect(e2,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e2)
 end
 s.listed_names={51960178}
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)

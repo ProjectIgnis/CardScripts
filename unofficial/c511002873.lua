@@ -1,51 +1,48 @@
---No.58 Burner visor
+--Ｎｏ．５８ 炎圧鬼バーナー・バイサー (Anime)
+--Number 58: Burner Visor (Anime)
 Duel.LoadCardScript("c93108839.lua")
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
-	Xyz.AddProcedure(c,nil,4,2)
 	c:EnableReviveLimit()
-	--equip
+	--Xyz Summon procedure: 2 Level 4 monsters
+	Xyz.AddProcedure(c,nil,4,2)
+	--Cannot be destroyed by battle except with "Number" monsters
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(93108839,0))
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e1:SetCategory(CATEGORY_EQUIP)
-	e1:SetType(EFFECT_TYPE_IGNITION)
-	e1:SetRange(LOCATION_MZONE)
-	e1:SetCost(s.eqcost)
-	e1:SetTarget(s.eqtg)
-	e1:SetOperation(s.eqop)
-	c:RegisterEffect(e1,false,EFFECT_MARKER_DETACH_XMAT)
-	--direct
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
+	e1:SetValue(function(e,c) return not c:IsSetCard(SET_NUMBER) end)
+	c:RegisterEffect(e1)
+	--Equip this card to 1 face-up monster you control
 	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_EQUIP)
-	e2:SetCode(EFFECT_DIRECT_ATTACK)
+	e2:SetDescription(aux.Stringid(id,0))
+	e2:SetCategory(CATEGORY_EQUIP)
+	e2:SetType(EFFECT_TYPE_IGNITION)
+	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetCost(Cost.DetachFromSelf(function(e,tp) return e:GetHandler():GetOverlayCount() end))
+	e2:SetTarget(s.eqtg)
+	e2:SetOperation(s.eqop)
 	c:RegisterEffect(e2)
-	--damage
+	--The equipped monster can attack directly
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(93108839,2))
-	e3:SetCategory(CATEGORY_DAMAGE)
-	e3:SetType(EFFECT_TYPE_IGNITION)
-	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e3:SetRange(LOCATION_SZONE)
-	e3:SetCondition(s.damcon)
-	e3:SetCost(s.damcost)
-	e3:SetTarget(s.damtg)
-	e3:SetOperation(s.damop)
+	e3:SetType(EFFECT_TYPE_EQUIP)
+	e3:SetCode(EFFECT_DIRECT_ATTACK)
 	c:RegisterEffect(e3)
-	--battle indestructable
+	--Inflict 500 damage to your opponent
 	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_SINGLE)
-	e4:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-	e4:SetValue(s.indes)
+	e4:SetDescription(aux.Stringid(id,1))
+	e4:SetCategory(CATEGORY_DAMAGE)
+	e4:SetType(EFFECT_TYPE_IGNITION)
+	e4:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e4:SetRange(LOCATION_SZONE)
+	e4:SetCondition(s.damcon)
+	e4:SetCost(s.damcost)
+	e4:SetTarget(s.damtg)
+	e4:SetOperation(s.damop)
 	c:RegisterEffect(e4)
 end
 s.xyz_number=58
-function s.eqcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	local g=e:GetHandler():GetOverlayGroup()
-	Duel.SendtoGrave(g,REASON_COST)
-end
+s.listed_series={SET_NUMBER}
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and chkc:IsFaceup() and chkc~=e:GetHandler() end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
@@ -64,14 +61,14 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	if not Duel.Equip(tp,c,tc,false) then return end
 	--eqlimit
-	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_SINGLE)
-	e4:SetCode(EFFECT_EQUIP_LIMIT)
-	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e4:SetValue(s.eqlimit)
-	e4:SetReset(RESET_EVENT+RESETS_STANDARD)
-	e4:SetLabelObject(tc)
-	c:RegisterEffect(e4)
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_EQUIP_LIMIT)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e1:SetValue(s.eqlimit)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetLabelObject(tc)
+	c:RegisterEffect(e1)
 end
 function s.eqlimit(e,c)
 	return c==e:GetLabelObject()
@@ -93,7 +90,4 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Damage(p,d,REASON_EFFECT)
-end
-function s.indes(e,c)
-	return not c:IsSetCard(SET_NUMBER)
 end

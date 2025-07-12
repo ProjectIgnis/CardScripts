@@ -41,7 +41,7 @@ function s.initial_effect(c)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetCountLimit(1)
 	e4:SetCondition(s.spcon)
-	e4:SetCost(Cost.Detach(1))
+	e4:SetCost(Cost.DetachFromSelf(1))
 	e4:SetTarget(s.sptg)
 	e4:SetOperation(s.spop)
 	local e5=Effect.CreateEffect(c)
@@ -51,7 +51,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e5)
 	local e6=e5:Clone()
 	e6:SetLabelObject(e4)
-	c:RegisterEffect(e6,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e6)
 end
 s.listed_series={SET_NUMBER}
 s.listed_names={84013237}

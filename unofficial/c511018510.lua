@@ -1,148 +1,105 @@
 --ＲＵＭ－光波追撃
 --Rank-Up-Magic Cipher Pursuit
---cleaned up by MLD
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
-	local re1=Effect.CreateEffect(c)
-	re1:SetDescription(aux.Stringid(41201386,0))
-	re1:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	re1:SetType(EFFECT_TYPE_ACTIVATE)
-	re1:SetCode(EVENT_FREE_CHAIN)
-	re1:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	re1:SetCondition(s.condition)
-	re1:SetTarget(s.target)
-	re1:SetOperation(s.activate)
-	c:RegisterEffect(re1)
+	--Special Summon from your Extra Deck, 1 "Cipher" Xyz Monster that is 1 Rank higher than 1 "Cipher" Xyz Monster you control
+	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(41201386,0))
+	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e1:SetType(EFFECT_TYPE_ACTIVATE)
+	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e1:SetCondition(function() return math.abs(Duel.GetLP(0)-Duel.GetLP(1))>=2000 end)
+	e1:SetTarget(s.sptg)
+	e1:SetOperation(s.spop)
+	c:RegisterEffect(e1)
 end
-s.listed_series={0xe5}
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return math.abs(Duel.GetLP(tp)-Duel.GetLP(1-tp))>=2000
-end
-function s.filter1(c,e,tp)
-	local rk=c:GetRank()
-	local pg=aux.GetMustBeMaterialGroup(tp,Group.FromCards(c),tp,nil,nil,REASON_XYZ)
-	return #pg<=1 and c:IsFaceup() and c:IsSetCard(SET_CIPHER) and (rk>0 or c:IsStatus(STATUS_NO_LEVEL))
-		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,c,rk+1,pg)
-end
-function s.filter2(c,e,tp,mc,rk,pg)
+s.listed_series={SET_CIPHER}
+function s.spfilter(c,e,tp,mc,rk,pg)
 	if c.rum_limit and not c.rum_limit(mc,e) then return false end
-	return c:IsType(TYPE_XYZ) and mc:IsType(TYPE_XYZ,c,SUMMON_TYPE_XYZ,tp) and c:IsRank(rk) and c:IsSetCard(SET_CIPHER) and mc:IsCanBeXyzMaterial(c,tp)
+	return c:IsType(TYPE_XYZ) and mc:IsType(TYPE_XYZ,c,SUMMON_TYPE_XYZ,tp)
+		and c:IsRank(rk) and c:IsSetCard(SET_CIPHER) and mc:IsCanBeXyzMaterial(c,tp)
 		and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0 and (#pg<=0 or pg:IsContains(mc))
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
 end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.filter1(chkc,e,tp) end
-	if chk==0 then return Duel.IsExistingTarget(s.filter1,tp,LOCATION_MZONE,0,1,nil,e,tp) end
+function s.matfilter(c,e,tp)
+	local pg=aux.GetMustBeMaterialGroup(tp,Group.FromCards(c),tp,nil,nil,REASON_XYZ)
+	return #pg<=1 and c:IsFaceup() and c:IsSetCard(SET_CIPHER) and c:HasRank()
+		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,c,c:GetRank()+1,pg)
+end
+function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.matfilter(chkc,e,tp) end
+	if chk==0 then return Duel.IsExistingTarget(s.matfilter,tp,LOCATION_MZONE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	Duel.SelectTarget(tp,s.filter1,tp,LOCATION_MZONE,0,1,1,nil,e,tp)
+	Duel.SelectTarget(tp,s.matfilter,tp,LOCATION_MZONE,0,1,1,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
-function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<0 then return end
+function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if not tc or tc:IsFacedown() or not tc:IsRelateToEffect(e) or tc:IsControler(1-tp) or tc:IsImmuneToEffect(e) then return end
+	if tc:IsFacedown() or not tc:IsRelateToEffect(e)
+		or tc:IsControler(1-tp) or tc:IsImmuneToEffect(e)
+		or not tc:HasRank() then return end
 	local pg=aux.GetMustBeMaterialGroup(tp,Group.FromCards(tc),tp,nil,nil,REASON_XYZ)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.filter2,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,tc,tc:GetRank()+1,pg)
-	local sc=g:GetFirst()
+	local sc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,tc,tc:GetRank()+1,pg):GetFirst()
 	if sc then
 		sc:SetMaterial(tc)
 		Duel.Overlay(sc,tc)
+		--You can activate that Xyz Monster's effect that is activated by detaching its own Xyz Material(s)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 		e1:SetCode(EVENT_SPSUMMON_SUCCESS)
-		e1:SetTarget(s.tg)
-		e1:SetOperation(s.op)
+		e1:SetTarget(s.acttg)
+		e1:SetOperation(s.actop)
 		e1:SetReset(RESETS_STANDARD&~RESET_TOFIELD)
 		sc:RegisterEffect(e1,true)
 		Duel.SpecialSummon(sc,SUMMON_TYPE_XYZ,tp,tp,false,false,POS_FACEUP)
 		sc:CompleteProcedure()
 	end
 end
-function s.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+function s.acttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
+	local effs={}
+	for _,eff in ipairs({c:GetOwnEffects(id)}) do
+		if eff:HasDetachCost() then table.insert(effs,eff) end
+	end
 	if chkc then
-		if not c:IsHasEffect(id) then return false end
-		local tgeffs={c:GetCardEffect(id)}
-		for _,tge in ipairs(tgeffs) do
-			if tge:GetLabel()==ev then return tge:GetLabelObject():GetTarget()(e,tp,eg,ep,ev,re,r,rp,chk,chkc) end
+		for _,eff in ipairs(effs) do
+			if eff:GetFieldID()==e:GetLabel() then return eff:GetTarget()(e,tp,eg,ep,ev,re,r,rp,chk,chkc) end
 		end
 		return false
 	end
-	if chk==0 then
-		if not c:IsHasEffect(511002571) then return false end
-		local effs={c:GetCardEffect(511002571)}
-		for _,teh in ipairs(effs) do
-			local temp=teh:GetLabelObject()
-			if temp:GetCode()&511001822==511001822 or temp:GetLabel()==511001822 then temp=temp:GetLabelObject() end
-			e:SetCategory(temp:GetCategory())
-			e:SetProperty(temp:GetProperty())
-			local con=temp:GetCondition()
-			local cost=temp:GetCost()
-			local tg=temp:GetTarget()
-			if (not con or con(e,tp,eg,ep,ev,re,r,rp))
-				and (not cost or cost(e,tp,eg,ep,ev,re,r,rp,0))
-				and (not tg or tg(e,tp,eg,ep,ev,re,r,rp,0,chkc)) then
-				return true
-			end
-		end
-		return false
-	end
-	local effs={c:GetCardEffect(511002571)}
-	local acd={}
-	local ac={}
-	for _,teh in ipairs(effs) do
-		local temp=teh:GetLabelObject()
-		if temp:GetCode()&511001822==511001822 or temp:GetLabel()==511001822 then temp=temp:GetLabelObject() end
-		e:SetCategory(temp:GetCategory())
-		e:SetProperty(temp:GetProperty())
-		local con=temp:GetCondition()
-		local cost=temp:GetCost()
-		local tg=temp:GetTarget()
-		if (not con or con(e,tp,eg,ep,ev,re,r,rp))
+	local options={}
+	local has_option=false
+	for _,eff in ipairs(effs) do
+		e:SetCategory(eff:GetCategory())
+		e:SetProperty(eff:GetProperty())
+		local con=eff:GetCondition()
+		local cost=eff:GetCost()
+		local tg=eff:GetTarget()
+		local eff_chk=(not con or con(e,tp,eg,ep,ev,re,r,rp))
 			and (not cost or cost(e,tp,eg,ep,ev,re,r,rp,0))
-			and (not tg or tg(e,tp,eg,ep,ev,re,r,rp,0,chkc)) then
-			table.insert(ac,teh)
-			table.insert(acd,temp:GetDescription())
-		end
+			and (not tg or tg(e,tp,eg,ep,ev,re,r,rp,0))
+		if eff_chk then has_option=true end
+		table.insert(options,{eff_chk,eff:GetDescription()})
 	end
-	local te=nil
-	if #ac==1 then te=ac[1] elseif #ac>1 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EFFECT)
-		local op=Duel.SelectOption(tp,table.unpack(acd))+1
-		te=ac[op]
-	end
-	local teh=te
-	te=teh:GetLabelObject()
-	if te:GetCode()&511001822==511001822 or te:GetLabel()==511001822 then te=te:GetLabelObject() end
+	e:SetCategory(0)
+	e:SetProperty(0)
+	if chk==0 then return has_option end
+	local op=#options==1 and 1 or Duel.SelectEffect(tp,table.unpack(options))
+	if not op then return end
+	local te=effs[op]
+	if not te then return end
+	e:SetLabel(te:GetFieldID())
 	e:SetCategory(te:GetCategory())
 	e:SetProperty(te:GetProperty())
 	local cost=te:GetCost()
 	if cost then cost(e,tp,eg,ep,ev,re,r,rp,1) end
 	local tg=te:GetTarget()
-	if tg then tg(e,tp,eg,ep,ev,re,r,rp,1,chkc) end
+	if tg then tg(e,tp,eg,ep,ev,re,r,rp,1) end
 	te:UseCountLimit(tp)
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(id)
-	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
-	e1:SetLabel(Duel.GetCurrentChain())
-	e1:SetLabelObject(te)
-	e1:SetReset(RESET_CHAIN)
-	c:RegisterEffect(e1)
-end
-function s.op(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	if c:IsHasEffect(id) then
-		local tgeffs={c:GetCardEffect(id)}
-		for _,tge in ipairs(tgeffs) do
-			if tge:GetLabel()==Duel.GetCurrentChain() then
-				local te=tge:GetLabelObject()
-				local operation=te:GetOperation()
-				if operation then operation(e,tp,eg,ep,ev,re,r,rp) end
-			end
-		end
-	end
-	e:Reset()
+	e:SetOperation(function(e,...)
+		te:GetOperation()(e,...)
+		e:Reset()
+	end)
 end

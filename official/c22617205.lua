@@ -2,58 +2,51 @@
 --Stellarknight Zefraxciton
 local s,id=GetID()
 function s.initial_effect(c)
-	--Pendulum Summon procedure
 	Pendulum.AddProcedure(c)
-	--You cannot Pendulum Summon, except "tellarknight" and "Zefra" monsters
+	--You cannot Pendulum Summon monsters, except "tellarknight" and "Zefra" monsters
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetRange(LOCATION_PZONE)
-	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CANNOT_NEGATE)
+	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+	e1:SetRange(LOCATION_PZONE)
 	e1:SetTargetRange(1,0)
-	e1:SetTarget(s.splimit)
+	e1:SetTarget(function(e,c,sump,sumtype) return (sumtype&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM and not c:IsSetCard({SET_TELLARKNIGHT,SET_ZEFRA}) end)
 	c:RegisterEffect(e1)
-	--Destroy 1 card you control and 1 Set card your opponent controls
-	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,0))
-	e2:SetCategory(CATEGORY_DESTROY)
-	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
-	e2:SetCode(EVENT_SUMMON_SUCCESS)
-	e2:SetCountLimit(1,id)
-	e2:SetTarget(s.target)
-	e2:SetOperation(s.operation)
-	c:RegisterEffect(e2,false,EFFECT_MARKER_TELLAR)
-	local e3=e2:Clone()
-	e3:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
-	c:RegisterEffect(e3)
-	local e4=e2:Clone()
-	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e4:SetCondition(function(e) return e:GetHandler():IsPendulumSummoned() end)
-	c:RegisterEffect(e4)
+	--Destroy 1 other "tellarknight" or "Zefra" card in your Monster Zone or Pendulum Zone and 1 Set card your opponent controls
+	local e2a=Effect.CreateEffect(c)
+	e2a:SetDescription(aux.Stringid(id,0))
+	e2a:SetCategory(CATEGORY_DESTROY)
+	e2a:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e2a:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
+	e2a:SetCode(EVENT_SUMMON_SUCCESS)
+	e2a:SetCountLimit(1,id)
+	e2a:SetTarget(s.destg)
+	e2a:SetOperation(s.desop)
+	c:RegisterEffect(e2a)
+	local e2b=e2a:Clone()
+	e2b:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
+	c:RegisterEffect(e2b)
+	local e2c=e2a:Clone()
+	e2c:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e2c:SetCondition(function(e) return e:GetHandler():IsPendulumSummoned() end)
+	c:RegisterEffect(e2c)
 end
 s.listed_series={SET_TELLARKNIGHT,SET_ZEFRA}
-function s.splimit(e,c,sump,sumtype,sumpos,targetp)
-	if c:IsSetCard({SET_TELLARKNIGHT,SET_ZEFRA}) then return false end
-	return (sumtype&SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
+function s.desfilter(c,e,tp)
+	return ((c:IsControler(tp) and c:IsSetCard({SET_TELLARKNIGHT,SET_ZEFRA}) and c:IsFaceup()) or (c:IsControler(1-tp) and c:IsFacedown()))
+		and c:IsCanBeEffectTarget(e)
 end
-function s.filter1(c)
-	return c:IsFaceup() and c:IsSetCard({SET_TELLARKNIGHT,SET_ZEFRA})
-end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	if chk==0 then return Duel.IsExistingTarget(s.filter1,tp,LOCATION_MZONE|LOCATION_PZONE,0,1,e:GetHandler())
-		and Duel.IsExistingTarget(Card.IsFacedown,tp,0,LOCATION_ONFIELD,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g1=Duel.SelectTarget(tp,s.filter1,tp,LOCATION_MZONE|LOCATION_PZONE,0,1,1,e:GetHandler())
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g2=Duel.SelectTarget(tp,Card.IsFacedown,tp,0,LOCATION_ONFIELD,1,1,nil)
-	g1:Merge(g2)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g1,#g1,0,0)
+	local g=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_MZONE|LOCATION_PZONE,LOCATION_ONFIELD,e:GetHandler(),e,tp)
+	if chk==0 then return aux.SelectUnselectGroup(g,e,tp,2,2,aux.dpcheck(Card.GetControler),0) end
+	local tg=aux.SelectUnselectGroup(g,e,tp,2,2,aux.dpcheck(Card.GetControler),1,tp,HINTMSG_DESTROY)
+	Duel.SetTargetCard(tg)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,tg,2,tp,0)
 end
-function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetTargetCards(e)
-	if #g>0 then
-		Duel.Destroy(g,REASON_EFFECT)
+function s.desop(e,tp,eg,ep,ev,re,r,rp)
+	local tg=Duel.GetTargetCards(e)
+	if #tg>0 then
+		Duel.Destroy(tg,REASON_EFFECT)
 	end
 end

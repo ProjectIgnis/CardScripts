@@ -31,10 +31,10 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCondition(aux.StatChangeDamageStepCondition)
-	e3:SetCost(Cost.Detach(1))
+	e3:SetCost(Cost.DetachFromSelf(1))
 	e3:SetTarget(s.atktg)
 	e3:SetOperation(s.atkop)
-	c:RegisterEffect(e3,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e3)
 end
 s.listed_series={SET_RAIDRAPTOR}
 function s.descon(e,tp,eg,ep,ev,re,r,rp)

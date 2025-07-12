@@ -13,10 +13,10 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCost(Cost.Detach(1))
+	e1:SetCost(Cost.DetachFromSelf(1))
 	e1:SetOperation(s.operation)
 	e1:SetHintTiming(TIMING_STANDBY_PHASE|TIMING_END_PHASE)
-	c:RegisterEffect(e1,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e1)
 end
 s.listed_series={SET_CONSTELLAR}
 function s.operation(e,tp,eg,ep,ev,re,r,rp)

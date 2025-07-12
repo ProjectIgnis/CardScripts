@@ -37,7 +37,7 @@ make_deprecated_function_no_replacement("Duel.GetTributeCount", "You should use 
 make_deprecated_function_alias("Auxiliary.selfbanishcost","Cost.SelfBanish")
 make_deprecated_function_alias("Auxiliary.SelfBanishCost","Cost.SelfBanish")
 make_deprecated_function_alias("Auxiliary.DiscardCost","Cost.Discard")
-make_deprecated_function_alias("Auxiliary.dxmcostgen","Cost.Detach")
+make_deprecated_function_alias("Auxiliary.dxmcostgen","Cost.DetachFromSelf")
 make_deprecated_function_alias("Auxiliary.selfreleasecost","Cost.SelfRelease")
 make_deprecated_function_alias("Auxiliary.SelfReleaseCost","Cost.SelfRelease")
 make_deprecated_function_alias("Auxiliary.SelfTributeCost","Cost.SelfRelease")

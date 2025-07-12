@@ -22,18 +22,18 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
 	e2:SetCondition(function(e,tp) return Duel.IsTurnPlayer(1-tp) end)
-	e2:SetCost(Cost.Detach(1))
+	e2:SetCost(Cost.DetachFromSelf(1))
 	e2:SetTarget(s.distg)
 	e2:SetOperation(s.disop)
-	c:RegisterEffect(e2,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e2)
 	--Workaround to make the extra attack part work on your turn
 	local e3=e2:Clone()
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetCountLimit(1)
 	e3:SetCondition(s.discon)
-	e3:SetCost(s.discost)
-	c:RegisterEffect(e3,false,EFFECT_MARKER_DETACH_XMAT)
+	e3:SetCost(Cost.AND(Cost.DetachFromSelf(1),s.discost))
+	c:RegisterEffect(e3)
 	--Global effects to keep track of total effect resolutions and the last attacker
 	aux.GlobalCheck(s,function()
 		--Keep track of how many effects have resolved during each Battle Phase
@@ -64,10 +64,9 @@ function s.discon(e,tp,eg,ep,ev,re,r,rp)
 		and not Duel.HasFlagEffect(tp,id+1) and not Duel.IsPhase(PHASE_BATTLE_START)
 end
 function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	c:RemoveOverlayCard(tp,1,1,REASON_COST)
+	if chk==0 then return true end
 	if Duel.IsTurnPlayer(tp) then
+		local c=e:GetHandler()
 		Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE|PHASE_BATTLE,0,1)
 		c:RegisterFlagEffect(id+1,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_DAMAGE|PHASE_BATTLE,0,1)
 		--Cannot attack with any other card after activating this effect

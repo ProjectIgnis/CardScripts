@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetHintTiming(0,TIMING_STANDBY_PHASE|TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E)
 	e1:SetCountLimit(1,id)
-	e1:SetCost(s.applycost)
+	e1:SetCost(Cost.AND(s.applycost,Cost.DetachFromSelf(1)))
 	e1:SetTarget(s.applytg)
 	e1:SetOperation(s.applyop)
 	c:RegisterEffect(e1)
@@ -32,60 +32,60 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_DRAGON_RULER}
-function s.tgfilter(c,tp)
-	if not (c:IsSetCard(SET_DRAGON_RULER) and c:IsLevel(7) and c:IsAbleToGraveAsCost() and c:IsHasEffect(id)) then
-		return false
-	end
-	local eff=c:GetCardEffect(id)
-	local te=eff:GetLabelObject()
-	local con=te:GetCondition()
-	local tg=te:GetTarget()
-	if (not con or con(te,tp,Group.CreateGroup(),PLAYER_NONE,0,eff,REASON_EFFECT,PLAYER_NONE,0))
-		and (not tg or tg(te,tp,Group.CreateGroup(),PLAYER_NONE,0,eff,REASON_EFFECT,PLAYER_NONE,0)) then
-		return true
+function s.runfn(fn,eff,tp,chk)
+	return not fn or fn(eff,tp,Group.CreateGroup(),PLAYER_NONE,0,nil,REASON_EFFECT,PLAYER_NONE,chk)
+end
+function s.applyfilter(c,tp)
+	if not (c:IsSetCard(SET_DRAGON_RULER) and c:IsLevel(7) and c:IsAbleToGraveAsCost()) then return false end
+	for _,eff in ipairs({c:GetOwnEffects()}) do
+		if eff:HasSelfDiscardCost() and s.runfn(eff:GetCondition(),eff,tp,0) and s.runfn(eff:GetTarget(),eff,tp,0) then return true end
 	end
 	return false
 end
 function s.applycost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:CheckRemoveOverlayCard(tp,1,REASON_COST)
-		and Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil,tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.applyfilter,tp,LOCATION_DECK,0,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local sc=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_DECK,0,1,1,nil,tp):GetFirst()
+	local sc=Duel.SelectMatchingCard(tp,s.applyfilter,tp,LOCATION_DECK,0,1,1,nil,tp):GetFirst()
+	local effs={}
+	local options={}
+	for _,eff in ipairs({sc:GetOwnEffects()}) do
+		if eff:HasSelfDiscardCost() then
+			table.insert(effs,eff)
+			local eff_chk=s.runfn(eff:GetCondition(),eff,tp,0) and s.runfn(eff:GetTarget(),eff,tp,0)
+			table.insert(options,{eff_chk,eff:GetDescription()})
+		end
+	end
+	local op=#options==1 and 1 or Duel.SelectEffect(tp,table.unpack(options))
+	local te=effs[op]
+	e:SetLabelObject(te)
 	Duel.SendtoGrave(sc,REASON_COST)
-	sc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_CHAIN,0,1)
-	e:SetLabelObject(sc:GetCardEffect(id):GetLabelObject())
-	c:RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.applytg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local te=e:GetLabelObject()
-	local tg=te and te:GetTarget() or nil
-	if chkc then return tg and tg(e,tp,eg,ep,ev,re,r,rp,0,chkc) end
+	if chkc then return te and te:GetTarget() and te:GetTarget()(e,tp,eg,ep,ev,re,r,rp,0,chkc) end
 	if chk==0 then return true end
 	e:SetLabel(te:GetLabel())
 	e:SetLabelObject(te:GetLabelObject())
 	e:SetProperty(te:IsHasProperty(EFFECT_FLAG_CARD_TARGET) and EFFECT_FLAG_CARD_TARGET or 0)
+	local tg=te:GetTarget()
 	if tg then
 		tg(e,tp,eg,ep,ev,re,r,rp,1)
+		te:SetLabel(e:GetLabel())
+		te:SetLabelObject(e:GetLabelObject())
+		Duel.ClearOperationInfo(0)
 	end
 	e:SetLabelObject(te)
-	Duel.ClearOperationInfo(0)
 end
 function s.applyop(e,tp,eg,ep,ev,re,r,rp)
 	local te=e:GetLabelObject()
 	if not te then return end
-	local sc=te:GetHandler()
-	if sc:GetFlagEffect(id)==0 then
-		e:SetLabel(0)
-		e:SetLabelObject(nil)
-		return
-	end
-	e:SetLabel(te:GetLabel())
-	e:SetLabelObject(te:GetLabelObject())
 	local op=te:GetOperation()
 	if op then
-		op(e,tp,Group.CreateGroup(),PLAYER_NONE,0,e,REASON_EFFECT,PLAYER_NONE)
+		e:SetLabel(te:GetLabel())
+		e:SetLabelObject(te:GetLabelObject())
+		op(e,tp,eg,ep,ev,re,r,rp)
 	end
+	e:SetProperty(0)
 	e:SetLabel(0)
 	e:SetLabelObject(nil)
 end

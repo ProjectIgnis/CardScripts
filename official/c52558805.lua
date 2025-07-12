@@ -16,10 +16,10 @@ function s.initial_effect(c)
 	e1:SetHintTiming(TIMING_DAMAGE_STEP|TIMINGS_CHECK_MONSTER)
 	e1:SetCountLimit(1)
 	e1:SetCondition(aux.StatChangeDamageStepCondition)
-	e1:SetCost(Cost.Detach(1,1,nil))
+	e1:SetCost(Cost.DetachFromSelf(1,1,nil))
 	e1:SetTarget(s.atktg)
 	e1:SetOperation(s.atkop)
-	c:RegisterEffect(e1,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e1)
 end
 s.listed_series={SET_DJINN}
 function s.filter(c,tp)

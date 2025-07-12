@@ -48,10 +48,10 @@ function s.initial_effect(c)
 	e7:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e7:SetRange(LOCATION_MZONE)
 	e7:SetCondition(s.nacon)
-	e7:SetCost(Cost.Detach(1))
+	e7:SetCost(Cost.DetachFromSelf(1))
 	e7:SetTarget(s.natg)
 	e7:SetOperation(s.naop)
-	c:RegisterEffect(e7,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e7)
 end
 s.listed_names={89477759}
 s.xyz_number=1000

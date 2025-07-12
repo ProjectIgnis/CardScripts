@@ -3,7 +3,7 @@
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
-	--Special Summon itself from the hand
+	--Special Summon this card from your hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -16,31 +16,31 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--Add 1 "tellarknight" Spell from the Deck to the hand
-	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,1))
-	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
-	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e2:SetProperty(EFFECT_FLAG_DELAY)
-	e2:SetCode(EVENT_SUMMON_SUCCESS)
-	e2:SetCountLimit(1,{id,1})
-	e2:SetTarget(s.thtg)
-	e2:SetOperation(s.thop)
-	c:RegisterEffect(e2,false,EFFECT_MARKER_TELLAR)
-	local e3=e2:Clone()
-	e3:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
-	c:RegisterEffect(e3)
-	local e4=e2:Clone()
-	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
-	c:RegisterEffect(e4)
+	--Add 1 "tellarknight" Spell from your Deck to your hand
+	local e2a=Effect.CreateEffect(c)
+	e2a:SetDescription(aux.Stringid(id,1))
+	e2a:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
+	e2a:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e2a:SetProperty(EFFECT_FLAG_DELAY)
+	e2a:SetCode(EVENT_SUMMON_SUCCESS)
+	e2a:SetCountLimit(1,{id,1})
+	e2a:SetTarget(s.thtg)
+	e2a:SetOperation(s.thop)
+	c:RegisterEffect(e2a)
+	local e2b=e2a:Clone()
+	e2b:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
+	c:RegisterEffect(e2b)
+	local e2c=e2a:Clone()
+	e2c:SetCode(EVENT_SPSUMMON_SUCCESS)
+	c:RegisterEffect(e2c)
 end
-s.listed_series={SET_TELLARKNIGHT,SET_CONSTELLAR}
+s.listed_series={SET_CONSTELLAR,SET_TELLARKNIGHT}
 s.listed_names={id}
-function s.cfilter(c,tp)
-	return c:IsControler(tp) and c:IsSetCard({SET_TELLARKNIGHT,SET_CONSTELLAR}) and not c:IsCode(id)
+function s.spconfilter(c,tp)
+	return c:IsSetCard({SET_TELLARKNIGHT,SET_CONSTELLAR}) and c:IsControler(tp) and c:IsFaceup() and not c:IsCode(id)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.cfilter,1,nil,tp)
+	return eg:IsExists(s.spconfilter,1,nil,tp)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

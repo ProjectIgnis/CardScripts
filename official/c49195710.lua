@@ -20,6 +20,7 @@ function s.initial_effect(c)
 	--Effect Monsters your opponent controls cannot activate their effects
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
+	e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e2:SetCode(EFFECT_CANNOT_TRIGGER)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetTargetRange(0,LOCATION_MZONE)
@@ -27,19 +28,20 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.xyz_number=65
-s.listed_names={3790062}
+s.listed_names={3790062} --"Number 65: Djinn Buster"
 function s.atkdeftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() end
 	if chk==0 then return Duel.IsExistingTarget(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	local tc=Duel.SelectTarget(tp,Card.IsFaceup,tp,0,LOCATION_MZONE,1,1,nil):GetFirst()
-	Duel.SetOperationInfo(0,CATEGORY_ATKCHANGE,tc,1,tp,-1000)
-	Duel.SetOperationInfo(0,CATEGORY_DEFCHANGE,tc,1,tp,-1000)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATKDEF)
+	local g=Duel.SelectTarget(tp,Card.IsFaceup,tp,0,LOCATION_MZONE,1,1,nil)
+	Duel.SetOperationInfo(0,CATEGORY_ATKCHANGE,g,1,tp,-1000)
+	Duel.SetOperationInfo(0,CATEGORY_DEFCHANGE,g,1,tp,-1000)
 end
 function s.atkdefop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		local c=e:GetHandler()
+		--It loses 1000 ATK and DEF
 		tc:UpdateAttack(-1000,nil,c)
 		tc:UpdateDefense(-1000,nil,c)
 	end

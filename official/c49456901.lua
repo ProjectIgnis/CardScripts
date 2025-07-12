@@ -25,10 +25,10 @@ function s.initial_effect(c)
 	e2:SetCountLimit(1)
 	e2:SetCode(EVENT_CHAINING)
 	e2:SetCondition(s.condition)
-	e2:SetCost(Cost.Detach(1))
+	e2:SetCost(Cost.DetachFromSelf(1))
 	e2:SetTarget(s.target)
 	e2:SetOperation(s.operation)
-	c:RegisterEffect(e2,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e2)
 	aux.DoubleSnareValidity(c,LOCATION_MZONE)
 end
 s.xyz_number=104

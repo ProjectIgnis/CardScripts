@@ -58,10 +58,10 @@ function s.initial_effect(c)
 	e7:SetCode(EVENT_BE_BATTLE_TARGET)
 	e7:SetRange(LOCATION_MZONE)
 	e7:SetCondition(s.nacon)
-	e7:SetCost(s.nacost)
+	e7:SetCost(Cost.DetachFromSelf(1))
 	e7:SetTarget(s.natg)
 	e7:SetOperation(s.naop)
-	c:RegisterEffect(e7,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e7)
 	--number generic effect
 	local e8=Effect.CreateEffect(c)
 	e8:SetType(EFFECT_TYPE_SINGLE)
@@ -123,10 +123,6 @@ end
 function s.nacon(e,tp,eg,ep,ev,re,r,rp)
 	local d=Duel.GetAttackTarget()
 	return d and d:IsControler(tp)
-end
-function s.nacost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.natg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetAttacker():IsOnField() end

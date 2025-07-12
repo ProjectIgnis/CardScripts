@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_SINGLE)
 	e3:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
 	e3:SetCondition(s.atkcon)
-	e3:SetCost(s.atkcost)
+	e3:SetCost(Cost.DetachFromSelf(1))
 	e3:SetTarget(s.atktg)
 	e3:SetOperation(s.atkop)
 	c:RegisterEffect(e3)
@@ -67,10 +67,6 @@ function s.atlimit(e,c)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetBattleTarget() and e:GetHandler():GetBattleTarget():IsControler(1-tp)
-end
-function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()

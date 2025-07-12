@@ -26,10 +26,10 @@ function s.initial_effect(c)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCondition(s.discon)
-	e2:SetCost(Cost.Detach(1,1,nil))
+	e2:SetCost(Cost.DetachFromSelf(1,1,nil))
 	e2:SetTarget(s.distg)
 	e2:SetOperation(s.disop)
-	c:RegisterEffect(e2,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e2)
 end
 s.xyz_number=3
 function s.spfilter(c,e,tp)

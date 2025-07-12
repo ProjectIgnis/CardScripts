@@ -60,10 +60,10 @@ function s.initial_effect(c)
 	e6:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e6:SetRange(LOCATION_MZONE)
 	e6:SetCondition(s.discon)
-	e6:SetCost(s.discost)
+	e6:SetCost(Cost.DetachFromSelf(1))
 	e6:SetTarget(s.distg)
 	e6:SetOperation(s.disop)
-	c:RegisterEffect(e6,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e6)
 	--battle indestructable
 	local e7=Effect.CreateEffect(c)
 	e7:SetType(EFFECT_TYPE_SINGLE)
@@ -140,10 +140,6 @@ function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
 	local tg=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 	return tg and tg:IsExists(s.disfilter,1,nil,eq) and Duel.IsChainDisablable(ev)
-end
-function s.discost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

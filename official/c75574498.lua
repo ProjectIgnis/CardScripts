@@ -38,10 +38,10 @@ function s.initial_effect(c)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetCode(EVENT_TO_GRAVE)
 	e4:SetCondition(s.spcon2)
-	e4:SetCost(Cost.Detach(1))
+	e4:SetCost(Cost.DetachFromSelf(1))
 	e4:SetTarget(s.sptg2)
 	e4:SetOperation(s.spop2)
-	c:RegisterEffect(e4,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e4)
 end
 s.listed_names={81587028} --"Box of Friends"
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)

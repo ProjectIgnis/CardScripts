@@ -14,10 +14,10 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(function(e) return e:GetHandler():GetOverlayGroup():IsExists(Card.IsSetCard,1,nil,{SET_ZUBABA,SET_GAGAGA,SET_GOGOGO,SET_DODODO}) end)
-	e1:SetCost(Cost.Detach(1))
+	e1:SetCost(Cost.DetachFromSelf(1))
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
-	c:RegisterEffect(e1,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e1)
 	--A "Utopic Future" Xyz Monster that has this card as material gains this effect.
 	--● If it is Xyz Summoned: Activate this effect; it can make a second attack during each Battle Phase this turn.
 	local e2=Effect.CreateEffect(c)

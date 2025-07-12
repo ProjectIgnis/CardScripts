@@ -1,111 +1,93 @@
---No.87 雪月花美神クイーン・オブ・ナイツ
+--Ｎｏ．８７ 雪月花美神クイーン・オブ・ナイツ
 --Number 87: Queen of the Night
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
-	Xyz.AddProcedure(c,nil,8,3)
 	c:EnableReviveLimit()
-	--s/t
+	--Xyz Summon procedure: 3 Level 8 monsters
+	Xyz.AddProcedure(c,nil,8,3)
+	--Ativate 1 of these effects
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_QUICK_O)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCountLimit(1,0,EFFECT_COUNT_CODE_SINGLE)
-	e1:SetCost(s.cost)
-	e1:SetTarget(s.sttg)
-	e1:SetOperation(s.stop)
-	c:RegisterEffect(e1,false,EFFECT_MARKER_DETACH_XMAT)
-	--turn set
-	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,1))
-	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e2:SetType(EFFECT_TYPE_QUICK_O)
-	e2:SetCode(EVENT_FREE_CHAIN)
-	e2:SetRange(LOCATION_MZONE)
-	e2:SetCountLimit(1,0,EFFECT_COUNT_CODE_SINGLE)
-	e2:SetCost(s.cost)
-	e2:SetTarget(s.settg)
-	e2:SetOperation(s.setop)
-	c:RegisterEffect(e2,false,EFFECT_MARKER_DETACH_XMAT)
-	--atkup
-	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(id,2))
-	e3:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
-	e3:SetType(EFFECT_TYPE_QUICK_O)
-	e3:SetCode(EVENT_FREE_CHAIN)
-	e3:SetRange(LOCATION_MZONE)
-	e3:SetCountLimit(1,0,EFFECT_COUNT_CODE_SINGLE)
-	e3:SetHintTiming(TIMING_DAMAGE_STEP)
-	e3:SetCondition(aux.StatChangeDamageStepCondition)
-	e3:SetCost(s.cost)
-	e3:SetTarget(s.atktg)
-	e3:SetOperation(s.atkop)
-	c:RegisterEffect(e3,false,EFFECT_MARKER_DETACH_XMAT)
+	e1:SetCountLimit(1)
+	e1:SetHintTiming(TIMING_DAMAGE_STEP|TIMING_SSET,TIMING_DAMAGE_STEP|TIMING_SSET|TIMING_STANDBY_PHASE|TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E)
+	e1:SetCost(Cost.DetachFromSelf(1))
+	e1:SetTarget(s.efftg)
+	e1:SetOperation(s.effop)
+	c:RegisterEffect(e1)
 end
 s.xyz_number=87
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
-end
-function s.sttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_SZONE) and chkc:IsFacedown() end
-	if chk==0 then return Duel.IsExistingTarget(Card.IsFacedown,tp,0,LOCATION_SZONE,1,e:GetHandler()) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEDOWN)
-	Duel.SelectTarget(tp,Card.IsFacedown,tp,0,LOCATION_SZONE,1,1,e:GetHandler())
-end
-function s.stop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local tc=Duel.GetFirstTarget()
-	if c:IsRelateToEffect(e) and tc:IsFacedown() and tc:IsRelateToEffect(e) then
-		c:SetCardTarget(tc)
-		e:SetLabelObject(tc)
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetProperty(EFFECT_FLAG_OWNER_RELATE)
-		e1:SetCode(EFFECT_CANNOT_TRIGGER)
-		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
-		e1:SetCondition(s.rcon)
-		e1:SetValue(1)
-		tc:RegisterEffect(e1)
-	end
-end
-function s.rcon(e)
-	return e:GetOwner():IsHasCardTarget(e:GetHandler())
-end
 function s.setfilter(c)
-	return c:IsFaceup() and c:IsRace(RACE_PLANT) and c:IsCanTurnSet()
+	return c:IsRace(RACE_PLANT) and c:IsCanTurnSet()
 end
-function s.settg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.setfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(s.setfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
-	local g=Duel.SelectTarget(tp,s.setfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_POSITION,g,1,0,0)
-end
-function s.setop(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.GetFirstTarget()
-	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
-		Duel.ChangePosition(tc,POS_FACEDOWN_DEFENSE)
+function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then
+		local op=e:GetLabel()
+		if op==1 then
+			return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_SZONE) and chkc:IsFacedown()
+		elseif op==2 then
+			return chkc:IsLocation(LOCATION_MZONE) and s.setfilter(chkc)
+		elseif op==3 then
+			return chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup()
+		end
+	end
+	local not_dmg_step=not Duel.IsPhase(PHASE_DAMAGE)
+	local b1=not_dmg_step and Duel.IsExistingTarget(Card.IsFacedown,tp,0,LOCATION_SZONE,1,nil)
+	local b2=not_dmg_step and Duel.IsExistingTarget(s.setfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
+	local b3=aux.StatChangeDamageStepCondition()
+		and Duel.IsExistingTarget(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
+	if chk==0 then return b1 or b2 or b3 end
+	local op=Duel.SelectEffect(tp,
+		{b1,aux.Stringid(id,1)},
+		{b2,aux.Stringid(id,2)},
+		{b3,aux.Stringid(id,3)})
+	e:SetLabel(op)
+	e:SetCategory(0)
+	if op==1 then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEDOWN)
+		Duel.SelectTarget(tp,Card.IsFacedown,tp,0,LOCATION_SZONE,1,1,nil)
+	elseif op==2 then
+		e:SetCategory(CATEGORY_POSITION)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
+		local g=Duel.SelectTarget(tp,s.setfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
+		Duel.SetOperationInfo(0,CATEGORY_POSITION,g,1,tp,0)
+	elseif op==3 then
+		e:SetCategory(CATEGORY_ATKCHANGE)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATKDEF)
+		Duel.SelectTarget(tp,Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
 	end
 end
-function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() end
-	if chk==0 then return Duel.IsExistingTarget(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	Duel.SelectTarget(tp,Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
-end
-function s.atkop(e,tp,eg,ep,ev,re,r,rp)
+function s.effop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
-		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetValue(300)
-		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
-		tc:RegisterEffect(e1)
+	if not tc:IsRelateToEffect(e) then return end
+	local op=e:GetLabel()
+	local c=e:GetHandler()
+	if op==1 then
+		--Target 1 Set Spell/Trap your opponent controls; while this card is face-up on the field, that Set card cannot be activated
+		if c:IsRelateToEffect(e) and tc:IsFacedown() then
+			c:SetCardTarget(tc)
+			--While this card is face-up on the field, that Set card cannot be activated
+			local e1=Effect.CreateEffect(c)
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetProperty(EFFECT_FLAG_OWNER_RELATE)
+			e1:SetCode(EFFECT_CANNOT_TRIGGER)
+			e1:SetCondition(function() return c:IsHasCardTarget(tc) and tc:IsFacedown() end)
+			e1:SetValue(1)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
+			tc:RegisterEffect(e1)
+		end
+	elseif op==2 then
+		--Target 1 Plant monster on the field; change that target to face-down Defense Position
+		if tc:IsRace(RACE_PLANT) then
+			Duel.ChangePosition(tc,POS_FACEDOWN_DEFENSE)
+		end
+	elseif op==3 then
+		--Target 1 face-up monster on the field; that target gains 300 ATK
+		if tc:IsFaceup() then
+			tc:UpdateAttack(300,nil,c)
+		end
 	end
 end

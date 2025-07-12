@@ -28,10 +28,10 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1,id)
-	e3:SetCost(Cost.Detach(1))
+	e3:SetCost(Cost.DetachFromSelf(1))
 	e3:SetTarget(s.sptg)
 	e3:SetOperation(s.spop)
-	c:RegisterEffect(e3,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e3)
 end
 s.listed_names={id}
 	--Filter for cards summoned from GY

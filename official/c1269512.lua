@@ -31,9 +31,9 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_BATTLE_DESTROYING)
 	e3:SetCondition(s.exatkcon)
-	e3:SetCost(Cost.Detach(1,1,nil))
+	e3:SetCost(Cost.DetachFromSelf(1,1,nil))
 	e3:SetOperation(function() Duel.ChainAttack() end)
-	c:RegisterEffect(e3,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e3)
 end
 s.listes_names={id}
 function s.ovfilter(c,tp,xyzc)

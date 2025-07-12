@@ -55,10 +55,10 @@ function s.initial_effect(c)
 	e7:SetDescription(aux.Stringid(id,1))
 	e7:SetType(EFFECT_TYPE_IGNITION)
 	e7:SetRange(LOCATION_MZONE)
-	e7:SetCost(s.descost)
+	e7:SetCost(Cost.DetachFromSelf(1))
 	e7:SetTarget(s.destg)
 	e7:SetOperation(s.desop)
-	c:RegisterEffect(e7,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e7)
 end
 s.listed_series={0x10af}
 s.listed_names={47198668}
@@ -87,10 +87,6 @@ function s.xyzop(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 then
 		Duel.Overlay(c,g)
 	end
-end
-function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)	
 end
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_PENDULUM)

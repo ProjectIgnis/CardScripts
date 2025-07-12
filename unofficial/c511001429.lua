@@ -5,7 +5,7 @@ Duel.LoadCardScript("c67173574.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--Xyz Summon Procedure
+	--Xyz Summon procedure: 4 Level 5 LIGHT monsters
 	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsAttribute,ATTRIBUTE_LIGHT),5,4)
 	--Rank Up Check
 	aux.EnableCheckRankUp(c,nil,nil,49678559)
@@ -21,10 +21,10 @@ function s.initial_effect(c)
 	e2:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DISABLE)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCost(Cost.Detach(1))
+	e2:SetCost(Cost.DetachFromSelf(1))
 	e2:SetTarget(s.tg)
 	e2:SetOperation(s.op)
-	--indes
+	--Make this card unable to be destroyed by that battle or effect and inflict damage to your opponent equal to this card's ATK
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_DAMAGE)
@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1,0,EFFECT_COUNT_CODE_SINGLE)
 	e3:SetCondition(s.indescon)
-	e3:SetCost(s.indescost)
+	e3:SetCost(Cost.DetachFromSelf(function(e,tp) return e:GetHandler():GetOverlayCount() end))
 	e3:SetTarget(s.indestg)
 	e3:SetOperation(s.indesop)
 	local e4=e3:Clone()
@@ -43,13 +43,13 @@ function s.initial_effect(c)
 	e5:SetType(EFFECT_TYPE_SINGLE)
 	e5:SetCode(EFFECT_RANKUP_EFFECT)
 	e5:SetLabelObject(e2)
-	c:RegisterEffect(e5,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e5)
 	local e6=e5:Clone()
 	e6:SetLabelObject(e3)
-	c:RegisterEffect(e6,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e6)
 	local e7=e5:Clone()
 	e7:SetLabelObject(e4)
-	c:RegisterEffect(e7,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e7)
 end
 s.listed_series={SET_NUMBER}
 s.xyz_number=102
@@ -126,12 +126,6 @@ end
 function s.indescon2(e,tp,eg,ep,ev,re,r,rp)
 	local ex,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_DESTROY)
 	return ex and tg and tg:IsContains(e:GetHandler())
-end
-function s.indescost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	local ct=c:GetOverlayCount()
-	if chk==0 then return ct>0 and c:CheckRemoveOverlayCard(tp,ct,REASON_COST) end
-	c:RemoveOverlayCard(tp,ct,ct,REASON_COST)
 end
 function s.indestg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

@@ -28,10 +28,10 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_CHAINING)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetCondition(s.negcon)
-	e2:SetCost(Cost.Detach(2,2,nil))
+	e2:SetCost(Cost.DetachFromSelf(2,2,nil))
 	e2:SetTarget(s.negtg)
 	e2:SetOperation(s.negop)
-	c:RegisterEffect(e2,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e2)
 end
 s.listed_series={SET_DRAGON_RULER}
 function s.tdfilter(c,e,tp)

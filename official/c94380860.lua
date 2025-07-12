@@ -14,11 +14,11 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
-	e1:SetCost(Cost.Detach(1,1,nil))
+	e1:SetCost(Cost.DetachFromSelf(1,1,nil))
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E)
-	c:RegisterEffect(e1,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e1)
 end
 s.xyz_number=103
 function s.filter(c,e)

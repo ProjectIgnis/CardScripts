@@ -13,10 +13,10 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e1:SetCondition(s.atkcon)
-	e1:SetCost(s.atkcost)
+	e1:SetCost(Cost.DetachFromSelf(1,1,function(e,og) Duel.Overlay(e:GetHandler():GetBattleTarget(),og) end))
 	e1:SetTarget(s.atktg)
 	e1:SetOperation(s.atkop)
-	c:RegisterEffect(e1,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e1)
 	--battle indestructable
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
@@ -30,18 +30,6 @@ function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
 	return bc and bc:IsType(TYPE_XYZ) and bc:IsFaceup() and bc:IsControler(1-tp)
-end
-function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	local bc=c:GetBattleTarget()
-	if chk==0 then return c:CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	local g=c:GetOverlayGroup()
-	if #g>0 then
-		local mg=g:Select(tp,1,1,nil)
-		Duel.SendtoGrave(mg,REASON_COST)
-		Duel.RaiseSingleEvent(c,EVENT_DETACH_MATERIAL,e,0,0,0,0)
-		Duel.Overlay(bc,mg)
-	end
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

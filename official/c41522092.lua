@@ -43,10 +43,10 @@ function s.initial_effect(c)
 	e5:SetRange(LOCATION_MZONE)
 	e5:SetCountLimit(1)
 	e5:SetCondition(s.ctcon)
-	e5:SetCost(Cost.Detach(1))
+	e5:SetCost(Cost.DetachFromSelf(1))
 	e5:SetTarget(s.cttg)
 	e5:SetOperation(s.ctop)
-	c:RegisterEffect(e5,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e5)
 end
 s.xyz_number=0
 function s.xyzcheck(g,tp,xyz)

@@ -4,60 +4,75 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_ACTIVATE)
+	e0:SetCode(EVENT_FREE_CHAIN)
+	c:RegisterEffect(e0)
+	--This effect becomes the effect of 1 "Numeron" Normal Spell when that card is activated
 	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetType(EFFECT_TYPE_IGNITION)
+	e1:SetRange(LOCATION_FZONE)
+	e1:SetCountLimit(1,id)
+	e1:SetCost(s.applycost)
+	e1:SetTarget(s.applytg)
+	e1:SetOperation(s.applyop)
 	c:RegisterEffect(e1)
-	--Copy spell
+	--"Numeron" Xyz Monsters you control can activate effects without detaching material(s)
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,0))
-	e2:SetType(EFFECT_TYPE_IGNITION)
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e2:SetCode(EFFECT_OVERLAY_REMOVE_REPLACE)
 	e2:SetRange(LOCATION_FZONE)
-	e2:SetCountLimit(1,id)
-	e2:SetCost(s.cpcost)
-	e2:SetTarget(s.cptg)
-	e2:SetOperation(s.cpop)
+	e2:SetCondition(function(e,tp,eg,ep,ev,re,r,rp)
+				local rc=re:GetHandler()
+				return (r&REASON_COST)>0 and re:IsActivated()
+					and re:IsActiveType(TYPE_XYZ) and rc:IsSetCard(SET_NUMERON)
+					and ep==e:GetOwnerPlayer() and ev>=1 and rc:GetOverlayCount()>=ev-1
+			end)
+	e2:SetOperation(function() Duel.Hint(HINT_CARD,0,id) return true end)
 	c:RegisterEffect(e2)
-	--Make detaching cost optional for "Numeron" Xyz Monsters
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_FIELD)
-	e3:SetCode(id)
-	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e3:SetRange(LOCATION_FZONE)
-	e3:SetTargetRange(1,0)
-	c:RegisterEffect(e3)
 end
 s.listed_series={SET_NUMERON}
-function s.cpcost(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.applycost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(1)
 	return true
 end
-function s.filter(c)
-	return c:IsNormalSpell() and c:IsSetCard(SET_NUMERON) and c:IsAbleToGraveAsCost()
+function s.applyfilter(c)
+	return c:IsSetCard(SET_NUMERON) and c:IsNormalSpell() and c:IsAbleToGraveAsCost()
 		and c:CheckActivateEffect(false,true,false)~=nil
 end
-function s.cptg(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.applytg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		if e:GetLabel()==0 then return false end
 		e:SetLabel(0)
-		return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil)
+		return Duel.IsExistingMatchingCard(s.applyfilter,tp,LOCATION_DECK,0,1,nil)
 	end
 	e:SetLabel(0)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil)
-	local te,ceg,cep,cev,cre,cr,crp=g:GetFirst():CheckActivateEffect(false,true,true)
-	Duel.SendtoGrave(g,REASON_COST)
+	local sc=Duel.SelectMatchingCard(tp,s.applyfilter,tp,LOCATION_DECK,0,1,1,nil):GetFirst()
+	local te,ceg,cep,cev,cre,cr,crp=sc:CheckActivateEffect(false,true,true)
+	Duel.SendtoGrave(sc,REASON_COST)
+	e:SetLabel(te:GetLabel())
+	e:SetLabelObject(te:GetLabelObject())
 	e:SetProperty(te:GetProperty())
 	local tg=te:GetTarget()
-	if tg then tg(e,tp,ceg,cep,cev,cre,cr,crp,1) end
+	if tg then
+		tg(e,tp,ceg,cep,cev,cre,cr,crp,1)
+	end
+	te:SetLabel(e:GetLabel())
 	te:SetLabelObject(e:GetLabelObject())
 	e:SetLabelObject(te)
 	Duel.ClearOperationInfo(0)
 end
-function s.cpop(e,tp,eg,ep,ev,re,r,rp)
+function s.applyop(e,tp,eg,ep,ev,re,r,rp)
 	local te=e:GetLabelObject()
 	if not te then return end
+	e:SetLabel(te:GetLabel())
 	e:SetLabelObject(te:GetLabelObject())
 	local op=te:GetOperation()
-	if op then op(e,tp,eg,ep,ev,re,r,rp) end
+	if op then
+		op(e,tp,Group.CreateGroup(),PLAYER_NONE,0,e,REASON_EFFECT,PLAYER_NONE)
+	end
+	e:SetLabel(0)
+	e:SetLabelObject(nil)
 end

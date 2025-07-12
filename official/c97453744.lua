@@ -35,10 +35,10 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1,{id,2})
 	e3:SetCondition(s.atkcon)
-	e3:SetCost(Cost.Detach(1,1,nil))
+	e3:SetCost(Cost.DetachFromSelf(1,1,nil))
 	e3:SetTarget(s.atktg)
 	e3:SetOperation(s.atkop)
-	c:RegisterEffect(e3,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e3)
 end
 --Cannot target other monsters for attacks
 function s.tgtg(e,c)

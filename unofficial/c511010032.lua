@@ -13,10 +13,10 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1)
 	e1:SetCode(EVENT_BATTLE_DESTROYING)
 	e1:SetCondition(s.atcon)
-	e1:SetCost(s.atcost)
+	e1:SetCost(Cost.DetachFromSelf(1))
 	e1:SetTarget(s.attg)
 	e1:SetOperation(s.atop)
-	c:RegisterEffect(e1,false,EFFECT_MARKER_DETACH_XMAT)
+	c:RegisterEffect(e1)
 	--battle indestructable
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
@@ -30,10 +30,6 @@ function s.atcon(e,tp,eg,ep,ev,re,r,rp)
 	local bc=c:GetBattleTarget()
 	return c==Duel.GetAttacker() and c:IsRelateToBattle() and c:IsStatus(STATUS_OPPO_BATTLE) 
 		and bc:IsLocation(LOCATION_GRAVE) and bc:IsMonster()
-end
-function s.atcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function s.attg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0

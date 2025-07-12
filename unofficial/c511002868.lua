@@ -2,24 +2,19 @@
 --Raidraptor - Rapid Xyz
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Immediately after this effect resolves, Xyz Summon 1 "Raidraptor" Xyz Monster using monsters you control
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(0,TIMING_BATTLE_START+TIMING_BATTLE_END)
-	e1:SetCondition(s.xyzcon)
+	e1:SetCondition(function(_,tp) return Duel.IsBattlePhase() and Duel.IsExistingMatchingCard(Card.IsSpecialSummoned,tp,0,LOCATION_MZONE,1,nil) end)
 	e1:SetTarget(s.xyztg)
 	e1:SetOperation(s.xyzop)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0xba}
-function s.cfilter(c)
-	return c:IsSpecialSummoned()
-end
-function s.xyzcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsBattlePhase() and Duel.IsExistingMatchingCard(s.cfilter,tp,0,LOCATION_MZONE,1,nil)
-end
+s.listed_series={SET_RAIDRAPTOR}
 function s.xyzfilter(c)
 	return c:IsXyzSummonable() and c:IsSetCard(SET_RAIDRAPTOR)
 end
@@ -31,107 +26,61 @@ function s.xyzop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local tc=Duel.SelectMatchingCard(tp,s.xyzfilter,tp,LOCATION_EXTRA,0,1,1,nil):GetFirst()
 	if tc then
+		--The Summoned monster can activate its effects that activate by detaching an Xyz Material(s)
 		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetDescription(aux.Stringid(id,1))
 		e1:SetType(EFFECT_TYPE_QUICK_O)
 		e1:SetCode(EVENT_FREE_CHAIN)
 		e1:SetRange(LOCATION_MZONE)
-		e1:SetTarget(s.tg)
-		e1:SetOperation(s.op)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD&~RESET_TOFIELD+RESET_PHASE+PHASE_END)
+		e1:SetCondition(function() return Duel.IsBattlePhase() end)
+		e1:SetTarget(s.acttg)
+		e1:SetOperation(s.actop)
+		e1:SetReset(RESET_EVENT|(RESETS_STANDARD&~RESET_TOFIELD)|RESET_PHASE|PHASE_END)
 		tc:RegisterEffect(e1,true)
 		Duel.XyzSummon(tp,tc)
 	end
 end
-function s.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+function s.acttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
+	local effs={}
+	for _,eff in ipairs({c:GetOwnEffects(id)}) do
+		if eff:HasDetachCost() then table.insert(effs,eff) end
+	end
+	if chkc then
+		for _,eff in ipairs(effs) do
+			if eff:GetFieldID()==e:GetLabel() then return eff:GetTarget()(e,tp,eg,ep,ev,re,r,rp,chk,chkc) end
+		end
+		return false
+	end
+	local options={}
+	local has_option=false
+	for _,eff in ipairs(effs) do
+		e:SetCategory(eff:GetCategory())
+		e:SetProperty(eff:GetProperty())
+		local con=eff:GetCondition()
+		local cost=eff:GetCost()
+		local tg=eff:GetTarget()
+		local eff_chk=eff:GetCountLimit()>0
+			and (not con or con(e,tp,eg,ep,ev,re,r,rp))
+			and (not cost or cost(e,tp,eg,ep,ev,re,r,rp,0))
+			and (not tg or tg(e,tp,eg,ep,ev,re,r,rp,0))
+		if eff_chk then has_option=true end
+		table.insert(options,{eff_chk,eff:GetDescription()})
+	end
 	e:SetCategory(0)
 	e:SetProperty(0)
-	if chkc then
-		if not c:IsHasEffect(id) then return false end
-		local tgeffs={c:GetCardEffect(id)}
-		for _,tge in ipairs(tgeffs) do
-			if tge:GetLabel()==ev then return tge:GetLabelObject():GetTarget()(e,tp,eg,ep,ev,re,r,rp,chk,chkc) end
-		end
-		return false
-	end
-	if chk==0 then
-		if not c:IsHasEffect(511002571) or not Duel.IsBattlePhase() then return false end
-		local effs={c:GetCardEffect(511002571)}
-		for _,teh in ipairs(effs) do
-			local temp=teh:GetLabelObject()
-			if temp:GetCode()&511001822==511001822 or temp:GetLabel()==511001822 then temp=temp:GetLabelObject() end
-			if temp:IsHasType(EFFECT_TYPE_IGNITION) then
-				e:SetCategory(temp:GetCategory())
-				e:SetProperty(temp:GetProperty())
-				local con=temp:GetCondition()
-				local cost=temp:GetCost()
-				local tg=temp:GetTarget()
-				if (not con or co(e,tp,eg,ep,ev,re,r,rp))
-					and (not cost or cost(e,tp,eg,ep,ev,re,r,rp,0))
-					and (not tg or tg(e,tp,eg,ep,ev,re,r,rp,0,chkc)) then
-					return true
-				end
-			end
-		end
-		return false
-	end
-	local effs={c:GetCardEffect(511002571)}
-	local acd={}
-	local ac={}
-	for _,teh in ipairs(effs) do
-		local temp=teh:GetLabelObject()
-		if temp:GetCode()&511001822==511001822 or temp:GetLabel()==511001822 then temp=temp:GetLabelObject() end
-		if temp:IsHasType(EFFECT_TYPE_IGNITION) then
-			e:SetCategory(temp:GetCategory())
-			e:SetProperty(temp:GetProperty())
-			local con=temp:GetCondition()
-			local cost=temp:GetCost()
-			local tg=temp:GetTarget()
-			if (not con or con(e,tp,eg,ep,ev,re,r,rp))
-				and (not cost or cost(e,tp,eg,ep,ev,re,r,rp,0))
-				and (not tg or tg(e,tp,eg,ep,ev,re,r,rp,0,chkc)) then
-				table.insert(ac,teh)
-				table.insert(acd,temp:GetDescription())
-			end
-		end
-	end
-	local te=nil
-	if #ac==1 then te=ac[1] elseif #ac>1 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EFFECT)
-		local op=Duel.SelectOption(tp,table.unpack(acd))+1
-		te=ac[op]
-	end
-	local teh=te
-	te=teh:GetLabelObject()
-	if te:GetCode()&511001822==511001822 or te:GetLabel()==511001822 then te=te:GetLabelObject() end
+	if chk==0 then return has_option end
+	local op=#options==1 and 1 or Duel.SelectEffect(tp,table.unpack(options))
+	if not op then return end
+	local te=effs[op]
+	if not te then return end
+	e:SetLabel(te:GetFieldID())
 	e:SetCategory(te:GetCategory())
 	e:SetProperty(te:GetProperty())
 	local cost=te:GetCost()
 	if cost then cost(e,tp,eg,ep,ev,re,r,rp,1) end
 	local tg=te:GetTarget()
-	if tg then tg(e,tp,eg,ep,ev,re,r,rp,1,chkc) end
+	if tg then tg(e,tp,eg,ep,ev,re,r,rp,1) end
 	te:UseCountLimit(tp)
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(id)
-	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
-	e1:SetLabel(Duel.GetCurrentChain())
-	e1:SetLabelObject(te)
-	e1:SetReset(RESET_CHAIN)
-	c:RegisterEffect(e1)
-end
-function s.op(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	if c:IsHasEffect(id) then
-		local tgeffs={c:GetCardEffect(id)}
-		for _,tge in ipairs(tgeffs) do
-			if tge:GetLabel()==Duel.GetCurrentChain() then
-				local te=tge:GetLabelObject()
-				e:SetCategory(te:GetCategory())
-				e:SetProperty(te:GetProperty())
-				local operation=te:GetOperation()
-				if operation then operation(e,tp,eg,ep,ev,re,r,rp) end
-			end
-		end
-	end
+	e:SetOperation(te:GetOperation())
 end

@@ -23,8 +23,8 @@ function s.registerxyzmateffect(e,tp)
 	Duel.RegisterEffect(matEff,tp)
 	return matEff
 end
-function s.xyzfilter(c,mg,fg,minc,maxg)
-	return c:IsXyzSummonable(mg,fg,minc,maxg)
+function s.xyzfilter(c,mg,minc,maxc)
+	return c:IsXyzSummonable(nil,mg,minc,maxc)
 end
 function s.rescon(exg)
 	return function(sg)
@@ -51,7 +51,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g=Duel.GetTargetCards(e)
 	local matEff=s.registerxyzmateffect(e,tp)
-	local xyzg=Duel.GetMatchingGroup(s.xyzfilter,tp,LOCATION_EXTRA,0,nil,nil,g,#g,#g)
+	local xyzg=Duel.GetMatchingGroup(s.xyzfilter,tp,LOCATION_EXTRA,0,nil,g,#g,#g)
 	if #xyzg>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local xyz=xyzg:Select(tp,1,1,nil):GetFirst()

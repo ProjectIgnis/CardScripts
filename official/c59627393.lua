@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetHintTiming(TIMING_ATTACK|TIMING_BATTLE_PHASE)
 	e1:SetCountLimit(1,0,EFFECT_COUNT_CODE_CHAIN)
 	e1:SetCondition(s.discon)
-	e1:SetCost(Cost.Detach(1))
+	e1:SetCost(Cost.DetachFromSelf(1))
 	e1:SetOperation(s.disop)
 	c:RegisterEffect(e1)
 end

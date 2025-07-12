@@ -31,7 +31,7 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1)
-	e3:SetCost(Cost.AND(Cost.Detach(1),s.halvelpcost))
+	e3:SetCost(Cost.AND(Cost.DetachFromSelf(1),s.halvelpcost))
 	e3:SetOperation(function(e,tp) local opp=1-tp Duel.SetLP(opp,Duel.GetLP(opp)/2) end)
 	c:RegisterEffect(e3)
 end

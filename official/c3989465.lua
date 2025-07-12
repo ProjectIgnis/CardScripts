@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetHintTiming(TIMING_DAMAGE_STEP)
 	e1:SetCondition(s.atkcon)
-	e1:SetCost(Cost.AND(Cost.Detach(1),Cost.SoftOncePerBattle(id)))
+	e1:SetCost(Cost.AND(Cost.DetachFromSelf(1),Cost.SoftOncePerBattle(id)))
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
 end

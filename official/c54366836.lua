@@ -32,7 +32,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCondition(function(e,tp) local bc=e:GetHandler():GetBattleTarget() return bc and bc:IsControler(1-tp) end)
-	e3:SetCost(Cost.AND(Cost.Detach(1),Cost.SoftOncePerBattle))
+	e3:SetCost(Cost.AND(Cost.DetachFromSelf(1),Cost.SoftOncePerBattle))
 	e3:SetOperation(s.reversedamop)
 	c:RegisterEffect(e3)
 end

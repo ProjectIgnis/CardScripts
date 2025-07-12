@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e3:SetHintTiming(TIMING_DAMAGE_STEP)
 	e3:SetCondition(s.atkcon)
-	e3:SetCost(Cost.Detach(1))
+	e3:SetCost(Cost.DetachFromSelf(1))
 	e3:SetTarget(s.atktg)
 	e3:SetOperation(s.atkop)
 	--

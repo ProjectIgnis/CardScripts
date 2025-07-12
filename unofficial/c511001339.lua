@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_BE_BATTLE_TARGET)
 	e1:SetCost(Cost.Choice(
-		{Cost.Detach(1),aux.Stringid(id,1)},
+		{Cost.DetachFromSelf(1),aux.Stringid(id,1)},
 		{s.cost,aux.Stringid(id,2)}
 	))
 	e1:SetTarget(s.target)

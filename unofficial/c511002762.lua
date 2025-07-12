@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e2:SetCategory(CATEGORY_ATKCHANGE)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_BATTLE_START)
-	e2:SetCost(Cost.Detach(function(e,tp) return e:GetHandler():GetOverlayCount() end))
+	e2:SetCost(Cost.DetachFromSelf(function(e,tp) return e:GetHandler():GetOverlayCount() end))
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
 end

@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetCountLimit(1)
 	e2:SetHintTiming(TIMING_DAMAGE_STEP)
-	e2:SetCost(Cost.Detach(1))
+	e2:SetCost(Cost.DetachFromSelf(1))
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end

@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCost(Cost.Detach(1,1,nil))
+	e2:SetCost(Cost.DetachFromSelf(1,1,nil))
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 	--Minus 1000 ATK for opp cards, optionally inflict damage

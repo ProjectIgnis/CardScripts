@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_DAMAGE_STEP_END)
 	e2:SetCondition(s.atcon)
-	e2:SetCost(Cost.Detach(1))
+	e2:SetCost(Cost.DetachFromSelf(1))
 	e2:SetOperation(s.atop)
 	--Place 1 card from the GY on the top of the Deck, and if you do, attach another to this card as material
 	c:RegisterEffect(e2)

@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_BATTLE_START)
 	e1:SetCondition(s.tbcon)
-	e1:SetCost(Cost.Detach(1))
+	e1:SetCost(Cost.DetachFromSelf(1))
 	e1:SetOperation(s.tbop)
 	c:RegisterEffect(e1)
 	--battle indestructable

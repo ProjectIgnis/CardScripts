@@ -32,7 +32,7 @@ function s.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e4:SetCode(EVENT_DAMAGE_STEP_END)
 	e4:SetCondition(s.atcon)
-	e4:SetCost(Cost.Detach(1))
+	e4:SetCost(Cost.DetachFromSelf(1))
 	e4:SetOperation(s.atop)
 	c:RegisterEffect(e4)
 end

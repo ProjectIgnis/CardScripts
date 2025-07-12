@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetHintTiming(TIMING_DAMAGE_STEP)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCondition(s.atkcon)
-	e1:SetCost(Cost.Detach(1))
+	e1:SetCost(Cost.DetachFromSelf(1))
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
 	--battle indestructable

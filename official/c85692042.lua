@@ -27,9 +27,9 @@ function s.initial_effect(c)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetCondition(function(e) return e:GetHandler():IsXyzSummoned() end)
 	e2:SetCost(Cost.Choice(
-		{Cost.Detach(2),aux.Stringid(id,2),s.thcheck(s.mmfilter)},
-		{Cost.Detach(3),aux.Stringid(id,3),s.thcheck(s.l4filter)},
-		{Cost.Detach(4),aux.Stringid(id,4),s.thcheck(s.stfilter)}
+		{Cost.DetachFromSelf(2),aux.Stringid(id,2),s.thcheck(s.mmfilter)},
+		{Cost.DetachFromSelf(3),aux.Stringid(id,3),s.thcheck(s.l4filter)},
+		{Cost.DetachFromSelf(4),aux.Stringid(id,4),s.thcheck(s.stfilter)}
 	))
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)

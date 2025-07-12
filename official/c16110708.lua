@@ -31,7 +31,7 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCondition(function(e) return not e:GetHandler():IsBaseAttack(1500) end)
-	e3:SetCost(Cost.Detach(1,1))
+	e3:SetCost(Cost.DetachFromSelf(1,1))
 	e3:SetOperation(s.atkop)
 	c:RegisterEffect(e3)
 end

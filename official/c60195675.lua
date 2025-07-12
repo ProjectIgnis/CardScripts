@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,id)
-	e2:SetCost(Cost.Detach(1,1,nil))
+	e2:SetCost(Cost.DetachFromSelf(1,1,nil))
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
 	--Special Summon this card from the GY in Defense Position

@@ -34,7 +34,7 @@ function s.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_IGNITION)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetCondition(s.atkcon)
-	e4:SetCost(Cost.Detach(1,1,nil))
+	e4:SetCost(Cost.DetachFromSelf(1,1,nil))
 	e4:SetOperation(s.atkop)
 	c:RegisterEffect(e4)
 end

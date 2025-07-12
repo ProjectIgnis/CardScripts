@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_BATTLE_DESTROYING)
 	e2:SetCountLimit(1)
 	e2:SetCondition(s.atcon)
-	e2:SetCost(Cost.Detach(1))
+	e2:SetCost(Cost.DetachFromSelf(1))
 	e2:SetOperation(s.atop)
 	c:RegisterEffect(e2)
 end

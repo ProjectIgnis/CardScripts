@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetHintTiming(TIMING_ATTACK|TIMING_BATTLE_PHASE)
 	e1:SetCondition(s.discon)
-	e1:SetCost(Cost.AND(Cost.Detach(1),Cost.SoftOncePerBattle))
+	e1:SetCost(Cost.AND(Cost.DetachFromSelf(1),Cost.SoftOncePerBattle))
 	e1:SetOperation(s.disop)
 	c:RegisterEffect(e1)
 	--Add 1 other "Geargia" card from your GY to your hand

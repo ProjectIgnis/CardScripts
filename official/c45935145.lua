@@ -55,8 +55,8 @@ function s.tccheck(op)
 	end
 end
 s.effdetachcost=Cost.Choice(
-	{Cost.Detach(1),aux.Stringid(id,1),s.tccheck(1)},
-	{Cost.Detach(2),aux.Stringid(id,2),s.tccheck(2)}
+	{Cost.DetachFromSelf(1),aux.Stringid(id,1),s.tccheck(1)},
+	{Cost.DetachFromSelf(2),aux.Stringid(id,2),s.tccheck(2)}
 )
 function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCondition(function(e) return e:GetHandler():IsRelateToBattle() end)
-	e1:SetCost(Cost.AND(Cost.Detach(1),Cost.SoftOncePerBattle(id)))
+	e1:SetCost(Cost.AND(Cost.DetachFromSelf(1),Cost.SoftOncePerBattle(id)))
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
 	--Special Summon this card during your 2nd Standby Phase after activation and double its ATK

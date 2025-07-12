@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
 	e1:SetCondition(s.indcon)
-	e1:SetCost(Cost.Detach(1))
+	e1:SetCost(Cost.DetachFromSelf(1))
 	e1:SetOperation(s.indop)
 	c:RegisterEffect(e1)
 	--effect

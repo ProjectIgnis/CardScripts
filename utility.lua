@@ -1526,7 +1526,7 @@ function Cost.Discard(filter,other,count)
 end
 
 local detach_costs={}
-function Cost.Detach(min,max,op)
+function Cost.DetachFromSelf(min,max,op)
 	max=max or min
 
 	local min_type=type(min)

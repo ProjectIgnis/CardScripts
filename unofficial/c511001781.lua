@@ -58,7 +58,7 @@ function s.initial_effect(c)
 	e5:SetDescription(aux.Stringid(id,3))
 	e5:SetType(EFFECT_TYPE_IGNITION)
 	e5:SetRange(LOCATION_MZONE)
-	e5:SetCost(Cost.AND(Cost.Detach(3),s.lpcost))
+	e5:SetCost(Cost.AND(Cost.DetachFromSelf(3),s.lpcost))
 	e5:SetTarget(s.lptg)
 	e5:SetOperation(s.lpop)
 	--spsummon

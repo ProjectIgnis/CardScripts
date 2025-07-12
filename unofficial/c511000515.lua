@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_DAMAGE_STEP_END)
 	e3:SetCondition(s.atcon)
-	e3:SetCost(Cost.Detach(1))
+	e3:SetCost(Cost.DetachFromSelf(1))
 	e3:SetOperation(s.atop)
 	c:RegisterEffect(e3)
 	--remove

@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
 	e2:SetCondition(function(e) return Duel.IsAbleToEnterBP() and not e:GetHandler():IsHasEffect(EFFECT_DIRECT_ATTACK) end)
-	e2:SetCost(Cost.Detach(1))
+	e2:SetCost(Cost.DetachFromSelf(1))
 	e2:SetOperation(s.effop)
 	c:RegisterEffect(e2)
 end

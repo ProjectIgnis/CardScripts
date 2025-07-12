@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
-	e1:SetCost(Cost.AND(Cost.Detach(1),s.atkcost))
+	e1:SetCost(Cost.AND(Cost.DetachFromSelf(1),s.atkcost))
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
 	--If this card attacks, it is changed to Defense Position at the end of the Battle Phase

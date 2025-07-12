@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCondition(s.atkcon)
-	e2:SetCost(Cost.AND(Cost.Detach(2),Cost.SoftOncePerBattle))
+	e2:SetCost(Cost.AND(Cost.DetachFromSelf(2),Cost.SoftOncePerBattle))
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
 end

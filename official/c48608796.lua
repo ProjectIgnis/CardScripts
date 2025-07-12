@@ -32,7 +32,7 @@ function s.initial_effect(c)
 	e4:SetCode(EVENT_FREE_CHAIN)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetCountLimit(1)
-	e4:SetCost(Cost.Detach(1))
+	e4:SetCost(Cost.DetachFromSelf(1))
 	e4:SetOperation(s.indop)
 	c:RegisterEffect(e4)
 end

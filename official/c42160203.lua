@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_BATTLE_CONFIRM)
 	e1:SetCountLimit(1)
 	e1:SetCondition(s.atkcon)
-	e1:SetCost(Cost.Detach(1))
+	e1:SetCost(Cost.DetachFromSelf(1))
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
 	--special summon

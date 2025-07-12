@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetHintTiming(0,TIMING_DRAW_PHASE)
 	e2:SetCountLimit(1)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCost(Cost.Detach(1))
+	e2:SetCost(Cost.DetachFromSelf(1))
 	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end

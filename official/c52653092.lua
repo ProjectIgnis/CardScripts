@@ -39,7 +39,7 @@ function s.initial_effect(c)
 	e6:SetHintTiming(0,TIMING_DRAW_PHASE)
 	e6:SetCountLimit(1)
 	e6:SetCondition(s.actcon)
-	e6:SetCost(Cost.Detach(1))
+	e6:SetCost(Cost.DetachFromSelf(1))
 	e6:SetOperation(s.actop)
 	c:RegisterEffect(e6)
 end

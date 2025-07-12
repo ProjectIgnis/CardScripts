@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCondition(s.atkcon)
-	e1:SetCost(Cost.AND(Cost.Detach(1),Cost.SoftOncePerBattle(id)))
+	e1:SetCost(Cost.AND(Cost.DetachFromSelf(1),Cost.SoftOncePerBattle(id)))
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
 	--battle indestructable

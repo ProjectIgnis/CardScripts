@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_PHASE|PHASE_BATTLE_START)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1,id)
-	e1:SetTarget(Cost.Detach(1))
+	e1:SetTarget(Cost.DetachFromSelf(1))
 	e1:SetOperation(s.btop)
 	c:RegisterEffect(e1)
 	--control

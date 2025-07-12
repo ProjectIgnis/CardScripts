@@ -43,7 +43,7 @@ function s.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_IGNITION)
 	e4:SetCountLimit(1)
 	e4:SetRange(LOCATION_MZONE)
-	e4:SetCost(Cost.Detach(1))
+	e4:SetCost(Cost.DetachFromSelf(1))
 	e4:SetOperation(s.regop)
 	c:RegisterEffect(e4)
 	--Cannot be destroyed by battle

@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
 	e1:SetCondition(function(_,tp) return Duel.IsTurnPlayer(tp) end)
-	e1:SetCost(Cost.Detach(1,1,nil))
+	e1:SetCost(Cost.DetachFromSelf(1,1,nil))
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 	--Unaffected by opponent's monster effects

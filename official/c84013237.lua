@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCode(EVENT_ATTACK_ANNOUNCE)
-	e1:SetCost(Cost.Detach(1,1,nil))
+	e1:SetCost(Cost.DetachFromSelf(1,1,nil))
 	e1:SetOperation(function() Duel.NegateAttack() end)
 	c:RegisterEffect(e1)
 	--Self destroy

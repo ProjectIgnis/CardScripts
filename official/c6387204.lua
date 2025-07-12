@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCondition(function(e,tp) return Duel.GetLP(1-tp)~=100 and e:GetHandler():GetOverlayGroup():IsExists(Card.IsCode,1,nil,9161357) end)
-	e2:SetCost(Cost.AND(Cost.Detach(3),s.lpcost))
+	e2:SetCost(Cost.AND(Cost.DetachFromSelf(3),s.lpcost))
 	e2:SetOperation(s.lpop)
 	c:RegisterEffect(e2)
 end

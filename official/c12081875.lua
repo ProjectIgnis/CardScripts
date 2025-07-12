@@ -55,6 +55,8 @@ function s.applytg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local op=#options==1 and 1 or Duel.SelectEffect(tp,table.unpack(options))
 	local te=effs[op]
 	Duel.Hint(HINT_OPSELECTED,1-tp,te:GetDescription())
+	Duel.ClearTargetCard()
+	tc:CreateEffectRelation(e)
 	e:SetLabel(te:GetLabel())
 	e:SetLabelObject(te:GetLabelObject())
 	local targ_fn=te:GetTarget()
@@ -64,18 +66,18 @@ function s.applytg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		te:SetLabelObject(e:GetLabelObject())
 		Duel.ClearOperationInfo(0)
 	end
-	e:SetLabelObject({tc,te})
+	e:SetLabelObject(te)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,tc,1,tp,0)
 end
 function s.applyop(e,tp,eg,ep,ev,re,r,rp)
-	local tc,te=table.unpack(e:GetLabelObject())
-	if not (tc:IsRelateToEffect(e) and te) then return end
+	local te=e:GetLabelObject()
+	if not te then return end
+	local tc=te:GetHandler()
+	if not tc:IsRelateToEffect(e) then return end
 	local op=te:GetOperation()
 	if op then
 		e:SetLabel(te:GetLabel())
 		e:SetLabelObject(te:GetLabelObject())
-		local tg=Duel.GetTargetCards(e)-tc
-		if #tg>0 then Duel.ChangeTargetCard(ev,tg) end
 		op(e,tp,eg,ep,ev,re,r,rp)
 	end
 	if tc:IsAbleToDeck() then

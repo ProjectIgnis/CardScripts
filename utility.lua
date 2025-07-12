@@ -219,7 +219,11 @@ Card.IsLinkSpell=make_exact_type_check(TYPE_SPELL|TYPE_LINK)
 Card.IsContinuousTrap=make_exact_type_check(TYPE_TRAP|TYPE_CONTINUOUS)
 Card.IsCounterTrap=make_exact_type_check(TYPE_TRAP|TYPE_COUNTER)
 
+Card.IsFusionMonster=make_exact_type_check(TYPE_MONSTER|TYPE_FUSION)
 Card.IsRitualMonster=make_exact_type_check(TYPE_MONSTER|TYPE_RITUAL)
+Card.IsSynchroMonster=make_exact_type_check(TYPE_MONSTER|TYPE_SYNCHRO)
+Card.IsXyzMonster=make_exact_type_check(TYPE_MONSTER|TYPE_XYZ)
+Card.IsPendulumMonster=make_exact_type_check(TYPE_MONSTER|TYPE_PENDULUM)
 Card.IsLinkMonster=make_exact_type_check(TYPE_MONSTER|TYPE_LINK)
 
 function Card.IsNormalSpell(c)
@@ -233,6 +237,7 @@ end
 function Card.IsNormalSpellTrap(c)
 	return c:IsNormalSpell() or c:IsNormalTrap()
 end
+
 function Card.IsContinuousSpellTrap(c)
 	return c:IsContinuousSpell() or c:IsContinuousTrap()
 end
@@ -252,6 +257,9 @@ function Card.GetMainCardType(c)
 	return c:GetType()&(TYPE_MONSTER|TYPE_SPELL|TYPE_TRAP)
 end
 
+function Card.IsEffectMonster(c)
+	return c:IsMonster() and c:IsType(TYPE_EFFECT)
+end
 
 function Card.IsNonEffectMonster(c)
 	return c:IsMonster() and not c:IsType(TYPE_EFFECT)

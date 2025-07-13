@@ -2,23 +2,25 @@
 --Domain of the Dark Ruler
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Activate when your opponent activates a Spell or Trap Card
 	local e1=Effect.CreateEffect(c)
+	e1:SetCategory(CATEGORY_NEGATE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
+	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetCode(EVENT_CHAINING)
 	e1:SetCondition(s.condition)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	--Negate
+	--Negate the effects of all other Spell and Trap cards
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_DISABLE)
 	e2:SetRange(LOCATION_SZONE)
-	e2:SetTargetRange(0xff,0xff)
-	e2:SetTarget(s.disable)
+	e2:SetTargetRange(LOCATION_ALL,LOCATION_ALL)
+	e2:SetTarget(function(e,c) return c:IsSpellTrap() and c~=e:GetHandler() end)
 	c:RegisterEffect(e2)
-	--Trap Spell
+	--Trap Spell properties
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
@@ -32,7 +34,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function s.condition(e,tp,eg,ev,ep,re,r,rp)
-	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and re:IsHasType(EFFECT_TYPE_ACTIVATE) and rp~=tp and Duel.IsChainNegatable(ev)
+	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and rp==1-tp and Duel.IsChainNegatable(ev)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -42,7 +44,4 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then
 		Duel.SendtoGrave(re:GetHandler(),REASON_EFFECT)
 	end
-end
-function s.disable(e,c)
-	return c:IsSpellTrap() and c~=e:GetHandler()
 end

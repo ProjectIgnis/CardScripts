@@ -26,14 +26,15 @@ function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	return bc1 and bc2 and bc1:IsSetCard(SET_BATTLIN_BOXER) and bc1:IsFaceup()
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	local bc1,bc2=Duel.GetBattleMonster(tp)
 	if bc2:IsRelateToBattle() and bc2:IsNegatableMonster() then
 		--Negate the effects of that opponent's monster while it is face-up until the end of this turn
-		bc2:NegateEffects(RESET_PHASE|PHASE_END)
+		bc2:NegateEffects(c,RESETS_STANDARD_PHASE_END)
 	end
 	if bc1:IsRelateToBattle() then
 		--That monster you control cannot be destroyed by that battle
-		local e1=Effect.CreateEffect(e:GetHandler())
+		local e1=Effect.CreateEffect(c)
 		e1:SetDescription(3000)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)

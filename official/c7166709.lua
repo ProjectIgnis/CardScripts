@@ -33,8 +33,8 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local b1=c:IsLocation(LOCATION_HAND) and not Duel.HasFlagEffect(tp,id)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-	local b2=c:IsLocation(LOCATION_GRAVE) and not Duel.HasFlagEffect(tp,id+100) and c:IsAbleToHand()
-	local b3=c:IsLocation(LOCATION_GRAVE) and not Duel.HasFlagEffect(tp,id+200)
+	local b2=c:IsLocation(LOCATION_GRAVE) and not Duel.HasFlagEffect(tp,id+1) and c:IsAbleToHand()
+	local b3=c:IsLocation(LOCATION_GRAVE) and not Duel.HasFlagEffect(tp,id+2)
 		and c:IsAbleToRemove() and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_GRAVE,0,1,c)
 	if chk==0 then return b1 or b2 or b3 end
 	local op=Duel.SelectEffect(tp,
@@ -42,7 +42,7 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 		{b2,aux.Stringid(id,3)},
 		{b3,aux.Stringid(id,4)})
 	Duel.SetTargetParam(op)
-	Duel.RegisterFlagEffect(tp,id+(op-1)*100,RESET_PHASE|PHASE_END,0,1)
+	Duel.RegisterFlagEffect(tp,id+op-1,RESET_PHASE|PHASE_END,0,1)
 	if op==1 then
 		e:SetCategory(CATEGORY_SPECIAL_SUMMON)
 		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,tp,0)

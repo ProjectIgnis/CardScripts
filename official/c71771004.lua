@@ -2,7 +2,7 @@
 --Readying of Rites
 --scripted by pyrQ
 local s,id=GetID()
-local TOKEN_SACIFICIAL_OFFERING=id+100
+local TOKEN_SACIFICIAL_OFFERING=id+1
 function s.initial_effect(c)
 	--Add 1 Fiend Ritual Monster from your Deck to your hand, then if you added a Pendulum Monster, you can Special Summon 1 "Sacrificial Offering Token" (Fiend/DARK/Level 1/ATK 300/DEF 300)
 	local e1=Effect.CreateEffect(c)

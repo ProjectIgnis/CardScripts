@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
-s.listed_names={101301083} --"Mutiny in the Sky"
+s.listed_names={71593652} --"Mutiny in the Sky"
 function s.disfilter(c)
 	return c:IsRace(RACE_FIEND) and c:IsType(TYPE_EFFECT) and c:IsNegatableMonster()
 end
@@ -62,7 +62,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thfilter(c)
-	return c:IsCode(101301083) and c:IsAbleToHand()
+	return c:IsCode(71593652) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

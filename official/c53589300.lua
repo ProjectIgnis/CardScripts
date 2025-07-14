@@ -4,8 +4,8 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--Fusion Materials: 3 "Artmegia" monsters
-	Fusion.AddProcMixRep(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_ARTMEGIA),3,3)
+	--Fusion Materials: 3 "Artmage" monsters
+	Fusion.AddProcMixRep(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_ARTMAGE),3,3)
 	c:AddMustFirstBeFusionSummoned()
 	c:SetSPSummonOnce(id)
 	--Must first be either Fusion Summoned, or Special Summoned (from your Extra Deck) in Defense Position by Tributing 3 monsters with different Types
@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	e1:SetCondition(function() return Duel.GetFieldGroupCount(0,LOCATION_FZONE,LOCATION_FZONE)>0 end)
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
-	--Make your "Artmegia" monster's effect become "Destroy all cards your opponent controls"
+	--Make your "Artmage" monster's effect become "Destroy all cards your opponent controls"
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_QUICK_O)
@@ -41,7 +41,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.chop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={SET_ARTMEGIA}
+s.listed_series={SET_ARTMAGE}
 function s.rescon(sg,e,tp)
 	return Duel.GetLocationCountFromEx(tp,tp,sg,e:GetHandler())>0 and sg:GetClassCount(Card.GetRace)==#sg
 end
@@ -71,7 +71,7 @@ function s.chcon(e,tp,eg,ep,ev,re,r,rp)
 	if not (re:IsMonsterEffect() and rp==tp) then return false end
 	local setcodes=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_SETCODES)
 	for _,set in ipairs(setcodes) do
-		if (SET_ARTMEGIA&0xfff)==(set&0xfff) and (SET_ARTMEGIA&set)==SET_ARTMEGIA then return true end
+		if (SET_ARTMAGE&0xfff)==(set&0xfff) and (SET_ARTMAGE&set)==SET_ARTMAGE then return true end
 	end
 	return false
 end

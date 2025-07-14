@@ -4,8 +4,8 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--Fusion Materials: 1 "Medius the Innocent" + 1 "Artmegia" monster
-	Fusion.AddProcMix(c,true,true,CARD_MEDIUS_THE_INNOCENT,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_ARTMEGIA))
+	--Fusion Materials: 1 "Medius the Pure" + 1 "Artmage" monster
+	Fusion.AddProcMix(c,true,true,CARD_MEDIUS_THE_PURE,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_ARTMAGE))
 	--Change the battle position of 1 monster on the field
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.negtg)
 	e2:SetOperation(s.negop)
 	c:RegisterEffect(e2)
-	--Special Summon 1 "Medius the Innocent" from your hand, Deck, or banishment
+	--Special Summon 1 "Medius the Pure" from your hand, Deck, or banishment
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -43,8 +43,8 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.listed_names={CARD_MEDIUS_THE_INNOCENT}
-s.listed_series={SET_ARTMEGIA}
+s.listed_names={CARD_MEDIUS_THE_PURE}
+s.listed_series={SET_ARTMAGE}
 function s.postg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsCanChangePosition() end
 	if chk==0 then return Duel.IsExistingTarget(Card.IsCanChangePosition,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
@@ -81,7 +81,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsFusionSummoned()
 end
 function s.spfilter(c,e,tp)
-	return c:IsCode(CARD_MEDIUS_THE_INNOCENT) and (not c:IsLocation(LOCATION_REMOVED) or c:IsFaceup())
+	return c:IsCode(CARD_MEDIUS_THE_PURE) and (not c:IsLocation(LOCATION_REMOVED) or c:IsFaceup())
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

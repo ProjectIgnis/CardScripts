@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,function(c) return not c:IsSummonLocation(LOCATION_EXTRA) or c:IsType(TYPE_FUSION) end)
 end
 s.listed_series={74733322} --"Artmage Academic Arcane Arts Acropolis"
-s.listed_series={SET_ARTMEGIA}
+s.listed_series={SET_ARTMAGE}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetCustomActivityCount(id,tp,ACTIVITY_SPSUMMON)==0 end
 	--You cannot Special Summon from the Extra Deck the turn you activate this effect, except Fusion Monsters
@@ -48,7 +48,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.rthtefilter(c,tp)
-	return c:IsSetCard(SET_ARTMEGIA) and (c:IsAbleToHand() or c:IsAbleToExtra())
+	return c:IsSetCard(SET_ARTMAGE) and (c:IsAbleToHand() or c:IsAbleToExtra())
 		and c:IsFaceup() and (not tp or Duel.GetMZoneCount(tp,c)>0)
 end
 function s.rthtetg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -79,7 +79,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsReason(REASON_COST) and re:IsActivated() and Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_CODE)==74733322
 end
 function s.thfilter(c)
-	return c:IsSetCard(SET_ARTMEGIA) and c:IsSpell() and c:IsFaceup() and c:IsAbleToHand()
+	return c:IsSetCard(SET_ARTMAGE) and c:IsSpell() and c:IsFaceup() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_GRAVE|LOCATION_REMOVED,0,1,nil) end

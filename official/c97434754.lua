@@ -9,18 +9,18 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
-	--Special Summon this card from your hand, then you can add 1 "Artmegia" card from your GY to your hand
+	--Special Summon this card from your hand, then you can add 1 "Artmage" card from your GY to your hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOHAND)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_HAND)
 	e2:SetCountLimit(1,id)
-	e2:SetCondition(function(e,tp) return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_ARTMEGIA),tp,LOCATION_ONFIELD,0,1,nil) end)
+	e2:SetCondition(function(e,tp) return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_ARTMAGE),tp,LOCATION_ONFIELD,0,1,nil) end)
 	e2:SetTarget(s.selfsptg)
 	e2:SetOperation(s.selfspop)
 	c:RegisterEffect(e2)
-	--Special Summon 1 "Artmegia" monster from your hand or GY, except "Artmegia Litera", then return this card from the field to the hand
+	--Special Summon 1 "Artmage" monster from your hand or GY, except "Artmage Litera", then return this card from the field to the hand
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={id}
-s.listed_series={SET_ARTMEGIA}
+s.listed_series={SET_ARTMAGE}
 function s.selfsptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -44,7 +44,7 @@ function s.selfsptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_GRAVE)
 end
 function s.thfilter(c)
-	return c:IsSetCard(SET_ARTMEGIA) and c:IsAbleToHand()
+	return c:IsSetCard(SET_ARTMAGE) and c:IsAbleToHand()
 end
 function s.selfspop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -60,7 +60,7 @@ function s.selfspop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(SET_ARTMEGIA) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_ARTMAGE) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

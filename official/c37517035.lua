@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetHintTiming(0,TIMING_MAIN_END|TIMINGS_CHECK_MONSTER)
 	e1:SetCondition(function() return Duel.IsMainPhase() end)
 	c:RegisterEffect(e1)
-	--Shuffle into your Deck 3 "Artmegia" cards in your GY with different names
+	--Shuffle 3 "Artmage" cards with different names from your GY into your Deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TODECK)
@@ -22,9 +22,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tdop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={SET_ARTMEGIA}
+s.listed_series={SET_ARTMAGE}
 function s.matcheck(tp,sg,fc)
-	return sg:IsExists(Card.IsSetCard,1,nil,SET_ARTMEGIA,fc,SUMMON_TYPE_FUSION,tp)
+	return sg:IsExists(Card.IsSetCard,1,nil,SET_ARTMAGE,fc,SUMMON_TYPE_FUSION,tp)
 end
 function s.fextra(e,tp,mg,sumtype)
 	return nil,s.matcheck
@@ -48,7 +48,7 @@ function s.atkop(e,tc,tp,mg,chk)
 	end
 end
 function s.tdfilter(c,e)
-	return c:IsSetCard(SET_ARTMEGIA) and c:IsAbleToDeck() and c:IsCanBeEffectTarget(e)
+	return c:IsSetCard(SET_ARTMAGE) and c:IsAbleToDeck() and c:IsCanBeEffectTarget(e)
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

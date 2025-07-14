@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	--Return 1 "Artmegia" monster you control to the hand/Extra Deck, and if you do, destroy 1 card your opponent controls
+	--Return 1 "Artmage" monster you control to the hand/Extra Deck, and if you do, destroy 1 card your opponent controls
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_TOEXTRA+CATEGORY_DESTROY)
@@ -29,10 +29,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={SET_ARTMEGIA}
-s.listed_names={CARD_MEDIUS_THE_INNOCENT}
+s.listed_series={SET_ARTMAGE}
+s.listed_names={CARD_MEDIUS_THE_PURE}
 function s.spfilter(c,e,tp)
-	return (c:IsSetCard(SET_ARTMEGIA) or c:IsCode(CARD_MEDIUS_THE_INNOCENT)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return (c:IsSetCard(SET_ARTMAGE) or c:IsCode(CARD_MEDIUS_THE_PURE)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -112,7 +112,7 @@ function s.chainlm(e,rp,tp)
 	return tp==rp
 end
 function s.thfilter(c)
-	return c:IsSetCard(SET_ARTMEGIA) and c:IsFaceup() and (c:IsAbleToHand() or c:IsAbleToExtra())
+	return c:IsSetCard(SET_ARTMAGE) and c:IsFaceup() and (c:IsAbleToHand() or c:IsAbleToExtra())
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.thfilter(chkc) end

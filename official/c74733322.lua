@@ -8,16 +8,16 @@ function s.initial_effect(c)
 	e0:SetType(EFFECT_TYPE_ACTIVATE)
 	e0:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e0)
-	--During your Main Phase, you can Normal Summon 1 "Medius the Innocent" in addition to your Normal Summon/Set
+	--During your Main Phase, you can Normal Summon 1 "Medius the Pure" in addition to your Normal Summon/Set
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_EXTRA_SUMMON_COUNT)
 	e1:SetRange(LOCATION_FZONE)
 	e1:SetTargetRange(LOCATION_HAND|LOCATION_MZONE,0)
-	e1:SetTarget(aux.TargetBoolFunction(Card.IsCode,CARD_MEDIUS_THE_INNOCENT))
+	e1:SetTarget(aux.TargetBoolFunction(Card.IsCode,CARD_MEDIUS_THE_PURE))
 	c:RegisterEffect(e1)
-	--Add 1 declared "Artmegia" monster from your Deck to your hand
+	--Add 1 declared "Artmage" monster from your Deck to your hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -39,14 +39,14 @@ function s.initial_effect(c)
 		end)
 	end)
 end
-s.listed_names={CARD_MEDIUS_THE_INNOCENT}
-s.listed_series={SET_ARTMEGIA}
+s.listed_names={CARD_MEDIUS_THE_PURE}
+s.listed_series={SET_ARTMAGE}
 function s.declfilter(c,exc1,exc2)
-	return c:IsSetCard(SET_ARTMEGIA) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_ARTMAGE) and c:IsMonster() and c:IsAbleToHand()
 		and (#exc1==0 or not c:IsCode(table.unpack(exc1))) and (#exc2==0 or not c:IsCode(table.unpack(exc2)))
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local fcs=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,SET_ARTMEGIA),tp,LOCATION_MZONE,0,nil):GetClass(Card.GetCode)
+	local fcs=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,SET_ARTMAGE),tp,LOCATION_MZONE,0,nil):GetClass(Card.GetCode)
 	local g=Duel.GetMatchingGroup(s.declfilter,tp,LOCATION_DECK,0,nil,fcs,s.declared_names[tp])
 	if chk==0 then return #g>0 end
 	s.announce_filter={}
@@ -79,14 +79,14 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	if not Duel.HasFlagEffect(tp,id) then
 		Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1)
-		--Cannot Special Summon from outside the Extra Deck for the rest of this turn, except "Artmegia" monsters and "Medius the Innocent"
+		--Cannot Special Summon from outside the Extra Deck for the rest of this turn, except "Artmage" monsters and "Medius the Pure"
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetDescription(aux.Stringid(id,2))
 		e1:SetType(EFFECT_TYPE_FIELD)
 		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 		e1:SetTargetRange(1,0)
-		e1:SetTarget(function(e,c) return not (c:IsSetCard(SET_ARTMEGIA) or c:IsCode(CARD_MEDIUS_THE_INNOCENT) or c:IsLocation(LOCATION_EXTRA)) end)
+		e1:SetTarget(function(e,c) return not (c:IsSetCard(SET_ARTMAGE) or c:IsCode(CARD_MEDIUS_THE_PURE) or c:IsLocation(LOCATION_EXTRA)) end)
 		e1:SetReset(RESET_PHASE|PHASE_END)
 		Duel.RegisterEffect(e1,tp)
 	end

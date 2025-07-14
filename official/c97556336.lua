@@ -3,7 +3,7 @@
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	--Take 1 "Imprisoned Deity" monster from your Deck and either add it to your hand or Special Summon it
+	--Take 1 "Power Patron" monster from your Deck and either add it to your hand or Special Summon it
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_SPECIAL_SUMMON)
@@ -28,9 +28,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.tdop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={SET_IMPRISONED_DEITY}
+s.listed_series={SET_POWER_PATRON}
 function s.thspfilter(c,e,tp,sp_chk)
-	return c:IsSetCard(SET_IMPRISONED_DEITY) and c:IsMonster()
+	return c:IsSetCard(SET_POWER_PATRON) and c:IsMonster()
 	   and (c:IsAbleToHand() or (sp_chk and c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
 end
 function s.thsptg(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -3,7 +3,7 @@
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
-	--When this card is activated: You can add 1 "Medius the Innocent" from your Deck to your hand
+	--When this card is activated: You can add 1 "Medius the Pure" from your Deck to your hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	--Make 1 face-up monster you control able to be treated as an "Artmegia" monster if used as Fusion Material this turn
+	--Make 1 face-up monster you control able to be treated as an "Artmage" monster if used as Fusion Material this turn
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_IGNITION)
@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.fusmattg)
 	e2:SetOperation(s.fusmatop)
 	c:RegisterEffect(e2)
-	--If "Artmegia the Academy City of Divine Arts" you control would be destroyed by card effect, you can send this card to the GY instead
+	--If "Artmage Academic Arcane Arts Acropolis" you control would be destroyed by card effect, you can send this card to the GY instead
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e3:SetCode(EFFECT_DESTROY_REPLACE)
@@ -32,10 +32,10 @@ function s.initial_effect(c)
 	e3:SetOperation(function(e) Duel.SendtoGrave(e:GetHandler(),REASON_EFFECT|REASON_REPLACE) end)
 	c:RegisterEffect(e3)
 end
-s.listed_names={CARD_MEDIUS_THE_INNOCENT,74733322} --"Artmegia the Academy City of Divine Arts"
-s.listed_series={SET_ARTMEGIA}
+s.listed_names={CARD_MEDIUS_THE_PURE,74733322} --"Artmage Academic Arcane Arts Acropolis"
+s.listed_series={SET_ARTMAGE}
 function s.thfilter(c)
-	return c:IsCode(CARD_MEDIUS_THE_INNOCENT) and c:IsAbleToHand()
+	return c:IsCode(CARD_MEDIUS_THE_PURE) and c:IsAbleToHand()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil)
@@ -56,13 +56,13 @@ end
 function s.fusmatop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
-		--It can be treated as an "Artmegia" monster if used as Fusion Material this turn
+		--It can be treated as an "Artmage" monster if used as Fusion Material this turn
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetDescription(aux.Stringid(id,3))
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetCode(EFFECT_ADD_SETCODE)
-		e1:SetValue(SET_ARTMEGIA)
+		e1:SetValue(SET_ARTMAGE)
 		e1:SetOperation(function(scard,sumtype,tp) return (sumtype&MATERIAL_FUSION)>0 or (sumtype&SUMMON_TYPE_FUSION)>0 end)
 		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)

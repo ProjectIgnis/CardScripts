@@ -25,9 +25,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.chngop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={CARD_MEDIUS_THE_INNOCENT}
+s.listed_names={CARD_MEDIUS_THE_PURE}
 function s.costfilter(c)
-	return c:IsCode(CARD_MEDIUS_THE_INNOCENT) and c:IsAbleToGraveAsCost()
+	return c:IsCode(CARD_MEDIUS_THE_PURE) and c:IsAbleToGraveAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_DECK,0,1,nil) end

@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(function(e,c) return c:IsLocation(LOCATION_EXTRA) and not c:IsType(TYPE_FUSION) end)
 	c:RegisterEffect(e1)
-	--Fusion Summon 1 "Artmegia" Fusion Monster or "Nerva the Imprisoned Deity of Creation"
+	--Fusion Summon 1 "Artmage" Fusion Monster or "Nerva the Imprisoned Deity of Creation"
 	local params={fusfilter=s.fusionfilter,gc=Fusion.ForcedHandler}
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e2:SetTarget(Fusion.SummonEffTG(params))
 	e2:SetOperation(Fusion.SummonEffOP(params))
 	c:RegisterEffect(e2)
-	--Add 1 "Artmegia" Spell/Trap from your Deck to your hand with a different name from the cards in your GY.
+	--Add 1 "Artmage" Spell/Trap from your Deck to your hand with a different name from the cards in your GY
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -39,13 +39,13 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={SET_ARTMEGIA}
-s.listed_names={53589300} --"Nerva the Imprisoned Deity of Creation"
+s.listed_series={SET_ARTMAGE}
+s.listed_names={53589300} --"Nerva the Power Patron of Creation"
 function s.fusionfilter(c)
-	return c:IsSetCard(SET_ARTMEGIA) or c:IsCode(53589300)
+	return c:IsSetCard(SET_ARTMAGE) or c:IsCode(53589300)
 end
 function s.thfilter(c,tp)
-	return c:IsSetCard(SET_ARTMEGIA) and c:IsSpellTrap() and c:IsAbleToHand()
+	return c:IsSetCard(SET_ARTMAGE) and c:IsSpellTrap() and c:IsAbleToHand()
 		and not Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,1,nil,c:GetCode())
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)

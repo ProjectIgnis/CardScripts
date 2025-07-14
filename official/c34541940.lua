@@ -3,14 +3,14 @@
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	--Your opponent cannot target Level 6 or lower "Artmegia" monsters you control with card effects
+	--Your opponent cannot target Level 6 or lower "Artmage" monsters you control with card effects
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e1:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetTargetRange(LOCATION_MZONE,0)
-	e1:SetTarget(function(e,c) return c:IsLevelBelow(6) and c:IsSetCard(SET_ARTMEGIA) end)
+	e1:SetTarget(function(e,c) return c:IsLevelBelow(6) and c:IsSetCard(SET_ARTMAGE) end)
 	e1:SetValue(aux.tgoval)
 	c:RegisterEffect(e1)
 	--Special Summon this card from your hand, then you can draw 1 card
@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_HAND)
 	e2:SetCountLimit(1,id)
-	e2:SetCondition(function(e,tp) return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_ARTMEGIA),tp,LOCATION_ONFIELD,0,1,nil) end)
+	e2:SetCondition(function(e,tp) return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_ARTMAGE),tp,LOCATION_ONFIELD,0,1,nil) end)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
@@ -38,7 +38,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.disop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={SET_ARTMEGIA}
+s.listed_series={SET_ARTMAGE}
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

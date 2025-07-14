@@ -3,7 +3,7 @@
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
-	--Place 1 "Artmegia the Academy City of Divine Arts" from your Deck or GY face-up in your Field Zone
+	--Place 1 "Artmage Academic Arcane Arts Acropolis" from your Deck or GY face-up in your Field Zone
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	--Negate an attack targeting your "Artmegia" monster
+	--Negate an attack targeting your "Artmage" monster
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -27,10 +27,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.negop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={CARD_MEDIUS_THE_INNOCENT,74733322,id} --"Artmegia the Academy City of Divine Arts"
-s.listed_series={SET_ARTMEGIA}
+s.listed_names={CARD_MEDIUS_THE_PURE,74733322,id} --"Artmage Academic Arcane Arts Acropolis"
+s.listed_series={SET_ARTMAGE}
 function s.plthfilter(c,tohand_chk)
-	return (c:IsCode(74733322) and not c:IsForbidden()) or (tohand_chk and c:IsSetCard(SET_ARTMEGIA) and c:IsAbleToHand() and c:IsLocation(LOCATION_DECK) and not c:IsCode(id))
+	return (c:IsCode(74733322) and not c:IsForbidden()) or (tohand_chk and c:IsSetCard(SET_ARTMAGE) and c:IsAbleToHand() and c:IsLocation(LOCATION_DECK) and not c:IsCode(id))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
@@ -62,14 +62,14 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	local bc=Duel.GetAttackTarget()
-	return bc and bc:IsSetCard(SET_ARTMEGIA) and bc:IsControler(tp) and bc:IsFaceup()
+	return bc and bc:IsSetCard(SET_ARTMAGE) and bc:IsControler(tp) and bc:IsFaceup()
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 end
 function s.spfilter(c,e,tp)
-	return c:IsCode(CARD_MEDIUS_THE_INNOCENT) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsCode(CARD_MEDIUS_THE_PURE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.NegateAttack() and Duel.GetLocationCount(tp,LOCATION_MZONE)>0

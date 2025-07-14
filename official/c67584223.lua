@@ -1,5 +1,5 @@
 --源帝従騎テセラ
---Tessera the Prime Squire
+--Tessera the Primal Squire
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

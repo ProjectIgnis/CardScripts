@@ -1,5 +1,5 @@
 --帝王の策略
---Scheme of the Monarchs
+--The Monarchs Masterplan
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --ジュラック・スティゴ
---Jurrac Stigo
+--Jurrac Stego
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

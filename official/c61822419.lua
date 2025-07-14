@@ -1,5 +1,5 @@
 --咎を擁く魔瞳
---Guilt Gripping Morganite
+--Guilt-Gripping Morganite
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

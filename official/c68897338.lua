@@ -1,5 +1,5 @@
 --魔轟神獣ベヒルモス
---The Fabled Behillmoth
+--The Fabled Behilmoth
 --Scripted by The Razgriz
 local s,id=GetID()
 function s.initial_effect(c)

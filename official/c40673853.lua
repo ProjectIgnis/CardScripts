@@ -1,5 +1,5 @@
 --超念銃士ヴァロン
---Vallon, the Psychic Skyblaster
+--Vallon, the Super Psy Skyblaster
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

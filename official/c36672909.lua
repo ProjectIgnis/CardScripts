@@ -1,5 +1,5 @@
 --再世律
---Regenesis Pentateuch
+--Regenesis Cycle
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

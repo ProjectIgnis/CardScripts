@@ -1,5 +1,5 @@
 --アルトメギア・バーニッシュ－改変－
---Artmegia Banish - Change
+--Artmage Varnish -Alteration-
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

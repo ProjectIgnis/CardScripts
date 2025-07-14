@@ -1,5 +1,5 @@
 --アルトメギア・ヴァンダリズム－襲撃－
---Artmegia Vandalism - Assault
+--Artmage Vandalism -Assault-
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

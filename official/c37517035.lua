@@ -1,5 +1,5 @@
 --アルトメギア・マスターワーク－継承－
---Artmegia Masterwork - Succession
+--Artmage Masterwork -Succession-
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

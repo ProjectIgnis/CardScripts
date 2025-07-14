@@ -1,5 +1,5 @@
 --聖秘なる竜騎士
---Sacramentum Dragoon
+--Secreterion Dragon
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

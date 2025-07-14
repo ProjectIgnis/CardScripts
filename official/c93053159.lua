@@ -1,5 +1,5 @@
 --白の枢機竜
---Dogmatikalamity Alba System
+--Alba System Dogmatikalamity
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

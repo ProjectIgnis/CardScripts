@@ -1,5 +1,5 @@
 --神芸学徒 ファインメルト
---Artmegia Finemelt
+--Artmage Finmel
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

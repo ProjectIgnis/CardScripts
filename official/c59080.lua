@@ -1,5 +1,5 @@
 --聖魔 裁きの雷
---Magia Magic - Thor Hammer
+--Magia Magic - Thunder of Judgment
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

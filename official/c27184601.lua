@@ -1,5 +1,5 @@
 --神芸獄徒 ディアクトロス
---Artmegia Diaktoros
+--Artmage Diactorus
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

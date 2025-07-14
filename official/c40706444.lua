@@ -1,5 +1,5 @@
 --ＡＲＧ☆Ｓ－勇駿のアリオン
---Argostars - Courageous Arion
+--Argostars - Adventurous Arion
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

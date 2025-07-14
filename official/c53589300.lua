@@ -1,5 +1,5 @@
 --創獄神ネルヴァ
---Nerva the Imprisoned Deity of Creation
+--Nerva the Power Patron of Creation
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

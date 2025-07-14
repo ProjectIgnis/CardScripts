@@ -1,5 +1,5 @@
 --アルトメギアの獄神獣
---Imprisoned Deity Beast of Artmegia
+--Artmage Power Patron
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

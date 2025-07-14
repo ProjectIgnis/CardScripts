@@ -1,5 +1,5 @@
 --閃刀姫＝ゼロ
---Sky Striker Ace - Zero
+--Sky Striker Ace = Zero
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

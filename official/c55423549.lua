@@ -1,5 +1,5 @@
 --黒き魔族－レオ・ウィザード
---Leo Wizard, the Dark Mage
+--Leo Wizard the Dark Fiend
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

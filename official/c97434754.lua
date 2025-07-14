@@ -1,5 +1,5 @@
 --神芸学徒 リテラ
---Artmegia Litera
+--Artmage Litera
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

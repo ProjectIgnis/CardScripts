@@ -1,5 +1,5 @@
 --エクシーズ・アンブレイカブル・バリア
---Xyz Unbreakable Barrier
+--Unbreakable Xyz Barrier
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

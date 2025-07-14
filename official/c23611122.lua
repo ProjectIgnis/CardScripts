@@ -1,5 +1,5 @@
 --急雷の泥沼
---Sudden Thunderous Swamp
+--Sudden Thunder Swamp
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --神芸学都アルトメギア
---Artmegia the Academy City of Divine Arts
+--Artmage Academic Arcane Arts Acropolis
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

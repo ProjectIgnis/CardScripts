@@ -1,5 +1,5 @@
 --アルトメギア・メセナ－覚醒－
---Artmegia Messena - Awakening
+--Artmage Pact -Awakening-
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

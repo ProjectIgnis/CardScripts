@@ -1,5 +1,5 @@
 --叛逆の帝王
---Rebellion of the Monarchs
+--The Monarchs Revolt
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

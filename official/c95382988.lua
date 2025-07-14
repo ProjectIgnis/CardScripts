@@ -1,5 +1,5 @@
 --再世十戒
---Regenesis Commandments
+--Regenesis Commands
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

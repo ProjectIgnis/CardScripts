@@ -1,5 +1,5 @@
 --魔轟神ガミュジン
---Fabled Gamygyn
+--Fabled Gammajin
 --Scripted by The Razgriz
 local s,id=GetID()
 function s.initial_effect(c)

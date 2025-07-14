@@ -1,5 +1,5 @@
 --ドラゴンメイド・シュテルン
---Dragonmaid Stern
+--Dragonmaid Cehrmba
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

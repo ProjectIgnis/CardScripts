@@ -1,5 +1,5 @@
 --ＶＳ ホーリー・スー
---Vanquish Soul Holy Sue
+--Vanquish Soul Hollie Sue
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

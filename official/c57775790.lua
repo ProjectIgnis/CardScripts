@@ -1,5 +1,5 @@
 --魔轟神界の復活
---Fabled Realm Resurrection
+--Fabled Realm's Revival
 --Scripted by The Razgriz
 local s,id=GetID()
 function s.initial_effect(c)

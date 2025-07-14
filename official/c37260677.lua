@@ -1,5 +1,5 @@
 --竜王絶火ゾロア
---Zoroa, the Magistus Victorious Verethragna
+--Zoroa, the Magistus Verethragna
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

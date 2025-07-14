@@ -1,5 +1,5 @@
 --ガガガ・ホープ・タクティクス
---Gagaga Hope Tactics
+--Gagaga Utopic Tactics
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

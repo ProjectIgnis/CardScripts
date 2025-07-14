@@ -1,5 +1,5 @@
 --閃刀亜式－レムニスゲート
---Sky Striker Alternative - Lemnis Gate
+--Sky Striker Special Maneuver - Lemnisgate!
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --第１９層『襲来干渉！漆黒の超量士！！』
---Layer 19: "Preventing the Invasion! The Pitch-Black Super Quantum!!"
+--Layer 19 "Sudden Incursion! Super Quantum Black!!"
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

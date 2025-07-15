@@ -2,7 +2,7 @@
 --Neo Flamvell Hedgehog
 local s,id=GetID()
 function s.initial_effect(c)
-	--remove
+	--Banish 1 card in your opponent's GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_REMOVE)
@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.rmtg)
 	e1:SetOperation(s.rmop)
 	c:RegisterEffect(e1)
-	--destroyed
+	--Add to your hand 1 FIRE monster with 200 or less DEF from your GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TOHAND)
@@ -24,6 +24,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
+s.listed_names={id}
 function s.rmfilter(c)
 	return c:IsAbleToRemove() and aux.SpElimFilter(c)
 end
@@ -45,7 +46,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.filter(c)
 	local def=c:GetDefense()
-	return def>=0 and def<=200 and c:IsAttribute(ATTRIBUTE_FIRE) and c:GetCode()~=id and c:IsAbleToHand()
+	return def>=0 and def<=200 and c:IsAttribute(ATTRIBUTE_FIRE) and not c:IsLinkMonster() and c:IsAbleToHand() and not c:IsCode(id)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc) end

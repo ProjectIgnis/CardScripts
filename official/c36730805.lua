@@ -39,6 +39,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetCode(EVENT_CHAIN_END)
 			e1:SetCountLimit(1)
 			e1:SetOperation(function() Duel.SetChainLimitTillChainEnd(aux.FALSE) end)
+			e1:SetReset(RESET_PHASE|PHASE_END)
 			Duel.RegisterEffect(e1,tp)
 		end
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)

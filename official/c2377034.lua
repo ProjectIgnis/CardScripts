@@ -45,8 +45,7 @@ function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return (e:GetHandler():GetReason()&(REASON_DESTROY|REASON_EFFECT))==(REASON_DESTROY|REASON_EFFECT)
 end
 function s.filter(c)
-	local def=c:GetDefense()
-	return def>=0 and def<=200 and c:IsAttribute(ATTRIBUTE_FIRE) and not c:IsLinkMonster() and c:IsAbleToHand() and not c:IsCode(id)
+	return c:IsDefenseBelow(200) and c:IsAttribute(ATTRIBUTE_FIRE) and c:IsAbleToHand() and not c:IsCode(id)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc) end

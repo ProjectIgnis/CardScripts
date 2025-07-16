@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--Xyz Summon procedure: 2 Level 7 Dragon monstes
+	--Xyz Summon procedure: 2 Level 7 Dragon monsters
 	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_DRAGON),7,2)
 	--Pendulum procedure
 	Pendulum.AddProcedure(c,false)
@@ -53,7 +53,8 @@ function s.initial_effect(c)
 	--Destroy as many cards in your Pendulum Zones as possible (min. 1), and if you do, place this card in your Pendulum Zone
 	local e7=Effect.CreateEffect(c)
 	e7:SetDescription(aux.Stringid(id,2))
-	e7:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_SINGLE)
+	e7:SetCategory(CATEGORY_DESTROY)
+	e7:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e7:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
 	e7:SetCode(EVENT_LEAVE_FIELD)
 	e7:SetCondition(function(e) local c=e:GetHandler() return c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousLocation(LOCATION_MZONE) end)
@@ -76,7 +77,6 @@ function s.pcop(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 then
 		Duel.MoveToField(g:GetFirst(),tp,tp,LOCATION_PZONE,POS_FACEUP,true)
 	end
-end
 end
 function s.matfilter(c,sc)
 	return c:IsType(TYPE_XYZ,sc,SUMMON_TYPE_XYZ,sc:GetSummonPlayer()) and c:IsXyzLevel(sc,7)

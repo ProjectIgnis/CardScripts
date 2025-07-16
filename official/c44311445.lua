@@ -72,6 +72,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local sc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp):GetFirst()
 	if sc and Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP_ATTACK|POS_FACEDOWN_DEFENSE)>0
 		and sc:IsFacedown() then
-		Duel.ConfirmCards(1-tp,tc)
+		Duel.ConfirmCards(1-tp,sc)
 	end
 end

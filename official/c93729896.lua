@@ -12,28 +12,29 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	--Add 1 "Yubel" monster to your hand
-	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,1))
-	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SPECIAL_SUMMON)
-	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e2:SetProperty(EFFECT_FLAG_DELAY)
-	e2:SetCode(EVENT_CUSTOM+id)
-	e2:SetRange(LOCATION_FZONE)
-	e2:SetCountLimit(1)
-	e2:SetCondition(function(e,tp,eg,ep) return ep==tp end)
-	e2:SetTarget(s.thtg)
-	e2:SetOperation(s.thop)
-	c:RegisterEffect(e2)
 	--Keep track of the "Yubel" monsters that left the field
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e3:SetCode(EVENT_LEAVE_FIELD)
-	e3:SetRange(LOCATION_FZONE)
-	e3:SetCondition(s.regcon)
-	e3:SetOperation(s.regop)
-	c:RegisterEffect(e3)
+	local e2a=Effect.CreateEffect(c)
+	e2a:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e2a:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e2a:SetCode(EVENT_LEAVE_FIELD)
+	e2a:SetRange(LOCATION_FZONE)
+	e2a:SetCondition(s.regcon)
+	e2a:SetOperation(s.regop)
+	c:RegisterEffect(e2a)
+	--Add 1 "Yubel" monster to your hand
+	local e2b=Effect.CreateEffect(c)
+	e2b:SetDescription(aux.Stringid(id,1))
+	e2b:SetCategory(CATEGORY_TOHAND+CATEGORY_SPECIAL_SUMMON)
+	e2b:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e2b:SetProperty(EFFECT_FLAG_DELAY)
+	e2b:SetCode(EVENT_CUSTOM+id)
+	e2b:SetRange(LOCATION_FZONE)
+	e2b:SetCountLimit(1)
+	e2b:SetCondition(function(e,tp,eg,ep) return ep==tp end)
+	e2b:SetTarget(s.thtg)
+	e2b:SetOperation(s.thop)
+	e2b:SetLabelObject(e2a)
+	c:RegisterEffect(e2b)
 end
 s.listed_series={SET_YUBEL}
 function s.thdesfilter(c)
@@ -48,22 +49,25 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		aux.ToHandOrElse(sc,tp,nil,function() Duel.Destroy(sc,REASON_EFFECT) end,aux.Stringid(id,3))
 	end
 end
-function s.thfilter(c,tp,eg)
-	return c:IsSetCard(SET_YUBEL) and (c:IsFaceup() or not c:IsLocation(LOCATION_REMOVED)) and c:IsAbleToHand() and c:HasLevel()
-		and eg:IsExists(s.lvfilter,1,nil,tp,c:GetOriginalLevel())
-end
-function s.lvfilter(c,tp,lv)
-	local clv=c:GetOriginalLevel()
-	return clv==lv+1 or clv==lv-1
+function s.thfilter(c,tp,levels)
+	if not (c:IsSetCard(SET_YUBEL) and (c:IsFaceup() or not c:IsLocation(LOCATION_REMOVED)) and c:IsAbleToHand() and c:HasLevel()) then return false end
+	for _,lv in ipairs(levels) do
+		if c:IsOriginalLevel(lv-1) or c:IsOriginalLevel(lv+1) then
+			return true
+		end
+	end
+	return false
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_REMOVED|LOCATION_DECK|LOCATION_GRAVE,0,1,nil,tp,eg) end
+	local levels={e:GetLabelObject():GetLabel()}
+	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_REMOVED|LOCATION_DECK|LOCATION_GRAVE,0,1,nil,tp,levels) end
+	e:SetLabel(table.unpack(levels))
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_REMOVED|LOCATION_DECK|LOCATION_GRAVE)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local sc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.thfilter),tp,LOCATION_REMOVED|LOCATION_DECK|LOCATION_GRAVE,0,1,1,nil,tp,eg):GetFirst()
+	local sc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.thfilter),tp,LOCATION_REMOVED|LOCATION_DECK|LOCATION_GRAVE,0,1,1,nil,tp,{e:GetLabel()}):GetFirst()
 	if not sc then return end
 	if sc:IsLocation(LOCATION_GRAVE|LOCATION_REMOVED) then Duel.HintSelection(sc,true) end
 	if not (Duel.SendtoHand(sc,nil,REASON_EFFECT)>0 and sc:IsLocation(LOCATION_HAND)) then return end
@@ -92,7 +96,17 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 			label_obj:DeleteGroup()
 			new_label_obj:KeepAlive()
 			e:SetLabelObject(new_label_obj)
+			local levels={e:GetLabel()}
+			for tc in g:Iter() do
+				table.insert(levels,tc:GetOriginalLevel())
+			end
+			e:SetLabel(table.unpack(levels))
 		else
+			local levels={}
+			for tc in g:Iter() do
+				table.insert(levels,tc:GetOriginalLevel())
+			end
+			e:SetLabel(table.unpack(levels))
 			e:SetLabelObject(g)
 			g:KeepAlive()
 			local c=e:GetHandler()
@@ -100,18 +114,21 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-			e1:SetCode(EVENT_CHAIN_END)
+			e1:SetCode(EVENT_CHAIN_SOLVED)
 			e1:SetRange(LOCATION_FZONE)
-			e1:SetOperation(function()
-								local g=e:GetLabelObject()
-								e1:Reset()
-								e:SetLabelObject(nil)
-								Duel.RaiseEvent(g,EVENT_CUSTOM+id,re,r,rp,tp,ev)
-								g:DeleteGroup()
-							end
-							)
+			e1:SetCondition(function() return Duel.GetCurrentChain()==1 end)
+			e1:SetOperation(function(eff)
+						local g=e:GetLabelObject()
+						eff:Reset()
+						e:SetLabelObject(nil)
+						Duel.RaiseEvent(g,EVENT_CUSTOM+id,re,r,rp,tp,ev)
+						g:DeleteGroup()
+					end)
 			e1:SetReset(RESETS_STANDARD_PHASE_END)
 			c:RegisterEffect(e1)
+			local e2=e1:Clone()
+			e2:SetCode(EVENT_CHAIN_NEGATED)
+			c:RegisterEffect(e2)
 		end
 	end
 end

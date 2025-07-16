@@ -66,14 +66,13 @@ end
 function s.selfspcon(e,c)
 	if not c then return true end
 	local tp=c:GetControler()
-	local mg=Duel.GetMatchingGroup(s.selfspcostfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,tp,e:GetHandler())
+	local mg=Duel.GetMatchingGroup(s.selfspcostfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,tp,c)
 	return #mg>=2 and aux.SelectUnselectGroup(mg,e,tp,2,2,s.rescon,0)
 end
 function s.selfsptg(e,tp,eg,ep,ev,re,r,rp,chk,c)
-	local mg=Duel.GetMatchingGroup(s.selfspcostfilter,tp,LOCATION_ONFIELD,LOCATION_MZONE,nil,tp,e:GetHandler())
+	local mg=Duel.GetMatchingGroup(s.selfspcostfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,tp,c)
 	local g=aux.SelectUnselectGroup(mg,e,tp,2,2,s.rescon,1,tp,HINTMSG_RELEASE,nil,nil,true)
 	if #g>0 then
-		g:KeepAlive()
 		e:SetLabelObject(g)
 		return true
 	end
@@ -83,7 +82,6 @@ function s.selfspop(e,tp,eg,ep,ev,re,r,rp,c)
 	local g=e:GetLabelObject()
 	if not g then return end
 	Duel.Release(g,REASON_COST|REASON_MATERIAL)
-	g:DeleteGroup()
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	if rp~=1-tp then return end

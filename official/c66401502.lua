@@ -3,7 +3,7 @@
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	--Special Summon this card
+	--Special Summon this card from your hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -11,32 +11,28 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(function(_,tp) return Duel.GetFieldGroupCount(tp,LOCATION_MMZONE,0)==0 end)
-	e1:SetCost(s.opccost)
+	e1:SetCost(Cost.HardOncePerChain(id))
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--Make this card indestructible by attacks, OR destroy all Spell/Traps in this card's column
+	--Activate 1 of these effects, by revealing monster(s) in your hand with the listed Attribute(s)
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetHintTiming(0,TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E)
 	e2:SetCountLimit(1,{id,1})
-	e2:SetCost(s.opccost)
+	e2:SetHintTiming(0,TIMING_STANDBY_PHASE|TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E)
+	e2:SetCost(Cost.HardOncePerChain(id))
 	e2:SetTarget(s.vstg)
 	e2:SetOperation(s.vsop)
 	c:RegisterEffect(e2)
-end
-function s.opccost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 end
-	Duel.RegisterFlagEffect(tp,id,RESET_CHAIN,0,1)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,tp,0)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -73,15 +69,15 @@ function s.vstg(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.ConfirmCards(1-tp,g)
 		Duel.ShuffleHand(tp)
 		e:SetCategory(CATEGORY_DESTROY)
-		Duel.SetOperationInfo(0,CATEGORY_DESTROY,colg,#colg,0,0)
+		Duel.SetOperationInfo(0,CATEGORY_DESTROY,colg,#colg,tp,0)
 	end
 end
 function s.vsop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	local op=e:GetLabel()
-	if op==1 and c:IsFaceup() then
-		--Cannot be destroyed by battle
+	if op==1 then
+		--This card cannot be destroyed by battle this turn
 		local e1=Effect.CreateEffect(c)
 		e1:SetDescription(3000)
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -91,8 +87,11 @@ function s.vsop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		c:RegisterEffect(e1)
 	elseif op==2 then
-		local cg=c:GetColumnGroup():Match(Card.IsSpellTrap,nil)
-		if #cg==0 then return end
-		Duel.Destroy(cg,REASON_EFFECT)
+		--Destroy all Spells/Traps in this card's column
+		local colg=c:GetColumnGroup():Match(Card.IsSpellTrap,nil)
+		if c:IsSpellTrap() then colg:AddCard(c) end
+		if #colg>0 then
+			Duel.Destroy(colg,REASON_EFFECT)
+		end
 	end
 end

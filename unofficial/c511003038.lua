@@ -45,7 +45,7 @@ function s.actop(e,tp,eg,ep,ev,re,r,rp)
 			tc:RegisterEffect(e1,true)
 		end
 		--During the End Phase, destroy that monster
-		aux.DelayedOperation(tc,PHASE_END,id,e,tp,function(ag) Duel.Destroy(ag,REASON_EFFECT) end,nil,0)
+		aux.DelayedOperation(tc,PHASE_END,id,e,tp,function(ag) Duel.Destroy(ag,REASON_EFFECT) end,nil,0,0,aux.Stringid(id,2))
 	end
 end
 function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

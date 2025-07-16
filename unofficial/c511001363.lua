@@ -69,6 +69,8 @@ function s.copycost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local op=Duel.SelectEffect(tp,{b1,aux.Stringid(id,2)},{b2,aux.Stringid(id,3)})
 	if op==1 then
 		Duel.SendtoGrave(sc,REASON_COST)
+		Duel.RaiseSingleEvent(c,EVENT_DETACH_MATERIAL,e,0,0,0,0)
+		Duel.RaiseEvent(c,EVENT_DETACH_MATERIAL,e,REASON_EFFECT,tp,tp,0)
 	else
 		Duel.PayLPCost(tp,400)
 	end

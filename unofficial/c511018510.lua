@@ -4,7 +4,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Special Summon from your Extra Deck, 1 "Cipher" Xyz Monster that is 1 Rank higher than 1 "Cipher" Xyz Monster you control
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(41201386,0))
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)

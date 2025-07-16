@@ -5,7 +5,7 @@ function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--Xyz Summon procedure: 3 Level 8 monsters
 	Xyz.AddProcedure(c,nil,8,3)
-	--Ativate 1 of these effects
+	--Activate 1 of these effects
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_QUICK_O)

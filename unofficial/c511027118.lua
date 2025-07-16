@@ -37,7 +37,7 @@ function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateEffect(ev)
-	 --Cannot detach for the rest of this turn
+	--Cannot detach for the rest of this turn
 	local e2=Effect.CreateEffect(e:GetHandler())
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_FIELD)
@@ -50,5 +50,5 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.aclimit(e,re)
 	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsType,TYPE_XYZ),0,LOCATION_MZONE,LOCATION_MZONE,nil)
-	return g:GetMaxGroup(Card.GetRank):IsContains(re:GetHandler()) or not re:HasDetachCost()
+	return re:HasDetachCost() and not g:GetMaxGroup(Card.GetRank):IsContains(re:GetHandler())
 end

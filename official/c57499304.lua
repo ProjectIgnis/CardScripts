@@ -32,6 +32,8 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabelObject(bc)
 	bc:CreateEffectRelation(e)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g+bc,#g,tp,0)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local bc=e:GetLabelObject()

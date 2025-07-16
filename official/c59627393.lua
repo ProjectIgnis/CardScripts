@@ -30,7 +30,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local bc1,bc2=Duel.GetBattleMonster(tp)
 	if bc2:IsRelateToBattle() and bc2:IsNegatableMonster() then
 		--Negate the effects of that opponent's monster while it is face-up until the end of this turn
-		bc2:NegateEffects(c,RESETS_STANDARD_PHASE_END)
+		bc2:NegateEffects(c,RESET_PHASE|PHASE_END)
 	end
 	if bc1:IsRelateToBattle() then
 		--That monster you control cannot be destroyed by that battle

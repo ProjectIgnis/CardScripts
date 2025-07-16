@@ -3,21 +3,21 @@
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
-	--Xyz Summon
-	Xyz.AddProcedure(c,nil,7,2,nil,nil,Xyz.InfiniteMats)
 	c:EnableReviveLimit()
-	--Special Summon 1 "Kshatri-la" monster from the Deck
+	--Xyz Summon procedure: 2+ Level 7 monsters
+	Xyz.AddProcedure(c,nil,7,2,nil,nil,Xyz.InfiniteMats)
+	--Special Summon 1 "Kashtira" monster from your Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e1:SetCode(EVENT_PHASE|PHASE_STANDBY)
+	e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1,{id,0})
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--Make 1 zone unusable
+	--Make 1 unused Main Monster Zone or Spell & Trap Zone unusable while this monster is face-up on the field
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.ztg)
 	e2:SetOperation(s.zop)
 	c:RegisterEffect(e2)
-	--Destruction replacment
+	--If this card on the field would be destroyed by battle or card effect, you can detach 1 material from this card instead
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -71,23 +71,29 @@ function s.ztg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.zop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) then return end
-	--Disable the chosen zone
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetCode(EFFECT_DISABLE_FIELD)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e1:SetRange(LOCATION_MZONE)
-	e1:SetOperation(function(e) return e:GetLabel() end)
-	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
-	e1:SetLabel(Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM))
-	c:RegisterEffect(e1)
+	if c:IsRelateToEffect(e) and c:IsFaceup() then
+		local dis=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
+		if not c:IsControler(tp) then
+			--Flip the zone if control of this card has changed by the time the effect resolves
+			if dis>4096 then
+				dis=dis>>16
+			else
+				dis=dis<<16
+			end
+		end
+		--That zone cannot be used while this monster is face-up on the field
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_FIELD)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetCode(EFFECT_DISABLE_FIELD)
+		e1:SetRange(LOCATION_MZONE)
+		e1:SetOperation(function(e) return dis end)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
+		c:RegisterEffect(e1)
+	end
 end
 function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return not c:IsReason(REASON_REPLACE) and c:CheckRemoveOverlayCard(tp,1,REASON_EFFECT) end
-	if Duel.SelectEffectYesNo(tp,c,96) then
-		c:RemoveOverlayCard(tp,1,1,REASON_EFFECT)
-		return true
-	else return false end
+	return Duel.SelectEffectYesNo(tp,c,96) and c:RemoveOverlayCard(tp,1,1,REASON_EFFECT)>0
 end

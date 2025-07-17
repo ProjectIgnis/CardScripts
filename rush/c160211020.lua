@@ -28,10 +28,11 @@ function s.stage2(e,tc,tp,sg,chk)
 	if chk==0 then
 		local mg=tc:GetMaterial()
 		local ct=mg:FilterCount(s.cfilter,nil)
-		if ct>0 and Duel.IsExistingMatchingCard(nil,tp,0,LOCATION_ONFIELD,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+		if ct>0 and Duel.IsExistingMatchingCard(Card.IsNotMaximumModeSide,tp,0,LOCATION_ONFIELD,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-			local g=Duel.SelectMatchingCard(tp,nil,tp,0,LOCATION_ONFIELD,1,1,nil)
-			Duel.HintSelection(g,true)
+			local g=Duel.SelectMatchingCard(tp,Card.IsNotMaximumModeSide,tp,0,LOCATION_ONFIELD,1,1,nil)
+			local g2=g:AddMaximumCheck()
+			Duel.HintSelection(g2)
 			Duel.BreakEffect()
 			Duel.Destroy(g,REASON_EFFECT)
 		end

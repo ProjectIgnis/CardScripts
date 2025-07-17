@@ -110,8 +110,7 @@ function Auxiliary.ReleaseCheckSingleUse(sg,tp,exg)
 	return ct<=1,ct>1
 end
 function Auxiliary.ReleaseCheckMMZ(sg,tp)
-	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		or sg:IsExists(aux.FilterBoolFunction(Card.IsInMainMZone,tp),1,nil)
+	return Duel.GetMZoneCount(tp,sg)>0
 end
 function Auxiliary.ReleaseCheckTarget(sg,tp,exg,dg)
 	return dg:IsExists(aux.TRUE,1,sg)

@@ -941,12 +941,13 @@ if not AnimeArchetype then
 	-- Naturia White Oak/White Night Dragon/Blue-Eyes Alternative White Dragon/
 	-- Blue-Eyes White Dragon/ The White Stone of Ancients/The White Stone of Legend/
 	-- White Aura Dolphin/White Aura Biphamet/White Aura Whale/
-	-- White Aura Monokeros/ White Salvation/White Magical Hat/
+	-- White Aura Monoceros/Whitefish Salvage/White Magical Hat/
 	-- White Stingray/White Duston/White Dolphin/
-	-- White Night Queen/White ninja/White Howling/
-	-- White Hole/White-Horned Dragon / White Potan
+	-- White Night Queen/White Ninja/White Howling/
+	-- White Hole/White-Horned Dragon /White Potan
 	-- White Moray/Lunalight White Rabbit
-	-- White Mirror
+	-- White Mirror/White Sunfish/White Sardine/
+	-- White Aura Porpoise/White Circle Reef/Arbitration of White
 	AnimeArchetype.OCGWhite={
 		13429800,46104361,9433350,
 		32269855,22804410,73398797,
@@ -958,7 +959,8 @@ if not AnimeArchetype then
 		20193924,1571945,62487836,
 		43487744,73891874,98024118,
 		84812868,32825095,84335863,
-		19885332
+		19885332,52596406,98684051,
+		46956301,21579049,57964143
 	}
 	Card.IsWhite=MakeCheck({0x55d},AnimeArchetype.OCGWhite)
 

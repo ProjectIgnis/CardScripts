@@ -508,19 +508,14 @@ function Card.UpdateAttack(c,amt,reset,rc,reset_count)
 	reset=reset or RESET_EVENT+r
 	reset_count=reset_count or 1
 	local atk=c:GetAttack()
-	if atk>=-amt then --If amt is positive, it would become negative and always be lower than or equal to atk, if amt is negative, it would become postive and if it is too much it would be higher than atk
-		local e1=Effect.CreateEffect(rc)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		if c==rc then
-			e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
-		end
-		e1:SetValue(amt)
-		e1:SetReset(reset,reset_count)
-		c:RegisterEffect(e1)
-		return c:GetAttack()-atk
-	end
-	return 0
+	--Increase or decrease its ATK by the given value
+	local e1=Effect.CreateEffect(rc)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_UPDATE_ATTACK)
+	e1:SetValue(amt)
+	e1:SetReset(reset,reset_count)
+	c:RegisterEffect(e1)
+	return c:GetAttack()-atk
 end
 
 function Card.UpdateDefense(c,amt,reset,rc,reset_count)
@@ -529,19 +524,14 @@ function Card.UpdateDefense(c,amt,reset,rc,reset_count)
 	reset=reset or RESET_EVENT+r
 	reset_count=reset_count or 1
 	local def=c:GetDefense()
-	if def and def>=-amt then --See Card.UpdateAttack
-		local e1=Effect.CreateEffect(rc)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_UPDATE_DEFENSE)
-		if c==rc then
-			e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
-		end
-		e1:SetValue(amt)
-		e1:SetReset(reset,reset_count)
-		c:RegisterEffect(e1)
-		return c:GetDefense()-def
-	end
-	return 0
+	--Increase or decrease its DEF by the given value
+	local e1=Effect.CreateEffect(rc)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_UPDATE_DEFENSE)
+	e1:SetValue(amt)
+	e1:SetReset(reset,reset_count)
+	c:RegisterEffect(e1)
+	return c:GetDefense()-def
 end
 
 function Card.UpdateLevel(c,amt,reset,rc)

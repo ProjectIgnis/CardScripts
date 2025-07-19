@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_CANNOT_ACTIVATE)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetTargetRange(0,1)
-	e1:SetCondition(function(e) return Duel.GetAttacker()==e:GetHandler() or Duel.GetAttackTarget()==e:GetHandler() end)
+	e1:SetCondition(function(e) local c=e:GetHandler() return Duel.GetAttacker()==c or Duel.GetAttackTarget()==c end)
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
 	--This card's ATK becomes 5000 during that damage calculation only

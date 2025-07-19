@@ -2,38 +2,31 @@
 --Junk Warrior
 local s,id=GetID()
 function s.initial_effect(c)
-	--synchro summon
-	Synchro.AddProcedure(c,s.tfilter,1,1,Synchro.NonTuner(nil),1,99)
 	c:EnableReviveLimit()
-	--atkup
+	--Synchro Summon procedure: "Junk Synchron" + 1+ non-Tuner monsters
+	Synchro.AddProcedure(c,s.tunerfilter,1,1,Synchro.NonTuner(nil),1,99)
+	--Make this card gain ATK equal to the total ATK of all Level 2 or lower monsters you currently control
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_ATKCHANGE)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e1:SetCondition(s.con)
-	e1:SetOperation(s.op)
+	e1:SetCondition(function(e) return e:GetHandler():IsSynchroSummoned() end)
+	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
 end
-s.material={63977008}
-s.listed_names={63977008}
+s.material={CARD_JUNK_SYNCHRON}
+s.listed_names={CARD_JUNK_SYNCHRON}
 s.material_setcode=SET_SYNCHRON
-function s.tfilter(c,lc,stype,tp)
-	return c:IsSummonCode(lc,stype,tp,63977008) or c:IsHasEffect(20932152)
+function s.tunerfilter(c,lc,stype,tp)
+	return c:IsSummonCode(lc,stype,tp,CARD_JUNK_SYNCHRON) or c:IsHasEffect(20932152)
 end
-function s.con(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSynchroSummoned()
-end
-function s.op(e,tp,eg,ep,ev,re,r,rp)
+function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsLevelBelow,2),tp,LOCATION_MZONE,0,nil)
-	if #g>0 and c:IsFaceup() and c:IsRelateToEffect(e) then
-		local atk=g:GetSum(Card.GetAttack)
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetValue(atk)
-		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
-		c:RegisterEffect(e1)
+	if not (c:IsRelateToEffect(e) and c:IsFaceup()) then return end
+	local atk=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsLevelBelow,2),tp,LOCATION_MZONE,0,nil):GetSum(Card.GetAttack)
+	if atk>0 then
+		--It gains ATK equal to the total ATK of all Level 2 or lower monsters you currently control
+		c:UpdateAttack(atk)
 	end
 end

@@ -58,31 +58,31 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 		if oc:IsControler(tp) then oc=tg:GetNext() end
 		if oc and oc:IsFaceup() then
 			--Change ATK to 0
-			local e0=Effect.CreateEffect(c)
-			e0:SetType(EFFECT_TYPE_SINGLE)
-			e0:SetCode(EFFECT_SET_ATTACK_FINAL)
-			e0:SetValue(0)
-			e0:SetReset(RESETS_STANDARD_PHASE_END)
-			oc:RegisterEffect(e0)
-		end
-		--Cannot be destroyed by that battle
-		for tc in tg:Iter() do
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-			e1:SetValue(1)
-			e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_DAMAGE)
-			tc:RegisterEffect(e1)
+			e1:SetCode(EFFECT_SET_ATTACK_FINAL)
+			e1:SetValue(0)
+			e1:SetReset(RESETS_STANDARD_PHASE_END)
+			oc:RegisterEffect(e1)
+		end
+		for tc in tg:Iter() do
+			--Cannot be destroyed by that battle
+			local e2=Effect.CreateEffect(c)
+			e2:SetType(EFFECT_TYPE_SINGLE)
+			e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
+			e2:SetValue(1)
+			e2:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_DAMAGE)
+			tc:RegisterEffect(e2)
 		end
 	end
 	--Take no battle damage from that battle
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_FIELD)
-	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e2:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
-	e2:SetTargetRange(1,1)
-	e2:SetReset(RESET_PHASE|PHASE_DAMAGE)
-	Duel.RegisterEffect(e2,tp)
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_FIELD)
+	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e3:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
+	e3:SetTargetRange(1,1)
+	e3:SetReset(RESET_PHASE|PHASE_DAMAGE)
+	Duel.RegisterEffect(e3,tp)
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetCurrentPhase()&(PHASE_DAMAGE|PHASE_DAMAGE_CAL)==0 or Duel.IsDamageCalculated() then return false end
@@ -99,12 +99,12 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 		local tc=Duel.GetFirstTarget()
 		if tc:IsFaceup() and tc:IsRelateToBattle() then
 			--Gains 700 ATK
-			local e0=Effect.CreateEffect(e:GetHandler())
-			e0:SetType(EFFECT_TYPE_SINGLE)
-			e0:SetCode(EFFECT_UPDATE_ATTACK)
-			e0:SetValue(700)
-			e0:SetReset(RESET_EVENT|RESETS_STANDARD)
-			tc:RegisterEffect(e0)
+			local e1=Effect.CreateEffect(e:GetHandler())
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetCode(EFFECT_UPDATE_ATTACK)
+			e1:SetValue(700)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
+			tc:RegisterEffect(e1)
 		end
 	end
 end

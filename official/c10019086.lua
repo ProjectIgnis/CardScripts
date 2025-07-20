@@ -5,12 +5,13 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--Link Summon Procedure: 3+ Beast, Beast-Warrior, and/or Winged Beast monsters
-	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACES_BEAST_BWARRIOR_WINGB),3,5)
-	--Special Summon restriction
+	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACES_BEAST_BWARRIOR_WINGB),3,5,nil,nil,s.splimit)
+	--Special Summon condition
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_SINGLE)
-	e0:SetCode(EFFECT_SPSUMMON_COST)
-	e0:SetCost(s.spcost)
+	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e0:SetCode(EFFECT_SPSUMMON_CONDITION)
+	e0:SetValue(s.splimit)
 	c:RegisterEffect(e0)
 	--Opponent cannot activate cards or effects on Special Summon
 	local e1=Effect.CreateEffect(c)
@@ -45,8 +46,8 @@ s.listed_series={SET_TRI_BRIGADE}
 function s.spcostfilter(c)
 	return c:IsSetCard(SET_TRI_BRIGADE) and c:IsSpellTrap()
 end
-function s.spcost(e,c,sp,st)
-	return not c:IsLocation(LOCATION_EXTRA) or Duel.GetMatchingGroupCount(s.spcostfilter,sp,LOCATION_GRAVE,0,nil)>2
+function s.splimit(e,se,sp,st)
+	return not e:GetHandler():IsLocation(LOCATION_EXTRA) or Duel.IsExistingMatchingCard(s.spcostfilter,sp,LOCATION_GRAVE,0,3,nil)
 end
 function s.sucop(e,tp,eg,ep,ev,re,r,rp)
 	if eg:IsExists(Card.IsSummonPlayer,1,nil,tp) then

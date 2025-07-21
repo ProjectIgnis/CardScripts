@@ -29,6 +29,14 @@ function s.initial_effect(c)
 	e2:SetTarget(s.thtgtg)
 	e2:SetOperation(s.thtgop)
 	c:RegisterEffect(e2)
+	--Keep track of whether it had an appropriate material before leaving the field
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e3:SetCode(EVENT_LEAVE_FIELD_P)
+	e3:SetOperation(function(e) e2:SetLabel(e:GetHandler():GetOverlayGroup():FilterCount(s.thtgconfilter,nil)) end)
+	e3:SetLabelObject(e3)
+	c:RegisterEffect(e3)
 end
 s.listed_names={CARD_MEDIUS_THE_PURE}
 s.listed_series={SET_DOOM_Z}
@@ -60,7 +68,7 @@ function s.thtgconfilter(c)
 end
 function s.thtgcon(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	return c:IsReason(REASON_BATTLE|REASON_EFFECT) and c:GetOverlayGroup():IsExists(s.thtgconfilter,1,nil)
+	return c:IsReason(REASON_BATTLE|REASON_EFFECT) and c:IsPreviousLocation(LOCATION_MZONE) and e:GetLabel()>0
 end
 function s.thtgfilter(c)
 	return c:IsEquipSpell() and (c:IsAbleToHand() or c:IsAbleToGrave())

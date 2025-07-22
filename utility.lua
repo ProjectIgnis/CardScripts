@@ -1513,14 +1513,28 @@ function Cost.HintSelectedEffect(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 end
 
-function Cost.Discard(filter,other,count)
-	count=count or 1
-	filter=filter and aux.AND(filter,Card.IsDiscardable) or Card.IsDiscardable
-	return function(e,tp,eg,ep,ev,re,r,rp,chk)
-		local exclude=other and e:GetHandler() or nil
-		if chk==0 then return Duel.IsExistingMatchingCard(filter,tp,LOCATION_HAND,0,count,exclude) end
-		Duel.DiscardHand(tp,filter,count,count,REASON_COST|REASON_DISCARD,exclude)
+function Cost.Discard(filter,other,min,max,op)
+	local min_type=type(min)
+	local max_type=type(max)
+	
+	local function filter_final(c,e,tp)
+		return (not filter or filter(c,e,tp)) and c:IsDiscardable()
 	end
+	
+	local function cost_func(e,tp,eg,ep,ev,re,r,rp,chk)
+		local min_count=(min_type=="function" and min(e,tp))
+			or (min==nil and 1)
+			or min
+		local max_count=(max_type=="function" and max(e,tp))
+			or (max==nil and min_count)
+			or max
+		local exclude=other and e:GetHandler() or nil
+		if chk==0 then return min_count>0 and max_count>=min_count
+			and Duel.IsExistingMatchingCard(filter_final,tp,LOCATION_HAND,0,min_count,exclude,e,tp) end
+		Duel.DiscardHand(tp,filter_final,min_count,max_count,REASON_COST|REASON_DISCARD,exclude,e,tp)
+		if op then op(e,tp,Duel.GetOperatedGroup()) end
+	end
+	return cost_func
 end
 
 local detach_costs={}

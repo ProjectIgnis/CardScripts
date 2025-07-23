@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Add 2 or 3 OTS and then Fusion Summon
-	local params = {s.fusfilter,s.matfilter,nil,Fusion.ShuffleMaterial}
+	local params = {fusfilter=s.fusfilter,matfilter=s.matfilter,extraop=Fusion.ShuffleMaterial,sumpos=POS_FACEUP_ATTACK}
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SPECIAL_SUMMON)
@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_DESTROYED)
 	e1:SetCondition(s.condition)
 	e1:SetTarget(s.target)
-	e1:SetOperation(s.operation(Fusion.SummonEffTG(table.unpack(params)),Fusion.SummonEffOP(table.unpack(params))))
+	e1:SetOperation(s.operation(Fusion.SummonEffTG(params),Fusion.SummonEffOP(params)))
 	c:RegisterEffect(e1)
 end
 s.listed_names={160022200}

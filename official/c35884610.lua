@@ -1,84 +1,81 @@
---U.A.パワードギプス
+--Ｕ．Ａ．パワードギプス
 --U.A. Powered Jersey
 local s,id=GetID()
 function s.initial_effect(c)
+	--Equip only to a "U.A." monster
 	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsSetCard,SET_UA))
-	--ATK increase
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_EQUIP)
-	e1:SetCode(EFFECT_UPDATE_ATTACK)
-	e1:SetValue(1000)
-	c:RegisterEffect(e1)
-	--DEF increase
-	local e2=e1:Clone()
-	e2:SetCode(EFFECT_UPDATE_DEFENSE)
+	--It gains 1000 ATK and DEF
+	local e1a=Effect.CreateEffect(c)
+	e1a:SetType(EFFECT_TYPE_EQUIP)
+	e1a:SetCode(EFFECT_UPDATE_ATTACK)
+	e1a:SetValue(1000)
+	c:RegisterEffect(e1a)
+	local e1b=e1a:Clone()
+	e1b:SetCode(EFFECT_UPDATE_DEFENSE)
+	c:RegisterEffect(e1b)
+	--Also if it battles an opponent's monster, any battle damage it inflicts to your opponent is doubled
+	local e1c=Effect.CreateEffect(c)
+	e1c:SetType(EFFECT_TYPE_EQUIP)
+	e1c:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+	e1c:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
+	e1c:SetCondition(function(e) local bc=e:GetHandler():GetEquipTarget():GetBattleTarget() return bc and bc:IsControler(1-e:GetHandlerPlayer()) end)
+	e1c:SetValue(aux.ChangeBattleDamage(1,DOUBLE_DAMAGE))
+	c:RegisterEffect(e1c)
+	--Make the equipped monster able to make a second attack during this Battle Phase
+	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,0))
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e2:SetCode(EVENT_BATTLE_DESTROYED)
+	e2:SetRange(LOCATION_SZONE)
+	e2:SetCondition(s.secondatkcon)
+	e2:SetOperation(s.secondatkop)
 	c:RegisterEffect(e2)
-	--Double damage
+	--Banish the equipped monster
 	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_EQUIP)
-	e3:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
-	e3:SetCondition(s.damcon)
-	e3:SetValue(aux.ChangeBattleDamage(1,DOUBLE_DAMAGE))
+	e3:SetDescription(aux.Stringid(id,1))
+	e3:SetCategory(CATEGORY_REMOVE)
+	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
+	e3:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e3:SetRange(LOCATION_SZONE)
+	e3:SetCountLimit(1)
+	e3:SetCondition(function(e,tp) return Duel.IsTurnPlayer(tp) and e:GetHandler():GetEquipTarget() end)
+	e3:SetTarget(s.rmtg)
+	e3:SetOperation(s.rmop)
 	c:RegisterEffect(e3)
-	--Second attack
+	--Return this card to the hand
 	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(id,0))
-	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e4:SetRange(LOCATION_SZONE)
-	e4:SetCode(EVENT_BATTLED)
-	e4:SetCondition(s.atcon)
-	e4:SetOperation(s.atop)
+	e4:SetDescription(aux.Stringid(id,2))
+	e4:SetCategory(CATEGORY_TOHAND)
+	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e4:SetProperty(EFFECT_FLAG_DELAY)
+	e4:SetCode(EVENT_TO_GRAVE)
+	e4:SetCondition(s.thcon)
+	e4:SetTarget(s.thtg)
+	e4:SetOperation(s.thop)
 	c:RegisterEffect(e4)
-	--Banish monster
-	local e5=Effect.CreateEffect(c)
-	e5:SetCategory(CATEGORY_REMOVE)
-	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
-	e5:SetRange(LOCATION_SZONE)
-	e5:SetCode(EVENT_PHASE|PHASE_STANDBY)
-	e5:SetCountLimit(1)
-	e5:SetCondition(s.rmcon)
-	e5:SetTarget(s.rmtg)
-	e5:SetOperation(s.rmop)
-	c:RegisterEffect(e5)
-	--Add itself to the hand
-	local e6=Effect.CreateEffect(c)
-	e6:SetDescription(aux.Stringid(id,1))
-	e6:SetCategory(CATEGORY_TOHAND)
-	e6:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e6:SetProperty(EFFECT_FLAG_DELAY)
-	e6:SetCode(EVENT_TO_GRAVE)
-	e6:SetCondition(s.thcon)
-	e6:SetTarget(s.thtg)
-	e6:SetOperation(s.thop)
-	c:RegisterEffect(e6)
 end
 s.listed_series={SET_UA}
-function s.damcon(e)
-	return e:GetHandler():GetEquipTarget():GetBattleTarget()~=nil
+function s.secondatkcon(e,tp,eg,ep,ev,re,r,rp)
+	local ec=e:GetHandler():GetEquipTarget()
+	return ec and ec:IsRelateToBattle() and ec:CanChainAttack() and ec:GetBattleTarget()
 end
-function s.atcon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler():GetEquipTarget()
-	local bc=c:GetBattleTarget()
-	return bc and bc:IsStatus(STATUS_BATTLE_DESTROYED) and c:CanChainAttack()
-end
-function s.atop(e,tp,eg,ep,ev,re,r,rp)
+function s.secondatkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) then return end
-	local tc=e:GetHandler():GetEquipTarget()
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e1:SetCode(EFFECT_EXTRA_ATTACK)
-	e1:SetValue(1)
-	e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_BATTLE)
-	tc:RegisterEffect(e1)
-end
-function s.rmcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsTurnPlayer(tp)
+	local ec=e:GetHandler():GetEquipTarget()
+	if ec then
+		--It can make a second attack during this Battle Phase
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetCode(EFFECT_EXTRA_ATTACK)
+		e1:SetValue(1)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_BATTLE)
+		ec:RegisterEffect(e1)
+	end
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,e:GetHandler():GetEquipTarget(),1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,e:GetHandler():GetEquipTarget(),1,tp,0)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local ec=e:GetHandler():GetEquipTarget()
@@ -88,11 +85,13 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsReason(REASON_LOST_TARGET) and c:GetPreviousEquipTarget() and c:GetPreviousEquipTarget():IsLocation(LOCATION_HAND)
+	local ec=c:GetPreviousEquipTarget()
+	return c:IsReason(REASON_LOST_TARGET) and ec and ec:IsLocation(LOCATION_HAND)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToHand() end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,e:GetHandler(),1,0,0)
+	local c=e:GetHandler()
+	if chk==0 then return c:IsAbleToHand() end
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,c,1,tp,0)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

@@ -30,7 +30,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local fid=tc:GetFieldID()
 	local function condition()
-			return (Duel.GetAttacker()==tc or Duel.GetAttackTarget()==tc) and tc:GetBattleTarget() and tc:HasFlagEffect(id) and tc:GetFlagEffectLabel(id)==fid and tc:IsControler(tp)
+			return (Duel.GetAttacker()==tc or Duel.GetAttackTarget()==tc) and tc:GetBattleTarget() and tc:GetBattleTarget():IsControler(1-tp)
+				and tc:HasFlagEffect(id) and tc:GetFlagEffectLabel(id)==fid and tc:IsControler(tp)
 		end
 	--If it battles an opponent's monster this turn while you control it, apply these effects
 	if not tc:HasFlagEffect(id) then

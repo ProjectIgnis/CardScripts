@@ -5,9 +5,15 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Ritual Summon
 	local e1=Ritual.CreateProc({handler=c,lvtype=RITPROC_GREATER,filter=s.ritualfil,matfilter=s.forcedgroup,stage2=s.stage2})
+	e1:SetCondition(s.condition)
 	c:RegisterEffect(e1)
+	--Register when a player Special Summons a monster
+	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,function(c) return not c:IsSummonType(SUMMON_TYPE_RITUAL) end)
 end
 s.listed_names={160022039}
+function s.condition(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetCustomActivityCount(id,tp,ACTIVITY_SPSUMMON)==0
+end
 function s.ritualfil(c)
 	return c:IsCode(160022039)
 end

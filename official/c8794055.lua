@@ -1,4 +1,4 @@
--- 
+--最果ての宇宙
 --The Most Distant, Deepest Depths
 --Scripted by Larry126
 local s,id=GetID()

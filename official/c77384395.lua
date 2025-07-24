@@ -1,4 +1,4 @@
--- 
+--パズズル
 --Pazuzule
 --Scripted by Hatter
 local s,id=GetID()

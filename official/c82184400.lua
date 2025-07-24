@@ -1,4 +1,4 @@
--- 
+--アビス・オーパー
 --Abyss Keeper
 --Scripted by Hatter
 local s,id=GetID()

@@ -1,4 +1,4 @@
--- 
+--リブロマンサー・マジガール
 --Libromancer Magigirl
 --Scripted by Hatter
 local s,id=GetID()

@@ -1,4 +1,4 @@
--- 
+--地底王の尖兵
 --Vanguard of the Underground Emperor
 --Scripted by Hatter
 local s,id=GetID()

@@ -1,4 +1,4 @@
--- 
+--貪欲なウツボ
 --Moray of Avarice
 --Scripted by Hatter
 local s,id=GetID()

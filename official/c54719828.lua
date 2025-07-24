@@ -2,15 +2,15 @@
 --Number 16: Shock Master
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
-	Xyz.AddProcedure(c,nil,4,3)
 	c:EnableReviveLimit()
-	--act limit
+	--Xyz Summon Procedure: 3 Level 4 monsters
+	Xyz.AddProcedure(c,nil,4,3)
+	--Players cannot activate cards with the declared type
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_IGNITION)
-	e1:SetCountLimit(1)
 	e1:SetRange(LOCATION_MZONE)
+	e1:SetCountLimit(1)
 	e1:SetCost(Cost.DetachFromSelf(1))
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
@@ -20,7 +20,7 @@ s.xyz_number=16
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,1))
-	e:SetLabel(Duel.SelectOption(tp,70,71,72))
+	e:SetLabel(Duel.SelectOption(tp,DECLTYPE_MONSTER,DECLTYPE_SPELL,DECLTYPE_TRAP))
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

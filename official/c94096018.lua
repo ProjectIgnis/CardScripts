@@ -34,7 +34,7 @@ function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1)
 		and Duel.GetFieldGroupCount(tp,0,LOCATION_DECK)>0 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CARDTYPE)
-	e:SetLabel(Duel.SelectOption(tp,70,71,72))
+	e:SetLabel(Duel.SelectOption(tp,DECLTYPE_MONSTER,DECLTYPE_SPELL,DECLTYPE_TRAP))
 	Duel.SetTargetPlayer(tp)
 	Duel.SetTargetParam(1)
 end
@@ -49,19 +49,20 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Draw(p,d,REASON_EFFECT)
 	end
 end
-function s.thfilter(c)
-	return c:IsFaceup() and c:IsCode(41091257) and c:IsAbleToHand()
+function s.thfilter(c,e,tp)
+	return (c:IsControler(1-tp) or (c:IsCode(41091257) and c:IsFaceup()))
+		and c:IsAbleToHand() and c:IsCanBeEffectTarget(e)
+end
+function s.rescon(sg,e,tp,mg)
+	return sg:FilterCount(Card.GetControler,nil)==#sg
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	if chk==0 then return Duel.IsExistingTarget(s.thfilter,tp,LOCATION_MZONE,0,1,nil)
-		and Duel.IsExistingTarget(Card.IsAbleToHand,tp,0,LOCATION_MZONE,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
-	local g1=Duel.SelectTarget(tp,s.thfilter,tp,LOCATION_MZONE,0,1,1,nil)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
-	local g2=Duel.SelectTarget(tp,Card.IsAbleToHand,tp,0,LOCATION_MZONE,1,1,nil)
-	g1:Merge(g2)
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g1,2,0,0)
+	local g=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,e,tp)
+	if chk==0 then return #g>=2 and aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,0) end
+	local rg=aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,1,tp,HINTMSG_TARGET)
+	Duel.SetTargetCard(rg)
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,rg,#rg,0,0)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetTargetCards(e)

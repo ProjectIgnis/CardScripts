@@ -6,7 +6,7 @@ function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--Xyz Summon procedure: 2 Level 4 monsters
 	Xyz.AddProcedure(c,nil,4,2)
-	--You can destroy 1 "Doom-Z" card in your hand or face-up field, then you can destroy 1 monster on the field
+	--Destroy 1 "Doom-Z" card in your hand or face-up field, then you can destroy 1 monster on the field
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY)
@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.destg)
 	e1:SetOperation(s.desop)
 	c:RegisterEffect(e1)
-	--You can add to your hand, or send to the GY, 1 Equip Spell from your Deck
+	--Add to your hand, or send to the GY, 1 Equip Spell from your Deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND+CATEGORY_TOGRAVE)
@@ -29,14 +29,6 @@ function s.initial_effect(c)
 	e2:SetTarget(s.thtgtg)
 	e2:SetOperation(s.thtgop)
 	c:RegisterEffect(e2)
-	--Keep track of whether it had an appropriate material before leaving the field
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e3:SetCode(EVENT_LEAVE_FIELD_P)
-	e3:SetOperation(function(e) e2:SetLabel(e:GetHandler():GetOverlayGroup():FilterCount(s.thtgconfilter,nil)) end)
-	e3:SetLabelObject(e3)
-	c:RegisterEffect(e3)
 end
 s.listed_names={CARD_MEDIUS_THE_PURE}
 s.listed_series={SET_DOOM_Z}
@@ -68,7 +60,7 @@ function s.thtgconfilter(c)
 end
 function s.thtgcon(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	return c:IsReason(REASON_BATTLE|REASON_EFFECT) and c:IsPreviousLocation(LOCATION_MZONE) and e:GetLabel()>0
+	return c:IsReason(REASON_EFFECT) and c:IsPreviousLocation(LOCATION_MZONE) and c:GetOverlayGroup():IsExists(s.thtgconfilter,1,nil)
 end
 function s.thtgfilter(c)
 	return c:IsEquipSpell() and (c:IsAbleToHand() or c:IsAbleToGrave())

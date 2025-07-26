@@ -1,25 +1,28 @@
---Solidroid beta
+--ソリッドロイドβ
+--Solidroid β
 local s,id=GetID()
 function s.initial_effect(c)
+	c:EnableReviveLimit()
+	--There can only be 1 "Solidroid" monster on your field
+	c:SetUniqueOnField(1,0,aux.FilterBoolFunction(Card.IsSetCard,0x4016),LOCATION_MZONE)
+	--Fusion Summon procedure:"Stealthroid" + "Turboroid" + "Strikeroid"
 	Fusion.AddProcMix(c,true,true,98049038,511002240,511000660)
 	Fusion.AddContactProc(c,s.contactfilter,s.contactop,s.splimit)
-	--destroy
-	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(16304628,0))
-	e3:SetCategory(CATEGORY_DESTROY)
-	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
-	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e3:SetTarget(s.destg)
-	e3:SetOperation(s.desop)
-	c:RegisterEffect(e3)
-	local e4=e3:Clone()
-	e4:SetCode(EVENT_SUMMON_SUCCESS)
-	c:RegisterEffect(e4)
-	local e5=e3:Clone()
-	e5:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
-	c:RegisterEffect(e5)
+	--When this card is Summoned: Destroy 1 monster your opponent controls
+	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(16304628,0))
+	e1:SetCategory(CATEGORY_DESTROY)
+	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
+	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e1:SetTarget(s.destg)
+	e1:SetOperation(s.desop)
+	c:RegisterEffect(e1)
+	local e2=e1:Clone()
+	e2:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
+	c:RegisterEffect(e2)
 end
-s.material_setcode=0x16
+s.listed_series={0x4016} --"Solidroid" archetype
+s.material_setcode=SET_ROID
 function s.splimit(e,se,sp,st)
 	return not e:GetHandler():IsLocation(LOCATION_EXTRA)
 end
@@ -27,7 +30,7 @@ function s.contactfilter(tp)
 	return Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,nil)
 end
 function s.contactop(g)
-	Duel.Remove(g,POS_FACEUP,REASON_COST+REASON_MATERIAL)
+	Duel.Remove(g,POS_FACEUP,REASON_COST|REASON_FUSION|REASON_MATERIAL)
 end
 function s.spfilter(c)
 	return c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
@@ -35,7 +38,7 @@ end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local g=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_MZONE,nil)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,tp,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)

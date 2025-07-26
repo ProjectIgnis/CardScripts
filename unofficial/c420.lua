@@ -772,10 +772,9 @@ if not AnimeArchetype then
 	-- Elemental HERO The Shining/Elemental HERO Shining Phoenix Enforcer/Elemental HERO Shining Flare Wingman
 	-- Leeching the Light/SZW - Fenrir Sword/Shining Hope Road
 	-- Radiant Mirror Force/Number 104: Masquerade/Blue-Eyes Shining Dragon
-
-	-- Number S
 	AnimeArchetype.OCGShining={
 		22061412,88820235,25366484,62829077,53347303,90263923,12927849,21481146,2061963
+		-- Number S
 	}
 	Card.IsShining=MakeCheck({0x548,0x2048},AnimeArchetype.OCGShining)
 
@@ -812,20 +811,21 @@ if not AnimeArchetype then
 		77235086,3629090,49010598,54407825,95457011,96570609,92223641,4149689,1637760,39238953,38411870,7452945,
 		97795930,10028593,86327225,27813661,11458071,48453776,74841885,10000020,41589166,90122655,95352218,23587624,
 		29146185,37910722,32995007,75326861,58601383,1992816,80764541,23085002,32559361,2519690,12171659,80196387,
-		33837653,60822251,
-		64806765,33907039
+		33837653,60822251,64806765,33907039
 	}
 	Card.IsSky=MakeCheck({0x54a,0xf6,0x3042},AnimeArchetype.OCGSky,{"IsCelestial","IsAngel"})
 
 	-- Slime スライム
 	-- Slime Toad/Graydle Slime/Graydle Slime Jr.
-	-- Jam Breeding Machine/Slime token/Change Slime
+	-- Jam Breeding Machine/Slime Token/Change Slime
 	-- Jam Defender/D/D Swirl Slime/D/D Necro Slime
 	-- Humanoid Slime/Magical Reflect Slime/Metal Reflect Slime
-	-- Revival Jam
+	-- Revival Jam/Egyptian God Slime/Reactor Slime
+	-- Impcantation Chalislime
 	AnimeArchetype.OCGSlime={
-		31709826,46821314,3918345,26905245,5600127,45206713,
-		72291412,21770261
+		68638985,20056760,80250319,21770260,21770261,79387393,18914778,
+		21558682,45206713,72291412,46821314,3918345,26905245,31709826,
+		42166000,79387392,65877963
 	}
 	Card.IsSlime=MakeCheck({0x54b},AnimeArchetype.OCGSlime)
 
@@ -881,7 +881,7 @@ if not AnimeArchetype then
 
 	-- Tachyon タキオン
 	AnimeArchetype.OCGTachyon={
-		-- Tachyon Transmigrassion, Tachyon Chaos Hole
+		-- Tachyon Transmigration, Tachyon Chaos Hole
 		8038143,59650656
 	}
 	Card.IsTachyon=MakeCheck({0x555},AnimeArchetype.OCGTachyon,{"IsTachyonDragon"})

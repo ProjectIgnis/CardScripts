@@ -3,10 +3,9 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
+	Pendulum.AddProcedure(c,false)
 	--Xyz Summon procedure: 2 Level 7 Dragon monsters
 	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_DRAGON),7,2)
-	--Pendulum procedure
-	Pendulum.AddProcedure(c,false)
 	--Place 1 Pendulum monster from your Deck in your other Pendulum Zone
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -50,7 +49,6 @@ function s.initial_effect(c)
 	e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e5:SetProperty(EFFECT_FLAG_DELAY)
 	e5:SetCode(EVENT_LEAVE_FIELD)
-	e5:SetCondition(function(e) return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD) end)
 	e5:SetTarget(s.pentg)
 	e5:SetOperation(s.penop)
 	c:RegisterEffect(e5)
@@ -140,13 +138,12 @@ end
 function s.pentg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetFieldGroup(tp,LOCATION_PZONE,0)
 	if chk==0 then return #g>0 end
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,tp,0)
 end
 function s.penop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) then return end
 	local g=Duel.GetFieldGroup(tp,LOCATION_PZONE,0)
-	if Duel.Destroy(g,REASON_EFFECT)>0 and Duel.CheckPendulumZones(tp) then
+	if #g>0 and Duel.Destroy(g,REASON_EFFECT)>0 and c:IsRelateToEffect(e) then
 		Duel.MoveToField(c,tp,tp,LOCATION_PZONE,POS_FACEUP,true)
 	end
 end

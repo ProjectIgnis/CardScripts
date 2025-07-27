@@ -3,16 +3,16 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--link summon
-	Link.AddProcedure(c,aux.FilterBoolFunction(Card.IsSummonType,SUMMON_TYPE_NORMAL),1,1)
-	--splimit
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_SPSUMMON_COST)
-	e1:SetCost(s.spcost)
-	c:RegisterEffect(e1)
+	--Link Summon procedure: 1 Normal Summoned/Set monster
+	Link.AddProcedure(c,aux.FilterBoolFunction(Card.IsSummonType,SUMMON_TYPE_NORMAL),1,1,nil,nil,s.splimit)
+	--Cannot be Link Summoned except during Main Phase 2
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_SINGLE)
+	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e0:SetCode(EFFECT_SPSUMMON_CONDITION)
+	e0:SetValue(s.splimit)
+	c:RegisterEffect(e0)
 end
-function s.spcost(e,c,tp,st)
-	if (st&SUMMON_TYPE_LINK)~=SUMMON_TYPE_LINK then return true end
-	return Duel.IsPhase(PHASE_MAIN2)
+function s.splimit(e,se,sp,st)
+	return (st&SUMMON_TYPE_LINK)~=SUMMON_TYPE_LINK or Duel.IsPhase(PHASE_MAIN2)
 end

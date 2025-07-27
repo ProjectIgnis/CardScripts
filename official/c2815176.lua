@@ -4,16 +4,17 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--Can only Special Summon "Zebufera, Vaalmonican Hallow Heathen" once per turn
-	c:SetSPSummonOnce(id)
-	--Link Summon procedure
-	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsType,TYPE_EFFECT),1,1)
+	--Link Summon procedure: 1 Effect Monster
+	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsType,TYPE_EFFECT),1,1,nil,nil,s.splimit)
 	--Cannot be Link Summoned unless you have a Fiend Monster Card with 3 or more Resonance Counters in your Pendulum Zone
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_SINGLE)
-	e0:SetCode(EFFECT_SPSUMMON_COST)
-	e0:SetCost(s.spcost)
+	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e0:SetCode(EFFECT_SPSUMMON_CONDITION)
+	e0:SetValue(s.splimit)
 	c:RegisterEffect(e0)
+	--You can only Special Summon "Zebufera, Vaalmonican Hallow Heathen" once per turn
+	c:SetSPSummonOnce(id)
 	--Remove 3 Resonance Counters from your Pendulum Zone instead of a card you control being destroyed
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -29,8 +30,8 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetHintTiming(0,TIMING_STANDBY_PHASE|TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E)
 	e2:SetCountLimit(1)
+	e2:SetHintTiming(0,TIMING_STANDBY_PHASE|TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E)
 	e2:SetCondition(function(e,tp) return Duel.IsTurnPlayer(1-tp) end)
 	e2:SetTarget(s.cptg)
 	e2:SetOperation(s.cpop)
@@ -39,12 +40,8 @@ end
 s.listed_series={SET_VAALMONICA}
 s.counter_list={COUNTER_RESONANCE}
 s.listed_names={id}
-function s.spcfilter(c)
-	return c:IsFaceup() and c:IsOriginalRace(RACE_FIEND) and c:GetCounter(COUNTER_RESONANCE)>=3
-end
-function s.spcost(e,c,tp,st)
-	if (st&SUMMON_TYPE_LINK)~=SUMMON_TYPE_LINK then return true end
-	return Duel.IsExistingMatchingCard(s.spcfilter,tp,LOCATION_PZONE,0,1,nil)
+function s.splimit(e,se,sp,st)
+	return (st&SUMMON_TYPE_LINK)~=SUMMON_TYPE_LINK or Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsOriginalRace,RACE_FIEND),sp,LOCATION_PZONE,0,nil):GetSum(Card.GetCounter,COUNTER_RESONANCE)>=3
 end
 function s.repfilter(c,tp)
 	return c:IsControler(tp) and c:IsOnField() and c:IsReason(REASON_BATTLE|REASON_EFFECT) and not c:IsReason(REASON_REPLACE)

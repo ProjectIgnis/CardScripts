@@ -1074,26 +1074,30 @@ if not AnimeArchetype then
 	Card.IsMosquito=MakeCheck({0x536},{94113093})
 
 -----------------------------------------
-	-- Speed Duel
+	-- Speed Duel exclusive archetypes
 
-	-- Gaia the Dragon Champion
+	-- Gaia the Dragon Champion (Archetype)
 	-- Gaia the Dragon Champion/Sky Galloping Gaia the Dragon Champion
 	Card.IsGaiatheDragonChampion=MakeCheck({0x580},{66889139,2519690})
 
-	-- Ancient Gear Golem
+	-- Ancient Gear Golem (Archetype)
 	-- Ancient Gear Golem/Ancient Gear Golem - Ultimate Pound
 	-- Toon Ancient Gear Golem/Ultimate Ancient Gear Golem
 	Card.IsAncientGearGolem=MakeCheck({0x581},{83104731,95735217,7171149,12652643})
 
-	-- Insect Queen
+	-- Insect Queen (Archetype)
 	-- Insect Queen/Metamorphosed Insect Queen
 	Card.IsInsectQueen=MakeCheck({0x582},{91512835,41456841})
 
-	-- Fortress Whale
+	-- Fortress Whale (Archetype)
 	-- Fortress Whale/Fortress Whale's Oath/Mega Fortress Whale
 	Card.IsFortressWhale=MakeCheck({0x583},{62337487,77454922,96546575})
 
-	--Harpie Lady Sisters
+	-- The Winged Dragon of Ra (Archetype)
+	-- The Winged Dragon of Ra/The Winged Dragon of Ra - Sphere Mode/The Winged Dragon of Ra - Immortal Phoenix
+	Card.IsTheWingedDragonofRa=MakeCheck({0x584},{10000010,10000080,10000090})
+	
+	--Harpie Lady Sisters (Archetype)
 	--Harpie Lady Sisters
 	Card.IsHarpieLadySisters=MakeCheck({0x1064},{12206212})
 end

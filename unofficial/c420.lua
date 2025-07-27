@@ -1092,4 +1092,8 @@ if not AnimeArchetype then
 	-- Fortress Whale
 	-- Fortress Whale/Fortress Whale's Oath/Mega Fortress Whale
 	Card.IsFortressWhale=MakeCheck({0x583},{62337487,77454922,96546575})
+
+	--Harpie Lady Sisters
+	--Harpie Lady Sisters
+	Card.IsHarpieLadySisters=MakeCheck({0x1064},{12206212})
 end

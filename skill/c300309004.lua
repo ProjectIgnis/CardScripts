@@ -14,12 +14,12 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={CARD_RA}
---s.listed_series={SET_WINGED_DRAGON_OF_RA} (To be implemented when setcode is available)
+s.listed_series={0x584} --"The Winged Dragon of Ra" archetype
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
 	Duel.Hint(HINT_CARD,tp,id)
 	local c=e:GetHandler()
-	--"The Winged Dragon of Ra" monsters gain ATK/DEF equal to the ATK/DEF of the monsters Tributed for its Tribute Summon
+	--"The Winged Dragon of Ra" gain ATK/DEF equal to the ATK/DEF of the monsters Tributed for its Tribute Summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
@@ -66,10 +66,10 @@ function s.atkdefop(e,tp,eg,ep,ev,re,r,rp)
 end
 --Skill choice functions
 function s.tdfilter(c)
-	return c:IsCode(CARD_RA,10000080,10000090) and c:IsAbleToDeck() and not c:IsPublic()
+	return c:IsTheWingedDragonofRa() and c:IsAbleToDeck() and not c:IsPublic()
 end
 function s.thfilter(c)
-	return c:IsCode(CARD_RA,10000080,10000090) and c:IsAbleToHand()
+	return c:IsTheWingedDragonofRa()  and c:IsAbleToHand()
 end
 function s.effcon(e,tp,eg,ep,ev,re,r,rp)
 	local b1=Duel.IsExistingMatchingCard(s.tdfilter,tp,LOCATION_HAND,0,1,nil) and Duel.IsPlayerCanDraw(tp,1)

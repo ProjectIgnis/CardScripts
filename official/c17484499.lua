@@ -14,8 +14,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetFieldGroupCount(tp,LOCATION_GRAVE,0)>=15
-		and Duel.GetFieldGroupCount(tp,0,LOCATION_GRAVE)>=15
+	local b1=Duel.GetFieldGroupCount(tp,LOCATION_GRAVE,0)>=15 and Duel.GetFieldGroupCount(tp,0,LOCATION_GRAVE)>=15
+	local b2=Duel.IsPlayerAffectedByEffect(tp,SKILL_AS_I_PREDICTED) and Duel.GetFieldGroupCount(tp,LOCATION_GRAVE,0)>=15
+	return (b1 or b2)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SwapDeckAndGrave(tp)

@@ -1,0 +1,91 @@
+--Tribal Unity
+--Scripted by The Razgriz
+local s,id=GetID()
+function s.initial_effect(c)
+	aux.AddSkillProcedure(c,2,false,nil,nil)
+	local e1=Effect.CreateEffect(c)
+	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e1:SetCode(EVENT_STARTUP)
+	e1:SetCountLimit(1)
+	e1:SetRange(0x5f)
+	e1:SetLabel(0)
+	e1:SetOperation(s.flipop)
+	c:RegisterEffect(e1)
+end
+s.listed_series={SET_HARPIE,SET_AMAZONESS} 
+function s.flipop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
+	Duel.Hint(HINT_CARD,tp,id)
+	local c=e:GetHandler()
+	--"Harpie" monsters are also treated as "Amazoness" monsters
+	local e1a=Effect.CreateEffect(c)
+	e1a:SetDescription(aux.Stringid(id,0))
+	e1a:SetType(EFFECT_TYPE_SINGLE)
+	e1a:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e1a:SetCode(EFFECT_ADD_SETCODE)
+	e1a:SetRange(LOCATION_MZONE|LOCATION_GRAVE)
+	e1a:SetValue(SET_AMAZONESS)
+	local e1b=Effect.CreateEffect(c)
+	e1b:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_GRANT)
+	e1b:SetTargetRange(LOCATION_MZONE|LOCATION_GRAVE,LOCATION_MZONE|LOCATION_GRAVE)
+	e1b:SetTarget(function(e,c) return c:IsSetCard(SET_HARPIE) and c:IsMonster() end)
+	e1b:SetLabelObject(e1a)
+	Duel.RegisterEffect(e1b,tp)
+	--"Amazoness" monsters are also treated as "Harpie" monsters
+	local e2a=Effect.CreateEffect(c)
+	e2a:SetDescription(aux.Stringid(id,0))
+	e2a:SetType(EFFECT_TYPE_SINGLE)
+	e2a:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e2a:SetCode(EFFECT_ADD_SETCODE)
+	e2a:SetRange(LOCATION_MZONE|LOCATION_GRAVE)
+	e2a:SetValue(SET_HARPIE)
+	local e2b=Effect.CreateEffect(c)
+	e2b:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_GRANT)
+	e2b:SetTargetRange(LOCATION_MZONE|LOCATION_GRAVE,LOCATION_MZONE|LOCATION_GRAVE)
+	e2b:SetTarget(function(e,c) return c:IsSetCard(SET_AMAZONESS) and c:IsMonster() end)
+	e2b:SetLabelObject(e2a)
+	Duel.RegisterEffect(e2b,tp)
+	--Discard 1 "Harpie" or "Amazoness" monster to increase the ATK of 1 "Harpie" or "Amazoness" monster you control
+	local e3=Effect.CreateEffect(c)
+	e3:SetCategory(CATEGORY_ATKCHANGE)
+	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e3:SetCode(EVENT_FREE_CHAIN)
+	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e3:SetCountLimit(1)
+	e3:SetRange(0x5f)
+	e3:SetCondition(s.atkcon)
+	e3:SetOperation(s.atkop)
+	Duel.RegisterEffect(e3,tp)
+end
+function s.atkfilter(c)
+	return c:IsFaceup() and (c:IsSetCard(SET_HARPIE) or c:IsSetCard(SET_AMAZONESS))
+end
+function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
+	return aux.CanActivateSkill(tp) and  Duel.IsExistingMatchingCard(aux.AND(Card.IsMonster,Card.IsDiscardable),tp,LOCATION_HAND,0,1,nil) 
+		and Duel.IsExistingMatchingCard(s.atkfilter,tp,LOCATION_MZONE,0,1,nil) and not Duel.HasFlagEffect(tp,id)
+end
+function s.atkop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_CARD,tp,id)
+	--You can only use this Skill once per Duel
+	Duel.RegisterFlagEffect(tp,id,0,0,0)
+	--Make your "Harpie" or "Amazoness" monster gain ATK
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
+	local g=Duel.SelectMatchingCard(tp,aux.AND(Card.IsMonster,Card.IsDiscardable),tp,LOCATION_HAND,0,1,1,nil)
+	local lv=g:GetFirst():GetLevel()
+	if lv>0 and Duel.SendtoGrave(g:GetFirst(),REASON_COST|REASON_DISCARD)>0 then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATKDEF)
+		local tc=Duel.SelectMatchingCard(tp,s.atkfilter,tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
+		if tc then
+			Duel.HintSelection(tc,true)
+			local e1=Effect.CreateEffect(e:GetHandler())
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+			e1:SetCode(EFFECT_UPDATE_ATTACK)
+			e1:SetRange(LOCATION_MZONE)
+			e1:SetValue(lv*200)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
+			tc:RegisterEffect(e1)
+		end
+	end
+end

@@ -53,7 +53,7 @@ function s.attachcond(e,tp,eg,ep,ev,re,r,rp)
 	if rp==1-tp or not re:IsHasType(EFFECT_TYPE_ACTIVATE) then return false end
 	local rc=re:GetHandler()
 	return rc:IsSetCard(SET_PURRELY) and rc:IsQuickPlaySpell() and rc:IsOnField()
-		and rc:IsCanBeXyzMaterial(e:GetHandler(),tc,REASON_EFFECT)
+		and rc:IsCanBeXyzMaterial(e:GetHandler(),tp,REASON_EFFECT)
 end
 function s.setfilter(c)
 	return c:IsSetCard(SET_PURRELY) and c:IsTrap() and c:IsSSetable()

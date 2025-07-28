@@ -28,7 +28,9 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCondition(function(e,tp) return Duel.IsTurnPlayer(tp) and Duel.GetDrawCount(tp)>0 and Duel.GetTurnCount(tp)>1 and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>1 end)
 	e1:SetOperation(s.drawop)
 	Duel.RegisterEffect(e1,tp)
-	--Only you need to have 15 or more cards in the GY to activate "Exchange of the Spirit"
+	--Apply the following Skills:
+	--● Only you need 15 or more cards in your GY to activate "Exchange of the Spirit".
+	--● If you have 15 or more cards in your GY, you can banish 1 "Exchange of the Spirit" from your GY to activate its effect.
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)	
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
@@ -36,17 +38,11 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetRange(0x5f)
 	e2:SetTargetRange(1,0)
 	Duel.RegisterEffect(e2,tp)
-	--Banish 1 "Exchange of the Spirit" to activate its effect
-	local e3=Effect.CreateEffect(c)
-	e3:SetCategory(CATEGORY_REMOVE)
-	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e3:SetCode(EVENT_FREE_CHAIN)
-	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e3:SetRange(0x5f)
-	e3:SetCondition(s.exchcon)
-	e3:SetTarget(s.exchtg)
-	e3:SetOperation(s.exchop)
-	Duel.RegisterEffect(e3,tp)
+	local e2b=Effect.CreateEffect(c)
+	e2b:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e2b:SetCode(EVENT_ADJUST)
+	e2b:SetOperation(s.altexchangeop)
+	Duel.RegisterEffect(e2b,tp)
 end
 --Draw functions
 function s.drawop(e,tp,eg,ep,ev,re,r,rp)
@@ -93,33 +89,23 @@ function s.drawop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
---"Exchange of the Spirit" banish functions
-function s.exchrmvfilter(c)
-	return c:IsCode(CARD_EXCHANGE_SPIRIT) and c:IsAbleToRemoveAsCost() and c:CheckActivateEffect(false,true,false)~=nil
-end
-function s.exchcon(e,tp,eg,ep,ev,re,r,rp)
-	return aux.CanActivateSkill(tp) and Duel.GetFieldGroupCount(tp,LOCATION_GRAVE,0)>=15 
-end
-function s.exchtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.exchfilter,tp,LOCATION_GRAVE,0,1,nil) end
-	Duel.Hint(HINT_CARD,tp,id)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local rg=Duel.SelectMatchingCard(tp,s.exchrmvfilter,tp,LOCATION_GRAVE,0,1,1,nil)
-	Duel.HintSelection(rg,true)
-	rg:KeepAlive()
-	e:SetLabelObject(rg)
-	Duel.Remove(rg,POS_FACEUP,REASON_COST)
-end
-function s.exchop(e,tp,eg,ep,ev,re,r,rp)
-	local g=e:GetLabelObject()
-	local te,ceg,cep,cev,cre,cr,crp=g:GetFirst():CheckActivateEffect(false,true,true)
-	local tg=te:GetTarget()
-	e:SetProperty(te:GetProperty())
-	if tg then tg(e,tp,ceg,cep,cev,cre,cr,crp,1) end
-	if not te then return end
-	local op=te:GetOperation()
-	if op then
-		op(e,tp,eg,ep,ev,re,r,rp)
-		g:DeleteGroup()
+function s.altexchangeop(e,tp,eg,ep,ev,re,r,rp)
+	local g=Duel.GetMatchingGroup(Card.IsCode,tp,LOCATION_ALL,LOCATION_ALL,nil,CARD_EXCHANGE_SPIRIT)
+	for tc in g:Iter() do
+		if not tc:HasFlagEffect(id) then
+			tc:RegisterFlagEffect(id,0,0,0)
+			--Only you need 15 or more cards in your GY to activate "Exchange of the Spirit"
+			local eff=tc:GetActivateEffect()
+			eff:SetCondition(function(e,tp)
+						return Duel.GetFieldGroupCount(tp,LOCATION_GRAVE,0)>=15 and (Duel.GetFieldGroupCount(tp,0,LOCATION_GRAVE)>=15 or Duel.IsPlayerAffectedByEffect(tp,id))
+					end)
+			--If you have 15 or more cards in your GY, you can banish 1 "Exchange of the Spirit" from your GY to activate its effect
+			local gy_eff=eff:Clone()
+			gy_eff:SetType(EFFECT_TYPE_QUICK_O)
+			gy_eff:SetRange(LOCATION_GRAVE)
+			gy_eff:SetCountLimit(1)
+			gy_eff:SetCost(Cost.SelfBanish)
+			tc:RegisterEffect(gy_eff)
+		end
 	end
 end

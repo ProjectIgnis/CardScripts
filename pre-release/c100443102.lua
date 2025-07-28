@@ -29,7 +29,6 @@ function s.initial_effect(c)
 	e2:SetOperation(s.effop)
 	c:RegisterEffect(e2)
 end
-local CARD_MACRO_COSMOS=30241314
 s.listed_names={CARD_MACRO_COSMOS,id}
 function s.macrofilter(c)
 	return (c:IsCode(CARD_MACRO_COSMOS) or c:ListsCode(CARD_MACRO_COSMOS)) and not c:IsCode(id) and c:IsAbleToHand()

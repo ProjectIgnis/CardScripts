@@ -34,6 +34,7 @@ function s.initial_effect(c)
 	e2:SetCondition(s.doubledamcon)
 	e2:SetValue(aux.ChangeBattleDamage(1,DOUBLE_DAMAGE))
 	c:RegisterEffect(e2)
+	--Keep track of monster effects activated in the hand or GY
 	Duel.AddCustomActivityCounter(id,ACTIVITY_CHAIN,s.chainfilter)
 end
 s.listed_series={SET_K9}
@@ -53,7 +54,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) and tc:IsMonster() then
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end

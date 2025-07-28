@@ -2,23 +2,19 @@
 --Exchange of the Spirit
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Each player swaps the cards in their GY with the cards in their Deck, then shuffles their Deck
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(0,TIMING_DRAW_PHASE)
-	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH+EFFECT_COUNT_CODE_DUEL)
-	e1:SetCondition(s.condition)
+	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_DUEL)
+	e1:SetCondition(function(e,tp) return Duel.GetFieldGroupCount(tp,LOCATION_GRAVE,0)>=15 and Duel.GetFieldGroupCount(tp,0,LOCATION_GRAVE)>=15 end)
 	e1:SetCost(Cost.PayLP(1000))
-	e1:SetOperation(s.activate)
+	e1:SetOperation(function(e,tp,eg,ep,ev,re,r,rp)
+				local turn_player=Duel.GetTurnPlayer()
+				Duel.SwapDeckAndGrave(turn_player)
+				Duel.SwapDeckAndGrave(1-turn_player)
+			end)
+	e1:SetHintTiming(0,TIMING_DRAW_PHASE|TIMING_STANDBY_PHASE|TIMING_MAIN_END|TIMING_BATTLE_START|TIMING_BATTLE_END|TIMINGS_CHECK_MONSTER_E|TIMING_CHAIN_END)
 	c:RegisterEffect(e1)
-end
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	local b1=Duel.GetFieldGroupCount(tp,LOCATION_GRAVE,0)>=15 and Duel.GetFieldGroupCount(tp,0,LOCATION_GRAVE)>=15
-	local b2=Duel.IsPlayerAffectedByEffect(tp,SKILL_AS_I_PREDICTED) and Duel.GetFieldGroupCount(tp,LOCATION_GRAVE,0)>=15
-	return (b1 or b2)
-end
-function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	Duel.SwapDeckAndGrave(tp)
-	Duel.SwapDeckAndGrave(1-tp)
 end

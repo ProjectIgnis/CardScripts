@@ -8,9 +8,9 @@ function s.initial_effect(c)
 	Pendulum.AddProcedure(c,false)
 	--Fusion Materials: 4 Fiend monsters (1 Fusion, 1 Synchro, 1 Xyz, 1 Pendulum)
 	Fusion.AddProcMix(c,true,true,s.matfilter(TYPE_FUSION),s.matfilter(TYPE_SYNCHRO),s.matfilter(TYPE_XYZ),s.matfilter(TYPE_PENDULUM))
+	c:AddMustBeFusionSummoned()
 	--Special Summon this card (from your Extra Deck) by banishing the above materials from your field and/or GY
 	Fusion.AddContactProc(c,s.contactfil,s.contactop,false,nil,1)
-	c:AddMustBeFusionSummoned()
 	--You can only Fusion Summon or Special Summon by its alternate procedure "D/D/D/D Great Dimension King Arc Crisis" once per turn
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
@@ -79,7 +79,7 @@ function s.regcon(e)
 	return c:IsFusionSummoned() or c:IsSummonType(SUMMON_TYPE_SPECIAL+1)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
-	--Prevent another Fusion Summon or Special Summon by its alternate procedure of "Dark Magician of Destruction" that turn
+	--Prevent another Fusion Summon or Special Summon by its alternate procedure of "D/D/D/D Great Dimension King Arc Crisis" that turn
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)

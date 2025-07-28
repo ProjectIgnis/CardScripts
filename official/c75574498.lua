@@ -2,90 +2,85 @@
 --Princess Cologne
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
-	Xyz.AddProcedure(c,nil,4,2)
 	c:EnableReviveLimit()
-	--spsummon1
+	--Xyz Summon procedure: 2 Level 4 monsters
+	Xyz.AddProcedure(c,nil,4,2)
+	--Special Summon 1 "Box of Friends" from your GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e1:SetCondition(s.spcon)
-	e1:SetTarget(s.sptg)
-	e1:SetOperation(s.spop)
+	e1:SetCondition(function(e) return e:GetHandler():IsXyzSummoned() end)
+	e1:SetTarget(s.boxsptg)
+	e1:SetOperation(s.boxspop)
 	c:RegisterEffect(e1)
-	--cannot be target
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e2:SetRange(LOCATION_MZONE)
-	e2:SetCode(EFFECT_CANNOT_BE_BATTLE_TARGET)
-	e2:SetCondition(s.tgcon)
-	e2:SetValue(aux.imval1)
-	c:RegisterEffect(e2)
-	local e3=e2:Clone()
-	e3:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
-	e3:SetValue(aux.tgoval)
+	--If you control another monster, your opponent's monsters cannot target this card for attacks, also your opponent cannot target this card with card effects
+	local e2a=Effect.CreateEffect(c)
+	e2a:SetType(EFFECT_TYPE_SINGLE)
+	e2a:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e2a:SetCode(EFFECT_CANNOT_BE_BATTLE_TARGET)
+	e2a:SetRange(LOCATION_MZONE)
+	e2a:SetCondition(function(e) return Duel.IsExistingMatchingCard(nil,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler()) end)
+	e2a:SetValue(aux.imval1)
+	c:RegisterEffect(e2a)
+	local e2b=e2a:Clone()
+	e2b:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
+	e2b:SetValue(aux.tgoval)
+	c:RegisterEffect(e2b)
+	--Special Summon 1 Normal Monster from your Deck or GY in Defense Position
+	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(id,1))
+	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e3:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
+	e3:SetCode(EVENT_TO_GRAVE)
+	e3:SetRange(LOCATION_MZONE)
+	e3:SetCountLimit(1,0,EFFECT_COUNT_CODE_CHAIN)
+	e3:SetCondition(s.normalspcon)
+	e3:SetCost(Cost.DetachFromSelf(1))
+	e3:SetTarget(s.normalsptg)
+	e3:SetOperation(s.normalspop)
 	c:RegisterEffect(e3)
-	--spsummon
-	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(id,1))
-	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e4:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
-	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e4:SetRange(LOCATION_MZONE)
-	e4:SetCode(EVENT_TO_GRAVE)
-	e4:SetCondition(s.spcon2)
-	e4:SetCost(Cost.DetachFromSelf(1))
-	e4:SetTarget(s.sptg2)
-	e4:SetOperation(s.spop2)
-	c:RegisterEffect(e4)
 end
-s.listed_names={81587028} --"Box of Friends"
-function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsXyzSummoned()
+s.listed_names={CARD_BOX_OF_FRIENDS}
+function s.boxspfilter(c,e,tp)
+	return c:IsCode(CARD_BOX_OF_FRIENDS) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
-function s.spfilter1(c,e,tp)
-	return c:IsCode(81587028) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-end
-function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.spfilter1(chkc,e,tp) end
+function s.boxsptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.boxspfilter(chkc,e,tp) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingTarget(s.spfilter1,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
+		and Duel.IsExistingTarget(s.boxspfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectTarget(tp,s.spfilter1,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
+	local g=Duel.SelectTarget(tp,s.boxspfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,tp,0)
 end
-function s.spop(e,tp,eg,ep,ev,re,r,rp)
+function s.boxspop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-function s.tgcon(e)
-	return Duel.GetFieldGroupCount(e:GetHandlerPlayer(),LOCATION_MZONE,0)>=2
+function s.normalspconfilter(c,tp)
+	return c:IsPreviousTypeOnField(TYPE_NORMAL) and c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
+		and c:IsReason(REASON_DESTROY) and c:IsReason(REASON_BATTLE|REASON_EFFECT) and c:IsType(TYPE_NORMAL)
 end
-function s.cfilter(c,tp)
-	return c:IsPreviousControler(tp) and c:IsPreviousLocation(LOCATION_MZONE) and c:IsReason(REASON_DESTROY)
-		and (c:GetPreviousTypeOnField()&TYPE_NORMAL)~=0
+function s.normalspcon(e,tp,eg,ep,ev,re,r,rp)
+	return eg:IsExists(s.normalspconfilter,1,nil,tp)
 end
-function s.spcon2(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.cfilter,1,nil,tp)
-end
-function s.spfilter2(c,e,tp)
+function s.normalspfilter(c,e,tp)
 	return c:IsType(TYPE_NORMAL) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
-function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.normalsptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(s.spfilter2,tp,LOCATION_GRAVE|LOCATION_DECK,0,1,nil,e,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE|LOCATION_DECK)
+		and Duel.IsExistingMatchingCard(s.normalspfilter,tp,LOCATION_DECK|LOCATION_GRAVE,0,1,nil,e,tp) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK|LOCATION_GRAVE)
 end
-function s.spop2(e,tp,eg,ep,ev,re,r,rp)
+function s.normalspop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter2),tp,LOCATION_GRAVE|LOCATION_DECK,0,1,1,nil,e,tp)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.normalspfilter),tp,LOCATION_DECK|LOCATION_GRAVE,0,1,1,nil,e,tp)
 	if #g>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 	end

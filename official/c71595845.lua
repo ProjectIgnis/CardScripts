@@ -1,10 +1,9 @@
 --人形の幸福
 --Doll Happiness
 --Logical Nonsense
---Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
-	--Add 1 "Box of Friends" or "Grandpa Demetto" from deck
+	--When this card is Activated: Add 1 "Grandpa Demetto" or "Box of Friends" from your Deck to your hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -14,19 +13,18 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	--Opponent cannot target your monsters with 0 ATK or DEF for attacks
+	--While you control "Princess Cologne", your opponent's monsters cannot target monsters with 0 ATK or DEF for attacks
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_FIELD)
+	e2:SetCode(EFFECT_CANNOT_SELECT_BATTLE_TARGET)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTargetRange(0,LOCATION_MZONE)
-	e2:SetCode(EFFECT_CANNOT_SELECT_BATTLE_TARGET)
-	e2:SetCondition(s.atcon)
-	e2:SetValue(s.atlimit)
+	e2:SetCondition(function(e) return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_PRINCESS_COLOGNE),e:GetHandlerPlayer(),LOCATION_ONFIELD,0,1,nil) end)
+	e2:SetValue(function(e,c) return (c:IsAttack(0) or c:IsDefense(0)) and c:IsFaceup() end)
 	c:RegisterEffect(e2)
-	--Destroy 1 monster from hand/field, send 1 "Doll Monster" card from deck to GY
+	--Destroy 1 monster in your hand or field, and if you do, send 1 "Doll Monster" card from your Deck to the GY
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(id,2))
+	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_DESTROY+CATEGORY_TOGRAVE)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_SZONE)
@@ -35,87 +33,53 @@ function s.initial_effect(c)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
 end
-	--Lists "Doll Monster" archetype
 s.listed_series={SET_DOLL_MONSTER}
-	--Specifically lists "Princess Cologne", "Box of Friends", and "Grandpa Demetto"
-s.listed_names={75574498,81587028,44190146}
-	--Check for "Box of Friends" or "Grandpa Demetto"
-function s.filter(c)
-	return c:IsCode(81587028,44190146) and c:IsAbleToHand()
+s.listed_names={CARD_GRANDPA_DEMETTO,CARD_BOX_OF_FRIENDS,CARD_PRINCESS_COLOGNE}
+function s.thfilter(c)
+	return c:IsCode(CARD_GRANDPA_DEMETTO,CARD_BOX_OF_FRIENDS) and c:IsAbleToHand()
 end
-	--Activation legality
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
-	--Add 1 "Box of Friends" or "Grandpa Demetto" from deck
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil)
 	if #g>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-	--Check for "Princess Cologne"
-function s.atcon(e)
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,75574498),e:GetHandlerPlayer(),LOCATION_ONFIELD,0,1,nil)
-end
-	--Check if the monster has 0 ATK or DEF
-function s.atlimit(e,c)
-	return c:IsFaceup() and (c:IsAttack(0) or c:IsDefense(0))
-end
-	--Check for a "Doll Monster" card
 function s.tgfilter(c)
 	return c:IsSetCard(SET_DOLL_MONSTER) and c:IsAbleToGrave()
 end
-	--Activation legality
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsMonster,tp,LOCATION_HAND|LOCATION_MZONE,0,1,nil)
 		and Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil) end
-	local dg=Duel.GetMatchingGroup(Card.IsMonster,tp,LOCATION_HAND|LOCATION_MZONE,0,nil)
-	if not Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,nil) then
-		Duel.SetOperationInfo(0,CATEGORY_DESTROY,dg,1,tp,LOCATION_HAND|LOCATION_MZONE)
-	else
-		Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,tp,LOCATION_HAND|LOCATION_MZONE)
-	end
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,tp,LOCATION_HAND|LOCATION_MZONE)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 end
-	--Destroy 1 monster from hand/field, send 1 "Doll Monster" card from deck to GY
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g1=Duel.SelectMatchingCard(tp,Card.IsMonster,tp,LOCATION_HAND|LOCATION_MZONE,0,1,1,nil)
-	if #g1>0 and Duel.Destroy(g1,REASON_EFFECT)~=0 then
+	local desg=Duel.SelectMatchingCard(tp,Card.IsMonster,tp,LOCATION_HAND|LOCATION_MZONE,0,1,1,nil)
+	if #desg>0 and Duel.Destroy(desg,REASON_EFFECT)>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-		local g2=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_DECK,0,1,1,nil)
-		if #g2>0 then
-			Duel.SendtoGrave(g2,REASON_EFFECT)
+		local gyg=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_DECK,0,1,1,nil)
+		if #gyg>0 then
+			Duel.SendtoGrave(gyg,REASON_EFFECT)
 		end
 	end
+	local c=e:GetHandler()
+	--You cannot Special Summon from the Extra Deck for the rest of this turn, except Xyz Monsters
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,2))
 	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(1,0)
-	e1:SetTarget(s.splimit)
+	e1:SetTarget(function (e,c) return c:IsLocation(LOCATION_EXTRA) and not c:IsType(TYPE_XYZ) end)
 	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
-	--Clock Lizard check
-	aux.addTempLizardCheck(c,tp,s.lizfilter)
-	local e2=Effect.CreateEffect(c)
-	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT+EFFECT_FLAG_OATH)
-	e2:SetDescription(aux.Stringid(id,3))
-	e2:SetReset(RESET_PHASE|PHASE_END)
-	e2:SetTargetRange(1,0)
-	Duel.RegisterEffect(e2,tp)
-end
-	--Restricted to Xyz monsters for extra deck
-function s.splimit(e,c)
-	return not c:IsType(TYPE_XYZ) and c:IsLocation(LOCATION_EXTRA)
-end
-function s.lizfilter(e,c)
-	return not c:IsOriginalType(TYPE_XYZ)
+	--"Clock Lizard" check
+	aux.addTempLizardCheck(c,tp,function(e,c) return not c:IsOriginalType(TYPE_XYZ) end)
 end

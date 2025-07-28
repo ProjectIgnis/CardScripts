@@ -4,33 +4,33 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_ACTIVATE)
+	e0:SetCode(EVENT_FREE_CHAIN)
+	c:RegisterEffect(e0)
+	--Special Summon 1 monster from your Deck with the same name as each target, as a Level 6 DARK monster
 	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e1:SetType(EFFECT_TYPE_IGNITION)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e1:SetRange(LOCATION_FZONE)
+	e1:SetCountLimit(1,id)
+	e1:SetTarget(s.sptg)
+	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--Special Summon 1 monster from your Deck as a Level 6 DARK monster
+	--Attach 1 "Grandpa Demetto" you control to "Princess Cologne" you control as material, then end the Battle Phase
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,0))
-	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e2:SetType(EFFECT_TYPE_IGNITION)
-	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e2:SetDescription(aux.Stringid(id,1))
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e2:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e2:SetRange(LOCATION_FZONE)
-	e2:SetCountLimit(1,id)
-	e2:SetTarget(s.sptg)
-	e2:SetOperation(s.spop)
+	e2:SetCondition(function(e,tp) return Duel.GetAttacker():IsControler(1-tp) end)
+	e2:SetTarget(s.attachtg)
+	e2:SetOperation(s.attachop)
 	c:RegisterEffect(e2)
-	--Attach material and end battle phase
-	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(id,1))
-	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e3:SetCode(EVENT_ATTACK_ANNOUNCE)
-	e3:SetRange(LOCATION_FZONE)
-	e3:SetCondition(function(e,tp) return Duel.GetAttacker():IsControler(1-tp) end)
-	e3:SetTarget(s.bptg)
-	e3:SetOperation(s.bpop)
-	c:RegisterEffect(e3)
 end
-s.listed_names={75574498,44190146} --Princess Cologne, Grandpa Demetto
+s.listed_names={CARD_PRINCESS_COLOGNE,CARD_GRANDPA_DEMETTO}
 function s.tgfilter(c,e)
 	return c:IsType(TYPE_NORMAL) and (c:IsAttack(0) or c:IsDefense(0)) and c:IsCanBeEffectTarget(e)
 end
@@ -39,13 +39,13 @@ function s.resconfunc(cg)
 	--that will ensure cards in sg will have at least one card in cg with the same name.
 	--It also ensures that each card has one exclusive pair.
 	return function (sg,e,tp,mg)
-		local code1=sg:GetFirst():GetCode()
-		local f1=cg:Filter(Card.IsCode,nil,code1)
+		local code0=sg:GetFirst():GetCode()
+		local f1=cg:Filter(Card.IsCode,nil,code0)
 		if #f1<1 then return end
 		if #sg>1 then
-			local code2=sg:GetNext():GetCode()
-			return (code1==code2 and #f1>1)
-				or (cg-f1):IsExists(Card.IsCode,1,nil,code2)
+			local code1=sg:GetNext():GetCode()
+			return (code0==code1 and #f1>1)
+				or (cg-f1):IsExists(Card.IsCode,1,nil,code1)
 		end
 		return true
 	end
@@ -61,7 +61,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local tg=Duel.GetMatchingGroup(s.tgfilter,tp,LOCATION_GRAVE,0,nil,e)
 	local rescon=s.resconfunc(Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_DECK,0,nil,e,tp))
 	if chk==0 then return ft>0 and aux.SelectUnselectGroup(tg,e,tp,1,1,rescon,0) end
-	if Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,75574498),tp,LOCATION_ONFIELD,0,1,nil)
+	if Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_PRINCESS_COLOGNE),tp,LOCATION_ONFIELD,0,1,nil)
 		and not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
 		and aux.SelectUnselectGroup(tg,e,tp,1,2,rescon,0) then
 		ft=math.min(2,ft)
@@ -101,24 +101,26 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummonComplete()
 	end
 end
-function s.bptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,75574498),tp,LOCATION_MZONE,0,1,nil)
-		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,44190146),tp,LOCATION_MZONE,0,1,nil)
-	end
+function s.attachfilter(c,tp)
+	return c:IsCode(CARD_GRANDPA_DEMETTO) and c:IsFaceup() and Duel.IsExistingMatchingCard(s.xyzfilter,tp,LOCATION_MZONE,0,1,nil,c,tp)
 end
-function s.colfilter(c,e)
-	return c:IsFaceup() and c:IsCode(75574498) and not c:IsImmuneToEffect(e)
+function s.xyzfilter(c,mc,tp)
+	return c:IsCode(CARD_PRINCESS_COLOGNE) and c:IsFaceup() and mc:IsCanBeXyzMaterial(c,tp,REASON_EFFECT)
 end
-function s.bpop(e,tp,eg,ep,ev,re,r,rp)
-	local mg=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsCode,44190146),tp,LOCATION_MZONE,0,nil)
-	local tg=Duel.GetMatchingGroup(s.colfilter,tp,LOCATION_MZONE,0,nil,e)
-	if #mg>0 and #tg>0 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
-		local mc=mg:Select(tp,1,1,false):GetFirst()
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SELECT)
-		local tc=tg:Select(tp,1,1,false):GetFirst()
-		if mc and tc then
-			Duel.Overlay(tc,mc)
+function s.attachtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.attachfilter,tp,LOCATION_MZONE,0,1,nil,tp) end
+end
+function s.attachop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
+	local attach_c=Duel.SelectMatchingCard(tp,s.attachfilter,tp,LOCATION_MZONE,0,1,1,nil,tp):GetFirst()
+	if not attach_c then return end
+	Duel.HintSelection(attach_c)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
+	local xyz_c=Duel.SelectMatchingCard(tp,s.xyzfilter,tp,LOCATION_MZONE,0,1,1,nil,attach_c,tp):GetFirst()
+	if xyz_c then
+		Duel.HintSelection(xyz_c)
+		if not attach_c:IsImmuneToEffect(e) and not xyz_c:IsImmuneToEffect(e) then
+			Duel.Overlay(xyz_c,attach_c,true)
 			Duel.BreakEffect()
 			Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE|PHASE_BATTLE_STEP,1)
 		end

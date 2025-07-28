@@ -52,12 +52,15 @@ function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local dam=100*Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsRace,RACE_PLANT),tp,LOCATION_GRAVE|LOCATION_REMOVED,0,nil)
 	if e:GetHandler():IsReason(REASON_EFFECT) and re:GetHandler():IsCode(CARD_BLACK_ROSE_DRAGON) then
 		e:SetLabel(1)
-		dam=dam+2400
+		if dam>0 then dam=dam+2400 end
 	else
 		e:SetLabel(0)
 	end
 	Duel.SetTargetPlayer(1-tp)
-	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,dam)
+	if dam>0 then
+		Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,dam)
+	end
+	Duel.SetPossibleOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,dam)
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)

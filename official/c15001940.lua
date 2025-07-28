@@ -71,7 +71,7 @@ function s.selfnouvfilter(c,tp)
 end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(SET_NOUVELLES) and c:IsRitualMonster() and c:IsLevel(5,6)
-		and c:IsCanBeSpecialSummoned(e,SUMMON_BY_NOUVELLES,tp,false,true)
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,true)
 end
 function s.rescon(sg,e,tp,mg)
 	return Duel.GetMZoneCount(tp,sg)>0 and sg:IsExists(s.atkposchk,1,nil,sg,tp)
@@ -94,7 +94,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND|LOCATION_DECK,0,1,1,nil,e,tp)
 		if #g>0 then
-			Duel.SpecialSummon(g,SUMMON_BY_NOUVELLES,tp,tp,false,true,POS_FACEUP)
+			Duel.SpecialSummon(g,0,tp,tp,false,true,POS_FACEUP)
 		end
 	end
 end

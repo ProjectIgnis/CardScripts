@@ -90,7 +90,7 @@ function s.cfilter(c)
 	return c:IsAttackPos() and c:IsReleasableByEffect()
 end
 function s.spfilter(c,e,tp)
-	return c:IsCode(30243636) and c:IsCanBeSpecialSummoned(e,SUMMON_BY_NOUVELLES,tp,false,true)
+	return c:IsCode(30243636) and c:IsCanBeSpecialSummoned(e,0,tp,false,true)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and s.cfilter(chkc) end
@@ -108,7 +108,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND|LOCATION_DECK,0,1,1,nil,e,tp)
 		if #g>0 then
-			Duel.SpecialSummon(g,SUMMON_BY_NOUVELLES,tp,tp,false,true,POS_FACEUP)
+			Duel.SpecialSummon(g,0,tp,tp,false,true,POS_FACEUP)
 		end
 	end
 end

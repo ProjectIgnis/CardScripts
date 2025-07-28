@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	--Fusion Materials: 4 Fiend monsters (1 Fusion, 1 Synchro, 1 Xyz, 1 Pendulum)
 	Fusion.AddProcMix(c,true,true,s.matfilter(TYPE_FUSION),s.matfilter(TYPE_SYNCHRO),s.matfilter(TYPE_XYZ),s.matfilter(TYPE_PENDULUM))
 	--Special Summon this card (from your Extra Deck) by banishing the above materials from your field and/or GY
-	Fusion.AddContactProc(c,s.contactfil,s.contactop,false)
+	Fusion.AddContactProc(c,s.contactfil,s.contactop,false,nil,1)
 	c:AddMustBeFusionSummoned()
 	--You can only Fusion Summon or Special Summon by its alternate procedure "D/D/D/D Great Dimension King Arc Crisis" once per turn
 	local e0=Effect.CreateEffect(c)

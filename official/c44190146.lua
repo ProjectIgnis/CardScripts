@@ -58,7 +58,7 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge2,0)
 	end)
 end
-s.listed_names={CARD_PRINCESS_COLOGNE} --"Princess Cologne"
+s.listed_names={CARD_PRINCESS_COLOGNE}
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local xyzg=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsCode,CARD_PRINCESS_COLOGNE),tp,LOCATION_MZONE,0,nil)
 	if chk==0 then return #xyzg>0 and Duel.CheckRemoveOverlayCard(tp,1,0,1,REASON_COST,xyzg) end
@@ -85,7 +85,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	for sc in g:Iter() do
 		if Duel.SpecialSummonStep(sc,0,tp,tp,false,false,POS_FACEUP_DEFENSE) then
-			--Special Summon each as a Level 8 DARK monster
+			--Special Summon each one as a Level 8 DARK monster
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)

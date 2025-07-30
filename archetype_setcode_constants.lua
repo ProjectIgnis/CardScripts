@@ -589,12 +589,13 @@ SET_TELEPORT                      = 0x1c5
 SET_POWER_PATRON                  = 0x1c6
 SET_ARTMAGE                       = 0x1c7
 SET_RB                            = 0x1ca
---Released but the official English name is unconfirmed
 SET_DRAGONTAIL                    = 0x1c0
 SET_YUMMY                         = 0x1c1
 SET_K9                            = 0x1c4
---Pre-release archetypes
 SET_DOOM_KING                     = 0x1c8
 SET_MAGNIFISTORM                  = 0x1c9
 SET_DOOM_Z                        = 0x1cb
+--Released but the official English name is unconfirmed
+--
+--Pre-release archetypes
 SET_HECATONCHEIRE                 = 0x1cc

@@ -36,7 +36,7 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 		{b2,aux.Stringid(id,2)},
 		{b3,aux.Stringid(id,3)})
 	e:SetLabel(op)
-	Duel.RegisterFlagEffect(tp,id+op*1,RESET_PHASE|PHASE_END,0,1)
+	Duel.RegisterFlagEffect(tp,id+op,RESET_PHASE|PHASE_END,0,1)
 	if op==1 then
 		e:SetCategory(CATEGORY_HANDES+CATEGORY_TOHAND+CATEGORY_SEARCH)
 		Duel.SetOperationInfo(0,CATEGORY_HANDES,nil,0,tp,1)

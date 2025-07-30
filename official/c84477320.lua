@@ -1,9 +1,9 @@
 --星辰響手プリクル
---Dragontail Phrixl
+--Dracotail Phrixl
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
-	--Special Summon 1 "Dragontail" monster from your GY, then return 1 monster you control to the hand
+	--Special Summon 1 "Dracotail" monster from your GY, then return 1 monster you control to the hand
 	local e1a=Effect.CreateEffect(c)
 	e1a:SetDescription(aux.Stringid(id,0))
 	e1a:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOHAND)
@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	local e1b=e1a:Clone()
 	e1b:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e1b)
-	--Set 1 "Dragontail" Spell/Trap from your Deck
+	--Set 1 "Dracotail" Spell/Trap from your Deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)

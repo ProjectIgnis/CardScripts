@@ -28,11 +28,11 @@ function s.initial_effect(c)
 	e2:SetCondition(function() return Duel.IsMainPhase() end)
 	e2:SetTarget(Ritual.Target(ritual_params))
 	e2:SetOperation(function(e,tp,eg,ep,ev,re,r,rp)
-						local c=e:GetHandler()
-						if c:IsRelateToEffect(e) and c:IsControler(tp) then
-							Ritual.Operation(ritual_params)(e,tp,eg,ep,ev,re,r,rp)
-						end
-					end)
+				local c=e:GetHandler()
+				if c:IsRelateToEffect(e) and c:IsControler(tp) then
+					Ritual.Operation(ritual_params)(e,tp,eg,ep,ev,re,r,rp)
+				end
+			end)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_MEGALITH}

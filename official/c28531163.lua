@@ -2,9 +2,9 @@
 --Apocaries
 --scripted by Naim
 local s,id=GetID()
-local COUNTER_C=0x215
+local COUNTER_CARIES=0x215
 function s.initial_effect(c)
-	c:EnableCounterPermit(COUNTER_C)
+	c:EnableCounterPermit(COUNTER_CARIES)
 	--When this card is activated: Place C Counters on this card equal to the number of cards your opponent controls
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetTarget(s.target)
-	e1:SetOperation(function(e,tp) e:GetHandler():AddCounter(COUNTER_C,Duel.GetFieldGroupCount(tp,0,LOCATION_ONFIELD)) end)
+	e1:SetOperation(function(e,tp) e:GetHandler():AddCounter(COUNTER_CARIES,Duel.GetFieldGroupCount(tp,0,LOCATION_ONFIELD)) end)
 	c:RegisterEffect(e1)
 	--Apply effects to a target based on the number of C Counters removed from this card
 	local e2=Effect.CreateEffect(c)
@@ -25,29 +25,29 @@ function s.initial_effect(c)
 	e2:SetOperation(s.effop)
 	c:RegisterEffect(e2)
 end
-s.counter_place_list={COUNTER_C}
+s.counter_place_list={COUNTER_CARIES}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local ct=Duel.GetFieldGroupCount(tp,0,LOCATION_ONFIELD)
-	if chk==0 then return ct>0 and Duel.IsCanAddCounter(tp,COUNTER_C,ct,c) end
-	Duel.SetOperationInfo(0,CATEGORY_COUNTER,c,1,COUNTER_C,ct)
+	if chk==0 then return ct>0 and Duel.IsCanAddCounter(tp,COUNTER_CARIES,ct,c) end
+	Duel.SetOperationInfo(0,CATEGORY_COUNTER,c,1,COUNTER_CARIES,ct)
 end
 function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() and chkc:IsControler(1-tp) end
-	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,0,COUNTER_C,1,REASON_COST)
+	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,0,COUNTER_CARIES,1,REASON_COST)
 		and Duel.IsExistingTarget(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_APPLYTO)
 	local tc=Duel.SelectTarget(tp,Card.IsFaceup,tp,0,LOCATION_MZONE,1,1,nil):GetFirst()
-	local b1=Duel.IsCanRemoveCounter(tp,1,0,COUNTER_C,1,REASON_COST)
-	local b2=Duel.IsCanRemoveCounter(tp,1,0,COUNTER_C,2,REASON_COST) and not tc:IsAttack(0)
-	local b3=Duel.IsCanRemoveCounter(tp,1,0,COUNTER_C,3,REASON_COST) and tc:IsNegatableMonster()
-	local b4=Duel.IsCanRemoveCounter(tp,1,0,COUNTER_C,4,REASON_COST)
+	local b1=Duel.IsCanRemoveCounter(tp,1,0,COUNTER_CARIES,1,REASON_COST)
+	local b2=Duel.IsCanRemoveCounter(tp,1,0,COUNTER_CARIES,2,REASON_COST) and not tc:IsAttack(0)
+	local b3=Duel.IsCanRemoveCounter(tp,1,0,COUNTER_CARIES,3,REASON_COST) and tc:IsNegatableMonster()
+	local b4=Duel.IsCanRemoveCounter(tp,1,0,COUNTER_CARIES,4,REASON_COST)
 	local ct=Duel.SelectEffect(tp,
 		{b1,aux.Stringid(id,2)},
 		{b2,aux.Stringid(id,3)},
 		{b3,aux.Stringid(id,4)},
 		{b4,aux.Stringid(id,5)})
-	Duel.RemoveCounter(tp,1,1,COUNTER_C,ct,REASON_COST)
+	Duel.RemoveCounter(tp,1,1,COUNTER_CARIES,ct,REASON_COST)
 	e:SetLabel(ct)
 	if (ct==1 or ct==2) then
 		e:SetCategory(CATEGORY_ATKCHANGE)

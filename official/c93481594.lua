@@ -21,12 +21,12 @@ function s.spfilter(c,e,tp)
 	return c:IsSetCard(SET_SOLFACHORD) and c:IsType(TYPE_PENDULUM) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local b1=not Duel.HasFlagEffect(tp,id+100)
+	local b1=not Duel.HasFlagEffect(tp,id+1)
 		and Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,e:GetHandler(),REASON_EFFECT)
 		and Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_DECK,0,nil):GetClassCount(Card.GetScale)>=2
-	local b2=not Duel.HasFlagEffect(tp,id+200)
+	local b2=not Duel.HasFlagEffect(tp,id+2)
 		and Pendulum.PlayerCanGainAdditionalPendulumSummon(tp,id)
-	local b3=not Duel.HasFlagEffect(tp,id+300)
+	local b3=not Duel.HasFlagEffect(tp,id+3)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>=2
 		and not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_PZONE,0,2,nil,e,tp)
@@ -36,7 +36,7 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 		{b2,aux.Stringid(id,2)},
 		{b3,aux.Stringid(id,3)})
 	e:SetLabel(op)
-	Duel.RegisterFlagEffect(tp,id+op*100,RESET_PHASE|PHASE_END,0,1)
+	Duel.RegisterFlagEffect(tp,id+op,RESET_PHASE|PHASE_END,0,1)
 	if op==1 then
 		e:SetCategory(CATEGORY_HANDES+CATEGORY_TOHAND+CATEGORY_SEARCH)
 		Duel.SetOperationInfo(0,CATEGORY_HANDES,nil,0,tp,1)

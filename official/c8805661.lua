@@ -35,7 +35,12 @@ function s.initial_effect(c)
 	e2:SetCondition(function() return Duel.IsMainPhase() end)
 	e2:SetCost(Cost.HardOncePerChain(id))
 	e2:SetTarget(Ritual.Target(ritual_params))
-	e2:SetOperation(s.ritop(Ritual.Operation(ritual_params)))
+	e2:SetOperation(function(e,tp,eg,ep,ev,re,r,rp)
+				local c=e:GetHandler()
+				if c:IsRelateToEffect(e) and c:IsControler(tp) then
+					Ritual.Operation(ritual_params)(e,tp,eg,ep,ev,re,r,rp)
+				end
+			end)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_MEGALITH}
@@ -53,13 +58,5 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 then
 		Duel.HintSelection(g)
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
-	end
-end
-function s.ritop(default_operation)
-	return function(e,tp,eg,ep,ev,re,r,rp)
-		local c=e:GetHandler()
-		if c:IsRelateToEffect(e) and c:IsControler(tp) then
-			default_operation(e,tp,eg,ep,ev,re,r,rp)
-		end
 	end
 end

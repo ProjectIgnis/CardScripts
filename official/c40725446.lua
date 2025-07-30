@@ -1,5 +1,5 @@
 --熒焅聖 アレクゥス
---Alekus the Shining Stunner Saint
+--Arequus the Shining Mars Saint
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

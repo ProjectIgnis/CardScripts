@@ -37,7 +37,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={SET_DOOM_Z}
-s.listed_names={101302044} --"Jupiter the Power Patron of Destruction"
+s.listed_names={68231287} --"Jupiter the Power Patron of Destruction"
 function s.xyzmatfilter(c,e,tp)
 	local mustg=aux.GetMustBeMaterialGroup(tp,Group.FromCards(c),tp,nil,nil,REASON_XYZ)
 	return #mustg<=1 and c:IsFaceup() and c:IsType(TYPE_EFFECT) and c:HasLevel()

@@ -33,8 +33,9 @@ function s.thfilter(c)
 	return c:IsCode(CARD_MYSTICAL_SPACE_TYPHOON) and c:IsAbleToHand()
 end
 function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local b1=Duel.IsPlayerCanDraw(tp,2) and not Duel.HasFlagEffect(tp,id)
-	local b2=Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK|LOCATION_GRAVE,0,1,nil) and not Duel.HasFlagEffect(tp,id+100)
+	local b1=not Duel.HasFlagEffect(tp,id) and Duel.IsPlayerCanDraw(tp,2)
+	local b2=not Duel.HasFlagEffect(tp,id+1)
+		and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK|LOCATION_GRAVE,0,1,nil)
 	if chk==0 then return b1 or b2 end
 	local op=Duel.SelectEffect(tp,
 		{b1,aux.Stringid(id,2)},
@@ -47,7 +48,7 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.SetOperationInfo(0,CATEGORY_HANDES,nil,1,tp,1)
 	elseif op==2 then
 		e:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
-		Duel.RegisterFlagEffect(tp,id+100,RESET_PHASE|PHASE_END,0,1)
+		Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE|PHASE_END,0,1)
 		Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK|LOCATION_GRAVE)
 	end
 end

@@ -1,9 +1,9 @@
 --星辰の刺毒
---Dragontail Sting
+--Dracotail Sting
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
-	--Banish 1 monster and/or 1 Spell/Trap from your opponent's GY, then you can place 1 "Dragontail" card from your GY or banishment on the bottom of the Deck, except "Dragontail Sting", then draw 1 card
+	--Banish 1 monster and/or 1 Spell/Trap from your opponent's GY, then you can place 1 "Dracotail" card from your GY or banishment on the bottom of the Deck, except "Dracotail Sting", then draw 1 card
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_REMOVE+CATEGORY_TODECK+CATEGORY_DRAW)
@@ -11,9 +11,9 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
-	e1:SetHintTiming(0,TIMING_STANDBY_PHASE|TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
+	e1:SetHintTiming(0,TIMING_STANDBY_PHASE|TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E)
 	c:RegisterEffect(e1)
 end
 s.listed_series={SET_DRAGONTAIL}

@@ -1,5 +1,5 @@
 --Ｋ９－ＬＣ拘束解除
---K9 - LC Liberation
+--K9-LC Release Restraint
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

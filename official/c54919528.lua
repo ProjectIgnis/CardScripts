@@ -1,5 +1,5 @@
 --Ｋ９－ØØ号 “Ｈｏｕｎｄ”
---K9 - #ØØ "Hound"
+--K9-ØØ "Hound"
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

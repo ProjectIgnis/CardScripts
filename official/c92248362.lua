@@ -1,5 +1,5 @@
 --Ｋ９－１７号 イヅナ
---K9 - #17 Izuna
+--K9-17 Izuna
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --星辰法宮グラメル
---Dragontail Gramel
+--Dracotail Gulamel
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

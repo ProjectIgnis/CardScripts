@@ -1,5 +1,5 @@
 --星辰の吼炎
---Dragontail Flame
+--Dracotail Flame
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

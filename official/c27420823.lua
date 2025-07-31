@@ -1,5 +1,5 @@
 --Ｋ９－１７号 “Ｒｉｐｐｅｒ”
---K9 - #17 "Ripper"
+--K9-17 "Ripper"
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

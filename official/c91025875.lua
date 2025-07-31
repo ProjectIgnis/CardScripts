@@ -1,5 +1,5 @@
 --Ｋ９－ØØ号 ルプス
---K9 - #ØØ Lupus
+--K9-ØØ Lupis
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

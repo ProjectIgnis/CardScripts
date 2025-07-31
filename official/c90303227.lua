@@ -1,5 +1,5 @@
 --Ｋ９－ＥＸ “Ｗｅｒｅｗｏｌｆ”
---K9 - EX "Werewolf"
+--K9-X "Werewolf"
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

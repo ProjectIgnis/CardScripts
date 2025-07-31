@@ -1,5 +1,5 @@
 --星辰竜パーン
---Dragontail Pan
+--Dracotail Pan
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

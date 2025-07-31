@@ -1,5 +1,5 @@
 --星辰の裂角
---Dragontail Horn
+--Dracotail Horn
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

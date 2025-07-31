@@ -1,5 +1,5 @@
 --星辰竜ムルル
---Dragontail Mulr
+--Dracotail Mululu
 --scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

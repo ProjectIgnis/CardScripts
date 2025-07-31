@@ -1,5 +1,5 @@
 --カプシー☆ヤミー
---Cupsie☆Yummy
+--Cupsy☆Yummy
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

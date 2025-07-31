@@ -1,5 +1,5 @@
 --Ｋ９－６６ａ号 ヨクル
---K9 - #66a Jokull
+--K9-66a Jokul
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --星辰槍手ルキアス
---Dragontail Lucias
+--Dracotail Lukias
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

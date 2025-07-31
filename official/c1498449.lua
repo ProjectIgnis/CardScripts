@@ -1,5 +1,5 @@
 --星辰砲手ファイメナ
---Dragontail Fymena
+--Dracotail Faimena
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

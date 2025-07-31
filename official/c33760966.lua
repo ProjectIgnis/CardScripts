@@ -1,5 +1,5 @@
 --星辰爪竜アルザリオン
---Dragontail Altharion
+--Dracotail Arthalion
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

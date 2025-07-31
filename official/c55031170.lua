@@ -1,5 +1,5 @@
 --Ｋ９－６６ｂ号 ランタン
---K9 - #66b Lantern
+--K9-66b Lantern
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

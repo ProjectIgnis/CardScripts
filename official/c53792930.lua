@@ -1,5 +1,5 @@
 --Ｋ９－ＥＸ強制解除
---K9 - EX Forced Liberation
+--K9-X Forced Release
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

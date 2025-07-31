@@ -1,5 +1,5 @@
 --Ｋ９－ＥＷ特殊解除実験
---K9 - EW Experimental Liberation
+--K9-EW Special Release Experiment
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

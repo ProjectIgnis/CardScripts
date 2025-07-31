@@ -1,5 +1,5 @@
 --＂Ｃａｓｅ ｏｆ Ｋ９＂
---"Case of K9"
+--"A Case for K9"
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

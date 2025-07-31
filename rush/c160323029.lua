@@ -1,9 +1,9 @@
 --精神操作
---Mind Control
+--Mind Control (Rush)
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)
-	--Make 1 of opponent's monsters able to be Tributed
+	--Take control of 1 of your opponent's monster that is not in Maximum Mode
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_ATKCHANGE)
@@ -23,12 +23,13 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	--Effect
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONTROL)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,0,LOCATION_MZONE,1,1,nil)
 	if #g==0 then return end
 	local tc=g:GetFirst()
 	Duel.HintSelection(g)
-	Duel.GetControl(tc,tp)
+	Duel.GetControl(tc,tp,PHASE_END,1)
+	--That monster cannot attack or be Tributed for a Tribute Summon
 	local e1=Effect.CreateEffect(c)
 	local reset=RESETS_STANDARD_PHASE_END&~RESET_TURN_SET
 	e1:SetType(EFFECT_TYPE_SINGLE)

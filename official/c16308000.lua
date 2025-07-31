@@ -2,7 +2,7 @@
 --Solemn Authority
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddPersistentProcedure(c,0,aux.FaceupFilter(Card.IsSetCard,SET_AESIR),nil,nil,SET_DRAGONTAIL,SET_YUMMY,nil,nil,nil,s.operation)
+	aux.AddPersistentProcedure(c,0,aux.FaceupFilter(Card.IsSetCard,SET_AESIR),nil,nil,TIMINGS_CHECK_MONSTER,TIMINGS_CHECK_MONSTER|TIMING_DRAW_PHASE,nil,nil,nil,s.operation)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)

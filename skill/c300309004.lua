@@ -69,7 +69,7 @@ function s.tdfilter(c)
 	return c:IsTheWingedDragonofRa() and c:IsAbleToDeck() and not c:IsPublic()
 end
 function s.thfilter(c)
-	return c:IsTheWingedDragonofRa()  and c:IsAbleToHand()
+	return c:IsTheWingedDragonofRa() and c:IsAbleToHand()
 end
 function s.effcon(e,tp,eg,ep,ev,re,r,rp)
 	local b1=Duel.IsExistingMatchingCard(s.tdfilter,tp,LOCATION_HAND,0,1,nil) and Duel.IsPlayerCanDraw(tp,1)

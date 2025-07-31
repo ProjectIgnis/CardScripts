@@ -29,10 +29,10 @@ function s.initial_effect(c)
 	e3:SetOperation(s.setop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={SET_DRAGONTAIL}
+s.listed_series={SET_DRACOTAIL}
 s.listed_names={id}
 function s.thfilter(c)
-	return c:IsSetCard(SET_DRAGONTAIL) and c:IsMonster() and c:IsAbleToHand() and not c:IsCode(id)
+	return c:IsSetCard(SET_DRACOTAIL) and c:IsMonster() and c:IsAbleToHand() and not c:IsCode(id)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -47,7 +47,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.setfilter(c)
-	return c:IsSetCard(SET_DRAGONTAIL) and c:IsSpellTrap() and c:IsSSetable()
+	return c:IsSetCard(SET_DRACOTAIL) and c:IsSpellTrap() and c:IsSSetable()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_DECK,0,1,nil) end

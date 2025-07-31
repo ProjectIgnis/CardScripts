@@ -29,9 +29,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={SET_DRAGONTAIL}
+s.listed_series={SET_DRACOTAIL}
 function s.setfilter(c)
-	return c:IsSetCard(SET_DRAGONTAIL) and c:IsSpellTrap() and c:IsSSetable()
+	return c:IsSetCard(SET_DRACOTAIL) and c:IsSpellTrap() and c:IsSSetable()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -61,7 +61,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return not eg:IsContains(e:GetHandler()) and eg:IsExists(s.spconfilter,1,nil,e,tp)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(SET_DRAGONTAIL) and not c:IsType(TYPE_FUSION) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_DRACOTAIL) and not c:IsType(TYPE_FUSION) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

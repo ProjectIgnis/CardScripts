@@ -14,9 +14,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_names={SET_DRAGONTAIL}
+s.listed_names={SET_DRACOTAIL}
 function s.thfilter(c)
-	return c:IsSetCard(SET_DRAGONTAIL) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_DRACOTAIL) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

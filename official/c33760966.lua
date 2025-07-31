@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--Fusion Materials: 1 "Dragontail" monster + 1+ monsters in the hand
-	Fusion.AddProcMixRep(c,true,true,aux.FilterBoolFunctionEx(Card.IsLocation,LOCATION_HAND),1,99,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_DRAGONTAIL))
+	Fusion.AddProcMixRep(c,true,true,aux.FilterBoolFunctionEx(Card.IsLocation,LOCATION_HAND),1,99,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_DRACOTAIL))
 	--Register how many materials are used from the hand
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_SINGLE)
@@ -57,7 +57,7 @@ function s.initial_effect(c)
 	e6:SetCode(EVENT_BREAK_EFFECT)
 	c:RegisterEffect(e6)
 end
-s.listed_series={SET_DRAGONTAIL}
+s.listed_series={SET_DRACOTAIL}
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE|LOCATION_GRAVE) and chkc:IsMonster() and chkc:IsAbleToHand() end
 	if chk==0 then return Duel.IsExistingTarget(aux.AND(Card.IsMonster,Card.IsAbleToHand),tp,LOCATION_MZONE|LOCATION_GRAVE,LOCATION_MZONE|LOCATION_GRAVE,1,nil) end

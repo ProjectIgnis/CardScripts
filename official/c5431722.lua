@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={SET_DRAGONTAIL}
+s.listed_series={SET_DRACOTAIL}
 s.listd_names={id}
 function s.disfilter(c)
 	return c:IsSpell() and c:IsNegatableSpellTrap()
@@ -31,7 +31,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_DRAW,nil,1,tp,1)
 end
 function s.tdfilter(c)
-	return c:IsSetCard(SET_DRAGONTAIL) and c:IsFaceup() and c:IsAbleToDeck() and not c:IsCode(id)
+	return c:IsSetCard(SET_DRACOTAIL) and c:IsFaceup() and c:IsAbleToDeck() and not c:IsCode(id)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

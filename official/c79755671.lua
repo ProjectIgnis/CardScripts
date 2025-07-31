@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--Fusion Materials: 1 "Dragontail" monster + 1 monster in the hand
-	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_DRAGONTAIL),aux.FilterBoolFunctionEx(Card.IsLocation,LOCATION_HAND))
+	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_DRACOTAIL),aux.FilterBoolFunctionEx(Card.IsLocation,LOCATION_HAND))
 	--Destroy 1 card your opponent controls
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -50,13 +50,13 @@ function s.initial_effect(c)
 	e6:SetCode(EVENT_BREAK_EFFECT)
 	c:RegisterEffect(e6)
 end
-s.listed_series={SET_DRAGONTAIL}
+s.listed_series={SET_DRACOTAIL}
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	if rp==1-tp then return false end
 	local trig_p,setcodes=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_PLAYER,CHAININFO_TRIGGERING_SETCODES)
 	if trig_p==1-tp then return false end
 	for _,archetype in ipairs(setcodes) do
-		if ((SET_DRAGONTAIL&0xfff)==(archetype&0xfff) and (archetype&SET_DRAGONTAIL)==SET_DRAGONTAIL) then
+		if ((SET_DRACOTAIL&0xfff)==(archetype&0xfff) and (archetype&SET_DRACOTAIL)==SET_DRACOTAIL) then
 			return true
 		end
 	end

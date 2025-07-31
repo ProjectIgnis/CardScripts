@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetHintTiming(0,TIMING_STANDBY_PHASE|TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E)
 	c:RegisterEffect(e1)
 end
-s.listed_series={SET_DRAGONTAIL}
+s.listed_series={SET_DRACOTAIL}
 s.listed_names={id}
 function s.rmfilter(c,e)
 	return c:IsAbleToRemove() and c:IsCanBeEffectTarget(e)
@@ -35,7 +35,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_DRAW,nil,1,tp,1)
 end
 function s.tdfilter(c)
-	return c:IsSetCard(SET_DRAGONTAIL) and c:IsFaceup() and c:IsAbleToDeck() and not c:IsCode(id)
+	return c:IsSetCard(SET_DRACOTAIL) and c:IsFaceup() and c:IsAbleToDeck() and not c:IsCode(id)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetTargetCards(e)

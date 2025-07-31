@@ -3,13 +3,13 @@
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
-	local params={handler=c,fusfilter=aux.FilterBoolFunction(Card.IsSetCard,SET_DRAGONTAIL),extrafil=s.extramat,stage2=s.summonlimit,extratg=s.extratg}
+	local params={handler=c,fusfilter=aux.FilterBoolFunction(Card.IsSetCard,SET_DRACOTAIL),extrafil=s.extramat,stage2=s.summonlimit,extratg=s.extratg}
 	--Fusion Summon 1 "Dragontail" Fusion Monster from your Extra Deck, using monsters from your hand, Deck, and/or field
 	local e1=Fusion.CreateSummonEff(params)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	c:RegisterEffect(e1)
 end
-s.listed_series={SET_DRAGONTAIL}
+s.listed_series={SET_DRACOTAIL}
 function s.extramat(e,tp,mg)
 	return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsAbleToGrave),tp,LOCATION_DECK,0,nil)
 end

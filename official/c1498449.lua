@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.setop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={SET_DRAGONTAIL}
+s.listed_series={SET_DRACOTAIL}
 function s.fextra(exc)
 	return function(e,tp,mg)
 		return nil,s.fcheck(exc)
@@ -48,7 +48,7 @@ function s.fustg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Fusion.SummonEffTG({fusfilter=aux.FilterBoolFunction(Card.IsRace,RACE_DRAGON|RACE_SPELLCASTER)})(e,tp,eg,ep,ev,re,r,rp,1)
 end
 function s.setfilter(c)
-	return c:IsSetCard(SET_DRAGONTAIL) and c:IsSpellTrap() and c:IsSSetable()
+	return c:IsSetCard(SET_DRACOTAIL) and c:IsSpellTrap() and c:IsSSetable()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_DECK,0,1,nil) end

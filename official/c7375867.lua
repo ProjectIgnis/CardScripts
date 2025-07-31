@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetHintTiming(0,TIMING_MAIN_END|TIMINGS_CHECK_MONSTER)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(function() return Duel.IsMainPhase() end)
-	e1:SetTarget(Fusion.SummonEffTG(aux.FilterBoolFunction(Card.IsSetCard,SET_DRAGONTAIL)))
+	e1:SetTarget(Fusion.SummonEffTG(aux.FilterBoolFunction(Card.IsSetCard,SET_DRACOTAIL)))
 	e1:SetOperation(s.fusop)
 	c:RegisterEffect(e1)
 	--Set 1 "Dragontail" Spell/Trap from your Deck
@@ -29,9 +29,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.setop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={SET_DRAGONTAIL}
+s.listed_series={SET_DRACOTAIL}
 function s.fusop(e,tp,eg,ep,ev,re,r,rp)
-	Fusion.SummonEffOP(aux.FilterBoolFunction(Card.IsSetCard,SET_DRAGONTAIL))(e,tp,eg,ep,ev,re,r,rp)
+	Fusion.SummonEffOP(aux.FilterBoolFunction(Card.IsSetCard,SET_DRACOTAIL))(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	--You cannot Special Summon from the Extra Deck for the rest of this turn, except Fusion Monsters
 	local e1=Effect.CreateEffect(c)
@@ -47,7 +47,7 @@ function s.fusop(e,tp,eg,ep,ev,re,r,rp)
 	aux.addTempLizardCheck(c,tp,function(c) return not c:IsOriginalType(TYPE_FUSION) end)
 end
 function s.setfilter(c)
-	return c:IsSetCard(SET_DRAGONTAIL) and c:IsSpellTrap() and c:IsSSetable()
+	return c:IsSetCard(SET_DRACOTAIL) and c:IsSpellTrap() and c:IsSSetable()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_DECK,0,1,nil) end

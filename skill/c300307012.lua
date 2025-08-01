@@ -1,5 +1,6 @@
 --My Precious Queen!
 --Scripted by the Razgriz
+Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -14,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.op)
 	c:RegisterEffect(e1)
 end
-s.listed_series={SET_INSECT_QUEEN}
+s.listed_series={0x582} --"Insect Queen" archetype
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
 	Duel.Hint(HINT_CARD,tp,id)
@@ -28,7 +29,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTarget(function(e,c) return c:IsMonster() and c:IsRace(RACE_INSECT) and c:IsLevel(7) end)
 	e1:SetValue(0x1)
 	Duel.RegisterEffect(e1,tp)
-	--Special Summon 1 "Insect Monster Token" during End Phase
+	--Special Summon 1 "Insect Monster Token" during the End Phase
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EVENT_PHASE+PHASE_END)
@@ -66,7 +67,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 		e2:SetTargetRange(1,1)
 		e2:SetRange(LOCATION_MZONE)
-		e2:SetTarget(function(e,c,rp,r,re) return c==token and r&(REASON_COST+REASON_EFFECT)>0 and re and not re:GetHandler():IsRace(RACE_INSECT) end)
+		e2:SetTarget(function(e,c,rp,r,re) return c==token and r&(REASON_COST|REASON_EFFECT)>0 and re and not re:GetHandler():IsRace(RACE_INSECT) end)
 		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		token:RegisterEffect(e2,true)
 	end

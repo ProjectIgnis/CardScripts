@@ -1,5 +1,6 @@
 --Harpie's Kaleidoscope
 --Scripted by The Razgriz
+Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddSkillProcedure(c,2,false,nil,nil)
@@ -41,7 +42,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	local e2b=Effect.CreateEffect(c)
 	e2b:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_GRANT)
 	e2b:SetTargetRange(LOCATION_MZONE,0)
-	e2b:SetTarget(function(e,c) return c:IsFaceup() and c:IsCode(12206212) end)
+	e2b:SetTarget(function(e,c) return c:IsFaceup() and c:IsHarpieLadySisters() end)
 	e2b:SetLabelObject(e2a)
 	Duel.RegisterEffect(e2b,tp)
 end
@@ -53,7 +54,7 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_GRAVE,0,2,2,nil)
 	if #g>0 and Duel.SendtoDeck(g,tp,SEQ_DECKBOTTOM,REASON_COST)==2 then
-		Duel.SortDeckbottom(tp,tp,2) 
+		Duel.SortDeckbottom(tp,tp,2)
 	end
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

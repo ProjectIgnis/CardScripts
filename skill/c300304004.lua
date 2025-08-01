@@ -1,11 +1,11 @@
 --Ancient Fusion
 --Scripted by The Razgriz
+Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddSkillProcedure(c,1,false,s.flipcon,s.flipop)
 end
-s.listed_series={SET_ANCIENT_GEAR}
-s.listed_names={CARD_ANCIENT_GEAR_GOLEM}
+s.listed_series={SET_ANCIENT_GEAR,0x581} --"Ancient Gear Golem" archetype
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	return aux.CanActivateSkill(tp) and s.cost(e,tp,eg,ep,ev,re,r,rp,0) and not Duel.HasFlagEffect(tp,id)
 end
@@ -23,7 +23,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_TOGRAVE,nil,0,tp,LOCATION_HAND|LOCATION_DECK)
 end
 function s.fcheckmatfilter(c)
-	return c:IsCode(83104731,95735217,7171149,12652643) and c:IsFaceup() and c:IsOnField()
+	return c:IsAncientGearGolem() and c:IsFaceup() and c:IsOnField()
 end
 function s.fextra(exc)
 	return function(e,tp,mg)
@@ -39,7 +39,7 @@ function s.fcheck(exc)
 	return function(tp,sg,fc)
 		if sg:IsExists(Card.IsLocation,1,nil,LOCATION_HAND|LOCATION_DECK) then
 			return sg:IsExists(s.fcheckmatfilter,1,nil) end
-		return not (exc and sg:IsContains(exc)) 
+		return not (exc and sg:IsContains(exc))
 	end
 end
 function s.stage2(e,tc,tp,sg,chk)
@@ -80,5 +80,5 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 		extrafil=s.fextra(c),
 		stage2=s.stage2}
 	Fusion.SummonEffTG(params)(e,tp,eg,ep,ev,re,r,rp,1)
-	Fusion.SummonEffOP(params)(e,tp,eg,ep,ev,re,r,rp)	
+	Fusion.SummonEffOP(params)(e,tp,eg,ep,ev,re,r,rp)
 end

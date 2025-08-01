@@ -25,6 +25,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1c)
 	--If they battle your opponent's monster, any battle damage they inflict to your opponent is doubled
 	local e1d=e1a:Clone()
+	e1d:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e1d:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
 	e1d:SetTarget(s.doubledamtg)
 	e1d:SetValue(aux.ChangeBattleDamage(1,DOUBLE_DAMAGE))

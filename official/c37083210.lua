@@ -28,6 +28,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		--Any battle damage your monster inflicts on your opponent during that battle is doubled
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 		e1:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
 		e1:SetCondition(function(e) return Duel.GetAttackTarget()==e:GetHandler() end)
 		e1:SetValue(aux.ChangeBattleDamage(1,DOUBLE_DAMAGE))

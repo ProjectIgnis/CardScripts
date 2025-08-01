@@ -28,6 +28,7 @@ function s.initial_effect(c)
 	--If a monster equipped with this card battles a monster, any battle damage it inflicts to your opponent is doubled
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_EQUIP)
+	e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e2:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
 	e2:SetCondition(function(e) return e:GetHandler():GetEquipTarget():GetBattleTarget() end)
 	e2:SetValue(aux.ChangeBattleDamage(1,DOUBLE_DAMAGE))

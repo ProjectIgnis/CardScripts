@@ -56,6 +56,7 @@ function s.doubleop(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e1)
 		--Also if it battles an opponent's monster, any battle damage it inflicts to your opponent is doubled
 		local e2=e1:Clone()
+		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_IGNORE_IMMUNE)
 		e2:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
 		e2:SetCondition(function(e) local bc=e:GetHandler():GetBattleTarget() return bc and bc:IsControler(1-e:GetHandlerPlayer()) end)
 		e2:SetValue(aux.ChangeBattleDamage(1,DOUBLE_DAMAGE))

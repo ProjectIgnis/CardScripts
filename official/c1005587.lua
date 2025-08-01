@@ -4,42 +4,43 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_DESTROY)
+	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetCategory(CATEGORY_DISABLE+CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-function s.filter(c,tp)
-	return c:IsFaceup() and c:IsType(TYPE_EFFECT) and c:IsAttackAbove(2000) and c:IsSummonPlayer(tp) and not c:IsDisabled()
+function s.disfilter(c,tp)
+	return c:IsSummonPlayer(1-tp) and c:IsAttackAbove(2000) and c:IsNegatableMonster()
 end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return false end
-	if chk==0 then return eg and eg:IsExists(s.filter,1,nil,1-tp) end
-	Duel.SetTargetCard(eg)
-	local g=eg:Filter(s.filter,nil,1-tp)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
-end
-function s.filter2(c,e,tp)
-	return c:IsFaceup() and c:IsType(TYPE_EFFECT) and c:IsAttackAbove(2000) and c:IsSummonPlayer(tp) and c:IsRelateToEffect(e)
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	local g=eg:Filter(s.disfilter,nil,tp)
+	if chk==0 then return #g>0 end
+	for sc in g:Iter() do
+		sc:CreateEffectRelation(e)
+	end
+	Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,1,tp,0)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,tp,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local g=eg:Filter(s.filter2,nil,e,1-tp)
-	local tc=g:GetFirst()
-	if not tc then return end
-	if #g>1 then
+	local g=eg:Filter(s.disfilter,nil,tp):Match(Card.IsRelateToEffect,nil,e)
+	if #g==0 then return end
+	local sc=nil
+	if #g==1 then
+		sc=g:GetFirst()
+	else
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-		tc=g:Select(tp,1,1,nil):GetFirst()
+		sc=g:Select(tp,1,1,nil):GetFirst()
+		Duel.HintSelection(sc)
 	end
-	if not tc:IsDisabled() then
-		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
-		tc:RegisterEffect(e1)
-		Duel.AdjustInstantly()
-		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
-		Duel.Destroy(tc,REASON_EFFECT)
+	if sc:IsCanBeDisabledByEffect(e) then
+		--Negate its effects
+		sc:NegateEffects(e:GetHandler())
+		Duel.AdjustInstantly(sc)
+		if sc:IsDisabled() then
+			Duel.Destroy(sc,REASON_EFFECT)
+		end
 	end
 end

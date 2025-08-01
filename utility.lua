@@ -1242,6 +1242,28 @@ function Auxiliary.lnklimit(e,se,sp,st)
 	return aux.sumlimit(SUMMON_TYPE_LINK)(e,se,sp,st)
 end
 
+--Registers a "Cannot be Normal Summoned" Summoning condition to card "c"
+function Card.AddCannotBeNormalSummoned(c)
+	--Cannot be Special Summoned
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_SINGLE)
+	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e0:SetCode(EFFECT_CANNOT_SUMMON)
+	c:RegisterEffect(e0)
+	return e0
+end
+
+--Registers a "Cannot be Flip Summoned" Summoning condition to card "c"
+function Card.AddCannotBeFlipSummoned(c)
+	--Cannot be Special Summoned
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_SINGLE)
+	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e0:SetCode(EFFECT_CANNOT_FLIP_SUMMON)
+	c:RegisterEffect(e0)
+	return e0
+end
+
 --Registers a "Cannot be Special Summoned" Summoning condition to card "c"
 function Card.AddCannotBeSpecialSummoned(c)
 	--Cannot be Special Summoned
@@ -1507,6 +1529,28 @@ self_discard_costs[Cost.SelfDiscardToGrave]=true
 Cost.SelfRelease=Cost.SelfTribute
 Auxiliary.bfgcost=Cost.SelfBanish
 
+function Cost.RemoveCounterFromSelf(counter_type,count)
+	return function(e,tp,eg,ep,ev,re,r,rp,chk)
+		local c=e:GetHandler()
+		if chk==0 then return c:IsCanRemoveCounter(tp,counter_type,count,REASON_COST) end
+		c:RemoveCounter(tp,counter_type,count,REASON_COST)
+	end
+end
+
+function Cost.RemoveCounterFromField(counter_type,count)
+	return function(e,tp,eg,ep,ev,re,r,rp,chk)
+		if chk==0 then return Duel.IsCanRemoveCounter(tp,1,0,counter_type,count,REASON_COST) end
+		Duel.RemoveCounter(tp,1,0,counter_type,count,REASON_COST)
+	end
+end
+
+function Cost.SelfChangePosition(position)
+	return function(e,tp,eg,ep,ev,re,r,rp,chk)
+		local c=e:GetHandler()
+		if chk==0 then return c:IsCanChangePosition() and not c:IsPosition(position) and (position&POS_FACEDOWN==0 or c:IsCanTurnSet()) end
+		Duel.ChangePosition(c,position)
+	end
+end
 
 function Cost.HintSelectedEffect(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

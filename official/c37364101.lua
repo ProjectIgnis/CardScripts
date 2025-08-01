@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e1c:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e1c:SetCode(EFFECT_CANNOT_TRIGGER)
 	c:RegisterEffect(e1c)
-	--Send this card to the Graveyard
+	--Send this card to the GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_TOGRAVE)

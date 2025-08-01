@@ -46,7 +46,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		--Double any battle damage that monster inflicts to your opponent this turn if it battles an opponent's monster
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetDescription(aux.Stringid(id,0))
+		e1:SetDescription(aux.Stringid(id,2))
 		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
 		e1:SetCondition(function(e) local bc=e:GetHandler():GetBattleTarget() return bc and bc:IsControler(1-e:GetHandlerPlayer()) end)

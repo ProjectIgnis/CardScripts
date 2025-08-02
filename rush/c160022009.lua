@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	e0:SetType(EFFECT_TYPE_SINGLE)
 	e0:SetCode(EFFECT_CHANGE_CODE)
 	e0:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e0:SetRange(LOCATION_GRAVE)
+	e0:SetRange(LOCATION_GRAVE|LOCATION_HAND)
 	e0:SetValue(160208031)
 	c:RegisterEffect(e0)
 	--Name change

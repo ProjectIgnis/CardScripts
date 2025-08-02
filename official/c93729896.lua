@@ -92,23 +92,15 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	else
 		local label_obj=e:GetLabelObject()
 		if label_obj then
-			local new_label_obj=label_obj+g
-			label_obj:DeleteGroup()
-			new_label_obj:KeepAlive()
-			e:SetLabelObject(new_label_obj)
+			label_obj:Merge(g)
 			local levels={e:GetLabel()}
 			for tc in g:Iter() do
 				table.insert(levels,tc:GetOriginalLevel())
 			end
 			e:SetLabel(table.unpack(levels))
 		else
-			local levels={}
-			for tc in g:Iter() do
-				table.insert(levels,tc:GetOriginalLevel())
-			end
-			e:SetLabel(table.unpack(levels))
+			e:SetLabel(table.unpack(g:GetClass(Card.GetOriginalLevel)))
 			e:SetLabelObject(g)
-			g:KeepAlive()
 			local c=e:GetHandler()
 			--Raise the custom event at the end of the Chain
 			local e1=Effect.CreateEffect(c)
@@ -121,8 +113,9 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 						local g=e:GetLabelObject()
 						eff:Reset()
 						e:SetLabelObject(nil)
-						Duel.RaiseEvent(g,EVENT_CUSTOM+id,re,r,rp,tp,ev)
-						g:DeleteGroup()
+						if g then
+							Duel.RaiseEvent(g,EVENT_CUSTOM+id,re,r,rp,tp,ev)
+						end
 					end)
 			e1:SetReset(RESETS_STANDARD_PHASE_END)
 			c:RegisterEffect(e1)

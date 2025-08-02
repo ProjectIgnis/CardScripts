@@ -21,6 +21,9 @@ end
 function s.eqlimit(e,c)
 	return c:IsFaceup()
 end
+function s.filter(c)
+	return c:IsFaceup() and not c:IsMaximumModeSide()
+end
 function s.value(e,c)
-	return Duel.GetMatchingGroupCount(Card.IsFaceup,e:GetHandlerPlayer(),LOCATION_MZONE,0,nil)*800
+	return Duel.GetMatchingGroupCount(s.filter,e:GetHandlerPlayer(),LOCATION_MZONE,0,nil)*800
 end

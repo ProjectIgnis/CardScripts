@@ -14,7 +14,7 @@ end
 s.listed_names={CARD_BLUEEYES_W_DRAGON,CARD_DARK_MAGICIAN}
 s.listed_series={SET_CHAOS,SET_NUMBER_C}
 function s.filter(c,e,tp,m1,ft)
-	if not (c:IsSetCard({SET_CHAOS,SET_NUMBER_C}) and c:IsRitualMonster() and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true) then return false end
+	if not (c:IsSetCard({SET_CHAOS,SET_NUMBER_C}) and c:IsRitualMonster() and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true)) then return false end
 	local mg=m1:Filter(Card.IsCanBeRitualMaterial,c,c)
 	if ft>0 then
 		return mg:CheckWithSumEqual(Card.GetRitualLevel,c:GetLevel(),1,99,c)

@@ -34,7 +34,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_SCRAP}
 function s.cfilter(c,tp)
-	return c:IsSetCard(SET_SCRAP) and c:IsMonster() and (c:GetReason()&SET_LV)==SET_LV
+	return c:IsSetCard(SET_SCRAP) and c:IsMonster() and (c:GetReason()&(REASON_DESTROY|REASON_EFFECT))==(REASON_DESTROY|REASON_EFFECT)
 		and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)

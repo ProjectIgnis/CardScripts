@@ -23,7 +23,7 @@ function s.cfilter(c,tp)
 	return c:IsControler(tp) and c:IsPreviousControler(tp)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return (r&SET_LV)==SET_LV and re and re:GetHandler():IsSetCard(SET_CLOUDIAN)
+	return (r&(REASON_DESTROY|REASON_EFFECT))==(REASON_DESTROY|REASON_EFFECT) and re and re:GetHandler():IsSetCard(SET_CLOUDIAN)
 		and eg:IsExists(s.cfilter,1,nil,1-tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

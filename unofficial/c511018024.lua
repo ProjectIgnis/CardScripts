@@ -20,7 +20,7 @@ function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsTurnPlayer(tp)
 end
 function s.filter(c,e,tp,tid)
-	return c:GetReason()&SET_EARTHBOUND==SET_EARTHBOUND and c:GetTurnID()==tid-1 and c:IsSetCard(SET_DESTINY_HERO)
+	return (c:GetReason()&(REASON_DESTROY|REASON_BATTLE))==(REASON_DESTROY|REASON_BATTLE) and c:GetTurnID()==tid-1 and c:IsSetCard(SET_DESTINY_HERO)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

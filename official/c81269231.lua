@@ -32,10 +32,9 @@ s.listed_series={SET_ANCIENT_GEAR,SET_GADGET}
 function s.valcheck(e,c)
 	local g=c:GetMaterial()
 	local flag=0
-	local tc=g:GetFirst()
-	for tc in aux.Next(g) do
-		if tc:IsSetCard(SET_ANCIENT_GEAR) then flag=(flag|SET_ALLY_OF_JUSTICE) end
-		if tc:IsSetCard(SET_GADGET) then flag=(flag|SET_GENEX) end
+	for tc in g:Iter() do
+		if tc:IsSetCard(SET_ANCIENT_GEAR) then flag=(flag|0x1) end
+		if tc:IsSetCard(SET_GADGET) then flag=(flag|0x2) end
 	end
 	e:SetLabel(flag)
 end

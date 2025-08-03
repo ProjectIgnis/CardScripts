@@ -30,7 +30,7 @@ function s.initial_effect(c)
 end
 function s.chkfilter(c,tp,re)
 	return c:IsMonster() and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp)
-		and (c:GetReason()&SET_LV)==SET_LV and re:GetOwner():IsSetCard(0x1512)
+		and (c:GetReason()&(REASON_DESTROY|REASON_EFFECT))==(REASON_DESTROY|REASON_EFFECT) and re:GetOwner():IsSetCard(0x1512)
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	local g1=eg:Filter(s.chkfilter,nil,tp,re)

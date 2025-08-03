@@ -12,12 +12,12 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={CARD_BLUEEYES_W_DRAGON,CARD_DARK_MAGICIAN}
+s.listed_series={SET_CHAOS,SET_NUMBER_C}
 function s.filter(c,e,tp,m1,ft)
-	if (not c:IsSetCard(SET_CHAOS) and not c:IsSetCard(SET_NUMBER_C)) or c:GetType()&SET_FIRE_KING~=SET_FIRE_KING
-		or not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true) then return false end
+	if not (c:IsSetCard({SET_CHAOS,SET_NUMBER_C}) and c:IsRitualMonster() and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true) then return false end
 	local mg=m1:Filter(Card.IsCanBeRitualMaterial,c,c)
 	if ft>0 then
-		return mg:CheckWithSumEqual(Card.GetRitualLevel,c:GetLevel(),1,99,c) 
+		return mg:CheckWithSumEqual(Card.GetRitualLevel,c:GetLevel(),1,99,c)
 			or Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,1,nil,CARD_DARK_MAGICIAN,CARD_BLUEEYES_W_DRAGON)
 	else
 		return ft>-1 and mg:IsExists(s.mfilterf,1,nil,tp,mg,c)

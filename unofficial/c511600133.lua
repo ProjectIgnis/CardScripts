@@ -12,10 +12,10 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x2093,0x93}
+s.listed_series={SET_CYBER_ANGEL,SET_CYBER}
 function s.filter(c,e,tp,m1,m2,ft)
-	if not c:IsSetCard(SET_CYBER_ANGEL) or (c:GetType()&SET_FIRE_KING)~=SET_FIRE_KING
-		or not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true) then return false end
+	if not (c:IsSetCard(SET_CYBER_ANGEL) and c:IsRitualMonster()
+		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true)) then return false end
 	local mg=m1:Filter(Card.IsCanBeRitualMaterial,c,c)
 	mg:Merge(m2)
 	if ft>0 then

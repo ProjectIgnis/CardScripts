@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e2:SetCode(EVENT_SUMMON_SUCCESS)
-	e2:SetCondition(s.regcon)
+	e2:SetCondition(function(e) return e:GetHandler():IsTributeSummoned() end)
 	e2:SetOperation(s.regop)
 	c:RegisterEffect(e2)
 	e2:SetLabelObject(e1)
@@ -42,15 +42,11 @@ s.listed_series={SET_ANCIENT_GEAR,SET_GADGET}
 function s.valcheck(e,c)
 	local g=c:GetMaterial()
 	local flag=0
-	local tc=g:GetFirst()
-	for tc in aux.Next(g) do
-		if tc:IsSetCard(SET_ANCIENT_GEAR) then flag=(flag|SET_ALLY_OF_JUSTICE) end
-		if tc:IsSetCard(SET_GADGET) then flag=(flag|SET_GENEX) end
+	for tc in g:Iter() do
+		if tc:IsSetCard(SET_ANCIENT_GEAR) then flag=(flag|0x1) end
+		if tc:IsSetCard(SET_GADGET) then flag=(flag|0x2) end
 	end
 	e:SetLabel(flag)
-end
-function s.regcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsTributeSummoned()
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local flag=e:GetLabelObject():GetLabel()
@@ -80,17 +76,14 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker()==e:GetHandler()
 end
-function s.desfilter(c)
-	return c:IsSpellTrap()
-end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.desfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
-	local g=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsSpellTrap,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
+	local g=Duel.GetMatchingGroup(Card.IsSpellTrap,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectMatchingCard(tp,s.desfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,Card.IsSpellTrap,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
 	if #g>0 then
 		Duel.HintSelection(g)
 		Duel.Destroy(g,REASON_EFFECT)

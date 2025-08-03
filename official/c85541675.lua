@@ -33,7 +33,7 @@ s.counter_place_list={0x12}
 function s.cfilter(c)
 	local np=c:GetPosition()
 	local pp=c:GetPreviousPosition()
-	return c:IsSetCard(SET_KARAKURI) and ((pp==SET_ALLY_OF_JUSTICE and np==SET_AMAZONESS) or (pp==SET_AMAZONESS and np==SET_ALLY_OF_JUSTICE) or (pp==SET_HERO and np==SET_ALLY_OF_JUSTICE))
+	return c:IsSetCard(SET_KARAKURI) and ((pp==POS_FACEUP_ATTACK and np==POS_FACEUP_DEFENSE) or (pp==POS_FACEUP_DEFENSE and np==POS_FACEUP_ATTACK) or (pp==SET_HERO and np==POS_FACEUP_ATTACK))
 end
 function s.accon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil)

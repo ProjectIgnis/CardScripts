@@ -67,7 +67,7 @@ function s.crystalop(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RaiseEvent(c,47408488,e,0,tp,0,0)
 end
 function s.placetg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsSetCard,tp,SET_BLACKWING,0,1,nil,SET_CRYSTAL_BEAST)
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_DECK|LOCATION_HAND|LOCATION_GRAVE|LOCATION_REMOVED,0,1,nil,SET_CRYSTAL_BEAST)
 		and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 end
 end
 function s.placeop(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -4,16 +4,16 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_EQUIP)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	--damage
+	--Inflict 500 damage to that Spell's controller
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
+	e2:SetCategory(CATEGORY_DAMAGE)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetCode(EVENT_PHASE|PHASE_STANDBY)
@@ -23,13 +23,13 @@ function s.initial_effect(c)
 	e2:SetTarget(s.damtg)
 	e2:SetOperation(s.damop)
 	c:RegisterEffect(e2)
-	--Destroy
+	--When that Spell leaves the field, destroy this card
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetCode(EVENT_LEAVE_FIELD)
 	e3:SetCondition(s.descon)
-	e3:SetOperation(s.desop)
+	e3:SetOperation(function(e) Duel.Destroy(e:GetHandler(),REASON_EFFECT) end)
 	c:RegisterEffect(e3)
 end
 function s.filter(c)
@@ -55,22 +55,17 @@ function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	local tc=e:GetHandler():GetFirstCardTarget()
-	Duel.SetTargetPlayer(tc:GetControler())
+	local p=e:GetHandler():GetFirstCardTarget():GetControler()
+	Duel.SetTargetPlayer(p)
 	Duel.SetTargetParam(500)
-	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,Duel.GetTurnPlayer(),500)
+	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,p,500)
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
-	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
+	local p=e:GetHandler():GetFirstCardTarget():GetControler()
+	local d=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
 	Duel.Damage(p,d,REASON_EFFECT)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	if c:IsStatus(STATUS_DESTROY_CONFIRMED) then return false end
-	local tc=c:GetFirstCardTarget()
+	local tc=e:GetHandler():GetFirstCardTarget()
 	return tc and eg:IsContains(tc)
-end
-function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Destroy(e:GetHandler(), REASON_EFFECT)
 end

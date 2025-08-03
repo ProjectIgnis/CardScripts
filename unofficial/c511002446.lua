@@ -18,14 +18,14 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return #g>0 end
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,eg,1,tp,0)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,tp,0)
-	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,g:GetSum(Card.GetAttack))
+	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,g:Filter(Card.IsFaceup,nil):GetSum(Card.GetAttack))
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.NegateEffect(ev) then return end
 	local g=Duel.GetMatchingGroup(nil,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	if #g>0 and Duel.Destroy(g,REASON_EFFECT)>0 then
 		local og=Duel.GetOperatedGroup():Match(Card.IsPreviousPosition,nil,POS_FACEUP)
-		local dam=og:GetSum(Card.GetAttack)/2
+		local dam=og:GetSum(Card.GetPreviousAttackOnField)/2
 		if dam>0 then
 			Duel.Damage(1-tp,dam,REASON_EFFECT)
 		end

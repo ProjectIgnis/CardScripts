@@ -1244,7 +1244,7 @@ end
 
 --Registers a "Cannot be Normal Summoned" Summoning condition to card "c"
 function Card.AddCannotBeNormalSummoned(c)
-	--Cannot be Special Summoned
+	--Cannot be Normal Summoned
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_SINGLE)
 	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
@@ -1255,7 +1255,7 @@ end
 
 --Registers a "Cannot be Flip Summoned" Summoning condition to card "c"
 function Card.AddCannotBeFlipSummoned(c)
-	--Cannot be Special Summoned
+	--Cannot be Flip Summoned
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_SINGLE)
 	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)

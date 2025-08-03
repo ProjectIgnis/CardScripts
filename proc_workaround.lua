@@ -1,6 +1,38 @@
 --Utilities to be added to the core
 
 --[[
+	Raise "EVENT_MOVE" when a card(s) is attached as Xyz Material
+	Fixes "Guiding Quem, the Virtuous" [45883110] and "Despian Luluwalilith" [53971455] not triggering if a card is attached directly from the Extra Deck
+--]]
+Duel.Overlay=(function()
+	local oldfunc=Duel.Overlay
+	return function(xyz_monster,xyz_mats,send_to_grave)
+		local eg=xyz_mats
+		local re=nil
+		local r=REASON_RULE
+		local rp=PLAYER_NONE
+		local core_reason_effect=Duel.GetReasonEffect()
+		if Duel.IsChainSolving() or (core_reason_effect and not core_reason_effect:IsHasProperty(EFFECT_FLAG_CANNOT_DISABLE)) then
+			re=Duel.GetReasonEffect()
+			r=REASON_EFFECT
+			rp=Duel.GetReasonPlayer()
+		end
+		if not send_to_grave then
+			if type(xyz_mats)=="Card" then
+				eg=eg+xyz_mats:GetOverlayGroup()
+			elseif type(xyz_mats)=="Group" then
+				for c in xyz_mats:Iter() do
+					eg=eg+c:GetOverlayGroup()
+				end
+			end
+		end
+		local res=oldfunc(xyz_monster,xyz_mats,send_to_grave)
+		Duel.RaiseEvent(eg,EVENT_MOVE,re,r,rp,0,0)
+		return res
+	end
+end)()
+
+--[[
 	Return false by default if the card to attach and the Xyz Monster to attach the card to are the same card
 --]]
 Card.IsCanBeXyzMaterial=(function()

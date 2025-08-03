@@ -40,7 +40,7 @@ function s.negsumcon(e,tp,eg,ep,ev,re,r,rp)
 		and Duel.IsExistingMatchingCard(s.negsumconfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.negsumtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
+	if chk==0 then return eg:IsExists(Card.IsAbleToRemove,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE_SUMMON,eg,#eg,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,eg,#eg,0,0)
 end

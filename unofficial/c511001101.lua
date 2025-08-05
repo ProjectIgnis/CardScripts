@@ -1,4 +1,5 @@
---Advanced Crystal Beast Sapphire Pegasus
+--Ａ宝玉獣 サファイア・ペガサス (Anime)
+--Advanced Crystal Beast Sapphire Pegasus (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Treated as "Crystal Beast Sapphire Pegasus"
@@ -46,7 +47,7 @@ s.listed_series={0x1034}
 s.listed_names={12644061}
 function s.descon(e)
 	local c=e:GetHandler()
-	return not Duel.IsEnvironment(12644061) and (c:IsLocation(LOCATION_MZONE) or c:GetType()&TYPE_CONTINUOUS+TYPE_SPELL==TYPE_CONTINUOUS+TYPE_SPELL)
+	return not Duel.IsEnvironment(12644061) and (c:IsMonster() or c:IsContinuousSpell())
 end
 function s.crystaltg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -73,7 +74,7 @@ end
 function s.placeop(e,tp,eg,ep,ev,re,r,rp,chk)
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
-	local g=Duel.SelectMatchingCard(tp,Card.IsSetCard,tp,SET_BLACKWING,0,1,1,nil,SET_CRYSTAL_BEAST)
+	local g=Duel.SelectMatchingCard(tp,Card.IsSetCard,tp,LOCATION_DECK|LOCATION_HAND|LOCATION_GRAVE|LOCATION_REMOVED,0,1,1,nil,SET_CRYSTAL_BEAST)
 	if #g>0 then
 		local tc=g:GetFirst()
 		Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)

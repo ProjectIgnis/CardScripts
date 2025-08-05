@@ -48,5 +48,5 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.ftarget(e,c)
-	return not c:IsAttribute(ATTRIBUTE_WIND) or not c:GetBaseDefense()==1200
+	return not c:IsAttribute(ATTRIBUTE_WIND) or c:GetBaseDefense()~=1200
 end

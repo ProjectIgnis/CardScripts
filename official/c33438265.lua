@@ -31,8 +31,9 @@ s.listed_series={SET_RB}
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=e:GetHandlerPlayer()
+	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and not Duel.IsExistingMatchingCard(aux.NOT(aux.FaceupFilter(Card.IsSetCard,SET_RB)),tp,LOCATION_MZONE,0,1,nil)
+		and (#g==0 or g:FilterCount(Card.IsSetCard,nil,SET_RB)==#g)
 end
 function s.desconfilter(c,ec,lg)
 	return c:IsSetCard(SET_RB) and c:IsLinkMonster() and c:IsFaceup() and (lg:IsContains(c) or c:GetLinkedGroup():IsContains(ec))

@@ -44,7 +44,7 @@ function s.xyzmatfilter(c,e,tp)
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,c,c:GetLevel(),mustg)
 end
 function s.spfilter(c,e,tp,mc,lv,mustg)
-	return c:IsType(TYPE_XYZ) and (c:IsSetCard(SET_DOOM_Z) or c:IsCode(101302044))
+	return c:IsType(TYPE_XYZ) and (c:IsSetCard(SET_DOOM_Z) or c:IsCode(68231287))
 		and c:IsRank(lv) and mc:IsCanBeXyzMaterial(c,tp) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false) 
 		and (#mustg<=0 or mustg:IsContains(mc)) and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0
 end

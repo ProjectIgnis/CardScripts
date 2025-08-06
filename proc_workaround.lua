@@ -1,6 +1,46 @@
 --Utilities to be added to the core
 
 --[[
+	Registers a flag effect on each monster that is Normal or Special Summoned, with the current phase being the flag effect's label
+	The flag will reset if the monster stops being face-up in the Monster Zone
+	Intended to be used with Rush cards like "Wicked Dragon of Darkness" [160214042] that require having been Normal/Special Summoned during a specific phase
+	If the monster is Summoned again (e.g. a Gemini Monster) the previous value will be overwritten (could be improved by adding such handling but it's not needed for Rush anyways)
+	
+	Also added basic "get" and "is" functions:
+		- Card.GetSummonPhase: Returns the flag effect's label, or 0 if the flag effect doesn't exist
+		- Card.IsSummonPhase: Returns 'true' or 'false' depending on the passed phase, use 'PHASE_MAIN' to check for the Main Phase and 'PHASE_BATTLE' to check for the Battle Phase (any other phase has no special handling and is checked as is)
+--]]
+do
+	--Store each monster's summon phase
+	local ns_eff=Effect.GlobalEffect()
+	ns_eff:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	ns_eff:SetCode(EVENT_SUMMON_SUCCESS)
+	ns_eff:SetOperation(function(e,tp,eg,ep,ev,re,r,rp)
+				for sc in eg:Iter() do
+					--"Wicked Dragon of Darkness"
+					sc:RegisterFlagEffect(160214042,RESET_EVENT|RESETS_STANDARD,0,1,Duel.GetCurrentPhase())
+				end
+			end)
+	Duel.RegisterEffect(ns_eff,0)
+	local sp_eff=ns_eff:Clone()
+	sp_eff:SetCode(EVENT_SPSUMMON_SUCCESS)
+	Duel.RegisterEffect(sp_eff,0)
+end
+function Card.GetSummonPhase(c)
+	--same ID as above
+	return c:HasFlagEffect(160214042) and c:GetFlagEffectLabel(160214042) or 0
+end
+function Card.IsSummonPhase(c,phase)
+	if phase==PHASE_MAIN then
+		return c:GetSummonPhase()==PHASE_MAIN1 or c:GetSummonPhase()==PHASE_MAIN2
+	elseif phase==PHASE_BATTLE then
+		return c:GetSummonPhase()>=PHASE_BATTLE_START and c:GetSummonPhase()<=PHASE_BATTLE
+	else
+		return c:GetSummonPhase()==phase
+	end
+end
+
+--[[
 	Raise "EVENT_MOVE" when a card(s) is attached as Xyz Material
 	Fixes "Guiding Quem, the Virtuous" [45883110] and "Despian Luluwalilith" [53971455] not triggering if a card is attached directly from the Extra Deck
 --]]

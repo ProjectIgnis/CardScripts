@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--Destroy 1 monster your opponent controls and inflict damageto your opponent equal to the Xyz Monster's Rank x 300
+	--Destroy 1 monster your opponent controls and inflict damage to your opponent equal to the Xyz Monster's Rank x 300
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DESTROY+CATEGORY_DAMAGE)

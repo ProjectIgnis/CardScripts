@@ -1,6 +1,24 @@
 --Utilities to be added to the core
 
 --[[
+	Have all the effects that grant an additional Tribute Summon share "Card Advance" as the flag effect's ID
+	If "Duel.RegisterEffect" detects such an effect is being registered then it'll automatically register said flag effect as well
+--]]
+function Duel.IsPlayerCanAdditionalTributeSummon(player)
+	return not Duel.HasFlagEffect(player,CARD_CARD_ADVANCE)
+end
+Duel.RegisterEffect=(function()
+	local oldfunc=Duel.RegisterEffect
+	return function(effect,player,...)
+		if effect:GetCode()==EFFECT_EXTRA_SUMMON_COUNT and effect:GetValue()==0x1 then
+			local reset,reset_count=effect:GetReset()
+			Duel.RegisterFlagEffect(player,CARD_CARD_ADVANCE,reset,0,reset_count)
+		end
+		oldfunc(effect,player,...)
+	end
+end)()
+
+--[[
 	Registers a flag effect on each monster that is Normal or Special Summoned, with the current phase being the flag effect's label
 	The flag will reset if the monster stops being face-up in the Monster Zone
 	Intended to be used with Rush cards like "Wicked Dragon of Darkness" [160214042] that require having been Normal/Special Summoned during a specific phase

@@ -42,6 +42,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,tc):GetFirst()
 		if sc then
+			if tc:IsFacedown() then Duel.ConfirmCards(1-tp,tc) end
 			sc:SetMaterial(Group.FromCards(tc))
 			Duel.SendtoDeck(tc,nil,SEQ_DECKSHUFFLE,REASON_EFFECT|REASON_MATERIAL|REASON_FUSION)
 			Duel.BreakEffect()

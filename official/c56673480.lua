@@ -2,7 +2,7 @@
 --Contract with Don Thousand
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate
+	--When this card is activated: Both players lose 1000 LP, and if they do, each draws 1 card
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DRAW)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -11,92 +11,65 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	--public
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e2:SetCode(EVENT_DRAW)
-	e2:SetRange(LOCATION_SZONE)
-	e2:SetCondition(s.drop)
-	c:RegisterEffect(e2)
 	local g=Group.CreateGroup()
-	g:KeepAlive()
-	e2:SetLabelObject(g)
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_FIELD)
-	e3:SetCode(EFFECT_PUBLIC)
-	e3:SetRange(LOCATION_SZONE)
-	e3:SetTargetRange(LOCATION_HAND,LOCATION_HAND)
-	e3:SetCondition(s.pubcon)
-	e3:SetTarget(s.pubtg)
-	e3:SetLabelObject(g)
-	c:RegisterEffect(e3)
-	--cannot summon
-	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_FIELD)
-	e4:SetCode(EFFECT_CANNOT_SUMMON)
-	e4:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e4:SetRange(LOCATION_SZONE)
-	e4:SetTargetRange(1,0)
-	e4:SetCondition(s.scon1)
-	e4:SetLabelObject(g)
-	c:RegisterEffect(e4)
-	local e5=e4:Clone()
-	e5:SetCode(EFFECT_CANNOT_MSET)
-	c:RegisterEffect(e5)
-	local e6=e4:Clone()
-	e6:SetTargetRange(0,1)
-	e6:SetCondition(s.scon2)
-	c:RegisterEffect(e6)
-	local e7=e6:Clone()
-	e7:SetCode(EFFECT_CANNOT_MSET)
-	c:RegisterEffect(e7)
+	--All cards that are drawn while this card's effect is applied must remain revealed
+	local e2a=Effect.CreateEffect(c)
+	e2a:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e2a:SetCode(EVENT_DRAW)
+	e2a:SetRange(LOCATION_SZONE)
+	e2a:SetCondition(s.drop)
+	e2a:SetLabelObject(g)
+	c:RegisterEffect(e2a)
+	local e2b=Effect.CreateEffect(c)
+	e2b:SetType(EFFECT_TYPE_FIELD)
+	e2b:SetCode(EFFECT_PUBLIC)
+	e2b:SetRange(LOCATION_SZONE)
+	e2b:SetTargetRange(LOCATION_HAND,LOCATION_HAND)
+	e2b:SetCondition(function(e) return e:GetHandler():HasFlagEffect(id) end)
+	e2b:SetTarget(function(e,c) return g:IsContains(c) and c:HasFlagEffect(id+1) end)
+	c:RegisterEffect(e2b)
+	--While a player's Spell Card in their hand is revealed by this effect, that player cannot Normal Summon/Set monsters
+	local e3a=Effect.CreateEffect(c)
+	e3a:SetType(EFFECT_TYPE_FIELD)
+	e3a:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e3a:SetCode(EFFECT_CANNOT_SUMMON)
+	e3a:SetRange(LOCATION_SZONE)
+	e3a:SetTargetRange(1,0)
+	e3a:SetCondition(function(e) return Duel.IsExistingMatchingCard(s.cannotsumfilter,e:GetHandlerPlayer(),LOCATION_HAND,0,1,nil,g) end)
+	c:RegisterEffect(e3a)
+	local e3b=e3a:Clone()
+	e3b:SetCode(EFFECT_CANNOT_MSET)
+	c:RegisterEffect(e3b)
+	local e3c=e3a:Clone()
+	e3c:SetTargetRange(0,1)
+	e3c:SetCondition(function(e) return Duel.IsExistingMatchingCard(s.cannotsumfilter,e:GetHandlerPlayer(),0,LOCATION_HAND,1,nil,g) end)
+	c:RegisterEffect(e3c)
+	local e3d=e3c:Clone()
+	e3d:SetCode(EFFECT_CANNOT_MSET)
+	c:RegisterEffect(e3d)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLP(tp)>=1000 and Duel.IsPlayerCanDraw(tp,1)
-		and Duel.GetLP(1-tp)>=1000 and Duel.IsPlayerCanDraw(1-tp,1) end
+	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) and Duel.IsPlayerCanDraw(1-tp,1) end
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,PLAYER_ALL,1)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
-	local lp0=Duel.GetLP(tp)
-	if lp0>=1000 then
-		Duel.SetLP(tp,lp0-1000)
-		Duel.Draw(tp,1,REASON_EFFECT)
-	end
-	local lp1=Duel.GetLP(1-tp)
-	if lp1>=1000 then
-		Duel.SetLP(1-tp,lp1-1000)
-		Duel.Draw(1-tp,1,REASON_EFFECT)
-	end
+	Duel.SetLP(tp,Duel.GetLP(tp)-1000)
+	Duel.SetLP(1-tp,Duel.GetLP(1-tp)-1000)
+	Duel.Draw(tp,1,REASON_EFFECT)
+	Duel.Draw(1-tp,1,REASON_EFFECT)
 end
 function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local pg=e:GetLabelObject()
-	if c:GetFlagEffect(id)==0 then
+	if not c:HasFlagEffect(id) then
 		c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD_DISABLE,0,1)
 		pg:Clear()
 	end
-	local tc=eg:GetFirst()
-	for tc in aux.Next(eg) do
-		pg:AddCard(tc)
-		tc:RegisterFlagEffect(id+1,RESET_EVENT|RESETS_STANDARD,0,1)
+	for dc in eg:Iter() do
+		pg:AddCard(dc)
+		dc:RegisterFlagEffect(id+1,RESET_EVENT|RESETS_STANDARD,0,1)
 	end
-	return false
 end
-function s.pubcon(e)
-	return e:GetHandler():GetFlagEffect(id)~=0
-end
-function s.pubtg(e,c)
-	return e:GetLabelObject():IsContains(c) and c:GetFlagEffect(id+1)~=0
-end
-function s.sfilter(c,pg)
-	return c:IsPublic() and pg:IsContains(c) and c:GetFlagEffect(id+1)>0 and c:IsSpell()
-end
-function s.scon1(e)
-	local tp=e:GetHandlerPlayer()
-	return Duel.IsExistingMatchingCard(s.sfilter,tp,LOCATION_HAND,0,1,nil,e:GetLabelObject())
-end
-function s.scon2(e)
-	local tp=e:GetHandlerPlayer()
-	return Duel.IsExistingMatchingCard(s.sfilter,tp,0,LOCATION_HAND,1,nil,e:GetLabelObject())
+function s.cannotsumfilter(c,pg)
+	return c:IsPublic() and c:IsSpell() and pg:IsContains(c) and c:HasFlagEffect(id+1)
 end

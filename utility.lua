@@ -1529,7 +1529,7 @@ self_discard_costs[Cost.SelfDiscardToGrave]=true
 Cost.SelfRelease=Cost.SelfTribute
 Auxiliary.bfgcost=Cost.SelfBanish
 
-function Cost.RemoveCounterFromSelf(counter_type,count)
+function Cost.RemoveCounterFromSelf(count,counter_type)
 	return function(e,tp,eg,ep,ev,re,r,rp,chk)
 		local c=e:GetHandler()
 		if chk==0 then return c:IsCanRemoveCounter(tp,counter_type,count,REASON_COST) end
@@ -1537,7 +1537,7 @@ function Cost.RemoveCounterFromSelf(counter_type,count)
 	end
 end
 
-function Cost.RemoveCounterFromField(counter_type,count)
+function Cost.RemoveCounterFromField(count,counter_type)
 	return function(e,tp,eg,ep,ev,re,r,rp,chk)
 		if chk==0 then return Duel.IsCanRemoveCounter(tp,1,0,counter_type,count,REASON_COST) end
 		Duel.RemoveCounter(tp,1,0,counter_type,count,REASON_COST)

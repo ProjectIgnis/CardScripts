@@ -34,7 +34,7 @@ end
 s.listed_series={SET_DD,SET_DARK_CONTRACT}
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsSetCard({SET_DD,SET_DARK_CONTRACT}) and chkc:IsOnField() and chkc:IsControler(tp) and chkc:IsFaceup() end
-	if chk==0 then return not Duel.HasFlagEffect(tp,id) --pending rulings on whether you can use this effect if you've already performed an extra Pendulum Summon or not
+	if chk==0 then return not Duel.HasFlagEffect(tp,id)
 		and Duel.IsExistingTarget(aux.FaceupFilter(Card.IsSetCard,{SET_DD,SET_DARK_CONTRACT}),tp,LOCATION_ONFIELD,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectTarget(tp,aux.FaceupFilter(Card.IsSetCard,{SET_DD,SET_DARK_CONTRACT}),tp,LOCATION_ONFIELD,0,1,1,nil)

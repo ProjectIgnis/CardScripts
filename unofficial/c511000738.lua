@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	if not Duel.IsPhase(PHASE_DAMAGE) or Duel.IsDamageCalculated() then return false end
+	if not (Duel.IsPhase(PHASE_DAMAGE) or Duel.IsDamageCalculated()) then return false end
 	local a=Duel.GetAttacker()
 	return a:IsRelateToBattle() and a:IsSynchroMonster()
 end

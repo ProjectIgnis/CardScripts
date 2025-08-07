@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(TIMING_DAMAGE_STEP)
-	e1:SetCondition(function() return not (Duel.IsPhase(PHASE_DAMAGE) or Duel.IsDamageCalculated()) end)
+	e1:SetCondition(aux.StatChangeDamageStepCondition)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
@@ -44,7 +44,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
+	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		--Gains 600 ATK for each "Performapal" monster destroyed this turn
 		tc:UpdateAttack(s[0]*600,RESETS_STANDARD_PHASE_END)
 		--Cannot be destroyed by battle or card effects
@@ -71,6 +71,6 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsNegatable,tp,0,LOCATION_ONFIELD,nil)
 	local c=e:GetHandler()
 	for tc in g:Iter() do
-		tc:NegateEffects(c)
+		tc:NegateEffects(c,nil,true)
 	end
 end

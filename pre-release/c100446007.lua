@@ -1,11 +1,11 @@
 --見えざる神ゼノ
---Hecatoncheire Xeno
+--Hecahands Xeno
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--Fusion Materials: 3 "Hecatoncheire" monsters
-	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_HECATONCHEIRE),3)
+	--Fusion Materials: 3 "Hecahands" monsters
+	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_HECAHANDS),3)
 	--If this card battles a monster, neither can be destroyed by that battle
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -41,8 +41,8 @@ function s.initial_effect(c)
 	e3:SetOperation(s.ctrlop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={SET_HECATONCHEIRE}
-s.material_setcode=SET_HECATONCHEIRE
+s.listed_series={SET_HECAHANDS}
+s.material_setcode=SET_HECAHANDS
 function s.indestg(e,c)
 	local handler=e:GetHandler()
 	return c==handler or c==handler:GetBattleTarget()

@@ -1,11 +1,11 @@
 --見えざる神ジャウザー
---Hecatoncheire Jawza
+--Hecahands Jawza
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--Fusion Materials: 1 "Hecatoncheire" monster + 1 Illusion monster
-	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_HECATONCHEIRE),aux.FilterBoolFunctionEx(Card.IsRace,RACE_ILLUSION))
+	--Fusion Materials: 1 "Hecahands" monster + 1 Illusion monster
+	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_HECAHANDS),aux.FilterBoolFunctionEx(Card.IsRace,RACE_ILLUSION))
 	c:AddMustFirstBeFusionSummoned()
 	--Must first be either Fusion Summoned, or Special Summoned (from your Extra Deck) by Tributing 1 Illusion monster and 1 face-up monster you control owned by your opponent
 	local e0=Effect.CreateEffect(c)
@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	e0:SetTarget(s.selfsptg)
 	e0:SetOperation(s.selfspop)
 	c:RegisterEffect(e0)
-	--Add 1 "Hecatoncheire" card from your Deck or GY to your hand
+	--Add 1 "Hecahands" card from your Deck or GY to your hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -38,8 +38,8 @@ function s.initial_effect(c)
 	e2:SetValue(1)
 	c:RegisterEffect(e2)
 end
-s.listed_series={SET_HECATONCHEIRE}
-s.material_setcode=SET_HECATONCHEIRE
+s.listed_series={SET_HECAHANDS}
+s.material_setcode=SET_HECAHANDS
 function s.selfspcostfilter(c,tp,fc)
 	return (c:IsRace(RACE_ILLUSION) or (c:IsFaceup() and c:IsOwner(1-tp))) and c:IsReleasable()
 		and c:IsCanBeFusionMaterial(fc,MATERIAL_FUSION)
@@ -71,7 +71,7 @@ function s.selfspop(e,tp,eg,ep,ev,re,r,rp,c)
 	g:DeleteGroup()
 end
 function s.thfilter(c)
-	return c:IsSetCard(SET_HECATONCHEIRE) and c:IsAbleToHand()
+	return c:IsSetCard(SET_HECAHANDS) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK|LOCATION_GRAVE,0,1,nil) end

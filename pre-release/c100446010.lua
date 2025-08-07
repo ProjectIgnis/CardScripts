@@ -15,9 +15,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={SET_HECATONCHEIRE}
+s.listed_series={SET_HECAHANDS}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return re:IsMonsterEffect() and rp==1-tp and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_HECATONCHEIRE),tp,LOCATION_MZONE,0,1,nil)
+	return re:IsMonsterEffect() and rp==1-tp and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_HECAHANDS),tp,LOCATION_MZONE,0,1,nil)
 		and Duel.IsChainNegatable(ev)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

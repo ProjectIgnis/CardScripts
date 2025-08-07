@@ -1,5 +1,5 @@
 --見えざる手ヤドエル
---Hecatoncheire Yadel
+--Hecahands Yadel
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.indestg)
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
-	--Shuffle this card into the Deck, then add 1 "Hecatoncheire" Spell/Trap from your Deck to your hand
+	--Shuffle this card into the Deck, then add 1 "Hecahands" Spell/Trap from your Deck to your hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_TODECK+CATEGORY_SEARCH+CATEGORY_TOHAND)
@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
-	--Set 1 "Hecatoncheire" Spell/Trap from your GY
+	--Set 1 "Hecahands" Spell/Trap from your GY
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -34,13 +34,13 @@ function s.initial_effect(c)
 	e3:SetOperation(s.setop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={SET_HECATONCHEIRE}
+s.listed_series={SET_HECAHANDS}
 function s.indestg(e,c)
 	local handler=e:GetHandler()
 	return c==handler or c==handler:GetBattleTarget()
 end
 function s.thfilter(c)
-	return c:IsSetCard(SET_HECATONCHEIRE) and c:IsSpellTrap() and c:IsAbleToHand()
+	return c:IsSetCard(SET_HECAHANDS) and c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -61,7 +61,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.setfilter(c)
-	return c:IsSetCard(SET_HECATONCHEIRE) and c:IsSpellTrap() and c:IsSSetable()
+	return c:IsSetCard(SET_HECAHANDS) and c:IsSpellTrap() and c:IsSSetable()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.setfilter(chkc) end

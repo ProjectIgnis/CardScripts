@@ -141,7 +141,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.rthcon(e,tp,eg,ep,ev,re,r,rp)
 	local ch=Duel.GetCurrentChain()-1
-	return ch>0 and ep==1-tp and Duel.GetChainInfo(ch,CHAININFO_TRIGGERING_CONTROLER)==tp
+	return e:GetHandler():IsFacedown() and ch>0 and ep==1-tp and Duel.GetChainInfo(ch,CHAININFO_TRIGGERING_CONTROLER)==tp
 end
 function s.rthtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToHand,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end

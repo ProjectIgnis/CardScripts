@@ -130,7 +130,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.indescon(e,tp,eg,ep,ev,re,r,rp)
-	if rp==tp or Duel.HasFlagEffect(tp,id) then return false end
+	if rp==tp or Duel.HasFlagEffect(tp,id) or e:GetHandler():IsFaceup() then return false end
 	if re:IsHasCategory(CATEGORY_NEGATE) and Duel.GetChainInfo(ev-1,CHAININFO_TRIGGERING_EFFECT):IsHasType(EFFECT_TYPE_ACTIVATE) then return false end
 	local ex,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_DESTROY)
 	return ex and tg~=nil and tg:FilterCount(Card.IsOnField,nil)>0

@@ -137,7 +137,7 @@ function s.disconfilter(c,tp)
 	return c:IsOnField() and c:IsControler(tp)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
-	if not (rp==1-tp and re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) and Duel.IsChainDisablable(ev)) then return false end
+	if not (rp==1-tp and e:GetHandler():IsFacedown() and re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) and Duel.IsChainDisablable(ev)) then return false end
 	local tg=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 	return tg and tg:IsExists(s.disconfilter,1,nil,tp)
 end

@@ -70,8 +70,8 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
 	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsCanBeEffectTarget,e),tp,LOCATION_ONFIELD,0,nil,e)
 	if chk==0 then return c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and aux.SelectUnselectGroup(g,1,tp,2,2,s.rescon,chk,tp) end
-	local tg=aux.SelectUnselectGroup(g,1,tp,2,2,s.rescon,chk,tp)
+		and aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,chk,tp) end
+	local tg=aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,chk,tp)
 	Duel.SetTargetCard(tg)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,2,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)

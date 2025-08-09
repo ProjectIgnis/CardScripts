@@ -65,10 +65,18 @@ function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,ct*900)
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
-	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
-	local ct=Duel.GetCounter(tp,1,0,COUNTER_SINQUISITION)
-	if ct>0 and Duel.RemoveCounter(tp,1,0,COUNTER_SINQUISITION,ct,REASON_EFFECT) then
-		Duel.Damage(p,ct*900,REASON_EFFECT)
+	local g=Duel.GetMatchingGroup(Card.HasCounter,tp,LOCATION_ONFIELD,0,nil,COUNTER_SINQUISITION)
+	if #g==0 then return end
+	local total_count=0
+	for sc in g:Iter() do
+		local sc_count=sc:GetCounter(COUNTER_SINQUISITION)
+		if sc:RemoveCounter(tp,COUNTER_SINQUISITION,sc_count,REASON_EFFECT) then
+			total_count=total_count+sc_count
+		end
+	end
+	if total_count>0 then
+		local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
+		Duel.Damage(p,total_count*900,REASON_EFFECT)
 	end
 end
 function s.rthfilter(c)

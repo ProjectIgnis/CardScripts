@@ -3,79 +3,75 @@
 --fixed by MLD
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate
+	--Activate (Normal activation)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--target
+	--Activate (Battle Timing)
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
-	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
+	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_SZONE)
+	e2:SetHintTiming(0,TIMING_BATTLE_PHASE|TIMING_BATTLE_START)
 	e2:SetCountLimit(1)
-	e2:SetCondition(s.atcon)
-	e2:SetTarget(s.attg)
-	e2:SetOperation(s.atop)
+	e2:SetCondition(s.forceoppattcon)
+	e2:SetTarget(s.forceoppatttg)
+	e2:SetOperation(s.forceoppattop)
 	c:RegisterEffect(e2)
-	--prevent destroy
+	--Prevent a "Supreme King" monster(s) from being destroyed by 1 battle or card effect
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
-	e3:SetType(EFFECT_TYPE_TRIGGER_F+EFFECT_TYPE_FIELD)
+	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetCountLimit(1,0,EFFECT_COUNT_CODE_SINGLE)
-	e3:SetCondition(s.adescon)
-	e3:SetOperation(s.adesop)
+	e3:SetCondition(s.batdescon)
+	e3:SetTarget(s.preventdestg)
+	e3:SetOperation(s.preventdesop)
 	c:RegisterEffect(e3)
-	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(id,1))
-	e4:SetType(EFFECT_TYPE_QUICK_F)
+	local e4=e3:Clone()
 	e4:SetCode(EVENT_CHAINING)
-	e4:SetRange(LOCATION_SZONE)
-	e4:SetCountLimit(1,0,EFFECT_COUNT_CODE_SINGLE)
-	e4:SetCondition(s.edescon)
-	e4:SetTarget(s.edestg)
-	e4:SetOperation(s.edesop)
+	e4:SetCondition(s.effdescon)
 	c:RegisterEffect(e4)
-	--attack
+	--You can send this card from your field to the GY during your opponent's BP; all monsters they control must attack, if able
 	local e5=Effect.CreateEffect(c)
 	e5:SetDescription(aux.Stringid(id,2))
 	e5:SetType(EFFECT_TYPE_QUICK_O)
 	e5:SetCode(EVENT_FREE_CHAIN)
 	e5:SetRange(LOCATION_SZONE)
-	e5:SetCondition(s.atcon2)
-	e5:SetCost(s.atcost2)
-	e5:SetTarget(s.attg2)
-	e5:SetOperation(s.atop2)
+	e5:SetCondition(function(e,tp) return Duel.IsTurnPlayer(1-tp) and Duel.IsBattlePhase() end)
+	e5:SetCost(Cost.SelfToGrave)
+	e5:SetTarget(s.tgforceattacktg)
+	e5:SetOperation(s.tgforceattackop)
 	c:RegisterEffect(e5)
 end
-s.listed_series={0xf8}
-function s.atcon(e,tp,eg,ev,ep,re,r,rp)
+s.listed_series={SET_SUPREME_KING}
+function s.forceoppattcon(e,tp,eg,ev,ep,re,r,rp)
 	return Duel.IsTurnPlayer(1-tp) and Duel.IsBattlePhase()
-		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,0xf8),tp,LOCATION_MZONE,0,1,nil)
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_SUPREME_KING),tp,LOCATION_MZONE,0,1,nil)
 end
-function s.filter(c)
+function s.forceoppattfilter(c)
 	return c:IsFaceup() and not c:IsHasEffect(EFFECT_CANNOT_ATTACK) and not c:IsHasEffect(EFFECT_CANNOT_ATTACK_ANNOUNCE)
 		and (c:IsAttackPos() or c:IsHasEffect(EFFECT_DEFENSE_ATTACK))
 end
-function s.attg(e,tp,eg,ev,ep,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,0,LOCATION_MZONE,1,nil) end
-	Duel.SelectTarget(tp,s.filter,tp,0,LOCATION_MZONE,1,1,nil,0)
+function s.forceoppatttg(e,tp,eg,ev,ep,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and s.forceoppattfilter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(s.forceoppattfilter,tp,0,LOCATION_MZONE,1,nil) end
+	Duel.SelectTarget(tp,s.forceattackfilter,tp,0,LOCATION_MZONE,1,1,nil,0)
 end
-function s.atop(e,tp,eg,ev,ep,re,r,rp)
+function s.forceoppattop(e,tp,eg,ev,ep,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local g=Duel.GetTargetCards(e)
-	for tc in aux.Next(g) do
+	for tc in g:Iter() do
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_MUST_ATTACK)
-		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_END)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
-		if tc:GetAttackAnnouncedCount()~=0 then
+		if tc:GetAttackAnnouncedCount()>0 then
 			local e2=e1:Clone()
 			e2:SetCode(EFFECT_EXTRA_ATTACK)
 			e2:SetValue(1)
@@ -83,61 +79,91 @@ function s.atop(e,tp,eg,ev,ep,re,r,rp)
 		end
 	end
 end
-function s.adescon(e,tp,eg,ep,ev,re,r,rp)
+function s.batdescon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
-	if tc:IsControler(1-tp) then tc=Duel.GetAttackTarget() end
-	return tc and tc:IsSetCard(0xf8) and tc:IsRelateToBattle()
-end
-function s.adesop(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.GetAttacker()
-	if tc:IsControler(1-tp) then tc=Duel.GetAttackTarget() end
-	if not e:GetHandler():IsRelateToEffect(e) or not tc or not tc:IsRelateToBattle() then return end
-	local e1=Effect.CreateEffect(e:GetHandler())
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-	e1:SetValue(1)
-	e1:SetReset(RESET_PHASE|PHASE_DAMAGE)
-	tc:RegisterEffect(e1)
-end
-function s.cdfilter(c,tp)
-	return c:IsOnField() and c:IsControler(tp) and c:IsSetCard(0xf8)
-end
-function s.edescon(e,tp,eg,ep,ev,re,r,rp)
-	local ex,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_DESTROY)
-	return ex and tg~=nil and tc+tg:FilterCount(s.cdfilter,nil,tp)-#tg>0
-end
-function s.edestg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	local ex,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_DESTROY)
-	local g=tg:Filter(s.cdfilter,nil,tp)
-	Duel.SetTargetCard(g)
-end
-function s.edesop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
-	local g=Duel.GetTargetCards(e)
-	if not g then return end
-	for tc in aux.Next(g) do
-		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
-		e1:SetValue(1)
-		e1:SetReset(RESET_CHAIN)
-		tc:RegisterEffect(e1)
+	local bc=tc:GetBattleTarget()
+	if tc:IsControler(1-tp) then
+		tc,bc=bc,tc
+	end
+	if not tc or not bc or tc:IsControler(1-tp) or not tc:IsSetCard(SET_SUPREME_KING) then return false end
+	if tc:IsHasEffect(EFFECT_INDESTRUCTABLE_BATTLE) then
+		local tcind={tc:GetCardEffect(EFFECT_INDESTRUCTABLE_BATTLE)}
+		for _,te in ipairs(tcind) do
+			local f=te:GetValue()
+			if type(f)=='function' then
+				if f(te,bc) then return false end
+			else return false end
+		end
+	end
+	e:SetLabelObject(tc)
+	if bc==Duel.GetAttackTarget() and bc:IsDefensePos() then return false end
+	if bc:IsPosition(POS_FACEUP_DEFENSE) and bc==Duel.GetAttacker() then
+		if not bc:IsHasEffect(EFFECT_DEFENSE_ATTACK) then return false end
+		if bc:IsHasEffect(75372290) then
+			if tc:IsAttackPos() then
+				return bc:GetAttack()>0 and bc:GetAttack()>=tc:GetAttack()
+			else
+				return bc:GetAttack()>tc:GetDefense()
+			end
+		else
+			if tc:IsAttackPos() then
+				return bc:GetDefense()>0 and bc:GetDefense()>=tc:GetAttack()
+			else
+				return bc:GetDefense()>tc:GetDefense()
+			end
+		end
+	else
+		if tc:IsAttackPos() then
+			return bc:GetAttack()>0 and bc:GetAttack()>=tc:GetAttack()
+		else
+			return bc:GetAttack()>tc:GetDefense()
+		end
 	end
 end
-function s.atcon2(e,tp,eg,ev,ep,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp and Duel.IsBattlePhase()
+function s.effdesfilter(c,tp)
+	return c:IsOnField() and c:IsControler(tp) and c:IsSetCard(SET_SUPREME_KING)
 end
-function s.atcost2(e,tp,eg,ev,ep,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
+function s.effdescon(e,tp,eg,ep,ev,re,r,rp)
+	local ex,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_DESTROY)
+	if tg==nil then return end
+	local g=tg:Filter(s.effdesfilter,nil,tp)
+	g:KeepAlive()
+	e:SetLabelObject(g)
+	return ex and tg~=nil and tc+tg:FilterCount(s.effdesfilter,nil,tp)-#tg>0
 end
-function s.attg2(e,tp,eg,ev,ep,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,nil) end
+function s.preventdestg(e,tp,eg,ep,ev,re,r,rp,chk)
+	local g=e:GetLabelObject()
+	if chk==0 then return g end
+	Duel.SetTargetCard(g)
 end
-function s.atop2(e,tp,eg,ev,ep,re,r,rp)
-	local g=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_MZONE,nil)
-	for tc in aux.Next(g) do
+function s.preventdesop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local g=Duel.GetTargetCards(e)
+	if #g==0 then return end
+	for tc in g:Iter() do
+		if tc:IsRelateToEffect(e) then
+			local e1=Effect.CreateEffect(c)
+			e1:SetType(EFFECT_TYPE_SINGLE)
+				if e:GetCode()==EVENT_PRE_DAMAGE_CALCULATE then
+					e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
+					e1:SetValue(1)
+					e1:SetReset(RESET_PHASE|PHASE_DAMAGE)
+				else
+					e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
+					e1:SetValue(function(e,te) return re==te end)
+					e1:SetReset(RESET_CHAIN)
+				end
+			tc:RegisterEffect(e1)
+		end
+	end
+	g:DeleteGroup()
+end
+function s.tgforceattacktg(e,tp,eg,ev,ep,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.forceoppattfilter,tp,0,LOCATION_MZONE,1,nil) end
+end
+function s.tgforceattackop(e,tp,eg,ev,ep,re,r,rp)
+	local g=Duel.GetMatchingGroup(s.forceoppattfilter,tp,0,LOCATION_MZONE,nil)
+	for tc in g:Iter() do
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_MUST_ATTACK)

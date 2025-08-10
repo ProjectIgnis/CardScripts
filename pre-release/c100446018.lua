@@ -93,10 +93,11 @@ function s.rvop(e,tp,eg,ep,ev,re,r,rp)
 	if #g~=3 then return end
 	Duel.ConfirmCards(1-tp,g)
 	local sg=g:RandomSelect(1-tp,1)
+	Duel.ShuffleDeck(tp)
 	if #sg>0 then
+		Duel.DisableShuffleCheck()
 		Duel.SendtoHand(sg,nil,REASON_EFFECT)
 	end
-	Duel.ShuffleDeck(tp)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetCustomActivityCount(id,tp,ACTIVITY_SPSUMMON)==0 end

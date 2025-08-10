@@ -1,4 +1,5 @@
 --マスクドナイト ＬＶ５
+--Masked Knight LV5
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special Summon 1 "Masked Knight LV7" from your hand or Deck
@@ -21,9 +22,9 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetCountLimit(1)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCost(s.cost)
-	e2:SetTarget(s.target)
-	e2:SetOperation(s.operation)
+	e2:SetCost(s.damcost)
+	e2:SetTarget(s.damtg)
+	e2:SetOperation(s.damop)
 	c:RegisterEffect(e2)
 	--Summon/flip check to apply activation restriction
 	aux.GlobalCheck(s,function()
@@ -65,7 +66,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		tc:CompleteProcedure()
 	end
 end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:GetAttackAnnouncedCount()==0 end
 	local e1=Effect.CreateEffect(e:GetHandler())
@@ -75,13 +76,13 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetReset(RESETS_STANDARD_PHASE_END)
 	c:RegisterEffect(e1)
 end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetTargetPlayer(1-tp)
 	Duel.SetTargetParam(1000)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,1000)
 end
-function s.operation(e,tp,eg,ep,ev,re,r,rp)
+function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Damage(p,d,REASON_EFFECT)
 end

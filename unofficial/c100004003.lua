@@ -25,13 +25,13 @@ end
 s.listed_names={100004002} --"Masked Knight LV5"
 s.LVnum=7
 s.LVset=0x2530 --"Masked Knight" archetype
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetTargetPlayer(1-tp)
 	Duel.SetTargetParam(1500)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,1500)
 end
-function s.operation(e,tp,eg,ep,ev,re,r,rp)
+function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Damage(p,d,REASON_EFFECT)
 end

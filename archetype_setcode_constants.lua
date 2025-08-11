@@ -599,3 +599,4 @@ SET_DOOM_Z                        = 0x1cb
 --Pre-release archetypes
 SET_HECAHANDS                     = 0x1cc
 SET_ENNEACRAFT                    = 0x1cd
+SET_KILLER_TUNE                   = 0x1ce

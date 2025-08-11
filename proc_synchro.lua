@@ -1295,3 +1295,56 @@ function Synchro.DarkTarget(f1,f2,plv,nlv,...)
 				else return false end
 			end
 end
+
+function Synchro.CreateHandMaterialEffect(c,id,filter,banish_mats,rc)
+	local function matfilter1(c)
+		local effs={c:GetCardEffect(EFFECT_HAND_SYNCHRO+EFFECT_SYNCHRO_CHECK)}
+		for _,te in ipairs(effs) do
+			if te:GetLabel()~=id then return false end
+		end
+		return #effs>0
+	end
+
+	local function matfilter2(c)
+		if c:IsHasEffect(EFFECT_HAND_SYNCHRO+EFFECT_SYNCHRO_CHECK) then return false end
+		for _,te in ipairs({c:GetCardEffect(EFFECT_HAND_SYNCHRO)}) do
+			if te:GetLabel()==id then return true end
+		end
+		return false
+	end
+
+	local function synchktg(e,c,sg,tg,ntg,tsg,ntsg)
+		if not c then return true end
+		if sg:IsExists(matfilter1,1,c) then return false end
+		if not (tg:IsExists(matfilter2,1,c) or ntg:IsExists(matfilter2,1,c) or sg:IsExists(matfilter2,1,c)) then return false end
+		local trg=tg:Filter(matfilter1,nil)
+		local ntrg=ntg:Filter(matfilter1,nil)
+		return true,trg,ntrg
+	end
+
+	local function synval(e,c,sc)
+		if not c:IsLocation(LOCATION_HAND) or (filter and not filter(c)) then return false end
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_HAND_SYNCHRO+EFFECT_SYNCHRO_CHECK)
+		e1:SetLabel(id)
+		e1:SetTarget(synchktg)
+		c:RegisterEffect(e1)
+		if banish_mats then c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1) end
+		return true
+	end
+
+	local e1=Effect.CreateEffect(rc or c)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_HAND_SYNCHRO)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e1:SetLabel(id)
+	e1:SetValue(synval)
+	return e1
+end
+
+function Synchro.AddHandMaterialEffect(c,...)
+	local e1=Synchro.CreateHandMaterialEffect(c,...)
+	c:RegisterEffect(e1)
+	return e1
+end

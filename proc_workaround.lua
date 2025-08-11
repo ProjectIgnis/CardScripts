@@ -1,6 +1,24 @@
 --Utilities to be added to the core
 
 --[[
+	Automatically shuffle a player's hand when the effect of a card that they activated in the hand begins resolving, but only if that same card is still in the hand on resolution
+	Fixes cases such as the "Enneacraft" monsters where the opponent shouldn't know if the player Special Summoned the monster whose effect was activated or not
+--]]
+do
+	local shuffle_eff=Effect.GlobalEffect()
+	shuffle_eff:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	shuffle_eff:SetCode(EVENT_CHAIN_SOLVING)
+	shuffle_eff:SetOperation(function(e,tp,eg,ep,ev,re,r,rp)
+					if Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)~=LOCATION_HAND then return end
+					local rc=re:GetHandler()
+					if rc:IsRelateToEffect(re) and rc:IsLocation(LOCATION_HAND) then
+						Duel.ShuffleHand(rc:GetControler())
+					end
+				end)
+	Duel.RegisterEffect(shuffle_eff,0)
+end
+
+--[[
 	Have all the effects that grant an additional Tribute Summon share "Card Advance" as the flag effect's ID
 	If "Duel.RegisterEffect" detects such an effect is being registered then it'll automatically register said flag effect as well
 --]]

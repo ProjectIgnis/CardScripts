@@ -38,6 +38,12 @@ function s.initial_effect(c)
 	e3:SetOperation(s.disop)
 	e3:SetHintTiming(0,TIMING_STANDBY_PHASE|TIMING_MAIN_END|TIMINGS_CHECK_MONSTER)
 	c:RegisterEffect(e3)
+	--Multiple Tuners
+	local e4=Effect.CreateEffect(c)
+	e4:SetType(EFFECT_TYPE_SINGLE)
+	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e4:SetCode(EFFECT_MULTIPLE_TUNERS)
+	c:RegisterEffect(e4)
 end
 s.listed_names={100446033} --"Killer Tune Reco"
 s.material={100446033} --"Killer Tune Reco"

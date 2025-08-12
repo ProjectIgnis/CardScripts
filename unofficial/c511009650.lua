@@ -22,16 +22,14 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
+	local g=Duel.GetFieldGroup(tp,0,LOCATION_ONFIELD)
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,eg,1,0,0)
-	if re:GetHandler():IsDestructable() and re:GetHandler():IsRelateToEffect(re) then
-		local g=Duel.GetFieldGroup(tp,0,LOCATION_ONFIELD)
-		Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
-	end
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
 	if not rc:IsDisabled() then
-		if Duel.NegateEffect(ev) and rc:IsRelateToEffect(re) then
+		if Duel.NegateEffect(ev) then
 			local g=Duel.GetFieldGroup(tp,0,LOCATION_ONFIELD)
 			Duel.Destroy(g,REASON_EFFECT)
 		end

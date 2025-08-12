@@ -1507,7 +1507,6 @@ function Cost.SelfReveal(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return not c:IsPublic() end
 	Duel.ConfirmCards(1-tp,c)
-	Duel.ShuffleHand(tp)
 end
 
 local self_discard_costs={}

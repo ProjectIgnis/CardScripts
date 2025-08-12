@@ -1296,7 +1296,7 @@ function Synchro.DarkTarget(f1,f2,plv,nlv,...)
 			end
 end
 
-function Synchro.CreateHandMaterialEffect(c,id,filter,banish_mats,rc)
+function Synchro.CreateHandMaterialEffect(c,id,material_filter,synchro_filter,banish_mats,rc)
 	local function matfilter1(c)
 		local effs={c:GetCardEffect(EFFECT_HAND_SYNCHRO+EFFECT_SYNCHRO_CHECK)}
 		for _,te in ipairs(effs) do
@@ -1323,7 +1323,9 @@ function Synchro.CreateHandMaterialEffect(c,id,filter,banish_mats,rc)
 	end
 
 	local function synval(e,c,sc)
-		if not c:IsLocation(LOCATION_HAND) or (filter and not filter(c)) then return false end
+		if not c:IsLocation(LOCATION_HAND)
+			or (material_filter and not material_filter(c))
+			or (synchro_filter and not synchro_filter(sc)) then return false end
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_HAND_SYNCHRO+EFFECT_SYNCHRO_CHECK)

@@ -5,15 +5,32 @@
 	Fixes cases such as the "Enneacraft" monsters where the opponent shouldn't know if the player Special Summoned the monster whose effect was activated or not
 --]]
 do
+	local function check_opinfo(ev,category,rc)
+		local ex,tg=Duel.GetOperationInfo(ev,category)
+		local possible_ex,possible_tg=Duel.GetPossibleOperationInfo(ev,category)
+		return (ex and tg and tg:IsContains(rc)) or (possible_ex and possible_tg and possible_tg:IsContains(rc))
+	end
+	
 	local shuffle_eff=Effect.GlobalEffect()
 	shuffle_eff:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	shuffle_eff:SetCode(EVENT_CHAIN_SOLVING)
 	shuffle_eff:SetOperation(function(e,tp,eg,ep,ev,re,r,rp)
 					if Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)~=LOCATION_HAND then return end
 					local rc=re:GetHandler()
-					if rc:IsRelateToEffect(re) and rc:IsLocation(LOCATION_HAND) then
-						Duel.ShuffleHand(rc:GetControler())
-					end
+					--if it's not the same card in the hand anymore then don't shuffle
+					if not (rc:IsRelateToEffect(re) and rc:IsLocation(LOCATION_HAND)) then return end
+					--if there's opinfo that would (even potentially) move rc then don't shuffle, e.g. the "Subterror Behemoth" monsters
+					if check_opinfo(ev,CATEGORY_SPECIAL_SUMMON,rc) then return end
+					if check_opinfo(ev,CATEGORY_SUMMON,rc) then return end
+					if check_opinfo(ev,CATEGORY_TOGRAVE,rc) then return end
+					if check_opinfo(ev,CATEGORY_DESTROY,rc) then return end
+					if check_opinfo(ev,CATEGORY_REMOVE,rc) then return end
+					if check_opinfo(ev,CATEGORY_TODECK,rc) then return end
+					if check_opinfo(ev,CATEGORY_TOEXTRA,rc) then return end
+					if check_opinfo(ev,CATEGORY_EQUIP,rc) then return end
+					if check_opinfo(ev,CATEGORY_RELEASE,rc) then return end
+					--otherwise, shuffle
+					Duel.ShuffleHand(rc:GetControler())
 				end)
 	Duel.RegisterEffect(shuffle_eff,0)
 end

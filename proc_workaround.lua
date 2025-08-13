@@ -21,11 +21,11 @@ do
 	shuffle_eff:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	shuffle_eff:SetCode(EVENT_CHAIN_SOLVING)
 	shuffle_eff:SetOperation(function(e,tp,eg,ep,ev,re,r,rp)
+					local rc=re:GetHandler()
 					local player=rc:GetControler()
 					--if this player's hand was already shuffled earlier in this Chain then don't shuffle it again
 					if player_table[player] then return end
 					if Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)~=LOCATION_HAND then return end
-					local rc=re:GetHandler()
 					--if it's not the same card in the hand anymore then don't shuffle
 					if not (rc:IsRelateToEffect(re) and rc:IsLocation(LOCATION_HAND)) then return end
 					--if there's opinfo that would (even potentially) move rc then don't shuffle, e.g. the "Subterror Behemoth" monsters

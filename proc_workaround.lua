@@ -10,11 +10,20 @@ do
 		local possible_ex,possible_tg=Duel.GetPossibleOperationInfo(ev,category)
 		return (ex and tg and tg:IsContains(rc)) or (possible_ex and possible_tg and possible_tg:IsContains(rc))
 	end
-	
+
+	--to keep track of a player whose hand has already been shuffled earlier during the current Chain
+	local player_table={}
+	player_table[0]=false
+	player_table[1]=false
+
+	--shuffle the player's hand at the beginning of an effect's resolution if all the checks are passed
 	local shuffle_eff=Effect.GlobalEffect()
 	shuffle_eff:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	shuffle_eff:SetCode(EVENT_CHAIN_SOLVING)
 	shuffle_eff:SetOperation(function(e,tp,eg,ep,ev,re,r,rp)
+					local player=rc:GetControler()
+					--if this player's hand was already shuffled earlier in this Chain then don't shuffle it again
+					if player_table[player] then return end
 					if Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)~=LOCATION_HAND then return end
 					local rc=re:GetHandler()
 					--if it's not the same card in the hand anymore then don't shuffle
@@ -30,9 +39,20 @@ do
 					if check_opinfo(ev,CATEGORY_EQUIP,rc) then return end
 					if check_opinfo(ev,CATEGORY_RELEASE,rc) then return end
 					--otherwise, shuffle
-					Duel.ShuffleHand(rc:GetControler())
+					Duel.ShuffleHand(player)
+					player_table[player]=true
 				end)
 	Duel.RegisterEffect(shuffle_eff,0)
+
+	--reset the player tracking at the end of each Chain
+	local tracking_eff=Effect.GlobalEffect()
+	tracking_eff:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	tracking_eff:SetCode(EVENT_CHAIN_END)
+	tracking_eff:SetOperation(function()
+					player_table[0]=false
+					player_table[1]=false
+				end)
+	Duel.RegisterEffect(tracking_eff,0)
 end
 
 --[[

@@ -12,7 +12,6 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_PHASE+PHASE_STANDBY)
 	e2:SetRange(LOCATION_GRAVE)
-	e2:SetCountLimit(1,id)
 	e2:SetCondition(function(e,tp) return Duel.IsTurnPlayer(tp) end)
 	e2:SetCost(function(e,tp,eg,ep,ev,re,r,rp,chk)
 		if chk==0 then return Duel.CheckLPCost(tp,1000) end
@@ -63,3 +62,4 @@ function s.skop(e,tp)
 		end
 	end
 end
+

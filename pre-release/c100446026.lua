@@ -50,11 +50,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #hg>0 then Duel.ConfirmCards(1-tp,hg) end
 	if #fg>0 then Duel.HintSelection(fg) end
 	if Duel.SendtoDeck(sg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>0 and Duel.IsPlayerCanDraw(tp) then
-		local ct=Duel.GetOperatedGroup():FilterCount(Card.IsLocation,nil,LOCATION_DECK)
-		if ct>0 then
-			Duel.ShuffleDeck(tp)
+		local og=Duel.GetOperatedGroup():Match(Card.IsLocation,nil,LOCATION_DECK)
+		if #og>0 then
+			if og:IsExists(Card.IsControler,1,nil,tp) then Duel.ShuffleDeck(tp) end
 			Duel.BreakEffect()
-			Duel.Draw(tp,ct,REASON_EFFECT)
+			Duel.Draw(tp,#og,REASON_EFFECT)
 		end
 	end
 end

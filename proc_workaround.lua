@@ -1,6 +1,51 @@
 --Utilities to be added to the core
 
 --[[
+	Phase and step functions
+	If the optional 'player' parameter is provided it will also check that it's that player's turn
+--]]
+local function make_base_phase_function(phase)
+	return function(player)
+		return Duel.GetCurrentPhase()==phase and (player==nil or Duel.IsTurnPlayer(player))
+	end
+end
+
+Duel.IsDrawPhase=make_base_phase_function(PHASE_DRAW)
+
+Duel.IsStandbyPhase=make_base_phase_function(PHASE_STANDBY)
+
+Duel.IsMainPhase1=make_base_phase_function(PHASE_MAIN1)
+
+Duel.IsStartOfBattlePhase=make_base_phase_function(PHASE_BATTLE_START)
+Duel.IsStartStep=Duel.IsStartOfBattlePhase
+
+Duel.IsBattleStep=make_base_phase_function(PHASE_BATTLE_STEP)
+
+Duel.IsDamageCalculation=make_base_phase_function(PHASE_DAMAGE_CAL)
+
+Duel.IsEndOfBattlePhase=make_base_phase_function(PHASE_BATTLE)
+Duel.IsEndStep=Duel.IsEndOfBattlePhase
+
+Duel.IsMainPhase2=make_base_phase_function(PHASE_MAIN2)
+
+Duel.IsEndPhase=make_base_phase_function(PHASE_END)
+
+function Duel.IsMainPhase(player)
+	local current_phase=Duel.GetCurrentPhase()
+	return (current_phase==PHASE_MAIN1 or current_phase==PHASE_MAIN2) and (player==nil or Duel.IsTurnPlayer(player))
+end
+
+function Duel.IsBattlePhase(player)
+	local current_phase=Duel.GetCurrentPhase()
+	return current_phase>=PHASE_BATTLE_START and current_phase<=PHASE_BATTLE and (player==nil or Duel.IsTurnPlayer(player))
+end
+
+function Duel.IsDamageStep(player)
+	local current_phase=Duel.GetCurrentPhase()
+	return (current_phase==PHASE_DAMAGE or current_phase==PHASE_DAMAGE_CAL) and (player==nil or Duel.IsTurnPlayer(player))
+end
+
+--[[
 	Automatically shuffle a player's hand when the effect of a card that they activated in the hand begins resolving, but only if that same card is still in the hand on resolution
 	Fixes cases such as the "Enneacraft" monsters where the opponent shouldn't know if the player Special Summoned the monster whose effect was activated or not
 --]]
@@ -21,11 +66,11 @@ do
 	shuffle_eff:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	shuffle_eff:SetCode(EVENT_CHAIN_SOLVING)
 	shuffle_eff:SetOperation(function(e,tp,eg,ep,ev,re,r,rp)
+					if Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)~=LOCATION_HAND then return end
 					local rc=re:GetHandler()
 					local player=rc:GetControler()
 					--if this player's hand was already shuffled earlier in this Chain then don't shuffle it again
 					if player_table[player] then return end
-					if Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)~=LOCATION_HAND then return end
 					--if it's not the same card in the hand anymore then don't shuffle
 					if not (rc:IsRelateToEffect(re) and rc:IsLocation(LOCATION_HAND)) then return end
 					--if there's opinfo that would (even potentially) move rc then don't shuffle, e.g. the "Subterror Behemoth" monsters
@@ -81,7 +126,9 @@ end)()
 	
 	Also added basic "get" and "is" functions:
 		- Card.GetSummonPhase: Returns the flag effect's label, or 0 if the flag effect doesn't exist
-		- Card.IsSummonPhase: Returns 'true' or 'false' depending on the passed phase, use 'PHASE_MAIN' to check for the Main Phase and 'PHASE_BATTLE' to check for the Battle Phase (any other phase has no special handling and is checked as is)
+		- Card.IsSummonPhase: Returns 'true' or 'false' depending on the passed phase
+		- Card.IsSummonPhaseMain: Returns 'true' if the card was summoned during the Main Phase (1 or 2)
+		- Card.IsSummonPhaseBattle: Returns 'true' if the card was summoned during the Battle Phase
 --]]
 do
 	--Store each monster's summon phase
@@ -104,13 +151,13 @@ function Card.GetSummonPhase(c)
 	return c:HasFlagEffect(160214042) and c:GetFlagEffectLabel(160214042) or 0
 end
 function Card.IsSummonPhase(c,phase)
-	if phase==PHASE_MAIN then
-		return c:GetSummonPhase()==PHASE_MAIN1 or c:GetSummonPhase()==PHASE_MAIN2
-	elseif phase==PHASE_BATTLE then
-		return c:GetSummonPhase()>=PHASE_BATTLE_START and c:GetSummonPhase()<=PHASE_BATTLE
-	else
-		return c:GetSummonPhase()==phase
-	end
+	return c:GetSummonPhase()==phase
+end
+function Card.IsSummonPhaseMain(c)
+	return c:GetSummonPhase()==PHASE_MAIN1 or c:GetSummonPhase()==PHASE_MAIN2
+end
+function Card.IsSummonPhaseBattle(c)
+	return c:GetSummonPhase()>=PHASE_BATTLE_START and c:GetSummonPhase()<=PHASE_BATTLE
 end
 
 --[[

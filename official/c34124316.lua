@@ -5,6 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--flip
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_SPECIAL_SUMMON+CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_FLIP)
 	e1:SetTarget(s.target)
@@ -38,7 +39,7 @@ local function summon(g,e,p,tograve,ft)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(tp,LOCATION_MZONE,LOCATION_MZONE)
-	Duel.Destroy(g,REASON_EFFECT)
+	if not Duel.Destroy(g,REASON_EFFECT)>0 then return end
 	Duel.BreakEffect()
 	local p=Duel.GetTurnPlayer()
 	local summonable1,nonsummonable1=Duel.GetDecktopGroup(p,5):Split(s.spchk,nil,e,p)

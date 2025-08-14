@@ -2,8 +2,8 @@
 --Nightmare Wheel
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddPersistentProcedure(c,1,nil,CATEGORY_DISABLE,nil,TIMING_STANDBY_PHASE,TIMINGS_CHECK_MONSTER,nil,nil,nil,nil,true)
-	--eff
+	aux.AddPersistentProcedure(c,1,nil,CATEGORY_POSITION,nil,TIMING_STANDBY_PHASE,TIMINGS_CHECK_MONSTER,nil,nil,nil,nil,true)
+	--It cannot attack or change its battle position
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_ATTACK)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_CANNOT_CHANGE_POSITION)
 	e2:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
 	c:RegisterEffect(e2)
-	--damage
+	--Inflict 500 damage to your opponent
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.damtg)
 	e3:SetOperation(s.damop)
 	c:RegisterEffect(e3)
-	--Destroy
+	--When it leaves the field, destroy this card
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 	e4:SetRange(LOCATION_SZONE)
@@ -55,7 +55,6 @@ function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,500)
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Damage(p,d,REASON_EFFECT)
 end

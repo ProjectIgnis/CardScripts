@@ -114,8 +114,8 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thpztg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
 	local g=e:GetLabelObject():Filter(s.thpzfilter,nil,tp)
+	if chk==0 then return #g>0 end
 	Duel.SetTargetCard(g)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,g,1,tp,0)
 end

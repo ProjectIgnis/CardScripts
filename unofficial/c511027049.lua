@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetOperation(function(e,tp) Duel.SendtoHand(e:GetHandler(),nil,REASON_EFFECT) end)
 	c:RegisterEffect(e2)
 end
-
+s.listed_names={83965310}
 function s.plasmacon(e)
 	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,83965310),e:GetHandlerPlayer(),LOCATION_ONFIELD,0,1,nil)
 end
@@ -62,4 +62,5 @@ function s.skop(e,tp)
 		end
 	end
 end
+
 

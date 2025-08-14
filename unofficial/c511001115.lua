@@ -1,73 +1,61 @@
---Advanced Crystal Beast Amethyst Cat
+--Ａ宝玉獣 アメジスト・キャット (Anime)
+--Advanced Crystal Beast Amethyst Cat (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
 	--Treated as "Crystal Beast Amethyst Cat"
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_SINGLE)
+	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e0:SetCode(EFFECT_ADD_CODE)
+	e0:SetValue(32933942)
+	c:RegisterEffect(e0)
+	--Destroy this card if "Advanced Dark" is not on the field
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e1:SetCode(EFFECT_ADD_CODE)
-	e1:SetValue(32933942)
+	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e1:SetCode(EFFECT_SELF_DESTROY)
+	e1:SetRange(LOCATION_MZONE)
+	e1:SetCondition(function(e) return not Duel.IsEnvironment(CARD_ADVANCED_DARK) end)
 	c:RegisterEffect(e1)
-	--Direct Attack
+	--This card can attack directly, but your opponent takes half damage if it attacks directly with this effect
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_DIRECT_ATTACK)
 	c:RegisterEffect(e2)
-	--Turn into Crystal
+	--Damage halving handling
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(32933942,0))
-	e3:SetCode(EFFECT_SEND_REPLACE)
-	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_UNCOPYABLE)
-	e3:SetRange(LOCATION_MZONE)
-	e3:SetTarget(s.crystaltg)
-	e3:SetOperation(s.crystalop)
+	e3:SetType(EFFECT_TYPE_SINGLE)
+	e3:SetCode(EFFECT_CHANGE_BATTLE_DAMAGE)
+	e3:SetCondition(s.rdcon)
+	e3:SetValue(aux.ChangeBattleDamage(1,HALF_DAMAGE))
 	c:RegisterEffect(e3)
-	--damage reduce
+	--When this card is destroyed, you can place it in the Spell & Trap Zone as a Continuous Spell instead of sending it to the GY
 	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
-	e4:SetRange(LOCATION_MZONE)
-	e4:SetCode(EVENT_PRE_BATTLE_DAMAGE)
-	e4:SetCondition(s.rdcon)
-	e4:SetOperation(s.rdop)
+	e4:SetType(EFFECT_TYPE_SINGLE)
+	e4:SetProperty(EFFECT_FLAG_UNCOPYABLE)
+	e4:SetCode(EFFECT_TO_GRAVE_REDIRECT_CB)
+	e4:SetCondition(s.replacecon)
+	e4:SetOperation(s.replaceop)
 	c:RegisterEffect(e4)
-	--selfdes
-	local e5=Effect.CreateEffect(c)
-	e5:SetType(EFFECT_TYPE_SINGLE)
-	e5:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e5:SetCode(EFFECT_SELF_DESTROY)
-	e5:SetRange(LOCATION_MZONE)
-	e5:SetCondition(s.descon)
-	c:RegisterEffect(e5)
 end
-s.listed_names={12644061}
-function s.descon(e)
-	local c=e:GetHandler()
-	return not Duel.IsEnvironment(12644061) and (c:IsLocation(LOCATION_MZONE) or c:GetType()&TYPE_CONTINUOUS+TYPE_SPELL==TYPE_CONTINUOUS+TYPE_SPELL)
+s.listed_names={CARD_ADVANCED_DARK,32933942} --"Crystal Beast Amethyst Cat"
+function s.rdcon(e)
+	local c,tp=e:GetHandler(),e:GetHandlerPlayer()
+	return Duel.GetAttackTarget()==nil and c:GetEffectCount(EFFECT_DIRECT_ATTACK)<2
+		and Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0
 end
-function s.crystaltg(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.replacecon(e)
 	local c=e:GetHandler()
-	if chk==0 then return c:GetDestination()==LOCATION_GRAVE and c:IsReason(REASON_DESTROY) end
-	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return false end
-	return Duel.SelectEffectYesNo(tp,c)
+	return c:IsFaceup() and c:IsLocation(LOCATION_MZONE) and c:IsReason(REASON_DESTROY)
 end
-function s.crystalop(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.replaceop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	Duel.MoveToField(c,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
 	local e1=Effect.CreateEffect(c)
 	e1:SetCode(EFFECT_CHANGE_TYPE)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET)
-	e1:SetValue(TYPE_SPELL+TYPE_CONTINUOUS)
+	e1:SetReset((RESET_EVENT|RESETS_STANDARD)&~RESET_TURN_SET)
+	e1:SetValue(TYPE_SPELL|TYPE_CONTINUOUS)
 	c:RegisterEffect(e1)
-	Duel.RaiseEvent(c,47408488,e,0,tp,0,0)
-end
-function s.rdcon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	return ep~=tp and c==Duel.GetAttacker() and Duel.GetAttackTarget()==nil
-		and c:GetEffectCount(EFFECT_DIRECT_ATTACK)<2 and Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0
-end
-function s.rdop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.ChangeBattleDamage(ep,ev/2)
+	Duel.RaiseEvent(c,EVENT_CUSTOM+CARD_CRYSTAL_TREE,e,0,tp,0,0)
 end

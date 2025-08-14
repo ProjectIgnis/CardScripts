@@ -47,7 +47,7 @@ function s.recop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Recover(p,val,REASON_EFFECT)
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():RegisterFlagEffect(id,(RESETS_STANDARD|RESET_OVERLAY)&~(RESET_LEAVE|RESET_TOGRAVE),0,0)
+	e:GetHandler():RegisterFlagEffect(id,(RESET_EVENT|RESETS_STANDARD|RESET_OVERLAY)&~(RESET_LEAVE|RESET_TOGRAVE),0,0)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetFlagEffect(id)~=0 and e:GetHandler():IsReason(REASON_DESTROY)

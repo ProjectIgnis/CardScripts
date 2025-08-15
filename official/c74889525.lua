@@ -69,7 +69,7 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() and Duel.GetControl(tc,tp) then
 		local c=e:GetHandler()
-		local reset=RESET_EVENT|(RESETS_STANDARD&~RESET_TURN_SET)|RESET_PHASE|PHASE_END
+		local reset=RESET_EVENT|(RESETS_STANDARD_PHASE_END&~RESET_TURN_SET)
 		--Cannot attack this turn
 		local e1=Effect.CreateEffect(c)
 		e1:SetDescription(3206)

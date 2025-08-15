@@ -70,14 +70,13 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(e) and tc then
 		local zone=c:GetLinkedZone()&ZONES_MMZ
 		if Duel.GetControl(tc,tp,PHASE_END,1,zone)~=0 then
-			local reset=RESET_EVENT|(RESETS_STANDARD&~RESET_TURN_SET)|RESET_PHASE|PHASE_END
 			--Cannot attack
 			local e1=Effect.CreateEffect(c)
 			e1:SetDescription(3206)
 			e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_CANNOT_ATTACK)
-			e1:SetReset(reset)
+			e1:SetReset(RESET_EVENT|(RESETS_STANDARD_PHASE_END&~RESET_TURN_SET))
 			tc:RegisterEffect(e1)
 		end
 	end

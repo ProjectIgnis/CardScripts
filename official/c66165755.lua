@@ -44,7 +44,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_SET_ATTACK)
 	e1:SetValue(tc:GetTextAttack()*2)
-	e1:SetReset(RESET_EVENT|(RESETS_STANDARD&~RESET_TOFIELD)|RESET_PHASE|PHASE_END)
+	e1:SetReset(RESET_EVENT|(RESETS_STANDARD_PHASE_END&~RESET_TOFIELD))
 	tc:RegisterEffect(e1)
 	--Cannot attack directly
 	local e2=Effect.CreateEffect(e:GetHandler())

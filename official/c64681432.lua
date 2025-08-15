@@ -67,7 +67,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tgreg1(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD-RESET_TURN_SET-RESET_TEMP_REMOVE-RESET_LEAVE|RESET_PHASE|PHASE_END,0,1)
+	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD&~(RESET_TURN_SET|RESET_TEMP_REMOVE|RESET_LEAVE)|RESET_PHASE|PHASE_END,0,1)
 end
 function s.tgreg2(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|(RESETS_STANDARD&~RESET_TURN_SET)|RESET_PHASE|PHASE_END,0,1)

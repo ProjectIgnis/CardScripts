@@ -29,6 +29,6 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_SET_BASE_DEFENSE)
 	e2:SetValue(1200)
-	e2:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE-RESET_TOFIELD)
+	e2:SetReset(RESET_EVENT|(RESETS_STANDARD_DISABLE&~RESET_TOFIELD))
 	c:RegisterEffect(e2)
 end

@@ -40,7 +40,7 @@ end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not re:IsMonsterEffect() or re:GetHandler()==c then return end
-	c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD-RESET_TURN_SET|RESET_CHAIN,0,1)
+	c:RegisterFlagEffect(id,RESET_EVENT|(RESETS_STANDARD&~RESET_TURN_SET)|RESET_CHAIN,0,1)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

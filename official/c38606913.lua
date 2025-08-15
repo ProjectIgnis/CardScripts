@@ -93,7 +93,7 @@ function s.damact(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetLabelObject(tc)
 		e2:SetReset(RESET_PHASE|PHASE_END)
 		Duel.RegisterEffect(e2,tp)
-		tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD-RESET_LEAVE-RESET_TOGRAVE|RESET_PHASE|PHASE_END,0,1)
+		tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD&~(RESET_LEAVE|RESET_TOGRAVE)|RESET_PHASE|PHASE_END,0,1)
 		tc:CreateEffectRelation(e1)
 	end
 end

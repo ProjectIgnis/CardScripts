@@ -34,7 +34,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCondition(s.damcon)
 	e1:SetTarget(s.damtg)
 	e1:SetOperation(s.damop)
-	e1:SetReset(RESET_EVENT|RESETS_CANNOT_ACT-RESET_TOGRAVE-RESET_REMOVE)
+	e1:SetReset(RESET_EVENT|RESETS_CANNOT_ACT&~(RESET_TOGRAVE|RESET_REMOVE))
 	c:RegisterEffect(e1,true)
 	Duel.SpecialSummonComplete()
 end

@@ -23,7 +23,7 @@ function s.matcheck(e,c)
 		ae:SetType(EFFECT_TYPE_SINGLE)
 		ae:SetCode(EFFECT_SET_ATTACK)
 		ae:SetValue(ct*500)
-		ae:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE-RESET_TOFIELD)
+		ae:SetReset(RESET_EVENT|(RESETS_STANDARD_DISABLE&~RESET_TOFIELD))
 		c:RegisterEffect(ae)
 	end
 	if ct>=2 then

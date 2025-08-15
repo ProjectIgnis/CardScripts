@@ -33,7 +33,7 @@ function s.ovfilter(c,tp,xyzc)
 end
 function s.xyzop(e,tp,chk)
 	if chk==0 then return true end
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD-RESET_TOFIELD|RESET_PHASE|PHASE_END,0,1)
+	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|(RESETS_STANDARD&~RESET_TOFIELD)|RESET_PHASE|PHASE_END,0,1)
 	return true
 end
 function s.rmfilter(c)

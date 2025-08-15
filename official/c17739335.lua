@@ -51,7 +51,7 @@ function s.matcheck(e,c)
 		e1:SetValue(1)
 		e1:SetReset(RESET_EVENT|(RESETS_STANDARD&~RESET_TOFIELD))
 		c:RegisterEffect(e1)
-		c:RegisterFlagEffect(0,RESET_EVENT|RESETS_STANDARD-RESET_TOFIELD,EFFECT_FLAG_CLIENT_HINT,1,0,3201)
+		c:RegisterFlagEffect(0,RESET_EVENT|(RESETS_STANDARD&~RESET_TOFIELD),EFFECT_FLAG_CLIENT_HINT,1,0,3201)
 	end
 end
 function s.descond(e)

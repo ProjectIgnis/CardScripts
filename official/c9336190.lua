@@ -86,7 +86,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 			e2:SetCode(EFFECT_CHANGE_LEVEL_FINAL)
 			e2:SetValue(lv)
-			e2:SetReset(RESET_EVENT|RESETS_STANDARD-RESET_TURN_SET)
+			e2:SetReset(RESET_EVENT|RESETS_STANDARD&~RESET_TURN_SET)
 			c:RegisterEffect(e2,true)
 		end
 	end

@@ -101,7 +101,7 @@ function s.ttop2(e,tp,eg,ep,ev,re,r,rp,c,minc,zone,relzone,exeff)
 end
 function s.retreg(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD-RESET_TURN_SET|RESET_PHASE|PHASE_END,0,2)
+	c:RegisterFlagEffect(id,RESET_EVENT|(RESETS_STANDARD&~RESET_TURN_SET)|RESET_PHASE|PHASE_END,0,2)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_PHASE+PHASE_END)

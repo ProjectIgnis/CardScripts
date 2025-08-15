@@ -59,7 +59,7 @@ function s.chain_operation(e,te,tp,tc,mat,sumtype,sg,sumpos)
 		tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD-(RESET_TOFIELD|RESET_TURN_SET),0,1)
 	else
 		Duel.SpecialSummonStep(tc,sumtype,tp,tp,false,false,sumpos)
-		tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD-RESET_TURN_SET,0,1)
+		tc:RegisterFlagEffect(id,RESET_EVENT|(RESETS_STANDARD&~RESET_TURN_SET),0,1)
 	end
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)

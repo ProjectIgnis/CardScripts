@@ -1,48 +1,39 @@
 --Ｅ・ＨＥＲＯ ダーク・ブライトマン (Anime)
 --Elemental HERO Darkbright (Anime)
---fixed by MLD & Larry126
 local s,id=GetID()
 function s.initial_effect(c)
-	--fusion material
 	c:EnableReviveLimit()
+	--Fusion Material: "Elemental HERO Sparkman" + "Elemental HERO Necroshade"
 	Fusion.AddProcMix(c,true,true,20721928,89252153)
-	--spsummon condition
+	c:AddMustBeFusionSummoned()
+	--If this card battles a Defense Position monster, inflict piercing damage
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
-	e1:SetValue(aux.fuslimit)
+	e1:SetCode(EFFECT_PIERCE)
 	c:RegisterEffect(e1)
-	--pierce
+	--Change this card to Defense Position at the end of the Damage Step if it attacks
 	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetCode(EFFECT_PIERCE)
+	e2:SetCategory(CATEGORY_POSITION)
+	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
+	e2:SetCode(EVENT_DAMAGE_STEP_END)
+	e2:SetCondition(function(e) return Duel.GetAttacker()==e:GetHandler() and e:GetHandler():IsRelateToBattle() end)
+	e2:SetOperation(s.posop)
 	c:RegisterEffect(e2)
-	--to defense
+	--Destroy 1 monster your opponent controls if this card is destroyed and send it to the Graveyard
 	local e3=Effect.CreateEffect(c)
-	e3:SetCategory(CATEGORY_POSITION)
-	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e3:SetCode(EVENT_DAMAGE_STEP_END)
-	e3:SetCondition(s.poscon)
-	e3:SetOperation(s.posop)
+	e3:SetDescription(aux.Stringid(41517968,0))
+	e3:SetCategory(CATEGORY_DESTROY)
+	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
+	e3:SetCode(EVENT_DESTROYED)
+	e3:SetTarget(s.destg)
+	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
-	--destroy
-	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(41517968,0))
-	e4:SetCategory(CATEGORY_DESTROY)
-	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
-	e4:SetCode(EVENT_DESTROYED)
-	e4:SetTarget(s.destg)
-	e4:SetOperation(s.desop)
-	c:RegisterEffect(e4)
 end
-s.material_setcode={0x8,0x3008}
-function s.poscon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsRelateToBattle()
-end
+s.material_setcode={SET_HERO,SET_ELEMENTAL_HERO}
 function s.posop(e,tp,eg,ep,ev,re,r,rp)
-	if e:GetHandler():IsRelateToEffect(e) then
-		Duel.ChangePosition(e:GetHandler(),POS_FACEUP_DEFENSE,POS_FACEDOWN_DEFENSE,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK)
+	local c=e:GetHandler()
+	if c:IsAttackPos() then
+		Duel.ChangePosition(c,POS_FACEUP_DEFENSE)
 	end
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -56,5 +47,6 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 then
 		Duel.HintSelection(g)
 		Duel.Destroy(g,REASON_EFFECT)
+		Duel.SendtoGrave(g,REASON_EFFECT)
 	end
 end

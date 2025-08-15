@@ -18,8 +18,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
-function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsStatus(STATUS_SPSUMMON_TURN)
+function s.condition(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	return c:IsSummonPhaseMain() and c:IsStatus(STATUS_SPSUMMON_TURN)
 end
 function s.filter(c,e,tp)
 	return c:IsLevel(8) and c:IsRace(RACE_GALAXY) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

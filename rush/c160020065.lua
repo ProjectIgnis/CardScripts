@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
-	e1:SetCondition(function(e) return e:GetHandler():IsStatus(STATUS_SPSUMMON_TURN) end)
+	e1:SetCondition(s.condition)
 	e1:SetTarget(Fusion.SummonEffTG(table.unpack(params)))
 	e1:SetOperation(Fusion.SummonEffOP(table.unpack(params)))
 	c:RegisterEffect(e1)
@@ -29,4 +29,8 @@ function s.mfilter(c)
 end
 function s.fextra(e,tp,mg)
 	return Duel.GetMatchingGroup(s.mfilter,tp,LOCATION_GRAVE,0,nil)
+end
+function s.condition(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	return c:IsSummonPhaseMain() and c:IsStatus(STATUS_SPSUMMON_TURN)
 end

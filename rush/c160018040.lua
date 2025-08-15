@@ -19,14 +19,15 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsStatus(STATUS_SPSUMMON_TURN)
-end
 function s.contactfil(tp)
 	return Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsAbleToDeckOrExtraAsCost),tp,LOCATION_ONFIELD,0,nil)
 end
 function s.contactop(g,tp)
 	Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST+REASON_MATERIAL)
+end
+function s.condition(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	return c:IsSummonPhaseMain() and c:IsStatus(STATUS_SPSUMMON_TURN)
 end
 function s.desfilter(c)
 	return c:IsFaceup() and c:IsNotMaximumModeSide()

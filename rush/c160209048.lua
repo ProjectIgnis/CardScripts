@@ -17,7 +17,8 @@ function s.initial_effect(c)
 end
 s.listed_names={52097679,160004052}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsStatus(STATUS_SUMMON_TURN|STATUS_SPSUMMON_TURN)
+	local c=e:GetHandler()
+	return c:IsSummonPhaseMain() and c:IsStatus(STATUS_SUMMON_TURN+STATUS_SPSUMMON_TURN)
 end
 function s.ssfilter(c)
 	return c:IsCode(52097679,160004052) and c:IsSpellTrap() and c:IsSSetable() and not c:IsType(TYPE_FIELD)

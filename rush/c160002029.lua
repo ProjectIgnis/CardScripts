@@ -16,7 +16,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.spcond(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsStatus(STATUS_SUMMON_TURN+STATUS_SPSUMMON_TURN)
+	local c=e:GetHandler()
+	return c:IsStatus(STATUS_SUMMON_TURN+STATUS_SPSUMMON_TURN) and c:IsSummonPhaseMain()
 end
 function s.filter(c,e,tp)
 	return c:IsType(TYPE_NORMAL) and c:IsRace(RACE_DINOSAUR) and c:IsLevelBelow(6) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

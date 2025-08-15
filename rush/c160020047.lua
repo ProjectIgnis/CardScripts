@@ -32,7 +32,7 @@ function s.contactop(g,tp)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsStatus(STATUS_SPSUMMON_TURN) and c:IsSummonType(SUMMON_TYPE_FUSION)
+	return c:IsSummonPhaseMain() and c:IsStatus(STATUS_SPSUMMON_TURN) and c:IsSummonType(SUMMON_TYPE_FUSION)
 end
 function s.filter(c)
 	return c:IsSpellTrap() and c:IsAbleToDeck()

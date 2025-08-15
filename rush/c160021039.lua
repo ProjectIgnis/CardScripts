@@ -56,7 +56,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(1)
 		tc:RegisterEffect(e1)
 	end
-	if c:IsStatus(STATUS_SPSUMMON_TURN) and c:IsSummonType(SUMMON_TYPE_FUSION) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+	if c:IsSummonPhaseMain() and c:IsStatus(STATUS_SPSUMMON_TURN) and c:IsSummonType(SUMMON_TYPE_FUSION) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.Recover(tp,2000,REASON_EFFECT)
 	end
 end

@@ -21,7 +21,7 @@ end
 s.listed_names={160421024,160020061}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsStatus(STATUS_SPSUMMON_TURN) and c:IsSummonType(SUMMON_TYPE_FUSION)
+	return c:IsSummonPhaseMain() and c:IsStatus(STATUS_SPSUMMON_TURN) and c:IsSummonType(SUMMON_TYPE_FUSION)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,2) end

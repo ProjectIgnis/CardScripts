@@ -16,7 +16,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.poscond(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsStatus(STATUS_SUMMON_TURN+STATUS_SPSUMMON_TURN)
+	local c=e:GetHandler()
+	return c:IsStatus(STATUS_SUMMON_TURN+STATUS_SPSUMMON_TURN) and c:IsSummonPhaseMain()
 end
 function s.filter(c)
 	return c:IsFacedown() and c:IsDefensePos()

@@ -13,24 +13,11 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	--Register when a player Summons a monster
-	aux.GlobalCheck(s,function()
-		local ge1=Effect.CreateEffect(c)
-		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge1:SetCode(EVENT_SUMMON_SUCCESS)
-		ge1:SetLabel(id)
-		ge1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		ge1:SetOperation(aux.sumreg)
-		Duel.RegisterEffect(ge1,0)
-		local ge2=ge1:Clone()
-		ge2:SetCode(EVENT_SPSUMMON_SUCCESS)
-		ge2:SetLabel(id)
-		Duel.RegisterEffect(ge2,0)
-	end)
 end
 s.listed_names={160302004}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetFlagEffect(id)~=0
+	local c=e:GetHandler()
+	return c:IsSummonPhaseMain() and c:IsStatus(STATUS_SUMMON_TURN+STATUS_SPSUMMON_TURN)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,2) end

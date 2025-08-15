@@ -32,7 +32,8 @@ function s.initial_effect(c)
 end
 s.material_setcode=SET_GAIA_THE_FIERCE_KNIGHT
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():CanAttack() and e:GetHandler():IsStatus(STATUS_SPSUMMON_TURN)
+	local c=e:GetHandler()
+	return c:CanAttack() and c:IsSummonPhaseMain() and c:IsStatus(STATUS_SPSUMMON_TURN)
 end
 function s.cfilter(c)
 	return c:IsMonster() and not c:IsRace(RACE_MAGICALKNIGHT) and c:IsAbleToDeckOrExtraAsCost()
@@ -61,7 +62,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsStatus(STATUS_SPSUMMON_TURN)
+	local c=e:GetHandler()
+	return c:IsSummonPhaseMain() and c:IsStatus(STATUS_SPSUMMON_TURN)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local dg=Duel.GetMatchingGroup(Card.IsSpellTrap,tp,0,LOCATION_ONFIELD,nil)

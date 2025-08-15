@@ -17,7 +17,8 @@ function s.initial_effect(c)
 end
 s.listed_names={160011040} --Galactica Xiphos
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsStatus(STATUS_SUMMON_TURN+STATUS_SPSUMMON_TURN) and Duel.IsExistingMatchingCard(Card.IsRace,tp,LOCATION_GRAVE,0,3,nil,RACE_GALAXY)
+	local c=e:GetHandler()
+	return c:IsSummonPhaseMain() and c:IsStatus(STATUS_SUMMON_TURN+STATUS_SPSUMMON_TURN) and Duel.IsExistingMatchingCard(Card.IsRace,tp,LOCATION_GRAVE,0,3,nil,RACE_GALAXY)
 end
 function s.thfilter(c)
 	return c:IsCode(160011040) and c:IsAbleToHand()

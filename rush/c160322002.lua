@@ -53,7 +53,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetValue(CARD_HARPIE_LADY)
 	e1:SetReset(RESETS_STANDARD_PHASE_END)
 	c:RegisterEffect(e1)
-	if c:IsStatus(STATUS_SPSUMMON_TURN) and Duel.IsExistingMatchingCard(Card.IsSpellTrap,tp,0,LOCATION_ONFIELD,1,nil)
+	if c:IsSummonPhaseMain() and c:IsStatus(STATUS_SPSUMMON_TURN) and Duel.IsExistingMatchingCard(Card.IsSpellTrap,tp,0,LOCATION_ONFIELD,1,nil)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 		local dg=Duel.SelectMatchingCard(tp,Card.IsSpellTrap,tp,0,LOCATION_ONFIELD,1,1,nil)

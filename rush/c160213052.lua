@@ -23,7 +23,7 @@ function s.matfilter(c,fc,sumtype,tp)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsStatus(STATUS_SPSUMMON_TURN) and c:IsSummonType(SUMMON_TYPE_FUSION)
+	return c:IsSummonPhaseMain() and c:IsStatus(STATUS_SPSUMMON_TURN) and c:IsSummonType(SUMMON_TYPE_FUSION)
 end
 function s.cfilter(c)
 	return c:IsMonster() and c:IsRace(RACE_INSECT) and not c:IsLevel(9) and c:IsAbleToDeckOrExtraAsCost()

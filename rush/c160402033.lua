@@ -19,9 +19,10 @@ function s.filter(c)
 	return c:IsFaceup() and c:GetLevel()>0
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	local g=Duel.GetMatchingGroup(aux.FilterMaximumSideFunctionEx(s.filter),tp,0,LOCATION_MZONE,nil)
 	local lvl=g:GetSum(Card.GetLevel)
-	return lvl>=10 and e:GetHandler():IsStatus(STATUS_SUMMON_TURN|STATUS_SPSUMMON_TURN)
+	return lvl>=10 and c:IsSummonPhaseMain() and c:IsStatus(STATUS_SUMMON_TURN+STATUS_SPSUMMON_TURN)
 end
 function s.thfilter(c)
 	return c:IsMonster() and c:IsAttribute(ATTRIBUTE_DARK) and c:IsRace(RACE_DRAGON|RACE_FIEND) and c:IsDefense(1200) and c:IsAbleToHand()

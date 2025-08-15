@@ -16,7 +16,9 @@ function s.initial_effect(c)
 end
 s.listed_names={160005065,160004030,160203039}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,LOCATION_MZONE,0,3,nil) and e:GetHandler():IsStatus(STATUS_SUMMON_TURN+STATUS_SPSUMMON_TURN)
+	local c=e:GetHandler()
+	return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,LOCATION_MZONE,0,3,nil) 
+		and c:IsSummonPhaseMain() and c:IsStatus(STATUS_SUMMON_TURN+STATUS_SPSUMMON_TURN)
 end
 function s.setfilter(c)
 	return c:IsCode(160005065) and c:IsSSetable()

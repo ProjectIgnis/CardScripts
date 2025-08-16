@@ -20,7 +20,7 @@ function s.filter(c,tp)
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,c:GetCode(),c:GetSetCard(),TYPES_TOKEN,0,0,0,RACE_AQUA,ATTRIBUTE_WATER)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil,tp) and CheckPillars(tp,1) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil,tp) and IcePillarZone.CheckPillars(tp,1) end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not CheckPillars(tp,1) then return end

@@ -1,6 +1,6 @@
 --N・グロー・モス (Anime)
 --Neo-Spacian Glow Moss (Anime)
---scripted by Larry126
+--Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -10,19 +10,17 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e1:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCondition(s.condition)
+	e1:SetCondition(function(e) return e:GetHandler()==Duel.GetAttacker() or e:GetHandler()==Duel.GetAttackTarget() end)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler()==Duel.GetAttacker() or e:GetHandler()==Duel.GetAttackTarget()
-end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():GetFlagEffect(id)==0 end
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE,0,1)
-	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,1-tp,1)
-	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,tp,2)
+	local c=e:GetHandler()
+	if chk==0 then return not c:HasFlagEffect(id) end
+	c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_DAMAGE,0,1)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_DRAW,nil,0,1-tp,1)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_DECKDES,nil,0,tp,2)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFieldGroupCount(1-tp,LOCATION_DECK,0)==0 then
@@ -37,15 +35,22 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.DiscardDeck(tp,2,REASON_EFFECT)
 	end
 	local c=e:GetHandler()
-	if tc:IsMonster() then
-		Duel.SkipPhase(Duel.GetTurnPlayer(),PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
-	elseif tc:IsSpell() then
-		if c==Duel.GetAttacker() and not c:IsHasEffect(EFFECT_CANNOT_DIRECT_ATTACK)
-			and c:IsRelateToEffect(e) and c:IsFaceup() and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
-			Duel.ChangeAttackTarget(nil)
+	if tc:IsSpell() then
+        if Duel.GetAttacker()==c and not c:IsHasEffect(EFFECT_CANNOT_DIRECT_ATTACK)
+            and c:IsRelateToEffect(e) and c:IsFaceup() and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+            Duel.ChangeAttackTarget(nil)
+        end
+	elseif tc:IsMonster() then
+		if Duel.GetAttacker()==c then
+			c:SetStatus(STATUS_ATTACK_CANCELED,true)
+			c:ResetFlagEffect(id)
+		elseif Duel.GetAttackTarget()==c then
+			local bc=c:GetBattleTarget()
+			bc:SetStatus(STATUS_ATTACK_CANCELED,true)
+			c:ResetFlagEffect(id)
 		end
 	else
-		if c:IsRelateToEffect(e) and c:IsFaceup() then
+		if c:IsRelateToEffect(e) and c:IsAttackPos() then
 			Duel.ChangePosition(c,POS_FACEUP_DEFENSE)
 		end
 	end

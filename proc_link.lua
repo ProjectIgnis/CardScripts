@@ -53,7 +53,7 @@ function Link.CheckRecursive(c,tp,sg,mg,lc,minc,maxc,f,specialchk,og,emt,filt)
 		end
 	end
 	if not og:IsContains(c) then
-		res=aux.CheckValidExtra(c,tp,sg,mg,lc,emt,filt)
+		local res=aux.CheckValidExtra(c,tp,sg,mg,lc,emt,filt)
 		if not res then
 			sg:RemoveCard(c)
 			return false
@@ -74,7 +74,7 @@ function Link.CheckRecursive2(c,tp,sg,sg2,secondg,mg,lc,minc,maxc,f,specialchk,o
 		end
 	end
 	if not og:IsContains(c) then
-		res=aux.CheckValidExtra(c,tp,sg,mg,lc,emt,filt)
+		local res=aux.CheckValidExtra(c,tp,sg,mg,lc,emt,filt)
 		if not res then
 			sg:RemoveCard(c)
 			return false

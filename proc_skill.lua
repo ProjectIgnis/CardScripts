@@ -74,7 +74,7 @@ function Auxiliary.AddFieldSkillProcedure(c,coverNum,drawless)
 end
 function Auxiliary.fieldop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.DisableShuffleCheck(true)
-	p=e:GetHandler():GetControler()
+	local p=e:GetHandler():GetControler()
 	Duel.MoveToField(e:GetHandler(),tp,tp,LOCATION_FZONE,POS_FACEDOWN,true)
 	Duel.ChangePosition(e:GetHandler(),POS_FACEUP)
 	if e:GetHandler():IsPreviousLocation(LOCATION_HAND) then
@@ -113,7 +113,7 @@ end
 function Auxiliary.continuousOp(flip)
 	return function(e,tp,eg,ep,ev,re,r,rp)
 		Duel.DisableShuffleCheck(true)
-		p=e:GetHandlerPlayer()
+		local p=e:GetHandlerPlayer()
 		Duel.MoveToField(e:GetHandler(),tp,tp,LOCATION_SZONE,POS_FACEDOWN,true,(1 << 2))
 		if flip then
 			Duel.ChangePosition(e:GetHandler(),POS_FACEUP)

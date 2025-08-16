@@ -156,7 +156,7 @@ function Auxiliary.SetUnionState(c)
 	end
 end
 function Auxiliary.CheckUnionEquip(uc,tc)
-	ct1,ct2=tc:GetUnionCount()
+	local ct1,ct2=tc:GetUnionCount()
 	if uc.old_union then return ct1==0
 	else return ct2==0 end
 end

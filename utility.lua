@@ -880,7 +880,7 @@ function bit.bnot(a)
 end
 
 local function fieldargs(f,width)
-	w=width or 1
+	local w=width or 1
 	assert(f>=0,"field cannot be negative")
 	assert(w>0,"width must be positive")
 	assert(f+w<=64,"trying to access non-existent bits")
@@ -2577,7 +2577,7 @@ function Duel.ActivateFieldSpell(c,e,tp,eg,ep,ev,re,r,rp,target_p)
 		local fc=Duel.GetFieldCard(target_p,LOCATION_FZONE,0)
 		if Duel.IsDuelType(DUEL_1_FIELD) then
 			if fc then Duel.Destroy(fc,REASON_RULE) end
-			of=Duel.GetFieldCard(1-target_p,LOCATION_FZONE,0)
+			local of=Duel.GetFieldCard(1-target_p,LOCATION_FZONE,0)
 			if of and Duel.Destroy(of,REASON_RULE)==0 then
 				Duel.SendtoGrave(c,REASON_RULE)
 				return false

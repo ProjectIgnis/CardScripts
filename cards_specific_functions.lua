@@ -1074,7 +1074,7 @@ Effect.CreateVernalizerSPEffect=(function()
 		Duel.SendtoGrave(g+c,REASON_COST+REASON_DISCARD)
 	end
 
-	function vernspfilter(c,e,tp,code)
+	local function vernspfilter(c,e,tp,code)
 		return c:IsAttribute(ATTRIBUTE_EARTH) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not (code and c:IsCode(code))
 	end
 

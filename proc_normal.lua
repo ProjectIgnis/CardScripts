@@ -21,7 +21,7 @@ function Auxiliary.AddNormalSummonProcedure(c,ns,opt,min,max,val,desc,f,sumop)
 	c:RegisterEffect(e1)
 	return e1
 end
-function maplevel(level)
+local function maplevel(level)
 	if level>=5 and level<=6 then
 		return 1
 	elseif level>=7 then

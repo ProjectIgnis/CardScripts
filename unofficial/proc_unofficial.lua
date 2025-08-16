@@ -904,7 +904,7 @@ function UnofficialProc.raDefusion()
 			and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 			and fusc:CheckFusionMaterial(mg,c,PLAYER_NONE|FUSPROC_NOTFUSION)
 	end
-	function activate(e,tp,eg,ep,ev,re,r,rp)
+	local function activate(e,tp,eg,ep,ev,re,r,rp)
 		local tc=Duel.GetFirstTarget()
 		if not tc:IsRelateToEffect(e) or tc:IsFacedown() then return end
 		if not tc:IsCode(CARD_RA) then

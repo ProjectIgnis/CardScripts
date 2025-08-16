@@ -600,3 +600,4 @@ SET_DOOM_Z                        = 0x1cb
 SET_HECAHANDS                     = 0x1cc
 SET_ENNEACRAFT                    = 0x1cd
 SET_KILLER_TUNE                   = 0x1ce
+SET_ECCLESIA                      = 0x1cf

@@ -57,7 +57,7 @@ function s.spop1(e,tp,eg,ep,ev,re,r,rp,c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(lv*200)
-	e1:SetReset(RESET_EVENT|RESETS_STANDARD-RESET_TOFIELD|RESET_DISABLE)
+	e1:SetReset(RESET_EVENT|(RESETS_STANDARD_DISABLE&~RESET_TOFIELD))
 	e:GetHandler():RegisterEffect(e1)
 	g:DeleteGroup()
 end

@@ -43,7 +43,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e1:SetCode(EFFECT_ADD_TYPE)
 	e1:SetValue(TYPE_TUNER)
-	e1:SetReset(RESET_EVENT|RESETS_STANDARD-RESET_TOFIELD)
+	e1:SetReset(RESET_EVENT|(RESETS_STANDARD&~RESET_TOFIELD))
 	c:RegisterEffect(e1)
 end
 	--This card can be discarded as cost

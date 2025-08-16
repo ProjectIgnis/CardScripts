@@ -57,5 +57,5 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND,0,1,1,nil)
 	Duel.ConfirmCards(1-tp,g)
 	Duel.ShuffleHand(tp)
-	local hg=Duel.GetMatchingGroup(s.afilter,tp,LOCATION_HAND,0,nil,g:GetFirst():GetCode()):ForEach(function(tc) tc:UpdateLevel(-1,RESET_EVENT|RESETS_STANDARD-RESET_TOFIELD|RESET_PHASE|PHASE_END,e:GetHandler()) end)
+	local hg=Duel.GetMatchingGroup(s.afilter,tp,LOCATION_HAND,0,nil,g:GetFirst():GetCode()):ForEach(function(tc) tc:UpdateLevel(-1,RESET_EVENT|(RESETS_STANDARD_PHASE_END&~RESET_TOFIELD),e:GetHandler()) end)
 end

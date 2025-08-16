@@ -61,7 +61,7 @@ function s.matcheck(e,c)
 	local g=c:GetMaterial()
 	local tp=c:GetControler()
 	if g:GetClassCount(Card.GetRace,c,SUMMON_TYPE_LINK,tp)==3 and g:GetClassCount(Card.GetAttribute,c,SUMMON_TYPE_LINK,tp)==3 then
-		c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD-RESET_TOFIELD-RESET_LEAVE-RESET_TEMP_REMOVE,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,0))
+		c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD&~(RESET_TOFIELD|RESET_LEAVE|RESET_TEMP_REMOVE),EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,0))
 	end
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)

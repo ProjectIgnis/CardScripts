@@ -46,8 +46,7 @@ s.listed_series={SET_EXOSISTER}
 function s.valcheck(e,c)
 	local g=c:GetMaterial()
 	if g:IsExists(Card.IsSetCard,1,nil,SET_EXOSISTER) then
-		local reset=RESET_EVENT|RESETS_STANDARD-RESET_TOFIELD|RESET_PHASE|PHASE_END
-		c:RegisterFlagEffect(id,reset,0,1)
+		c:RegisterFlagEffect(id,RESET_EVENT|(RESETS_STANDARD_PHASE_END&~RESET_TOFIELD),0,1)
 	end
 end
 function s.limcon(e,tp,eg,ep,ev,re,r,rp)

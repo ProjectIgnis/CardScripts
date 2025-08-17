@@ -29,14 +29,16 @@ function s.efilter(e,te)
 end
 function s.sucop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	--Face-up Machine Type monsters on your field gain ATK equal to [the number of monsters used as material for this card's Fusion Summon] x 100.
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetCode(EFFECT_UPDATE_ATTACK)
-	e1:SetRange(LOCATION_MZONE)
-	e1:SetTargetRange(LOCATION_MZONE,0)
-	e1:SetTarget(aux.TargetBoolFunction(Card.IsRace,RACE_MACHINE))
-	e1:SetValue(c:GetMaterialCount()*100)
-	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
-	c:RegisterEffect(e1)
+	if c:IsSummonType(SUMMON_TYPE_FUSION) then
+		--Face-up Machine Type monsters on your field gain ATK equal to [the number of monsters used as material for this card's Fusion Summon] x 100.
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_FIELD)
+		e1:SetCode(EFFECT_UPDATE_ATTACK)
+		e1:SetRange(LOCATION_MZONE)
+		e1:SetTargetRange(LOCATION_MZONE,0)
+		e1:SetTarget(aux.TargetBoolFunction(Card.IsRace,RACE_MACHINE))
+		e1:SetValue(c:GetMaterialCount()*100)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
+		c:RegisterEffect(e1)
+	end
 end

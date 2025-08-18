@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_LIMIT_SET_PROC)
 	c:RegisterEffect(e2)
-	--Negate
+	--Negate the activation of the effect
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e3:SetCode(EVENT_CHAIN_ACTIVATING)
@@ -30,27 +30,35 @@ function s.initial_effect(c)
 	e3:SetCondition(s.negcon)
 	e3:SetOperation(s.negop)
 	c:RegisterEffect(e3)
-	--Destroy
+	--Destroy all cards you control
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e4:SetCode(EVENT_TO_GRAVE)
-	e4:SetCondition(s.descon)
+	e4:SetCondition(function s.descon(e) return e:GetHandler():IsReason(REASON_DESTROY) end)
 	e4:SetOperation(s.desop)
 	c:RegisterEffect(e4)
 	aux.DoubleSnareValidity(c,LOCATION_MZONE)
+end
+function s.maplevel(level)
+	if level>=5 and level<=6 then
+		return 1
+	elseif level>=7 then
+		return 2
+	end
+	return 0
 end
 function s.sumcon(e,c,minc,zone,relzone,exeff)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	local mg=Duel.GetTributeGroup(c)
 	mg=mg:Filter(aux.IsZone,nil,relzone,tp)
-	local tributes=maplevel(c:GetLevel())
+	local tributes=s.maplevel(c:GetLevel())
 	return tributes>0 and minc<=tributes and Duel.CheckTribute(c,tributes,tributes,mg,tp,zone)
 end
 function s.sumtg(e,tp,eg,ep,ev,re,r,rp,chk,c,minc,zone,relzone,exeff)
 	local mg=Duel.GetTributeGroup(c)
 	mg=mg:Filter(aux.IsZone,nil,relzone,tp)
-	local tributes=maplevel(c:GetLevel())
+	local tributes=s.maplevel(c:GetLevel())
 	local g=Duel.SelectTribute(tp,c,tributes,tributes,mg,tp,zone,Duel.GetCurrentChain()==0)
 	if g and #g>0 then
 		g:KeepAlive()
@@ -62,7 +70,7 @@ end
 function s.sumop(e,tp,eg,ep,ev,re,r,rp,c,minc,zone,relzone,exeff)
 	local g=e:GetLabelObject()
 	c:SetMaterial(g)
-	Duel.Release(g,REASON_SUMMON+REASON_MATERIAL)
+	Duel.Release(g,REASON_SUMMON|REASON_MATERIAL)
 	g:DeleteGroup()
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
@@ -85,21 +93,18 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(-500)
 		c:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetProperty(EFFECT_FLAG_COPY_INHERIT)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		e2:SetCode(EFFECT_UPDATE_DEFENSE)
 		e2:SetValue(-500)
 		c:RegisterEffect(e2)
 	end
-end
-function s.descon(e)
-	return e:GetHandler():IsReason(REASON_DESTROY)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,tp,id)

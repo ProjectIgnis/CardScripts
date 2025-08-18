@@ -47,7 +47,7 @@ function s.cop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 	e1:SetValue(LOCATION_REMOVED)
-	e1:SetReset(RESET_EVENT|RESETS_REDIRECT-RESET_OVERLAY)
+	e1:SetReset(RESET_EVENT|(RESETS_REDIRECT&~RESET_OVERLAY))
 	rc:RegisterEffect(e1)
 	--Cannot activate its effects
 	local e2=Effect.CreateEffect(c)

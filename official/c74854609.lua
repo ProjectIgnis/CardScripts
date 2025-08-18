@@ -49,7 +49,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetType(EFFECT_TYPE_EQUIP)
 		e2:SetCode(EFFECT_SET_CONTROL)
 		e2:SetValue(tp)
-		e2:SetReset(RESET_EVENT|RESETS_STANDARD-RESET_TURN_SET)
+		e2:SetReset(RESET_EVENT|RESETS_STANDARD&~RESET_TURN_SET)
 		ec:RegisterEffect(e2)
 	end
 end

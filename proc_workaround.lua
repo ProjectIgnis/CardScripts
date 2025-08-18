@@ -85,6 +85,26 @@ do
 					if check_opinfo(ev,CATEGORY_RELEASE,rc) then return end
 					--otherwise, shuffle
 					Duel.ShuffleHand(player)
+					
+					--if the activating card itself ends up moving then shuffle the hand after the current Chain Link finishes resolving
+					--this will make it so it matches the behaviour of the core which automatically shuffles the hand if the activating card is still there at the end of the resolution
+					local move_eff=Effect.CreateEffect(rc)
+					move_eff:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+					move_eff:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+					move_eff:SetCode(EVENT_MOVE)
+					move_eff:SetOperation(function()
+								local eff=Effect.CreateEffect(rc)
+								eff:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+								eff:SetCode(EVENT_CHAIN_SOLVED)
+								eff:SetOperation(function() Duel.ShuffleHand(player) eff:Reset() end)
+								eff:SetReset(RESET_CHAIN)
+								Duel.RegisterEffect(eff,player)
+								--
+								move_eff:Reset()
+							end)
+					move_eff:SetReset(RESET_CHAIN)
+					rc:RegisterEffect(move_eff)
+					
 					player_table[player]=true
 				end)
 	Duel.RegisterEffect(shuffle_eff,0)
@@ -154,10 +174,12 @@ function Card.IsSummonPhase(c,phase)
 	return c:GetSummonPhase()==phase
 end
 function Card.IsSummonPhaseMain(c)
-	return c:GetSummonPhase()==PHASE_MAIN1 or c:GetSummonPhase()==PHASE_MAIN2
+	local summon_phase=c:GetSummonPhase()
+	return summon_phase==PHASE_MAIN1 or summon_phase==PHASE_MAIN2
 end
 function Card.IsSummonPhaseBattle(c)
-	return c:GetSummonPhase()>=PHASE_BATTLE_START and c:GetSummonPhase()<=PHASE_BATTLE
+	local summon_phase=c:GetSummonPhase()
+	return summon_phase>=PHASE_BATTLE_START and summon_phase<=PHASE_BATTLE
 end
 
 --[[

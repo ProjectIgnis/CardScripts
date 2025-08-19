@@ -33,10 +33,14 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e2:SetCode(EFFECT_CANNOT_SPSUMMON)
 	Duel.RegisterEffect(e2,tp)
 end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingTarget(aux.FaceupFilter(Card.IsRace,RACE_DRAGON),tp,LOCATION_MZONE,0,1,nil) end
+function s.targetfilter(c)
+	return c:IsFaceup() and c:IsRace(RACE_DRAGON)
+end
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.targetfilter(chkc) end 
+	if chk==0 then return Duel.IsExistingTarget(s.targetfilter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATKDEF)
-	Duel.SelectTarget(tp,aux.FaceupFilter(Card.IsRace,RACE_DRAGON),tp,LOCATION_MZONE,0,1,1,nil)
+	Duel.SelectTarget(tp,s.targetfilter,tp,LOCATION_MZONE,0,1,1,nil)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

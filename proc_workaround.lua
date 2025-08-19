@@ -24,6 +24,23 @@ do
 				end
 			end)
 	Duel.RegisterEffect(sum_status_eff,0)
+	
+	--set the summon turn status to 'false' for any monster that is Normal Set
+	--normally that status would cover both Normal Summons and Normal Sets
+	--however there's currently no card (that I can find) that cares for a monster that was Normal Set that specific turn
+	--until an eventual proper split happens this should fix cases such as "Raidraptor - Vanishing Lanius" or Rush cards
+	--that care about being Normal Summoned that turn but not about being Normal Set that turn (e.g. Normal Set --> "Book of Taiyou" --> shouldn't be able to use its effect)
+	local set_turn_status_split=Effect.GlobalEffect()
+	set_turn_status_split:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	set_turn_status_split:SetCode(EVENT_MSET)
+	set_turn_status_split:SetOperation(function(e,tp,eg,ep,ev,re,r,rp)
+				for c in eg:Iter() do
+					c:SetStatus(STATUS_SUMMON_TURN,false)
+					--same reason as above
+					c:SetStatus(STATUS_FORM_CHANGED,true)
+				end
+			end)
+	Duel.RegisterEffect(set_turn_status_split,0)
 end
 
 --[[

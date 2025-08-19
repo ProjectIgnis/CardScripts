@@ -1,6 +1,32 @@
 --Utilities to be added to the core
 
 --[[
+	If a monster in the Monster Zone is flipped face-down and back up again it shouldn't be treated as a monster that was Summoned that turn
+--]]
+do
+	local function summon_status_filter(c)
+		return c:IsFacedown() and c:IsPreviousPosition(POS_FACEUP) and c:IsLocation(LOCATION_MZONE) and c:IsStatus(STATUS_SUMMON_TURN|STATUS_FLIP_SUMMON_TURN|STATUS_SPSUMMON_TURN)
+	end
+
+	--Manually set the summon turn statuses to 'false' when a monster is flipped face-down
+	local sum_status_eff=Effect.GlobalEffect()
+	sum_status_eff:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	sum_status_eff:SetCode(EVENT_CHANGE_POS)
+	sum_status_eff:SetOperation(function(e,tp,eg,ep,ev,re,r,rp)
+				local g=eg:Filter(summon_status_filter,nil)
+				for c in g:Iter() do
+					c:SetStatus(STATUS_SUMMON_TURN,false)
+					c:SetStatus(STATUS_FLIP_SUMMON_TURN,false)
+					c:SetStatus(STATUS_SPSUMMON_TURN,false)
+					--need to set it to 'true' otherwise it can change its position or be Flip Summoned even though it was Summoned that same turn
+					--(probably cuz it's tied to the summon turn statuses)
+					c:SetStatus(STATUS_FORM_CHANGED,true)
+				end
+			end)
+	Duel.RegisterEffect(sum_status_eff,0)
+end
+
+--[[
 	Phase and step functions
 	If the optional 'player' parameter is provided it will also check that it's that player's turn
 --]]

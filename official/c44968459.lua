@@ -2,7 +2,7 @@
 --Silent Burning
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Each player draws until they have 6 cards in their hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DRAW)
@@ -12,8 +12,9 @@ function s.initial_effect(c)
 	e1:SetCondition(s.condition)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
+	e1:SetHintTiming(TIMING_BATTLE_PHASE,TIMING_BATTLE_START|TIMING_BATTLE_PHASE|TIMING_BATTLE_STEP_END|TIMING_BATTLE_END|TIMINGS_CHECK_MONSTER)
 	c:RegisterEffect(e1)
-	--to hand
+	--Add 1 "Silent Magician" monster from your Deck to your hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -25,32 +26,26 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_SILENT_MAGICIAN}
-function s.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(SET_SILENT_MAGICIAN)
-end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	local ct1=Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)
-	local ct2=Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)
-	local ph=Duel.GetCurrentPhase()
-	return ct1>ct2 and Duel.IsBattlePhase()
-		and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
+	return Duel.IsBattlePhase() and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_SILENT_MAGICIAN),tp,LOCATION_MZONE,0,1,nil)
+		and Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)>Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ct1=6-Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)
+	local ct1=6-Duel.GetMatchingGroupCount(nil,tp,LOCATION_HAND,0,e:GetHandler())
 	local ct2=6-Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)
 	if chk==0 then return ct1>0 and Duel.IsPlayerCanDraw(tp,ct1)
 		and ct2>0 and Duel.IsPlayerCanDraw(1-tp,ct2) end
-	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,ct1)
-	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,1-tp,ct2)
+	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,PLAYER_ALL,ct1+ct2)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local ct1=6-Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)
-	local ct2=6-Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)
+	local turn_player=Duel.GetTurnPlayer()
+	local ct1=6-Duel.GetFieldGroupCount(turn_player,LOCATION_HAND,0)
+	local ct2=6-Duel.GetFieldGroupCount(turn_player,0,LOCATION_HAND)
 	if ct1>0 then
-		Duel.Draw(tp,ct1,REASON_EFFECT)
+		Duel.Draw(turn_player,ct1,REASON_EFFECT)
 	end
 	if ct2>0 then
-		Duel.Draw(1-tp,ct2,REASON_EFFECT)
+		Duel.Draw(1-turn_player,ct2,REASON_EFFECT)
 	end
 end
 function s.thfilter(c)

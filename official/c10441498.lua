@@ -11,12 +11,15 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
-	e1:SetCost(Cost.Reveal(function(c,e,tp)
+	e1:SetCost(Cost.Reveal(
+				function(c,e,tp)
 					return c:HasLevel() and Duel.IsExistingTarget(s.lvfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,c:GetLevel())
-				end),nil,1,1,
+				end,
+				nil,1,1,
 				function(e,tp,g)
 					e:SetLabel(g:GetFirst():GetLevel())
 				end)
+			)
 	e1:SetTarget(s.lvtg)
 	e1:SetOperation(s.lvop)
 	c:RegisterEffect(e1)

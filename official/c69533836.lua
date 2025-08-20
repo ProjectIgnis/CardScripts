@@ -67,7 +67,7 @@ function s.oppatkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return c:IsControler(1-tp) and c:IsLocation(LOCATION_GRAVE) and c:IsMonster() and c:IsAbleToRemove() end
+	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_GRAVE) and chkc:IsMonster() and chkc:IsAbleToRemove() end
 	if chk==0 then return Duel.IsExistingTarget(aux.AND(Card.IsMonster,Card.IsAbleToRemove),tp,0,LOCATION_GRAVE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectTarget(tp,aux.AND(Card.IsMonster,Card.IsAbleToRemove),tp,0,LOCATION_GRAVE,1,1,nil)

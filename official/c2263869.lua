@@ -31,7 +31,7 @@ function s.tdcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local extype=e:GetLabel()
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c:IsControler(1-tp) and s.tdfilter(chkc,e,extype) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and s.tdfilter(chkc,e,extype) end
 	if chk==0 then return true end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectTarget(tp,s.tdfilter,tp,0,LOCATION_MZONE,1,1,nil,e,extype)

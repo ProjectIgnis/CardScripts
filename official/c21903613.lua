@@ -83,7 +83,7 @@ function s.lvfilter(c,lg)
 end
 function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local lg=e:GetHandler():GetLinkedGroup():Match(aux.AND(Card.IsFaceup,Card.HasLevel),nil)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and c:IsControler(tp) and s.lvfilter(chkc,lg) end
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.lvfilter(chkc,lg) end
 	if chk==0 then return #lg>0 and Duel.IsExistingTarget(s.lvfilter,tp,LOCATION_GRAVE,0,1,nil,lg) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	Duel.SelectTarget(tp,s.lvfilter,tp,LOCATION_GRAVE,0,1,1,nil,lg)

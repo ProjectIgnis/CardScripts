@@ -39,7 +39,7 @@ function s.thfilter(c)
 end
 function s.postg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local opp_loc=Duel.IsExistingMatchingCard(s.tisfilter,tp,LOCATION_MZONE,0,1,nil) and LOCATION_MZONE or 0
-	if chkc then return (opp_loc>0 or chkc:IsControler(tp)) and chkc:IsLocation(LOCATION_MZONE) and c:IsCanTurnSet() end
+	if chkc then return (opp_loc>0 or chkc:IsControler(tp)) and chkc:IsLocation(LOCATION_MZONE) and chkc:IsCanTurnSet() end
 	if chk==0 then return Duel.IsExistingTarget(Card.IsCanTurnSet,tp,LOCATION_MZONE,opp_loc,1,nil)
 		and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)

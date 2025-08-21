@@ -29,12 +29,12 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thspop)
 	e2:SetHintTiming(0,TIMING_STANDBY_PHASE|TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E)
 	c:RegisterEffect(e2)
-	--Multiple Tuners
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_SINGLE)
-	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e3:SetCode(EFFECT_MULTIPLE_TUNERS)
-	c:RegisterEffect(e3)
+	--Multiple tuners
+	local e4=Effect.CreateEffect(c)
+	e4:SetType(EFFECT_TYPE_SINGLE)
+	e4:SetCode(EFFECT_MATERIAL_CHECK)
+	e4:SetValue(s.valcheck)
+	c:RegisterEffect(e4)
 end
 s.listed_names={100446031} --"Killer Tune Mix"
 s.material={100446031} --"Killer Tune Mix"
@@ -83,5 +83,16 @@ function s.thspop(e,tp,eg,ep,ev,re,r,rp)
 				Duel.SynchroSummon(tp,synchc)
 			end
 		end
+	end
+end
+function s.valcheck(e,c)
+	local g=c:GetMaterial()
+	if g:IsExists(function(c) return c:IsType(TYPE_TUNER) or c:IsHasEffect(EFFECT_CAN_BE_TUNER) end,2,nil) then
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+		e1:SetCode(EFFECT_MULTIPLE_TUNERS)
+		e1:SetReset(RESET_EVENT|(RESETS_STANDARD&~RESET_TOFIELD)|RESET_PHASE|PHASE_END)
+		c:RegisterEffect(e1)
 	end
 end

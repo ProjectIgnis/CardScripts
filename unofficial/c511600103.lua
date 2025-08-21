@@ -29,7 +29,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 	Duel.ConfirmDecktop(1-tp,1)
 	local tc=Duel.GetDecktopGroup(1-tp,1):GetFirst()
-	if Duel.IsPlayerCanDraw(1-tp,1) and Duel.SelectYesNo(1-tp,aux.Stringid(17732278,1)) then
+	if Duel.IsPlayerCanDraw(1-tp,1) and Duel.SelectYesNo(1-tp,aux.Stringid(id,0)) then
 		Duel.Draw(1-tp,1,REASON_EFFECT)
 	else
 		Duel.DiscardDeck(tp,2,REASON_EFFECT)

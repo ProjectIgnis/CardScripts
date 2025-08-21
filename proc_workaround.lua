@@ -1,6 +1,40 @@
 --Utilities to be added to the core
 
 --[[
+	Allow only 1 Chain to be built if an effect meets its activation condition during hand size adjustment at the end of the End Phase
+--]]
+do
+	--Track if a card is discarded for hand size adjustment
+	local hand_adjust_eff=Effect.GlobalEffect()
+	hand_adjust_eff:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	hand_adjust_eff:SetCode(EVENT_DISCARD)
+	hand_adjust_eff:SetCountLimit(1)
+	hand_adjust_eff:SetCondition(function(e,tp,eg,ep,ev,re,r,rp) return (r&REASON_ADJUST)>0 end)
+	hand_adjust_eff:SetOperation(function()
+				--Track the moment that the Chain starts resolving
+				local chain_solving_eff=Effect.GlobalEffect()
+				chain_solving_eff:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+				chain_solving_eff:SetCode(EVENT_CHAIN_SOLVING)
+				chain_solving_eff:SetCountLimit(1)
+				chain_solving_eff:SetOperation(function()
+							chain_solving_eff:Reset()
+							--Neither player can activate another effect after the first Chain built during hand size adjustment starts resolving
+							local cannot_act_eff=Effect.GlobalEffect()
+							cannot_act_eff:SetType(EFFECT_TYPE_FIELD)
+							cannot_act_eff:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+							cannot_act_eff:SetCode(EFFECT_CANNOT_ACTIVATE)
+							cannot_act_eff:SetTargetRange(1,1)
+							cannot_act_eff:SetValue(1)
+							cannot_act_eff:SetReset(RESET_PHASE|PHASE_END)
+							Duel.RegisterEffect(cannot_act_eff,0)
+						end)
+				chain_solving_eff:SetReset(RESET_PHASE|PHASE_END)
+				Duel.RegisterEffect(chain_solving_eff,0)
+			end)
+	Duel.RegisterEffect(hand_adjust_eff,0)
+end
+
+--[[
 	If a monster in the Monster Zone is flipped face-down and back up again it shouldn't be treated as a monster that was Summoned that turn
 --]]
 do

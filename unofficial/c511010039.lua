@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e1:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,SET_NUMBER)))
 	c:RegisterEffect(e1)
-	--Attach 1 Xyz Material from this card to 1 Xyz monster your opponent controls, then increase this card's ATK equal to the 
+	--Attach 1 Xyz Material from this card to 1 Xyz monster your opponent controls, then this card's ATK becomes equal to the difference in Ranks between this card and that oppponent's monster, multiplied by the number of materials attached 1 Xyz Monster your controls
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_ATKCHANGE)

@@ -29,7 +29,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 	Duel.ConfirmDecktop(1-tp,1)
 	local tc=Duel.GetDecktopGroup(1-tp,1):GetFirst()
-	if Duel.IsPlayerCanDraw(1-tp,1) and Duel.SelectYesNo(1-tp,aux.Stringid(983995,0)) then
+	if Duel.IsPlayerCanDraw(1-tp,1) and Duel.SelectYesNo(1-tp,aux.Stringid(17732278,1)) then
 		Duel.Draw(1-tp,1,REASON_EFFECT)
 	else
 		Duel.DiscardDeck(tp,2,REASON_EFFECT)
@@ -37,7 +37,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if tc:IsSpell() then
         if Duel.GetAttacker()==c and not c:IsHasEffect(EFFECT_CANNOT_DIRECT_ATTACK)
-            and c:IsRelateToEffect(e) and c:IsFaceup() and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+            and c:IsRelateToEffect(e) and c:IsFaceup() and Duel.SelectYesNo(tp,aux.Stringid(17732278,1)) then
             Duel.ChangeAttackTarget(nil)
         end
 	elseif tc:IsMonster() then

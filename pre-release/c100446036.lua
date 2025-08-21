@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--Synchro Summon procedure: "Killer Tune Mix" + 1+ Tuners
-	Synchro.AddProcedure(c,aux.FilterSummonCode(100446031),1,1,aux.FilterBoolFunctionEx(Card.IsType,TYPE_TUNER),1,99)
+	Synchro.AddProcedure(c,aux.FALSE,1,1,s.tunerfilter,1,99,aux.FilterSummonCode(100446031))
 	--Gains 1500 ATK while your opponent has a Tuner in their field or GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -38,6 +38,9 @@ function s.initial_effect(c)
 end
 s.listed_names={100446031} --"Killer Tune Mix"
 s.material={100446031} --"Killer Tune Mix"
+function s.tunerfilter(c,scard,sumtype,tp)
+	return c:IsType(TYPE_TUNER,scard,sumtype,tp) or c:IsHasEffect(EFFECT_CAN_BE_TUNER)
+end
 function s.thspfilter(c,e,tp,exc)
 	return c:IsType(TYPE_TUNER) and not c:IsType(TYPE_SYNCHRO)
 		and (c:IsAbleToHand() or c:IsCanBeSpecialSummoned(e,0,tp,false,false))

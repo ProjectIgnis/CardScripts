@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--Synchro Summon procedure: 1 Tuner + 1+ Tuners
-	Synchro.AddProcedure(c,nil,1,1,aux.FilterBoolFunctionEx(Card.IsType,TYPE_TUNER),1,99)
+	Synchro.AddProcedure(c,nil,1,1,s.tunerfilter,1,99)
 	--Other Tuners you control cannot be destroyed by card effects, also your opponent cannot target them with card effects
 	local e1a=Effect.CreateEffect(c)
 	e1a:SetType(EFFECT_TYPE_FIELD)
@@ -40,6 +40,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={SET_KILLER_TUNE}
+function s.tunerfilter(c,scard,sumtype,tp)
+	return c:IsType(TYPE_TUNER,scard,sumtype,tp) or c:IsHasEffect(EFFECT_CAN_BE_TUNER)
+end
 function s.rmfilter(c,e,tp)
 	if not (c:IsSetCard(SET_KILLER_TUNE) and c:IsMonster() and c:IsAbleToRemoveAsCost()) then return false end
 	local effs={c:GetOwnEffects()}

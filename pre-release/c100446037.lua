@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--Synchro Summon procedure: "Killer Tune Reco" + 1+ Tuners
-	Synchro.AddProcedure(c,aux.FilterSummonCode(100446033),1,1,aux.FilterBoolFunctionEx(Card.IsType,TYPE_TUNER),1,99)
+	Synchro.AddProcedure(c,aux.FALSE,1,1,s.tunerfilter,1,99,aux.FilterSummonCode(100446033))
 	--Gains 300 ATK for each Tuner in the GYs
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -47,6 +47,9 @@ function s.initial_effect(c)
 end
 s.listed_names={100446033} --"Killer Tune Reco"
 s.material={100446033} --"Killer Tune Reco"
+function s.tunerfilter(c,scard,sumtype,tp)
+	return c:IsType(TYPE_TUNER,scard,sumtype,tp) or c:IsHasEffect(EFFECT_CAN_BE_TUNER)
+end
 function s.costfilter(c)
 	return c:IsType(TYPE_TUNER) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end

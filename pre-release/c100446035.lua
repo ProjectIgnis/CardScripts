@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--Synchro Summon procedure: 1 "Killer Tune" Tuner + 1+ Tuners
-	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_KILLER_TUNE),1,1,aux.FilterBoolFunctionEx(Card.IsType,TYPE_TUNER),1,99)
+	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_KILLER_TUNE),1,1,s.tunerfilter,1,99)
 	--If this card on the field would be used as Synchro Material, 1 Tuner in your hand can be used as 1 of the other materials
 	Synchro.AddHandMaterialEffect(c,id,function(c) return c:IsType(TYPE_TUNER) end)
 	--Add 1 "Killer Tune" card from your Deck to your hand
@@ -39,6 +39,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={SET_KILLER_TUNE}
+function s.tunerfilter(c,scard,sumtype,tp)
+	return c:IsType(TYPE_TUNER,scard,sumtype,tp) or c:IsHasEffect(EFFECT_CAN_BE_TUNER)
+end
 function s.thfilter(c)
 	return c:IsSetCard(SET_KILLER_TUNE) and c:IsAbleToHand()
 end

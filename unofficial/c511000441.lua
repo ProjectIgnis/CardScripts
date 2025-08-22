@@ -2,8 +2,9 @@
 --Dragon Heart
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--1 Dragon-Type monster you control gains 1000 ATK until the End Phase
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_ATKCHANGE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -30,7 +31,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetTargetRange(1,0)
 	Duel.RegisterEffect(e1,tp)
 	local e2=e1:Clone()
-	e2:SetCode(EFFECT_CANNOT_SPSUMMON)
+	e2:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	Duel.RegisterEffect(e2,tp)
 end
 function s.targetfilter(c)

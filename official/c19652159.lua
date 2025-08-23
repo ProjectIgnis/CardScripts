@@ -56,7 +56,7 @@ end
 function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not (c:IsRelateToEffect(e) and c:IsFaceup() and c:IsAttackAbove(1000) and c:IsDefenseAbove(1000)
-		and not c:IsStatus(STATUS_BATTLE_DESTROYED) and Duel.GetCurrentChain()==ev+1) then return end
+		and not c:IsStatus(STATUS_BATTLE_DESTROYED)) then return end
 	local prev_atk,prev_def=c:GetAttack(),c:GetDefense()
 	--This card loses 1000 ATK/DEF
 	local e1=Effect.CreateEffect(c)
@@ -69,7 +69,7 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_UPDATE_DEFENSE)
 	c:RegisterEffect(e2)
-	if c:IsAttack(prev_atk-1000) and c:IsDefense(prev_def-1000) then
+	if c:IsAttack(prev_atk-1000) and c:IsDefense(prev_def-1000) and Duel.GetCurrentChain()==ev+1 then
 		Duel.NegateActivation(ev)
 	end
 end

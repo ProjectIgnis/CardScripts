@@ -33,7 +33,7 @@ function s.chtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if Duel.SelectOption(tp,aux.Stringid(id,1),aux.Stringid(id,2))==0 then
 		local rc=Duel.AnnounceAnotherRace(g,tp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-		local sg=g:FilterSelect(tp,Card.IsDifferentRace,1,1,nil,rc)
+		local sg=g:FilterSelect(tp,Card.IsRaceExcept,1,1,nil,rc)
 		Duel.SetTargetCard(sg)
 		e:SetLabel(0,rc)
 	else
@@ -48,7 +48,7 @@ function s.chop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not tc or not tc:IsRelateToEffect(e) or tc:IsFacedown() then return end
 	local op,decl=e:GetLabel()
-	if op==0 and tc:IsDifferentRace(decl) then
+	if op==0 and tc:IsRaceExcept(decl) then
 		--Change monster type
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)

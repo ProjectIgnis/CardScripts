@@ -27,14 +27,14 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local c=e:GetHandler()
 	local rc=Duel.AnnounceRace(tp,1,RACE_ALL)
-	local att=c:IsDifferentRace(rc) and Duel.AnnounceAttribute(tp,1,ATTRIBUTE_ALL) or c:AnnounceAnotherAttribute(tp)
+	local att=c:IsRaceExcept(rc) and Duel.AnnounceAttribute(tp,1,ATTRIBUTE_ALL) or c:AnnounceAnotherAttribute(tp)
 	e:SetLabel(rc,att)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if (not c:IsFaceup() and c:IsRelateToEffect(e)) then return end
 	local rc,att=e:GetLabel()
-	if c:IsDifferentRace(rc) then
+	if c:IsRaceExcept(rc) then
 		--Change monster type
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)

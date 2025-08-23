@@ -51,7 +51,7 @@ function s.cfilter(c,tp)
 		and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,c:GetRace())
 end
 function s.thfilter(c,rac)
-	return c:IsSetCard(SET_RITUAL_BEAST) and c:IsMonster() and c:IsAbleToHand() and c:IsDifferentRace(rac)
+	return c:IsSetCard(SET_RITUAL_BEAST) and c:IsMonster() and c:IsAbleToHand() and c:IsRaceExcept(rac)
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil,tp) end

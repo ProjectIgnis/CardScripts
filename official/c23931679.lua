@@ -38,6 +38,15 @@ function s.initial_effect(c)
 	e5:SetTarget(s.thtg)
 	e5:SetOperation(s.thop)
 	c:RegisterEffect(e5)
+	--Cannot activate a monster's effect that flips itself face-up as cost if it would violate the "each player can only control 1 face-up non-WATER monster" clause
+	local e6=Effect.CreateEffect(c)
+	e6:SetType(EFFECT_TYPE_FIELD)
+	e6:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e6:SetCode(EFFECT_CANNOT_ACTIVATE)
+	e6:SetRange(LOCATION_MZONE)
+	e6:SetTargetRange(1,1)
+	e6:SetValue(function(e,re,tp) local rc=re:GetHandler() return re:HasSelfChangePositionCost() and rc:IsAttributeExcept(ATTRIBUTE_WATER) and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsAttributeExcept,ATTRIBUTE_WATER),tp,LOCATION_MZONE,0,1,nil) end)
+	c:RegisterEffect(e6)
 end
 s.listed_names={CARD_UMI}
 s.listed_series={SET_KAIRYU_SHIN,SET_SEA_STEALTH}

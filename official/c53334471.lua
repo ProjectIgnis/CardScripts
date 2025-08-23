@@ -20,9 +20,9 @@ function s.initial_effect(c)
 	--cannot summon,spsummon,flipsummon
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD)
-	e4:SetRange(LOCATION_SZONE)
-	e4:SetCode(EFFECT_FORCE_SPSUMMON_POSITION)
 	e4:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e4:SetCode(EFFECT_FORCE_SPSUMMON_POSITION)
+	e4:SetRange(LOCATION_SZONE)
 	e4:SetTargetRange(1,1)
 	e4:SetTarget(s.sumlimit)
 	e4:SetValue(POS_FACEDOWN)
@@ -33,6 +33,15 @@ function s.initial_effect(c)
 	local e6=e4:Clone()
 	e6:SetCode(EFFECT_CANNOT_FLIP_SUMMON)
 	c:RegisterEffect(e6)
+	--Cannot activate a monster's effect that flips itself face-up as cost if it's of a different Attribute than the other face-up monsters that player controls
+	local e7=Effect.CreateEffect(c)
+	e7:SetType(EFFECT_TYPE_FIELD)
+	e7:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e7:SetCode(EFFECT_CANNOT_ACTIVATE)
+	e7:SetRange(LOCATION_SZONE)
+	e7:SetTargetRange(1,1)
+	e7:SetValue(function(e,re,tp) return re:HasSelfChangePositionCost() and s[tp]>0 and re:GetHandler():IsAttributeExcept(s[tp]) end)
+	c:RegisterEffect(e7)
 end
 s[0]=0
 s[1]=0

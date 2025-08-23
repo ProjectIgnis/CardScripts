@@ -47,7 +47,7 @@ function s.thcostfilter(c,tp)
 		and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil,c:GetRace(),c:GetAttribute())
 end
 function s.thfilter(c,race,attribute)
-	return c:IsRitualMonster() and c:IsDifferentRace(race) and c:IsAttributeExcept(attribute) and c:IsAbleToHand()
+	return c:IsRitualMonster() and c:IsRaceExcept(race) and c:IsAttributeExcept(attribute) and c:IsAbleToHand()
 end
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thcostfilter,tp,LOCATION_HAND,0,1,nil,tp) end

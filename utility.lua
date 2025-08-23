@@ -698,7 +698,6 @@ function Card.AnnounceAnotherAttribute(c,tp)
 	return Duel.AnnounceAttribute(tp,1,att&(att-1)==0 and (~att&ATTRIBUTE_ALL) or ATTRIBUTE_ALL)
 end
 
---Returns true if "c" has any Attribute except "att"
 function Card.IsAttributeExcept(c,att,scard,sumtype,playerid)
 	sumtype=sumtype==nil and 0 or sumtype
 	playerid=playerid==nil and PLAYER_NONE or playerid
@@ -712,8 +711,10 @@ function Card.AnnounceAnotherRace(c,tp)
 	return Duel.AnnounceRace(tp,1,race&(race-1)==0 and (~race&RACE_ALL) or RACE_ALL)
 end
 
-function Card.IsDifferentRace(c,race)
-	local _race=c:GetRace()
+function Card.IsRaceExcept(c,race,scard,sumtype,playerid)
+	sumtype=sumtype==nil and 0 or sumtype
+	playerid=playerid==nil and PLAYER_NONE or playerid
+	local _race=c:GetRace(scard,sumtype,playerid)
 	return (_race&race)~=_race
 end
 
@@ -1543,12 +1544,15 @@ function Cost.RemoveCounterFromField(counter_type,count)
 	end
 end
 
+local self_changepos_costs={}
 function Cost.SelfChangePosition(position)
-	return function(e,tp,eg,ep,ev,re,r,rp,chk)
+	local function cost_func(e,tp,eg,ep,ev,re,r,rp,chk)
 		local c=e:GetHandler()
 		if chk==0 then return c:IsCanChangePosition() and not c:IsPosition(position) and (position&POS_FACEDOWN==0 or c:IsCanTurnSet()) end
 		Duel.ChangePosition(c,position)
 	end
+	self_changepos_costs[cost_func]=true
+	return cost_func
 end
 
 function Cost.HintSelectedEffect(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -1651,6 +1655,7 @@ end
 Effect.HasSelfToGraveCost=cost_table_check(self_tograve_costs)
 Effect.HasSelfDiscardCost=cost_table_check(self_discard_costs)
 Effect.HasDetachCost=cost_table_check(detach_costs)
+Effect.HasSelfChangePositionCost=cost_table_check(self_changepos_costs)
 
 --Default cost for "You can pay X LP;"
 function Cost.PayLP(lp_value,pay_until)

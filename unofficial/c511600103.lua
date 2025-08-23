@@ -41,14 +41,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
             Duel.ChangeAttackTarget(nil)
         end
 	elseif tc:IsMonster() then
-		if Duel.GetAttacker()==c then
-			c:SetStatus(STATUS_ATTACK_CANCELED,true)
-			c:ResetFlagEffect(id)
-		elseif Duel.GetAttackTarget()==c then
-			local bc=c:GetBattleTarget()
-			bc:SetStatus(STATUS_ATTACK_CANCELED,true)
-			c:ResetFlagEffect(id)
-		end
+		Duel.GetAttacker():SetStatus(STATUS_ATTACK_CANCELED,true)
+		c:ResetFlagEffect(id)
 	else
 		if c:IsRelateToEffect(e) and c:IsAttackPos() then
 			Duel.ChangePosition(c,POS_FACEUP_DEFENSE)

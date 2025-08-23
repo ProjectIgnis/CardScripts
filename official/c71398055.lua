@@ -67,8 +67,8 @@ function s.matfilter(typ)
 	end
 end
 function s.contactfil(tp)
-	local loc=LOCATION_ONFIELD|LOCATION_GRAVE
-	if Duel.IsPlayerAffectedByEffect(tp,CARD_SPIRIT_ELIMINATION) then loc=LOCATION_ONFIELD end
+	local loc=LOCATION_MZONE|LOCATION_GRAVE
+	if Duel.IsPlayerAffectedByEffect(tp,CARD_SPIRIT_ELIMINATION) then loc=LOCATION_MZONE end
 	return Duel.GetMatchingGroup(Card.IsAbleToRemoveAsCost,tp,loc,0,nil)
 end
 function s.contactop(g)

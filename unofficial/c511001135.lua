@@ -24,7 +24,8 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_BE_BATTLE_TARGET)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCondition(s.attacktargetchangecon)
-	e2:SetOperation(function(e) Duel.ChangeAttackTarget(e:GetHandler()) end)
+	e2:SetTarget(s.attacktargetchangetg)
+	e2:SetOperation(s.attacktargetchangeop)
 	c:RegisterEffect(e2)
 	--When this card is destroyed, you can place it in the Spell & Trap Zone as a Continuous Spell instead of sending it to the GY
 	local e3=Effect.CreateEffect(c)
@@ -41,6 +42,15 @@ function s.attacktargetchangecon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local at=eg:GetFirst()
 	return r~=REASON_REPLACE and at~=c and at:IsFaceup() and at:IsSetCard(SET_CRYSTAL_BEAST) and at:GetControler()==c:GetControler()
+end
+function s.attacktargetchangetg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.GetAttacker():GetAttackableTarget():IsContains(e:GetHandler()) end
+end
+function s.attacktargetchangeop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	if c:IsRelateToEffect(e) and not Duel.GetAttacker():IsImmuneToEffect(e) then
+		Duel.ChangeAttackTarget(c)
+	end
 end
 function s.replacecon(e)
 	local c=e:GetHandler()

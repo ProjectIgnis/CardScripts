@@ -1,114 +1,121 @@
 --ＢＦ－朧影のゴウフウ
 --Blackwing - Gofu the Vague Shadow
 local s,id=GetID()
+local TOKEN_VAGUE_SHADOW=id+1
 function s.initial_effect(c)
-	--Must be properly summoned before reviving
 	c:EnableReviveLimit()
-	--Special summon procedure (from hand)
+	--Must first be Special Summoned (from your hand) while you control no monsters
+	local e0=Effect.CreateEffect(c)
+	e0:SetDescription(aux.Stringid(id,0))
+	e0:SetType(EFFECT_TYPE_FIELD)
+	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e0:SetCode(EFFECT_SPSUMMON_PROC)
+	e0:SetRange(LOCATION_HAND)
+	e0:SetCondition(s.selfspcon)
+	c:RegisterEffect(e0)
+	--Special Summon 2 "Vague Shadow Tokens" (Winged Beast/DARK/Level 1/ATK 0/DEF 0), but they cannot be Tributed or be used as Synchro Material
 	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetCode(EFFECT_SPSUMMON_PROC)
-	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
-	e1:SetRange(LOCATION_HAND)
-	e1:SetCondition(s.spcon)
+	e1:SetDescription(aux.Stringid(id,1))
+	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
+	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e1:SetCondition(function(e) return e:GetHandler():IsSummonLocation(LOCATION_HAND) end)
+	e1:SetTarget(s.tokentg)
+	e1:SetOperation(s.tokenop)
 	c:RegisterEffect(e1)
-	--Special summon 2 tokens to your field
+	--Special Summon 1 "Blackwing" Synchro Monster whose Level equals the total Levels the banished monsters had on the field from your GY as a Tuner
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,0))
-	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
-	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e2:SetCondition(s.tkncon)
-	e2:SetTarget(s.tkntg)
-	e2:SetOperation(s.tknop)
+	e2:SetDescription(aux.Stringid(id,2))
+	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e2:SetType(EFFECT_TYPE_IGNITION)
+	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetCost(s.gyspcost)
+	e2:SetTarget(s.gysptg)
+	e2:SetOperation(s.gyspop)
 	c:RegisterEffect(e2)
-	--Special summon 1 "Blackwing" synchro monster from GY, treated as a tuner
-	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(id,1))
-	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e3:SetType(EFFECT_TYPE_IGNITION)
-	e3:SetRange(LOCATION_MZONE)
-	e3:SetTarget(s.target)
-	e3:SetOperation(s.operation)
-	c:RegisterEffect(e3)
 end
-s.listed_names={9929399}
+s.listed_names={TOKEN_VAGUE_SHADOW}
 s.listed_series={SET_BLACKWING}
-function s.spcon(e,c)
+function s.selfspcon(e,c)
 	if c==nil then return true end
-	return Duel.GetFieldGroupCount(c:GetControler(),LOCATION_MZONE,0,nil)==0
-		and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
+	local tp=c:GetControler()
+	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0,nil)==0
+		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 end
-function s.tkncon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsPreviousLocation(LOCATION_HAND)
-end
-function s.tkntg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
-		and Duel.GetLocationCount(tp,LOCATION_MZONE)>1
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0,TYPES_TOKEN,0,0,1,RACE_WINGEDBEAST,ATTRIBUTE_DARK) end
-	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,2,0,0)
+function s.tokentg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>=2
+		and not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_VAGUE_SHADOW,0,TYPES_TOKEN,0,0,1,RACE_WINGEDBEAST,ATTRIBUTE_DARK) end
+	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,2,tp,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,tp,0)
 end
-function s.tknop(e,tp,eg,ep,ev,re,r,rp)
-	if not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) and Duel.GetLocationCount(tp,LOCATION_MZONE)>1
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0,TYPES_TOKEN,0,0,1,RACE_WINGEDBEAST,ATTRIBUTE_DARK) then
+function s.tokenop(e,tp,eg,ep,ev,re,r,rp)
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)>=2 and not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_VAGUE_SHADOW,0,TYPES_TOKEN,0,0,1,RACE_WINGEDBEAST,ATTRIBUTE_DARK) then
+		local c=e:GetHandler()
 		for i=1,2 do
-			local token=Duel.CreateToken(tp,id+1)
+			local token=Duel.CreateToken(tp,TOKEN_VAGUE_SHADOW)
 			Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)
-			--Cannot be tributed
-			local e1=Effect.CreateEffect(e:GetHandler())
+			--They cannot be Tributed or be used as Synchro Material
+			local e1=Effect.CreateEffect(c)
 			e1:SetDescription(3303)
-			e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 			e1:SetCode(EFFECT_UNRELEASABLE_SUM)
 			e1:SetValue(1)
 			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
-			token:RegisterEffect(e1,true)
+			token:RegisterEffect(e1)
 			local e2=e1:Clone()
 			e2:SetCode(EFFECT_UNRELEASABLE_NONSUM)
-			token:RegisterEffect(e2,true)
-			--Cannot be used as synchro material
+			token:RegisterEffect(e2)
 			local e3=e2:Clone()
 			e3:SetDescription(3310)
 			e3:SetCode(EFFECT_CANNOT_BE_SYNCHRO_MATERIAL)
-			token:RegisterEffect(e3,true)
+			token:RegisterEffect(e3)
 		end
 		Duel.SpecialSummonComplete()
 	end
 end
-function s.cfilter(c)
-	return c:IsFaceup() and not c:IsType(TYPE_TUNER) and c:IsAbleToRemoveAsCost() and c:HasLevel() and not c:IsLevel(0)
+function s.gyspcostfilter(c)
+	return not c:IsType(TYPE_TUNER) and c:HasLevel() and c:IsFaceup() and c:IsAbleToRemoveAsCost()
 end
-function s.spfilter(c,e,tp,ct)
-	local rlv=c:GetLevel()-e:GetHandler():GetLevel()
-	if rlv<1 then return false end
-	local rg=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE,0,e:GetHandler())
-	return c:IsType(TYPE_SYNCHRO) and c:IsSetCard(SET_BLACKWING) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and rg:CheckWithSumEqual(Card.GetLevel,rlv,ct,63)
+function s.rescon(sg,e,tp,mg)
+	return Duel.GetMZoneCount(tp,sg)>0 and Duel.IsExistingTarget(s.gyspfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,sg:GetSum(Card.GetLevel)+e:GetHandler():GetLevel())
 end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ct=-Duel.GetLocationCount(tp,LOCATION_MZONE)
-	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost()
-		and Duel.IsExistingTarget(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,ct) end
+function s.gyspfilter(c,e,tp,lv)
+	if not (c:IsSetCard(SET_BLACKWING) and c:IsSynchroMonster() and c:IsLevel(lv)) then return false end
+	c:AssumeProperty(ASSUME_TYPE,c:GetType()|TYPE_TUNER)
+	return c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+end
+function s.gyspcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
+	local rg=Duel.GetMatchingGroup(s.gyspcostfilter,tp,LOCATION_MZONE,0,c)
+	if chk==0 then return c:IsAbleToRemoveAsCost() and c:HasLevel() and #rg>0
+		and aux.SelectUnselectGroup(rg,e,tp,1,#rg,s.rescon,0) end
+	local g=aux.SelectUnselectGroup(rg,e,tp,1,#rg,s.rescon,1,tp,HINTMSG_REMOVE,s.rescon)
+	e:SetLabel(g:GetSum(Card.GetLevel)+c:GetLevel())
+	Duel.Remove(g+c,POS_FACEUP,REASON_COST)
+end
+function s.gysptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.gyspfilter(chkc,e,tp,e:GetLabel()) end
+	if chk==0 then return true end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectTarget(tp,s.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp,ct)
-	local rlv=g:GetFirst():GetLevel()-e:GetHandler():GetLevel()
-	local rg=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE,0,e:GetHandler())
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g2=rg:SelectWithSumEqual(tp,Card.GetLevel,rlv,ct,63)
-	g2:AddCard(e:GetHandler())
-	Duel.Remove(g2,POS_FACEUP,REASON_COST)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
+	local g=Duel.SelectTarget(tp,s.gyspfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp,e:GetLabel())
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,tp,0)
 end
-function s.operation(e,tp,eg,ep,ev,re,r,rp)
+function s.gyspop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
+	if not tc:IsRelateToEffect(e) then return end
+	tc:AssumeProperty(ASSUME_TYPE,tc:GetType()|TYPE_TUNER)
+	if Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
+		--It is treated as a Tuner
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetCode(EFFECT_ADD_TYPE)
-		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e1:SetValue(TYPE_TUNER)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 	end
 	Duel.SpecialSummonComplete()

@@ -1,6 +1,76 @@
 --Utilities to be added to the core
 
 --[[
+	If a non-activated effect allows a monster to be Summoned with a different property (e.g. "as a Level X monster") then that different property should be considered when any "cannot summon" type of effects are checked
+	("Cockadoodledoo" vs "Evilswarm Ophion" workaround)
+--]]
+Card.RegisterEffect=(function()
+	local oldf=Card.RegisterEffect
+	return function(c,e,forced,...)
+		local reg_e=oldf(c,e,forced)
+		if not reg_e or reg_e<=0 then return reg_e end
+		local eff_code=e:GetCode()
+		if eff_code==EFFECT_CANNOT_SUMMON or eff_code==EFFECT_CANNOT_SPECIAL_SUMMON then
+			local base_tg=e:GetTarget()
+			if not base_tg then return reg_e end
+			e:SetTarget(function(e,c,sump,sumtype,sumpos,targetp,sum_eff,sum_proc_eff)
+						if sum_proc_eff then
+							local assume_func=sum_proc_eff:GetLabelObject()
+							if assume_func and type(assume_func)=="table"
+								and type(assume_func[1])=="function" then
+								assume_func[1](c)
+							end
+						end
+						if eff_code==EFFECT_CANNOT_SUMMON and sumtype==SUMMON_TYPE_NORMAL+1 then
+							local ns_eff=c:IsHasEffect(EFFECT_SUMMON_PROC)
+							if ns_eff then
+								local assume_func=ns_eff:GetLabelObject()
+								if assume_func and type(assume_func)=="table"
+									and type(assume_func[1])=="function" then
+									assume_func[1](c)
+								end
+							end
+						end
+						return base_tg(e,c,sump,sumtype,sumpos,targetp,sum_eff,sum_proc_eff)
+					end)
+		end
+		return reg_e
+	end
+end)()
+Duel.RegisterEffect=(function()
+	local oldf=Duel.RegisterEffect
+	return function(e,player,...)
+		local reg_e=oldf(e,player,...)
+		local eff_code=e:GetCode()
+		if eff_code==EFFECT_CANNOT_SUMMON or eff_code==EFFECT_CANNOT_SPECIAL_SUMMON then
+			local base_tg=e:GetTarget()
+			if not base_tg then return reg_e end
+			e:SetTarget(function(e,c,sump,sumtype,sumpos,targetp,sum_eff,sum_proc_eff)
+						if sum_proc_eff then
+							local assume_func=sum_proc_eff:GetLabelObject()
+							if assume_func and type(assume_func)=="table"
+								and type(assume_func[1])=="function" then
+								assume_func[1](c)
+							end
+						end
+						if eff_code==EFFECT_CANNOT_SUMMON and sumtype==SUMMON_TYPE_NORMAL+1 then
+							local ns_eff=c:IsHasEffect(EFFECT_SUMMON_PROC)
+							if ns_eff then
+								local assume_func=ns_eff:GetLabelObject()
+								if assume_func and type(assume_func)=="table"
+									and type(assume_func[1])=="function" then
+									assume_func[1](c)
+								end
+							end
+						end
+						return base_tg(e,c,sump,sumtype,sumpos,targetp,sum_eff,sum_proc_eff)
+					end)
+		end
+		return reg_e
+	end
+end)()
+
+--[[
 	Allow only 1 Chain to be built if an effect meets its activation condition during hand size adjustment at the end of the End Phase
 --]]
 do

@@ -15,6 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--If your opponent controls a monster and you control no cards, you can Special Summon this card (from your hand) as a Level 4 monster
 	local e2=e1:Clone()
+	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCondition(s.lv4spcon)
 	e2:SetOperation(s.spop(4))
 	e2:SetLabelObject({function(c) c:AssumeProperty(ASSUME_LEVEL,4) end})

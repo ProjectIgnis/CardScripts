@@ -53,9 +53,16 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e1:SetTargetRange(1,0)
-	e1:SetTarget(function(e,c) return (c:IsMonster() and not c:IsType(TYPE_TUNER)) or (c:IsMonsterCard() and not c:IsOriginalType(TYPE_TUNER)) end)
+	e1:SetTarget(s.splimit)
 	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
+end
+function s.splimit(e,c)
+	if c:IsMonster() then
+		return not c:IsType(TYPE_TUNER)
+	elseif c:IsMonsterCard() then
+		return not c:IsOriginalType(TYPE_TUNER)
+	end
 end
 function s.exctg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,0,LOCATION_DECK)>=2 and Duel.IsPlayerCanRemove(tp) end

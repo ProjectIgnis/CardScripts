@@ -1,5 +1,5 @@
---白闘気海豚
---White Aura Dolphin
+--白闘気海豚 (Manga)
+--White Aura Dolphin (Manga)
 Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)

@@ -58,7 +58,6 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	local tc=Duel.GetFirstTarget()
 	c:AssumeProperty(ASSUME_TYPE,c:GetType()|TYPE_TUNER)
 	if Duel.SpecialSummonStep(c,0,tp,tp,false,false,POS_FACEUP) then
 		--Treated as a Tuner
@@ -69,7 +68,9 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(TYPE_TUNER)
 		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e1)
-		if Duel.SpecialSummonComplete()>0 and tc:IsRelateToEffect(e) and tc:IsControler(tp) then
+		if Duel.SpecialSummonComplete()==0 then return end
+		local tc=Duel.GetFirstTarget()
+		if tc:IsRelateToEffect(e) and tc:IsControler(tp) then
 			if not c:EquipByEffectAndLimitRegister(e,tp,tc,nil,true) then return end
 			--The equipped monster gains 500 ATK
 			local e2=Effect.CreateEffect(tc)

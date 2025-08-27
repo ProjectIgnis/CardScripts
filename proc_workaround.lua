@@ -1,7 +1,7 @@
 --Utilities to be added to the core
 
 --[[
-	If a non-activated effect allows a monster to be Summoned with a different property (e.g. "as a Level X monster") then that different property should be considered when any "cannot summon" type of effects are checked
+	If a non-activated effect allows a monster to be Special Summoned with a different property (e.g. "as a Level X monster") then that different property should be considered when any "cannot summon" type of effects are checked
 	("Cockadoodledoo" vs "Evilswarm Ophion" workaround)
 --]]
 Card.RegisterEffect=(function()
@@ -12,31 +12,42 @@ Card.RegisterEffect=(function()
 		local eff_code=e:GetCode()
 		if eff_code==EFFECT_CANNOT_SUMMON or eff_code==EFFECT_CANNOT_SPECIAL_SUMMON then
 			local base_tg=e:GetTarget()
+			--if there's no target function in the effect then return early
 			if not base_tg then return reg_e end
+			--change the "cannot (special) summon" effect's target function to execute the specialised "assume" function, if it exists, before returning its regular check
+			--as a result when the base target function is executed the relevant assume property call has already happened
 			e:SetTarget(function(e,c,sump,sumtype,sumpos,targetp,sum_eff,sum_proc_eff)
+						--'sum_proc_eff' exists only if it's a proc effect
 						if sum_proc_eff then
+							--the label object of the SS proc effect is a table containing a function that when executed calls "Card.AssumeProperty" on the passed card
 							local assume_func=sum_proc_eff:GetLabelObject()
+							--safety checks incase an SS proc effect has a label object for a different reason
 							if assume_func and type(assume_func)=="table"
 								and type(assume_func[1])=="function" then
 								assume_func[1](c)
 							end
 						end
+						--the summoning effects are always nil for the Normal Summon case
+						--manually grab the proc effect and check the sumtype (added a '1' value in the cards' scripts to differentiate it from regular/other Normal Summons)
 						if eff_code==EFFECT_CANNOT_SUMMON and sumtype==SUMMON_TYPE_NORMAL+1 then
 							local ns_eff=c:IsHasEffect(EFFECT_SUMMON_PROC)
 							if ns_eff then
 								local assume_func=ns_eff:GetLabelObject()
+								--safety checks same as above
 								if assume_func and type(assume_func)=="table"
 									and type(assume_func[1])=="function" then
 									assume_func[1](c)
 								end
 							end
 						end
+						--execute the base target function at the end
 						return base_tg(e,c,sump,sumtype,sumpos,targetp,sum_eff,sum_proc_eff)
 					end)
 		end
 		return reg_e
 	end
 end)()
+--same functionality as the 'Card' version above but for 'Duel' effects
 Duel.RegisterEffect=(function()
 	local oldf=Duel.RegisterEffect
 	return function(e,player,...)

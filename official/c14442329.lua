@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetTargetRange(LOCATION_MZONE,0)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsCode,100446038))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsCode,41069676))
 	e2:SetValue(3300)
 	e2:SetCondition(function(e) return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsType,TYPE_TUNER),e:GetHandlerPlayer(),0,LOCATION_MZONE|LOCATION_GRAVE,1,nil) end)
 	c:RegisterEffect(e2)
@@ -39,7 +39,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thspop)
 	c:RegisterEffect(e3)
 end
-s.listed_names={100446038} --"Killer Tune Loudness War"
+s.listed_names={41069676} --"Killer Tune Loudness War"
 s.listed_series={SET_KILLER_TUNE}
 function s.costfilter(c,e,tp)
 	return c:IsType(TYPE_TUNER) and Duel.IsExistingMatchingCard(s.thspfilter,tp,LOCATION_DECK,0,1,nil,e,tp,Duel.GetMZoneCount(tp,c)>0)

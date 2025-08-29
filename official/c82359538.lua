@@ -188,7 +188,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 		--If a chain link is resolving, register a flag to deal the damage after it
 		local c=e:GetHandler()
 		for i=1,ct do
-			c:RegisterFlagEffect(id+100,RESET_CHAIN,0,1)
+			c:RegisterFlagEffect(id+1,RESET_CHAIN,0,1)
 		end
 	else
 		--If a chain is not resolving, deal the damage right away
@@ -197,10 +197,10 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.chainsolvedop(e,tp,eg,ep,ev,re,r,rp)
-	local ct=e:GetHandler():GetFlagEffect(id+100)
+	local ct=e:GetHandler():GetFlagEffect(id+1)
 	if ct>0 then
 		Duel.Hint(HINT_CARD,1-tp,id)
 		Duel.Damage(1-tp,ct*900,REASON_EFFECT)
-		e:GetHandler():ResetFlagEffect(id+100)
+		e:GetHandler():ResetFlagEffect(id+1)
 	end
 end

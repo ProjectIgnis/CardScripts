@@ -3,8 +3,7 @@
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)
-	local params={aux.FilterBoolFunction(s.fusfilter),s.mfilter,s.fextra,Fusion.ShuffleMaterial,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,9}
-	local params2={aux.FilterBoolFunction(s.fusfilter),s.mfilter,s.fextra,Fusion.ShuffleMaterial,nil,nil,nil,nil,nil,nil,nil,nil,nil,9}
+	local params={fusfilter=aux.FilterBoolFunction(s.fusfilter),matfilter=s.mfilter,extrafil=s.fextra,extraop=Fusion.ShuffleMaterial,maxcount=9}
 	--Destroy up to 3 monsters on your field
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -14,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1)
 	e1:SetCondition(s.condition)
 	e1:SetTarget(s.target)
-	e1:SetOperation(s.operation(Fusion.SummonEffTG(table.unpack(params)),Fusion.SummonEffOP(table.unpack(params2))))
+	e1:SetOperation(s.operation(Fusion.SummonEffTG(params),Fusion.SummonEffOP(params)))
 	c:RegisterEffect(e1)
 end
 function s.fusfilter(c)

@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
-s.listed_name={CARD_JUNK_WARRIOR}
+s.listed_names={CARD_JUNK_WARRIOR}
 function s.spconfilter(c,tp)
 	return c:IsType(TYPE_TUNER) and c:IsControler(tp)
 end

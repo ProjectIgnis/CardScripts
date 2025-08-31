@@ -21,6 +21,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
+	e2:SetCondition(s.condition)
 	e2:SetTarget(Fusion.SummonEffTG(table.unpack(params)))
 	e2:SetOperation(Fusion.SummonEffOP(table.unpack(params)))
 	c:RegisterEffect(e2)
@@ -57,4 +58,8 @@ function s.filter(c)
 end
 function s.matfilter(c)
 	return c:IsLocation(LOCATION_MZONE) and c:IsRace(RACE_GALAXY) and c:IsFaceup() and c:IsAbleToGrave()
+end
+function s.condition(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	return c:IsSummonPhaseMain() and c:IsStatus(STATUS_SUMMON_TURN+STATUS_SPSUMMON_TURN)
 end

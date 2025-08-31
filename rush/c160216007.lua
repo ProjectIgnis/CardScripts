@@ -52,11 +52,12 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		--Cannot be destroyed by your opponent's card effects
 		local e2=Effect.CreateEffect(c)
 		e2:SetDescription(3001)
-		e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
+		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 		e2:SetValue(1)
 		e2:SetReset(RESETS_STANDARD_PHASE_END)
 		c:RegisterEffect(e2)
+		c:AddCenterToSideEffectHandler(e2)
 	end
 end

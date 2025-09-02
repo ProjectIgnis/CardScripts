@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1a:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1a:SetCode(EFFECT_UPDATE_ATTACK)
 	e1a:SetRange(LOCATION_MZONE)
-	e1a:SetCondition(function() return Duel.IsExistingMatchingCard(aux.AND(Card.IsSetCard,Card.IsMonster),0,LOCATION_MZONE|LOCATION_GRAVE,LOCATION_MZONE|LOCATION_GRAVE,1,nil,SET_ECCLESIA) end)
+	e1a:SetCondition(function() return Duel.IsExistingMatchingCard(s.atkimmconfilter,0,LOCATION_MZONE|LOCATION_GRAVE,LOCATION_MZONE|LOCATION_GRAVE,1,nil) end)
 	e1a:SetValue(500)
 	c:RegisterEffect(e1a)
 	local e1b=e1a:Clone()
@@ -45,6 +45,9 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_ALBAZ}
 s.listed_series={SET_ECCLESIA,SET_DOGMATIKA,SET_TRI_BRIGADE}
+function s.atkimmconfilter(c)
+	return c:IsFaceup() and c:IsSetCard(SET_ECCLESIA) and c:IsMonster()
+end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToDeck,tp,LOCATION_GRAVE|LOCATION_REMOVED,LOCATION_GRAVE|LOCATION_REMOVED,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,PLAYER_EITHER,LOCATION_GRAVE|LOCATION_REMOVED)

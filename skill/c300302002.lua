@@ -8,7 +8,7 @@ function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	return aux.CanActivateSkill(tp) and Duel.IsExistingMatchingCard(s.ritualrevealfilter,tp,LOCATION_HAND,0,1,nil,tp) and not Duel.HasFlagEffect(tp,id)
 end
 function s.ritualrevealfilter(c,tp)
-	return c:IsRitualMonster() and not c:IsPublic() and Duel.IsExistingMatchingCard(s.ritspellthfilter,c:GetControler(),LOCATION_DECK,0,1,nil,c)
+	return c:IsRitualMonster() and not c:IsPublic() and Duel.IsExistingMatchingCard(s.ritspellthfilter,tp,LOCATION_DECK,0,1,nil,c)
 end
 function s.ritspellthfilter(c,tc)
 	return c:IsRitualSpell() and tc:ListsCode(c:GetCode()) and c:IsAbleToHand()

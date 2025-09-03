@@ -35,7 +35,7 @@ function s.atklm(e)
 	return Duel.IsExistingMatchingCard(s.atkfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function s.cfilter(c,tp)
-	return c:IsPreviousControler(1-tp) and c:IsMonster() and c:IsPreviousLocation(LOCATION_MZONE)
+	return c:IsControler(1-tp) and c:IsMonster() and c:IsPreviousLocation(LOCATION_MZONE)
 end
 function s.tkcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)

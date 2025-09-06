@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.spfilter(c,tpe)
-	return c:IsType(tpe) and c:IsAbleToGraveAsCost()
+	return c:IsType(tpe) and c:IsAbleToGraveAsCost() and not c:IsCode(id)
 end
 function s.rescon(sg,e,tp,mg)
 	return aux.ChkfMMZ(1)(sg,e,tp,mg) and sg:IsExists(s.chk,1,nil,sg)

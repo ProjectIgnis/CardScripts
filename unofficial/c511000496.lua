@@ -46,7 +46,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g2=Duel.SelectMatchingCard(1-tp,s.filter,tp,0,LOCATION_DECK,3,3,nil)
 	local exg1=Group.CreateGroup()
 	local exg2=Group.CreateGroup()
-	for i=1,3 do
+	for i=1,1 do
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
 		local sc1=g1:Select(tp,1,1,exg1):GetFirst()
 		exg1:AddCard(sc1)

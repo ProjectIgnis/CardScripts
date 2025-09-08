@@ -26,12 +26,12 @@ function s.initial_effect(c)
 	e2:SetValue(s.effval)
 	c:RegisterEffect(e2)
 end
-s.material={100348004} --"Scrap Synchron"
+s.material={16449363} --"Scrap Synchron"
 s.listed_series={SET_WARRIOR}
-s.listed_names={CARD_JUNK_SYNCHRON,CARD_JUNK_WARRIOR,id}
+s.listed_names={16449363,CARD_JUNK_SYNCHRON,CARD_JUNK_WARRIOR,id}
 s.material_setcode=SET_SYNCHRON
 function s.tunerfilter(c,lc,stype,tp)
-    return c:IsSummonCode(lc,stype,tp,100348004) or c:IsHasEffect(20932152)
+    return c:IsSummonCode(lc,stype,tp,16449363) or c:IsHasEffect(20932152)
 end
 function s.thtgfilter(c)
 	return (c:IsCode(CARD_JUNK_SYNCHRON) or c:ListsCode(CARD_JUNK_WARRIOR)) and (c:IsAbleToHand() or c:IsAbleToGrave())

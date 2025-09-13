@@ -25,17 +25,17 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_RB}
-function s.spfilter(c,e,tp)
+function s.spfromgyfilter(c,e,tp)
 	return c:IsLevelAbove(3) and c:IsSetCard(SET_RB) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.spfilter(chkc,e,tp) end
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.spfromgyfilter(chkc,e,tp) end
 	if chk==0 then return true end
-	if Duel.IsExistingTarget(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
+	if Duel.IsExistingTarget(s.spfromgyfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 		e:SetCategory(CATEGORY_SPECIAL_SUMMON)
 		e:SetProperty(EFFECT_FLAG_CARD_TARGET)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local g=Duel.SelectTarget(tp,s.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
+		local g=Duel.SelectTarget(tp,s.spfromgyfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,tp,0)
 	else
 		e:SetCategory(0)
@@ -61,7 +61,7 @@ function s.recthsptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,#g,tp,0)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 end
-function s.spfilter(c,e,tp)
+function s.spfromhandfilter(c,e,tp)
 	return c:IsSetCard(SET_RB) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.recthspop(e,tp,eg,ep,ev,re,r,rp)
@@ -70,11 +70,11 @@ function s.recthspop(e,tp,eg,ep,ev,re,r,rp)
 	local sum=tg:GetSum(Card.GetBaseAttack)
 	if Duel.Recover(tp,sum,REASON_EFFECT)>0 and Duel.SendtoHand(tg,nil,REASON_EFFECT)>0 and Duel.GetMZoneCount(tp)>0
 		and tg:FilterCount(Card.IsLocation,nil,LOCATION_HAND|LOCATION_EXTRA)>0
-		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp) then
+		and Duel.IsExistingMatchingCard(s.spfromhandfilter,tp,LOCATION_HAND,0,1,nil,e,tp) then
 		Duel.ShuffleHand(tp)
 		if not Duel.SelectYesNo(tp,aux.Stringid(id,3)) then return end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local sg=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
+		local sg=Duel.SelectMatchingCard(tp,s.spfromhandfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
 		if #sg>0 then
 			Duel.BreakEffect()
 			Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)

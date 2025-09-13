@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Ritual Summon "Archfiend Matador"
-	Ritual.AddProcGreaterCode(c,6,nil,100443104)
+	Ritual.AddProcGreaterCode(c,6,nil,7622360)
 	--Special Summon 1 non-Ritual "Archfiend" monster from your hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,1))
@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
-s.listed_names={100443104} --"Archfiend Matador"
+s.listed_names={7622360} --"Archfiend Matador"
 s.listed_series={SET_ARCHFIEND}
 function s.spfilter(c,e,tp)
 	return not c:IsRitualMonster() and c:IsSetCard(SET_ARCHFIEND) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

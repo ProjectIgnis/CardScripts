@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.desop)
 	c:RegisterEffect(e4)
 end
-s.listed_names={100443105,id} --"Ritual of the Matador"
+s.listed_names={70105073,id} --"Ritual of the Matador"
 s.listed_series={SET_ARCHFIEND}
 function s.thfilter(c)
 	return c:IsSetCard(SET_ARCHFIEND) and not c:IsCode(id) and c:IsAbleToHand()

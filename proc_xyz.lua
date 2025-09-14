@@ -435,7 +435,7 @@ function Xyz.Target(f,lv,minc,maxc,mustbemat,exchk)
 								end
 							end
 						end
-						finishable=#matg>=minc and Xyz.CheckMaterialSet(matg,c,tp,exchk,mustg,lv)
+						finishable=#matg+extra_mats>=minc and Xyz.CheckMaterialSet(matg,c,tp,exchk,mustg,lv)
 						::continue::
 					end
 					sg:KeepAlive()

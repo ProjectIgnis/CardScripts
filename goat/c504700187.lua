@@ -1,6 +1,6 @@
 --サイバーポッド
---Cyber Jar
---Scripted by edo9300
+--Cyber Jar (GOAT)
+--The first player gets to see the second player's cards as well before deciding how to summon.
 local s,id=GetID()
 function s.initial_effect(c)
 	--flip
@@ -56,8 +56,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tohand,tograve=nonsummonable1:Merge(nonsummonable2):Split(Card.IsAbleToHand,nil)
 	Duel.DisableShuffleCheck()
 	Duel.ConfirmDecktop(p,5)
-	summon(summonable1,e,p,tograve,ft1)
 	Duel.ConfirmDecktop(1-p,5)
+	summon(summonable1,e,p,tograve,ft1)
 	summon(summonable2,e,1-p,tograve,ft2)
 	Duel.SpecialSummonComplete()
 	if #tohand>0 then

@@ -5,7 +5,7 @@ function s.initial_effect(c)
 	--Synchro Summon
 	c:EnableReviveLimit()
 	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTuner(nil),1,99)
-	--Increase ATK/DEF
+	--Gains 100 ATK/DEF for each banished card
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_UPDATE_DEFENSE)
 	c:RegisterEffect(e2)
-	--Decrease ATK/DEF
+	--Monsters your opponent controls lose 100 ATK/DEF for each banished card
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetCode(EFFECT_UPDATE_ATTACK)
@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	local e4=e3:Clone()
 	e4:SetCode(EFFECT_UPDATE_DEFENSE)
 	c:RegisterEffect(e4)
-	--Destroy replace
+	--If this card would be destroyed by card effect, you can banish 1 card from your GY instead
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
 	e5:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	e5:SetRange(LOCATION_MZONE)
 	e5:SetTarget(s.desreptg)
 	c:RegisterEffect(e5)
-	--Banish
+	--Banish 1 card each from both your opponent's field and GY
 	local e6=Effect.CreateEffect(c)
 	e6:SetDescription(aux.Stringid(id,0))
 	e6:SetCategory(CATEGORY_REMOVE)
@@ -44,6 +44,7 @@ function s.initial_effect(c)
 	e6:SetCode(EVENT_REMOVE)
 	e6:SetRange(LOCATION_MZONE)
 	e6:SetCountLimit(1,id)
+	e6:SetCondition(s.remcon)
 	e6:SetTarget(s.remtg)
 	e6:SetOperation(s.remop)
 	c:RegisterEffect(e6)
@@ -67,6 +68,9 @@ function s.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 		return true
 	else return false end
+end
+function s.remcon(e,tp,eg,ep,ev,re,r,rp)
+	return eg:IsExists(function(c) return not c:IsType(TYPE_TOKEN) end,1,nil)
 end
 function s.remtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not Duel.IsPlayerAffectedByEffect(e:GetHandlerPlayer(),CARD_SPIRIT_ELIMINATION) 

@@ -1,5 +1,5 @@
 --ティマイオスの眼
---The Eye of Timaeus
+--The Eye of Timaeus (Rush)
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)
@@ -62,15 +62,17 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		table.insert(announceFilter,OPCODE_ALLOW_ALIASES)
 	end
 	local code=Duel.AnnounceCard(tp,announceFilter)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local tc=Duel.SelectMatchingCard(tp,s.matfilter,tp,LOCATION_MZONE,0,1,1,nil,e,tp,code):GetFirst()
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local sg=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,tc)
-	local sc=sg:GetFirst()
-	if sc then
-		sc:SetMaterial(Group.FromCards(tc))
-		Duel.SendtoGrave(tc,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
-		Duel.BreakEffect()
-		Duel.SpecialSummon(sc,SUMMON_TYPE_FUSION,tp,tp,false,false,POS_FACEUP)
-		sc:CompleteProcedure()
+	if tc then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+		local sc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,tc):GetFirst()
+		if sc then
+			sc:SetMaterial(Group.FromCards(tc))
+			Duel.SendtoGrave(tc,REASON_EFFECT|REASON_MATERIAL|REASON_FUSION)
+			Duel.BreakEffect()
+			Duel.SpecialSummon(sc,SUMMON_TYPE_FUSION,tp,tp,false,false,POS_FACEUP)
+			sc:CompleteProcedure()
+		end
 	end
 end

@@ -3,8 +3,8 @@
 --Scripted by The Razgriz
 local s,id=GetID()
 function s.initial_effect(c)
-    --Activate
-    local e1=Fusion.CreateSummonEff({
+	--Fusion Summon 1 DARK Fairy Fusion Monster from your Extra Deck, by banishing its materials from your hand, field, and/or GY, and if you do, it gains 1000 ATK
+	local e1=Fusion.CreateSummonEff({
 				handler=c,
 				fusfilter=s.fusfilter,
 				matfilter=Card.IsAbleToRemove,
@@ -13,12 +13,12 @@ function s.initial_effect(c)
 				extratg=s.extratg,
 				stage2=s.stage2
 			})
-    e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
-    c:RegisterEffect(e1)
+	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
+	c:RegisterEffect(e1)
 end
 s.listed_series={SET_DARKLORD}
 function s.fusfilter(c)
-    return c:IsAttribute(ATTRIBUTE_DARK) and c:IsRace(RACE_FAIRY)
+	return c:IsAttribute(ATTRIBUTE_DARK) and c:IsRace(RACE_FAIRY)
 end
 function s.fcheck(tp,sg,fc)
 	return fc:IsSetCard(SET_DARKLORD) or not sg:IsExists(Card.IsControler,1,nil,1-tp)

@@ -30,13 +30,13 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_POWER_PATRON}
 function s.thspfilter(c,e,tp,sp_chk)
-	return c:IsSetCard(SET_POWER_PATRON) and c:IsMonster()
-	   and (c:IsAbleToHand() or (sp_chk and c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
+	return c:IsSetCard(SET_POWER_PATRON) and c:IsMonster() and (c:IsAbleToHand()
+		or (sp_chk and c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
 end
 function s.thsptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
-	   local sp_chk=Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-	   return Duel.IsExistingMatchingCard(s.thspfilter,tp,LOCATION_DECK,0,1,nil,e,tp,sp_chk)
+		local sp_chk=Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		return Duel.IsExistingMatchingCard(s.thspfilter,tp,LOCATION_DECK,0,1,nil,e,tp,sp_chk)
 	end
 	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)

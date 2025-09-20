@@ -43,7 +43,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 	aux.AddEREquipLimit(c,nil,function(ec,c,tp) return ec:IsControler(1-tp) end,Card.EquipByEffectAndLimitRegister,e3)
 end
-s.listed_series={SET_DOOM_Z}
 function s.eqfilter(c,tp)
 	return c:IsFaceup() and (c:IsControler(tp) or c:IsAbleToChangeControler())
 end

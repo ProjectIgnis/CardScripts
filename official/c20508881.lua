@@ -25,9 +25,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={CARD_MYSTICAL_SPACE_TYPHOON}
-s.listed_series={SET_MAGNIFISTORM}
+s.listed_series={SET_RADIANT_TYPHOON}
 function s.tgfilter(c)
-	return c:IsSetCard(SET_MAGNIFISTORM) and c:IsMonster() and c:IsAbleToGrave()
+	return c:IsSetCard(SET_RADIANT_TYPHOON) and c:IsMonster() and c:IsAbleToGrave()
 end
 function s.thfilter(c)
 	return c:IsCode(CARD_MYSTICAL_SPACE_TYPHOON) and c:IsAbleToHand()
@@ -53,7 +53,7 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.discardfilter(c)
-	return (c:IsSetCard(SET_MAGNIFISTORM) or c:IsQuickPlaySpell()) and c:IsDiscardable(REASON_EFFECT)
+	return (c:IsSetCard(SET_RADIANT_TYPHOON) or c:IsQuickPlaySpell()) and c:IsDiscardable(REASON_EFFECT)
 end
 function s.effop(e,tp,eg,ep,ev,re,r,rp)
 	local op=e:GetLabel()

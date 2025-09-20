@@ -31,9 +31,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={CARD_MEDIUS_THE_PURE}
-s.listed_series={SET_DOOM_Z}
+s.listed_series={SET_DOOMZ}
 function s.desfilter(c)
-	return c:IsSetCard(SET_DOOM_Z) and (c:IsFaceup() or c:IsLocation(LOCATION_HAND))
+	return c:IsSetCard(SET_DOOMZ) and (c:IsFaceup() or c:IsLocation(LOCATION_HAND))
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.desfilter,tp,LOCATION_HAND|LOCATION_ONFIELD,0,1,nil) end
@@ -56,7 +56,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thtgconfilter(c)
-	return (c:IsSetCard(SET_DOOM_Z) and c:IsMonster()) or c:IsCode(CARD_MEDIUS_THE_PURE)
+	return (c:IsSetCard(SET_DOOMZ) and c:IsMonster()) or c:IsCode(CARD_MEDIUS_THE_PURE)
 end
 function s.thtgcon(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

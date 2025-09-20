@@ -593,9 +593,9 @@ SET_DRACOTAIL                     = 0x1c0
 SET_YUMMY                         = 0x1c1
 SET_K9                            = 0x1c4
 SET_DOOM_KING                     = 0x1c8
+SET_RADIANT_TYPHOON               = 0x1c9
+SET_DOOMZ                         = 0x1cb
 --Released but the official English name is unconfirmed
-SET_MAGNIFISTORM                  = 0x1c9
-SET_DOOM_Z                        = 0x1cb
 SET_HECAHANDS                     = 0x1cc
 SET_ENNEACRAFT                    = 0x1cd
 SET_KILLER_TUNE                   = 0x1ce

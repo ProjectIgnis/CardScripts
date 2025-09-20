@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e2b:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2b)
 end
-s.listed_series={SET_MAGNIFISTORM}
+s.listed_series={SET_RADIANT_TYPHOON}
 s.listed_names={CARD_MYSTICAL_SPACE_TYPHOON,id}
 function s.selfspcon(e,c)
 	if c==nil then return true end
@@ -38,7 +38,7 @@ function s.selfspcon(e,c)
 		or not Duel.IsExistingMatchingCard(Card.IsSpellTrap,tp,0,LOCATION_ONFIELD,1,nil))
 end
 function s.thfilter(c)
-	return ((c:IsSetCard(SET_MAGNIFISTORM) and c:IsMonster()) or c:IsCode(CARD_MYSTICAL_SPACE_TYPHOON)) and c:IsAbleToHand() and not c:IsCode(id)
+	return ((c:IsSetCard(SET_RADIANT_TYPHOON) and c:IsMonster()) or c:IsCode(CARD_MYSTICAL_SPACE_TYPHOON)) and c:IsAbleToHand() and not c:IsCode(id)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

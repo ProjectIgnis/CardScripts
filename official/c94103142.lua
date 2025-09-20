@@ -25,9 +25,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={CARD_MYSTICAL_SPACE_TYPHOON}
-s.listed_series={SET_MAGNIFISTORM}
+s.listed_series={SET_RADIANT_TYPHOON}
 function s.tgfilter(c)
-	return c:IsSetCard(SET_MAGNIFISTORM) and c:IsMonster() and c:IsAbleToGrave()
+	return c:IsSetCard(SET_RADIANT_TYPHOON) and c:IsMonster() and c:IsAbleToGrave()
 end
 function s.thfilter(c)
 	return c:IsCode(CARD_MYSTICAL_SPACE_TYPHOON) and c:IsAbleToHand()

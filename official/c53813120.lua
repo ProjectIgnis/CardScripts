@@ -47,18 +47,18 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={CARD_MYSTICAL_SPACE_TYPHOON}
-s.listed_series={SET_MAGNIFISTORM}
+s.listed_series={SET_RADIANT_TYPHOON}
 function s.tdfilter(c,e)
 	return c:IsQuickPlaySpell() and c:IsAbleToDeck() and c:IsCanBeEffectTarget(e)
 end
 function s.rescon(sg,e,tp,mg)
-	return sg:IsExists(Card.IsSetCard,1,nil,SET_MAGNIFISTORM)
+	return sg:IsExists(Card.IsSetCard,1,nil,SET_RADIANT_TYPHOON)
 end
 function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	local g=Duel.GetMatchingGroup(s.tdfilter,tp,LOCATION_GRAVE,0,nil,e)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1)
-		and #g>=3 and g:IsExists(Card.IsSetCard,1,nil,SET_MAGNIFISTORM)
+		and #g>=3 and g:IsExists(Card.IsSetCard,1,nil,SET_RADIANT_TYPHOON)
 	end
 	local tg=aux.SelectUnselectGroup(g,e,tp,3,3,s.rescon,1,tp,HINTMSG_TODECK)
 	Duel.SetTargetCard(tg)

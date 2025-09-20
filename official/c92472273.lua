@@ -28,9 +28,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={SET_DOOM_Z}
+s.listed_series={SET_DOOMZ}
 function s.desfilter(c,tp)
-	return c:IsSetCard(SET_DOOM_Z) and c:IsFaceup() and Duel.GetMZoneCount(tp,c)>0
+	return c:IsSetCard(SET_DOOMZ) and c:IsFaceup() and Duel.GetMZoneCount(tp,c)>0
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()

@@ -43,7 +43,7 @@ function s.initial_effect(c)
 	e3b:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3b)
 end
-s.listed_series={SET_MAGNIFISTORM}
+s.listed_series={SET_RADIANT_TYPHOON}
 s.listed_names={id,CARD_MYSTICAL_SPACE_TYPHOON}
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -58,14 +58,14 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thfilter(c)
-	return (c:IsSetCard(SET_MAGNIFISTORM) or c:IsCode(CARD_MYSTICAL_SPACE_TYPHOON)) and c:IsAbleToHand() and not c:IsCode(id)
+	return (c:IsSetCard(SET_RADIANT_TYPHOON) or c:IsCode(CARD_MYSTICAL_SPACE_TYPHOON)) and c:IsAbleToHand() and not c:IsCode(id)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK|LOCATION_GRAVE,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK|LOCATION_GRAVE)
 end
 function s.rescon(sg,e,tp,mg)
-	return sg:FilterCount(Card.IsSetCard,nil,SET_MAGNIFISTORM)<=1 and sg:FilterCount(Card.IsCode,nil,CARD_MYSTICAL_SPACE_TYPHOON)<=1
+	return sg:FilterCount(Card.IsSetCard,nil,SET_RADIANT_TYPHOON)<=1 and sg:FilterCount(Card.IsCode,nil,CARD_MYSTICAL_SPACE_TYPHOON)<=1
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.thfilter),tp,LOCATION_DECK|LOCATION_GRAVE,0,nil)

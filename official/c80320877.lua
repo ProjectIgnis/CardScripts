@@ -29,9 +29,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.eqpop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={SET_DOOM_Z}
+s.listed_series={SET_DOOMZ}
 function s.xyzfilter(c)
-	return c:IsSetCard(SET_DOOM_Z) and c:IsType(TYPE_XYZ) and c:IsFaceup()
+	return c:IsSetCard(SET_DOOMZ) and c:IsType(TYPE_XYZ) and c:IsFaceup()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.xyzfilter(chkc) end
@@ -66,7 +66,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.eqfilter(c,tp)
-	return c:IsSetCard(SET_DOOM_Z) and c:IsMonster() and c:CheckUniqueOnField(tp) and not c:IsForbidden() 
+	return c:IsSetCard(SET_DOOMZ) and c:IsMonster() and c:CheckUniqueOnField(tp) and not c:IsForbidden() 
 end
 function s.eqptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()

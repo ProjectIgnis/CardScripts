@@ -38,7 +38,7 @@ end
 function s.adswapcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
-	return c:IsRelateToBattle() and bc and bc:IsControler(1-tp) and bc:IsRelateToBattle() and bc:IsFaceup()
+	return c:IsRelateToBattle() and bc and bc:IsControler(1-tp) and bc:IsRelateToBattle() and bc:IsFaceup() and bc:HasDefense()
 end
 function s.adswaptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local bc=e:GetHandler():GetBattleTarget()

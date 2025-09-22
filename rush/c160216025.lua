@@ -27,7 +27,7 @@ function s.cfilter(c)
 	return c:IsMonster() and c:IsAbleToDeckOrExtraAsCost()
 end
 function s.tgfilter(c)
-	return c:IsFaceup() and c:IsRace(RACE_BEAST)
+	return c:IsFaceup() and c:IsRace(RACE_BEAST) and c:IsNotMaximumModeSide()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_MZONE,0,1,nil) end
@@ -38,6 +38,7 @@ function s.operation(fustg,fusop)
 		--Effect
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		local g=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_MZONE,0,1,1,nil)
+		g=g:AddMaximumCheck()
 		Duel.HintSelection(g)
 		if Duel.SendtoGrave(g,REASON_EFFECT)==0 then return end
 		if fustg(e,tp,eg,ep,ev,re,r,rp,0) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then

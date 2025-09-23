@@ -16,7 +16,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_YUMMY}
 function s.monoppthfilter(c,e,tp)
-	return ((c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsRace(RACE_BEAST) and c:IsControler(tp)) or c:IsControler(1-tp))
+	return ((c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsRace(RACE_BEAST) and c:IsControler(tp) and c:IsFaceup()) or c:IsControler(1-tp))
 		and c:IsCanBeEffectTarget(e) and c:IsAbleToHand()
 end
 function s.rescon(sg,e,tp,mg)

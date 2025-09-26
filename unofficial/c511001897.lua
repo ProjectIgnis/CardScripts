@@ -14,9 +14,10 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_names={79853073,67532912,75559356}
+s.listed_names={79853073,67532912,75559356} --"Cipher Soldier", "Science Soldier", "Cyber Soldier of Dark World"
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,79853073),tp,LOCATION_ONFIELD,0,1,nil)
+	return Duel.IsTurnPlayer(tp) and Duel.IsMainPhase()
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,79853073),tp,LOCATION_ONFIELD,0,1,nil)
 		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,67532912),tp,LOCATION_ONFIELD,0,1,nil)
 		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,75559356),tp,LOCATION_ONFIELD,0,1,nil)
 end
@@ -32,16 +33,19 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(nil,tp,0,LOCATION_HAND,1,nil)
-		and Duel.IsExistingMatchingCard(nil,tp,0,LOCATION_ONFIELD,1,nil) end
-	local tg=Duel.GetFieldGroup(tp,0,LOCATION_HAND)
-	local dg=Duel.GetFieldGroup(tp,0,LOCATION_ONFIELD)
-	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,tg,#tg,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,dg,#dg,0,0)
+	local desg=Duel.GetFieldGroup(tp,0,LOCATION_ONFIELD)
+	if chk==0 then return #desg>0 or Duel.IsExistingMatchingCard(Card.IsAbleToGrave,tp,0,LOCATION_HAND,1,nil) end
+	local hg=Duel.GetMatchingGroup(Card.IsAbleToGrave,tp,0,LOCATION_HAND,nil)
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,hg,#hg,tp,0)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,desg,#desg,tp,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local tg=Duel.GetFieldGroup(tp,0,LOCATION_HAND)
-	if Duel.SendtoGrave(tg,REASON_EFFECT)>0 and tg:FilterCount(Card.IsLocation,nil,LOCATION_GRAVE)>0 then
-		Duel.Destroy(Duel.GetFieldGroup(tp,0,LOCATION_ONFIELD),REASON_EFFECT)
+	local hg=Duel.GetMatchingGroup(Card.IsAbleToGrave,tp,0,LOCATION_HAND,nil)
+	if #hg>0 then
+		Duel.SendtoGrave(hg,REASON_EFFECT)
+	end
+	local desg=Duel.GetFieldGroup(tp,0,LOCATION_ONFIELD)
+	if #desg>0 then
+		Duel.Destroy(desg,REASON_EFFECT)
 	end
 end

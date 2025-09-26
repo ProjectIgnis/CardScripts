@@ -41,7 +41,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.lvnameop)
 	c:RegisterEffect(e3)
 end
-s.listed_names={101302082} --"Cursed Copycat Noble Arms"
+s.listed_names={23249029} --"Cursed Copycat Noble Arms"
 function s.spconfilter(c)
 	return c:IsEquipSpell() and (c:IsFaceup() or c:GetEquipTarget())
 end
@@ -61,7 +61,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thfilter(c)
-	return c:IsCode(101302082) and c:IsAbleToHand()
+	return c:IsCode(23249029) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

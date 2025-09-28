@@ -2,8 +2,9 @@
 --Fire Whip
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Special Summon all monsters that were destroyed this turn to your field
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -13,7 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 local LOCATION_HDGRE=LOCATION_HAND|LOCATION_DECK|LOCATION_GRAVE|LOCATION_REMOVED|LOCATION_EXTRA
-function s.confilter()
+function s.confilter(c)
 	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_FIRE) and c:IsRace(RACE_FIEND)
 end
 function s.spfilter(c,e,tp,tid)

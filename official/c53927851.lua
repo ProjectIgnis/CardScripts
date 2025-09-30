@@ -1,5 +1,5 @@
 --絢嵐渦麗ヴァルルーン
---Magnifistorm Vortex Beauty Valrune
+--Radiant Typhoon Varuroon, the Vibrant Vortex
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

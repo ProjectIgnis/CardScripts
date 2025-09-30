@@ -1,5 +1,5 @@
 --ＤＤＤ智慧王ソロモン
---D/D/D Wisdom King Solomon
+--D/D/D Wise King Solomon
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

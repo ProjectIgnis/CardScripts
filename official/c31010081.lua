@@ -1,12 +1,12 @@
 --終刻獄徒 ディアクトロス
---Doom-Z Break Diactorus
+--DoomZ Break - Diactorus
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--Xyz Summon procedure: 2 Level 4 monsters
 	Xyz.AddProcedure(c,nil,4,2)
-	--Destroy 1 "Doom-Z" card in your hand or face-up field, then you can destroy 1 monster on the field
+	--Destroy 1 "DoomZ" card in your hand or face-up field, then you can destroy 1 monster on the field
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY)

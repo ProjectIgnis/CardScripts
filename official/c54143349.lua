@@ -1,5 +1,5 @@
 --絢嵐たるエルダム
---Magnifistorming Erdam
+--Radiant Typhoon Eldam
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetCondition(s.selfspcon)
 	c:RegisterEffect(e1)
-	--Add 1 "Magnifistorm" monster or 1 "Mystical Space Typhoon" from your Deck to your hand
+	--Add 1 "Radiant Typhoon" monster or 1 "Mystical Space Typhoon" from your Deck to your hand
 	local e2a=Effect.CreateEffect(c)
 	e2a:SetDescription(aux.Stringid(id,1))
 	e2a:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)

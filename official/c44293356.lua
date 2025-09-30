@@ -1,5 +1,5 @@
 --メガリス・ノートラ・プルーラ
---Megalith Nortra Phulra
+--Megalith Notrah Plura
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

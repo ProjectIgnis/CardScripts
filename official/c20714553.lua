@@ -1,5 +1,5 @@
 --聖月の魔導士エンディミオン
---Endymion, the Crescent of Magistus
+--Endymion, the Crescent Magistus
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

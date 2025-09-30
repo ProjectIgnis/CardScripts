@@ -1,5 +1,5 @@
 --陰陽師 タオタオ
---Taotao the Chanter
+--Tao Tao the Chanter
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

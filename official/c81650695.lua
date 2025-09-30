@@ -1,5 +1,5 @@
 --獄神機Ｄｏｏｍ－Ｚ
---Power Patron Machine Doom-Z
+--Power Patron DoomZ
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetTarget(function(e,c) return c:IsLocation(LOCATION_EXTRA) and not c:IsType(TYPE_XYZ) end)
 	c:RegisterEffect(e1)
 	aux.addContinuousLizardCheck(c,LOCATION_MZONE,function(e,c) return not c:IsOriginalType(TYPE_XYZ) end)
-	--Special Summon from your Extra Deck, 1 "Doom-Z" Xyz Monster or "Jupiter the Power Patron of Destruction" by using another Effect monster as material
+	--Special Summon from your Extra Deck, 1 "DoomZ" Xyz Monster or "Jupiter the Power Patron of Destruction" by using another Effect monster as material
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	--Add 1 "Doom-Z" card from your Deck to your hand
+	--Add 1 "DoomZ" card from your Deck to your hand
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)

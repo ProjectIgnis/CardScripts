@@ -1,5 +1,5 @@
 --絢嵐豪火フォニクス
---Magnifistorm Great Pyre Phonix
+--Radiant Typhoon Fonix, the Great Flame
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

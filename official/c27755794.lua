@@ -1,5 +1,5 @@
 --絢嵐たるメガラ
---Magnifistorming Megala
+--Radiant Typhoon Meghala
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetCondition(s.selfspcon)
 	c:RegisterEffect(e1)
-	--Special Summon 1 "Magnifistorm" monster from your Deck with a different name from the monsters you control
+	--Special Summon 1 "Radiant Typhoon" monster from your Deck with a different name from the monsters you control
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)

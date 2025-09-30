@@ -1,5 +1,5 @@
 --竜呼双搏
---Draco Stand-off
+--Draco Awakening
 --Scripted by The Razgriz
 local s,id=GetID()
 function s.initial_effect(c)

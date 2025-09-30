@@ -1,5 +1,5 @@
 --星辰響手プリクル
---Dracotail Phrixl
+--Dracotail Phryxul
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

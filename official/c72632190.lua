@@ -1,5 +1,5 @@
 --ドリ・ドル・ドラ
---Tri-Headed Behemoth
+--Triple-Headed Behemoth
 --Scripted by The Razgriz
 local s,id=GetID()
 function s.initial_effect(c)

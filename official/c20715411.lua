@@ -1,5 +1,5 @@
 --ＤＤＤ零死王ゼロ・マキナ
---D/D/D Zero Demise King Zero Machinex
+--D/D/D Zero Doom Queen Machinex
 --Scripted by The Razgriz
 local s,id=GetID()
 function s.initial_effect(c)

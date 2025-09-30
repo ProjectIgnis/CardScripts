@@ -1,5 +1,5 @@
 --終刻龍機ⅩⅡ－ドラストリウス
---Doom-Z End - Drastrius
+--DoomZ XII End - Drastrius
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

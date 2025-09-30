@@ -1,5 +1,5 @@
 --絢嵐たる権能
---Magnifistorming Sovereign Tyranny
+--Radiant Typhoon Mandate
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

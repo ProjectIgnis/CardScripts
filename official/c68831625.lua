@@ -1,5 +1,5 @@
 --終刻起動『Ｄ．Ｏ．Ｏ．Ｍ．Ｄ．Ｕ．Ｒ．Ｇ．』
---Doom-Z Command "D.O.O.M.D.U.R.G"
+--DoomZ Command "D.O.O.M.D.U.R.G."
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -34,7 +34,7 @@ function s.initial_effect(c)
 	e3:SetCondition(aux.StatChangeDamageStepCondition)
 	e3:SetTarget(s.desatktg)
 	e3:SetOperation(s.desatkop)
-	--Grant the above effects to a "Doom-Z" monster equipped with this card
+	--Grant the above effects to a "DoomZ" monster equipped with this card
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_GRANT)
 	e4:SetRange(LOCATION_SZONE)

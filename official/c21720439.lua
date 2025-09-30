@@ -1,5 +1,5 @@
 --アルトメギア・ムーヴメント－血統－
---Artmage Movement -Lineage-
+--Artmage Movement -Pedigree-
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

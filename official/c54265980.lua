@@ -1,9 +1,9 @@
 --終刻竜機Ⅶ－エララ
---Doom-Z Seven - Elara
+--DoomZ VII Seven - Elara
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
-	--Set 1 "Doom-Z" Spell/Trap directly from your Deck
+	--Set 1 "DoomZ" Spell/Trap directly from your Deck
 	local e1a=Effect.CreateEffect(c)
 	e1a:SetDescription(aux.Stringid(id,0))
 	e1a:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)

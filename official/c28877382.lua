@@ -1,9 +1,9 @@
 --終刻竜機Ⅴ－アマルテ
---Doom-Z Five - Amalthe
+--DoomZ V Five - Amalthe
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
-	--Add 1 "Doom-Z" monster from your Deck to your hand
+	--Add 1 "DoomZ" monster from your Deck to your hand
 	local e1a=Effect.CreateEffect(c)
 	e1a:SetDescription(aux.Stringid(id,0))
 	e1a:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)

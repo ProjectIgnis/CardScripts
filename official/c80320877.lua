@@ -1,9 +1,9 @@
 --終刻決壊
---Doom-Z Destruction
+--DoomZ Destruction
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
-	--Equip this card to 1 "Doom-Z" Xyz Monster you control
+	--Equip this card to 1 "DoomZ" Xyz Monster you control
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_EQUIP)
@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	--Equip 1 "Doom-Z" monster from your Deck to a monster on the field
+	--Equip 1 "DoomZ" monster from your Deck to a monster on the field
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_EQUIP)

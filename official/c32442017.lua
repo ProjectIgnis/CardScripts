@@ -1,5 +1,5 @@
 --終刻撃針
---Doom-Z Raider
+--DoomZ Raiders
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	e0:SetType(EFFECT_TYPE_ACTIVATE)
 	e0:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e0)
-	--Destroy 1 other "Doom-Z" card in your hand or face-up field, then add to your hand, or Special Summon, 1 "Doom-Z" monster from your Deck
+	--Destroy 1 other "DoomZ" card in your hand or face-up field, then add to your hand, or Special Summon, 1 "DoomZ" monster from your Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_SPECIAL_SUMMON)

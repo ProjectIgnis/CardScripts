@@ -1,5 +1,5 @@
 --絢嵐たる顕現
---Magnifistorming Summoning Technique
+--Radiant Typhoon Manifestation
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -55,7 +55,7 @@ end
 function s.effop(e,tp,eg,ep,ev,re,r,rp)
 	local op=e:GetLabel()
 	if op==1 then
-		--Send 1 "Magnifistorm" monster from your Deck to the GY
+		--Send 1 "Radiant Typhoon" monster from your Deck to the GY
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		local g=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_DECK,0,1,1,nil)
 		if #g>0 then

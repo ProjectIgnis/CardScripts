@@ -1,5 +1,5 @@
 --剛鬼闘魂
---Gouki Fighting Spirit
+--Gouki Gameface
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

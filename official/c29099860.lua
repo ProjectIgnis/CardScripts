@@ -1,5 +1,5 @@
 --剛鬼マシン・スープレックス
---Gouki Mashin Suprex
+--Gouki Machine Suprex
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --絢嵐たるスエン
---Magnifistorming Crothea
+--Radiant Typhoon Krosea
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	--Add 1 "Magnifistorm" card and/or 1 "Mystical Space Typhoon" from your Deck and/or GY to your hand
+	--Add 1 "Radiant Typhoon" card and/or 1 "Mystical Space Typhoon" from your Deck and/or GY to your hand
 	local e3a=Effect.CreateEffect(c)
 	e3a:SetDescription(aux.Stringid(id,1))
 	e3a:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)

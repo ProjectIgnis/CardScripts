@@ -1,5 +1,5 @@
 --えざる誘う手
---Ipt al Hecatoncherie
+--Ipt al Hecahands
 --Scripted by The Razgriz
 local s,id=GetID()
 function s.initial_effect(c)

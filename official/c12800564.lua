@@ -1,5 +1,5 @@
 --真竜魔王マスターＰ
---Master Peace, The True Dracoverlord
+--Master Peace, the True Dracoverlord
 --Scripted by The Razgriz
 local s,id=GetID()
 function s.initial_effect(c)

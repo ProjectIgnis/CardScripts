@@ -1,5 +1,5 @@
 --教導の雷霆フルルドリス
---Dogmatika Fleurdelis, the Thunderous
+--Dogmatika Fleurdelis, the Thunderbolt
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --絢嵐たる献詠
---Magnifistorming Stanza Tribute
+--Radiant Typhoon Chant
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -54,7 +54,7 @@ end
 function s.effop(e,tp,eg,ep,ev,re,r,rp)
 	local op=e:GetLabel()
 	if op==1 then
-		--Add 1 Level 4 or lower "Magnifistorm" monster from your Deck to your hand
+		--Add 1 Level 4 or lower "Radiant Typhoon" monster from your Deck to your hand
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local g=Duel.SelectMatchingCard(tp,s.thfilter1,tp,LOCATION_DECK,0,1,1,nil)
 		if #g>0 then

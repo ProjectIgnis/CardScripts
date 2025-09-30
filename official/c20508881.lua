@@ -1,5 +1,5 @@
 --絢嵐たる見神
---Magnifistorming Sight Trance
+--Radiant Typhoon Vision
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -58,7 +58,7 @@ end
 function s.effop(e,tp,eg,ep,ev,re,r,rp)
 	local op=e:GetLabel()
 	if op==1 then
-		--Draw 2 cards, then discard 1 "Magnifistorm" card or 1 Quick-Play Spell, or, if you do not have any in your hand, discard your entire hand
+		--Draw 2 cards, then discard 1 "Radiant Typhoon" card or 1 Quick-Play Spell, or, if you do not have any in your hand, discard your entire hand
 		if Duel.Draw(tp,2,REASON_EFFECT)>0 then
 			Duel.ShuffleHand(tp)
 			Duel.BreakEffect()

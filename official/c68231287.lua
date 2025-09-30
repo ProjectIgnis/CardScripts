@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e2:SetCondition(function(e) return e:GetHandler():GetOverlayGroup():IsExists(Card.IsType,1,nil,TYPE_XYZ) end)
 	e2:SetValue(3000)
 	c:RegisterEffect(e2)
-	--Special Summon 1 "Doom-Z" monster from your GY, then you can destroy 1 card on the field
+	--Special Summon 1 "DoomZ" monster from your GY, then you can destroy 1 card on the field
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_DESTROY)

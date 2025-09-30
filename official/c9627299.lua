@@ -1,5 +1,5 @@
 --斎キ狭依姫
---Ichiki Sayori Hime
+--Ichiki Sayori-Hime
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

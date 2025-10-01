@@ -34,8 +34,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,1,nil) and #dg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 		local sg=dg:Select(tp,1,2,nil)
-		Duel.HintSelection(sg)
-		sg=sg:AddMaximumCheck()
+		local sg2=sg:AddMaximumCheck()
+		Duel.HintSelection(sg2)
 		Duel.Destroy(sg,REASON_EFFECT)
 	end
 end

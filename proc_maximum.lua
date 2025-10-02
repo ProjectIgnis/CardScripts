@@ -24,8 +24,9 @@ function Debug.AddMaximumCard(player,center,left,right)
 	for _,tc in ipairs({l,r}) do
 		tc:RegisterFlagEffect(FLAG_MAXIMUM_SIDE,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD,0,1)
 		tc:RegisterFlagEffect(FLAG_MAXIMUM_SIDE_PREONFIELD,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD-RESET_TOGRAVE-RESET_LEAVE,0,1)
-		tc:RegisterFlagEffect(FLAG_MAXIMUM_SIDE_RELATION+center,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD-RESET_TOGRAVE-RESET_LEAVE,0,1)
+		tc:RegisterFlagEffect(FLAG_MAXIMUM_SIDE_RELATION+c:GetCardID(),RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD-RESET_TOGRAVE-RESET_LEAVE,0,1)
 	end
+	return c
 end
 --Maximum Summon
 function Maximum.AddProcedure(c,desc,...)

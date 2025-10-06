@@ -8,9 +8,9 @@ function s.initial_effect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(0,TIMING_STANDBY_PHASE|TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E)
 	e1:SetTarget(s.efftg)
 	e1:SetOperation(s.effop)
+	e1:SetHintTiming(0,TIMING_STANDBY_PHASE|TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E)
 	c:RegisterEffect(e1)
 	--Set this card
 	local e2=Effect.CreateEffect(c)
@@ -18,7 +18,6 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_DESTROYED)
-	e2:SetCountLimit(1,{id,1})
 	e2:SetCondition(function(e,tp,eg,ep,ev,re,r,rp) return re:GetHandler():IsCode(CARD_MYSTICAL_SPACE_TYPHOON) end)
 	e2:SetTarget(s.settg)
 	e2:SetOperation(s.setop)
@@ -58,7 +57,7 @@ end
 function s.effop(e,tp,eg,ep,ev,re,r,rp)
 	local op=e:GetLabel()
 	if op==1 then
-		--Draw 2 cards, then discard 1 "Radiant Typhoon" card or 1 Quick-Play Spell, or, if you do not have any in your hand, discard your entire hand
+		--Draw 2 cards, then if you have a "Radiant Typhoon" card or a Quick-Play Spell in your hand, discard 1 of them, or your entire hand if you don't
 		if Duel.Draw(tp,2,REASON_EFFECT)>0 then
 			Duel.ShuffleHand(tp)
 			Duel.BreakEffect()

@@ -45,10 +45,11 @@ Duel.Release=(function()
 				others:AddCard(targets)
 			end
 		end
-		oldfunc(others,reason,rp)
+		local res=oldfunc(others,reason,rp)
 		if #exg>0 then
-			Duel.SendtoGrave(exg,REASON_RELEASE|reason,nil,rp)
+			res=res+Duel.SendtoGrave(exg,REASON_RELEASE|reason,nil,rp)
 		end
+		return res
 	end
 end)()
 

@@ -1,6 +1,58 @@
 --Utilities to be added to the core
 
 --[[
+	allow EFFECT_EXTRA_RELEASE_NONSUM effects to work on cards in the Extra Deck
+	used by "Duel Evolution - Assault Zone"
+	possibly to be expanded on to also include other locations such as the Deck
+	
+	will add more comments later
+--]]
+Duel.GetReleaseGroup=(function()
+	local oldfunc=Duel.GetReleaseGroup
+	return function(player,use_hand,use_oppo,reason)
+		use_hand=use_hand or false
+		use_oppo=use_oppo or false
+		reason=reason or REASON_COST
+		local g=oldfunc(player,use_hand,use_oppo,reason)
+		local exg=Duel.GetMatchingGroup(function(c) return c:IsHasEffect(EFFECT_EXTRA_RELEASE_NONSUM) and c:IsReleasable(reason) end,player,LOCATION_EXTRA,0,nil)
+		if #exg>0 then
+			local re=Duel.GetReasonEffect()
+			for exc in exg:Iter() do
+				local effs={exc:IsHasEffect(EFFECT_EXTRA_RELEASE_NONSUM)}
+				for _,eff in ipairs(effs) do
+					local value=eff:GetValue()
+					if value==1 or value(eff,re,reason,player) then
+						g:AddCard(exc)
+					end
+				end
+			end
+		end
+		return g
+	end
+end)()
+Duel.Release=(function()
+	local oldfunc=Duel.Release
+	return function(targets,reason,rp)
+		rp=rp or Duel.GetReasonPlayer()
+		local exg=Group.CreateGroup()
+		local others=Group.CreateGroup()
+		if type(targets)=="Group" then
+			exg,others=targets:Split(Card.IsLocation,nil,LOCATION_EXTRA)
+		elseif type(targets)=="Card" then
+			if targets:IsLocation(LOCATION_EXTRA) then
+				exg:AddCard(targets)
+			else
+				others:AddCard(targets)
+			end
+		end
+		oldfunc(others,reason,rp)
+		if #exg>0 then
+			Duel.SendtoGrave(exg,REASON_RELEASE|reason,nil,rp)
+		end
+	end
+end)()
+
+--[[
 	If a non-activated effect allows a monster to be Special Summoned with a different property (e.g. "as a Level X monster") then that different property should be considered when any "cannot summon" type of effects are checked
 	("Cockadoodledoo" vs "Evilswarm Ophion" workaround)
 --]]

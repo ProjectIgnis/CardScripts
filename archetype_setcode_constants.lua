@@ -601,3 +601,4 @@ SET_ENNEACRAFT                    = 0x1cd
 SET_KILLER_TUNE                   = 0x1ce
 --Pre-release archetypes
 SET_ECCLESIA                      = 0x1cf
+SET_ELVENNOTES                    = 0x1d0

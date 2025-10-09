@@ -610,3 +610,13 @@ function Duel.SelectReleaseGroupCost(tp,f,minc,maxc,use_hand,check,ex,...)
 	end
 	return sg
 end
+
+do
+	local oldf=Duel.SwapSequence
+	function Duel.SwapSequence(c1,c2)
+		local seq1=c1:GetSequence()
+		local seq2=c2:GetSequence()
+		oldf(c1,c2)
+		return c1:IsOnField() and c2:IsOnField() and c1:IsSequence(seq2) and c2:IsSequence(seq1)
+	end
+end

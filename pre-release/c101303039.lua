@@ -51,7 +51,7 @@ function s.cannotmatfilter(c,tp)
 	return c:GetColumnGroup():IsExists(s.elvennotesfilter,1,nil,tp)
 end
 function s.elvennotesfilter(c,tp)
-	return c:IsSetCard(SET_ELVENNOTES) and c:IsFaceup() and c:IsControler(tp)
+	return c:IsSetCard(SET_ELVENNOTES) and c:IsMonster() and c:IsFaceup() and c:IsControler(tp)
 end
 function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cannotmatfilter,tp,0,LOCATION_MZONE,1,nil,tp) end

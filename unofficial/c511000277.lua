@@ -29,7 +29,6 @@ function s.initial_effect(c)
 	e3:SetTarget(s.bantg)
 	e3:SetOperation(s.banop)
 	c:RegisterEffect(e3)
-
 end
 s.listed_series={SET_NUMBER}
 s.listed_names={CARD_NUMERON_NETWORK,15232745} --"Number 1: Numeron Gate Ekam"
@@ -51,7 +50,7 @@ function s.banop(e,tp,eg,ep,ev,re,r,rp)
 		if tcatk<0 or tc:IsFacedown() then tcatk=0 end
 		atk=atk+tcatk
 	end
-	if Duel.Remove(g,POS_FACEUP,REASON_EFFECT)>0 and c:IsRelateToEffect(e) then
+	if Duel.Remove(g,POS_FACEUP,REASON_EFFECT)>0 then
 		local e3=Effect.CreateEffect(c)
 		e3:SetDescription(aux.Stringid(id,2))
 		e3:SetCategory(CATEGORY_SPECIAL_SUMMON)

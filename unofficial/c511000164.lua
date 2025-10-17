@@ -61,19 +61,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_CANNOT_ATTACK)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_SELF_TURN,3)
 	tc:RegisterEffect(e1)
-	local e2=Effect.CreateEffect(c)
-	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e2:SetCode(EVENT_PHASE+PHASE_END)
-	e2:SetCountLimit(1)
-	e2:SetRange(LOCATION_MZONE)
-	e2:SetLabel(0)
-	e2:SetLabelObject(e1)
-	e2:SetOwnerPlayer(tp)
-	e2:SetCondition(s.descon)
-	e2:SetOperation(s.desop)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_SELF_TURN,3)
-	tc:RegisterEffect(e2)
 	tc:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD,0,0)
 	local descnum=tp==c:GetOwner() and 0 or 1
 	local e3=Effect.CreateEffect(c)
@@ -87,26 +74,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e3:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN,3)
 	c:RegisterEffect(e3)
 end
-function s.reset(e,tp,eg,ep,ev,re,r,rp)
-	s.desop(e:GetLabelObject(),tp,eg,ep,ev,e,r,rp)
-end
-function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=e:GetOwner():GetControler()
-end
-function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local ct=e:GetLabel()+1
-	Duel.HintSelection(Group.FromCards(c))
-	e:GetOwner():SetTurnCounter(ct)
-	e:SetLabel(ct)
-	if ct==3 then
-		if e:GetLabelObject() then e:GetLabelObject():Reset() end
-		c:ResetFlagEffect(id)
-		Duel.Destroy(c,REASON_EFFECT)
-		if re then re:Reset() end
-	end
-end
-function s.efilter(c)
+	function s.efilter(c)
 	return c:IsFaceup() and c:GetFlagEffect(id)>0
 end
 function s.effcon(e)

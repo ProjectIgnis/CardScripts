@@ -53,7 +53,7 @@ function s.thfilter(c)
 end
 function s.plfilter(c,tp,szone_chk)
 	return c:IsSetCard(SET_YUMMY) and (c:IsFieldSpell() or (szone_chk and c:IsContinuousSpellTrap()))
-		and not c:IsForbidden() and c:CheckUniqueOnField(tp)
+		and (c:IsFaceup() or c:IsLocation(LOCATION_DECK)) and not c:IsForbidden() and c:CheckUniqueOnField(tp)
 end
 function s.thpltg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local sp_chk=re and e:GetHandler():IsSpecialSummoned() and re:IsMonsterEffect() and re:GetHandler():IsOriginalType(TYPE_SYNCHRO)

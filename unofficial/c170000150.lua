@@ -2,8 +2,8 @@
 --Doom Virus Dragon (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
-	--fusion material
 	c:EnableReviveLimit()
+	--Fusion Materials: "Crush Card Virus" + "The Fang of Critias"
 	Fusion.AddProcMix(c,true,true,57728570,11082056)
 	--Destroy all monsters your opponent controls with 1500 or more ATK
 	local e1=Effect.CreateEffect(c)
@@ -28,7 +28,8 @@ end
 function s.fdchkfilter(c)
 	return c:IsFacedown() and c:IsAttackAbove(1500) and c:IsDestructable()
 end
-function s.desop(e,tp,eg,ep,ev,re,r,rp)
+function s.desop(e)
+	local tp=e:GetHandlerPlayer()
 	local g=Duel.GetMatchingGroup(s.desfilter,tp,0,LOCATION_MZONE,nil)
 	local conf=Duel.GetMatchingGroup(s.fdchkfilter,tp,0,LOCATION_MZONE,nil)
 	if #conf>0 then
@@ -37,7 +38,8 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	Duel.Destroy(g,REASON_EFFECT)
 end
-function s.fdchkop(e,tp,eg,ep,ev,re,r,rp)
+function s.fdchkop(e)
+	local tp=e:GetHandlerPlayer()
 	local conf=Duel.GetFieldGroup(tp,0,LOCATION_MZONE,POS_FACEDOWN)
 	if #conf>0 then
 		Duel.ConfirmCards(tp,conf)

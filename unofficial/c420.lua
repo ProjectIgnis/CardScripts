@@ -582,11 +582,6 @@ if not AnimeArchetype then
 	}
 	Card.IsLineMonster=MakeCheck({0x564},AnimeArchetype.OCGLineMonster)
 
-	-- Magnet (Checked 13/05/2024)
-	-- 磁石
-	-- マグネット
-	Card.IsMagnet=MakeCheck({0x534,0x2066})
-
 	-- Mantis カマキリ (need to be discussed, cards used with it in the manga don't have the mantis string)
 	-- Empress Mantis,Praying Mantis,Guard Mantis
 	AnimeArchetype.OCGMantis={

@@ -1,5 +1,5 @@
 --磁石の戦士Ω＋
---Magnet Warrior Ω+
+--Magnet Warrior Ω＋
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

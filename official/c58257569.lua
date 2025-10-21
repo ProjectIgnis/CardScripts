@@ -28,24 +28,22 @@ s.listed_series={SET_RED_EYES}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsLocation(LOCATION_GRAVE) and e:GetHandler():IsReason(REASON_BATTLE)
 end
-function s.filter(c,e,tp)
+function s.spfilter(c,e,tp)
 	return c:IsSetCard(SET_RED_EYES) and c:IsLevelBelow(7) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
-		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,e,tp) end
+		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
-	Duel.SetOperationInfo(0,CATEGORY_EQUIP,e:GetHandler(),1,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,e:GetHandler(),1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_EQUIP,e:GetHandler(),1,tp,0)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
-	if #g>0 then
+	local tc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp):GetFirst()
+	if tc then
 		local c=e:GetHandler()
-		local tc=g:GetFirst()
 		if Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)>0 and c:IsRelateToEffect(e) and c:IsLocation(LOCATION_GRAVE) then
 			Duel.Equip(tp,c,tc,true)
 			local e1=Effect.CreateEffect(c)
@@ -55,7 +53,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetValue(s.eqlimit)
 			e1:SetLabelObject(tc)
 			c:RegisterEffect(e1)
-			--atkup
+			--The equipped monster gains 300 ATK
 			local e2=Effect.CreateEffect(c)
 			e2:SetType(EFFECT_TYPE_EQUIP)
 			e2:SetCode(EFFECT_UPDATE_ATTACK)
@@ -70,10 +68,10 @@ function s.eqlimit(e,c)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:GetPreviousLocation()==LOCATION_SZONE and not c:IsReason(REASON_LOST_TARGET)
+	return c:IsPreviousLocation(LOCATION_SZONE) and c:GetPreviousEquipTarget() and not c:IsReason(REASON_LOST_TARGET)
 end
 function s.thfilter(c)
-	return c:IsRace(RACE_DRAGON) and c:GetLevel()==1 and c:IsAbleToHand()
+	return c:IsRace(RACE_DRAGON) and c:IsLevel(1) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_GRAVE|LOCATION_DECK,0,1,nil) end

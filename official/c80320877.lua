@@ -66,7 +66,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.eqfilter(c,tp)
-	return c:IsSetCard(SET_DOOMZ) and c:IsMonster() and c:CheckUniqueOnField(tp) and not c:IsForbidden() 
+	return c:IsSetCard(SET_DOOMZ) and c:IsMonster() and c:CheckUniqueOnField(tp) and not c:IsForbidden()
 end
 function s.eqptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()

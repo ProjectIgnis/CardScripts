@@ -1,4 +1,4 @@
--- 
+--リブロマンサー・デスブローカー
 --Libromancer Doombroker
 --Scripted by Hatter
 local s,id=GetID()

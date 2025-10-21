@@ -1,4 +1,4 @@
---Japanese name
+--陽炎殿の君主
 --Queen of the Blazing Domain
 --scripted by Naim
 local s,id=GetID()

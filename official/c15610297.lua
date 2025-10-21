@@ -35,7 +35,7 @@ function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
 	if chk==0 then return bc and bc:IsFaceup() and bc:IsRelateToBattle()
-		and c:IsLocation(LOCATION_MZONE) and c:IsRelateToBattle() 
+		and c:IsLocation(LOCATION_MZONE) and c:IsRelateToBattle()
 		and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 end
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)

@@ -1,4 +1,4 @@
---Japanese name
+--虫だけエリアー
 --Insect Invitation
 --Scripted by The Razgriz
 local s,id=GetID()

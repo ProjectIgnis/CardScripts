@@ -1,4 +1,4 @@
---JP name
+--密林の狩猟者シュヴルイユ
 --Chevreuil, Hunting Scout of the Deep Forest
 --scripted by pyrQ
 local s,id=GetID()

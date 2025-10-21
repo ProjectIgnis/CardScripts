@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={SET_RB}
-function s.condition(e,tp,eg,ep,ev,re,r,rp) 
+function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp and re:IsMonsterEffect() and Duel.IsChainNegatable(ev) and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_RB),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

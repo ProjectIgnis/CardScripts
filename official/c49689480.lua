@@ -6,7 +6,7 @@ function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--Xyz Summon Procedure
 	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_MADOLCHE),5,3,s.ovfilter,aux.Stringid(id,0),3,s.xyzop)
-	--Shuffle "Madolche" cards from your GY and cards your opponent controls into the Deck 
+	--Shuffle "Madolche" cards from your GY and cards your opponent controls into the Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TODECK)

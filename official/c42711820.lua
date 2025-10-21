@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--Synchro Summon procedure: "Scrap Synchron" + 1+ non-Tuner monsters
-    Synchro.AddProcedure(c,s.tunerfilter,1,1,Synchro.NonTuner(nil),1,99)
+	Synchro.AddProcedure(c,s.tunerfilter,1,1,Synchro.NonTuner(nil),1,99)
 	--Add to your hand, or send to the GY, 1 "Junk Synchron" or 1 card that mentions "Junk Warrior" from your Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -31,7 +31,7 @@ s.listed_series={SET_WARRIOR}
 s.listed_names={16449363,CARD_JUNK_SYNCHRON,CARD_JUNK_WARRIOR,id}
 s.material_setcode=SET_SYNCHRON
 function s.tunerfilter(c,lc,stype,tp)
-    return c:IsSummonCode(lc,stype,tp,16449363) or c:IsHasEffect(20932152)
+	return c:IsSummonCode(lc,stype,tp,16449363) or c:IsHasEffect(20932152)
 end
 function s.thtgfilter(c)
 	return (c:IsCode(CARD_JUNK_SYNCHRON) or c:ListsCode(CARD_JUNK_WARRIOR)) and (c:IsAbleToHand() or c:IsAbleToGrave())

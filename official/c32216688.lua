@@ -1,5 +1,5 @@
 --JP Name
---R.B. The Brute Blues 
+--R.B. The Brute Blues
 --Scripted by The Razgriz
 local s,id=GetID()
 function s.initial_effect(c)

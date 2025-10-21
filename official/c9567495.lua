@@ -1,4 +1,4 @@
---
+--ゲート・オブ・ドラゴン
 --Dragon Gate
 --scripted by pyrQ
 local s,id=GetID()

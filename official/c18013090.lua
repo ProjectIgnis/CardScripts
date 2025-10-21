@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	e1a:SetCondition(s.atkcon)
 	e1a:SetValue(1000)
 	c:RegisterEffect(e1a)
-	--Reset the flag effect above if this card attacks again 
+	--Reset the flag effect above if this card attacks again
 	local e1b=Effect.CreateEffect(c)
 	e1b:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e1b:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
@@ -62,7 +62,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return Duel.GetAttacker()==c and c:HasFlagEffect(id) and Duel.IsPhase(PHASE_DAMAGE_CAL) 
+	return Duel.GetAttacker()==c and c:HasFlagEffect(id) and Duel.IsPhase(PHASE_DAMAGE_CAL)
 end
 function s.chainattackposcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

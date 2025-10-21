@@ -64,7 +64,7 @@ function s.filter(c,this,tp)
 		local mg=Group.FromCards(this,c)
 		return Duel.IsExistingMatchingCard(Card.IsSynchroSummonable,tp,LOCATION_EXTRA,0,1,nil,nil,mg)
 	end
-	--Temporarily register EFFECT_SYNCHRO_MATERIAL otherwise IsSynchroSummonable will fail with opponent's monsters 
+	--Temporarily register EFFECT_SYNCHRO_MATERIAL otherwise IsSynchroSummonable will fail with opponent's monsters
 	local e1=Effect.CreateEffect(this)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_SYNCHRO_MATERIAL)

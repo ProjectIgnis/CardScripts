@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.eqtg)
 	e1:SetOperation(s.eqop)
 	c:RegisterEffect(e1)
-	--Return 1 Spellcaster Monster Card in your Spell & Trap Zone treated as an Equip Spell to the hand 
+	--Return 1 Spellcaster Monster Card in your Spell & Trap Zone treated as an Equip Spell to the hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TOHAND)
@@ -41,7 +41,7 @@ function s.matcheck(g,lc,sumtype,tp)
 	return g:IsExists(s.matfilter,1,nil,lc,sumtype,tp)
 end
 function s.eqfilter(c,tp)
-	return c:IsRace(RACE_SPELLCASTER) and c:CheckUniqueOnField(tp) and c:IsFaceup() and not c:IsForbidden() 
+	return c:IsRace(RACE_SPELLCASTER) and c:CheckUniqueOnField(tp) and c:IsFaceup() and not c:IsForbidden()
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()

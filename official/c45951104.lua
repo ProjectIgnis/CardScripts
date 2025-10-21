@@ -1,4 +1,4 @@
---
+--ボット・ハーダー
 --Bot Herder
 --Scripted by Hatter
 local s,id=GetID()

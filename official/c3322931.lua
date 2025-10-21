@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.atkcon)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
-	--Shuffle all opponent monsters and this card 
+	--Shuffle all opponent monsters and this card
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_TODECK)
 	e2:SetType(EFFECT_TYPE_QUICK_O)

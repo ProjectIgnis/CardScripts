@@ -26,7 +26,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local rc=re:GetHandler()
 	if rc:IsRelateToEffect(re) and rc:IsDestructable() then
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,1,tp,0)
-		Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,rc,1,tp,0) 
+		Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,rc,1,tp,0)
 	end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)

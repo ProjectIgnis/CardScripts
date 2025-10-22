@@ -44,7 +44,7 @@ function s.thfilter(c)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
-	if not Duel.IsExistingMatchingCard(s.confilter,tp,LOCATION_MZONE,0,1,nil) then
+	if not Duel.IsExistingMatchingCard(s.confilter,tp,LOCATION_MZONE,0,1,nil) or Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 		if Duel.DiscardHand(tp,s.cfilter,3,3,REASON_COST+REASON_DISCARD,nil)<3 then return end
 	end
 	--Effect
@@ -54,7 +54,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if ct>0 and #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.BreakEffect()
 		local sg=g:Select(tp,1,1,nil)
-		Duel.HintSelection(sg,true)
 		Duel.SendtoHand(sg,nil,REASON_EFFECT)
 	end
 end

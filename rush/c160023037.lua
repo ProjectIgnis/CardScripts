@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Send the top 3 cards of your Deck to the GY
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_DECKDES+CATEGORY_RECOVER)
+	e1:SetCategory(CATEGORY_DECKDES)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
@@ -28,7 +28,7 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Effect
 	Duel.DiscardDeck(tp,3,REASON_EFFECT)
-	if Duel.IsExistingMatchingCard(Card.IsMonster,tp,0,LOCATION_GRAVE,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+	if Duel.IsExistingMatchingCard(s.setfilter,tp,0,LOCATION_GRAVE,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SELECT)
 		local g=Duel.SelectMatchingCard(tp,s.setfilter,tp,0,LOCATION_GRAVE,1,1,nil)
 		Duel.HintSelection(g)

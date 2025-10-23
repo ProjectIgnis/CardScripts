@@ -79,17 +79,18 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
+function s.chkfilter(c,tp)
+	return c:IsControler(tp) and c:IsLocation(LOCATION_GRAVE)
+end
 function s.regop2(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsLocation(LOCATION_SZONE) and e:GetHandler():IsFacedown() then --need to check here because face-down Defense Position cards cannot use effects
 		local cg=e:GetLabelObject():GetLabelObject()
 		local ep=e:GetHandler():GetControler()
 		--Raise 1 event after chain
 		if Duel.GetFlagEffect(ep,id)==0 and #cg>0 then
-			if not cg:IsExists(s.filter,1,nil,1-ep) then -- The following does not apply if a card is sent from the Deck, as in that case, the first copy will trigger the second copy
-				cg:Clear() --Must be cleared so multiple copies cannot trigger
-			end
 			Duel.RegisterFlagEffect(ep,id,RESET_CHAIN,0,1)
 			Duel.RaiseEvent(e:GetHandler(),EVENT_CUSTOM+id,e,0,ep,ep,0)
+			cg:Clear() --Must be cleared so multiple copies cannot trigger
 		end
 	elseif #e:GetLabelObject():GetLabelObject()>0 then --if the card has seen a card but is not face-down in the S/T zone anymore, it should forget about it
 		e:GetLabelObject():GetLabelObject():Clear()

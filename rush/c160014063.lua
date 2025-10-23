@@ -66,7 +66,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	g:Merge(eg)
 	e:GetLabelObject():SetLabelObject(g)
 	--Use the label of e1 to see if there were cards from the deck
-	if g:IsExists(s.filter,1,nil,1-ep) then
+	if eg:IsExists(s.filter,1,nil,1-ep) then
 		e:GetLabelObject():SetLabel(1)
 	else
 		e:GetLabelObject():SetLabel(0)

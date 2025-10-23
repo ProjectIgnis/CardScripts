@@ -20,6 +20,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Effect
+	Duel.DisableShuffleCheck()
 	Duel.SendtoGrave(Duel.GetDeckbottomGroup(tp,1),REASON_EFFECT)
 	local ct=Duel.GetOperatedGroup():GetFirst()
 	if ct and ct:IsRace(RACE_ZOMBIE) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and ct:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then

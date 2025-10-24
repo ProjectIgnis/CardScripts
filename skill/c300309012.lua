@@ -49,6 +49,7 @@ function s.ctrlop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=g:GetFirst()
 	Duel.HintSelection(tc,true)
 	if tc and Duel.GetControl(tc,1-tp) then
+		--That monster cannot be Tributed
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetDescription(3303)
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -75,25 +76,26 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		if #sg>0 and Duel.Destroy(sg,REASON_EFFECT)>0 then
 			Duel.Damage(1-tp,500,REASON_EFFECT)
 		end
-		--You take no damage from your card effects for the rest of this Duel
-		local e1=Effect.CreateEffect(e:GetHandler())
+		local c=e:GetHandler()
+		--You take no damage from cards you own for the rest of this Duel
+		local e1a=Effect.CreateEffect(e:GetHandler())
 		e1:SetDescription(aux.Stringid(id,2))
-		e1:SetType(EFFECT_TYPE_FIELD)
-		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
-		e1:SetCode(EFFECT_CHANGE_DAMAGE)
-		e1:SetRange(0x5f)
-		e1:SetTargetRange(1,0)
-		e1:SetValue(s.damval)
-		Duel.RegisterEffect(e1,tp)
-		local e2=e1:Clone()
-		e2:SetCode(EFFECT_NO_EFFECT_DAMAGE)
-		Duel.RegisterEffect(e2,tp)
+		e1a:SetType(EFFECT_TYPE_FIELD)
+		e1a:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
+		e1a:SetCode(EFFECT_CHANGE_DAMAGE)
+		e1a:SetRange(0x5f)
+		e1a:SetTargetRange(1,0)
+		e1a:SetValue(s.damval)
+		Duel.RegisterEffect(e1a,tp)
+		local e1b=e1a:Clone()
+		e1b:SetCode(EFFECT_NO_EFFECT_DAMAGE)
+		Duel.RegisterEffect(e1b,tp)
 	end
 end
-function s.damval(e,re,val,r,rp,rc)
-    if (r&REASON_EFFECT)>0 and re:GetHandler():GetOwner()==e:GetOwnerPlayer() then
-        return 0
-    else
-        return val
-    end
+function s.val(e,re,val,r,rp,rc)
+	if rc:IsOwner(e:GetHandlerPlayer()) then 
+		return 0
+	else 
+		return val 
+	end
 end

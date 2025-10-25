@@ -93,7 +93,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.RegisterEffect(e1b,tp)
 	end
 end
-function s.val(e,re,val,r,rp,rc)
+function s.damval(e,re,val,r,rp,rc)
 	if rc:IsOwner(e:GetHandlerPlayer()) then 
 		return 0
 	else 

@@ -68,7 +68,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	--Use the label of e1 to see if there were cards from the deck
 	if eg:IsExists(s.filter,1,nil,1-ep) then
 		e:GetLabelObject():SetLabel(1)
-	else
+	elseif not eg:GetFirst():IsReason(REASON_RULE) then
 		e:GetLabelObject():SetLabel(0)
 	end
 	--Raise 1 event per chain

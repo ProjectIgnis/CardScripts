@@ -71,7 +71,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.selfspcostfilter(c,tp,fc)
-	return c:IsLevelAbove(7) and c:IsSetCard(SET_ARTMAGE) and Duel.GetLocationCountFromEx(tp,tp,c,fc)>0
+	return c:IsLevelAbove(7) and c:IsSetCard(SET_ARTMAGE,fc,SUMMON_TYPE_SPECIAL+1,tp) and Duel.GetLocationCountFromEx(tp,tp,c,fc)>0
 end
 function s.selfspcon(e,c)
 	if not c then return true end

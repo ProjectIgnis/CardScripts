@@ -26,16 +26,19 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if cl>=4 then Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1) end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
+	local break_chk=false
 	local cl=Duel.GetCurrentChain()
 	if cl>=2 then
+		break_chk=true
+		Duel.ConfirmDecktop(tp,cl)
 		Duel.SortDecktop(tp,tp,cl)
 	end
 	if cl>=3 and Duel.IsPlayerCanDiscardDeck(tp,1) then
-		Duel.BreakEffect()
+		if break_chk then Duel.BreakEffect() end
 		Duel.DiscardDeck(tp,1,REASON_EFFECT)
 	end
 	if cl>=4 then
-		Duel.BreakEffect()
+		if break_chk then Duel.BreakEffect() end
 		Duel.Draw(tp,1,REASON_EFFECT)
 	end
 end

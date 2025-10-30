@@ -55,7 +55,7 @@ function s.effcost(fusion_params,ritual_params)
 		e:SetLabel(-100)
 		local b1=not Duel.HasFlagEffect(tp,id)
 			and Fusion.SummonEffTG(fusion_params)(e,tp,eg,ep,ev,re,r,rp,0)
-		local b2=not Duel.HasFlagEffect(tp,id+100)
+		local b2=not Duel.HasFlagEffect(tp,id+1)
 			and Ritual.Target(ritual_params)(e,tp,eg,ep,ev,re,r,rp,0)
 		if chk==0 then return b1 or b2 end
 	end
@@ -65,7 +65,7 @@ function s.efftg(fusion_params,ritual_params)
 		local cost_skip=e:GetLabel()~=-100
 		local b1=(cost_skip or not Duel.HasFlagEffect(tp,id))
 			and Fusion.SummonEffTG(fusion_params)(e,tp,eg,ep,ev,re,r,rp,0)
-		local b2=(cost_skip or not Duel.HasFlagEffect(tp,id+100))
+		local b2=(cost_skip or not Duel.HasFlagEffect(tp,id+1))
 			and Ritual.Target(ritual_params)(e,tp,eg,ep,ev,re,r,rp,0)
 		if chk==0 then e:SetLabel(0) return b1 or b2 end
 		local op=Duel.SelectEffect(tp,
@@ -78,7 +78,7 @@ function s.efftg(fusion_params,ritual_params)
 			Fusion.SummonEffTG(fusion_params)(e,tp,eg,ep,ev,re,r,rp,1)
 		elseif op==2 then
 			e:SetCategory(CATEGORY_REMOVE+CATEGORY_SPECIAL_SUMMON)
-			if not cost_skip then Duel.RegisterFlagEffect(tp,id+100,RESET_PHASE|PHASE_END,0,1) end
+			if not cost_skip then Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE|PHASE_END,0,1) end
 			Ritual.Target(ritual_params)(e,tp,eg,ep,ev,re,r,rp,1)
 		end
 	end

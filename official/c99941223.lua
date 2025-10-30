@@ -1,5 +1,5 @@
 --佚楽の堕天使
---Darklord Pleasure
+--Darklord Dance
 --Scripted by The Razgriz
 local s,id=GetID()
 function s.initial_effect(c)

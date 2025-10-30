@@ -39,7 +39,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 	local e4=e3:Clone()
 	e4:SetCode(EVENT_CHAINING)
-	e4:SetOperation(function(e) e:GetHandler():ResetFlagEffect(id+100) end)
+	e4:SetOperation(function(e) e:GetHandler():ResetFlagEffect(id+1) end)
 	c:RegisterEffect(e4)
 	local e5=e4:Clone()
 	e5:SetCode(EVENT_CHAIN_SOLVED)
@@ -74,12 +74,12 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local ct=eg:FilterCount(Card.IsMonster,nil)
 	if ct==0 or eg:IsContains(c) then return end
-	if ct>=2 or c:HasFlagEffect(id+100) then
+	if ct>=2 or c:HasFlagEffect(id+1) then
 		Duel.RaiseSingleEvent(c,EVENT_CUSTOM+id,re,r,rp,ep,ev)
 	end
 	local eff=Duel.GetChainInfo(0,CHAININFO_TRIGGERING_EFFECT)
 	if eff then
-		c:RegisterFlagEffect(id+100,RESET_EVENT|RESETS_STANDARD|RESET_CHAIN,0,1)
+		c:RegisterFlagEffect(id+1,RESET_EVENT|RESETS_STANDARD|RESET_CHAIN,0,1)
 	end
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

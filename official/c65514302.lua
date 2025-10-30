@@ -33,7 +33,7 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b1=not Duel.HasFlagEffect(tp,id)
 		and Duel.IsExistingMatchingCard(s.magnetthfilter,tp,LOCATION_DECK,0,1,nil)
 	--Add 1 Level 8 "Magna Warrior" monster from your Deck to your hand
-	local b2=not Duel.HasFlagEffect(tp,id+100)
+	local b2=not Duel.HasFlagEffect(tp,id+1)
 		and Duel.IsExistingMatchingCard(s.magnathfilter,tp,LOCATION_DECK,0,1,nil)
 	--Fusion Summon 1 Rock Fusion Monster from your Extra Deck, by shuffling Rock monsters from your hand, field, GY, and/or banishment into the Deck
 	local fusion_params={
@@ -42,7 +42,7 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 			extrafil=s.fextra,
 			extraop=Fusion.ShuffleMaterial
 		}
-	local b3=not Duel.HasFlagEffect(tp,id+200)
+	local b3=not Duel.HasFlagEffect(tp,id+2)
 		and Fusion.SummonEffTG(fusion_params)(e,tp,eg,ep,ev,re,r,rp,0)
 	if chk==0 then return b1 or b2 or b3 end
 	local op=Duel.SelectEffect(tp,
@@ -56,11 +56,11 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 	elseif op==2 then
 		e:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
-		Duel.RegisterFlagEffect(tp,id+100,RESET_PHASE|PHASE_END,0,1)
+		Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE|PHASE_END,0,1)
 		Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 	elseif op==3 then
 		e:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON+CATEGORY_TODECK)
-		Duel.RegisterFlagEffect(tp,id+200,RESET_PHASE|PHASE_END,0,1)
+		Duel.RegisterFlagEffect(tp,id+2,RESET_PHASE|PHASE_END,0,1)
 		Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,tp,LOCATION_HAND|LOCATION_MZONE|LOCATION_GRAVE|LOCATION_REMOVED)
 		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 	end

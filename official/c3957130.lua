@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={67526112,20071842,101303107} --"Rapid Trigger", "Heavy Interlock", "Double Trigger"
+s.listed_names={67526112,20071842,38129297} --"Rapid Trigger", "Heavy Interlock", "Double Trigger"
 s.listed_series={SET_ROKKET}
 function s.matfilter(c,sc,st,tp)
 	return c:IsAttribute(ATTRIBUTE_DARK,sc,st,tp) and c:IsRace(RACE_DRAGON,sc,st,tp)
@@ -39,7 +39,7 @@ function s.matcheck(g,lc,sumtype,tp)
 	return g:IsExists(Card.IsSetCard,1,nil,SET_ROKKET,lc,sumtype,tp)
 end
 function s.deckthfilter(c)
-	return c:IsCode(67526112,20071842,101303107) and c:IsAbleToHand()
+	return c:IsCode(67526112,20071842,38129297) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.deckthfilter,tp,LOCATION_DECK,0,1,nil) end

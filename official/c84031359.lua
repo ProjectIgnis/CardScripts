@@ -2,7 +2,7 @@
 --Darklord Gulgalta
 --scripted by Naim
 local s,id=GetID()
-local TOKEN_DARKLORD=id+100
+local TOKEN_DARKLORD=id+1
 function s.initial_effect(c)
 	--You can only Special Summon "Darklord Gulgalta(s)" once per turn
 	c:SetSPSummonOnce(id)

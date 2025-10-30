@@ -43,13 +43,13 @@ function s.initial_effect(c)
 	e2:SetHintTiming(0,TIMING_STANDBY_PHASE|TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E)
 	c:RegisterEffect(e2)
 end
-s.listed_names={101303005,101303006} --"Magnet Warrior Σ＋", "Magnet Warrior Σ－"
+s.listed_names={51826619,87814728} --"Magnet Warrior Σ＋", "Magnet Warrior Σ－"
 s.listed_series={SET_MAGNET_WARRIOR_SIGMA}
 function s.selfspcostfilter(c)
-	return c:IsCode(101303005,101303006) and (c:IsFaceup() or not c:IsOnField()) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true,true)
+	return c:IsCode(51826619,87814728) and (c:IsFaceup() or not c:IsOnField()) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true,true)
 end
 function s.rescon(sg,e,tp,mg)
-	return Duel.GetMZoneCount(tp,sg)>0 and sg:IsExists(Card.IsCode,1,nil,101303005) and sg:IsExists(Card.IsCode,1,nil,101303006)
+	return Duel.GetMZoneCount(tp,sg)>0 and sg:IsExists(Card.IsCode,1,nil,51826619) and sg:IsExists(Card.IsCode,1,nil,87814728)
 end
 function s.selfspcon(e,c)
 	if c==nil then return true end

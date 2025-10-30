@@ -48,7 +48,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.spop)
 	c:RegisterEffect(e4)
 end
-s.listed_names={101303059} --"Throne of Archfiends"
+s.listed_names={63679166} --"Throne of Archfiends"
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
 	if chkc then return c:IsOnField() and c:IsSpellTrap() and c:IsFaceup() and chkc~=c end

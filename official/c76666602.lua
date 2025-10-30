@@ -1,5 +1,5 @@
 --聖痕喰らいし竜
---The Stigmata-Devouring Dragon
+--The Dragon that Devours the Dogma
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

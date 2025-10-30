@@ -42,21 +42,21 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b1=not Duel.HasFlagEffect(tp,id)
 		and Duel.IsExistingMatchingCard(Card.IsAbleToDeck,tp,LOCATION_MZONE,LOCATION_MZONE,1,c)
 	--Shuffle all Spells and Traps on the field into the Deck
-	local b2=not Duel.HasFlagEffect(tp,id+100)
+	local b2=not Duel.HasFlagEffect(tp,id+1)
 		and Duel.IsExistingMatchingCard(aux.AND(Card.IsSpellTrap,Card.IsAbleToDeck),tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
 	--Look at your opponent's Extra Deck and banish 1 card from it
-	local b3=not Duel.HasFlagEffect(tp,id+200)
+	local b3=not Duel.HasFlagEffect(tp,id+2)
 		and Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_EXTRA,1,nil)
 	if chk==0 then return (b1 or b2 or b3) end
 	if not Duel.HasFlagEffect(tp,id) then
 		local g=Duel.GetMatchingGroup(Card.IsAbleToDeck,tp,LOCATION_MZONE,LOCATION_MZONE,c)
 		Duel.SetPossibleOperationInfo(0,CATEGORY_TODECK,g,#g,tp,0)
 	end
-	if not Duel.HasFlagEffect(tp,id+100) then
+	if not Duel.HasFlagEffect(tp,id+1) then
 		local g=Duel.GetMatchingGroup(aux.AND(Card.IsSpellTrap,Card.IsAbleToDeck),tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
 		Duel.SetPossibleOperationInfo(0,CATEGORY_TODECK,g,#g,tp,0)
 	end
-	if not Duel.HasFlagEffect(tp,id+200) then
+	if not Duel.HasFlagEffect(tp,id+2) then
 		local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,0,LOCATION_EXTRA,nil,tp)
 		Duel.SetPossibleOperationInfo(0,CATEGORY_REMOVE,g,#g,tp,0)
 	end
@@ -66,9 +66,9 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 	local exc=c:IsRelateToEffect(e) and c or nil
 	local b1=not Duel.HasFlagEffect(tp,id)
 		and Duel.IsExistingMatchingCard(Card.IsAbleToDeck,tp,LOCATION_MZONE,LOCATION_MZONE,1,exc)
-	local b2=not Duel.HasFlagEffect(tp,id+100)
+	local b2=not Duel.HasFlagEffect(tp,id+1)
 		and Duel.IsExistingMatchingCard(aux.AND(Card.IsSpellTrap,Card.IsAbleToDeck),tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
-	local b3=not Duel.HasFlagEffect(tp,id+200)
+	local b3=not Duel.HasFlagEffect(tp,id+2)
 		and Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_EXTRA,1,nil)
 	if not (b1 or b2 or b3) then return end
 	local op=Duel.SelectEffect(tp,
@@ -82,12 +82,12 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	elseif op==2 then
 		--Shuffle all Spells and Traps on the field into the Deck
-		Duel.RegisterFlagEffect(tp,id+100,RESET_PHASE|PHASE_END,0,1)
+		Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE|PHASE_END,0,1)
 		local g=Duel.GetMatchingGroup(aux.AND(Card.IsSpellTrap,Card.IsAbleToDeck),tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
 		Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	elseif op==3 then
 		--Look at your opponent's Extra Deck and banish 1 card from it
-		Duel.RegisterFlagEffect(tp,id+200,RESET_PHASE|PHASE_END,0,1)
+		Duel.RegisterFlagEffect(tp,id+2,RESET_PHASE|PHASE_END,0,1)
 		local g=Duel.GetFieldGroup(tp,0,LOCATION_EXTRA)
 		Duel.ConfirmCards(tp,g)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)

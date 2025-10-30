@@ -1,5 +1,5 @@
 --黄昏の堕天使ルシファー
---Lucifer, Darklord of the Evening Twilight
+--Darklord Eveningstar
 --Scripted by The Razgriz
 local s,id=GetID()
 function s.initial_effect(c)

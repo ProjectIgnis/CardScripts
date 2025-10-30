@@ -14,12 +14,12 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
 	e1:SetRange(LOCATION_GRAVE|LOCATION_REMOVED)
 	e1:SetCountLimit(1,id)
-	e1:SetCondition(function(e,tp) return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,101303031),tp,LOCATION_EXTRA,0,1,nil) end)
+	e1:SetCondition(function(e,tp) return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,48469380),tp,LOCATION_EXTRA,0,1,nil) end)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
 end
-s.listed_names={101303031} --"Doom Emperor Archfiend"
+s.listed_names={48469380} --"Doom Emperor Archfiend"
 s.listed_series={SET_ARCHFIEND}
 function s.ritualmonsterfilter(c)
 	return c:IsSetCard(SET_ARCHFIEND) and c:IsRitualMonster() and (c:IsFaceup() or c:IsLocation(LOCATION_HAND))

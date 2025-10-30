@@ -16,9 +16,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={SET_ARCHFIEND}
-s.listed_names={101303014,101303015,101303016} --"Royal Archfiend", "Duke Archfiend", "Highness Archfiend"
+s.listed_names={58769832,85154941,11248645} --"Royal Archfiend", "Duke Archfiend", "Highness Archfiend"
 function s.spfilter(c,e,tp,ex_chk)
-	return ((c:IsLevelBelow(7) and c:IsSetCard(SET_ARCHFIEND)) or (ex_chk and c:IsCode(101303014,101303015,101303016)))
+	return ((c:IsLevelBelow(7) and c:IsSetCard(SET_ARCHFIEND)) or (ex_chk and c:IsCode(58769832,85154941,11248645)))
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.archritfilter(c)
@@ -34,7 +34,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.rescon(ex_chk)
 	return function(sg,e,tp,mg)
-		return #sg==1 or (ex_chk and #sg<=3 and sg:FilterCount(Card.IsCode,nil,101303014,101303015,101303016)==#sg and sg:GetClassCount(Card.GetCode)==#sg)
+		return #sg==1 or (ex_chk and #sg<=3 and sg:FilterCount(Card.IsCode,nil,58769832,85154941,11248645)==#sg and sg:GetClassCount(Card.GetCode)==#sg)
 	end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)

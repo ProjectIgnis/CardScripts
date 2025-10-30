@@ -41,7 +41,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={SET_ELVENNOTES}
-s.listed_names={101303039} --"Junora the Power Patron of Tuning"
+s.listed_names={5914858} --"Junora the Power Patron of Tuning"
 function s.lvfilter(c)
 	return c:IsSequence(2) and c:HasLevel() and c:IsFaceup()
 end
@@ -54,7 +54,7 @@ function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function s.synchrofilter(c)
-	return (c:IsSetCard(SET_ELVENNOTES) or c:IsCode(101303039)) and c:IsSynchroSummonable()
+	return (c:IsSetCard(SET_ELVENNOTES) or c:IsCode(5914858)) and c:IsSynchroSummonable()
 end
 function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()

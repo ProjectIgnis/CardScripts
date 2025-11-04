@@ -35,6 +35,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_SHADDOLL}
 function s.applyfilter(c,e,tp)
+	if c:IsCode(id) then return false end
 	if not (not c:IsRace(RACE_ROCK) and c:IsSetCard(SET_SHADDOLL) and c:IsMonster()) then return false end
 	local effs={c:GetOwnEffects()}
 	for _,eff in ipairs(effs) do

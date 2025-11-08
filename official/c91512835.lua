@@ -45,7 +45,8 @@ function s.atcost(e,c,tp)
 	return Duel.CheckReleaseGroupCost(tp,s.atfilter,1,true,nil,e:GetHandler(),tp)
 end
 function s.atop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.IsAttackCostPaid()~=2 and e:GetHandler():IsLocation(LOCATION_MZONE) then
+	local c=e:GetHandler()
+	if Duel.IsAttackCostPaid()~=2 and c:IsLocation(LOCATION_MZONE) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
 		local tc=Duel.GetReleaseGroup(tp,true,false,REASON_COST):Filter(s.atfilter,c,tp):SelectUnselect(Group.CreateGroup(),tp,Duel.IsAttackCostPaid()==0,Duel.IsAttackCostPaid()==0)
 		if tc then

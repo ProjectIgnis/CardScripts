@@ -20,7 +20,7 @@ function s.stage2(e,tc,tp,mg,chk)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
 			e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
 			e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE|RESET_PHASE|PHASE_END)
-			e1:SetValue(500)
+			e1:SetValue(600)
 			tc:RegisterEffect(e1)
 		end
 	end

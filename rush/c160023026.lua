@@ -44,7 +44,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetReset(RESETS_STANDARD_PHASE_END)
 	c:RegisterEffect(e1)
 	if Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,1,c) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
-		local g2=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_HAND,0,1,2,nil)
+		local g2=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,1,2,c)
 		local ct=Duel.SendtoGrave(g2,REASON_COST)
 		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 		local g3=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.spfilter),tp,LOCATION_GRAVE,0,nil,e,tp)

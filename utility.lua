@@ -1549,7 +1549,9 @@ function Cost.SelfChangePosition(position)
 	local function cost_func(e,tp,eg,ep,ev,re,r,rp,chk)
 		local c=e:GetHandler()
 		if chk==0 then return c:IsCanChangePosition() and not c:IsPosition(position) and (position&POS_FACEDOWN==0 or c:IsCanTurnSet()) end
+		local fd_chk=c:IsPosition(POS_FACEDOWN) and position&POS_FACEUP>0
 		Duel.ChangePosition(c,position)
+		if fd_chk then c:SetStatus(STATUS_EFFECT_ENABLED,true) end
 	end
 	self_changepos_costs[cost_func]=true
 	return cost_func

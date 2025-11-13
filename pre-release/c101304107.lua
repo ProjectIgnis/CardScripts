@@ -48,5 +48,5 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local ac=Duel.GetAttacker()
-	return ac:IsControler(tp) and ac:CanChainAttack() and (ac:IsCode(CARD_RED_DRAGON_ARCHFIEND) or c:IsSetCard(SET_ASSAULT_MODE))
+	return ac:IsControler(tp) and ac:CanChainAttack() and (ac:IsCode(CARD_RED_DRAGON_ARCHFIEND) or ac:IsSetCard(SET_ASSAULT_MODE))
 end

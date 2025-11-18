@@ -253,6 +253,13 @@ function Card.IsTrapMonster(c)
 	return c:IsTrapCard() and (c:GetOriginalLevel()>0 or c:GetOriginalAttribute()>0 or c:GetOriginalRace()>0)
 end
 
+function Card.IsEquipTrap(c)
+	if not c:IsTrap() then return false end
+	if c.self_equip_trap then return true end
+	local activate_eff=c:GetActivateEffect()
+	return activate_eff and activate_eff:HasRemainFieldCost()
+end
+
 function Card.GetMainCardType(c)
 	return c:GetType()&(TYPE_MONSTER|TYPE_SPELL|TYPE_TRAP)
 end
@@ -1650,6 +1657,36 @@ function Cost.DetachFromSelf(min,max,op)
 	return cost_func
 end
 
+
+--check for cards that can stay on the field, but not always
+function Auxiliary.RemainFieldCost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	local c=e:GetHandler()
+	local cid=Duel.GetChainInfo(0,CHAININFO_CHAIN_ID)
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_REMAIN_FIELD)
+	e1:SetProperty(EFFECT_FLAG_OATH)
+	e1:SetReset(RESET_CHAIN)
+	c:RegisterEffect(e1)
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e2:SetCode(EVENT_CHAIN_DISABLED)
+	e2:SetOperation(Auxiliary.RemainFieldDisabled)
+	e2:SetLabel(cid)
+	e2:SetReset(RESET_CHAIN)
+	Duel.RegisterEffect(e2,tp)
+end
+function Auxiliary.RemainFieldDisabled(e,tp,eg,ep,ev,re,r,rp)
+	local cid=Duel.GetChainInfo(ev,CHAININFO_CHAIN_ID)
+	if cid~=e:GetLabel() then return end
+	if e:GetOwner():IsLocation(LOCATION_ONFIELD) then
+		e:GetOwner():CancelToGrave(false)
+	end
+end
+local remain_field_costs={}
+remain_field_costs[aux.RemainFieldCost]=true
+
 local function cost_table_check(t)
 	return function(eff) return t[eff:GetCost()] end
 end
@@ -1658,6 +1695,7 @@ Effect.HasSelfToGraveCost=cost_table_check(self_tograve_costs)
 Effect.HasSelfDiscardCost=cost_table_check(self_discard_costs)
 Effect.HasDetachCost=cost_table_check(detach_costs)
 Effect.HasSelfChangePositionCost=cost_table_check(self_changepos_costs)
+Effect.HasRemainFieldCost=cost_table_check(remain_field_costs)
 
 --Default cost for "You can pay X LP;"
 function Cost.PayLP(lp_value,pay_until)
@@ -1733,6 +1771,7 @@ function Cost.AND(...)
 		if detach_costs[fn] then detach_costs[full_cost]=true end
 		if self_discard_costs[fn] then self_discard_costs[full_cost]=true end
 		if self_tograve_costs[fn] then self_tograve_costs[full_cost]=true end
+		if remain_field_costs[fn] then remain_field_costs[full_cost]=true end
 	end
 	return full_cost
 end
@@ -1941,32 +1980,7 @@ function Auxiliary.ChkfMMZ(sumcount)
 				return Duel.GetMZoneCount(tp,sg)>=sumcount
 			end
 end
---check for cards that can stay on the field, but not always
-function Auxiliary.RemainFieldCost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	local c=e:GetHandler()
-	local cid=Duel.GetChainInfo(0,CHAININFO_CHAIN_ID)
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_REMAIN_FIELD)
-	e1:SetProperty(EFFECT_FLAG_OATH)
-	e1:SetReset(RESET_CHAIN)
-	c:RegisterEffect(e1)
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e2:SetCode(EVENT_CHAIN_DISABLED)
-	e2:SetOperation(Auxiliary.RemainFieldDisabled)
-	e2:SetLabel(cid)
-	e2:SetReset(RESET_CHAIN)
-	Duel.RegisterEffect(e2,tp)
-end
-function Auxiliary.RemainFieldDisabled(e,tp,eg,ep,ev,re,r,rp)
-	local cid=Duel.GetChainInfo(ev,CHAININFO_CHAIN_ID)
-	if cid~=e:GetLabel() then return end
-	if e:GetOwner():IsLocation(LOCATION_ONFIELD) then
-		e:GetOwner():CancelToGrave(false)
-	end
-end
+
 --autocheck for Summoning a Group containing Extra Deck/non-Extra Deck monsters to avoid zone issues
 function Auxiliary.MainAndExtraSpSummonLoop(func,sumtype,sump,targetp,nocheck,nolimit,pos,mmz,emz)
 	return	function(e,tp,eg,ep,ev,re,r,rp,sg)

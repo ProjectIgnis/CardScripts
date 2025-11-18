@@ -28,6 +28,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.eqpop)
 	c:RegisterEffect(e2)
 end
+s.self_equip_trap=true
 s.listed_series={SET_PLUNDER_PATROLL}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_PLUNDER_PATROLL),tp,LOCATION_MZONE,0,1,nil)

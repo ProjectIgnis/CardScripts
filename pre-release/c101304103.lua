@@ -22,6 +22,7 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e2:SetCountLimit(1,{id,1})
+	e2:SetTarget(function(e,tp,eg,ep,ev,re,r,rp,chk) if chk==0 then return e:GetHandler():IsLevelAbove(2) end end)
 	e2:SetOperation(s.lvchangeop)
 	c:RegisterEffect(e2)
 	--Special Summon 1 Level 4 or lower Fiend monster from your GY
@@ -58,7 +59,7 @@ function s.selfspop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.lvchangeop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) and c:IsFaceup() and c:HasLevel() then
+	if c:IsRelateToEffect(e) and c:IsFaceup() and c:IsLevelAbove(2) then
 		local b1=c:IsLevelAbove(2)
 		local b2=c:IsLevelAbove(3)
 		local lv=Duel.SelectEffect(tp,

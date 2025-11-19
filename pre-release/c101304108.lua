@@ -71,14 +71,17 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 	if ct>=3 then
 		if breakeff then Duel.BreakEffect() end
+		local c=e:GetHandler()
+		local reset_count=Duel.IsTurnPlayer(tp) and 2 or 1
+		aux.RegisterClientHint(c,nil,tp,1,0,aux.Stringid(id,1),RESET_PHASE|PHASE_END|RESET_SELF_TURN,reset_count)
 		--"Red Dragon Archfiend" in your Monster Zone is unaffected by your opponent's activated effects until the end of your next turn
-		local e1=Effect.CreateEffect(e:GetHandler())
+		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD)
 		e1:SetCode(EFFECT_IMMUNE_EFFECT)
 		e1:SetTargetRange(LOCATION_MZONE,0)
 		e1:SetTarget(aux.TargetBoolFunction(Card.IsCode,CARD_RED_DRAGON_ARCHFIEND))
 		e1:SetValue(function(e,te) return te:GetOwnerPlayer()~=e:GetHandlerPlayer() and te:IsActivated() end)
-		e1:SetReset(RESET_PHASE|PHASE_END|RESET_SELF_TURN,Duel.IsTurnPlayer(tp) and 2 or 1)
+		e1:SetReset(RESET_PHASE|PHASE_END|RESET_SELF_TURN,reset_count)
 		Duel.RegisterEffect(e1,tp)
 		breakeff=true
 	end

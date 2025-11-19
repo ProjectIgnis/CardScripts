@@ -40,7 +40,7 @@ function s.thsptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.thspop(e,tp,eg,ep,ev,re,r,rp)
 	local mmz_chk=Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,2))
 	local sc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.thspfilter),tp,LOCATION_DECK|LOCATION_GRAVE,0,1,1,nil,e,tp,mmz_chk):GetFirst()
 	if not sc then return end
 	aux.ToHandOrElse(sc,tp,
@@ -54,7 +54,7 @@ function s.thspop(e,tp,eg,ep,ev,re,r,rp)
 			end
 			Duel.SpecialSummonComplete()
 		end,
-		aux.Stringid(id,2)
+		aux.Stringid(id,3)
 	)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)

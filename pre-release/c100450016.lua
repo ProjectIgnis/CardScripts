@@ -26,6 +26,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tokenop)
 	c:RegisterEffect(e2)
 end
+s.listed_names={TOKEN_SURPRISE}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() end
 	if chk==0 then return Duel.IsExistingTarget(Card.IsFaceup,tp,LOCATION_MZONE,0,1,nil) end

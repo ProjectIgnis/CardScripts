@@ -35,6 +35,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 	if cl>=3 and Duel.IsPlayerCanDiscardDeck(tp,1) then
 		if break_chk then Duel.BreakEffect() end
+		break_chk=true
 		Duel.DiscardDeck(tp,1,REASON_EFFECT)
 	end
 	if cl>=4 then

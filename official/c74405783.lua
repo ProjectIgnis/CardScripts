@@ -61,7 +61,7 @@ function s.desconfilter(c)
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) and tc:IsCanBeDisabledByEffect(e) then
 		--Negate its effects
 		tc:NegateEffects(e:GetHandler())
 		if Duel.IsExistingMatchingCard(s.desconfilter,tp,LOCATION_GRAVE,0,1,nil)

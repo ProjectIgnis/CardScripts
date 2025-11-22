@@ -53,7 +53,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=sg:Select(tp,ct,ct,nil)
 	Duel.HintSelection(g)
 	local c=e:GetHandler()
-	for tc g:Iter() do
+	for tc in g:Iter() do
 		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 		local e0=Effect.CreateEffect(c)
 		e0:SetType(EFFECT_TYPE_SINGLE)

@@ -46,13 +46,14 @@ function s.chainlimit(typ)
 			end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
 	local ct=e:GetLabel()
 	local sg=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsType,TYPE_EFFECT),tp,0,LOCATION_MZONE,nil)
 	if #sg<ct then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_NEGATE)
 	local g=sg:Select(tp,ct,ct,nil)
-	for tc in aux.Next(g) do
+	Duel.HintSelection(g)
+	local c=e:GetHandler()
+	for tc g:Iter() do
 		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 		local e0=Effect.CreateEffect(c)
 		e0:SetType(EFFECT_TYPE_SINGLE)

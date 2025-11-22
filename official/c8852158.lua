@@ -1,5 +1,5 @@
 --影霊翼騎 ウェンディクルフ
---Reeshaddoll Wendicluhu
+--Reeshaddoll Wendikurhu
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

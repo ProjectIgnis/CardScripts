@@ -8,6 +8,7 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetCondition(function(e,tp) return Duel.GetAttacker():IsControler(1-tp) end)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
@@ -29,7 +30,8 @@ function s.filter(c,e,tp,eg,ep,ev,re,r,rp,b)
 	return false
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_GRAVE,1,e:GetHandler(),e,tp,eg,ep,ev,re,r,rp,e:GetHandler():IsLocation(LOCATION_HAND)) end
+	local b=e:GetHandler():IsLocation(LOCATION_HAND)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_GRAVE,1,e:GetHandler(),e,tp,eg,ep,ev,re,r,rp,b) end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local b=e:GetHandler():IsLocation(LOCATION_HAND)
@@ -64,7 +66,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.BreakEffect()
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	if g then
-		for etc in aux.Next(g) do
+		for etc in g:Iter() do
 			etc:CreateEffectRelation(te)
 		end
 	end
@@ -77,19 +79,19 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 	tc:ReleaseEffectRelation(te)
 	if g then
-		for etc in aux.Next(g) do
+		for etc in g:Iter() do
 			etc:ReleaseEffectRelation(te)
 		end
 	end
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_PHASE+PHASE_END)
-	e1:SetReset(RESET_PHASE+PHASE_END)
 	e1:SetCountLimit(1)
 	e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e1:SetLabelObject(tc)
 	e1:SetCondition(s.rtcon)
 	e1:SetOperation(s.rtop)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.rtcon(e,tp,eg,ep,ev,re,r,rp)

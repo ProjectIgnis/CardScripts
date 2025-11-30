@@ -22,6 +22,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={id}
+s.roll_dice=true
 function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local bc1=Duel.GetBattleMonster(tp)

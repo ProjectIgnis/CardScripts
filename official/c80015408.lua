@@ -1,5 +1,5 @@
 --糾罪巧－裁誕
---Enneacraft - Rebirth
+--Enneacraft Reverth
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

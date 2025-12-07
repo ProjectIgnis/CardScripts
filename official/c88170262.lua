@@ -1,10 +1,10 @@
 --キラーチューン・リミックス
---Killer Tune Remix
+--Kewl Tune Remix
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--Synchro Summon procedure: "Killer Tune Mix" + 1+ Tuners
+	--Synchro Summon procedure: "Kewl Tune Mix" + 1+ Tuners
 	Synchro.AddProcedure(c,aux.FALSE,1,1,s.tunerfilter,1,99,aux.FilterSummonCode(16509007))
 	--Gains 1500 ATK while your opponent has a Tuner in their field or GY
 	local e1=Effect.CreateEffect(c)
@@ -36,7 +36,7 @@ function s.initial_effect(c)
 	e4:SetValue(s.valcheck)
 	c:RegisterEffect(e4)
 end
-s.listed_names={16509007} --"Killer Tune Mix"
+s.listed_names={16509007} --"Kewl Tune Mix"
 s.material={16509007}
 function s.tunerfilter(c,scard,sumtype,tp)
 	return c:IsType(TYPE_TUNER,scard,sumtype,tp) or c:IsHasEffect(EFFECT_CAN_BE_TUNER)

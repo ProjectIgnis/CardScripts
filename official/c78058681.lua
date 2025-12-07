@@ -1,9 +1,9 @@
 --キラーチューン・シンクロ
---Killer Tune Synchro
+--Kewl Tune Synchro
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
-	--Add 1 "Killer Tune" card from your Deck to your hand, except "Killer Tune Synchro", then immediately after this effect resolves, you can Synchro Summon 1 Tuner
+	--Add 1 "Kewl Tune" card from your Deck to your hand, except "Kewl Tune Synchro", then immediately after this effect resolves, you can Synchro Summon 1 Tuner Synchro Monster
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_SPECIAL_SUMMON)
@@ -15,10 +15,10 @@ function s.initial_effect(c)
 	e1:SetHintTiming(0,TIMING_STANDBY_PHASE|TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E)
 	c:RegisterEffect(e1)
 end
-s.listed_series={SET_KILLER_TUNE}
+s.listed_series={SET_KEWL_TUNE}
 s.listed_names={id}
 function s.thfilter(c)
-	return c:IsSetCard(SET_KILLER_TUNE) and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(SET_KEWL_TUNE) and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

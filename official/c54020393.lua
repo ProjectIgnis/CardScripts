@@ -1,5 +1,5 @@
 --糾罪巧－始導
---Enneacraft - Release
+--Enneacraft Release
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --キラーチューン・プレイリスト
---Killer Tune Playlist
+--Kewl Tune Playlist
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
@@ -16,9 +16,9 @@ function s.initial_effect(c)
 	e1:SetHintTiming(0,TIMING_STANDBY_PHASE|TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E)
 	c:RegisterEffect(e1)
 end
-s.listed_series={SET_KILLER_TUNE}
+s.listed_series={SET_KEWL_TUNE}
 function s.applyfilter(c,e,tp)
-	if not (c:IsSetCard(SET_KILLER_TUNE) and c:IsMonster() and c:IsFaceup()) then return false end
+	if not (c:IsSetCard(SET_KEWL_TUNE) and c:IsMonster() and c:IsFaceup()) then return false end
 	if c:IsAbleToHand() then return true end
 	local effs={c:GetOwnEffects()}
 	for _,eff in ipairs(effs) do

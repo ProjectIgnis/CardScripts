@@ -1,10 +1,10 @@
 --キラーチューン・レッドシール
---Killer Tune Red Seal
+--Kewl Tune RS
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--Synchro Summon procedure: "Killer Tune Reco" + 1+ Tuners
+	--Synchro Summon procedure: "Kewl Tune Reco" + 1+ Tuners
 	Synchro.AddProcedure(c,aux.FALSE,1,1,s.tunerfilter,1,99,aux.FilterSummonCode(89392810))
 	--Gains 300 ATK for each Tuner in the GYs
 	local e1=Effect.CreateEffect(c)
@@ -45,7 +45,7 @@ function s.initial_effect(c)
 	e4:SetValue(s.valcheck)
 	c:RegisterEffect(e4)
 end
-s.listed_names={89392810} --"Killer Tune Reco"
+s.listed_names={89392810} --"Kewl Tune Reco"
 s.material={89392810}
 function s.tunerfilter(c,scard,sumtype,tp)
 	return c:IsType(TYPE_TUNER,scard,sumtype,tp) or c:IsHasEffect(EFFECT_CAN_BE_TUNER)

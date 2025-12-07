@@ -1,5 +1,5 @@
 --見えざる招き手
---Yad al Hecahands
+--Yad'al-Hecahands
 --Scripted by The Razgriz
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --見えざる幽獄
---Hecahands Tartarus
+--Hecahands Tartaros
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

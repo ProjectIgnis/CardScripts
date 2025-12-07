@@ -1,5 +1,5 @@
 --キラーチューン・クリップ
---Killer Tune Clip
+--Kewl Tune Clip
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
@@ -31,7 +31,6 @@ function s.initial_effect(c)
 	e2:SetOperation(s.rmop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={SET_KILLER_TUNE}
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

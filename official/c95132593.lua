@@ -1,5 +1,5 @@
 --見えざる手ガイガス
---Hecahands Gygas
+--Hecahands Gaigas
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

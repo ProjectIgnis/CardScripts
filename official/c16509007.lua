@@ -1,11 +1,11 @@
 --キラーチューン・ミクス
---Killer Tune Mix
+--Kewl Tune Mix
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	--If this card on the field would be used as Synchro Material, 1 Tuner in your hand can be used as 1 of the other materials
 	Synchro.AddHandMaterialEffect(c,id,function(c) return c:IsType(TYPE_TUNER) end)
-	--Add 1 "Killer Tune" monster from your Deck or GY to your hand, except a Level 2 monster
+	--Add 1 "Kewl Tune" monster from your Deck or GY to your hand, except a Level 2 monster
 	local e1a=Effect.CreateEffect(c)
 	e1a:SetDescription(aux.Stringid(id,0))
 	e1a:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -32,9 +32,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={SET_KILLER_TUNE}
+s.listed_series={SET_KEWL_TUNE}
 function s.thfilter(c)
-	return c:IsSetCard(SET_KILLER_TUNE) and c:IsMonster() and not c:IsLevel(2) and c:IsAbleToHand() 
+	return c:IsSetCard(SET_KEWL_TUNE) and c:IsMonster() and not c:IsLevel(2) and c:IsAbleToHand() 
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK|LOCATION_GRAVE,0,1,nil) end

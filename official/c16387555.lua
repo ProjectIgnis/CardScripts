@@ -1,11 +1,11 @@
 --キラーチューン・キュー
---Killer Tune Cue
+--Kewl Tune Cue
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	--If this card on the field would be used as Synchro Material, 1 Tuner in your hand can be used as 1 of the other materials
 	Synchro.AddHandMaterialEffect(c,id,function(c) return c:IsType(TYPE_TUNER) end)
-	--Special Summon 1 Tuner from your hand, Deck, or GY, except "Killer Tune Cue"
+	--Special Summon 1 Tuner from your hand, Deck, or GY, except "Kewl Tune Cue"
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={id}
-s.listed_series={SET_KILLER_TUNE}
+s.listed_series={SET_KEWL_TUNE}
 function s.spfilter(c,e,tp)
 	return c:IsType(TYPE_TUNER) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

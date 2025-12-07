@@ -1,5 +1,5 @@
 --見えざる神ジャウザー
---Hecahands Jawza
+--Hecahands Jauzah
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

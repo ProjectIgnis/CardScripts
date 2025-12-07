@@ -1,5 +1,5 @@
 --糾罪都市－エニアポリス
---Enneapolis, the Sinquisition City
+--Enneapolis
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	e0:SetType(EFFECT_TYPE_ACTIVATE)
 	e0:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e0)
-	--Remove all Sinquisition Counters from your fiend, and if you do, inflict 900 damage to your opponent for each
+	--Remove all E.C. Counters from your fiend, and if you do, inflict 900 damage to your opponent for each
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DAMAGE)
@@ -57,20 +57,20 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_series={SET_ENNEACRAFT}
-s.counter_list={COUNTER_SINQUISITION}
+s.counter_list={COUNTER_EC}
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	local ct=Duel.GetCounter(tp,1,0,COUNTER_SINQUISITION)
+	local ct=Duel.GetCounter(tp,1,0,COUNTER_EC)
 	Duel.SetTargetPlayer(1-tp)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,ct*900)
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(Card.HasCounter,tp,LOCATION_ONFIELD,0,nil,COUNTER_SINQUISITION)
+	local g=Duel.GetMatchingGroup(Card.HasCounter,tp,LOCATION_ONFIELD,0,nil,COUNTER_EC)
 	if #g==0 then return end
 	local total_count=0
 	for sc in g:Iter() do
-		local sc_count=sc:GetCounter(COUNTER_SINQUISITION)
-		if sc:RemoveCounter(tp,COUNTER_SINQUISITION,sc_count,REASON_EFFECT) then
+		local sc_count=sc:GetCounter(COUNTER_EC)
+		if sc:RemoveCounter(tp,COUNTER_EC,sc_count,REASON_EFFECT) then
 			total_count=total_count+sc_count
 		end
 	end

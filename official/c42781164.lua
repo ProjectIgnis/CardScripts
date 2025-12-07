@@ -1,14 +1,14 @@
 --キラーチューン・トラックメイカー
---Killer Tune Track Maker
+--Kewl Tune Track Maker
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--Synchro Summon procedure: 1 "Killer Tune" Tuner + 1+ Tuners
-	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_KILLER_TUNE),1,1,s.tunerfilter,1,99)
+	--Synchro Summon procedure: 1 "Kewl Tune" Tuner + 1+ Tuners
+	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_KEWL_TUNE),1,1,s.tunerfilter,1,99)
 	--If this card on the field would be used as Synchro Material, 1 Tuner in your hand can be used as 1 of the other materials
 	Synchro.AddHandMaterialEffect(c,id,function(c) return c:IsType(TYPE_TUNER) end)
-	--Add 1 "Killer Tune" card from your Deck to your hand
+	--Add 1 "Kewl Tune" card from your Deck to your hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -38,12 +38,12 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_MULTIPLE_TUNERS)
 	c:RegisterEffect(e3)
 end
-s.listed_series={SET_KILLER_TUNE}
+s.listed_series={SET_KEWL_TUNE}
 function s.tunerfilter(c,scard,sumtype,tp)
 	return c:IsType(TYPE_TUNER,scard,sumtype,tp) or c:IsHasEffect(EFFECT_CAN_BE_TUNER)
 end
 function s.thfilter(c)
-	return c:IsSetCard(SET_KILLER_TUNE) and c:IsAbleToHand()
+	return c:IsSetCard(SET_KEWL_TUNE) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

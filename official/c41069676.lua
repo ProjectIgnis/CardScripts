@@ -1,5 +1,5 @@
 --キラーチューン・ラウドネスウォー
---Killer Tune Loudness War
+--Kewl Tune Loudness War
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e1b:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
 	e1b:SetValue(aux.tgoval)
 	c:RegisterEffect(e1b)
-	--Apply the effect of 1 "Killer Tune" monster in your GY that activates if sent to the GY as Synchro Material
+	--Apply the effect of 1 "Kewl Tune" monster in your GY that activates if sent to the GY as Synchro Material
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_QUICK_O)
@@ -39,12 +39,12 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_MULTIPLE_TUNERS)
 	c:RegisterEffect(e3)
 end
-s.listed_series={SET_KILLER_TUNE}
+s.listed_series={SET_KEWL_TUNE}
 function s.tunerfilter(c,scard,sumtype,tp)
 	return c:IsType(TYPE_TUNER,scard,sumtype,tp) or c:IsHasEffect(EFFECT_CAN_BE_TUNER)
 end
 function s.rmfilter(c,e,tp)
-	if not (c:IsSetCard(SET_KILLER_TUNE) and c:IsMonster() and c:IsAbleToRemoveAsCost()) then return false end
+	if not (c:IsSetCard(SET_KEWL_TUNE) and c:IsMonster() and c:IsAbleToRemoveAsCost()) then return false end
 	local effs={c:GetOwnEffects()}
 	for _,eff in ipairs(effs) do
 		if eff:GetCode()==EVENT_BE_MATERIAL then

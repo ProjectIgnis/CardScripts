@@ -1,5 +1,5 @@
 --ジュークジョイント“Ｋｉｌｌｅｒ Ｔｕｎｅ”
---Juke Joint "Killer Tune"
+--JJ "Kewl Tune"
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_EXTRA_SUMMON_COUNT)
 	e1:SetTarget(aux.TargetBoolFunction(Card.IsType,TYPE_TUNER))
 	c:RegisterEffect(e1)
-	--"Killer Tune Loudness War" you control gains 3300 ATK while your opponent has a Tuner in their field or GY
+	--"Kewl Tune Loudness War" you control gains 3300 ATK while your opponent has a Tuner in their field or GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetValue(3300)
 	e2:SetCondition(function(e) return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsType,TYPE_TUNER),e:GetHandlerPlayer(),0,LOCATION_MZONE|LOCATION_GRAVE,1,nil) end)
 	c:RegisterEffect(e2)
-	--Add to your hand, or Special Summon, 1 "Killer Tune" monster from your Deck
+	--Add to your hand, or Special Summon, 1 "Kewl Tune" monster from your Deck
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_SPECIAL_SUMMON)
@@ -39,13 +39,13 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thspop)
 	c:RegisterEffect(e3)
 end
-s.listed_names={41069676} --"Killer Tune Loudness War"
-s.listed_series={SET_KILLER_TUNE}
+s.listed_names={41069676} --"Kewl Tune Loudness War"
+s.listed_series={SET_KEWL_TUNE}
 function s.costfilter(c,e,tp)
 	return c:IsType(TYPE_TUNER) and Duel.IsExistingMatchingCard(s.thspfilter,tp,LOCATION_DECK,0,1,nil,e,tp,Duel.GetMZoneCount(tp,c)>0)
 end
 function s.thspfilter(c,e,tp,mmz_chk)
-	return c:IsSetCard(SET_KILLER_TUNE) and c:IsMonster()
+	return c:IsSetCard(SET_KEWL_TUNE) and c:IsMonster()
 		and (c:IsAbleToHand() or (mmz_chk and c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
 end
 function s.thspcost(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -1,11 +1,11 @@
 --糾罪巧－Ａｓｔａγ.ＰＩＸＩＥＡ
---Enneacraft - Astarγ.PIXIEA
+--Enneacraft - Asta.PIXIEA
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	c:EnableCounterPermit(COUNTER_SINQUISITION,LOCATION_PZONE)
+	c:EnableCounterPermit(COUNTER_EC,LOCATION_PZONE)
 	Pendulum.AddProcedure(c)
-	--Each time a monster(s) is flipped face-up, place 1 Sinquisition Counter on this card
+	--Each time a monster(s) is flipped face-up, place 1 E.C. Counter on this card
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_FLIP)
@@ -66,19 +66,19 @@ function s.initial_effect(c)
 	e5b:SetValue(aux.tgoval)
 	c:RegisterEffect(e5b)
 end
-s.counter_place_list={COUNTER_SINQUISITION}
+s.counter_place_list={COUNTER_EC}
 s.listed_series={SET_ENNEACRAFT}
 function s.counterop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not Duel.IsChainSolving() then
-		c:AddCounter(COUNTER_SINQUISITION,1)
+		c:AddCounter(COUNTER_EC,1)
 	else
 		--Place 1 Sinquisition Counter on this card at the end of the Chain Link
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_CHAIN_SOLVED)
 		e1:SetRange(LOCATION_PZONE)
-		e1:SetOperation(function() c:AddCounter(COUNTER_SINQUISITION,1) end)
+		e1:SetOperation(function() c:AddCounter(COUNTER_EC,1) end)
 		e1:SetReset(RESET_EVENT|RESETS_STANDARD|RESET_CHAIN)
 		c:RegisterEffect(e1)
 		--Reset "e1" at the end of the Chain Link

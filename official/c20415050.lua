@@ -1,5 +1,5 @@
 --神の見えざる手
---Hecahands
+--The Hidden Hecahands
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

@@ -4,7 +4,8 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--Must first be Special Summoned (from your hand or GY) while you have 3 or more cards in your GY with different names that are "Temple of the Kings" and/or Traps, by placing 2 of them on the bottom of the Deck in any order
+	c:AddMustBeSpecialSummoned()
+	--Must be Special Summoned (from your hand or GY) while you have 3 or more cards in your GY with different names that are "Temple of the Kings" and/or Traps, by placing 2 of them on the bottom of the Deck in any order
 	local e0=Effect.CreateEffect(c)
 	e0:SetDescription(aux.Stringid(id,0))
 	e0:SetType(EFFECT_TYPE_FIELD)

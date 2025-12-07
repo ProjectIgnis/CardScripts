@@ -1,5 +1,5 @@
 --糾罪巧－Ａｓｔａγ.ＰＩＸＩＥＡ
---Enneacraft - Asta.PIXIEA
+--Enneacraft - Asta.PIXEA
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

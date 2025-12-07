@@ -30,7 +30,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={id}
-s.listed_series={SET_KEWL_TUNE}
 function s.spfilter(c,e,tp)
 	return c:IsType(TYPE_TUNER) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

@@ -9,7 +9,7 @@ function s.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCondition(function(e) return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,100200282),e:GetHandlerPlayer(),LOCATION_ONFIELD|LOCATION_GRAVE,0,1,nil) end)
+	e1:SetCondition(function(e) return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_REGULUS_THE_PRINCE_OF_ENDYMION),e:GetHandlerPlayer(),LOCATION_ONFIELD|LOCATION_GRAVE,0,1,nil) end)
 	e1:SetValue(2300)
 	c:RegisterEffect(e1)
 	--Special Summon this card from your hand
@@ -37,7 +37,7 @@ function s.initial_effect(c)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_CHAIN,function(re,tp,cid) return not re:IsSpellEffect() end)
 end
 s.listed_series={SET_WITCHCRAFTER}
-s.listed_names={100200282,28553439} --"Regulus, the Prince of Endymion", "Magical Dimension"
+s.listed_names={CARD_REGULUS_THE_PRINCE_OF_ENDYMION,28553439} --"Magical Dimension"
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

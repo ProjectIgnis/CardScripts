@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.spsettg)
 	e1:SetOperation(s.spsetop)
 	c:RegisterEffect(e1)
-	--During either player's turn, you can activate "Magical Musket" Spell/Trap Cards from your hand.
+	--During either player's turn, you can activate "Magical Musket" Spell/Trap Cards from your hand
 	local e2a=Effect.CreateEffect(c)
 	e2a:SetType(EFFECT_TYPE_FIELD)
 	e2a:SetCode(EFFECT_QP_ACT_IN_NTPHAND)

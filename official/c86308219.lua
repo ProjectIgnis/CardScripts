@@ -2,8 +2,9 @@
 --Harpie Lady Phoenix Formation
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Destroy as many monsters your opponent controls as possible, and if you do, inflict damage to your opponent equal to the highest original ATK among those monsters
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_DAMAGE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -17,7 +18,7 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_HARPIE_LADY,CARD_HARPIE_LADY_SISTERS}
 function s.counterfilter(c)
-	return (c:GetSummonLocation()&LOCATION_DECK|LOCATION_EXTRA)==0
+	return (c:GetSummonLocation()&(LOCATION_DECK|LOCATION_EXTRA))==0
 end
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsCode(CARD_HARPIE_LADY,CARD_HARPIE_LADY_SISTERS)
@@ -28,6 +29,7 @@ end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetCustomActivityCount(id,tp,ACTIVITY_SPSUMMON)==0
 		and Duel.IsPhase(PHASE_MAIN1) end
+	--You cannot Special Summon monsters from the Main Deck or Extra Deck the turn you activate this card
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
@@ -36,6 +38,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetTarget(s.sumlimit)
 	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
+	--You cannot conduct your Battle Phase the turn you activate this card
 	local e2=Effect.CreateEffect(e:GetHandler())
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
@@ -55,16 +58,16 @@ function s.sumlimit(e,c,sump,sumtype,sumpos,targetp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) end
-	if chk==0 then return Duel.IsExistingTarget(aux.TRUE,tp,0,LOCATION_MZONE,1,nil) end
+	if chk==0 then return Duel.IsExistingTarget(nil,tp,0,LOCATION_MZONE,1,nil) end
 	local ct=Duel.GetMatchingGroupCount(s.cfilter,tp,LOCATION_MZONE,0,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(tp,aux.TRUE,tp,0,LOCATION_MZONE,ct,ct,nil)
+	local g=Duel.SelectTarget(tp,nil,tp,0,LOCATION_MZONE,ct,ct,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetTargetCards(e)
-	if Duel.Destroy(g,REASON_EFFECT)~=0 then
+	if Duel.Destroy(g,REASON_EFFECT)>0 then
 		local og=Duel.GetOperatedGroup()
 		local mg,matk=og:GetMaxGroup(Card.GetBaseAttack)
 		if matk>0 then

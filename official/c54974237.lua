@@ -2,8 +2,9 @@
 --Eradicator Epidemic Virus
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Look at your opponent's hand, all Spells/Traps they control, and all cards they draw until the 3rd end of their turn, and destroy all cards of that declared type
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -21,42 +22,38 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.SelectReleaseGroupCost(tp,s.costfilter,1,1,false,nil,nil)
 	Duel.Release(g,REASON_COST)
 end
-function s.tgfilter(c,ty)
-	return c:IsFaceup() and c:IsType(ty)
-end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,2))
-	local ac=Duel.SelectOption(tp,aux.Stringid(id,0),aux.Stringid(id,1))
-	local ty=TYPE_SPELL
-	if ac==1 then ty=TYPE_TRAP end
-	e:SetLabel(ty)
-	local g=Duel.GetMatchingGroup(s.tgfilter,tp,0,LOCATION_ONFIELD,nil,ty)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CARDTYPE)
+	local decl_type=2<<Duel.SelectOption(tp,DECLTYPE_SPELL,DECLTYPE_TRAP)
+	e:SetLabel(decl_type)
+	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsType,decl_type),tp,0,LOCATION_ONFIELD,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end
 function s.cffilter(c)
 	return c:IsLocation(LOCATION_HAND) or (c:IsFacedown() and c:IsSpellTrap())
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local ty=e:GetLabel()
+	local decl_type=e:GetLabel()
 	local g=Duel.GetFieldGroup(tp,0,LOCATION_ONFIELD|LOCATION_HAND)
 	if #g>0 then
 		local cg=g:Filter(s.cffilter,nil)
 		Duel.ConfirmCards(tp,cg)
-		local dg=g:Filter(Card.IsType,nil,ty)
+		local dg=g:Filter(Card.IsType,nil,decl_type)
 		Duel.Destroy(dg,REASON_EFFECT)
 		Duel.ShuffleHand(1-tp)
 	end
-	if not e:IsHasType(EFFECT_TYPE_ACTIVATE) then return end
+	--Look at all cards your opponent draws until the 3rd end of their turn, and destroy all cards of that declared type
 	local c=e:GetHandler()
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_DRAW)
 	e1:SetOperation(s.desop)
-	e1:SetLabel(ty)
+	e1:SetLabel(decl_type)
 	e1:SetReset(RESET_PHASE|PHASE_END|RESET_OPPO_TURN,3)
 	Duel.RegisterEffect(e1,tp)
+	--To work with "Pyro Clock of Destiny"
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EVENT_PHASE+PHASE_END)

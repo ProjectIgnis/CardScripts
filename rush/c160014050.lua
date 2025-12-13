@@ -44,7 +44,7 @@ function s.thfilter(c)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
-	if not Duel.IsExistingMatchingCard(s.confilter,tp,LOCATION_MZONE,0,1,nil) or Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
+	if not Duel.IsExistingMatchingCard(s.confilter,tp,LOCATION_MZONE,0,1,nil) or (Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,3,nil) and Duel.SelectYesNo(tp,aux.Stringid(id,2))) then
 		if Duel.DiscardHand(tp,s.cfilter,3,3,REASON_COST+REASON_DISCARD,nil)<3 then return end
 	end
 	--Effect

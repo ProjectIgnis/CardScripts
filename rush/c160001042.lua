@@ -12,9 +12,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.damop)
 	c:RegisterEffect(e1)
 end
+function s.filter(c)
+	return c:IsFaceup() and c:IsHasEffect(160217020)
+end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local dam=200
-	if Duel.IsPlayerAffectedByEffect(tp,160217020) then dam=700 end
+	if Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil) then dam=700 end
 	if chk==0 then return true end
 	Duel.SetTargetPlayer(1-tp)
 	Duel.SetTargetParam(dam)

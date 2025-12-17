@@ -25,7 +25,7 @@ function s.spfilter(c,e,tp)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
-	if Duel.GetTurnCount()~=2 or Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
+	if Duel.GetTurnCount()~=2 or (Duel.IsExistingMatchingCard(Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,2,e:GetHandler()) and Duel.SelectYesNo(tp,aux.Stringid(id,2))) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		local g=Duel.SelectMatchingCard(tp,Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,2,2,e:GetHandler())
 		if #g==0 or Duel.SendtoGrave(g,REASON_COST)==0 then return end

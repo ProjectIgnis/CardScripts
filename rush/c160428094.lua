@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.costfilter(c)
-	return c:IsAttackAbove(1600) and c:IsFaceup() and c:IsAbleToGraveAsCost()
+	return c:IsAttackAbove(1600) and c:IsFaceup() and c:IsAbleToGraveAsCost() and c:IsNotMaximumModeSide()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_MZONE,0,1,nil) end
@@ -31,6 +31,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_MZONE,0,1,1,nil)
+	g=g:AddMaximumCheck()
 	local ct=Duel.SendtoGrave(g,REASON_COST)
 	local tg=Duel.GetOperatedGroup():GetFirst()
 	if ct==0 or Duel.GetLocationCount(tp,LOCATION_MZONE)==0 then return end

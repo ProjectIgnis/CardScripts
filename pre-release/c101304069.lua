@@ -66,6 +66,6 @@ function s.fextra(tc,sc)
 end
 function s.fcheck(tc,sc)
 	return  function(tp,sg,fc)
-				return sg:IsContains(tc) and sg:IsContains(sc)
+				return #sg==2 and sg:IsContains(tc) and sg:IsContains(sc)
 			end
 end

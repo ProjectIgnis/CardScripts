@@ -1,23 +1,23 @@
+--フュージョン・ショット
 --Fusion Shot
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsType,TYPE_FUSION))
-	--damage
+	--Banish 1 monster used for the equipped monster's Fusion Summon with 1000 or less ATK; inflict damage to your opponent equal to its ATK
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_IGNITION)
-	e2:SetRange(LOCATION_SZONE)
 	e2:SetCategory(CATEGORY_DAMAGE)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e2:SetCountLimit(1)
+	e2:SetRange(LOCATION_SZONE)
 	e2:SetCost(s.damcost)
 	e2:SetTarget(s.damtg)
 	e2:SetOperation(s.damop)
 	c:RegisterEffect(e2)
 end
 function s.cfilter(c,tp,eq)
-	return c:IsControler(tp) and c:IsLocation(LOCATION_GRAVE) and (c:GetReason()&0x40008)==0x40008 and c:GetReasonCard()==eq
-		and c:IsAbleToRemoveAsCost() and c:IsAttackBelow(1000) and c:GetAttack()>0
+	return c:IsControler(tp) and c:IsLocation(LOCATION_GRAVE) and (c:GetReason()&(REASON_MATERIAL|REASON_FUSION))==(REASON_MATERIAL|REASON_FUSION) and c:GetReasonCard()==eq
+		and c:IsAbleToRemoveAsCost() and c:IsAttackBelow(1000) and c:HasNonZeroAttack()
 end
 function s.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local eq=e:GetHandler():GetEquipTarget()

@@ -36,15 +36,26 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,Card.IsCanChangePositionRush,tp,0,LOCATION_MZONE,1,1,nil)
 	Duel.HintSelection(g)
 	if Duel.ChangePosition(g,POS_FACEUP_DEFENSE,POS_FACEDOWN_DEFENSE,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK)>0 then
-		local g2=Duel.GetMatchingGroup(s.desfilter,tp,0,LOCATION_MZONE,nil,e:GetHandler():GetLevel())
-		if #g2>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-			local sg=g2:Select(tp,1,1,nil)
-			if #sg==0 then return end
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		e1:SetCode(EVENT_CHAIN_END)
+		e1:SetLabel(e:GetHandler():GetLevel())
+		e1:SetOperation(s.desop)
+		e1:SetReset(RESET_PHASE+PHASE_END)
+		Duel.RegisterEffect(e1,tp)
+	end
+end
+function s.desop(e,tp,eg,ep,ev,re,r,rp)
+	local lvl=e:GetLabel()
+	local g2=Duel.GetMatchingGroup(s.desfilter,tp,0,LOCATION_MZONE,nil,lvl)
+	if #g2>0 and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+		local sg=g2:Select(tp,1,1,nil)
+		if #sg>0 then
 			sg=sg:AddMaximumCheck()
 			Duel.HintSelection(sg)
-			Duel.BreakEffect()
 			Duel.Destroy(sg,REASON_EFFECT)
 		end
 	end
+	e:Reset()
 end

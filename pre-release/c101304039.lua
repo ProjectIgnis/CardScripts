@@ -3,6 +3,7 @@
 --Scripted by The Razgriz
 local s,id=GetID()
 function s.initial_effect(c)
+	c:EnableReviveLimit()
 	--Synchro Summon procedure: 1 Tuner + 1+ non-Tuner monsters
 	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTuner(nil),1,99)
 	--Special Summon 1 "Predaplant" or "Starving Venom" monster from your face-up Extra Deck or GY

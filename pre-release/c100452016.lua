@@ -36,7 +36,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.controlfilter(c,zones)
-	return c:IsControlerCanBeChanged(false,zone)
+	return c:IsControlerCanBeChanged(false,zones)
 end
 function s.controltg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local zones=e:GetHandler():GetLinkedZone()&ZONES_MMZ

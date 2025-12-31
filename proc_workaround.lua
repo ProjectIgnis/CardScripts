@@ -1,6 +1,20 @@
 --Utilities to be added to the core
 
 --[[
+	update the "Card.IsAbleToX" functions for location changes to return false if the card is already in that location
+--]]
+local function card_isableto_update(func,loc)
+	return function(card,...)
+		return not card:IsLocation(loc) and func(card,...)
+	end
+end
+Card.IsAbleToHand=card_isableto_update(Card.IsAbleToHand,LOCATION_HAND)
+Card.IsAbleToDeck=card_isableto_update(Card.IsAbleToDeck,LOCATION_DECK)
+Card.IsAbleToExtra=card_isableto_update(Card.IsAbleToExtra,LOCATION_EXTRA)
+Card.IsAbleToGrave=card_isableto_update(Card.IsAbleToGrave,LOCATION_GRAVE)
+Card.IsAbleToRemove=card_isableto_update(Card.IsAbleToRemove,LOCATION_REMOVED)
+
+--[[
 	allow EFFECT_EXTRA_RELEASE_NONSUM effects to work on cards in the Extra Deck
 	used by "Duel Evolution - Assault Zone"
 	possibly to be expanded on to also include other locations such as the Deck

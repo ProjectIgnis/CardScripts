@@ -2,8 +2,9 @@
 --Primal Seed
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Add 2 of your banished cards to your hand
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -13,6 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_names={72989439,82301904}
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsCode(72989439,82301904)
 end
@@ -27,10 +29,8 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,2,0,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-	local sg=g:Filter(Card.IsRelateToEffect,nil,e)
-	if #sg>0 then
-		Duel.SendtoHand(sg,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,sg)
+	local tg=Duel.GetTargetCards(e)
+	if #tg==2 then
+		Duel.SendtoHand(tg,nil,REASON_EFFECT)
 	end
 end

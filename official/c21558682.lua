@@ -2,13 +2,13 @@
 --Jam Defender
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(0,TIMING_BATTLE_START)
 	c:RegisterEffect(e1)
-	--change target
+	--Switch the attack target to 1 "Revival Jam" you control
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -22,7 +22,7 @@ function s.initial_effect(c)
 end
 s.listed_names={31709826}
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsTurnPlayer(1-tp) and Duel.GetAttackTarget()~=nil
+	return Duel.GetAttacker():IsControler(1-tp) and Duel.GetAttackTarget()~=nil
 end
 function s.filter(c,atg)
 	return c:IsFaceup() and c:IsCode(31709826) and atg:IsContains(c)
@@ -36,9 +36,8 @@ function s.atktg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,0,1,1,at,atg)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) and not Duel.GetAttacker():IsImmuneToEffect(e) then
+	if tc:IsFaceup() and tc:IsCode(31709826) and tc:IsRelateToEffect(e) and not Duel.GetAttacker():IsImmuneToEffect(e) then
 		Duel.ChangeAttackTarget(tc)
 	end
 end

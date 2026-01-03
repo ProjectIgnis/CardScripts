@@ -73,5 +73,6 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp,c,og)
 				end
 			end
 		end
+		g:DeleteGroup()
 	end	
 end

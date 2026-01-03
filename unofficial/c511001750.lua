@@ -23,15 +23,13 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 and Duel.Remove(g,POS_FACEUP,REASON_EFFECT)>0 then
 		local rg=Duel.GetOperatedGroup()
 		rg:KeepAlive()
-		local tc=rg:GetFirst()
-		while tc do
+		for tc in rg:Iter() do
 			tc:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
-			tc=rg:GetNext()
 		end
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetCode(EVENT_FREE_CHAIN)
+		e1:SetCode(EVENT_CHAIN_END)
 		e1:SetCountLimit(1)
 		e1:SetLabelObject(rg)
 		e1:SetCondition(function(e) local tp=e:GetHandlerPlayer() return Duel.IsPlayerCanDraw(tp,1) end) 
@@ -62,24 +60,18 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp,c,og)
 			return
 		end
 		if g:IsExists(s.retfilter,1,nil,tp,tpe) then
-			local rg=g:FilterSelect(tp,s.retfilter,1,1,nil,tp,tpe)
-			Duel.HintSelection(rg)
-			local rc=rg:GetFirst()
-			local loc=rc:GetPreviousLocation()
-			local pos=rc:GetPreviousPosition()
-			if (rc:GetType()&TYPE_FIELD) then
-				loc=LOCATION_FZONE
-				local of=Duel.GetFieldCard(1-tp,LOCATION_FZONE,0)
-				if of then Duel.Destroy(of,REASON_RULE) end
-				of=Duel.GetFieldCard(tp,LOCATION_FZONE,0)
-				if of and Duel.Destroy(of,REASON_RULE)==0 and Duel.SendtoGrave(of,REASON_RULE)==0 then
-					Duel.SendtoGrave(rc,REASON_RULE)
+			local rg=g:Filter(Card.IsType,nil,tpe)
+			for rc in rg:Iter() do
+				if rc:IsPreviousLocation(LOCATION_PZONE) then
+					local seq=0
+					if rc:GetPreviousSequence()==7 or rc:GetPreviousSequence()==4 then seq=1 end
+					Duel.MoveToField(rc,tp,tp,LOCATION_PZONE,rc:GetPreviousPosition(),true,(1<<seq))
+				elseif rc:IsPreviousLocation(LOCATION_FZONE) and rc:IsFieldSpell() then
+					Duel.MoveToField(rc,tp,tp,LOCATION_FZONE,rc:GetPreviousPosition(),true)
+				else
+					Duel.MoveToField(rc,tp,tp,rc:GetPreviousLocation(),rc:GetPreviousPosition(),true)
 				end
 			end
-			Duel.MoveToField(rc,tp,tp,loc,pos,true)
 		end
-		Duel.ShuffleHand(tp)
-	end
-	g:DeleteGroup()
-	return
+	end	
 end

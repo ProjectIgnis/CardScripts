@@ -2,7 +2,7 @@
 --Surprise Fusion
 --scripted by pyrQ
 local s,id=GetID()
-local TOKEN_SURPRISE=id+100
+local TOKEN_SURPRISE=id+1
 function s.initial_effect(c)
 	--Make 1 face-up monster you control become the declared Type and Attribute, then you can Fusion Summon 1 Fusion Monster from your Extra Deck, using monsters you control, including the targeted monster
 	local e1=Effect.CreateEffect(c)

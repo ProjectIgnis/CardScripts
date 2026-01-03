@@ -2,8 +2,8 @@
 --Ebisu Shinsen Matsuri
 --scripted by pyrQ
 local s,id=GetID()
-local TOKEN_SHINSEN=id+100
-local TOKEN_EBISU=id+200
+local TOKEN_SHINSEN=id+1
+local TOKEN_EBISU=id+2
 function s.initial_effect(c)
 	--Activate
 	local e0=Effect.CreateEffect(c)
@@ -38,7 +38,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_PHASE+PHASE_BATTLE_START)
 	e2:SetRange(LOCATION_SZONE)
-	e2:SetCondition(function(e) return not e:GetHandler():HasFlagEffect(id+100) end)
+	e2:SetCondition(function(e) return not e:GetHandler():HasFlagEffect(id+1) end)
 	e2:SetTarget(s.ebisusptg)
 	e2:SetOperation(s.ebisuspop)
 	c:RegisterEffect(e2)
@@ -95,7 +95,7 @@ function s.ebisusptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return #g>0 and Duel.GetMZoneCount(tp,g)>0
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_EBISU,0,TYPES_TOKEN,-2,-2,7,RACE_FAIRY,ATTRIBUTE_WATER) end
 	local c=e:GetHandler()
-	c:RegisterFlagEffect(id+100,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_BATTLE,0,1)
+	c:RegisterFlagEffect(id+1,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_BATTLE,0,1)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g+c,#g+1,tp,0)
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,tp,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0)

@@ -2,7 +2,7 @@
 --Armament Reincarnation
 --scripted by pyrQ
 local s,id=GetID()
-local TOKEN_ARMAMENT_REINCARNATION=id+100
+local TOKEN_ARMAMENT_REINCARNATION=id+1
 function s.initial_effect(c)
 	--Special Summon "Armament Reincarnation Tokens" (Warrior/LIGHT/Level 1/ATK 500/DEF 500) up to the number of Equip Spells, and Traps with an effect that equip themselves to a monster, in your GY, then you can destroy as many cards in your Spell & Trap Zone as possible, including this card, then Set as many Equip Spells, and Traps with an effect that equip themselves to a monster, as possible from your GY
 	local e1=Effect.CreateEffect(c)

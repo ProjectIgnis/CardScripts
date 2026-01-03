@@ -601,8 +601,8 @@ SET_HECAHANDS                     = 0x1cc
 SET_ENNEACRAFT                    = 0x1cd
 SET_KEWL_TUNE                     = 0x1ce
 SET_ECCLESIA                      = 0x1cf
+SET_END_OF_THE_WORLD              = 0x1d1
 --Released but the official English name is unconfirmed
 SET_ELVENNOTES                    = 0x1d0
 --Pre-release archetypes
-SET_END_OF_THE_WORLD              = 0x1d1
 SET_FAIRY_TAIL                    = 0x1d2

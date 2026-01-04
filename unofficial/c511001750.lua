@@ -70,6 +70,9 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp,c,og)
 					Duel.MoveToField(rc,tp,tp,LOCATION_FZONE,rc:GetPreviousPosition(),true)
 				else
 					Duel.MoveToField(rc,tp,tp,rc:GetPreviousLocation(),rc:GetPreviousPosition(),true)
+					if (rc:IsNormalSpell() or rc:IsQuickplaySpell() or rc:IsNormalTrap() or rc:IsCounterTrap()) and rc:IsPosition(POS_FACEUP) and not rc:IsHasEffect(EFFECT_REMAIN_FIELD) then
+						Duel.SendtoGrave(rc,REASON_RULE)
+					end
 				end
 			end
 		end

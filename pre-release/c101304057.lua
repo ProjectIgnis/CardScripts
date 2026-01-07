@@ -51,7 +51,7 @@ function s.revealfilter(c,e,tp)
 		and Duel.IsExistingMatchingCard(s.thspfilter,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetCode(),Duel.GetLocationCount(tp,LOCATION_MZONE)>0)
 end
 function s.thspfilter(c,e,tp,code,mmz_chk)
-	return c:ListsCode(code) and (c:IsAbleToHand() or (mmz_chk and c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
+	return c:ListsCode(code) and c:IsMonster() and (c:IsAbleToHand() or (mmz_chk and c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
 end
 function s.thsptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,LOCATION_HAND,0,1,nil,nil,POS_FACEDOWN) end

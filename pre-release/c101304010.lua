@@ -62,7 +62,8 @@ function s.tdfilter(c)
 	return c:IsType(TYPES_FSX) and c:IsAbleToExtraAsCost()
 end
 function s.tdrescon(sg,e,tp,mg)
-	return Duel.GetMZoneCount(tp,sg)>0 and sg:GetBitwiseOr(Card.GetType)&TYPES_FSX==TYPES_FSX
+	return sg:GetBitwiseOr(Card.GetType)&TYPES_FSX==TYPES_FSX
+		and (e:GetHandler():IsLocation(LOCATION_GRAVE) and Duel.GetMZoneCount(tp,sg)>0 or Duel.GetLocationCountFromEx(tp,tp,sg,e:GetHandler())>0)
 end
 function s.selfspcon(e,c)
 	if c==nil then return true end

@@ -29,10 +29,10 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_POWER_PATRON}
 function s.tgfilter(c)
-	return c:IsSetCard(SET_POWER_PATRON) and c:IsAbleToGrave()
+	return c:IsSetCard(SET_POWER_PATRON) and c:IsMonster() and c:IsAbleToGrave()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK|LOCATION_EXTRA,0,1,nil,tp,false) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK|LOCATION_EXTRA,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK|LOCATION_EXTRA)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end

@@ -606,3 +606,4 @@ SET_END_OF_THE_WORLD              = 0x1d1
 SET_ELVENNOTES                    = 0x1d0
 --Pre-release archetypes
 SET_FAIRY_TAIL                    = 0x1d2
+SET_CLOWN_CREW                    = 0x1d3

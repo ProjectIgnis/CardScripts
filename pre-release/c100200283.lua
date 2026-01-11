@@ -42,6 +42,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(tp,sc2)
 		table.insert(tp_codes,sc1:GetCode())
 		table.insert(opp_codes,sc2:GetCode())
+		sc1:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
+		sc2:RegisterFlagEffect(id+100,RESETS_STANDARD_PHASE_END,0,1)
 		atk1=sc1:GetAttack()
 		atk2=sc2:GetAttack()
 		if atk1>atk2 then
@@ -65,8 +67,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 				Duel.Damage(destroy_card:GetPreviousControler(),500,REASON_EFFECT)
 			end
 		end
-		sc1:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
-		sc2:RegisterFlagEffect(id+100,RESETS_STANDARD_PHASE_END,0,1)
 	end
 	--Each player cannot activate the effects of the monster they revealed and monsters with the same name as it for the rest of this turn
 	local e1=Effect.CreateEffect(e:GetHandler())

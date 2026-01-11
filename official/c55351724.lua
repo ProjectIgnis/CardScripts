@@ -48,5 +48,5 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.aclimit(e,re,tp)
-	return re:GetHandler():IsCode(e:GetLabel()))
+	return re:GetHandler():IsCode(e:GetLabel())
 end

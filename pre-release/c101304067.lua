@@ -34,7 +34,7 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 		{b2,aux.Stringid(id,2)})
 	e:SetLabel(op)
 	if op==1 then
-		e:SetCategory(0)
+		e:SetCategory(CATEGORY_SET)
 	elseif op==2 then
 		e:SetCategory(CATEGORY_RELEASE+CATEGORY_SPECIAL_SUMMON)
 		Ritual.Target(ritual_params)(e,tp,eg,ep,ev,re,r,rp,1)

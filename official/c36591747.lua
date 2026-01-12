@@ -7,7 +7,7 @@ function s.initial_effect(c)
 	aux.AddAttractionEquipProc(c)
 	--You: Change battle position and Set 1 "Attraction" Trap from your GY
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_POSITION)
+	e1:SetCategory(CATEGORY_POSITION+CATEGORY_SET)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_SZONE)

@@ -20,6 +20,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	--Set itself from GY
 	local e3=Effect.CreateEffect(c)
+	e3:SetCategory(CATEGORY_SET)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetRange(LOCATION_GRAVE)
 	e3:SetCode(EVENT_PHASE+PHASE_END)

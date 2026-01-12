@@ -5,6 +5,7 @@ function s.initial_effect(c)
 	--Your opponent declares either Continuous Spell or Continuous Trap, then you Set 1 card of that type from your Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetCategory(CATEGORY_SET)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
 	e1:SetCondition(function(e,tp) return e:GetHandler():IsTributeSummoned() and not Duel.IsExistingMatchingCard(Card.IsSpellTrap,tp,LOCATION_ONFIELD,0,1,nil) end)

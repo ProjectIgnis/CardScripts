@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	--Once per turn, during your opponent's Main Phase, you can (Quick Effect): Immediately after this effect resolves, Tribute Summon 1 monster
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,2))
-	e2:SetCategory(CATEGORY_SUMMON)
+	e2:SetCategory(CATEGORY_SUMMON+CATEGORY_SET)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_MZONE)

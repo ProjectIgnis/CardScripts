@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	--Set 1 "R.B." Spell/Trap from your Deck or GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
-	e2:SetCategory(CATEGORY_LEAVE_GRAVE)
+	e2:SetCategory(CATEGORY_LEAVE_GRAVE+CATEGORY_SET)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,id)

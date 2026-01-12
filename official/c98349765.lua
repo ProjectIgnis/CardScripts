@@ -65,7 +65,7 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		if not cost_skip then Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE|PHASE_END,0,1) end
 		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 	elseif op==3 then
-		e:SetCategory(0)
+		e:SetCategory(CATEGORY_SET)
 		e:SetProperty(0)
 		if not cost_skip then Duel.RegisterFlagEffect(tp,id+2,RESET_PHASE|PHASE_END,0,1) end
 	end

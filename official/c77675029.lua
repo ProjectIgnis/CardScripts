@@ -9,6 +9,7 @@ function s.initial_effect(c)
 	--Apply a "during the End Phase of this turn, Set 1 "Exosister" Spell/Trap from your Deck, GY, or banishment" effect
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetCategory(CATEGORY_SET)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)

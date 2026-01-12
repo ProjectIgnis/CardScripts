@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	--Set itself from GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,2))
-	e2:SetCategory(CATEGORY_DESTROY)
+	e2:SetCategory(CATEGORY_DESTROY+CATEGORY_SET)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCode(EVENT_FREE_CHAIN)

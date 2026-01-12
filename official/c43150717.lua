@@ -48,7 +48,7 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return b1 or b2 end
 	if b1 then
 		e:SetLabel(1)
-		e:SetCategory(0)
+		e:SetCategory(CATEGORY_SET)
 		Duel.Hint(HINT_OPSELECTED,1-tp,aux.Stringid(id,1))
 	elseif b2 then
 		e:SetLabel(2)

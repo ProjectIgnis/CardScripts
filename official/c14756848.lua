@@ -22,7 +22,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	--destroy
 	local e3=Effect.CreateEffect(c)
-	e3:SetCategory(CATEGORY_DESTROY)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCost(Cost.SelfTribute)
@@ -75,9 +74,11 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 	e:SetLabel(sel)
 	if sel==1 then
+		e:SetCategory(CATEGORY_DESTROY+CATEGORY_SET)
 		local g=Duel.GetMatchingGroup(s.desfilter1,tp,0,LOCATION_SZONE,nil)
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 	else
+		e:SetCategory(CATEGORY_DESTROY)
 		local g=Duel.GetFieldGroup(tp,0,LOCATION_PZONE)
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 	end

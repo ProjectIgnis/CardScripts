@@ -33,6 +33,7 @@ function s.initial_effect(c)
 	--Set 1 "Necrovalley" Spell/Trap
 	local e5=Effect.CreateEffect(c)
 	e5:SetDescription(aux.Stringid(id,1))
+	e5:SetCategory(CATEGORY_SET)
 	e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e5:SetCode(EVENT_TO_GRAVE)
 	e5:SetProperty(EFFECT_FLAG_DELAY)

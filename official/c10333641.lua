@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	--Set 1 Spell/Trap frm the opponent's GY to your field
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
-	e2:SetCategory(CATEGORY_LEAVE_GRAVE)
+	e2:SetCategory(CATEGORY_LEAVE_GRAVE+CATEGORY_SET)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCode(EVENT_FREE_CHAIN)

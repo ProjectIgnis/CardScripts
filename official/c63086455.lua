@@ -6,7 +6,7 @@ function s.initial_effect(c)
 	--Send 1 card to the GY and Set 1 card from the GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetCategory(CATEGORY_TOGRAVE+CATEGORY_LEAVE_GRAVE)
+	e1:SetCategory(CATEGORY_TOGRAVE+CATEGORY_LEAVE_GRAVE+CATEGORY_SET)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_FREE_CHAIN)

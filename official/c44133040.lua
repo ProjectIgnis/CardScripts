@@ -37,6 +37,7 @@ function s.initial_effect(c)
 	--Set itself from the GY
 	local e6=Effect.CreateEffect(c)
 	e6:SetDescription(aux.Stringid(id,1))
+	e6:SetCategory(CATEGORY_SET)
 	e6:SetType(EFFECT_TYPE_IGNITION)
 	e6:SetRange(LOCATION_GRAVE)
 	e6:SetCountLimit(1,id)

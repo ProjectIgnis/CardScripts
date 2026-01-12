@@ -41,7 +41,7 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,tp,0)
 		Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,PLAYER_EITHER,LOCATION_MZONE)
 	elseif op==2 then
-		e:SetCategory(0)
+		e:SetCategory(CATEGORY_SET)
 	end
 end
 function s.effop(e,tp,eg,ep,ev,re,r,rp)

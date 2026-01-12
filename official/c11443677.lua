@@ -33,6 +33,7 @@ function s.initial_effect(c)
 	--Set Trap from GY
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,0))
+	e4:SetCategory(CATEGORY_SET)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e4:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e4:SetCode(EVENT_DAMAGE_STEP_END)

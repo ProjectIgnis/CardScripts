@@ -58,7 +58,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		e:SetCategory(0)
 		Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE|PHASE_END,0,1)
 	elseif op==3 then
-		e:SetCategory(0)
+		e:SetCategory(CATEGORY_SET)
 		Duel.RegisterFlagEffect(tp,id+2,RESET_PHASE|PHASE_END,0,1)
 	end
 end

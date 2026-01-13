@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	--FLIP: Special Summon 1 Flip monster from Deck.
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_SET)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_FLIP+EFFECT_TYPE_TRIGGER_O)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCountLimit(1,id)
@@ -66,7 +66,9 @@ function s.postg(e,tp,eg,ep,ev,re,r,rp,chk)
 		{b1,aux.Stringid(id,2)},
 		{b2,aux.Stringid(id,3)})
 	e:SetLabel(op)
+	local category=op==1 and CATEGORY_POSITION or (CATEGORY_POSITION+CATEGORY_SET)
 	local pos=op==1 and POS_FACEUP_DEFENSE or POS_FACEDOWN_DEFENSE
+	e:SetCategory(category)
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,nil,1,tp,pos)
 end
 function s.posop(e,tp,eg,ep,ev,re,r,rp)

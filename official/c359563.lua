@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	--pos
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetCategory(CATEGORY_POSITION)
+	e1:SetCategory(CATEGORY_POSITION+CATEGORY_SET)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetRange(LOCATION_MZONE)
@@ -23,7 +23,7 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return eg:IsExists(s.filter,1,nil,nil,tp) end
 	Duel.SetTargetCard(eg)
-	Duel.SetOperationInfo(0,CATEGORY_POSITION,eg,#eg,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_POSITION,eg,#eg,tp,POS_FACEDOWN_DEFENSE)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(s.filter,nil,e,tp)

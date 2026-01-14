@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	--Change positions and negate activated effect
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
-	e2:SetCategory(CATEGORY_POSITION+CATEGORY_DISABLE)
+	e2:SetCategory(CATEGORY_POSITION+CATEGORY_DISABLE+CATEGORY_SET)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCode(EVENT_CHAINING)
@@ -56,7 +56,7 @@ function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingTarget(Card.IsPosition,tp,LOCATION_MZONE,0,1,nil,POS_FACEDOWN_DEFENSE)	and c:IsCanTurnSet() end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
 	local tc=Duel.SelectTarget(tp,Card.IsPosition,tp,LOCATION_MZONE,0,1,1,nil,POS_FACEDOWN_DEFENSE):GetFirst()
-	Duel.SetOperationInfo(0,CATEGORY_POSITION,Group.FromCards(c,tc),1,tp,0)
+	Duel.SetOperationInfo(0,CATEGORY_POSITION,Group.FromCards(c,tc),1,tp,POS_FACEUP_DEFENSE|POS_FACEDOWN_DEFENSE)
 	if tc:IsSetCard(SET_NINJA) and not tc:IsCode(id) then
 		Duel.SetOperationInfo(0,CATEGORY_DISABLE,eg,1,0,0)
 	end

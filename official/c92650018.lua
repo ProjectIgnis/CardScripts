@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	--Your opponent: Change the equipped monster to face-down Defense Position.
 	local e2=e1:Clone()
 	e2:SetProperty(0)
-	e2:SetCategory(CATEGORY_POSITION)
+	e2:SetCategory(CATEGORY_POSITION+CATEGORY_SET)
 	e2:SetCondition(aux.AttractionEquipCon(false))
 	e2:SetTarget(s.postg)
 	e2:SetOperation(s.posop)
@@ -58,7 +58,7 @@ end
 function s.postg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=e:GetHandler():GetEquipTarget()
 	if chk==0 then return tc and tc:IsCanTurnSet() end
-	Duel.SetOperationInfo(0,CATEGORY_POSITION,tc,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_POSITION,tc,1,tp,POS_FACEDOWN_DEFENSE)
 end
 function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetHandler():GetEquipTarget()

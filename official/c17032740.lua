@@ -6,7 +6,7 @@ function s.initial_effect(c)
 	--Fusion Summon Procedure
 	Fusion.AddProcMix(c,true,true,CARD_NEOS,43237273,17732278)
 	Fusion.AddContactProc(c,s.contactfil,s.contactop,s.splimit)
-	aux.EnableNeosReturn(c,nil,nil,s.retop)
+	aux.EnableNeosReturn(c,CATEGORY_POSITION+CATEGORY_SET,s.retinfo,s.retop)
 	--Toss a coin 3 times and apply the appropriate effect
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,1))
@@ -31,6 +31,9 @@ function s.contactop(g,tp)
 end
 function s.splimit(e,se,sp,st)
 	return not e:GetHandler():IsLocation(LOCATION_EXTRA)
+end
+function s.retinfo(e,tp,eg,ep,ev,re,r,rp)
+	Duel.SetOperationInfo(0,CATEGORY_POSITION,nil,1,PLAYER_ALL,POS_FACEDOWN_DEFENSE)
 end
 function s.retop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,nil)

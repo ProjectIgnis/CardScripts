@@ -4,6 +4,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
 	local e1=Ritual.CreateProc({handler=c,lvtype=RITPROC_EQUAL,filter=s.cfilter,extrafil=s.extrafil,matfilter=s.filter,forcedselection=s.ritcheck,customoperation=s.customoperation})
+	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_RELEASE+CATEGORY_SET)
 	e1:SetTarget(s.registerloccount(e1:GetTarget()))
 	e1:SetOperation(s.registerloccount(e1:GetOperation()))
 	c:RegisterEffect(e1)

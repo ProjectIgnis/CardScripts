@@ -41,7 +41,7 @@ end
 s.listed_names={68231287} --"Jupiter the Power Patron of Destruction"
 s.listed_series={SET_POWER_PATRON,SET_DOOMZ}
 function s.pdesfilter(c)
-	return c:IsSetCard({SET_POWER_PATRON,SET_DOOMZ}) and (c:IsFaceup() or c:IsLocation(LOCATION_HAND))
+	return c:IsSetCard({SET_POWER_PATRON,SET_DOOMZ}) and (c:IsFaceup() or c:IsLocation(LOCATION_HAND)) and c:IsMonster()
 end
 function s.pdestg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.pdesfilter,tp,LOCATION_MZONE|LOCATION_HAND,0,1,nil) end

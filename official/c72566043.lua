@@ -32,6 +32,7 @@ function s.initial_effect(c)
 	--Set 1 Trap Card from either GY
 	local e5=Effect.CreateEffect(c)
 	e5:SetDescription(aux.Stringid(id,0))
+	e5:SetCategory(CATEGORY_SET)
 	e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e5:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
 	e5:SetCode(EVENT_DESTROYED)

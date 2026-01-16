@@ -32,6 +32,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e0)
 	--set
 	local e4=Effect.CreateEffect(c)
+	e4:SetCategory(CATEGORY_SET)
 	e4:SetType(EFFECT_TYPE_IGNITION)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetCountLimit(1)

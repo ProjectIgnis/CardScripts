@@ -38,6 +38,7 @@ function s.initial_effect(c)
 	--Set this card if it is destroyed by the effect of "Mystical Space Typhoon"
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
+	e3:SetCategory(CATEGORY_SET)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetProperty(EFFECT_FLAG_DELAY)
 	e3:SetCode(EVENT_DESTROYED)

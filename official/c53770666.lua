@@ -7,7 +7,7 @@ function s.initial_effect(c)
 	--Special Summon "Armament Reincarnation Tokens" (Warrior/LIGHT/Level 1/ATK 500/DEF 500) up to the number of Equip Spells, and Traps with an effect that equip themselves to a monster, in your GY, then you can destroy as many cards in your Spell & Trap Zone as possible, including this card, then Set as many Equip Spells, and Traps with an effect that equip themselves to a monster, as possible from your GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN+CATEGORY_DESTROY)
+	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN+CATEGORY_DESTROY+CATEGORY_SET)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetTarget(s.target)

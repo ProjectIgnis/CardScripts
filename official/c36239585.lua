@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	--Change itself to face-down defense position
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
-	e2:SetCategory(CATEGORY_POSITION)
+	e2:SetCategory(CATEGORY_POSITION+CATEGORY_SET)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetTarget(s.postg)
@@ -36,7 +36,7 @@ function s.postg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsCanTurnSet() and c:GetFlagEffect(id)==0 end
 	c:RegisterFlagEffect(id,RESET_EVENT|(RESETS_STANDARD&~RESET_TURN_SET)|RESET_PHASE|PHASE_END,0,1)
-	Duel.SetOperationInfo(0,CATEGORY_POSITION,c,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_POSITION,c,1,tp,POS_FACEDOWN_DEFENSE)
 end
 function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -59,12 +59,13 @@ function s.settg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
 	local tc=Duel.SelectTarget(tp,s.setfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp):GetFirst()
 	if tc:IsMonster() then
-		e:SetCategory(CATEGORY_SPECIAL_SUMMON)
+		e:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_SET)
 		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,tc,1,tp,LOCATION_GRAVE)
 	elseif tc:IsSpellTrap() then
-		e:SetCategory(0)
+		e:SetCategory(CATEGORY_SET)
 		Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,tc,1,tp,LOCATION_GRAVE)
 	end
+	Duel.SetPossibleOperationInfo(0,CATEGORY_POSITION,nil,1,1-tp,POS_FACEDOWN_DEFENSE)
 end
 function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()

@@ -6,7 +6,7 @@ function s.initial_effect(c)
 	--Set 1 Spell/Trap from your hand or GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetCategory(CATEGORY_LEAVE_GRAVE)
+	e1:SetCategory(CATEGORY_LEAVE_GRAVE+CATEGORY_SET)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_TO_GRAVE)

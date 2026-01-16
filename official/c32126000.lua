@@ -6,6 +6,7 @@ function s.initial_effect(c)
 	--Set 1 Trap from your Deck with an effect that equips itself to a monster
 	local e1a=Effect.CreateEffect(c)
 	e1a:SetDescription(aux.Stringid(id,0))
+	e1a:SetCategory(CATEGORY_SET)
 	e1a:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1a:SetProperty(EFFECT_FLAG_DELAY)
 	e1a:SetCode(EVENT_SUMMON_SUCCESS)

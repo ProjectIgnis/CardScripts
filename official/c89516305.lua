@@ -50,10 +50,10 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEDOWN)
 		Duel.SelectTarget(tp,Card.IsFacedown,tp,0,LOCATION_SZONE,1,1,nil)
 	elseif op==2 then
-		e:SetCategory(CATEGORY_POSITION)
+		e:SetCategory(CATEGORY_POSITION+CATEGORY_SET)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
 		local g=Duel.SelectTarget(tp,s.setfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
-		Duel.SetOperationInfo(0,CATEGORY_POSITION,g,1,tp,0)
+		Duel.SetOperationInfo(0,CATEGORY_POSITION,g,1,tp,POS_FACEDOWN_DEFENSE)
 	elseif op==3 then
 		e:SetCategory(CATEGORY_ATKCHANGE)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATKDEF)

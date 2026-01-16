@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	--If this card is sent to the GY as Link Material: You can Set 1 Quick-Play Spell or Normal Trap from your GY that was sent there this turn
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
-	e3:SetCategory(CATEGORY_LEAVE_GRAVE)
+	e3:SetCategory(CATEGORY_LEAVE_GRAVE+CATEGORY_SET)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetProperty(EFFECT_FLAG_DELAY)
 	e3:SetCode(EVENT_BE_MATERIAL)

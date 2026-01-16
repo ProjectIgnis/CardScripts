@@ -22,6 +22,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	--Set 1 "Attraction" Trap that is banished or in the GY
 	local e3=Effect.CreateEffect(c)
+	e3:SetCategory(CATEGORY_SET)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_PHASE+PHASE_END)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)

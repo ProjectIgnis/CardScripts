@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	--Activate 1 of these effects
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
-	e2:SetCategory(CATEGORY_SUMMON)
+	e2:SetCategory(CATEGORY_SUMMON+CATEGORY_SET)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetProperty(EFFECT_FLAG_BOTH_SIDE)
 	e2:SetRange(LOCATION_FZONE)

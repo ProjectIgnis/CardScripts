@@ -1,6 +1,5 @@
 --ティンダングル・イントルーダー
 --Tindangle Intruder
---
 local s,id=GetID()
 function s.initial_effect(c)
 	--flip
@@ -26,7 +25,7 @@ function s.initial_effect(c)
 	--special summon
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
-	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e3:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_SET)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e3:SetProperty(EFFECT_FLAG_DELAY)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)

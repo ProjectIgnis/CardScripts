@@ -41,7 +41,7 @@ function s.initial_effect(c)
 	--Special Summon 1 monster from GY in face-down Defense Position
 	local e6=Effect.CreateEffect(c)
 	e6:SetDescription(aux.Stringid(id,0))
-	e6:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e6:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_SET)
 	e6:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e6:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
 	e6:SetCode(EVENT_DESTROYED)

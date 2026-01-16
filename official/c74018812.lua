@@ -6,6 +6,7 @@ function s.initial_effect(c)
 	--Set 1 "Labrynth" Spell/Trap from the hand or deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetCategory(CATEGORY_SET)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_HAND|LOCATION_MZONE)

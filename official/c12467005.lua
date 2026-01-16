@@ -28,8 +28,8 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if op==0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
 		local g=Duel.SelectTarget(tp,aux.FaceupFilter(Card.IsCanTurnSet),tp,0,LOCATION_MZONE,1,1,nil)
-		e:SetCategory(CATEGORY_POSITION)
-		Duel.SetOperationInfo(0,CATEGORY_POSITION,g,1,0,0)
+		e:SetCategory(CATEGORY_POSITION+CATEGORY_SET)
+		Duel.SetOperationInfo(0,CATEGORY_POSITION,g,1,tp,POS_FACEDOWN_DEFENSE)
 	else
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 		local g=Duel.SelectTarget(tp,s.filter2,tp,0,LOCATION_ONFIELD,1,1,nil)

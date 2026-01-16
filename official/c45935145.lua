@@ -62,11 +62,19 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	if chk==0 then return true end
 	local op=e:GetLabel()
-	local categ=CATEGORY_TODECK
 	local tc=Duel.GetFirstTarget()
-	if op==2 then categ=tc:IsMonster() and CATEGORY_SPECIAL_SUMMON or CATEGORY_LEAVE_GRAVE end
-	e:SetCategory(categ)
-	Duel.SetOperationInfo(0,categ,tc,1,tp,0)
+	if op==1 then
+		e:SetCategory(CATEGORY_TODECK)
+		Duel.SetOperationInfo(0,CATEGORY_TODECK,tc,1,tp,0)
+	elseif op==2 then
+		local categ=CATEGORY_SET|CATEGORY_LEAVE_GRAVE
+		if tc:IsMonster() then
+			e:SetCategory(CATEGORY_SPECIAL_SUMMON|categ)
+			Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,tc,1,tp,0)
+		else
+			e:SetCategory(categ)
+		end
+	end
 end
 function s.effop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()

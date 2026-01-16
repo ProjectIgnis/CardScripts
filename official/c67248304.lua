@@ -6,7 +6,7 @@ function s.initial_effect(c)
 	--Change as many other monsters to face-down defense
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetCategory(CATEGORY_POSITION+CATEGORY_TOHAND)
+	e1:SetCategory(CATEGORY_POSITION+CATEGORY_TOHAND+CATEGORY_SET)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_FLIP)
 	e1:SetCountLimit(1,id)
 	e1:SetTarget(s.target)
@@ -17,7 +17,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local fdg=Duel.GetMatchingGroup(Card.IsCanTurnSet,tp,LOCATION_MZONE,LOCATION_MZONE,e:GetHandler())
 	local thg=Duel.GetMatchingGroup(aux.AND(Card.IsAbleToHand,aux.FaceupFilter(Card.IsSpellTrap)),tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
-	Duel.SetOperationInfo(0,CATEGORY_POSITION,fdg,#fdg,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_POSITION,fdg,#fdg,tp,POS_FACEDOWN_DEFENSE)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,thg,#thg,0,0)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)

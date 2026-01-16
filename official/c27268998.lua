@@ -7,7 +7,7 @@ function s.initial_effect(c)
 	--Set 1 "Metalmorph" Trap from your Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetCategory(CATEGORY_TODECK)
+	e1:SetCategory(CATEGORY_TODECK+CATEGORY_SET)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,id)

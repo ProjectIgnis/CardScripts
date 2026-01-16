@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	--Special Summon 1 monster from your hand in face-down Defense Position
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
-	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e3:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_SET)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_HAND)
 	e3:SetCost(Cost.AND(Cost.SelfReveal,s.spcost))
@@ -52,7 +52,7 @@ function s.initial_effect(c)
 	--Change all monsters your opponent controls to face-down Defense Position
 	local e5=Effect.CreateEffect(c)
 	e5:SetDescription(aux.Stringid(id,3))
-	e5:SetCategory(CATEGORY_POSITION)
+	e5:SetCategory(CATEGORY_POSITION+CATEGORY_SET)
 	e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e5:SetCode(EVENT_FLIP)
 	e5:SetTarget(s.postg)
@@ -145,7 +145,7 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.postg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_POSITION,nil,1,1-tp,LOCATION_MZONE)
+	Duel.SetOperationInfo(0,CATEGORY_POSITION,nil,1,1-tp,POS_FACEDOWN_DEFENSE)
 end
 function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsCanTurnSet,tp,0,LOCATION_MZONE,nil)

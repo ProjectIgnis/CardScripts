@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	--Flip opponent monsters face-down
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
-	e3:SetCategory(CATEGORY_POSITION)
+	e3:SetCategory(CATEGORY_POSITION+CATEGORY_SET)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetRange(LOCATION_MZONE)
@@ -74,7 +74,7 @@ end
 function s.fdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.fdfilter,tp,0,LOCATION_MZONE,nil)
 	if chk==0 then return #g>0 end
-	Duel.SetOperationInfo(0,CATEGORY_POSITION,g,#g,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_POSITION,g,#g,tp,POS_FACEDOWN_DEFENSE)
 end
 function s.fdop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.fdfilter,tp,0,LOCATION_MZONE,nil)

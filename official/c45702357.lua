@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	--Change this card, also any monsters in its column, to face-down Defense Position
 	local e2a=Effect.CreateEffect(c)
 	e2a:SetDescription(aux.Stringid(id,1))
-	e2a:SetCategory(CATEGORY_POSITION)
+	e2a:SetCategory(CATEGORY_POSITION+CATEGORY_SET)
 	e2a:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e2a:SetCode(EVENT_SUMMON_SUCCESS)
 	e2a:SetCountLimit(1,{id,1})
@@ -41,7 +41,7 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.postg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_POSITION,nil,1,PLAYER_ALL,LOCATION_MZONE)
+	Duel.SetOperationInfo(0,CATEGORY_POSITION,nil,1,PLAYER_ALL,POS_FACEDOWN_DEFENSE)
 end
 function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

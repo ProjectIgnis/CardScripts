@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Normal Summon/Set
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_SUMMON)
+	e1:SetCategory(CATEGORY_SUMMON+CATEGORY_SET)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCondition(s.condition)

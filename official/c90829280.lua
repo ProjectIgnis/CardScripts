@@ -38,7 +38,7 @@ function s.initial_effect(c)
 	--Add 1 Spell/Trap that mentions "Yubel" to the hand or Set it to the field
 	local e5=Effect.CreateEffect(c)
 	e5:SetDescription(aux.Stringid(id,2))
-	e5:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
+	e5:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_SET)
 	e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e5:SetProperty(EFFECT_FLAG_DELAY)
 	e5:SetCode(EVENT_SPSUMMON_SUCCESS)

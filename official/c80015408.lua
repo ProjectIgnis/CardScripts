@@ -74,11 +74,11 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 		{b2,aux.Stringid(id,3)})
 	e:SetLabel(op)
 	if op==1 then
-		e:SetCategory(CATEGORY_SPECIAL_SUMMON)
+		e:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_SET)
 		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 	elseif op==2 then
 		e:SetCategory(CATEGORY_POSITION)
-		Duel.SetOperationInfo(0,CATEGORY_POSITION,nil,1,tp,LOCATION_MZONE)
+		Duel.SetOperationInfo(0,CATEGORY_POSITION,nil,1,tp,POS_FACEUP_DEFENSE)
 	end
 end
 function s.effop(e,tp,eg,ep,ev,re,r,rp)

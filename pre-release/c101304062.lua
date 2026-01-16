@@ -17,6 +17,7 @@ function s.initial_effect(c)
 	--Set this card, but it cannot be activated unless you control a "Fairy Tail" monster
 	local e2a=Effect.CreateEffect(c)
 	e2a:SetDescription(aux.Stringid(id,1))
+	e2a:SetCategory(CATEGORY_SET)
 	e2a:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2a:SetProperty(EFFECT_FLAG_DELAY)
 	e2a:SetCode(EVENT_REMOVE)

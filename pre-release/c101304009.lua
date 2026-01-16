@@ -64,6 +64,7 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 		e:SetCategory(CATEGORY_COUNTER)	
 		Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,1,tp,COUNTER_PREDATOR)
 	elseif op==2 then
+		e:SetCategory(CATEGORY_SET)
 		Duel.SetPossibleOperationInfo(0,CATEGORY_LEAVE_GRAVE,nil,1,tp,0)
 	end
 end

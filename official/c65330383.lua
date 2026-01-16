@@ -53,7 +53,7 @@ function s.settg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	else
 		e:SetLabel(0)
 	end
-	local cat=0
+	local cat=CATEGORY_SET
 	if e:GetLabel()==1 then cat=cat+CATEGORY_DRAW end
 	e:SetCategory(cat)
 end

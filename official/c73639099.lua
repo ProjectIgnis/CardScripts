@@ -31,6 +31,7 @@ function s.initial_effect(c)
 	--Set 1 "Trap Hole" normal trap card from deck, optional trigger effect
 	local e5=Effect.CreateEffect(c)
 	e5:SetDescription(aux.Stringid(id,1))
+	e5:SetCategory(CATEGORY_SET)
 	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e5:SetCode(EVENT_CHAINING)
 	e5:SetProperty(EFFECT_FLAG_DELAY)

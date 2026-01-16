@@ -6,7 +6,7 @@ function s.initial_effect(c)
 	--Negate the activation of an opponent's Spell/Trap Card, and if you do, destroy it
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,1))
-	e1:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
+	e1:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY+CATEGORY_SET)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_CHAINING)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)

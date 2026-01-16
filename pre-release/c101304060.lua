@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	--During the End Phase: You can draw cards equal to the number of monster card types (Ritual, Fusion, Synchro, Xyz, Pendulum, Link) Tributed this turn, then you can Set 1 Spell/Trap from your hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
-	e2:SetCategory(CATEGORY_DRAW)
+	e2:SetCategory(CATEGORY_DRAW+CATEGORY_SET)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetCode(EVENT_PHASE+PHASE_END)

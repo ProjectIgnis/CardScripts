@@ -49,7 +49,7 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.SetOperationInfo(0,CATEGORY_TOEXTRA,nil,1,PLAYER_ALL,LOCATION_MZONE|LOCATION_GRAVE)
 	elseif op==2 then
 		Duel.RegisterFlagEffect(tp,id+100,RESET_PHASE|PHASE_END,0,1)
-		e:SetCategory(0)
+		e:SetCategory(CATEGORY_SET)
 	end
 end
 function s.effop(e,tp,eg,ep,ev,re,r,rp)

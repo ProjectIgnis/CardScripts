@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	--Change position
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
-	e2:SetCategory(CATEGORY_TOGRAVE+CATEGORY_POSITION)
+	e2:SetCategory(CATEGORY_TOGRAVE+CATEGORY_POSITION+CATEGORY_SET)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTarget(s.postg)
@@ -38,8 +38,8 @@ end
 function s.postg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_HAND,0,1,nil,tp) and 
 		Duel.IsExistingMatchingCard(s.posfilter,tp,LOCATION_MZONE,0,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,0,LOCATION_HAND)
-	Duel.SetOperationInfo(0,CATEGORY_POSITION,nil,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_HAND)
+	Duel.SetOperationInfo(0,CATEGORY_POSITION,nil,1,tp,POS_FACEUP_ATTACK|POS_FACEDOWN_DEFENSE)
 end
 function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end

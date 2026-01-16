@@ -4,7 +4,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--When opponent summons a monster(s), change it to face-down defense position
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_POSITION)
+	e1:SetCategory(CATEGORY_POSITION+CATEGORY_SET)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
 	e1:SetTarget(s.target)
@@ -25,11 +25,13 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return eg and eg:IsExists(s.filter,1,nil,tp) end
 	local g=eg:Filter(s.filter,nil,tp)
 	Duel.SetTargetCard(g)
+	Duel.SetOperationInfo(0,CATEGORY_POSITION,g,1,tp,POS_FACEDOWN_DEFENSE)
 end
 function s.target2(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=eg:GetFirst()
 	if chk==0 then return rp==1-tp and tc:IsFaceup() and tc:IsCanTurnSet() end
 	Duel.SetTargetCard(tc)
+	Duel.SetOperationInfo(0,CATEGORY_POSITION,tc,1,tp,POS_FACEDOWN_DEFENSE)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetTargetCards(e)

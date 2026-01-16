@@ -31,6 +31,11 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		{b1,aux.Stringid(id,1)},
 		{b2,aux.Stringid(id,2)})
 	e:SetLabel(op)
+	if op==1 then
+		e:SetCategory(0)
+	elseif op==2 then
+		e:SetCategory(CATEGORY_SET)
+	end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local op=e:GetLabel()

@@ -4,7 +4,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Excavate the top card of your Deck and set it if it is a Normal Trap
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_DECKDES)
+	e1:SetCategory(CATEGORY_TOGRAVE+CATEGORY_SET)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_GRAVE)
@@ -30,6 +30,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
 		and Duel.CanPlayerSetSpellTrap(tp)
 	end
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsPlayerCanDiscardDeck(tp,1) or not Duel.CanPlayerSetSpellTrap(tp) then return end

@@ -102,6 +102,7 @@ function s.applytg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	eff:SetLabel(e:GetLabel())
 	eff:SetLabelObject(e:GetLabelObject())
 	e:SetLabelObject(eff)
+	e:SetCategory(0)
 	Duel.ClearOperationInfo(0)
 end
 function s.applyop(e,tp,eg,ep,ev,re,r,rp)

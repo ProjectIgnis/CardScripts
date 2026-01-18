@@ -72,6 +72,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		end
 		e:SetLabelObject(eff)
 	end
+	e:SetCategory(CATEGORY_TOHAND)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,tc,1,tp,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)

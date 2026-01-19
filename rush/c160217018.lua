@@ -26,6 +26,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,1-tp,LOCATION_ONFIELD)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	--Requirement
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToGraveAsCost,tp,LOCATION_ONFIELD|LOCATION_HAND,0,1,1,c)
@@ -40,7 +41,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.BreakEffect()
 		Duel.Damage(1-tp,700,REASON_EFFECT)
 	end
-	local e1=Effect.CreateEffect(e:GetHandler())
+	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_ACTIVATE)

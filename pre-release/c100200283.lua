@@ -33,7 +33,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local sc1,sc2,atk1,atk2
 	local search_card=nil
 	local destroy_card=nil
+	local break_chk=false
 	for i=1,3 do
+		if break_chk then Duel.BreakEffect() end
+		break_chk=true
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
 		sc1=Duel.SelectMatchingCard(tp,s.revealfilter,tp,LOCATION_DECK,0,1,1,nil):GetFirst()
 		Duel.Hint(HINT_SELECTMSG,opp,HINTMSG_CONFIRM)
@@ -59,14 +62,19 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.ShuffleDeck(opp)
 		end
 		if search_card and destroy_card then
-			Duel.SendtoHand(search_card,nil,REASON_EFFECT)
-			local prev_ctrl=search_card:GetPreviousControler()
-			Duel.ConfirmCards(1-prev_ctrl,search_card)
-			Duel.ShuffleHand(prev_ctrl)
+			if Duel.SendtoHand(search_card,nil,REASON_EFFECT)>0 then
+				local prev_ctrl=search_card:GetPreviousControler()
+				Duel.ConfirmCards(1-prev_ctrl,search_card)
+				Duel.ShuffleHand(prev_ctrl)
+			else
+				Duel.SendtoGrave(search_card,REASON_RULE)
+			end
 			if Duel.Destroy(destroy_card,REASON_EFFECT)>0 then
 				Duel.Damage(destroy_card:GetPreviousControler(),500,REASON_EFFECT)
 			end
 		end
+		if not (Duel.IsExistingMatchingCard(s.revealfilter,tp,LOCATION_DECK,0,1,nil)
+			and Duel.IsExistingMatchingCard(s.revealfilter,tp,0,LOCATION_DECK,1,nil)) then break end
 	end
 	--Each player cannot activate the effects of the monster they revealed and monsters with the same name as it for the rest of this turn
 	local e1=Effect.CreateEffect(e:GetHandler())

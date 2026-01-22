@@ -1,6 +1,13 @@
 --Utilities to be added to the core
 
 --[[
+	'Duel.GetMatchingGroup' that also filters for 'Card.IsCanBeEffectTarget' using 'Duel.GetReasonEffect()'
+--]]
+function Duel.GetTargetGroup(filter,player,loc1,loc2,exclusion,...)
+	return Duel.GetMatchingGroup(filter,player,loc1,loc2,exclusion,...):Match(Card.IsCanBeEffectTarget,nil,Duel.GetReasonEffect())
+end
+
+--[[
 	update the "Card.IsAbleToX" functions for location changes to return false if the card is already in that location
 --]]
 local function card_isableto_update(func,loc)

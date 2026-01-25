@@ -3,7 +3,7 @@
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
-	--Apply this effect 3 times: ● Each player reveals 1 monster in their Deck, except a monster with ? ATK. Add the monster with higher ATK to the hand of the player that revealed it, also destroy the monster with lower ATK, and if you do, inflict 500 damage to the player that revealed it. If they have the same ATK, shuffle them into the Deck
+	--Apply this effect 3 times, in sequence: ● Each player reveals 1 monster in their Deck, except a monster with ? ATK. Add the monster with higher ATK to the hand of the player that revealed it, also destroy the monster with lower ATK, and if you do, inflict 500 damage to the player that revealed it. If they have the same ATK, shuffle them into the Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_DESTROY+CATEGORY_DAMAGE)
@@ -46,7 +46,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		table.insert(tp_codes,sc1:GetCode())
 		table.insert(opp_codes,sc2:GetCode())
 		sc1:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
-		sc2:RegisterFlagEffect(id+100,RESETS_STANDARD_PHASE_END,0,1)
+		sc2:RegisterFlagEffect(id+1,RESETS_STANDARD_PHASE_END,0,1)
 		atk1=sc1:GetAttack()
 		atk2=sc2:GetAttack()
 		if atk1>atk2 then
@@ -87,6 +87,6 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	local e2=e1:Clone()
-	e2:SetValue(function(e,re,tp) local rc=re:GetHandler() return re:IsMonsterEffect() and (rc:HasFlagEffect(id+100) or rc:IsCode(opp_codes)) end)
+	e2:SetValue(function(e,re,tp) local rc=re:GetHandler() return re:IsMonsterEffect() and (rc:HasFlagEffect(id+1) or rc:IsCode(opp_codes)) end)
 	Duel.RegisterEffect(e2,opp)
 end

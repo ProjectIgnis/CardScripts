@@ -141,6 +141,7 @@ FLAG_DOUBLE_TRIB_REQUIEM=160020104
 FLAG_DOUBLE_TRIB_EARTH=160021008 --Mamabot
 FLAG_DOUBLE_TRIB_OTS_OBLIVION=160022005 --OuTerverSe Needle Maker
 FLAG_DOUBLE_TRIB_ZOMBIE=160023012 --Necromaid Guard
+FLAG_DOUBLE_TRIB_INSECT=160024025 --Delirium Teega
 function Card.AddDoubleTribute(c,id,otfilter,eftg,reset,...)
 	for i,flag in ipairs{...} do
 		c:RegisterFlagEffect(flag,reset,0,1)

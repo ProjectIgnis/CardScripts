@@ -39,7 +39,7 @@ function s.indtg2(e,c)
 	return c==e:GetHandler()
 end
 function s.value(e,re,rp)
-	return nil~=re
+	return nil~=re and re:GetHandler():IsMonster()
 end
 function s.sucop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

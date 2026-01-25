@@ -34,7 +34,7 @@ function s.difflvfilter(c)
 	return c:HasLevel() and c:IsFaceup() and not c:IsLevel(c:GetOriginalLevel())
 end
 function s.tgspfilter(c,e,tp,mmz_extra_chk)
-	return c:IsRace(RACE_MACHINE) and (c:IsAbleToGrave() or (mmz_extra_chk and c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
+	return c:IsRace(RACE_MACHINE) and c:IsType(TYPE_TUNER) and (c:IsAbleToGrave() or (mmz_extra_chk and c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
 end
 function s.tgsptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local mmz_extra_chk=Duel.GetLocationCount(tp,LOCATION_MZONE)>0

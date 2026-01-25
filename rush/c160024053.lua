@@ -31,7 +31,14 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return not Duel.HasFlagEffect(tp,id)
 end
 function s.cfilter(c,...)
-	return c:IsFaceup() and not c:IsCode(...) and c:IsNotMaximumModeSide()
+    if not (c:IsFaceup() and c:IsNotMaximumModeSide()) then return false end
+    local named_mats={...}
+    for key,current_mat in pairs(named_mats) do
+        if not c:IsCode(current_mat) then
+            return true
+        end
+    end
+    return false
 end
 function s.revealfilter(c,tp)
 	return c:IsType(TYPE_FUSION) and c:IsAttribute(ATTRIBUTE_FIRE) and c:IsAttack(2900) and not c:IsPublic()
@@ -39,6 +46,9 @@ function s.revealfilter(c,tp)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.revealfilter,tp,LOCATION_EXTRA,0,1,nil,tp) end
+end
+function s.chkfilter(c,code)
+	return c:IsFaceup() and not c:IsCode(code)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
@@ -49,13 +59,15 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--To populate the table with valid declarable names
 	local announcement_filter={}
 	for _,name in pairs(fc.material) do
-		if #announcement_filter==0 then
-			table.insert(announcement_filter,name)
-			table.insert(announcement_filter,OPCODE_ISCODE)
-		else
-			table.insert(announcement_filter,name)
-			table.insert(announcement_filter,OPCODE_ISCODE)
-			table.insert(announcement_filter,OPCODE_OR)
+		if Duel.IsExistingMatchingCard(s.chkfilter,tp,LOCATION_MZONE,0,1,nil,name) then
+			if #announcement_filter==0 then
+				table.insert(announcement_filter,name)
+				table.insert(announcement_filter,OPCODE_ISCODE)
+			else
+				table.insert(announcement_filter,name)
+				table.insert(announcement_filter,OPCODE_ISCODE)
+				table.insert(announcement_filter,OPCODE_OR)
+			end
 		end
 	end
 	--Effect

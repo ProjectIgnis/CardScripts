@@ -31,8 +31,8 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
-	if Duel.NegateActivation(ev) and rc:IsRelateToEffect(re) and Duel.Destroy(eg,REASON_EFFECT)>0 and not rc:IsLocation(LOCATION_HAND|LOCATION_DECK) and aux.nvfilter(rc)
-		and rc:IsCanBeSpecialSummoned(e,0,tp,false,false) then
+	if Duel.NegateActivation(ev) and rc:IsRelateToEffect(re) and Duel.Destroy(eg,REASON_EFFECT)>0 and not rc:IsLocation(LOCATION_HAND|LOCATION_DECK)
+		and aux.nvfilter(rc) and rc:IsMonster() and rc:IsCanBeSpecialSummoned(e,0,tp,false,false) then
 		if rc:IsLocation(LOCATION_EXTRA) and Duel.GetLocationCountFromEx(tp,tp,nil,rc)<=0 then
 			return
 		elseif not rc:IsLocation(LOCATION_EXTRA) and Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then

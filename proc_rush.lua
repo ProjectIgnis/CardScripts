@@ -294,7 +294,7 @@ end
 --Utility functions for Rush
 --Returns true if a monster can get a piercing effect as per Rush rules
 function Card.CanGetPiercingRush(c)
-	if c:IsHasEffect(EFFECT_CANNOT_ATTACK) or Duel.GetTurnCount()==1 then return false end
+	if c:IsHasEffect(EFFECT_CANNOT_ATTACK) or not Duel.IsAbleToEnterBP() then return false end
 	local e=c:IsHasEffect(EFFECT_PIERCE)
 	if e==nil then return true end
     return e:GetReset()==0

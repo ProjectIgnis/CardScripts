@@ -2,7 +2,7 @@
 --Exceptional Schedule
 --scripted by pyrQ
 local s,id=GetID()
-local TOKEN_SCHEDULE=id+100
+local TOKEN_SCHEDULE=id+1
 function s.initial_effect(c)
 	--Add 1 "Special Schedule" or "Urgent Schedule" from your Deck to your hand, then you can Special Summon 1 "Schedule Token" (Machine/EARTH/Level 10/ATK 3000/DEF 3000) to your opponent's field
 	local e1=Effect.CreateEffect(c)

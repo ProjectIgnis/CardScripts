@@ -25,17 +25,17 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_CLOWN_CREW}
-s.listed_names={101304015,id} --"Clown Crew Biancaviso"
+s.listed_names={82159583,id} --"Clown Crew Biancaviso"
 function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,nil,1,true,nil,nil) end
 	local g=Duel.SelectReleaseGroupCost(tp,nil,1,1,true,nil,nil)
 	Duel.Release(g,REASON_COST)
 end
 function s.thfilter(c)
-	return (c:IsCode(101304015) or (c:IsSetCard(SET_CLOWN_CREW) and c:IsSpellTrap() and not c:IsCode(id))) and c:IsAbleToHand()
+	return (c:IsCode(82159583) or (c:IsSetCard(SET_CLOWN_CREW) and c:IsSpellTrap() and not c:IsCode(id))) and c:IsAbleToHand()
 end
 function s.rescon(sg,e,tp,mg)
-	return sg:IsExists(Card.IsCode,1,nil,101304015) and sg:IsExists(Card.IsSpellTrap,1,nil)
+	return sg:IsExists(Card.IsCode,1,nil,82159583) and sg:IsExists(Card.IsSpellTrap,1,nil)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then

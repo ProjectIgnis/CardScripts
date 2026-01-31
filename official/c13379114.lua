@@ -1,5 +1,5 @@
 --デーモンの気魄
---Archfiend's Vigor
+--Archfiend's Fervor
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

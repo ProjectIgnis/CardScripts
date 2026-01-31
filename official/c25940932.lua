@@ -1,5 +1,5 @@
 --絢嵐たる軒昂
---Radiant Typhoon Elation
+--Radiant Typhoon Ascendance
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

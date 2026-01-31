@@ -1,5 +1,5 @@
 --ＤＤＤ聖賢王アルフレッド
---D/D/D Sage King Alfred
+--D/D/D Alfred the Divine Sage King
 --Scripted by The Razgriz
 local s,id=GetID()
 function s.initial_effect(c)

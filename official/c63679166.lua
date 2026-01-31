@@ -1,5 +1,5 @@
 --スローン・オブ・デーモンズ
---Throne of Archfiends
+--Throne of the Archfiends
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

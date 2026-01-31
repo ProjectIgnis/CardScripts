@@ -1,5 +1,5 @@
 --超電導戦騎プラズマ・マグナム
---Conduction Knight Plasma Magnum
+--Conduction Warrior Plasma Magnum
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

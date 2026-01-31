@@ -1,5 +1,5 @@
 --スレット・アームド・ドラゴン
---Threat Armed Dragon
+--Fist Armed Dragon
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

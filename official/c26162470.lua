@@ -1,5 +1,5 @@
 --飛竜戦艇－ファンドラ
---Fandora, the Fearsome Flying Furtress
+--Fandora, the Flying Fighting Furtress
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

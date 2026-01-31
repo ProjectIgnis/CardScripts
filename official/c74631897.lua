@@ -1,5 +1,5 @@
 --神芸なる知恵の乙女
---Artmage Non Finito
+--Artmage Non-Finito
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

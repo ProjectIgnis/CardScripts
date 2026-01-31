@@ -1,5 +1,5 @@
 --デーモンの盤上遊戯
---Archfiend's Strategy Game
+--Archfiend Strategy
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --鎖縛竜ザレン
---Zaren the Chainbound Dragon
+--Zalen the Shackled Dragon
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

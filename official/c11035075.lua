@@ -1,5 +1,5 @@
 --死地誤算守護
---Shichigosan Shugo
+--Shichi-Go-San
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

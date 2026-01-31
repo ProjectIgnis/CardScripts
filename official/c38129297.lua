@@ -1,5 +1,5 @@
 --ダブル・トリガー
---Double Trigger
+--Double Interlock
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

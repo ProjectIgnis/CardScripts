@@ -1,5 +1,5 @@
 --天雷ノ双風神 シーナ
---Sheena the Twin Storm Deities of Divine Thunder
+--Shiina, Twin Tempests of Celestial Thunder
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

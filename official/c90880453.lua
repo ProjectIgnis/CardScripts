@@ -1,5 +1,5 @@
 --エルフェンノーツ～再邂のテルチェット～
---Elvennotes ~Reunion Tercet~
+--Elfnotes: A Plea for Help
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

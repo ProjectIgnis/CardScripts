@@ -1,5 +1,5 @@
 --蒼穹を睨めるダーク
---Dark Staring at the Blue Sky
+--Derk, Longing for the Blue Skies
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

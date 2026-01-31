@@ -1,5 +1,5 @@
 --空牙団の疾風 レクス
---Rex, Gale Fur Hire
+--Rex, Ride Fur Hire
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

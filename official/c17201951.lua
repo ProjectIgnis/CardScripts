@@ -1,5 +1,5 @@
 --フルスピード・ウォリアー
---Fullspeed Warrior
+--Full-Speed Warrior
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

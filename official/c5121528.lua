@@ -1,5 +1,5 @@
 --巨大戦艦 デリンジャー・コア
---B.E.S. Dellinger Core
+--B.E.S. Derringer Core
 --scripted by Naim
 local s,id=GetID()
 local COUNTER_BES=0x1f

@@ -1,5 +1,5 @@
 --ヴァレルロード・ＦＦ・ドラゴン
---Borreload Fatal Flare Dragon
+--Borreload Fatalflare Dragon
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

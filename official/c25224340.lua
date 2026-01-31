@@ -1,5 +1,5 @@
 --幻惑の操手
---Nightmare Hand
+--Nightmare Hands
 local s,id=GetID()
 function s.initial_effect(c)
 	--Send 1 Illusion monster from your Deck to the GY

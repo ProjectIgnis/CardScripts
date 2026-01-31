@@ -1,5 +1,5 @@
 --堕天使グルガルタ
---Darklord Gulgalta
+--Darklord Gulgolet
 --scripted by Naim
 local s,id=GetID()
 local TOKEN_DARKLORD=id+1

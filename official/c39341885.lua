@@ -1,5 +1,5 @@
 --絢嵐たる海霊ヴァルルーン
---Radiant Typhoon Varuroon, the Sea Spirit
+--Radiant Typhoon Varuroon, the Marine Eidolon
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

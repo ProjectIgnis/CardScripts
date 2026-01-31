@@ -1,5 +1,5 @@
 --耀聖の波詩ディーナ
---Elvennotes Dyina
+--Elfnote Tinia
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

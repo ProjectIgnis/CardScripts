@@ -1,5 +1,5 @@
 --Ｋ９－ＥＸ ”Ｒｉｐｐｅｒ／Ｍ”
---K9-X "Ripper/Millennia"
+--K9-X "Ripper/M"
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

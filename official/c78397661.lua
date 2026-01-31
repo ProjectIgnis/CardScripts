@@ -1,5 +1,5 @@
 --黒き竜のエクレシア
---Ecclesia of the Black Dragon
+--Ecclesia and the Dark Dragon
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

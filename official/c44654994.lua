@@ -1,5 +1,5 @@
 --アルトメギア・インパスト －奪還－
---Artmage Impact -Recapture-
+--Artmage Impasto -Recapture-
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

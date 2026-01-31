@@ -1,5 +1,5 @@
 --空牙団の奥義
---Secret Technique Fur Hire
+--Furtive Techniques Fur Hire, Fur All Your Ultimate Moves
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

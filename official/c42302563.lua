@@ -1,5 +1,5 @@
 --獄花の大燿聖ストリチア
---Elvennotes Seraphim Stlitzia
+--Elfnote Seraphim Strelitzia
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

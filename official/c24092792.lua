@@ -1,5 +1,5 @@
 --エルフェンノーツ～狂奏のラプソディア～
---Elvennotes ~Maddening Rhapsodia~
+--Elfnotes: Rhapsodia of Madness
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

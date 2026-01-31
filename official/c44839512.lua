@@ -1,5 +1,5 @@
 --超電導戦士 リニア・マグナム±
---Conduction Warrior Linear Magnum ±
+--Conduction Warrior Linear Magnum Plus Minus
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

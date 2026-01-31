@@ -1,5 +1,5 @@
 --ガンホー！スプリガンズ！
---Gung-ho! Springans!
+--Gung-Ho! Springans!
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

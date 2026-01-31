@@ -1,5 +1,5 @@
 --ナイトウィング・プリースト
---Night Wing Priestess
+--Nightwinged Cleric
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

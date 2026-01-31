@@ -1,5 +1,5 @@
 --終刻変転
---DoomZ Changer
+--DoomZ Change
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --舌先減少
---Tip of the Tongue Reduction
+--Tip of the Tinying Tongue
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

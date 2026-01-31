@@ -1,5 +1,5 @@
 --デーモンの諧謔
---Archfiend's Jest
+--Archfiend Playtime
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

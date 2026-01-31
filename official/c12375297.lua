@@ -1,5 +1,5 @@
 --燿ける聖詩の獄神精
---Elvennotes Power Patron
+--Elfnote Power Patron
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

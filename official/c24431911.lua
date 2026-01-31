@@ -1,5 +1,5 @@
 --磁石の戦士マグネット・テルスリオン
---Tellusrion the Magna Warrior
+--Tellusion the Magna Warrior
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

@@ -111,7 +111,7 @@ function s.chainlimop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
-	if not (ep==1-tp and Duel.GetCurrentChain(true)>=3) then return false end
+	if not (e:GetHandler():IsFacedown() and ep==1-tp and Duel.GetCurrentChain(true)>=3) then return false end
 	for i=1,ev do
 		local te,tgp=Duel.GetChainInfo(i,CHAININFO_TRIGGERING_EFFECT,CHAININFO_TRIGGERING_PLAYER)
 		if te and tgp==1-tp and Duel.IsChainNegatable(i) then

@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={SET_SNAKE_EYE,SET_DIABELLESTARR}
+s.listed_series={SET_SNAKE_EYE,SET_DIABELLSTAR}
 function s.cfilter(c,tp)
 	return c:IsFaceup() and c:IsAbleToGraveAsCost() and Duel.GetMZoneCount(tp,c)>0
 end
@@ -53,7 +53,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tdfilter(c)
-	return c:IsSetCard({SET_SNAKE_EYE,SET_DIABELLESTARR}) and c:IsMonster() and c:IsAbleToDeck()
+	return c:IsSetCard({SET_SNAKE_EYE,SET_DIABELLSTAR}) and c:IsMonster() and c:IsAbleToDeck()
 end
 function s.thfilter(c)
 	return c:IsLevel(1) and c:IsAttribute(ATTRIBUTE_FIRE) and c:IsAbleToHand()

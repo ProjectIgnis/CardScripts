@@ -3,7 +3,7 @@
 --scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	--(Quick Effect): You can send 1 other "Elvennotes" card from your hand or face-up field to the GY; Special Summon this card from your hand
+	--(Quick Effect): You can send 1 other "Elfnote" card from your hand or face-up field to the GY; Special Summon this card from your hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.selfspop)
 	e1:SetHintTiming(0,TIMING_STANDBY_PHASE|TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E)
 	c:RegisterEffect(e1)
-	--If this card is Normal or Special Summoned to the center Main Monster Zone: You can Special Summon 1 "Elvennotes" monster from your Deck, except "Elvennotes Regina"
+	--If this card is Normal or Special Summoned to the center Main Monster Zone: You can Special Summon 1 "Elfnote" monster from your Deck, except "Elfnote Regina"
 	local e2a=Effect.CreateEffect(c)
 	e2a:SetDescription(aux.Stringid(id,1))
 	e2a:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -45,9 +45,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={id}
-s.listed_series={SET_ELVENNOTES}
+s.listed_series={SET_ELFNOTE}
 function s.selfspcostfilter(c,tp)
-	return c:IsSetCard(SET_ELVENNOTES) and c:IsAbleToGraveAsCost() and Duel.GetMZoneCount(tp,c)>0
+	return c:IsSetCard(SET_ELFNOTE) and c:IsAbleToGraveAsCost() and Duel.GetMZoneCount(tp,c)>0
 		and (c:IsFaceup() or c:IsLocation(LOCATION_HAND))
 end
 function s.selfspcost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -69,7 +69,7 @@ function s.selfspop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(SET_ELVENNOTES) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_ELFNOTE) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

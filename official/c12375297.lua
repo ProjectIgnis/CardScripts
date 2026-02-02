@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetTarget(function(e,c) return c:IsLocation(LOCATION_EXTRA) and not c:IsSynchroMonster() end)
 	c:RegisterEffect(e1)
 	aux.addContinuousLizardCheck(c,LOCATION_MZONE,function(e,c) return not c:IsOriginalType(TYPE_SYNCHRO) end)
-	--Increase the Level of the monster in your center Main Monster Zone by 3 (until the end of this turn), then immediately after this effect resolves, you can Synchro Summon 1 "Elvennotes" monster or "Junora the Power Patron of Tuning"
+	--Increase the Level of the monster in your center Main Monster Zone by 3 (until the end of this turn), then immediately after this effect resolves, you can Synchro Summon 1 "Elfnote" monster or "Junora the Power Patron of Tuning"
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_LVCHANGE+CATEGORY_SPECIAL_SUMMON)
@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.lvop)
 	e2:SetHintTiming(0,TIMING_MAIN_END|TIMINGS_CHECK_MONSTER)
 	c:RegisterEffect(e2)
-	--Add 1 "Elvennotes" card from your Deck to your hand
+	--Add 1 "Elfnote" card from your Deck to your hand
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -40,7 +40,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={SET_ELVENNOTES}
+s.listed_series={SET_ELFNOTE}
 s.listed_names={5914858} --"Junora the Power Patron of Tuning"
 function s.lvfilter(c)
 	return c:IsSequence(2) and c:HasLevel() and c:IsFaceup()
@@ -54,7 +54,7 @@ function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function s.synchrofilter(c)
-	return (c:IsSetCard(SET_ELVENNOTES) or c:IsCode(5914858)) and c:IsSynchroSummonable()
+	return (c:IsSetCard(SET_ELFNOTE) or c:IsCode(5914858)) and c:IsSynchroSummonable()
 end
 function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
@@ -79,7 +79,7 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thfilter(c)
-	return c:IsSetCard(SET_ELVENNOTES) and c:IsAbleToHand()
+	return c:IsSetCard(SET_ELFNOTE) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

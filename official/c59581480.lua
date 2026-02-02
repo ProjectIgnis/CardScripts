@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetValue(function() return 0,ZONE_CENTER_MMZ end)
 	c:RegisterEffect(e1)
-	--Place 1 "Elvennotes" Continuous Spell from your Deck face-up on your field
+	--Place 1 "Elfnote" Continuous Spell from your Deck face-up on your field
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_IGNITION)
@@ -36,9 +36,9 @@ function s.initial_effect(c)
 	e3:SetHintTiming(0,TIMING_STANDBY_PHASE|TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E)
 	c:RegisterEffect(e3)
 end
-s.listed_series={SET_ELVENNOTES}
+s.listed_series={SET_ELFNOTE}
 function s.plfilter(c,tp)
-	return c:IsSetCard(SET_ELVENNOTES) and c:IsContinuousSpell() and not c:IsForbidden() and c:CheckUniqueOnField(tp)
+	return c:IsSetCard(SET_ELFNOTE) and c:IsContinuousSpell() and not c:IsForbidden() and c:CheckUniqueOnField(tp)
 end
 function s.pltg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0

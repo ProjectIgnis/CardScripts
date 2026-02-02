@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetCondition(function(e) return e:GetHandler():IsSequence(2) end)
 	e1:SetValue(3000)
 	c:RegisterEffect(e1)
-	--Special Summon 1 Level 6 or lower "Elvennotes" monster from your hand or GY, then you can decrease the Levels of all Level 4 or higher monsters currently on the field by 3 until the end of this turn
+	--Special Summon 1 Level 6 or lower "Elfnote" monster from your hand or GY, then you can decrease the Levels of all Level 4 or higher monsters currently on the field by 3 until the end of this turn
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_LVCHANGE)
@@ -29,9 +29,9 @@ function s.initial_effect(c)
 	e2:SetHintTiming(0,TIMING_MAIN_END|TIMINGS_CHECK_MONSTER)
 	c:RegisterEffect(e2)
 end
-s.listed_series={SET_ELVENNOTES}
+s.listed_series={SET_ELFNOTE}
 function s.spfilter(c,e,tp)
-	return c:IsLevelBelow(6) and c:IsSetCard(SET_ELVENNOTES) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsLevelBelow(6) and c:IsSetCard(SET_ELFNOTE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

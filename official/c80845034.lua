@@ -27,10 +27,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tdop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={SET_DIABELLESTARR,SET_SINFUL_SPOILS}
+s.listed_series={SET_DIABELLSTAR,SET_SINFUL_SPOILS}
 s.listed_names={id}
 function s.thfilter(c)
-	return c:IsSetCard(SET_DIABELLESTARR) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_DIABELLSTAR) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK|LOCATION_GRAVE,0,1,nil) end

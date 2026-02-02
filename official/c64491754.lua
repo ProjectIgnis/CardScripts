@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	e1:SetTarget(function(e,c) return c:IsSequence(2) end)
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
-	--Special Summon 1 "Elvennotes" monster with a different original Attribute from your Deck in Defense Position
+	--Special Summon 1 "Elfnote" monster with a different original Attribute from your Deck in Defense Position
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -30,13 +30,13 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={SET_ELVENNOTES}
+s.listed_series={SET_ELFNOTE}
 function s.spcostfilter(c,e,tp)
 	return c:IsMonster() and c:IsAbleToGraveAsCost() and Duel.GetMZoneCount(tp,c)>0
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetOriginalAttribute())
 end
 function s.spfilter(c,e,tp,attr)
-	return c:IsSetCard(SET_ELVENNOTES) and not c:IsOriginalAttribute(attr) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return c:IsSetCard(SET_ELFNOTE) and not c:IsOriginalAttribute(attr) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.spcostfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,1,nil,e,tp) end

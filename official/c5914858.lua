@@ -48,9 +48,9 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cannotmatfilter(c,tp)
-	return c:GetColumnGroup():IsExists(s.Elfnotefilter,1,nil,tp)
+	return c:GetColumnGroup():IsExists(s.elfnotefilter,1,nil,tp)
 end
-function s.Elfnotefilter(c,tp)
+function s.elfnotefilter(c,tp)
 	return c:IsSetCard(SET_ELFNOTE) and c:IsMonster() and c:IsFaceup() and c:IsControler(tp)
 end
 function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)

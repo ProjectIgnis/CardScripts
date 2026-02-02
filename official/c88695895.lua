@@ -31,12 +31,12 @@ function s.initial_effect(c)
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={SET_DIABELLESTARR}
+s.listed_series={SET_DIABELLSTAR}
 function s.tdconfilter(c,tp)
 	return c:IsSummonPlayer(1-tp) and c:IsSummonLocation(LOCATION_DECK|LOCATION_EXTRA)
 end
 function s.diafilter(c)
-	return c:IsSetCard(SET_DIABELLESTARR) and c:IsMonsterCard() and c:IsFaceup()
+	return c:IsSetCard(SET_DIABELLSTAR) and c:IsMonsterCard() and c:IsFaceup()
 end
 function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.tdconfilter,1,nil,tp)
@@ -57,7 +57,7 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local a,b=Duel.GetBattleMonster(tp)
-	return Duel.IsPhase(PHASE_DAMAGE) and a and b and b:IsFaceup() and a:IsSetCard(SET_DIABELLESTARR) and a:IsFaceup()
+	return Duel.IsPhase(PHASE_DAMAGE) and a and b and b:IsFaceup() and a:IsSetCard(SET_DIABELLSTAR) and a:IsFaceup()
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e1:SetCondition(function(e) return Duel.GetFieldCard(e:GetHandlerPlayer(),LOCATION_MZONE,2)~=nil end)
 	e1:SetValue(function(e,c) return c:IsSequence(2) end)
 	c:RegisterEffect(e1)
-	--Special Summon 1 "Elvennotes" monster from your GY
+	--Special Summon 1 "Elfnote" monster from your GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_DISABLE)
@@ -32,13 +32,13 @@ function s.initial_effect(c)
 	e2:SetHintTiming(0,TIMING_STANDBY_PHASE|TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E)
 	c:RegisterEffect(e2)
 end
-s.listed_series={SET_ELVENNOTES}
+s.listed_series={SET_ELFNOTE}
 function s.spcostfilter(c,e,tp)
 	return c:IsMonster() and c:IsAbleToGraveAsCost() and Duel.GetMZoneCount(tp,c)>0 
 		and Duel.IsExistingTarget(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,c:GetOriginalAttribute())
 end
 function s.spfilter(c,e,tp,attr)
-	return c:IsSetCard(SET_ELVENNOTES) and not c:IsOriginalAttribute(attr) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_ELFNOTE) and not c:IsOriginalAttribute(attr) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.spcostfilter,tp,LOCATION_HAND|LOCATION_MZONE,0,1,nil,e,tp) end

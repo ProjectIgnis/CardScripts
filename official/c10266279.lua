@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	Pendulum.AddProcedure(c)
-	--If a "Power Patron" and/or "Elvennotes" monster(s) is Special Summoned to your field while this card is in the Pendulum Zone: You can destroy this card, and if you do, draw 2 cards, then discard 1 card
+	--If a "Power Patron" and/or "Elfnote" monster(s) is Special Summoned to your field while this card is in the Pendulum Zone: You can destroy this card, and if you do, draw 2 cards, then discard 1 card
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_DRAW+CATEGORY_HANDES)
@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.mdestg)
 	e2:SetOperation(s.mdesop)
 	c:RegisterEffect(e2)
-	--If this card is added to your Extra Deck face-up: You can add 1 "Power Patron" or "Elvennotes" card from your face-up Extra Deck or GY to your hand, except "Power Patron Shadow Spirit Junordo"
+	--If this card is added to your Extra Deck face-up: You can add 1 "Power Patron" or "Elfnote" card from your face-up Extra Deck or GY to your hand, except "Power Patron Shadow Spirit Junordo"
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetCategory(CATEGORY_TOHAND)
@@ -42,9 +42,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={id,5914858} --"Junora the Power Patron of Tuning"
-s.listed_series={SET_POWER_PATRON,SET_ELVENNOTES}
+s.listed_series={SET_POWER_PATRON,SET_ELFNOTE}
 function s.pdesconfilter(c,tp)
-	return c:IsFaceup() and c:IsControler(tp) and c:IsSetCard({SET_POWER_PATRON,SET_ELVENNOTES})
+	return c:IsFaceup() and c:IsControler(tp) and c:IsSetCard({SET_POWER_PATRON,SET_ELFNOTE})
 end
 function s.pdescon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.pdesconfilter,1,nil,tp)
@@ -118,7 +118,7 @@ function s.thcon(e)
 	return c:IsLocation(LOCATION_EXTRA) and c:IsFaceup()
 end
 function s.thfilter(c)
-	return c:IsFaceup() and c:IsSetCard({SET_POWER_PATRON,SET_ELVENNOTES}) and c:IsAbleToHand() and not c:IsCode(id)
+	return c:IsFaceup() and c:IsSetCard({SET_POWER_PATRON,SET_ELFNOTE}) and c:IsAbleToHand() and not c:IsCode(id)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_EXTRA|LOCATION_GRAVE,0,1,nil) end

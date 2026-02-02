@@ -555,7 +555,7 @@ SET_COUNTER                       = 0x200
 SET_BATTLIN_BOXING                = 0x201
 SET_VEDA                          = 0x202
 SET_DIABELL                       = 0x203
-SET_DIABELLESTARR                 = 0x1203
+SET_DIABELLSTAR                   = 0x1203
 SET_SINFUL_SPOILS                 = 0x204
 SET_SNAKE_EYE                     = 0x205
 SET_PATISSCIEL                    = 0x206
@@ -603,8 +603,8 @@ SET_KEWL_TUNE                     = 0x1ce
 SET_ECCLESIA                      = 0x1cf
 SET_END_OF_THE_WORLD              = 0x1d1
 SET_FAIRY_TAIL                    = 0x1d2
+SET_ELFNOTE                       = 0x1d0
 --Released but the official English name is unconfirmed
-SET_ELVENNOTES                    = 0x1d0
 SET_CLOWN_CREW                    = 0x1d3
 --Pre-release archetypes
 SET_GMX                           = 0x1d4

@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--Make the opponent send 1 Spell/Trap to the GY
+	--Make the opponent send 1 Spell/Trap they control to the GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOGRAVE)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.tgtg)
 	e1:SetOperation(s.tgop)
 	c:RegisterEffect(e1)
-	--Can make a second attack in a row
+	--This card can make a second attack in a row
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	--Shuffle 1 Ritual Monster from your GY into the Deck and destroy 1 card the opponent controls
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
-	e3:SetCategory(CATEGORY_DESTROY+CATEGORY_TODECK)
+	e3:SetCategory(CATEGORY_TODECK+CATEGORY_DESTROY)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetCode(EVENT_CHAINING)
 	e3:SetRange(LOCATION_MZONE)
@@ -37,13 +37,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={SET_CYBER_ANGEL}
-s.listed_names={39996157}
+s.listed_names={39996157} --"Machine Angel Ritual"
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetFieldGroupCount(tp,0,LOCATION_SZONE)>0 end
-	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,0,LOCATION_SZONE)
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsSpellTrap,tp,0,LOCATION_ONFIELD,1,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,1-tp,LOCATION_ONFIELD)
 end
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(nil,1-tp,LOCATION_SZONE,0,nil)
+	local g=Duel.GetMatchingGroup(Card.IsSpellTrap,1-tp,LOCATION_ONFIELD,0,nil)
 	if #g>0 then
 		Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_TOGRAVE)
 		local sg=g:Select(1-tp,1,1,nil)

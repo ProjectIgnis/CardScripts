@@ -51,12 +51,26 @@ function s.initial_effect(c)
 end
 s.curgroup=nil
 function s.closed_sky_filter(c)
-	return not (c:HasFlagEffect(71818935) and #c:GetCardTarget()>0)
+	return not ((c:HasFlagEffect(71818935) and #c:GetCardTarget()>0))
 end
 function s.extracon(c,e,tp,sg,mg,lc,og,chk)
 	if not s.curgroup then return true end
 	local g=s.curgroup:Filter(s.closed_sky_filter,nil)
-	return #(sg&g)<2
+	local max_count=1
+	local must_include=Group.CreateGroup()
+	local effs={Duel.GetPlayerEffect(tp,EFFECT_EXTRA_MATERIAL)}
+	for _,eff in ipairs(effs) do
+		if not eff:GetOwner():IsCode(id) then
+			if #(eff:GetValue()(0,SUMMON_TYPE_LINK,eff,tp,lc))>0 then
+				local handler=eff:GetHandler()
+				must_include:Merge(handler)
+				if #(sg&must_include)>0 or lc==handler then
+					max_count=max_count+1
+				end
+			end
+		end
+	end
+	return #(sg&g)<=max_count
 end
 function s.extraval(chk,summon_type,e,...)
 	if chk==0 then

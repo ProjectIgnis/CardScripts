@@ -604,7 +604,7 @@ SET_ECCLESIA                      = 0x1cf
 SET_END_OF_THE_WORLD              = 0x1d1
 SET_FAIRY_TAIL                    = 0x1d2
 SET_ELFNOTE                       = 0x1d0
+SET_GMX                           = 0x1d4
 --Released but the official English name is unconfirmed
 SET_CLOWN_CREW                    = 0x1d3
 --Pre-release archetypes
-SET_GMX                           = 0x1d4

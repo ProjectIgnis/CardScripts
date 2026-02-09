@@ -27,10 +27,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tdop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={101303096} --"GMX Applied Experiment #55"
+s.listed_names={18795635} --"GMX Applied Experiment #55"
 s.listed_series={SET_GMX}
 function s.thfilter(c)
-	return c:IsCode(101303096) and c:IsAbleToHand()
+	return c:IsCode(18795635) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

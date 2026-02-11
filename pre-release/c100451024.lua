@@ -47,6 +47,7 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		c:RegisterEffect(e1)
 	end
+	if c:IsDisabled() then return end
 	local atk=mg:Match(Card.IsSynchroMonster,nil):GetSum(Card.GetBaseAttack,nil)
 	if atk==0 then return end
 	--After this card is Synchro Summoned, for the rest of this turn, it gains ATK equal to the total original ATK of the Synchro Monsters used as its material

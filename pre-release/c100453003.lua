@@ -43,7 +43,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tgfilter(c)
-	return c:IsFaceup() and c:IsAttackPos() and (not c:IsHasEffect(EFFECT_CANNOT_ATTACK) or c:IsNegatableMonster() or c:CanStillBeMaterial())
+	return c:IsFaceup() and c:IsAttackPos() and (not c:IsHasEffect(EFFECT_CANNOT_ATTACK) or c:IsNegatableMonster() or s.CanStillBeMaterial(c))
 		and not c:HasFlagEffect(id)
 end
 function s.CanStillBeMaterial(c)

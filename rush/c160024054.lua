@@ -22,7 +22,7 @@ function s.thfilter(c)
 	return c:IsRace(RACE_FAIRY) and c:IsAttribute(ATTRIBUTE_DARK) and c:IsAttack(0) and c:IsAbleToHand()
 end
 function s.cfilter(c)
-	return c:IsFaceup() and c:IsRace(RACE_FAIRY) and c:IsAttribute(ATTRIBUTE_LIGHT) 
+	return c:IsFaceup() and c:IsRace(RACE_FAIRY) and c:IsAttribute(ATTRIBUTE_LIGHT) and c:GetBaseAttack()==0 and c:GetBaseDefense()==0
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Effect

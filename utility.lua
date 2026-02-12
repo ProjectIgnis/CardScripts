@@ -1761,9 +1761,11 @@ function Cost.AND(...)
 			end
 			return true
 		end
-		--when executing, run all functions regardless of what they return
+		--when executing, stop if a function returns 'false' specifically
 		for _,fn in ipairs(fns) do
-			fn(e,tp,eg,ep,ev,re,r,rp,1)
+			if fn(e,tp,eg,ep,ev,re,r,rp,1)==false then
+				return false
+			end
 		end
 	end
 

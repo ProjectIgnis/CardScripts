@@ -1249,6 +1249,7 @@ do
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
 			local g=Duel.SelectMatchingCard(tp,filter,tp,LOCATION_HAND,0,1,1,c)
 			Duel.SendtoGrave(g+c,REASON_COST|REASON_DISCARD)
+			return false
 		end
 	end
 	--For Level 7 monsters (can only discard to GY, and does not allow Dragons)

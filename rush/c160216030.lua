@@ -29,13 +29,15 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 	Duel.ShuffleDeck(tp)
 	Duel.ShuffleDeck(1-tp)
-	local ct=Duel.Draw(tp,1,REASON_EFFECT)
-	if ct==0 then return end
-	local tc=Duel.GetOperatedGroup():GetFirst()
-	Duel.ConfirmCards(1-tp,tc)
-	if tc:IsMonster() and tc:IsLevelAbove(7) and tc:IsRace(RACE_BEAST) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and tc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
-		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
+	if Duel.IsPlayerCanDraw(tp,1) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+		local ct=Duel.Draw(tp,1,REASON_EFFECT)
+		if ct==0 then return end
+		local tc=Duel.GetOperatedGroup():GetFirst()
+		Duel.ConfirmCards(1-tp,tc)
+		if tc:IsMonster() and tc:IsLevelAbove(7) and tc:IsRace(RACE_BEAST) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+			and tc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP) and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
+			Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
+		end
+		Duel.ShuffleHand(tp)
 	end
-	Duel.ShuffleHand(tp)
 end

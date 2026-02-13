@@ -1,3 +1,4 @@
+--ホーリー・サクリファイス
 --Holy Sacrifice
 local s,id=GetID()
 function s.initial_effect(c)
@@ -21,7 +22,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		local fid=e:GetHandler():GetFieldID()
-		tc:RegisterFlagEffect(51101512,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE,0,1,fid)
+		tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD|RESET_PHASE|PHASE_BATTLE,0,1,fid)
 		local e2=Effect.CreateEffect(e:GetHandler())
 		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e2:SetCode(EVENT_PRE_BATTLE_DAMAGE)
@@ -29,13 +30,13 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetOperation(s.damop)
 		e2:SetLabelObject(tc)
 		e2:SetLabel(fid)
-		e2:SetReset(RESET_PHASE+PHASE_BATTLE)
+		e2:SetReset(RESET_PHASE|PHASE_BATTLE)
 		Duel.RegisterEffect(e2,tp)
 	end
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
-	if not tc or tc:GetFlagEffectLabel(51101512)~=e:GetLabel() then e:Reset() return false end
+	if not tc or tc:GetFlagEffectLabel(id)~=e:GetLabel() then e:Reset() return false end
 	return Duel.GetBattleDamage(tp)>0 and Duel.IsBattlePhase()
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
@@ -46,7 +47,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetValue(-dam)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	tc:RegisterEffect(e1)
 	if tc:IsAttackBelow(0) then
 		Duel.Destroy(tc,REASON_EFFECT)

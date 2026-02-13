@@ -25,7 +25,7 @@ function s.initial_effect(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
-	return a:IsControler(tp) and a:GetOriginalRace()==RACE_ZOMBIE and a:GetBattleTarget():IsControler(1-tp)
+	return a:IsControler(tp) and a:GetOriginalRace()==RACE_ZOMBIE
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local bc=Duel.GetAttacker():GetBattleTarget()

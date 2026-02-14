@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.effop)
 	e1:SetHintTiming(0,TIMING_STANDBY_PHASE|TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E)
 	c:RegisterEffect(e1)
-	--f this card is destroyed by the effect of "Mystical Space Typhoon": You can Set this card
+	--If this card is destroyed by the effect of "Mystical Space Typhoon": You can Set this card
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SET)

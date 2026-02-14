@@ -3,7 +3,7 @@
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate 1 of these effects
+	--Activate 1 of these effects (but you can only use each of these effects of "Radiant Typhoon Vision" once per turn);
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -12,14 +12,14 @@ function s.initial_effect(c)
 	e1:SetOperation(s.effop)
 	e1:SetHintTiming(0,TIMING_STANDBY_PHASE|TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E)
 	c:RegisterEffect(e1)
-	--Set this card
+	--f this card is destroyed by the effect of "Mystical Space Typhoon": You can Set this card
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SET)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_DESTROYED)
-	e2:SetCondition(function(e,tp,eg,ep,ev,re,r,rp) return re:GetHandler():IsCode(CARD_MYSTICAL_SPACE_TYPHOON) end)
+	e2:SetCondition(function(e,tp,eg,ep,ev,re,r,rp) return re and re:GetHandler():IsCode(CARD_MYSTICAL_SPACE_TYPHOON) end)
 	e2:SetTarget(s.settg)
 	e2:SetOperation(s.setop)
 	c:RegisterEffect(e2)
@@ -58,7 +58,7 @@ end
 function s.effop(e,tp,eg,ep,ev,re,r,rp)
 	local op=e:GetLabel()
 	if op==1 then
-		--Draw 2 cards, then if you have a "Radiant Typhoon" card or a Quick-Play Spell in your hand, discard 1 of them, or your entire hand if you don't
+		--● Draw 2 cards, then if you have a "Radiant Typhoon" card or a Quick-Play Spell in your hand, discard 1 of them, or your entire hand if you don't
 		if Duel.Draw(tp,2,REASON_EFFECT)>0 then
 			Duel.ShuffleHand(tp)
 			Duel.BreakEffect()
@@ -74,7 +74,7 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 			end
 		end
 	elseif op==2 then
-		--Add 1 "Mystical Space Typhoon" from your Deck or GY to your hand
+		--● Add 1 "Mystical Space Typhoon" from your Deck or GY to your hand
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.thfilter),tp,LOCATION_DECK|LOCATION_GRAVE,0,1,1,nil)
 		if #g>0 then

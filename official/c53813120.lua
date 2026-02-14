@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	e0:SetType(EFFECT_TYPE_ACTIVATE)
 	e0:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e0)
-	--Apply these effects in sequence
+	--Once per turn: You can target 3 Quick-Play Spells in your GY, including a "Radiant Typhoon" card; apply the following effects in sequence
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TODECK+CATEGORY_DRAW+CATEGORY_ATKCHANGE+CATEGORY_DEFCHANGE)
@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.efftg)
 	e1:SetOperation(s.effop)
 	c:RegisterEffect(e1)
-	--Negate the effects 1 face-up card your opponent controls
+	--Once per Chain, when "Mystical Space Typhoon" is activated: You can target 1 face-up card your opponent controls; negate its effects
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DISABLE)
@@ -35,14 +35,14 @@ function s.initial_effect(c)
 	e2:SetTarget(s.distg)
 	e2:SetOperation(s.disop)
 	c:RegisterEffect(e2)
-	--Set this card if it is destroyed by the effect of "Mystical Space Typhoon"
+	--If this card is destroyed by the effect of "Mystical Space Typhoon": You can Set this card
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetCategory(CATEGORY_SET)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetProperty(EFFECT_FLAG_DELAY)
 	e3:SetCode(EVENT_DESTROYED)
-	e3:SetCondition(function(e,tp,eg,ep,ev,re,r,rp) return re:GetHandler():IsCode(CARD_MYSTICAL_SPACE_TYPHOON) end)
+	e3:SetCondition(function(e,tp,eg,ep,ev,re,r,rp) return re and re:GetHandler():IsCode(CARD_MYSTICAL_SPACE_TYPHOON) end)
 	e3:SetTarget(s.settg)
 	e3:SetOperation(s.setop)
 	c:RegisterEffect(e3)
@@ -71,6 +71,7 @@ end
 function s.effop(e,tp,eg,ep,ev,re,r,rp)
 	local break_chk=false
 	local tg=Duel.GetTargetCards(e)
+	--● Shuffle them into the Deck, then draw 1 card
 	if #tg>0 and Duel.SendtoDeck(tg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>0 then
 		break_chk=true
 		Duel.ShuffleDeck(tp)
@@ -80,7 +81,7 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 	if break_chk then Duel.BreakEffect() end
 	local c=e:GetHandler()
 	aux.RegisterClientHint(c,0,tp,1,0,aux.Stringid(id,3))
-	--WIND monsters you control will gain 300 ATK/DEF for the rest of this turn
+	--● All WIND monsters you control gain 300 ATK/DEF this turn
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)

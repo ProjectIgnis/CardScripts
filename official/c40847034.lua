@@ -70,8 +70,8 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 			eff:SetLabelObject(e:GetLabelObject())
 			Duel.ClearOperationInfo(0)
 		end
-		e:SetLabelObject({tc,eff})
 	end
+	e:SetLabelObject({tc,eff})
 	e:SetCategory(CATEGORY_TOHAND)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,tc,1,tp,0)
 end

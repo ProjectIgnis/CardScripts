@@ -51,9 +51,9 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	--Register monsters Normal Summoned on your turn
 	aux.GlobalCheck(s,function()
 		s[0]={} --previous
-        	s[1]={} --current
-        	local ge1=Effect.CreateEffect(c)
-        	ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+    	s[1]={} --current
+        local ge1=Effect.CreateEffect(c)
+    	ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCode(EVENT_SUMMON_SUCCESS)
 		ge1:SetOperation(s.checkop)
 		Duel.RegisterEffect(ge1,0)
@@ -115,7 +115,7 @@ function s.spirittohandop(e,tp,eg,ep,ev,re,r,rp)
 	--Skill Activation
 	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
 	Duel.Hint(HINT_CARD,tp,id)
-	--Add 1 "Shinato, King of a Higher Plane" or "Shinato's Ark" from your Deck to your hand
+	--Add 1 Spirit monster from your GY to your hand if you control a Level 5 or higher Spirit monster or "Shinato, King of a Higher Plane"
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,s.spirittohandfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 	if #g>0 then

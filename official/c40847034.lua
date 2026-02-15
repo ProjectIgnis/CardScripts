@@ -3,7 +3,7 @@
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
-	--Apply these effects, in sequence, also you cannot Special Summon for the rest of this turn after this card resolves, except Tuners
+	--Target 1 "Kewl Tune" monster in your field or GY; apply these effects in sequence, also for the rest of this turn after this card resolves, you cannot Special Summon, except Tuners
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND)
@@ -70,19 +70,18 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 			eff:SetLabelObject(e:GetLabelObject())
 			Duel.ClearOperationInfo(0)
 		end
-		e:SetLabelObject(eff)
+		e:SetLabelObject({tc,eff})
 	end
 	e:SetCategory(CATEGORY_TOHAND)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,tc,1,tp,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local _,tc=Duel.GetOperationInfo(0,CATEGORY_TOHAND)
-	tc=tc:GetFirst()
+	local tc=e:GetLabelObject()[1]
 	if tc and tc:IsRelateToEffect(e) then
-		local te=e:GetLabelObject()
+		local break_chk=false
+		local te=e:GetLabelObject()[2]
 		if te then
-			local break_chk=false
-			--Apply its effect that activates if sent to the GY as Synchro Material
+			--● Apply that target's effect that activates when it is sent to the GY as Synchro Material
 			local op=te:GetOperation()
 			if tc:IsFaceup() and op then
 				e:SetLabel(te:GetLabel())
@@ -93,12 +92,14 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e:SetLabel(0)
 			e:SetLabelObject(nil)
 		end
-		--Return it to the hand
+		--● Return that target to the hand
 		if break_chk then Duel.BreakEffect() end
-		Duel.SendtoHand(tc,nil,REASON_EFFECT)
+		if Duel.SendtoHand(tc,nil,REASON_EFFECT)>0 then
+			Duel.ShuffleHand(tp)
+		end
 	end
 	if not e:IsHasType(EFFECT_TYPE_ACTIVATE) then return end
-	--You cannot Special Summon for the rest of this turn after this card resolves, except Tuners
+	--For the rest of this turn after this card resolves, you cannot Special Summon, except Tuners
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetType(EFFECT_TYPE_FIELD)

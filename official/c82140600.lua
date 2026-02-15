@@ -2,47 +2,45 @@
 --Avalon
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Target 5 "Noble Knight" monsters in your Graveyard, including at least 1 "Artorigus" monster and at least 1 "Laundsallyn" monster; banish those targets, and if you do, destroy all cards on the field
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_REMOVE+CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
+	e1:SetHintTiming(0,TIMING_STANDBY_PHASE|TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E)
 	c:RegisterEffect(e1)
 end
 s.listed_series={SET_NOBLE_KNIGHT,SET_ARTORIGUS,SET_LAUNDSALLYN}
-function s.filter(c,e)
-	return c:IsSetCard(SET_NOBLE_KNIGHT) and c:IsMonster() and c:IsAbleToRemove() and c:IsCanBeEffectTarget(e) and aux.SpElimFilter(c,true)
+function s.banfilter(c)
+	return c:IsSetCard(SET_NOBLE_KNIGHT) and c:IsMonster() and c:IsAbleToRemove()
+end
+function s.rescon(sg,e,tp,mg)
+	return sg:IsExists(Card.IsSetCard,1,nil,SET_ARTORIGUS) and sg:IsExists(Card.IsSetCard,1,nil,SET_LAUNDSALLYN)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,nil,e)
-	if chk==0 then return #g>4
-		and g:IsExists(Card.IsSetCard,1,nil,SET_ARTORIGUS) and g:IsExists(Card.IsSetCard,1,nil,SET_LAUNDSALLYN)
-		and Duel.IsExistingMatchingCard(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g1=g:FilterSelect(tp,Card.IsSetCard,1,1,nil,SET_ARTORIGUS)
-	g:Sub(g1)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g2=g:FilterSelect(tp,Card.IsSetCard,1,1,nil,SET_LAUNDSALLYN)
-	g:Sub(g2)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g3=g:Select(tp,3,3,nil)
-	g1:Merge(g2)
-	g1:Merge(g3)
-	Duel.SetTargetCard(g1)
-	local dg=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g1,5,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,dg,#dg,0,0)
+	local c=e:GetHandler()
+	local g=Duel.GetTargetGroup(s.banfilter,tp,LOCATION_GRAVE,0,nil)
+	if chk==0 then return #g>=5 and aux.SelectUnselectGroup(g,e,tp,5,5,s.rescon,0)
+		and Duel.IsExistingMatchingCard(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c) end
+	local tg=aux.SelectUnselectGroup(g,e,tp,5,5,s.rescon,1,tp,HINTMSG_REMOVE)
+	Duel.SetTargetCard(tg)
+	local dg=Duel.GetMatchingGroup(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,c)
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,tg,5,tp,0)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,dg,#dg,tp,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-	local g=tg:Filter(Card.IsRelateToEffect,nil,e)
-	if #g==5 and Duel.Remove(g,POS_FACEUP,REASON_EFFECT)>0 then
-		local dg=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
-		Duel.Destroy(dg,REASON_EFFECT)
+	local tg=Duel.GetTargetCards(e)
+	if #tg>0 and Duel.Remove(tg,POS_FACEUP,REASON_EFFECT)>0 then
+		local c=e:GetHandler()
+		local exc=c:IsRelateToEffect(e) and c or nil
+		local g=Duel.GetMatchingGroup(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,exc)
+		if #g>0 then
+			Duel.Destroy(g,REASON_EFFECT)
+		end
 	end
 end

@@ -32,9 +32,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={id}
-s.listed_series={SET_CENTURION}
+s.listed_series={SET_CENTUR_ION}
 function s.plfilter(c,tp)
-	return c:IsSetCard(SET_CENTURION) and c:IsFaceup() and not c:IsForbidden()
+	return c:IsSetCard(SET_CENTUR_ION) and c:IsFaceup() and not c:IsForbidden()
 		and not c:IsCode(id) and Duel.GetMZoneCount(tp,c)>0
 end
 function s.pltg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

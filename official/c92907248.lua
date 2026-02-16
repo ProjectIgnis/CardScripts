@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 local TOKEN_CENTURION=id+1
-s.listed_series={SET_CENTURION}
+s.listed_series={SET_CENTUR_ION}
 s.listed_names={TOKEN_CENTURION,id}
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsOriginalType(TYPE_MONSTER)
@@ -37,8 +37,8 @@ function s.tokencond(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_STZONE,0,1,nil)
 end
 function s.tokentg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local lv4=Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_CENTURION,SET_CENTURION,TYPES_TOKEN,0,0,4,RACE_PYRO,ATTRIBUTE_DARK,POS_FACEUP)
-	local lv8=Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_CENTURION,SET_CENTURION,TYPES_TOKEN,0,0,8,RACE_PYRO,ATTRIBUTE_DARK,POS_FACEUP)
+	local lv4=Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_CENTURION,SET_CENTUR_ION,TYPES_TOKEN,0,0,4,RACE_PYRO,ATTRIBUTE_DARK,POS_FACEUP)
+	local lv8=Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_CENTURION,SET_CENTUR_ION,TYPES_TOKEN,0,0,8,RACE_PYRO,ATTRIBUTE_DARK,POS_FACEUP)
 	if chk==0 then return (lv4 or lv8) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end
 	local levels={}
 	if lv4 then table.insert(levels,4) end
@@ -51,7 +51,7 @@ end
 function s.tokenop(e,tp,eg,ep,ev,re,r,rp)
 	local lvl=e:GetLabel()
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
-		or not Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_CENTURION,SET_CENTURION,TYPES_TOKEN,0,0,lvl,RACE_PYRO,ATTRIBUTE_DARK,POS_FACEUP) then return end
+		or not Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_CENTURION,SET_CENTUR_ION,TYPES_TOKEN,0,0,lvl,RACE_PYRO,ATTRIBUTE_DARK,POS_FACEUP) then return end
 	local token=Duel.CreateToken(tp,TOKEN_CENTURION)
 	--Set the Token's Level
 	local e1=Effect.CreateEffect(e:GetHandler())
@@ -78,7 +78,7 @@ function s.tokenop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummonComplete()
 end
 function s.tgyfilter(c)
-	return c:IsSetCard(SET_CENTURION) and not c:IsCode(id) and c:IsAbleToGrave()
+	return c:IsSetCard(SET_CENTUR_ION) and not c:IsCode(id) and c:IsAbleToGrave()
 end
 function s.tgytg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgyfilter,tp,LOCATION_DECK,0,1,nil) end

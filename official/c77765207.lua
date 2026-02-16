@@ -14,12 +14,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={SET_CENTURION}
+s.listed_series={SET_CENTUR_ION}
 function s.plfilter(c)
-	return c:IsSetCard(SET_CENTURION) and c:IsMonster() and not c:IsForbidden()
+	return c:IsSetCard(SET_CENTUR_ION) and c:IsMonster() and not c:IsForbidden()
 end
 function s.setfilter(c,ft)
-	return c:IsSetCard(SET_CENTURION) and c:IsSpellTrap() and c:IsSSetable() and (ft>0 or c:IsFieldSpell())
+	return c:IsSetCard(SET_CENTUR_ION) and c:IsSpellTrap() and c:IsSSetable() and (ft>0 or c:IsFieldSpell())
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
@@ -64,11 +64,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 			e2:SetTargetRange(1,0)
 			e2:SetCondition(function() return Duel.IsExistingMatchingCard(s.spconfilter,tp,LOCATION_ONFIELD,0,1,nil,sc:GetOriginalCodeRule()) end)
-			e2:SetTarget(function(_e,_c) return not _c:IsSetCard(SET_CENTURION) and _c:IsLocation(LOCATION_EXTRA) end)
+			e2:SetTarget(function(_e,_c) return not _c:IsSetCard(SET_CENTUR_ION) and _c:IsLocation(LOCATION_EXTRA) end)
 			e2:SetReset(RESET_PHASE|PHASE_END)
 			Duel.RegisterEffect(e2,tp)
 			--Clock Lizard check
-			aux.addTempLizardCheck(c,tp,function(_e,_c) return not _c:IsOriginalSetCard(SET_CENTURION) end)
+			aux.addTempLizardCheck(c,tp,function(_e,_c) return not _c:IsOriginalSetCard(SET_CENTUR_ION) end)
 		end
 	elseif op==2 then
 		--Set 1 "Centurion" Spell/Trap directly from your Deck

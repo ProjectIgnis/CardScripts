@@ -1095,4 +1095,14 @@ if not AnimeArchetype then
 	--Harpie Lady Sisters (Archetype)
 	--Harpie Lady Sisters
 	Card.IsHarpieLadySisters=MakeCheck({0x1064},{12206212})
+	
+	--Helios (Archetype)
+	--Helios - The Primordial Sun/Helios Duo Megistus/Helios Trice Megistus
+	--Heliosphere Dragon/Elemental HERO Heliosphere
+	Card.IsHelios=MakeCheck({54493213,80887952,17286057,51043053,160214029})
+	
+	--Kangaroo (Archetype)
+	--Des Kangaroo/Kangaroo Champ
+	--Junk Robot Teapot Kangaroo
+	Card.IsKangaroo=MakeCheck({78613627,95789089,511001684})
 end

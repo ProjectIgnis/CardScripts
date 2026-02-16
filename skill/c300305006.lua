@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.op)
 	c:RegisterEffect(e1)
 end
-s.listed_series={SET_KOALA,SET_KANGAROO}
+s.listed_series={SET_KOALA}
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
 	Duel.Hint(HINT_CARD,tp,id)
@@ -25,12 +25,12 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_DEFENSE_ATTACK)
 	e1:SetTargetRange(LOCATION_MZONE,0)
-	e1:SetTarget(function(e,c) return c:IsSetCard(SET_KOALA) or c:IsSetCard(SET_KANGAROO) end)
+	e1:SetTarget(function(e,c) return c:IsSetCard(SET_KOALA) or c:IsKangaroo() end)
 	e1:SetValue(1)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.cfilter(c)
-	return (c:IsSetCard(SET_KOALA) or c:IsSetCard(SET_KANGAROO)) and c:IsMonster() and c:IsFaceup() and c:IsCanChangePosition()
+	return (c:IsSetCard(SET_KOALA) or c:IsKangaroo()) and c:IsMonster() and c:IsFaceup() and c:IsCanChangePosition()
 end
 function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	return aux.CanActivateSkill(tp) and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)

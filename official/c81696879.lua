@@ -29,12 +29,12 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={id}
-s.listed_series={SET_CENTURION}
+s.listed_series={SET_CENTUR_ION}
 function s.chcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==1-tp and re:IsMonsterEffect() and Duel.GetCurrentChain(true)>=2
 end
 function s.plfilter(c,tp)
-	return c:IsSetCard(SET_CENTURION) and c:IsMonster() and c:IsFaceup() and not c:IsForbidden()
+	return c:IsSetCard(SET_CENTUR_ION) and c:IsMonster() and c:IsFaceup() and not c:IsForbidden()
 		and c:CheckUniqueOnField(tp)
 end
 function s.chtg(e,tp,eg,ep,ev,re,r,rp,chk)

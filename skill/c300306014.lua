@@ -15,7 +15,6 @@ function s.initial_effect(c)
 	e1:SetOperation(s.op)
 	c:RegisterEffect(e1)
 end
-s.listed_series={SET_HELIOS}
 function s.op(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
 	Duel.Hint(HINT_CARD,tp,id)
@@ -25,7 +24,7 @@ function s.op(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetRange(0x5f)
 	e1:SetTargetRange(1,1)
-	e1:SetTarget(function(e,c) return c:IsSetCard(SET_HELIOS) and c:IsMonster() and c:GetControler()==e:GetHandlerPlayer() end)
+	e1:SetTarget(function(e,c) return c:IsHelios() and c:IsMonster() and c:GetControler()==e:GetHandlerPlayer() end)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.atkfilter(c,tp)

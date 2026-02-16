@@ -1,17 +1,15 @@
 --[[
 	Archetype setcode constants list (akin to common card names).
-	Includes every archetype that's being used in official card scripts.
+	Includes every archetype that's being used in OCG/TCG card scripts.
+	
+	To be formatted, probably alphabetically while keeping sub-archetypes with the original.
 
-	Notes:
-- To be formatted, probably alphabetically while keeping sub-archetypes with the original.
-
-- 0x8c Druid (unused, non-existent archetype, ドルイド, 4 OCG cards include it in their names)
-
-- 0x106d Djinn of Rituals (unused sub-archetype of "Djinn")
-- 0x8a Envy (unused super-archetype of "Traptrix")
-
-- 0xb6 not used at all
-- 0xb8 not used at all
+	Available/unused values:
+	- 0x68
+	- 0x6c
+	- 0x8c
+	- 0xb6
+	- 0xb8
 --]]
 
 SET_ALLY_OF_JUSTICE               = 0x1
@@ -19,7 +17,7 @@ SET_GENEX                         = 0x2
 SET_R_GENEX                       = 0x1002
 SET_GENEX_ALLY                    = 0x2002
 SET_HORUS                         = 0x3
-SET_HORUS_BLACK_FLAME_DRAGON      = 0x1003
+SET_HORUS_THE_BLACK_FLAME_DRAGON  = 0x1003
 SET_AMAZONESS                     = 0x4
 SET_ARCANA_FORCE                  = 0x5
 SET_DARK_WORLD                    = 0x6
@@ -115,6 +113,7 @@ SET_JUNK                          = 0x43
 SET_THE_AGENT                     = 0x44
 SET_ARCHFIEND                     = 0x45
 SET_RED_DRAGON_ARCHFIEND          = 0x1045
+SET_POLYMERIZATION                = 0x46
 SET_FUSION                        = 0x46
 SET_FUSION_DRAGON                 = 0x1046
 SET_GEM                           = 0x47
@@ -165,7 +164,6 @@ SET_MAGNET_WARRIOR_SIGMA          = 0xb066
 SET_HIERATIC                      = 0x69
 SET_BUTTERSPY                     = 0x6a
 SET_BOUNZER                       = 0x6b
-SET_HELIOS                        = 0x6c
 SET_DJINN                         = 0x6d
 SET_PROPHECY                      = 0x6e
 SET_SPELLBOOK                     = 0x106e
@@ -214,7 +212,7 @@ SET_STAR_SERAPH                   = 0x86
 SET_UMBRAL_HORROR                 = 0x87
 SET_BUJIN                         = 0x88
 SET_HOLE                          = 0x89
-SET_TRAPTRIX                      = 0x108a
+SET_TRAPTRIX                      = 0x8a
 SET_MALICEVOROUS                  = 0x8b
 SET_GHOSTRICK                     = 0x8d
 SET_VAMPIRE                       = 0x8e
@@ -522,7 +520,6 @@ SET_GHOTI                         = 0x18b
 SET_KASHTIRA                      = 0x18a
 SET_GOLD_PRIDE                    = 0x193
 SET_KOALA                         = 0x67
-SET_KANGAROO                      = 0x68
 SET_RESCUE_ACE                    = 0x18c
 SET_PURRELY                       = 0x18d
 SET_MIKANKO                       = 0x18e
@@ -537,7 +534,7 @@ SET_NOUVELLES                     = 0x197
 SET_RECIPE                        = 0x198
 SET_VISAS                         = 0x199
 SET_MEMENTO                       = 0x19a
-SET_CENTURION                     = 0x19b
+SET_CENTUR_ION                    = 0x19b
 SET_VAALMONICA                    = 0x19c
 SET_YUBEL                         = 0x19d
 SET_VOICELESS_VOICE               = 0x19e

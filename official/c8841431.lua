@@ -40,7 +40,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={id}
-s.listed_series={SET_EMBLEMA,SET_CENTURION}
+s.listed_series={SET_EMBLEMA,SET_CENTUR_ION}
 function s.indescon(e)
 	local c=e:GetHandler()
 	return c:IsSpecialSummoned() and not c:IsSummonLocation(LOCATION_EXTRA)
@@ -70,7 +70,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spconfilter(c,tp)
-	return c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousSetCard(SET_CENTURION) 
+	return c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousSetCard(SET_CENTUR_ION) 
 		and c:IsPreviousControler(tp) and c:IsReason(REASON_EFFECT)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)

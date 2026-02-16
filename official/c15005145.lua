@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_SZONE)
 	e1:SetTargetRange(LOCATION_MZONE,0)
 	e1:SetCondition(function(e) return e:GetHandler():IsContinuousTrap() end)
-	e1:SetTarget(function(e,c) return c:IsLevelAbove(5) and c:IsSetCard(SET_CENTURION) end)
+	e1:SetTarget(function(e,c) return c:IsLevelAbove(5) and c:IsSetCard(SET_CENTUR_ION) end)
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
 	--Search 1 "Centurion" card
@@ -42,9 +42,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.listed_names={id}
-s.listed_series={SET_CENTURION}
+s.listed_series={SET_CENTUR_ION}
 function s.thfilter(c)
-	return c:IsSetCard(SET_CENTURION) and not c:IsCode(id) and c:IsAbleToHand() 
+	return c:IsSetCard(SET_CENTUR_ION) and not c:IsCode(id) and c:IsAbleToHand() 
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

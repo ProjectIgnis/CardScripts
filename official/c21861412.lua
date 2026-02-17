@@ -55,7 +55,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.rthfilter(c,opp)
-	return c:IsAbleToHand() and (c:IsAttribute(ATTRIBUTE_EARTH) and c:IsFaceup()) or c:IsControler(opp)
+	return c:IsAbleToHand() and ((c:IsAttribute(ATTRIBUTE_EARTH) and c:IsFaceup()) or c:IsControler(opp))
 end
 function s.rthtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

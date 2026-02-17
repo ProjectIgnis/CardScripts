@@ -59,7 +59,7 @@ function s.rthfilter(c,opp)
 end
 function s.rthtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	local g=Duel.GetMatchingGroup(s.rthfilter,tp,LOCATION_MZONE,LOCATION_ONFIELD,nil,1-tp)
+	local g=Duel.GetTargetGroup(s.rthfilter,tp,LOCATION_MZONE,LOCATION_ONFIELD,nil,1-tp)
 	if chk==0 then return aux.SelectUnselectGroup(g,e,tp,2,2,aux.dpcheck(Card.GetControler),0) end
 	local tg=aux.SelectUnselectGroup(g,e,tp,2,2,aux.dpcheck(Card.GetControler),1,tp,HINTMSG_RTOHAND)
 	Duel.SetTargetCard(tg)

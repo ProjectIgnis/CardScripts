@@ -34,7 +34,7 @@ function s.cfilter2(c)
 	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_WIND)
 end
 function s.thfilter(c)
-	return c:IsLevelAbove(8) and c:IsAbleToHand() and not c:IsMaximumModeSide()
+	return c:IsLevelAbove(8) and not c:IsMaximumModeSide()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Effect

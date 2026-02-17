@@ -30,7 +30,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsSummonPhaseMain() and c:IsStatus(STATUS_SPSUMMON_TURN) and c:IsSummonType(SUMMON_TYPE_FUSION)
 end
 function s.tdfilter(c)
-	return c:IsFaceup() and c:IsAbleToDeck() and not c:IsMaximumModeSide()
+	return c:IsFaceup() and not c:IsMaximumModeSide()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tdfilter,tp,0,LOCATION_MZONE,1,nil) end

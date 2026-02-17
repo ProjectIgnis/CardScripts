@@ -31,7 +31,7 @@ function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,tp,LOCATION_MZONE)
 end
 function s.tdfilter(c)
-	return c:IsLevelBelow(8) and c:IsFaceup() and c:IsAbleToDeck()
+	return c:IsLevelBelow(8) and c:IsFaceup()
 end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement

@@ -20,7 +20,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp,chk)
 	return Duel.GetMatchingGroupCount(s.cfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)>=3
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsLevelBelow(8) and c:IsAbleToHand()
+	return c:IsFaceup() and c:IsLevelBelow(8)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,nil) end
@@ -32,7 +32,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local dg=Duel.SelectMatchingCard(tp,s.filter,tp,0,LOCATION_MZONE,1,1,nil)
 	if #dg>0 then
 		dg=dg:AddMaximumCheck()
-		Duel.HintSelection(dg,true)
+		Duel.HintSelection(dg)
 		Duel.SendtoHand(dg,nil,REASON_EFFECT)
 	end
 end

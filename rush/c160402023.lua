@@ -22,7 +22,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 end
 function s.thfilter(c)
-	return c:IsFaceup() and c:IsLevelBelow(8) and c:IsAttackPos() and c:IsAbleToHand() and not c:IsMaximumModeSide()
+	return c:IsFaceup() and c:IsLevelBelow(8) and c:IsAttackPos() and not c:IsMaximumModeSide()
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Effect

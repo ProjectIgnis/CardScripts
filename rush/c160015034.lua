@@ -24,7 +24,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_TODECK,nil,1,tp,LOCATION_ONFIELD)
 end
 function s.tdfilter(c)
-	return c:IsPosition(POS_FACEDOWN) and c:IsAbleToDeck()
+	return c:IsPosition(POS_FACEDOWN)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

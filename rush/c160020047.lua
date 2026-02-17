@@ -35,7 +35,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsSummonPhaseMain() and c:IsStatus(STATUS_SPSUMMON_TURN) and c:IsSummonType(SUMMON_TYPE_FUSION)
 end
 function s.filter(c)
-	return c:IsSpellTrap() and c:IsAbleToDeck()
+	return c:IsSpellTrap()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_ONFIELD,1,nil) end

@@ -20,7 +20,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsStatus(STATUS_SUMMON_TURN) and c:IsSummonType(SUMMON_TYPE_TRIBUTE)
 end
 function s.filter(c)
-	return c:IsAbleToDeck() and c:IsNotMaximumModeSide()
+	return c:IsNotMaximumModeSide()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local dg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
@@ -32,7 +32,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local sg=dg:Select(tp,1,1,nil)
 		sg=sg:AddMaximumCheck()
 		Duel.HintSelection(sg,true)
-		Duel.SendtoDeck(sg,nil,SEQ_DECKTOP,REASON_EFFECT)
+		if Duel.SendtoDeck(sg,nil,SEQ_DECKTOP,REASON_EFFECT)<1 then return end
 		if #sg>1 then
 			Duel.SortDecktop(1-tp,1-tp,#sg)
 		end

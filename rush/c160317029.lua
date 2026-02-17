@@ -33,7 +33,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,nil) end
 end
 function s.thfilter(c)
-	return c:IsDefensePos() and c:IsAbleToHand() and not c:IsMaximumModeSide()
+	return c:IsDefensePos() and not c:IsMaximumModeSide()
 end
 function s.cfilter2(c)
 	return c:IsFaceup() and c:IsLevel(8) and c:IsRace(RACE_GALAXY)

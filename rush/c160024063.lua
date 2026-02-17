@@ -33,7 +33,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,1-tp,LOCATION_MZONE)
 end
 function s.thfilter(c)
-	return c:IsAbleToHand() and c:IsNotMaximumModeSide()
+	return c:IsNotMaximumModeSide()
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

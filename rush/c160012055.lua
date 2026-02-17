@@ -34,26 +34,26 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,2,tp,LOCATION_GRAVE)
 end
 function s.shufflefilter(c)
-	return c:IsFaceup() and c:IsLevelBelow(8) and c:IsAbleToDeck()
+	return c:IsFaceup() and c:IsLevelBelow(8)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	-- Requirement
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_GRAVE,0,2,2,nil)
-	Duel.HintSelection(g,true)
+	Duel.HintSelection(g)
 	if #g==0 or Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST)==0 then return end
 	-- Effect
 	local dg=Duel.GetMatchingGroup(s.tdfilter3,tp,0,LOCATION_GRAVE,nil)
 	local sg=aux.SelectUnselectGroup(dg,e,tp,2,7,aux.dncheck,1,tp,HINTMSG_TODECK)
 	if #sg==0 then return end
-	Duel.HintSelection(sg,true)
+	Duel.HintSelection(sg)
 	if Duel.SendtoDeck(sg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>=6
 		and Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(s.shufflefilter),tp,0,LOCATION_MZONE,1,nil)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 		local g2=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.shufflefilter),tp,0,LOCATION_MZONE,1,1,nil)
 		if #g2>0 then
-			Duel.HintSelection(g2,true)
+			Duel.HintSelection(g2)
 			Duel.SendtoDeck(g2,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 		end
 	end

@@ -36,7 +36,7 @@ function s.rescon(sg,e,tp,mg)
 	return (#sg==1 and sg:IsExists(Card.IsRitualMonster,1,nil,id)) or sg:IsExists(Card.IsRace,3,nil,RACE_ZOMBIE)
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsAbleToHand() and not c:IsMaximumModeSide()
+	return c:IsFaceup() and not c:IsMaximumModeSide()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,nil) end

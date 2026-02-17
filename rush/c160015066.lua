@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.tdfilter(c)
-	return c:IsAbleToDeck() and c:IsType(TYPE_FUSION) and c:IsFaceup() and not c:IsMaximumModeSide()
+	return c:IsType(TYPE_FUSION) and c:IsFaceup() and not c:IsMaximumModeSide()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tdfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end

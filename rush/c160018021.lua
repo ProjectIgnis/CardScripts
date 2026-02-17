@@ -26,7 +26,7 @@ function s.cfilter(c)
 	return c:IsFaceup() and c:IsRace(RACE_WARRIOR) and c:IsType(TYPE_FUSION)
 end
 function s.thfilter(c)
-	return c:IsFaceup() and c:IsLevelBelow(8) and c:IsAbleToHand() and not c:IsMaximumModeSide()
+	return c:IsFaceup() and c:IsLevelBelow(8) and not c:IsMaximumModeSide()
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

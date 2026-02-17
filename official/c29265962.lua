@@ -3,7 +3,7 @@
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
-	--Equip 2 monsters with the same original name as a target to that target
+	--Target 1 face-up monster you control; equip 2 monsters with the same original name as that target from your hand, Deck, and/or GY to that target as Equip Spells, and if you do, it cannot attack or be destroyed by battle while equipped with those 2 cards. You cannot Special Summon for the rest of this turn after this card resolves, except monsters with the same original Type as the targeted monster
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_EQUIP)
@@ -57,8 +57,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 		end
 		Duel.EquipComplete()
 		if equip_success then
-			local ec1,ec2=eqg:GetFirst(),eqg:GetNext()
-			--Cannot attack while equipped with those 2 cards
+			--It cannot attack or be destroyed by battle while equipped with those 2 cards
 			local e2=Effect.CreateEffect(c)
 			e2:SetDescription(aux.Stringid(id,1))
 			e2:SetType(EFFECT_TYPE_SINGLE)
@@ -67,7 +66,6 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetCondition(function(e) return e:GetHandler():GetEquipGroup():IsExists(function(ec) return ec:GetFlagEffectLabel(id)==fid end,2,nil) end)
 			e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 			tc:RegisterEffect(e2)
-			--Cannot be destroyed by battle while equipped with those 2 cards
 			local e3=e2:Clone()
 			e3:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 			e3:SetValue(1)
@@ -75,14 +73,15 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 	if not e:IsHasType(EFFECT_TYPE_ACTIVATE) then return end
-	--Cannot Special Summon for the rest of this turn after this card resolves, except monsters with the same original Type as the targeted monster
+	local orig_race=tc:GetOriginalRace()
+	--You cannot Special Summon for the rest of this turn after this card resolves, except monsters with the same original Type as the targeted monster
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,2))
 	e4:SetType(EFFECT_TYPE_FIELD)
 	e4:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e4:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e4:SetTargetRange(1,0)
-	e4:SetTarget(function(e,c) return not c:IsOriginalRace(tc:GetOriginalRace()) end)
+	e4:SetTarget(function(e,c) return not c:IsOriginalRace(orig_race) end)
 	e4:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e4,tp)
 end

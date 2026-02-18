@@ -44,13 +44,19 @@ function s.xyztg(e,c)
 end
 function s.copyfilter(c,e,tp)
 	if not c:IsType(TYPE_XYZ) or c:HasFlagEffect(id) then return false end
+	local eff=nil
 	local effs={c:GetOwnEffects()}
-	for _,eff in ipairs(effs) do
+	for _,tmp_eff in ipairs(effs) do
+		if tmp_eff:GetCode()==EFFECT_RANKUP_EFFECT then
+			eff=tmp_eff:GetLabelObject()
+		else
+			eff=tmp_eff
+		end
 		if eff:HasDetachCost() then
 			local con=eff:GetCondition()
 			local tg=eff:GetTarget()
-			if (con==nil or con(eff,tp,Group.CreateGroup(),PLAYER_NONE,0,e,REASON_EFFECT,PLAYER_NONE,0))
-				and (tg==nil or tg(eff,tp,Group.CreateGroup(),PLAYER_NONE,0,e,REASON_EFFECT,PLAYER_NONE,0)) then
+			if (con==nil or con(e,tp,Group.CreateGroup(),PLAYER_NONE,0,e,REASON_EFFECT,PLAYER_NONE,0))
+				and (tg==nil or tg(e,tp,Group.CreateGroup(),PLAYER_NONE,0,e,REASON_EFFECT,PLAYER_NONE,0)) then
 				return true
 			end
 		end
@@ -74,9 +80,15 @@ function s.copycost(e,tp,eg,ep,ev,re,r,rp,chk)
 	else
 		Duel.PayLPCost(tp,400)
 	end
+	local eff=nil
 	local available_effs={}
 	local effs={sc:GetOwnEffects()}
-	for _,eff in ipairs(effs) do
+	for _,tmp_eff in ipairs(effs) do
+		if tmp_eff:GetCode()==EFFECT_RANKUP_EFFECT then
+			eff=tmp_eff:GetLabelObject()
+		else
+			eff=tmp_eff
+		end
 		if eff:HasDetachCost() then
 			local con=eff:GetCondition()
 			local tg=eff:GetTarget()

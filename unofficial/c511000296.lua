@@ -117,7 +117,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		c:CompleteProcedure()
 	end
 end
-function s.negatkacon(e,tp,eg,ep,ev,re,r,rp)
+function s.negatkcon(e,tp,eg,ep,ev,re,r,rp)
 	local d=Duel.GetAttackTarget()
 	return d and d:IsControler(tp)
 end

@@ -54,7 +54,7 @@ function s.initial_effect(c)
 	e6:SetCode(EVENT_PHASE+PHASE_END)
 	e6:SetRange(LOCATION_MZONE)
 	e6:SetCountLimit(1)
-	e6:SetCondition(function(e,tp) return Duel.IsTurnPlayer(1-tp) and not Duel.HasFlagEffect(tp,id) end)
+	e6:SetCondition(function(e,tp) return Duel.IsTurnPlayer(1-tp) and not e:GetHandler():HasFlagEffect(id) end)
 	e6:SetOperation(function(e) Duel.Win(e:GetHandlerPlayer(),WIN_REASON_NUMBER_iC1000) end)
 	c:RegisterEffect(e6)
 	--Once per turn, when this card is attacked: You can detach 1 material from this card; negate the attack, then gain LP equal to the attacking monster's ATK
@@ -69,25 +69,17 @@ function s.initial_effect(c)
 	e7:SetTarget(s.negatktg)
 	e7:SetOperation(s.negatkop)
 	c:RegisterEffect(e7)
-	--Check for attacks performed by the opponent
-	aux.GlobalCheck(s,function()
-		local ge1=Effect.CreateEffect(c)
-		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-		ge1:SetCode(EVENT_ATTACK_ANNOUNCE)
-		ge1:SetOperation(s.check)
-		Duel.RegisterEffect(ge1,0)
-		local ge2=ge1:Clone()
-		Duel.RegisterEffect(ge2,1)
-	end)
+	--Register a flag on this card whenever it's selected as an attack target
+	local e8=Effect.CreateEffect(c)
+	e8:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e8:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
+	e8:SetCode(EVENT_BE_BATTLE_TARGET)
+	e8:SetOperation(function(e) e:GetHandler():RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1) end)
+	c:RegisterEffect(e8)
 end
 s.listed_series={SET_NUMBER}
 s.listed_names={89477759} --"Number C1000: Numeronious"
 s.xyz_number=1000
-function s.check(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.IsTurnPlayer(tp) or Duel.GetFlagEffect(tp,id)>0 then return end
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1)
-end
 function s.cfilter(c,e,tp,xyz)
 	return c:IsCode(89477759) and c:IsPreviousControler(tp) and c:IsReason(REASON_DESTROY)
 		and c:IsCanBeXyzMaterial(xyz,tp) and (not e or c:IsRelateToEffect(e))

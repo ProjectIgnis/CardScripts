@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	e0:SetType(EFFECT_TYPE_SINGLE)
 	e0:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e0:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,SET_NUMBER)))
-	c:RegisterEffect(e8)
+	c:RegisterEffect(e0)
 	--When a "Number C1000: Numeronius" you control is destroyed: You can Xyz Summon this card from your Extra Deck, by using it as the Xyz Material 
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))

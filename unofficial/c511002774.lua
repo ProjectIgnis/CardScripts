@@ -1,8 +1,8 @@
---時空混沌渦
-Duel.LoadScript("c420.lua")
+--時空混沌渦 (Anime)
+--Tachyon Chaos Hole (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
-	--banish
+	--When a "Tachyon" monster you control is destroyed by battle: Banish all cards your opponent controls.
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(59650656,0))
 	e1:SetCategory(CATEGORY_REMOVE)
@@ -17,19 +17,20 @@ function s.initial_effect(c)
 	e2:SetDescription(aux.Stringid(59650656,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCode(EVENT_PREDRAW)
 	e2:SetRange(LOCATION_GRAVE)
-	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCondition(s.spcon)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-function s.cfilter(c,tp)
-	return c:IsTachyon() and c:IsPreviousControler(tp)
+s.listed_series={SET_TACHYON}
+function s.desfilter(c,tp)
+	return c:IsMonster() and c:IsSetCard(SET_TACHYON) and c:IsPreviousControler(tp)
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.cfilter,1,nil,tp)
+	return eg:IsExists(s.desfilter,1,nil,tp)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,1,nil) end
@@ -41,11 +42,11 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Remove(g,POP_FACEUP,REASON_EFFECT)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return tp==Duel.GetTurnPlayer() and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>0
+	return Duel.IsTurnPlayer(tp) and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>0
 		and Duel.GetDrawCount(tp)>0
 end
 function s.spfilter(c,e,tp)
-	return c:IsTachyon() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsMonster() and c:IsSetCard(SET_TACHYON) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.spfilter(chkc,e,tp) end

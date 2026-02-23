@@ -1,5 +1,6 @@
 --Chillin' Outback
 --Scripted by The Razgriz
+Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

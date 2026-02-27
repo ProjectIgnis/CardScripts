@@ -59,7 +59,7 @@ function s.controlop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.resconfilter(c,tp)
-	return c:IsAttribute(ATTRIBUTE_WIND) and c:IsMonster() and c:IsControler(tp)
+	return c:IsAttribute(ATTRIBUTE_WIND) and c:IsMonster() and c:IsControler(tp) and c:IsFaceup()
 end
 function s.rescon(sg,e,tp,mg)
 	return sg:IsExists(s.resconfilter,1,nil,tp)

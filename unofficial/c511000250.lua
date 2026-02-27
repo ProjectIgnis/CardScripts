@@ -57,7 +57,7 @@ function s.initial_effect(c)
 	e5:SetRange(LOCATION_MZONE)
 	e5:SetCode(EFFECT_DESTROY_REPLACE)
 	e5:SetCondition(function(e) return Duel.IsExistingMatchingCard(Card.IsFaceup,0,LOCATION_FZONE,LOCATION_FZONE,1,nil) end)
-	e5:SetTarget(s.replacetg)
+	e5:SetTarget(s.desreptg)
 	c:RegisterEffect(e5)
 end
 s.listed_series={SET_EARTHBOUND_IMMORTAL}

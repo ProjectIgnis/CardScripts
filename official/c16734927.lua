@@ -13,9 +13,9 @@ function s.initial_effect(c)
 	e1:SetOperation(s.effop)
 	c:RegisterEffect(e1)
 end
-s.listed_names={100453007,CARD_CALL_OF_THE_HAUNTED} --"Call of the Forgotten"
+s.listed_names={80749819,CARD_CALL_OF_THE_HAUNTED} --"Call of the Forgotten"
 function s.thfilter(c)
-	return ((c:IsLevel(6) and c:IsRace(RACE_ZOMBIE)) or c:IsCode(100453007)) and c:IsAbleToHand()
+	return ((c:IsLevel(6) and c:IsRace(RACE_ZOMBIE)) or c:IsCode(80749819)) and c:IsAbleToHand()
 end
 function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b1=Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0

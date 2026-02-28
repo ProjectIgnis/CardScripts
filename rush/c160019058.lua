@@ -29,15 +29,29 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	if tc:WasMaximumMode() then
 		Duel.SpecialSummon(tc,0,tp,tc:GetPreviousControler(),false,false,tc:GetPreviousPosition(),0x4)
+		tc:RegisterFlagEffect(FLAG_MAXIMUM_CENTER_PREONFIELD,RESET_EVENT+RESETS_STANDARD-RESET_TOGRAVE-RESET_LEAVE,0,1)
 		tc:RegisterFlagEffect(FLAG_MAXIMUM_CENTER,RESET_EVENT|RESETS_STANDARD&~RESET_TOFIELD,0,1)
-		local maxg=Duel.GetMatchingGroup(s.maxfilter,tc:GetPreviousControler(),LOCATION_GRAVE,0,nil,tc)
-		for maxc in maxg:Iter() do
-			local zone=0x8
-			if maxc.MaximumSide=="Left" then zone=0x2 end
-			maxc:RegisterFlagEffect(FLAG_MAXIMUM_SIDE,RESET_EVENT|RESETS_STANDARD&~RESET_TOFIELD,0,1)
-			Duel.MoveToField(maxc,tc:GetPreviousControler(),tc:GetPreviousControler(),LOCATION_MZONE,POS_FACEUP_ATTACK,true,zone)
-		end
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		e1:SetCode(EVENT_CHAIN_END)
+		e1:SetLabelObject(tc)
+		e1:SetOperation(s.desop)
+		e1:SetReset(RESET_PHASE+PHASE_END)
+		Duel.RegisterEffect(e1,tp)
 	else
 		Duel.SpecialSummon(tc,0,tp,tc:GetPreviousControler(),false,false,tc:GetPreviousPosition())
 	end
+end
+function s.desop(e,tp,eg,ep,ev,re,r,rp)
+	local tc=e:GetLabelObject()
+	local maxg=Duel.GetMatchingGroup(s.maxfilter,tc:GetPreviousControler(),LOCATION_GRAVE,0,nil,tc)
+	for maxc in maxg:Iter() do
+		local zone=0x8
+		if maxc.MaximumSide=="Left" then zone=0x2 end
+		maxc:RegisterFlagEffect(FLAG_MAXIMUM_SIDE_PREONFIELD,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD-RESET_TOGRAVE-RESET_LEAVE,0,1)
+		maxc:RegisterFlagEffect(FLAG_MAXIMUM_SIDE_RELATION+tc:GetCardID(),RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD-RESET_TOGRAVE-RESET_LEAVE,0,1)
+		maxc:RegisterFlagEffect(FLAG_MAXIMUM_SIDE,RESET_EVENT|RESETS_STANDARD&~RESET_TOFIELD,0,1)
+		Duel.MoveToField(maxc,tc:GetPreviousControler(),tc:GetPreviousControler(),LOCATION_MZONE,POS_FACEUP_ATTACK,true,zone)
+	end
+	e:Reset()
 end

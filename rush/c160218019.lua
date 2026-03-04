@@ -21,14 +21,14 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge1,0)
 	end)
 end
-s.listed_names={160218019}
+s.listed_names={id} --"Handbook to the Spiritual Arts"
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
-	if re:GetHandler():IsCode(160218019) then
+	if re:GetHandler():IsCode(id) then
 		Duel.RegisterFlagEffect(rp,id,RESET_PHASE|PHASE_END,0,1)
 	end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetFlagEffect(tp,id)==0
+	return not Duel.HasFlagEffect(tp,id)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>=5 end
@@ -67,7 +67,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 				e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 				e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 				e2:SetCode(EVENT_ATTACK_ANNOUNCE)
-				e2:SetOperation(s.checkop)
+				e2:SetOperation(s.diratkcheckop)
 				e2:SetReset(RESET_PHASE|PHASE_END)
 				e2:SetLabelObject(e1)
 				Duel.RegisterEffect(e2,tp)
@@ -86,7 +86,7 @@ end
 function s.atktg(e,c)
 	return c:GetFieldID()~=e:GetLabel()
 end
-function s.checkop(e,tp,eg,ep,ev,re,r,rp)
+function s.diratkcheckop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetAttackTarget()
 	if tg==nil then	
 		local fid=eg:GetFirst():GetFieldID()

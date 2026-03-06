@@ -83,7 +83,7 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.rthfilter(c,e,tp)
-	return ((c:IsType(TYPE_PENDULUM) and c:IsFaceup() and c:IsControler(tp)) or c:IsControler(1-tp))
+	return ((c:IsOriginalType(TYPE_PENDULUM) and c:IsFaceup() and c:IsControler(tp)) or c:IsControler(1-tp))
 		and c:IsCanBeEffectTarget(e) and c:IsAbleToHand()
 end
 function s.rthtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

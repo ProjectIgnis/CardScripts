@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
 end
-s.listed_names={16178681,511015104,511015105} -"Odd-Eyes Pendulum Dragon", "Odd-Eyes Fusiongate", "Odd-Eyes Synchrogate"
+s.listed_names={16178681,511015104,511015105} --"Odd-Eyes Pendulum Dragon", "Odd-Eyes Fusiongate", "Odd-Eyes Synchrogate"
 function s.counterfilter(c)
 	return not c:IsPendulumSummoned()
 end

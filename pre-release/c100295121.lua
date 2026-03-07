@@ -70,7 +70,7 @@ end
 function s.spfilter(c,e,tp)
 	if c:IsLocation(LOCATION_DECK) and Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return false end
 	if c:IsLocation(LOCATION_EXTRA) and Duel.GetLocationCountFromEx(tp,tp,nil,c)<=0 then return false end
-	return c:IsSetCard(SET_CLOWN_CREW) and not c:IsPendulumMonster() and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+	return c:IsSetCard(SET_CLOWN_CREW) and c:IsMonster() and not c:IsPendulumMonster() and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b1=not Duel.HasFlagEffect(tp,id)

@@ -3,22 +3,22 @@
 --Script by nekrozar
 local s,id=GetID()
 function s.initial_effect(c)
-	--link summon
-	Link.AddProcedure(c,nil,2,99,s.lcheck)
 	c:EnableReviveLimit()
-	--Set
+	--Link Summon procedure: 2+ monsters with different names
+	Link.AddProcedure(c,nil,2,99,s.lcheck)
+	--Set 1 Spell/Trap from your GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetCountLimit(1,id)
-	e1:SetCondition(s.setcon)
+	e1:SetCondition(function(e) return e:GetHandler():IsLinkSummoned() end)
 	e1:SetCost(s.setcost)
 	e1:SetTarget(s.settg)
 	e1:SetOperation(s.setop)
 	c:RegisterEffect(e1)
-	--Cannot activate
+	--Special Summoned monsters on the field cannot activate their effects, unless they are linked
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_CANNOT_ACTIVATE)
@@ -30,9 +30,6 @@ function s.initial_effect(c)
 end
 function s.lcheck(g,lc,sumtype,tp)
 	return g:CheckDifferentProperty(Card.GetCode,lc,sumtype,tp)
-end
-function s.setcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsLinkSummoned()
 end
 function s.setcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
@@ -47,7 +44,6 @@ function s.settg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		and Duel.IsExistingTarget(s.setfilter,tp,LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
 	local g=Duel.SelectTarget(tp,s.setfilter,tp,LOCATION_GRAVE,0,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,g,1,0,0)
 	if e:GetHandler():GetMutualLinkedGroupCount()>0 then
 		e:SetLabel(1)
 	else
@@ -56,11 +52,13 @@ function s.settg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local cat=CATEGORY_SET
 	if e:GetLabel()==1 then cat=cat+CATEGORY_DRAW end
 	e:SetCategory(cat)
+	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,g,1,tp,0)
+	Duel.SetOperationInfo(0,CATEGORY_SET,g,1,tp,0)
 end
 function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) and tc:IsSSetable() and Duel.SSet(tp,tc)>0 then
-		--Cannot be activated this turn
+		--It cannot be activated this turn
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_TRIGGER)
@@ -75,6 +73,5 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.aclimit(e,re,tp)
 	local tc=re:GetHandler()
-	return tc:IsLocation(LOCATION_MZONE) and tc:IsFaceup() and tc:IsSpecialSummoned()
-		and not tc:IsLinked() and re:IsMonsterEffect()
+	return tc:IsLocation(LOCATION_MZONE) and tc:IsSpecialSummoned() and not tc:IsLinked() and re:IsMonsterEffect()
 end

@@ -64,6 +64,7 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 			if #g>0 and Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>0 and Duel.IsPlayerCanDraw(p) then
 				local draw_count=Duel.GetOperatedGroup():FilterCount(Card.IsPreviousControler,nil,p)
 				if draw_count>0 then
+					Duel.ShuffleDeck(p)
 					Duel.BreakEffect()
 					Duel.Draw(p,draw_count,REASON_EFFECT)
 				end

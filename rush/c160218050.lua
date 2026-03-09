@@ -24,7 +24,12 @@ function s.matfilter2(c)
 	return c:IsType(TYPE_EFFECT) and c:IsRace(RACE_FAIRY)
 end
 function s.fcheck(tp,sg,fc)
-	local mg1=sg:Filter(s.matfilter1,nil)
-	local mg2=sg:Filter(s.matfilter2,nil)
-	return #sg>1 and #mg1==1 and #mg2>0
+    local mg1=sg:Filter(s.matfilter1, nil)
+    local mg2=sg:Filter(s.matfilter2, nil)
+    local count=#sg
+    local total=fc.min_material_count
+    if count<total then
+        return #mg1<=1 and (#mg1+#mg2==count)
+    end
+    return #mg1==1 and #mg2>=1 and (#mg1+#mg2==count)
 end

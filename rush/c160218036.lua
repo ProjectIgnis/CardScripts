@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Fusion materials
 	c:EnableReviveLimit()
-	Fusion.AddProcMixRep(c,true,true,s.ffilter,1,1,CARD_SKYSAVIOR_SOLEIL,160218048)
+	Fusion.AddProcMixRep(c,true,true,s.ffilter,1,1,CARD_SKYSAVIOR_SOLEIL,160218049)
 	--Piercing
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))

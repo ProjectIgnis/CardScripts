@@ -121,6 +121,7 @@ SET_GEM_KNIGHT                    = 0x1047
 SET_NUMBER                        = 0x48
 SET_NUMBER_C                      = 0x1048
 SET_NUMBER_C39                    = 0x5048
+SET_NUMBER_99                     = 0x2048
 SET_SKYBLASTER                    = 0x49
 SET_TIMELORD                      = 0x4a
 SET_AESIR                         = 0x4b
@@ -605,3 +606,4 @@ SET_GMX                           = 0x1d4
 --Released but the official English name is unconfirmed
 SET_CLOWN_CREW                    = 0x1d3
 --Pre-release archetypes
+SET_DARK_TUNER                    = 0x1d5

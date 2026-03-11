@@ -437,6 +437,7 @@ SET_ELDLICH                       = 0x142
 SET_ELDLIXIR                      = 0x143
 SET_GOLDEN_LAND                   = 0x144
 SET_PHANTASM                      = 0x145
+SET_SACRED_BEAST                  = 0x1145
 SET_DOGMATIKA                     = 0x146
 SET_MELFFY                        = 0x147
 SET_POTAN                         = 0x148

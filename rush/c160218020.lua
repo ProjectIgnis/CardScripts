@@ -44,7 +44,7 @@ function s.thfilter(c,att)
 	return (s.charmerfil(c) or s.familiarfil(c)) and c:IsAttribute(att) and c:IsAbleToHand()
 end
 function s.rescon(sg,e,tp,mg)
-	return sg:GetClassCount(Card.GetAttribute)==1
+	return sg:GetClassCount(Card.GetAttribute)==1 and sg:FilterCount(s.charmerfil,nil)<2 and sg:FilterCount(s.familiarfil,nil)<2
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then

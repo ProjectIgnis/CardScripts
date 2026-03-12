@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetHintTiming(0,TIMING_STANDBY_PHASE|TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E)
 	c:RegisterEffect(e1)
 	--You can banish this card from your GY; Fusion Summon 1 "Phantasm" Fusion Monster from your Extra Deck, using monsters from your hand or field
-	local fusion_params={aux.FilterBoolFunction(Card.IsSetCard,SET_PHANTASM)}
+	local fusion_params={fusfilter=aux.FilterBoolFunction(Card.IsSetCard,SET_PHANTASM)}
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)

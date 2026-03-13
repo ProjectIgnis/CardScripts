@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,{id,1})
-	e2:SetCondition(function(e,tp) return Duel.HasFlagEffect(tp,id+100) end)
+	e2:SetCondition(function(e,tp) return Duel.HasFlagEffect(tp,id+1) end)
 	e2:SetCost(Cost.AND(Cost.SelfBanish,Cost.HardOncePerChain(id)))
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
@@ -49,10 +49,10 @@ end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(s.checkfilter,nil)
 	if g:IsExists(Card.IsPreviousControler,1,nil,0) then
-		Duel.RegisterFlagEffect(0,id+100,RESET_PHASE|PHASE_END,0,1)
+		Duel.RegisterFlagEffect(0,id+1,RESET_PHASE|PHASE_END,0,1)
 	end
 	if g:IsExists(Card.IsPreviousControler,1,nil,1) then
-		Duel.RegisterFlagEffect(1,id+100,RESET_PHASE|PHASE_END,0,1)
+		Duel.RegisterFlagEffect(1,id+1,RESET_PHASE|PHASE_END,0,1)
 	end
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)

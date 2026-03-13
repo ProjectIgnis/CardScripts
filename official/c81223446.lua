@@ -2,36 +2,44 @@
 --Necro Fusion
 local s,id=GetID()
 function s.initial_effect(c)
-	--Fusion summon 1 fusion monster by banishing monsters from GY, face-down, as material
-	local e1=Fusion.CreateSummonEff(c,nil,s.matfilter,s.fextra,s.extraop,nil,s.stage2,nil,nil,nil,nil,nil,nil,nil,s.extratg)
+	--Fusion Summon 1 Fusion Monster from your Extra Deck, by banishing Fusion Materials mentioned on it from your GY face-down, but it cannot attack this turn
+	local e1=Fusion.CreateSummonEff({
+			handler=c,
+			matfilter=aux.FALSE,
+			extrafil=s.fextra,
+			extratg=s.extratg,
+			extraop=s.extraop,
+			stage2=s.stage2}
+		)
+	e1:SetHintTiming(0,TIMING_STANDBY_PHASE|TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E)
 	c:RegisterEffect(e1)
 end
-function s.matfilter(c,e,tp,check_or_run)
-	return aux.SpElimFilter(c) and c:IsAbleToRemove(tp,POS_FACEDOWN)
+function s.matfilter(c,tp)
+	return c:IsAbleToRemove(tp,POS_FACEDOWN) and aux.SpElimFilter(c)
 end
 function s.fextra(e,tp,mg)
-	if not Duel.IsPlayerAffectedByEffect(tp,CARD_SPIRIT_ELIMINATION) then
-		return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsAbleToRemove),tp,LOCATION_GRAVE,0,nil)
-	end
-	return nil
-end
-function s.extraop(e,tc,tp,sg)
-	Duel.Remove(sg,POS_FACEDOWN,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
-	sg:Clear()
-end
-function s.stage2(e,tc,tp,sg,chk)
-	if chk==1 then
-		--Cannot attack this turn
-		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetDescription(3206)
-		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_CANNOT_ATTACK)
-		e1:SetReset(RESETS_STANDARD_PHASE_END)
-		tc:RegisterEffect(e1,true)
-	end
+	return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(s.matfilter),tp,LOCATION_GRAVE|LOCATION_MZONE,0,nil,tp)
 end
 function s.extratg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,0,tp,LOCATION_GRAVE)
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,tp,LOCATION_GRAVE)
+end
+function s.extraop(e,fc,tp,sg)
+	local faceup,facedown=sg:Split(Card.IsFaceup,nil)
+	if #faceup>0 then Duel.HintSelection(faceup) end
+	if #facedown>0 then Duel.ConfirmCards(1-tp,facedown) end
+	Duel.Remove(sg,POS_FACEDOWN,REASON_EFFECT|REASON_MATERIAL|REASON_FUSION)
+	sg:Clear()
+end
+function s.stage2(e,fc,tp,sg,chk)
+	if chk==1 then
+		--It cannot attack this turn
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetDescription(3206)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
+		e1:SetCode(EFFECT_CANNOT_ATTACK)
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
+		fc:RegisterEffect(e1,true)
+	end
 end

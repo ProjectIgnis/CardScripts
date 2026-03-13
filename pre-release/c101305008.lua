@@ -59,7 +59,7 @@ function s.sptg(summon_location)
 end
 function s.spop(summon_location)
 	return function(e,tp,eg,ep,ev,re,r,rp)
-		if summon_location==LOCATION_HAND and Duel.DiscardHand(tp,s.discardfilter,1,1,REASON_EFFECT,nil,e,tp)<0 then return end
+		if summon_location==LOCATION_HAND and Duel.DiscardHand(tp,s.discardfilter,1,1,REASON_EFFECT|REASON_DISCARD,nil,e,tp)<0 then return end
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 		local exc=nil
 		if summon_location==LOCATION_HAND|LOCATION_GRAVE then

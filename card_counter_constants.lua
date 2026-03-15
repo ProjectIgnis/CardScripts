@@ -109,6 +109,7 @@ CARD_SUMMON_GATE                    = 29724053
 CARD_SUMMONED_SKULL                 = 70781052
 CARD_SUPER_POLYMERIZATION           = 48130397
 CARD_TEMPLE_OF_THE_KINGS            = 29762407
+CARD_TOON_WORLD                     = 15259703
 CARD_TOY_BOX                        = 24878656
 CARD_UMI                            = 22702055
 CARD_UNKNOWN                        = 10000110

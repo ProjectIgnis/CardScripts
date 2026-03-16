@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	if not (#eg==1 or rp==1-tp) then return false end
+	if #eg~=1 or rp==tp then return false end
 	local ec=eg:GetFirst()
 	return ec:IsPreviousLocation(LOCATION_MZONE) and ec:IsPreviousControler(tp) and ec:IsReason(REASON_EFFECT)
 end

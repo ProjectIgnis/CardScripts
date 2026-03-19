@@ -1,4 +1,4 @@
---
+--ミラクル・レイヴン－供物の儀式－
 --Miracle Raven
 --scripted by pyrQ
 local s,id=GetID()

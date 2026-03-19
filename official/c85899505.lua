@@ -1,5 +1,5 @@
 --合体魔竜ティマイオス
---Timaeus the United Magidragon
+--Timaeus the United Magical Dragon
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

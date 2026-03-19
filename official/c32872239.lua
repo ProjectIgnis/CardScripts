@@ -1,5 +1,5 @@
 --ガルガルドの屍煉魔
---Gargardo the Necroforger Fiend
+--Gallugallud the Endless Enigma
 local s,id=GetID()
 function s.initial_effect(c)
 	Pendulum.AddProcedure(c)

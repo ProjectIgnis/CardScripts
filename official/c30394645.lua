@@ -1,5 +1,5 @@
 --教導の死徒
---Dogmatika Chaplain
+--Dogmatika Lawbringer
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

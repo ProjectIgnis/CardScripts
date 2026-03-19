@@ -1,5 +1,5 @@
 --黒魔術の護符
---Dark Magic Amulet
+--Dark Magic Talisman
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

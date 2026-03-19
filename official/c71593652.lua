@@ -1,4 +1,4 @@
---Japanese name
+--天至る叛逆
 --Mutiny in the Sky
 --scripted by Naim
 local s,id=GetID()

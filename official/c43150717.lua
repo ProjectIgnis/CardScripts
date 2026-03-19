@@ -1,4 +1,4 @@
---Japanese name
+--エクシーズ・レイ
 --Xyz Lay
 --scripted by Naim
 local s,id=GetID()

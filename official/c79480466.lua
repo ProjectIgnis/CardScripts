@@ -1,5 +1,5 @@
 --魂喰魔獣 バズー
---Bazoo the Soul Eater Beast
+--Bazoo the Soul-Devourer
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

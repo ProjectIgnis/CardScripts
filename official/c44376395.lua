@@ -1,4 +1,4 @@
---
+--ＡＳＨＬＡＮ－Ｕ１０００型
 --ASHLAN U1000
 --scripted by pyrQ
 local s,id=GetID()

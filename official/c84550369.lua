@@ -1,5 +1,5 @@
 --御巫神舞－二貴子
---Mikanko Divine Dance - Futahashira no Uzu no Miko
+--Mikanko Shinbu - Noble Twins
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

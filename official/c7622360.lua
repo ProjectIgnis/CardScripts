@@ -1,5 +1,5 @@
 --デーモンズ・マタドール
---Archfiend Matador
+--Matador Archfiend
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

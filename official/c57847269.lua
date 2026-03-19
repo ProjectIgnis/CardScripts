@@ -40,13 +40,21 @@ function s.initial_effect(c)
 	end)
 end
 s.listed_series={SET_CLOWN_CREW}
+function s.popcount(value)
+	local count = 0
+	while value > 0 do
+		value = value & (value - 1)
+		count = count + 1
+	end
+	return count
+end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(Card.IsType,nil,TYPE_RITUAL|TYPE_PENDULUM|TYPE_EXTRA)
 	for rc in g:Iter() do
 		local card_type=(rc:GetOriginalType()&(TYPE_RITUAL|TYPE_PENDULUM|TYPE_EXTRA))
-		local label=Duel.GetFlagEffectLabel(0,id)
-		if not label or card_type&label==0 then
-			local new_label=label and (card_type|label) or card_type
+		local current_label=Duel.GetFlagEffectLabel(0,id) or 0
+		local new_label=current_label|card_type
+		if new_label~=current_label then
 			Duel.RegisterFlagEffect(0,id,RESET_PHASE|PHASE_END,0,1)
 			Duel.SetFlagEffectLabel(0,id,new_label)
 		end
@@ -86,12 +94,15 @@ function s.aclimit(e,re,tp)
 	return re:IsMonsterEffect() and rc:IsOnField() and rc:IsSummonLocation(LOCATION_DECK|LOCATION_EXTRA)
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ct=Duel.GetFlagEffect(0,id)
+	local types=Duel.GetFlagEffectLabel(0,id) or 0
+	local ct = s.popcount(types)
 	if chk==0 then return ct>0 and Duel.IsPlayerCanDraw(tp,ct) end
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,ct)
 end
 function s.drop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.Draw(tp,Duel.GetFlagEffect(0,id),REASON_EFFECT)>0 then
+	local types=Duel.GetFlagEffectLabel(0,id) or 0
+	local ct = s.popcount(types)
+	if Duel.Draw(tp,ct,REASON_EFFECT)>0 then
 		Duel.ShuffleHand(tp)
 		if Duel.IsExistingMatchingCard(Card.IsSSetable,tp,LOCATION_HAND,0,1,nil)
 			and Duel.SelectYesNo(tp,aux.Stringid(id,3)) then

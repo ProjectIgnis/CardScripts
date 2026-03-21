@@ -142,7 +142,7 @@ function Maximum.Operation(mats)
 		for tc in aux.Next(tg) do
 			Duel.MoveToField(tc,tp,tp,LOCATION_MZONE,POS_FACEUP_ATTACK,true)
 		end
-		
+
 		c:RegisterFlagEffect(FLAG_MAXIMUM_CENTER_PREONFIELD,RESET_EVENT+RESETS_STANDARD-RESET_TOGRAVE-RESET_LEAVE,0,1)
 	end
 end
@@ -400,7 +400,7 @@ end
 local function summon_pos_target(e,c)
 	return c:IsMaximumMode()
 end
-local function initial_effect()
+local function register_spsummon_pos()
 	local e1=Effect.GlobalEffect()
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_FORCE_SPSUMMON_POSITION)
@@ -424,7 +424,15 @@ local function initial_effect()
 				end)
 	Duel.RegisterEffect(e2,0)
 end
-initial_effect()
+register_spsummon_pos()
+Debug.ReloadFieldBegin=(function()
+	local old=Debug.ReloadFieldBegin
+	return function(...)
+			old(...)
+			register_spsummon_pos()
+		end
+	end
+)()
 
 --handling for tribute summon (when a Maximum monster is Tributed, its side pieces go at the same place as the center piece for the same reason)
 function Maximum.cfilter(c,tp)

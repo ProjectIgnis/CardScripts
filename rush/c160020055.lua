@@ -78,7 +78,7 @@ function s.tgfilter1(c,e)
 	return c:IsReleasable(REASON_SUMMON) and c:IsNotMaximumModeSide()
 end
 function s.tgfilter2(c,e)
-	return c:IsReleasable(REASON_SUMMON) and c:IsNotMaximumModeSide() and c:IsHasEffect(id)
+	return c:IsReleasable(REASON_SUMMON) and c:IsNotMaximumModeSide() and c:IsHasEffect(id) and not c:IsHasEffect(EFFECT_UNRELEASABLE_SUM)
 end
 function s.tgfilter(c,e,tp)
 	if c:IsControler(tp) then return s.tgfilter1(c,e) end

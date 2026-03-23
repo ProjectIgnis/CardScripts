@@ -606,6 +606,6 @@ SET_ELFNOTE                       = 0x1d0
 SET_GMX                           = 0x1d4
 --Released but the official English name is unconfirmed
 SET_CLOWN_CREW                    = 0x1d3
---Pre-release archetypes
 SET_DARK_TUNER                    = 0x1d5
+--Pre-release archetypes
 SET_BLITZCLIQUE                   = 0x1d6

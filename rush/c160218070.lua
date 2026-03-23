@@ -3,6 +3,14 @@
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)
+	--Name change
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_SINGLE)
+	e0:SetCode(EFFECT_CHANGE_CODE)
+	e0:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e0:SetRange(LOCATION_GRAVE)
+	e0:SetValue(160021058)
+	c:RegisterEffect(e0)
 	local e1=Ritual.CreateProc({handler=c,lvtype=RITPROC_GREATER,filter=s.ritualfil,matfilter=s.forcedgroup,stage2=s.stage2})
 	c:RegisterEffect(e1)
 end

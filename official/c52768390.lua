@@ -2,7 +2,7 @@
 --Dark Creator
 --scripted by Naim
 local s,id=GetID()
-local TOKEN_DARK_CREATOR=id+100
+local TOKEN_DARK_CREATOR=id+1
 function s.initial_effect(c)
 	--You can Special Summon this card (from your hand) by Tributing 2 Fiend and/or Fairy monsters
 	local e1=Effect.CreateEffect(c)

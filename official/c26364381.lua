@@ -2,7 +2,7 @@
 --Demiurge Ema
 --scripted by Naim
 local s,id=GetID()
-local TOKEN_HOMUNCULUS=id+100
+local TOKEN_HOMUNCULUS=id+1
 function s.initial_effect(c)
 	--You can send 4 monsters with 2400 or more ATK and 1000 DEF from your hand, Deck, and/or face-up field to the GY; Special Summon this card from your hand
 	local e1=Effect.CreateEffect(c)

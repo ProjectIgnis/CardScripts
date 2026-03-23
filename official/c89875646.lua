@@ -22,10 +22,10 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	--● Shuffle 1 Dragon monster from your GY into the Deck, then you can Special Summon 1 "Rokket" monster with a different name from your Deck
 	local b1=not Duel.HasFlagEffect(tp,id) and #dg>=1
 	--● Shuffle 2 Dragon monsters from your GY into the Deck, then add 1 Field Spell from your GY to your hand
-	local b2=not Duel.HasFlagEffect(tp,id+100) and #dg>=2 
+	local b2=not Duel.HasFlagEffect(tp,id+1) and #dg>=2 
 		and Duel.IsExistingMatchingCard(aux.AND(Card.IsFieldSpell,Card.IsAbleToHand),tp,LOCATION_GRAVE,0,1,nil)
 	--● Shuffle 3 Dragon monsters from your GY into the Deck, then shuffle up to 3 monsters from your opponent's GY into the Deck
-	local b3=not Duel.HasFlagEffect(tp,id+200) and #dg>=3 
+	local b3=not Duel.HasFlagEffect(tp,id+2) and #dg>=3 
 		and Duel.IsExistingMatchingCard(aux.AND(Card.IsMonster,Card.IsAbleToDeck),tp,0,LOCATION_GRAVE,1,nil)
 	if chk==0 then return b1 or b2 or b3 end
 	local op=Duel.SelectEffect(tp,
@@ -40,12 +40,12 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 	elseif op==2 then
 		e:SetCategory(CATEGORY_TODECK+CATEGORY_TOHAND)
-		Duel.RegisterFlagEffect(tp,id+100,RESET_PHASE|PHASE_END,0,1)
+		Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE|PHASE_END,0,1)
 		Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,2,tp,LOCATION_GRAVE)
 		Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_GRAVE)
 	elseif op==3 then
 		e:SetCategory(CATEGORY_TODECK)
-		Duel.RegisterFlagEffect(tp,id+200,RESET_PHASE|PHASE_END,0,1)
+		Duel.RegisterFlagEffect(tp,id+2,RESET_PHASE|PHASE_END,0,1)
 		Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,4,PLAYER_ALL,LOCATION_GRAVE)
 	end
 end

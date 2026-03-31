@@ -73,7 +73,7 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		if not cost_skip then Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1) end
 		Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,tp,0)
 	elseif op==2 then
-		e:SetCategory(CATEGORY_FUSION_SUMMON)
+		e:SetCategory(CATEGORY_REMOVE+CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
 		e:SetProperty(0)
 		if not cost_skip then Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE|PHASE_END,0,1) end
 		Fusion.SummonEffTG(fusion_params)(e,tp,eg,ep,ev,re,r,rp,1)

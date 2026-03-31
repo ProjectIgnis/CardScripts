@@ -3,20 +3,20 @@
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
-	--Special Summon 1 of your monsters that left the field OR this card
+	--When exactly 1 monster you control (and no other monsters) leaves the field by an opponent's card effect (except during the Damage Step): You can banish this card from your hand or GY; if that monster is in the GY or banished face-up, Special Summon it, otherwise, Special Summon this banished card
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_LEAVE_FIELD)
 	e1:SetRange(LOCATION_HAND|LOCATION_GRAVE)
-	e1:SetCountLimit(1,id)
+	e1:SetCountLimit(1,{id,0})
 	e1:SetCondition(s.spcon)
 	e1:SetCost(Cost.SelfBanish)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--Make this card gain 1500 ATK until the end of the next turn
+	--If this card is Special Summoned: You can make this card gain 1500 ATK until the end of the next turn
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_ATKCHANGE)
@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	if #eg~=1 or rp==tp then return false end
+	if not (#eg==1 and rp==1-tp) then return false end
 	local ec=eg:GetFirst()
 	return ec:IsPreviousLocation(LOCATION_MZONE) and ec:IsPreviousControler(tp) and ec:IsReason(REASON_EFFECT)
 end
@@ -72,7 +72,7 @@ end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and c:IsFaceup() then
-		--This card gains 1500 ATK until the end of the next turn
+		--Make this card gain 1500 ATK until the end of the next turn
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)

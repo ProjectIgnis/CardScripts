@@ -4,12 +4,12 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	Pendulum.AddProcedure(c)
-	--Activate 1 of these effects
+	--If you have a card in your other Pendulum Zone: You can activate 1 of these effects;
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_PZONE)
-	e1:SetCountLimit(1,id)
+	e1:SetCountLimit(1,{id,0})
 	e1:SetCondition(function(e,tp) return Duel.IsExistingMatchingCard(nil,tp,LOCATION_PZONE,0,1,e:GetHandler()) end)
 	e1:SetTarget(s.efftg)
 	e1:SetOperation(s.effop)
@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e2b:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	e2b:SetValue(aux.indoval)
 	c:RegisterEffect(e2b)
-	--Return 1 Pendulum Monster Card you control and 1 card your opponent controls to the hand
+	--(Quick Effect): You can target 1 Pendulum Monster Card you control and 1 card your opponent controls; return them to the hand. You can only use this effect of "Wind Unicorn Parallel, the Dracoslayer" once per turn
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_TOHAND)
@@ -47,7 +47,9 @@ end
 function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local mmz_chk=Duel.GetMZoneCount(tp)>0
+	--● Special Summon this card
 	local b1=mmz_chk and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	--● Destroy this card, and if you do, Special Summon 1 Level 5 or lower Pendulum Monster Card from your Pendulum Zone
 	local b2=mmz_chk and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_PZONE,0,1,c,e,tp)
 	if chk==0 then return b1 or b2 end
 	local op=Duel.SelectEffect(tp,
@@ -67,12 +69,12 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 	local op=e:GetLabel()
 	local c=e:GetHandler()
 	if op==1 then
-		--Special Summon this card
+		--● Special Summon this card
 		if c:IsRelateToEffect(e) then
 			Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 		end
 	elseif op==2 then
-		--Destroy this card, and if you do, Special Summon 1 Level 5 or lower Pendulum Monster Card from your Pendulum Zone
+		--● Destroy this card, and if you do, Special Summon 1 Level 5 or lower Pendulum Monster Card from your Pendulum Zone
 		if c:IsRelateToEffect(e) and Duel.Destroy(c,REASON_EFFECT)>0 and Duel.GetMZoneCount(tp)>0 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 			local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_PZONE,0,1,1,nil,e,tp)
@@ -82,13 +84,12 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-function s.rthfilter(c,e,tp)
-	return ((c:IsOriginalType(TYPE_PENDULUM) and c:IsFaceup() and c:IsControler(tp)) or c:IsControler(1-tp))
-		and c:IsCanBeEffectTarget(e) and c:IsAbleToHand()
+function s.rthfilter(c,opp)
+	return ((c:IsOriginalType(TYPE_PENDULUM) and c:IsFaceup()) or c:IsControler(opp)) and c:IsAbleToHand()
 end
 function s.rthtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	local g=Duel.GetMatchingGroup(s.rthfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil,e,tp)
+	local g=Duel.GetTargetGroup(s.rthfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil,1-tp)
 	if chk==0 then return aux.SelectUnselectGroup(g,e,tp,2,2,aux.dpcheck(Card.GetControler),0) end
 	local tg=aux.SelectUnselectGroup(g,e,tp,2,2,aux.dpcheck(Card.GetControler),1,tp,HINTMSG_RTOHAND)
 	Duel.SetTargetCard(tg)

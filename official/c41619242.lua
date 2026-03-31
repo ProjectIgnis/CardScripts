@@ -10,11 +10,11 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E|TIMING_MAIN_END|TIMING_DAMAGE_STEP)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetCondition(aux.StatChangeDamageStepCondition)
 	e1:SetTarget(s.atktg)
 	e1:SetOperation(s.atkop)
+	e1:SetHintTiming(TIMING_DAMAGE_STEP,TIMINGS_CHECK_MONSTER_E|TIMING_MAIN_END|TIMING_DAMAGE_STEP)
 	c:RegisterEffect(e1)
 	--When a card or effect is activated that targets a "Scareclaw" monster or "Visas Starfrost" you control: Negate that effect
 	local e2=Effect.CreateEffect(c)
@@ -25,22 +25,20 @@ function s.initial_effect(c)
 	e2:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e2:SetCondition(s.discon)
 	e2:SetTarget(s.distg)
-	e2:SetOperation(s.disop)
+	e2:SetOperation(function(e,tp,eg,ep,ev,re,r,rp) Duel.NegateEffect(ev) end)
 	c:RegisterEffect(e2)
 end
 s.listed_names={CARD_VISAS_STARFROST}
 s.listed_series={SET_SCARECLAW}
-function s.atkfilter(c,tp)
-	return c:IsFaceup() and ((c:IsSetCard(SET_SCARECLAW) or c:IsCode(CARD_VISAS_STARFROST)) or c:IsControler(1-tp))
-end
-function s.atkrescon(sg,e,tp,mg)
-	return sg:GetClassCount(Card.GetControler)==2
+function s.atkfilter(c,opp)
+	return ((c:IsSetCard(SET_SCARECLAW) or c:IsCode(CARD_VISAS_STARFROST)) or (c:IsControler(opp)
+		and (c:HasNonZeroAttack() or c:HasNonZeroDefense()))) and c:IsFaceup()
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	local g=Duel.GetTargetGroup(s.atkfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,tp)
-	if chk==0 then return aux.SelectUnselectGroup(g,e,tp,2,2,s.atkrescon,0) end
-	local tg=aux.SelectUnselectGroup(g,e,tp,2,2,s.atkrescon,1,tp,HINTMSG_FACEUP)
+	local g=Duel.GetTargetGroup(s.atkfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,1-tp)
+	if chk==0 then return aux.SelectUnselectGroup(g,e,tp,2,2,aux.dpcheck(Card.GetControler),0) end
+	local tg=aux.SelectUnselectGroup(g,e,tp,2,2,aux.dpcheck(Card.GetControler),1,tp,HINTMSG_ATKDEF)
 	Duel.SetTargetCard(tg)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
@@ -57,18 +55,15 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.disconfilter(c,tp)
-	return c:IsFaceup() and c:IsOnField() and c:IsControler(tp)
-		and ((c:IsSetCard(SET_SCARECLAW) and c:IsMonster()) or c:IsCode(CARD_VISAS_STARFROST))
+	return ((c:IsSetCard(SET_SCARECLAW) and c:IsMonster()) or c:IsCode(CARD_VISAS_STARFROST))
+		and c:IsFaceup() and c:IsOnField() and c:IsControler(tp)
 end
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
-	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
+	if not (re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) and Duel.IsChainDisablable(ev)) then return false end
 	local tg=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
-	return tg and tg:IsExists(s.disconfilter,1,nil,tp) and Duel.IsChainDisablable(ev)
+	return tg and tg:IsExists(s.disconfilter,1,nil,tp)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return not re:GetHandler():IsStatus(STATUS_DISABLED) end
-	Duel.SetOperationInfo(0,CATEGORY_DISABLE,eg,1,0,0)
-end
-function s.disop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.NegateEffect(ev)
+	if chk==0 then return true end
+	Duel.SetOperationInfo(0,CATEGORY_DISABLE,eg,1,tp,0)
 end

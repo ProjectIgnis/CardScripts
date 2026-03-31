@@ -2,33 +2,34 @@
 --Sniffer Dragon
 local s,id=GetID()
 function s.initial_effect(c)
-	--search
-	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
-	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
-	e1:SetCode(EVENT_SUMMON_SUCCESS)
-	e1:SetCountLimit(1,id)
-	e1:SetTarget(s.target)
-	e1:SetOperation(s.operation)
-	c:RegisterEffect(e1)
-	local e2=e1:Clone()
-	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
-	c:RegisterEffect(e2)
+	--If this card is Normal or Special Summoned: You can add 1 "Sniffer Dragon" from your Deck to your hand. You can only use this effect of "Sniffer Dragon" once per turn
+	local e1a=Effect.CreateEffect(c)
+	e1a:SetDescription(aux.Stringid(id,0))
+	e1a:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
+	e1a:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e1a:SetProperty(EFFECT_FLAG_DELAY)
+	e1a:SetCode(EVENT_SUMMON_SUCCESS)
+	e1a:SetCountLimit(1,id)
+	e1a:SetTarget(s.thtg)
+	e1a:SetOperation(s.thop)
+	c:RegisterEffect(e1a)
+	local e1b=e1a:Clone()
+	e1b:SetCode(EVENT_SPSUMMON_SUCCESS)
+	c:RegisterEffect(e1b)
 end
-s.listed_names={}
-function s.filter(c)
+s.listed_names={id}
+function s.thfilter(c)
 	return c:IsCode(id) and c:IsAbleToHand()
 end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil) end
+function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
-function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.GetFirstMatchingCard(s.filter,tp,LOCATION_DECK,0,nil)
-	if tc then
-		Duel.SendtoHand(tc,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,tc)
+function s.thop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+	local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil)
+	if #g>0 then
+		Duel.SendtoHand(g,nil,REASON_EFFECT)
+		Duel.ConfirmCards(1-tp,g)
 	end
 end

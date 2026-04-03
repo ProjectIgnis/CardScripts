@@ -61,9 +61,12 @@ end
 function s.monplfilter(c,e)
 	return c:IsFaceup() and not c:IsForbidden() and c:IsCanBeEffectTarget(e)
 end
+function s.yourradiantfilter(c,tp)
+	return c:IsSetCard(SET_RADIANT_TYPHOON) and c:IsControler(tp)
+end
 function s.rescon(sg,e,tp)
 	local your_g,opp_g=sg:Split(Card.IsOwner,nil,tp)
-	return #sg==2 and #your_g>0 and your_g:IsExists(Card.IsSetCard,1,nil,SET_RADIANT_TYPHOON)
+	return #sg==2 and sg:IsExists(s.yourradiantfilter,1,nil,tp)
 		and Duel.GetLocationCount(tp,LOCATION_SZONE)>=#your_g
 		and Duel.GetLocationCount(1-tp,LOCATION_SZONE)>=#opp_g
 end

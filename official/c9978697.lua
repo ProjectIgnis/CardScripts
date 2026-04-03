@@ -1,5 +1,5 @@
 --Ｘ－セイバー ペリナ
---X-Saber Perina
+--X-Saber Pellina
 --Scripted by the Razgriz
 local s,id=GetID()
 function s.initial_effect(c)
@@ -52,7 +52,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.effcon(e,tp,eg,ep,ev,re,r,rp)
-	if not (r==REASON_SYNCHRO and (Duel.IsAbleToEnterBP() or (Duel.IsBattlePhase() and not Duel.IsEndStep()))) then return false end
+	if not r==REASON_SYNCHRO then return false end
 	local c=e:GetHandler()
 	local sync=c:GetReasonCard()
 	if not (c:IsLocation(LOCATION_GRAVE) and sync:IsSetCard(SET_X_SABER)) then return false end

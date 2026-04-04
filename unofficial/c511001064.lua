@@ -11,43 +11,43 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	--return
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
-	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e2:SetCode(EVENT_LEAVE_FIELD_P)
-	e2:SetOperation(s.checkop)
-	c:RegisterEffect(e2)
+	--When this card leaves the field, control of the equipped monster switches to your opponent
+	local e2a=Effect.CreateEffect(c)
+	e2a:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e2a:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e2a:SetCode(EVENT_LEAVE_FIELD_P)
+	e2a:SetOperation(s.checkop)
+	c:RegisterEffect(e2a)
+	local e2b=Effect.CreateEffect(c)
+	e2b:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e2b:SetCode(EVENT_LEAVE_FIELD)
+	e2b:SetOperation(s.retop)
+	e2b:SetLabelObject(e2a)
+	c:RegisterEffect(e2b)
+	--When control of the equipped monster switches, destroy this card
 	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
-	e3:SetCode(EVENT_LEAVE_FIELD)
-	e3:SetOperation(s.retop)
-	e3:SetLabelObject(e2)
+	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e3:SetCode(EVENT_CONTROL_CHANGED)
+	e3:SetRange(LOCATION_SZONE)
+	e3:SetCondition(s.descon)
+	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
-	--Destroy
-	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
-	e4:SetRange(LOCATION_SZONE)
-	e4:SetCode(EVENT_CONTROL_CHANGED)
-	e4:SetCondition(s.descon)
-	e4:SetOperation(s.desop)
-	c:RegisterEffect(e4)
 end
-s.listed_names={12533811}
+s.listed_names={12533811} --"Baby Tiragon"
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	return tc:GetSummonType()==SUMMON_TYPE_XYZ and tc:IsControler(1-tp) and tc:IsCode(12533811)
+	return tc:IsXyzSummoned() and tc:IsSummonPlayer(1-tp) and tc:IsCode(12533811)
+end
+function s.spfilter(c,e,tp)
+	return c:IsXyzMonster() and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false,POS_FACEUP,tp,)
+		and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local pg=aux.GetMustBeMaterialGroup(tp,Group.CreateGroup(),tp,nil,nil,REASON_XYZ)
 		return #pg<=0 and Duel.GetLocationCountFromEx(tp,tp,nil,TYPE_XYZ)>0 and Duel.GetFieldGroupCount(tp,0,LOCATION_EXTRA)>0 
-			and Duel.IsPlayerCanSpecialSummonMonster(tp,nil,nil,nil,nil,nil,nil,nil,nil,POS_FACEUP,tp,SUMMON_TYPE_XYZ) end
+			and Duel.IsExistingMatchingCard(s.spfilter,tp,0,LOCATION_EXTRA,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
-end
-function s.spfilter(c,e,tp)
-	return c:IsType(TYPE_XYZ) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
-		and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
 end
 function s.eqlimit(e,c)
 	return e:GetLabelObject()==c
@@ -68,7 +68,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_EQUIP_LIMIT)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e1:SetValue(s.eqlimit)
 		e1:SetLabelObject(g)
 		c:RegisterEffect(e1)

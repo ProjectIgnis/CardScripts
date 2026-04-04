@@ -39,7 +39,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return tc:IsXyzSummoned() and tc:IsSummonPlayer(1-tp) and tc:IsCode(12533811)
 end
 function s.spfilter(c,e,tp)
-	return c:IsXyzMonster() and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false,POS_FACEUP,tp,)
+	return c:IsXyzMonster() and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false,POS_FACEUP)
 		and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

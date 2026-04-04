@@ -73,7 +73,7 @@ function s.diratktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	Duel.SelectTarget(tp,s.diratkfilter,tp,LOCATION_MZONE,0,1,1,nil)
 end
-function s.s.diratkop(e,tp,eg,ep,ev,re,r,rp)
+function s.diratkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		local e1=Effect.CreateEffect(e:GetHandler())

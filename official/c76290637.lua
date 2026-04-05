@@ -4,9 +4,9 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--Xyz Summon procedure
+	--Xyz Summon procedure: 2 Level 8 monsters
 	Xyz.AddProcedure(c,nil,8,2)
-	--Add 1 "Rank-Up-Magic" Spell from your Deck to your hand
+	--Add 1 "Rank-Up-Magic" Spell from your Deck to your hand, also, you can Normal Summon 1 Machine monster during your Main Phase this turn, in addition to your Normal Summon/Set
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
-	--Special Summon this card from your GY to either field in Defense Position
+	--Special Summon this card from your GY to either field in Defense Position, then you can add 1 "Rank-Up-Magic" Spell from your GY to your hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOHAND)
@@ -36,7 +36,8 @@ function s.thfilter(c)
 	return c:IsSetCard(SET_RANK_UP_MAGIC) and c:IsSpell() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil)
+		and Duel.IsPlayerCanSummon(tp) and Duel.IsPlayerCanAdditionalSummon(tp) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
@@ -46,17 +47,19 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 	end
-	local c=e:GetHandler()
-	--Can Normal Summon 1 Machine monster in addition to your Normal Summon/Set this turn
-	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(id,2))
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetCode(EFFECT_EXTRA_SUMMON_COUNT)
-	e1:SetTargetRange(LOCATION_HAND|LOCATION_MZONE,0)
-	e1:SetTarget(aux.TargetBoolFunction(Card.IsRace,RACE_MACHINE))
-	e1:SetReset(RESET_PHASE|PHASE_END)
-	Duel.RegisterEffect(e1,tp)
-	Auxiliary.RegisterClientHint(c,nil,tp,1,0,aux.Stringid(id,3))
+	if Duel.IsPlayerCanSummon(tp) and Duel.IsPlayerCanAdditionalSummon(tp) then
+		local c=e:GetHandler()
+		--Can Normal Summon 1 Machine monster in addition to your Normal Summon/Set this turn
+		local e1=Effect.CreateEffect(c)
+		e1:SetDescription(aux.Stringid(id,2))
+		e1:SetType(EFFECT_TYPE_FIELD)
+		e1:SetCode(EFFECT_EXTRA_SUMMON_COUNT)
+		e1:SetTargetRange(LOCATION_HAND|LOCATION_MZONE,0)
+		e1:SetTarget(aux.TargetBoolFunction(Card.IsRace,RACE_MACHINE))
+		e1:SetReset(RESET_PHASE|PHASE_END)
+		Duel.RegisterEffect(e1,tp)
+		Auxiliary.RegisterClientHint(c,nil,tp,1,0,aux.Stringid(id,3))
+	end
 end
 function s.spconfilter(c,tp)
 	return c:IsSetCard(SET_GIMMICK_PUPPET) and c:IsType(TYPE_XYZ) and c:IsFaceup() and c:IsSummonPlayer(tp)

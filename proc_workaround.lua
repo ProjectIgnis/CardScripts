@@ -5,8 +5,8 @@
 	fixes the effect relation issues with cards such as "Dramaturge of Despia", "Sacred Fire King Garunix", etc
 --]]
 Card.IsRelateToEffect=(function()
-    local oldfunc=Card.IsRelateToEffect
-    return function(c,e,...)
+	local oldfunc=Card.IsRelateToEffect
+	return function(c,e,...)
 		--use the regular handling if a chain isn't currently resolving or the effect in question isn't an activated effect
 		if not (Duel.IsChainSolving() and e:IsActivated()) then
 			return oldfunc(c,e,...)

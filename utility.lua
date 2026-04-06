@@ -387,8 +387,9 @@ end
 function Card.HasEquipCard(c)
 	return c:GetEquipCount()>0
 end
-function Card.IsCoLinked(c)
-	return c:GetMutualLinkedGroupCount()>0
+function Card.IsCoLinked(c,count)
+	count=count or 1
+	return c:GetMutualLinkedGroupCount()>=count
 end
 
 function Card.IsDestination(c,dest)

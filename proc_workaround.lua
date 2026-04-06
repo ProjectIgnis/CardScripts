@@ -1,6 +1,33 @@
 --Utilities to be added to the core
 
 --[[
+	update 'Card.IsRelateToEffect' to use 'Card.IsRelateToChain' instead if an activated effect is currently resolving
+	fixes the effect relation issues with cards such as "Dramaturge of Despia", "Sacred Fire King Garunix", etc
+--]]
+Card.IsRelateToEffect=(function()
+    local oldfunc=Card.IsRelateToEffect
+    return function(c,e,...)
+		--use the regular handling if a chain isn't currently resolving or the effect in question isn't an activated effect
+		if not (Duel.IsChainSolving() and e:IsActivated()) then
+			return oldfunc(c,e,...)
+		end
+		--if the effect in question is what the core considers the "current effect" then check if the card is related to the current chain link
+		if Duel.GetReasonEffect()==e then
+			return c:IsRelateToChain(0)
+		else
+			--otherwise go through all the effects in the chain to find out which one it is
+			for chain_link=0,Duel.GetCurrentChain()-1 do
+				if Duel.GetChainInfo(chain_link,CHAININFO_TRIGGERING_EFFECT)==e then
+					return c:IsRelateToChain(chain_link)
+				end
+			end
+		end
+		--if no match is found just use the regular handling
+		return oldfunc(c,e,...)
+	end
+end)()
+
+--[[
 	'Duel.GetMatchingGroup' that also filters for 'Card.IsCanBeEffectTarget' using 'Duel.GetReasonEffect()'
 --]]
 function Duel.GetTargetGroup(filter,player,loc1,loc2,exclusion,...)

@@ -610,3 +610,4 @@ SET_DARK_TUNER                    = 0x1d5
 --Pre-release archetypes
 SET_BLITZCLIQUE                   = 0x1d6
 SET_THEOREALIZE                   = 0x1d7
+SET_ALEISTER                      = 0x1d8

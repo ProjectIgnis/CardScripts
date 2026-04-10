@@ -1740,7 +1740,7 @@ local function cost_replace_getvalideffs(replacecode,extracon,e,tp,eg,ep,ev,re,r
 	local t={}
 	for _,eff in ipairs({Duel.GetPlayerEffect(tp,replacecode)}) do
 		if eff:CheckCountLimit(tp) then
-		local val=eff:GetValue()
+			local val=eff:GetValue()
 			if type(val)=="number" then
 				if val==1 then
 					table.insert(t,eff)

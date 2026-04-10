@@ -16,8 +16,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--Cost replacement for "S-Force" monsters that would banish cards to activate their effects
 	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetDescription(aux.Stringid(id,1))
+	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetCode(EFFECT_SFORCE_REPLACE)
 	e2:SetRange(LOCATION_GRAVE)
@@ -53,6 +53,5 @@ function s.repval(base,e,tp,eg,ep,ev,re,r,rp,chk)
 		and c:IsSetCard(SET_S_FORCE)
 end
 function s.repop(base,e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_CARD,0,id)
 	Duel.Remove(base:GetHandler(),POS_FACEUP,REASON_COST)
 end

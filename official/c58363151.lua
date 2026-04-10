@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_UPDATE_ATTACK)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetTargetRange(0,LOCATION_MZONE)
-	e3:SetTarget(aux.SForceTarget)
+	e3:SetTarget(SForce.ColumnTarget)
 	e3:SetValue(-600)
 	c:RegisterEffect(e3)
 end

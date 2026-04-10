@@ -403,13 +403,14 @@ function Fusion.OperationMixRep(insf,sub,fun1,minc,maxc,...)
 				Fusion.SummonEffect=nil
 			end
 end
-function Fusion.CheckMixRep(sg,g,fc,sub,sub2,contact,sumtype,chkf,tp,fun1,minc,maxc,fun2,...)
+function Fusion.CheckMixRep(sg,fun2Materials,fc,sub,sub2,contact,sumtype,chkf,tp,fun1,minc,maxc,fun2,...)
 	if fun2 then
-		return sg:IsExists(Fusion.CheckMixRepFilter,1,g,sg,g,fc,sub,sub2,contact,sumtype,chkf,tp,fun1,minc,maxc,fun2,...)
+		return sg:IsExists(Fusion.CheckMixRepFilter,1,fun2Materials,sg,fun2Materials,fc,sub,sub2,contact,sumtype,chkf,tp,fun1,minc,maxc,fun2,...)
 	else
-		local ct1=sg:FilterCount(fun1,g,fc,sub,sub2,sg,g,tp,contact,sumtype)
-		local ct2=sg:FilterCount(fun1,g,fc,false,sub2,sg,g,tp,contact,sumtype)
-		return ct1==#sg-#g and ct1-ct2<=1
+		local totalMaterials=sg+fun2Materials
+		local ct1=sg:FilterCount(fun1,fun2Materials,fc,sub,sub2,totalMaterials,totalMaterials,tp,contact,sumtype)
+		local ct2=sg:FilterCount(fun1,fun2Materials,fc,false,sub2,totalMaterials,totalMaterials,tp,contact,sumtype)
+		return ct1==#sg-#fun2Materials and ct1-ct2<=1
 	end
 end
 function Fusion.CheckMixRepFilter(c,sg,g,fc,sub,sub2,contact,sumtype,chkf,tp,fun1,minc,maxc,fun2,...)

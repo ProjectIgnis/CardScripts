@@ -276,48 +276,23 @@ function Auxiliary.MaleficSummonOperation(cd,loc)
 			end
 end
 
---Discard cost for Witchcrafter monsters, supports the replacements from the Continuous Spells
-local Witchcrafter={}
-function Witchcrafter.DiscardSpell(c)
-	return c:IsDiscardable() and c:IsSpell()
-end
-function Witchcrafter.DiscardCost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Witchcrafter.DiscardSpell,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,Witchcrafter.DiscardSpell,1,1,REASON_COST+REASON_DISCARD)
-end
-Auxiliary.WitchcrafterDiscardCost=Auxiliary.CostWithReplace(Witchcrafter.DiscardCost,EFFECT_WITCHCRAFTER_REPLACE)
+Witchcrafter={}
+do
+	Witchcrafter.DiscardCost=Cost.Replaceable(Cost.Discard(Card.IsSpell),EFFECT_WITCHCRAFTER_REPLACE)
+	Witchcrafter.TributeAndDiscardCost=Cost.AND(Cost.SelfTribute,Witchcrafter.DiscardCost)
 
-function Witchcrafter.ReleaseCost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() end
-	Duel.Release(e:GetHandler(),REASON_COST)
-end
-Auxiliary.WitchcrafterDiscardAndReleaseCost=Auxiliary.CostWithReplace(Witchcrafter.DiscardCost,EFFECT_WITCHCRAFTER_REPLACE,nil,Witchcrafter.ReleaseCost)
-
-function Witchcrafter.repcon(e)
-	return e:GetHandler():IsAbleToGraveAsCost()
-end
-function Witchcrafter.repval(base,e,tp,eg,ep,ev,re,r,rp,chk,extracon)
-	local c=e:GetHandler()
-	return c:IsControler(tp) and c:IsMonster() and c:IsSetCard(SET_WITCHCRAFTER)
-end
-function Witchcrafter.repop(id)
-	return function(base,e,tp,eg,ep,ev,re,r,rp)
-		Duel.Hint(HINT_CARD,0,id)
-		Duel.SendtoGrave(base:GetHandler(),REASON_COST)
+	function Witchcrafter.CreateCostReplaceEffect(c,id)
+		local e=Effect.CreateEffect(c)
+		e:SetType(EFFECT_TYPE_FIELD)
+		e:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+		e:SetCode(EFFECT_WITCHCRAFTER_REPLACE)
+		e:SetTargetRange(1,0)
+		e:SetValue(function(base,e,tp)
+			local c=e:GetHandler()
+			return c:IsControler(tp) and c:IsMonster() and c:IsSetCard(SET_WITCHCRAFTER)
+		end)
+		return e
 	end
-end
-function Auxiliary.CreateWitchcrafterReplace(c,id)
-	local e=Effect.CreateEffect(c)
-	e:SetType(EFFECT_TYPE_FIELD)
-	e:SetCode(EFFECT_WITCHCRAFTER_REPLACE)
-	e:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e:SetTargetRange(1,0)
-	e:SetRange(LOCATION_SZONE)
-	e:SetCountLimit(1,id)
-	e:SetCondition(Witchcrafter.repcon)
-	e:SetValue(Witchcrafter.repval)
-	e:SetOperation(Witchcrafter.repop(id))
-	return e
 end
 
 --Special Summon limit for "Evil HERO" Fusion monsters

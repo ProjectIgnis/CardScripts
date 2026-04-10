@@ -277,22 +277,21 @@ function Auxiliary.MaleficSummonOperation(cd,loc)
 end
 
 Witchcrafter={}
-do
-	Witchcrafter.DiscardCost=Cost.Replaceable(Cost.Discard(Card.IsSpell),EFFECT_WITCHCRAFTER_REPLACE)
-	Witchcrafter.TributeAndDiscardCost=Cost.AND(Cost.SelfTribute,Witchcrafter.DiscardCost)
 
-	function Witchcrafter.CreateCostReplaceEffect(c,id)
-		local e=Effect.CreateEffect(c)
-		e:SetType(EFFECT_TYPE_FIELD)
-		e:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-		e:SetCode(EFFECT_WITCHCRAFTER_REPLACE)
-		e:SetTargetRange(1,0)
-		e:SetValue(function(base,e,tp)
-			local c=e:GetHandler()
-			return c:IsControler(tp) and c:IsMonster() and c:IsSetCard(SET_WITCHCRAFTER)
-		end)
-		return e
-	end
+Witchcrafter.DiscardCost=Cost.Replaceable(Cost.Discard(Card.IsSpell),EFFECT_WITCHCRAFTER_REPLACE)
+Witchcrafter.TributeAndDiscardCost=Cost.AND(Cost.SelfTribute,Witchcrafter.DiscardCost)
+
+function Witchcrafter.CreateCostReplaceEffect(c,id)
+	local e=Effect.CreateEffect(c)
+	e:SetType(EFFECT_TYPE_FIELD)
+	e:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e:SetCode(EFFECT_WITCHCRAFTER_REPLACE)
+	e:SetTargetRange(1,0)
+	e:SetValue(function(base,e,tp)
+		local c=e:GetHandler()
+		return c:IsControler(tp) and c:IsMonster() and c:IsSetCard(SET_WITCHCRAFTER)
+	end)
+	return e
 end
 
 --Special Summon limit for "Evil HERO" Fusion monsters
@@ -683,18 +682,24 @@ function Auxiliary.AddAmazementQuickEquipEffect(c,id)
 	e2:SetOperation(AA.qeqeop)
 	c:RegisterEffect(e2)
 end
--- Cost for "S-Force" cards that banish a card from the hand, needed for "S-Force Chase" (55049722) from LIOV
-local SForce={}
-function SForce.CostFilter(c)
-	return c:IsSetCard(SET_S_FORCE) and c:IsAbleToRemoveAsCost()
+
+
+SForce={}
+do
+	local function cost_filter(c)
+		return c:IsSetCard(SET_S_FORCE) and c:IsAbleToRemoveAsCost()
+	end
+
+	local function base_cost(e,tp,eg,ep,ev,re,r,rp,chk)
+		if chk==0 then return Duel.IsExistingMatchingCard(cost_filter,tp,LOCATION_HAND,0,1,nil) end
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+		local rg=Duel.SelectMatchingCard(tp,cost_filter,tp,LOCATION_HAND,0,1,1,nil)
+		Duel.Remove(rg,POS_FACEUP,REASON_COST)
+	end
+
+	SForce.BanishCost=Cost.Replaceable(base_cost,CARD_SFORCE_CHASE)
 end
-function SForce.Cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(SForce.CostFilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local rg=Duel.SelectMatchingCard(tp,SForce.CostFilter,tp,LOCATION_HAND,0,1,1,nil)
-	Duel.Remove(rg,POS_FACEUP,REASON_COST)
-end
-Auxiliary.SForceCost=Auxiliary.CostWithReplace(SForce.Cost,CARD_SFORCE_CHASE)
+
 --Standard functions for the "Ursarctic" Special Summoning Quick Effects
 local Ursarctic={}
 function Ursarctic.spcfilter(c)

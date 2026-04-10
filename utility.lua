@@ -1736,11 +1736,11 @@ function Cost.Choice(...)
     return full_cost
 end
 
-local function cost_replace_getvalideffs(replacecode,extracon,e,tp,eg,ep,ev,re,r,rp,chk)
+local function cost_replace_getvalideffs(extracon,e,tp,eg,ep,ev,re,r,rp,chk)
 	local t={}
-	for _,eff in ipairs({Duel.GetPlayerEffect(tp,replacecode)}) do
+	for _,eff in ipairs({Duel.GetPlayerEffect(tp,EFFECT_COST_REPLACE)}) do
 		if eff:CheckCountLimit(tp) then
-			local val=eff:GetValue()
+		local val=eff:GetValue()
 			if type(val)=="number" then
 				if val==1 then
 					table.insert(t,eff)
@@ -1755,12 +1755,12 @@ local function cost_replace_getvalideffs(replacecode,extracon,e,tp,eg,ep,ev,re,r
 	return t
 end
 
-function Cost.Replaceable(base,replacecode,extracon)
+function Cost.Replaceable(base,extracon)
 	return function(e,tp,eg,ep,ev,re,r,rp,chk)
 		local cost_chk=base(e,tp,eg,ep,ev,re,r,rp,0)
 		if chk==0 then
 			if cost_chk then return true end
-			for _,eff in ipairs({Duel.GetPlayerEffect(tp,replacecode)}) do
+			for _,eff in ipairs({Duel.GetPlayerEffect(tp,EFFECT_COST_REPLACE)}) do
 				if eff:CheckCountLimit(tp) then
 					local val=eff:GetValue()
 					if type(val)=="number" and val==1 then return true end
@@ -1769,7 +1769,7 @@ function Cost.Replaceable(base,replacecode,extracon)
 			end
 			return false
 		end
-		local effs=cost_replace_getvalideffs(replacecode,extracon,e,tp,eg,ep,ev,re,r,rp,chk)
+		local effs=cost_replace_getvalideffs(extracon,e,tp,eg,ep,ev,re,r,rp,chk)
 		if not cost_chk or #effs>0 then
 			local eff=effs[1]
 			if #effs>1 then

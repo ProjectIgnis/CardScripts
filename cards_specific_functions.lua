@@ -278,14 +278,14 @@ end
 
 Witchcrafter={}
 
-Witchcrafter.DiscardCost=Cost.Replaceable(Cost.Discard(Card.IsSpell),EFFECT_WITCHCRAFTER_REPLACE)
+Witchcrafter.DiscardCost=Cost.Replaceable(Cost.Discard(Card.IsSpell))
 Witchcrafter.TributeAndDiscardCost=Cost.AND(Cost.SelfTribute,Witchcrafter.DiscardCost)
 
-function Witchcrafter.CreateCostReplaceEffect(c,id)
+function Witchcrafter.CreateCostReplaceEffect(c)
 	local e=Effect.CreateEffect(c)
 	e:SetType(EFFECT_TYPE_FIELD)
 	e:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e:SetCode(EFFECT_WITCHCRAFTER_REPLACE)
+	e:SetCode(EFFECT_COST_REPLACE)
 	e:SetTargetRange(1,0)
 	e:SetValue(function(base,e,tp)
 		local c=e:GetHandler()
@@ -682,14 +682,12 @@ do
 		return c:IsSetCard(SET_S_FORCE) and c:IsAbleToRemoveAsCost()
 	end
 
-	local function base_cost(e,tp,eg,ep,ev,re,r,rp,chk)
+	SForce.BanishCost=Cost.Replaceable(function(e,tp,eg,ep,ev,re,r,rp,chk)
 		if chk==0 then return Duel.IsExistingMatchingCard(cost_filter,tp,LOCATION_HAND,0,1,nil) end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 		local rg=Duel.SelectMatchingCard(tp,cost_filter,tp,LOCATION_HAND,0,1,1,nil)
 		Duel.Remove(rg,POS_FACEUP,REASON_COST)
-	end
-
-	SForce.BanishCost=Cost.Replaceable(base_cost,CARD_SFORCE_CHASE)
+	end)
 
 	local function column_filter(c,tp)
 		return c:IsControler(tp) and c:IsFaceup() and c:IsMonster() and c:IsSetCard(SET_S_FORCE)

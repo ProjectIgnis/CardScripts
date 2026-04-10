@@ -1736,81 +1736,80 @@ function Cost.Choice(...)
     return full_cost
 end
 
-local function cost_replace_getvalideffs(extracon,e,tp,eg,ep,ev,re,r,rp,chk)
-	local t={}
+local function check_cost_replace_effect(eff,extracon,e,tp,...)
+	if not eff:CheckCountLimit(tp) then return false end
+	local val=eff:GetValue()
+	if val==1 then return true end
+	return type(val)=="function" and val(eff,e,tp,...) and (not extracon or extracon(e,tp,...))
+end
+
+local function select_cost_replace_effect(tp,effs)
+	if #effs==1 then return effs[1] end
+	local desctable={}
+	for _,_eff in ipairs(effs) do
+		table.insert(desctable,_eff:GetDescription())
+	end
+	local op=Duel.SelectOption(tp,false,table.unpack(desctable))
+	return effs[op+1]
+end
+
+--if this function returns nil, then the base cost should be used
+local function get_cost_replace_effect_to_apply(base_chk,extracon,e,tp,...)
+	local effs={}
 	for _,eff in ipairs({Duel.GetPlayerEffect(tp,EFFECT_COST_REPLACE)}) do
-		if eff:CheckCountLimit(tp) then
-		local val=eff:GetValue()
-			if type(val)=="number" then
-				if val==1 then
-					table.insert(t,eff)
-				end
-			elseif type(val)=="function" then
-				if val(eff,e,tp,eg,ep,ev,re,r,rp,chk,extracon) then
-					table.insert(t,eff)
-				end
-			end
+		if check_cost_replace_effect(eff,extracon,e,tp,...) then table.insert(effs,eff) end
+	end
+
+	if #effs==0 then return end
+
+	if #effs==1 then
+		if base_chk and not Duel.SelectEffectYesNo(tp,effs[1]:GetHandler()) then return end
+		return effs[1]
+	end
+
+	local effs_per_card={}
+	local eff_handlers=Group.CreateGroup()
+	for _,eff in ipairs(effs) do
+		local ec=eff:GetHandler()
+		eff_handlers:AddCard(ec)
+		if not effs_per_card[ec] then effs_per_card[ec]={} end
+		table.insert(effs_per_card[ec],eff)
+	end
+
+	if #eff_handlers==1 then
+		if base_chk and not Duel.SelectEffectYesNo(tp,eff_handlers:GetFirst()) then return end
+		return select_cost_replace_effect(tp,effs)
+	end
+
+	while true do
+		if base_chk and not Duel.SelectYesNo(tp,98) then return end
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RESOLVEEFFECT)
+		local g=eff_handlers:Select(tp,1,1,base_chk,nil)
+		if g and #g>0 then
+			return select_cost_replace_effect(tp,effs_per_card[g:GetFirst()])
 		end
 	end
-	return t
 end
 
 function Cost.Replaceable(base,extracon)
 	return function(e,tp,eg,ep,ev,re,r,rp,chk)
-		local cost_chk=base(e,tp,eg,ep,ev,re,r,rp,0)
+		local base_chk=base(e,tp,eg,ep,ev,re,r,rp,0)
+
 		if chk==0 then
-			if cost_chk then return true end
+			if base_chk then return true end
 			for _,eff in ipairs({Duel.GetPlayerEffect(tp,EFFECT_COST_REPLACE)}) do
-				if eff:CheckCountLimit(tp) then
-					local val=eff:GetValue()
-					if type(val)=="number" and val==1 then return true end
-					if type(val)=="function" and val(eff,e,tp,eg,ep,ev,re,r,rp,chk,extracon) then return true end
-				end
+				if check_cost_replace_effect(eff,extracon,e,tp,eg,ep,ev,re,r,rp,chk) then return true end
 			end
 			return false
 		end
-		local effs=cost_replace_getvalideffs(extracon,e,tp,eg,ep,ev,re,r,rp,chk)
-		if not cost_chk or #effs>0 then
-			local eff=effs[1]
-			if #effs>1 then
-				local effsPerCard={}
-				local effsHandlersGroup=Group.CreateGroup()
-				for _,_eff in ipairs(effs) do
-					local _effCard=_eff:GetHandler()
-					effsHandlersGroup:AddCard(_effCard)
-					if not effsPerCard[_effCard] then effsPerCard[_effCard]={} end
-					table.insert(effsPerCard[_effCard],_eff)
-				end
-				local effCard=nil
-				if #effsHandlersGroup==1 and (not cost_chk or Duel.SelectEffectYesNo(tp,effCard)) then
-					effCard=effsHandlersGroup:GetFirst()
-				elseif #effsHandlersGroup>1 then
-					while effCard==nil and (not cost_chk or Duel.SelectYesNo(tp,98)) do
-						Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RESOLVEEFFECT)
-						effCard=effsHandlersGroup:Select(tp,1,1,cost_chk,nil)
-					end
-					if effCard then effCard=effCard:GetFirst() end
-				end
-				if not effCard then return base(e,tp,eg,ep,ev,re,r,rp,1) end
-				local effsOfThatCard=effsPerCard[effCard]
-				if #effsOfThatCard==1 then
-					eff=effsOfThatCard[1]
-				else
-					local desctable={}
-					for _,_eff in ipairs(effsOfThatCard) do
-						table.insert(desctable,_eff:GetDescription())
-					end
-					eff=effsOfThatCard[Duel.SelectOption(tp,false,table.unpack(desctable)) + 1]
-				end
-			elseif cost_chk and not Duel.SelectEffectYesNo(tp,eff:GetHandler()) then
-				return base(e,tp,eg,ep,ev,re,r,rp,1)
-			end
-			Duel.Hint(HINT_CARD,0,eff:GetHandler():GetOriginalCodeRule())
-			local res={eff:GetOperation()(eff,e,tp,eg,ep,ev,re,r,rp,chk,extracon)}
-			eff:UseCountLimit(tp)
-			return table.unpack(res)
-		end
-		return base(e,tp,eg,ep,ev,re,r,rp,1)
+
+		local eff=get_cost_replace_effect_to_apply(base_chk,extracon,e,tp,eg,ep,ev,re,r,rp,chk)
+		if not eff then return base(e,tp,eg,ep,ev,re,r,rp,1) end
+
+		Duel.Hint(HINT_CARD,0,eff:GetHandler():GetOriginalCodeRule())
+		local res={eff:GetOperation()(eff,e,tp,eg,ep,ev,re,r,rp,chk)}
+		eff:UseCountLimit(tp)
+		return table.unpack(res)
 	end
 end
 

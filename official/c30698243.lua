@@ -6,7 +6,7 @@ function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--Synchro Summon procedure: 4 Tuners + 1+ non-Tuner Synchro Monsters
 	Synchro.AddProcedure(c,nil,4,4,Synchro.NonTunerEx(Card.IsType,TYPE_SYNCHRO),1,99)
-	--Multiple Tuners
+	--Synchro Summon uses multiple Tuners
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_SINGLE)
 	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	e1:SetValue(s.splimit)
 	c:RegisterEffect(e1)
-	--atk up
+	--Gains 500 ATK for each Tuner in your GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetValue(s.atkval)
 	c:RegisterEffect(e2)
-	--cannot target
+	--Your opponent cannot target this card with card effects
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
 	e3:SetValue(aux.tgoval)
 	c:RegisterEffect(e3)
-	--indes
+	--Cannot be destroyed by your opponent's card effects
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE)
 	e4:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
@@ -43,7 +43,7 @@ function s.initial_effect(c)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetValue(aux.indoval)
 	c:RegisterEffect(e4)
-	--banish
+	--Once per turn (Quick Effect): You can activate this effect; banish this card, also banish as many cards from your opponent's field and GY as possible, then you can Special Summon 1 "Red Nova Dragon" from your Extra Deck (this is treated as a Synchro Summon)
 	local e5=Effect.CreateEffect(c)
 	e5:SetDescription(aux.Stringid(id,0))
 	e5:SetCategory(CATEGORY_REMOVE|CATEGORY_SPECIAL_SUMMON)
@@ -51,12 +51,12 @@ function s.initial_effect(c)
 	e5:SetCode(EVENT_FREE_CHAIN)
 	e5:SetRange(LOCATION_MZONE)
 	e5:SetCountLimit(1)
+	e5:SetHintTiming(0,TIMING_STANDBY_PHASE|TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E)
 	e5:SetTarget(s.rmtg)
 	e5:SetOperation(s.rmop)
-	e5:SetHintTiming(0,TIMING_STANDBY_PHASE|TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E)
 	c:RegisterEffect(e5)
 end
-s.listed_names={97489701}
+s.listed_names={97489701} --"Red Nova Dragon"
 s.synchro_nt_required=1
 function s.splimit(e,se,sp,st)
 	return not e:GetHandler():IsLocation(LOCATION_EXTRA) or ((st&SUMMON_TYPE_SYNCHRO)==SUMMON_TYPE_SYNCHRO and not se)
@@ -80,17 +80,15 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD|LOCATION_GRAVE,nil)
 	if c:IsRelateToEffect(e) and c:IsAbleToRemove() then g:AddCard(c) end
-	if #g>0 and Duel.Remove(g,POS_FACEUP,REASON_EFFECT)>0 then
-		local sg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_EXTRA,0,nil,e,tp)
-		if #sg>=0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-			local sc=sg:Select(tp,1,1,nil):GetFirst()
-			if not sc then return end
-			sc:SetMaterial(nil)
-			Duel.BreakEffect()
-			if Duel.SpecialSummon(sc,SUMMON_TYPE_SYNCHRO,tp,tp,false,false,POS_FACEUP)>0 then
-				sc:CompleteProcedure()
-			end
-		end
+	if #g==0 or Duel.Remove(g,POS_FACEUP,REASON_EFFECT)==0 or not g:IsExists(Card.IsLocation,1,nil,LOCATION_REMOVED) then return end
+	local sg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_EXTRA,0,nil,e,tp)
+	if #sg==0 or not Duel.SelectYesNo(tp,aux.Stringid(id,1)) then return end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+	local sc=sg:Select(tp,1,1,nil):GetFirst()
+	if not sc then return end
+	sc:SetMaterial(nil)
+	Duel.BreakEffect()
+	if Duel.SpecialSummon(sc,SUMMON_TYPE_SYNCHRO,tp,tp,false,false,POS_FACEUP)>0 then
+		sc:CompleteProcedure()
 	end
 end

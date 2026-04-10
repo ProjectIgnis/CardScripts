@@ -506,14 +506,6 @@ function Auxiliary.IceBarrierDiscardCost(f,discard,minc,maxc)
 	end
 end
 
---Function to be used as the target for "S-Force" effects that apply to monsters in the same column as your "S-Force" monsters
-function Auxiliary.SForceTarget(e,cc)
-	local function filter(c,tp)
-		return c:IsControler(tp) and c:IsFaceup() and c:IsMonster() and c:IsSetCard(SET_S_FORCE)
-	end
-	return cc:GetColumnGroup():IsExists(filter,1,cc,e:GetHandlerPlayer())
-end
-
 -- Description: Checks for whether the equip card still has the equip effect once it reaches SZONE
 -- This is used to correct the interaction between Phantom of Chaos (or alike) and any monsters that equip themselves to another
 function Auxiliary.ZWEquipLimit(tc,te)
@@ -698,6 +690,14 @@ do
 	end
 
 	SForce.BanishCost=Cost.Replaceable(base_cost,CARD_SFORCE_CHASE)
+
+	local function column_filter(c,tp)
+		return c:IsControler(tp) and c:IsFaceup() and c:IsMonster() and c:IsSetCard(SET_S_FORCE)
+	end
+
+	function SForce.ColumnTarget(e,cc)
+		return cc:GetColumnGroup():IsExists(column_filter,1,cc,e:GetHandlerPlayer())
+	end
 end
 
 --Standard functions for the "Ursarctic" Special Summoning Quick Effects

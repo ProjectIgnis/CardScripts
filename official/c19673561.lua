@@ -22,8 +22,12 @@ function s.initial_effect(c)
 	e2:SetOperation(s.drop)
 	c:RegisterEffect(e2)
 	--replace discard effect
-	local e2=aux.CreateWitchcrafterReplace(c,id)
+	local e2=Witchcrafter.CreateCostReplaceEffect(c)
 	e2:SetDescription(aux.Stringid(id,2))
+	e2:SetRange(LOCATION_SZONE)
+	e2:SetCountLimit(1,id)
+	e2:SetCondition(function(base) return base:GetHandler():IsAbleToGraveAsCost() end)
+	e2:SetOperation(function(base) Duel.SendtoGrave(base:GetHandler(),REASON_COST) end)
 	c:RegisterEffect(e2)
 	--to S/T Zone
 	local e4=Effect.CreateEffect(c)

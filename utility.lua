@@ -1740,7 +1740,7 @@ local function check_cost_replace_effect(eff,extracon,e,tp,...)
 	if not eff:CheckCountLimit(tp) then return false end
 	local val=eff:GetValue()
 	if val==1 then return true end
-	return type(val)=="function" and val(eff,e,tp,...) and (not extracon or extracon(e,tp,...))
+	return type(val)=="function" and val(eff,e,tp,...) and (not extracon or extracon(eff,e,tp,...))
 end
 
 local function select_cost_replace_effect(tp,effs)

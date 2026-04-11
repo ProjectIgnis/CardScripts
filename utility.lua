@@ -1739,8 +1739,7 @@ end
 local function check_cost_replace_effect(eff,extracon,e,tp,...)
 	if not eff:CheckCountLimit(tp) then return false end
 	local val=eff:GetValue()
-	if val==1 then return true end
-	return type(val)=="function" and val(eff,e,tp,...) and (not extracon or extracon(eff,e,tp,...))
+	return val==1 or (type(val)=="function" and val(eff,extracon,e,tp,...))
 end
 
 local function select_cost_replace_effect(tp,effs)
@@ -1792,6 +1791,8 @@ local function get_cost_replace_effect_to_apply(base_chk,extracon,e,tp,...)
 end
 
 function Cost.Replaceable(base,extracon)
+	extracon=extracon or aux.TRUE
+
 	return function(e,tp,eg,ep,ev,re,r,rp,chk)
 		local base_chk=base(e,tp,eg,ep,ev,re,r,rp,0)
 

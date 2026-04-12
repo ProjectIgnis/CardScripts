@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e2:SetCode(CARD_URSARCTIC_BIG_DIPPER)
+	e2:SetCode(EFFECT_COST_REPLACE)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetTargetRange(1,0)
 	e2:SetCountLimit(1,id)
@@ -25,9 +25,6 @@ function s.initial_effect(c)
 	e2:SetValue(s.repval)
 	e2:SetOperation(s.repop)
 	c:RegisterEffect(e2)
-	local e3=e2:Clone()
-	e3:SetCode(CARD_URSARCTIC_DRYTRON)
-	c:RegisterEffect(e3)
 end
 s.listed_names={33250142,CARD_URSARCTIC_BIG_DIPPER,58793369,27693363,97148796}
 --"Ultimate Flagship Ursatron", "Ursarctic Big Dipper", "Drytron Fafnir", "Ursarctic Polari", "Drytron Alpha Thuban"
@@ -69,13 +66,12 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		if Duel.SpecialSummon(sc,0,tp,tp,true,false,POS_FACEUP)>0 then
 			sc:CompleteProcedure()
 		end
-	end 
+	end
 end
-function s.repval(base,e,tp,eg,ep,ev,re,r,rp,chk,extracon)
+function s.repval(base,extracon,e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	return c:IsSetCard({SET_URSARCTIC,SET_DRYTRON}) and c:IsMonster() and (extracon==nil or extracon(base,e,tp,eg,ep,ev,re,r,rp))
+	return c:IsSetCard({SET_URSARCTIC,SET_DRYTRON}) and c:IsMonster() and extracon(base,e,tp,eg,ep,ev,re,r,rp)
 end
 function s.repop(base,e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_CARD,0,id)
 	Duel.Remove(base:GetHandler(),POS_FACEUP,REASON_COST|REASON_REPLACE)
 end

@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e2:SetCode(CARD_URSARCTIC_BIG_DIPPER)
+	e2:SetCode(EFFECT_COST_REPLACE)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetTargetRange(1,0)
 	e2:SetCountLimit(1,{id,1})
@@ -44,11 +44,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-function s.repval(base,e,tp,eg,ep,ev,re,r,rp,chk,extracon)
+function s.repval(base,extracon,e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	return c:IsSetCard(SET_URSARCTIC) and c:IsMonster() and (extracon==nil or extracon(base,e,tp,eg,ep,ev,re,r,rp))
+	return c:IsSetCard(SET_URSARCTIC) and c:IsMonster() and extracon(base,e,tp,eg,ep,ev,re,r,rp)
 end
 function s.repop(base,e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_CARD,0,id)
 	Duel.Remove(base:GetHandler(),POS_FACEUP,REASON_COST|REASON_REPLACE)
 end

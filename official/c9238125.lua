@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
 	--Draw 1 card
-	c:RegisterEffect(Effect.CreateVernalizerSPEffect(c,id,1,CATEGORY_DRAW,s.drtg,s.drop))
+	Vernusylph.AddSpSummonEffect(c,id,1,CATEGORY_DRAW,s.drtg,s.drop)
 end
 s.listed_series={SET_VERNUSYLPH}
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

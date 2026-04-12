@@ -757,13 +757,6 @@ do
 	end
 end
 
-local Stardust={}
-function Stardust.ReleaseSelfCost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() end
-	Duel.Release(e:GetHandler(),REASON_COST)
-end
-Auxiliary.StardustCost=Auxiliary.CostWithReplace(Stardust.ReleaseSelfCost,84012625)
-
 function Auxiliary.DoubleSnareValidity(c,range,property)
 	if c then
 		if not property then property=0 end

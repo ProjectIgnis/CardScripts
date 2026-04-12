@@ -47,7 +47,7 @@ end
 function s.repcon(e)
 	return e:GetHandler():IsAbleToRemoveAsCost()
 end
-function s.repval(base,e,tp,eg,ep,ev,re,r,rp,chk)
+function s.repval(base,extracon,e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE)
 		and c:IsSetCard(SET_S_FORCE)

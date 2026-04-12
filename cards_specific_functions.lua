@@ -289,7 +289,7 @@ function Witchcrafter.CreateCostReplaceEffect(c)
 	e:SetTargetRange(1,0)
 	e:SetValue(function(base,extracon,e,tp)
 		local c=e:GetHandler()
-		return c:IsControler(tp) and c:IsMonster() and c:IsSetCard(SET_WITCHCRAFTER)
+		return c:IsSetCard(SET_WITCHCRAFTER) and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE)
 	end)
 	return e
 end
@@ -690,7 +690,7 @@ do
 	end)
 
 	local function column_filter(c,tp)
-		return c:IsControler(tp) and c:IsFaceup() and c:IsMonster() and c:IsSetCard(SET_S_FORCE)
+		return c:IsSetCard(SET_S_FORCE) and c:IsMonster() and c:IsControler(tp) and c:IsFaceup()
 	end
 
 	function SForce.ColumnTarget(e,cc)
@@ -701,7 +701,7 @@ end
 Ursarctic={}
 do
 	local function spcostfilter(c)
-		return c:IsLocation(LOCATION_HAND) and c:IsLevelAbove(7)
+		return c:IsLevelAbove(7) and c:IsLocation(LOCATION_HAND)
 	end
 
 	local function spcost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -715,7 +715,7 @@ do
 		local c=e:GetHandler()
 		if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 			and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
-		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
+		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,tp,0)
 	end
 
 	local function spop(id)
@@ -724,7 +724,7 @@ do
 			if c:IsRelateToEffect(e) then
 				Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 			end
-			--Cannot Special Summon, except monsters with a Level
+			--You cannot Special Summon for the rest of this turn, except monsters with a Level
 			local e1=Effect.CreateEffect(c)
 			e1:SetDescription(aux.Stringid(id,1))
 			e1:SetType(EFFECT_TYPE_FIELD)
@@ -738,17 +738,19 @@ do
 	end
 
 	function Ursarctic.CreateSpSummonQuickEffect(c,id)
+		--During the Main Phase (Quick Effect): You can Tribute 1 other Level 7 or higher monster from your hand; Special Summon this card from your hand, also you cannot Special Summon for the rest of this turn, except monsters with a Level
 		local e1=Effect.CreateEffect(c)
+		e1:SetDescription(aux.Stringid(id,0))
 		e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 		e1:SetType(EFFECT_TYPE_QUICK_O)
 		e1:SetCode(EVENT_FREE_CHAIN)
 		e1:SetRange(LOCATION_HAND)
-		e1:SetHintTiming(0,TIMING_MAIN_END)
 		e1:SetCountLimit(1,id)
 		e1:SetCondition(function() return Duel.IsMainPhase() end)
 		e1:SetCost(Cost.Replaceable(spcost))
 		e1:SetTarget(sptg)
 		e1:SetOperation(spop(id))
+		e1:SetHintTiming(0,TIMING_MAIN_END|TIMINGS_CHECK_MONSTER)
 		return e1
 	end
 
@@ -848,8 +850,7 @@ end
 Drytron={}
 do
 	local function tribute_cost_filter(c,tp)
-		return ((c:IsSetCard(SET_DRYTRON) and c:IsMonster()) or c:IsRitualMonster())
-			and (c:IsControler(tp) or c:IsFaceup())
+		return ((c:IsSetCard(SET_DRYTRON) and c:IsMonster()) or c:IsRitualMonster()) and (c:IsControler(tp) or c:IsFaceup())
 			and Duel.GetMZoneCount(tp,c)>0
 	end
 

@@ -287,7 +287,7 @@ function Witchcrafter.CreateCostReplaceEffect(c)
 	e:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e:SetCode(EFFECT_COST_REPLACE)
 	e:SetTargetRange(1,0)
-	e:SetValue(function(base,e,tp)
+	e:SetValue(function(base,extracon,e,tp)
 		local c=e:GetHandler()
 		return c:IsControler(tp) and c:IsMonster() and c:IsSetCard(SET_WITCHCRAFTER)
 	end)
@@ -698,54 +698,65 @@ do
 	end
 end
 
---Standard functions for the "Ursarctic" Special Summoning Quick Effects
-local Ursarctic={}
-function Ursarctic.spcfilter(c)
-	return c:IsLocation(LOCATION_HAND) and c:IsLevelAbove(7)
-end
-function Ursarctic.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Ursarctic.spcfilter,1,true,nil,c) end
-	local g=Duel.SelectReleaseGroupCost(tp,Ursarctic.spcfilter,1,1,true,nil,c)
-	Duel.Release(g,REASON_COST)
-end
-function Ursarctic.summontarget(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
-end
-function Ursarctic.summonoperation(id)
-	return function(e,tp,eg,ep,ev,re,r,rp)
+Ursarctic={}
+do
+	local function spcostfilter(c)
+		return c:IsLocation(LOCATION_HAND) and c:IsLevelAbove(7)
+	end
+
+	local function spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 		local c=e:GetHandler()
-		if c:IsRelateToEffect(e) then
-			Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
+		if chk==0 then return Duel.CheckReleaseGroupCost(tp,spcostfilter,1,true,nil,c) end
+		local g=Duel.SelectReleaseGroupCost(tp,spcostfilter,1,1,true,nil,c)
+		Duel.Release(g,REASON_COST)
+	end
+
+	local function sptg(e,tp,eg,ep,ev,re,r,rp,chk)
+		local c=e:GetHandler()
+		if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+			and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
+		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
+	end
+
+	local function spop(id)
+		return function(e,tp,eg,ep,ev,re,r,rp)
+			local c=e:GetHandler()
+			if c:IsRelateToEffect(e) then
+				Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
+			end
+			--Cannot Special Summon, except monsters with a Level
+			local e1=Effect.CreateEffect(c)
+			e1:SetDescription(aux.Stringid(id,1))
+			e1:SetType(EFFECT_TYPE_FIELD)
+			e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
+			e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+			e1:SetTargetRange(1,0)
+			e1:SetTarget(function(e,c) return not c:IsLevelAbove(0) end)
+			e1:SetReset(RESET_PHASE|PHASE_END)
+			Duel.RegisterEffect(e1,tp)
 		end
-		--Cannot Special Summon, except monsters with a Level
+	end
+
+	function Ursarctic.CreateSpSummonQuickEffect(c,id)
 		local e1=Effect.CreateEffect(c)
-		e1:SetDescription(aux.Stringid(id,1))
-		e1:SetType(EFFECT_TYPE_FIELD)
-		e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
-		e1:SetTargetRange(1,0)
-		e1:SetTarget(function(e,c) return not c:IsLevelAbove(0) end)
-		e1:SetReset(RESET_PHASE+PHASE_END)
-		Duel.RegisterEffect(e1,tp)
+		e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
+		e1:SetType(EFFECT_TYPE_QUICK_O)
+		e1:SetCode(EVENT_FREE_CHAIN)
+		e1:SetRange(LOCATION_HAND)
+		e1:SetHintTiming(0,TIMING_MAIN_END)
+		e1:SetCountLimit(1,id)
+		e1:SetCondition(function() return Duel.IsMainPhase() end)
+		e1:SetCost(Cost.Replaceable(spcost))
+		e1:SetTarget(sptg)
+		e1:SetOperation(spop(id))
+		return e1
+	end
+
+	function Ursarctic.AddSpSummonQuickEffect(c,...)
+		c:RegisterEffect(Ursarctic.CreateSpSummonQuickEffect(c,...))
 	end
 end
-function Auxiliary.CreateUrsarcticSpsummon(c,id)
-	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e1:SetType(EFFECT_TYPE_QUICK_O)
-	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetRange(LOCATION_HAND)
-	e1:SetHintTiming(0,TIMING_MAIN_END)
-	e1:SetCountLimit(1,id)
-	e1:SetCondition(function() return Duel.IsMainPhase() end)
-	e1:SetCost(Auxiliary.CostWithReplace(Ursarctic.spcost,CARD_URSARCTIC_BIG_DIPPER))
-	e1:SetTarget(Ursarctic.summontarget)
-	e1:SetOperation(Ursarctic.summonoperation(id))
-	return e1
-end
+
 local Stardust={}
 function Stardust.ReleaseSelfCost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReleasable() end

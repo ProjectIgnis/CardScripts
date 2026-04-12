@@ -1780,10 +1780,11 @@ local function get_cost_replace_effect_to_apply(base_chk,extracon,e,tp,...)
 		return select_cost_replace_effect(tp,effs)
 	end
 
+	local g=nil
 	while true do
 		if base_chk and not Duel.SelectYesNo(tp,98) then return end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RESOLVEEFFECT)
-		local g=eff_handlers:Select(tp,1,1,base_chk,nil)
+		g=eff_handlers:Select(tp,1,1,base_chk,nil)
 		if g and #g>0 then
 			return select_cost_replace_effect(tp,effs_per_card[g:GetFirst()])
 		end
@@ -1807,7 +1808,7 @@ function Cost.Replaceable(base,extracon)
 		local eff=get_cost_replace_effect_to_apply(base_chk,extracon,e,tp,eg,ep,ev,re,r,rp,chk)
 		if not eff then return base(e,tp,eg,ep,ev,re,r,rp,1) end
 
-		Duel.Hint(HINT_CARD,0,eff:GetHandler():GetOriginalCodeRule())
+		Duel.Hint(HINT_CARD,0,eff:GetHandler():GetOriginalCode())
 		local res={eff:GetOperation()(eff,e,tp,eg,ep,ev,re,r,rp,chk)}
 		eff:UseCountLimit(tp)
 		return table.unpack(res)

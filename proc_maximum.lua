@@ -451,8 +451,8 @@ function Maximum.tribop(e,tp,eg,ep,ev,re,r,rp)
 end
 --handling for battle destruction (same as above but for battle destruction)
 function Maximum.battlecon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	return c:IsReason(REASON_BATTLE) and eg:IsExists(Card.IsControler,1,nil,tp)
+    local c=e:GetHandler()
+    return c:IsReason(REASON_BATTLE) and eg:IsContains(c)
 end
 function Maximum.battleop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsMaximumMode,e:GetHandler():GetPreviousControler(),LOCATION_MZONE,0,nil)

@@ -35,9 +35,14 @@ function s.repval(base,extracon,e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	return c:IsMonster() and c:IsSetCard(SET_VERNUSYLPH) and c:IsDiscardable()
 end
+function s.hintselectionfilter(c)
+	return c:IsCode(id) and not c:HasFlagEffect(id)
+end
 function s.repop(base,e,tp,eg,ep,ev,re,r,rp)
 	local c=base:GetHandler()
-	Duel.HintSelection(c,true)
+	if Duel.IsExistingMatchingCard(s.hintselectionfilter,tp,LOCATION_SZONE,0,1,c) then
+		Duel.HintSelection(c)
+	end
 	c:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,EFFECT_FLAG_CLIENT_HINT,1,nil,aux.Stringid(id,1))
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST|REASON_DISCARD)
 end

@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--special summon
-	c:RegisterEffect(aux.CreateUrsarcticSpsummon(c,id))
+	Ursarctic.AddSpSummonQuickEffect(c,id)
 	--to hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))

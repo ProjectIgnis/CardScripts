@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e3:SetCode(CARD_VERNUSYLPH_COROLLA)
+	e3:SetCode(EFFECT_COST_REPLACE)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetTargetRange(LOCATION_HAND,0)
 	e3:SetCountLimit(1)
@@ -31,15 +31,17 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={SET_VERNUSYLPH}
-function s.repval(base,e,tp,eg,ep,ev,re,r,rp,chk,extracon)
+function s.repval(base,extracon,e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	return c:IsMonster() and c:IsSetCard(SET_VERNUSYLPH) and c:IsDiscardable()
 end
+function s.hintselectionfilter(c)
+	return c:IsCode(id) and not c:HasFlagEffect(id)
+end
 function s.repop(base,e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_CARD,0,id)
 	local c=base:GetHandler()
-	if #{Duel.GetPlayerEffect(tp,CARD_VERNUSYLPH_COROLLA)}>1 then
-		Duel.HintSelection(c,true)
+	if Duel.IsExistingMatchingCard(s.hintselectionfilter,tp,LOCATION_SZONE,0,1,c) then
+		Duel.HintSelection(c)
 	end
 	c:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,EFFECT_FLAG_CLIENT_HINT,1,nil,aux.Stringid(id,1))
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST|REASON_DISCARD)

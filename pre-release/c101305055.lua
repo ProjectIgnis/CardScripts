@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e2:SetCode(EFFECT_POWER_PATRON_REPLACE)
+	e2:SetCode(EFFECT_COST_REPLACE)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetTargetRange(1,0)
 	e2:SetCountLimit(1,{id,1})
@@ -66,11 +66,10 @@ function s.inactop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-function s.repval(base,e,tp,eg,ep,ev,re,r,rp,chk)
+function s.repval(base,extracon,e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	return c:IsSetCard(SET_POWER_PATRON) and c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE)
 end
 function s.repop(base,e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_CARD,0,id)
 	Duel.Remove(base:GetHandler(),POS_FACEUP,REASON_COST)
 end

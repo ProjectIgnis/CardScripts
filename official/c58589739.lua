@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_CANNOT_CHANGE_POSITION)
 	e2:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
 	e2:SetTargetRange(0,LOCATION_MZONE)
-	e2:SetTarget(aux.SForceTarget)
+	e2:SetTarget(SForce.ColumnTarget)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_S_FORCE}

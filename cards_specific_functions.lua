@@ -276,47 +276,21 @@ function Auxiliary.MaleficSummonOperation(cd,loc)
 			end
 end
 
---Discard cost for Witchcrafter monsters, supports the replacements from the Continuous Spells
-local Witchcrafter={}
-function Witchcrafter.DiscardSpell(c)
-	return c:IsDiscardable() and c:IsSpell()
-end
-function Witchcrafter.DiscardCost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Witchcrafter.DiscardSpell,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,Witchcrafter.DiscardSpell,1,1,REASON_COST+REASON_DISCARD)
-end
-Auxiliary.WitchcrafterDiscardCost=Auxiliary.CostWithReplace(Witchcrafter.DiscardCost,EFFECT_WITCHCRAFTER_REPLACE)
+Witchcrafter={}
 
-function Witchcrafter.ReleaseCost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() end
-	Duel.Release(e:GetHandler(),REASON_COST)
-end
-Auxiliary.WitchcrafterDiscardAndReleaseCost=Auxiliary.CostWithReplace(Witchcrafter.DiscardCost,EFFECT_WITCHCRAFTER_REPLACE,nil,Witchcrafter.ReleaseCost)
+Witchcrafter.DiscardCost=Cost.Replaceable(Cost.Discard(Card.IsSpell))
+Witchcrafter.TributeAndDiscardCost=Cost.AND(Cost.SelfTribute,Witchcrafter.DiscardCost)
 
-function Witchcrafter.repcon(e)
-	return e:GetHandler():IsAbleToGraveAsCost()
-end
-function Witchcrafter.repval(base,e,tp,eg,ep,ev,re,r,rp,chk,extracon)
-	local c=e:GetHandler()
-	return c:IsControler(tp) and c:IsMonster() and c:IsSetCard(SET_WITCHCRAFTER)
-end
-function Witchcrafter.repop(id)
-	return function(base,e,tp,eg,ep,ev,re,r,rp)
-		Duel.Hint(HINT_CARD,0,id)
-		Duel.SendtoGrave(base:GetHandler(),REASON_COST)
-	end
-end
-function Auxiliary.CreateWitchcrafterReplace(c,id)
+function Witchcrafter.CreateCostReplaceEffect(c)
 	local e=Effect.CreateEffect(c)
 	e:SetType(EFFECT_TYPE_FIELD)
-	e:SetCode(EFFECT_WITCHCRAFTER_REPLACE)
 	e:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e:SetCode(EFFECT_COST_REPLACE)
 	e:SetTargetRange(1,0)
-	e:SetRange(LOCATION_SZONE)
-	e:SetCountLimit(1,id)
-	e:SetCondition(Witchcrafter.repcon)
-	e:SetValue(Witchcrafter.repval)
-	e:SetOperation(Witchcrafter.repop(id))
+	e:SetValue(function(base,extracon,e,tp)
+		local c=e:GetHandler()
+		return c:IsSetCard(SET_WITCHCRAFTER) and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE)
+	end)
 	return e
 end
 
@@ -532,14 +506,6 @@ function Auxiliary.IceBarrierDiscardCost(f,discard,minc,maxc)
 	end
 end
 
---Function to be used as the target for "S-Force" effects that apply to monsters in the same column as your "S-Force" monsters
-function Auxiliary.SForceTarget(e,cc)
-	local function filter(c,tp)
-		return c:IsControler(tp) and c:IsFaceup() and c:IsMonster() and c:IsSetCard(SET_S_FORCE)
-	end
-	return cc:GetColumnGroup():IsExists(filter,1,cc,e:GetHandlerPlayer())
-end
-
 -- Description: Checks for whether the equip card still has the equip effect once it reaches SZONE
 -- This is used to correct the interaction between Phantom of Chaos (or alike) and any monsters that equip themselves to another
 function Auxiliary.ZWEquipLimit(tc,te)
@@ -708,72 +674,90 @@ function Auxiliary.AddAmazementQuickEquipEffect(c,id)
 	e2:SetOperation(AA.qeqeop)
 	c:RegisterEffect(e2)
 end
--- Cost for "S-Force" cards that banish a card from the hand, needed for "S-Force Chase" (55049722) from LIOV
-local SForce={}
-function SForce.CostFilter(c)
-	return c:IsSetCard(SET_S_FORCE) and c:IsAbleToRemoveAsCost()
-end
-function SForce.Cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(SForce.CostFilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local rg=Duel.SelectMatchingCard(tp,SForce.CostFilter,tp,LOCATION_HAND,0,1,1,nil)
-	Duel.Remove(rg,POS_FACEUP,REASON_COST)
-end
-Auxiliary.SForceCost=Auxiliary.CostWithReplace(SForce.Cost,CARD_SFORCE_CHASE)
---Standard functions for the "Ursarctic" Special Summoning Quick Effects
-local Ursarctic={}
-function Ursarctic.spcfilter(c)
-	return c:IsLocation(LOCATION_HAND) and c:IsLevelAbove(7)
-end
-function Ursarctic.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Ursarctic.spcfilter,1,true,nil,c) end
-	local g=Duel.SelectReleaseGroupCost(tp,Ursarctic.spcfilter,1,1,true,nil,c)
-	Duel.Release(g,REASON_COST)
-end
-function Ursarctic.summontarget(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
-end
-function Ursarctic.summonoperation(id)
-	return function(e,tp,eg,ep,ev,re,r,rp)
-		local c=e:GetHandler()
-		if c:IsRelateToEffect(e) then
-			Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
-		end
-		--Cannot Special Summon, except monsters with a Level
-		local e1=Effect.CreateEffect(c)
-		e1:SetDescription(aux.Stringid(id,1))
-		e1:SetType(EFFECT_TYPE_FIELD)
-		e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
-		e1:SetTargetRange(1,0)
-		e1:SetTarget(function(e,c) return not c:IsLevelAbove(0) end)
-		e1:SetReset(RESET_PHASE+PHASE_END)
-		Duel.RegisterEffect(e1,tp)
+
+
+SForce={}
+do
+	local function cost_filter(c)
+		return c:IsSetCard(SET_S_FORCE) and c:IsAbleToRemoveAsCost()
+	end
+
+	SForce.BanishCost=Cost.Replaceable(function(e,tp,eg,ep,ev,re,r,rp,chk)
+		if chk==0 then return Duel.IsExistingMatchingCard(cost_filter,tp,LOCATION_HAND,0,1,nil) end
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+		local rg=Duel.SelectMatchingCard(tp,cost_filter,tp,LOCATION_HAND,0,1,1,nil)
+		Duel.Remove(rg,POS_FACEUP,REASON_COST)
+	end)
+
+	local function column_filter(c,tp)
+		return c:IsSetCard(SET_S_FORCE) and c:IsMonster() and c:IsControler(tp) and c:IsFaceup()
+	end
+
+	function SForce.ColumnTarget(e,cc)
+		return cc:GetColumnGroup():IsExists(column_filter,1,cc,e:GetHandlerPlayer())
 	end
 end
-function Auxiliary.CreateUrsarcticSpsummon(c,id)
-	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e1:SetType(EFFECT_TYPE_QUICK_O)
-	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetRange(LOCATION_HAND)
-	e1:SetHintTiming(0,TIMING_MAIN_END)
-	e1:SetCountLimit(1,id)
-	e1:SetCondition(function() return Duel.IsMainPhase() end)
-	e1:SetCost(Auxiliary.CostWithReplace(Ursarctic.spcost,CARD_URSARCTIC_BIG_DIPPER))
-	e1:SetTarget(Ursarctic.summontarget)
-	e1:SetOperation(Ursarctic.summonoperation(id))
-	return e1
+
+Ursarctic={}
+do
+	local function spcostfilter(c)
+		return c:IsLevelAbove(7) and c:IsLocation(LOCATION_HAND)
+	end
+
+	local function spcost(e,tp,eg,ep,ev,re,r,rp,chk)
+		local c=e:GetHandler()
+		if chk==0 then return Duel.CheckReleaseGroupCost(tp,spcostfilter,1,true,nil,c) end
+		local g=Duel.SelectReleaseGroupCost(tp,spcostfilter,1,1,true,nil,c)
+		Duel.Release(g,REASON_COST)
+	end
+
+	local function sptg(e,tp,eg,ep,ev,re,r,rp,chk)
+		local c=e:GetHandler()
+		if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+			and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
+		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,tp,0)
+	end
+
+	local function spop(id)
+		return function(e,tp,eg,ep,ev,re,r,rp)
+			local c=e:GetHandler()
+			if c:IsRelateToEffect(e) then
+				Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
+			end
+			--You cannot Special Summon for the rest of this turn, except monsters with a Level
+			local e1=Effect.CreateEffect(c)
+			e1:SetDescription(aux.Stringid(id,1))
+			e1:SetType(EFFECT_TYPE_FIELD)
+			e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
+			e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+			e1:SetTargetRange(1,0)
+			e1:SetTarget(function(e,c) return not c:IsLevelAbove(0) end)
+			e1:SetReset(RESET_PHASE|PHASE_END)
+			Duel.RegisterEffect(e1,tp)
+		end
+	end
+
+	function Ursarctic.CreateSpSummonQuickEffect(c,id)
+		--During the Main Phase (Quick Effect): You can Tribute 1 other Level 7 or higher monster from your hand; Special Summon this card from your hand, also you cannot Special Summon for the rest of this turn, except monsters with a Level
+		local e1=Effect.CreateEffect(c)
+		e1:SetDescription(aux.Stringid(id,0))
+		e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
+		e1:SetType(EFFECT_TYPE_QUICK_O)
+		e1:SetCode(EVENT_FREE_CHAIN)
+		e1:SetRange(LOCATION_HAND)
+		e1:SetCountLimit(1,id)
+		e1:SetCondition(function() return Duel.IsMainPhase() end)
+		e1:SetCost(Cost.Replaceable(spcost))
+		e1:SetTarget(sptg)
+		e1:SetOperation(spop(id))
+		e1:SetHintTiming(0,TIMING_MAIN_END|TIMINGS_CHECK_MONSTER)
+		return e1
+	end
+
+	function Ursarctic.AddSpSummonQuickEffect(c,...)
+		c:RegisterEffect(Ursarctic.CreateSpSummonQuickEffect(c,...))
+	end
 end
-local Stardust={}
-function Stardust.ReleaseSelfCost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() end
-	Duel.Release(e:GetHandler(),REASON_COST)
-end
-Auxiliary.StardustCost=Auxiliary.CostWithReplace(Stardust.ReleaseSelfCost,84012625)
 
 function Auxiliary.DoubleSnareValidity(c,range,property)
 	if c then
@@ -864,35 +848,41 @@ function Cyberdark.EquipOperation_NTG(f,op)
 end
 
 Drytron={}
-function Drytron.TributeCostFilter(c,tp)
-	return ((c:IsSetCard(SET_DRYTRON) and c:IsMonster()) or c:IsRitualMonster()) and (c:IsControler(tp) or c:IsFaceup())
-		and Duel.GetMZoneCount(tp,c)>0
+do
+	local function tribute_cost_filter(c,tp)
+		return ((c:IsSetCard(SET_DRYTRON) and c:IsMonster()) or c:IsRitualMonster()) and (c:IsControler(tp) or c:IsFaceup())
+			and Duel.GetMZoneCount(tp,c)>0
+	end
+
+	local function tribute_base_cost(e,tp,eg,ep,ev,re,r,rp,chk)
+		local c=e:GetHandler()
+		if chk==0 then return Duel.CheckReleaseGroupCost(tp,tribute_cost_filter,1,true,nil,c,tp) end
+		local sg=Duel.SelectReleaseGroupCost(tp,tribute_cost_filter,1,1,true,nil,c,tp)
+		Duel.Release(sg,REASON_COST)
+	end
+
+	local function extracon(base,e,tp,eg,ep,ev,re,r,rp)
+		return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	end
+
+	local function tribute_extra_cost(e,tp,eg,ep,ev,re,r,rp,chk)
+		local c=e:GetHandler()
+		local id=c:GetOriginalCode()
+		if chk==0 then return Duel.GetCustomActivityCount(id,tp,ACTIVITY_SPSUMMON)==0 end
+		--You cannot Special Summon monsters, except monsters that cannot be Normal Summoned/Set, the turn you activate this effect
+		local e1=Effect.CreateEffect(c)
+		e1:SetDescription(aux.Stringid(id,1))
+		e1:SetType(EFFECT_TYPE_FIELD)
+		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH+EFFECT_FLAG_CLIENT_HINT)
+		e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+		e1:SetTargetRange(1,0)
+		e1:SetTarget(function(e,c) return c:IsSummonableCard() end)
+		e1:SetReset(RESET_PHASE|PHASE_END)
+		Duel.RegisterEffect(e1,tp)
+	end
+
+	Drytron.TributeCost=Cost.AND(Cost.Replaceable(tribute_base_cost,extracon),tribute_extra_cost)
 end
-function Drytron.TributeBaseCost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Drytron.TributeCostFilter,1,true,nil,c,tp) end
-	local sg=Duel.SelectReleaseGroupCost(tp,Drytron.TributeCostFilter,1,1,true,nil,c,tp)
-	Duel.Release(sg,REASON_COST)
-end
-function Drytron.ExtraCon(base,e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-end
-function Drytron.TributeExtraCost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	local id=c:GetOriginalCode()
-	if chk==0 then return Duel.GetCustomActivityCount(id,tp,ACTIVITY_SPSUMMON)==0 end
-	--You cannot Special Summon monsters, except monsters that cannot be Normal Summoned/Set, the turn you activate this effect
-	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(id,1))
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH+EFFECT_FLAG_CLIENT_HINT)
-	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e1:SetTargetRange(1,0)
-	e1:SetTarget(function(e,c) return c:IsSummonableCard() end)
-	e1:SetReset(RESET_PHASE|PHASE_END)
-	Duel.RegisterEffect(e1,tp)
-end
-Drytron.TributeCost=aux.CostWithReplace(Drytron.TributeBaseCost,CARD_URSARCTIC_DRYTRON,Drytron.ExtraCon,Drytron.TributeExtraCost)
 
 --[[
 	Effect.CreateMysteruneQPEffect(c,id,[uniquecat,uniquetg,uniqueop,rmcount,uniqueprop,uniquecode])
@@ -1043,48 +1033,33 @@ Effect.CreateMysteruneQPEffect = (function()
 	end
 end)()
 
---[[
-	Effect.CreateVernalizerSPEffect(c,id,desc,uniquecat,uniquetg,uniqueop)
-
-	Creates an ignition Effect object for the "Vernusylph" effects that
-	discard themselves and another card from the hand.
-	Includes handling for "Vernusylph Corolla" cost replacement.
-
-	Card c: the owner of the Effect
-	int id: the card ID used for the HOPT restriction and strings
-	int desc: the string ID of the effect description (will also be used for the limitcount code)
-	int uniquecat: the category of the unique effect
-	function uniquetg: the target function for the effect
-	function uniqueop: the unique effect's operation function, excluding the special summoning and lingering restriction,
-		the function must return true to proceed to the special summon,
-		it can also return an optional passcode (int) which will be excluded from the special summon
---]]
-Effect.CreateVernalizerSPEffect=(function()
+Vernusylph={}
+do
 	local stringbase=9350312 -- use strings from "Flourishing Hils" so they don't need to be stored in every card
 
-	local function verncostfilter(c)
+	local function spcostfilter(c)
 		return (c:IsMonster() or c:IsSetCard(SET_VERNUSYLPH)) and c:IsDiscardable()
 	end
 
-	local function verncost(e,tp,eg,ep,ev,re,r,rp,chk)
+	local function spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 		local c=e:GetHandler()
-		if chk==0 then return c:IsDiscardable() and Duel.IsExistingMatchingCard(verncostfilter,tp,LOCATION_HAND,0,1,c) end
+		if chk==0 then return c:IsDiscardable() and Duel.IsExistingMatchingCard(spcostfilter,tp,LOCATION_HAND,0,1,c) end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
-		local g=Duel.SelectMatchingCard(tp,verncostfilter,tp,LOCATION_HAND,0,1,1,c)
+		local g=Duel.SelectMatchingCard(tp,spcostfilter,tp,LOCATION_HAND,0,1,1,c)
 		Duel.SendtoGrave(g+c,REASON_COST+REASON_DISCARD)
 	end
 
-	local function vernspfilter(c,e,tp,code)
+	local function spfilter(c,e,tp,code)
 		return c:IsAttribute(ATTRIBUTE_EARTH) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not (code and c:IsCode(code))
 	end
 
-	local function vernop(uniqueop,e,tp,eg,ep,ev,re,r,rp)
+	local function spop(uniqueop,e,tp,eg,ep,ev,re,r,rp)
 		local proceed,exemptID=uniqueop(e,tp,eg,ep,ev,re,r,rp)
 		if proceed and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-			and Duel.IsExistingMatchingCard(aux.NecroValleyFilter(vernspfilter),tp,LOCATION_GRAVE,0,1,nil,e,tp,exemptID)
+			and Duel.IsExistingMatchingCard(aux.NecroValleyFilter(spfilter),tp,LOCATION_GRAVE,0,1,nil,e,tp,exemptID)
 			and Duel.SelectYesNo(tp,aux.Stringid(stringbase,1)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-			local sg=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(vernspfilter),tp,LOCATION_GRAVE,0,1,1,nil,e,tp,exemptID)
+			local sg=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(spfilter),tp,LOCATION_GRAVE,0,1,1,nil,e,tp,exemptID)
 			if #sg>0 then
 				Duel.BreakEffect()
 				Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
@@ -1102,23 +1077,43 @@ Effect.CreateVernalizerSPEffect=(function()
 		Duel.RegisterEffect(e1,tp)
 	end
 
-	return function(c,id,desc,uniquecat,uniquetg,uniqueop)
+
+	--[[
+		Creates an ignition Effect object for the "Vernusylph" effects that
+		discard themselves and another card from the hand.
+		Includes handling for "Vernusylph Corolla" cost replacement.
+
+		Card c: the owner of the Effect
+		int id: the card ID used for the HOPT restriction and strings
+		int desc: the string ID of the effect description (will also be used for the limitcount code)
+		int uniquecat: the category of the unique effect
+		function uniquetg: the target function for the effect
+		function uniqueop: the unique effect's operation function, excluding the special summoning and lingering restriction,
+			the function must return true to proceed to the special summon,
+			it can also return an optional passcode (int) which will be excluded from the special summon
+	--]]
+
+	function Vernusylph.CreateSpSummonEffect(c,id,desc,uniquecat,uniquetg,uniqueop)
 		local e1=Effect.CreateEffect(c)
 		e1:SetDescription(aux.Stringid(id,desc))
 		e1:SetCategory(uniquecat|CATEGORY_SPECIAL_SUMMON)
 		e1:SetType(EFFECT_TYPE_IGNITION)
 		e1:SetRange(LOCATION_HAND)
 		e1:SetCountLimit(1,{id,desc})
-		e1:SetCost(aux.CostWithReplace(verncost,CARD_VERNUSYLPH_COROLLA))
+		e1:SetCost(Cost.Replaceable(spcost))
 		e1:SetTarget(function(e,tp,eg,ep,ev,re,r,rp,chk)
 			if chk==0 then return uniquetg(e,tp,eg,ep,ev,re,r,rp,chk) end
 			uniquetg(e,tp,eg,ep,ev,re,r,rp,chk)
 			Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 		end)
-		e1:SetOperation(function(...) vernop(uniqueop,...) end)
+		e1:SetOperation(function(...) spop(uniqueop,...) end)
 		return e1
 	end
-end)()
+
+	function Vernusylph.AddSpSummonEffect(c,...)
+		c:RegisterEffect(Vernusylph.CreateSpSummonEffect(c,...))
+	end
+end
 
 --[[
 	Handles the additional destruction effect for

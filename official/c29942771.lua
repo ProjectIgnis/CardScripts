@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e3:SetCode(CARD_NATURIA_CAMELLIA)
+	e3:SetCode(EFFECT_COST_REPLACE)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetTargetRange(1,0)
 	e3:SetCountLimit(1,{id,1})
@@ -62,12 +62,11 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoGrave(g,REASON_EFFECT)
 	end
 end
-function s.repval(base,e,tp,eg,ep,ev,re,r,rp,chk,extracon)
+function s.repval(base,extracon,e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	return c:IsSetCard(SET_NATURIA) and c:IsMonster() and (extracon==nil or extracon(base,e,tp,eg,ep,ev,re,r,rp))
+	return c:IsSetCard(SET_NATURIA) and c:IsMonster() and extracon(base,e,tp,eg,ep,ev,re,r,rp)
 end
 function s.repop(base,e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_CARD,0,id)
 	Duel.DiscardDeck(tp,2,REASON_COST)
 end
 function s.spfilter(c,e,tp)

@@ -1405,58 +1405,67 @@ end
 --Functions for commonly used costs:
 Cost={}
 
+local cost_tables={}
+
 function Cost.SelfBanish(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsAbleToRemoveAsCost() end
 	Duel.Remove(c,POS_FACEUP,REASON_COST)
 end
+
 function Cost.SelfTribute(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsReleasable() end
 	Duel.Release(c,REASON_COST)
 end
-local self_tograve_costs={}
+
+cost_tables.self_tograve={}
 function Cost.SelfToGrave(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsAbleToGraveAsCost() end
 	Duel.SendtoGrave(c,REASON_COST)
 end
-self_tograve_costs[Cost.SelfToGrave]=true
+cost_tables.self_tograve[Cost.SelfToGrave]=true
+
 function Cost.SelfToHand(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsAbleToHandAsCost() end
 	Duel.SendtoHand(c,nil,REASON_COST)
 end
+
 function Cost.SelfToDeck(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsAbleToDeckAsCost() end
 	Duel.SendtoDeck(c,nil,SEQ_DECKSHUFFLE,REASON_COST)
 end
+
 function Cost.SelfToExtra(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsAbleToExtraAsCost() end
 	Duel.SendtoDeck(c,nil,SEQ_DECKSHUFFLE,REASON_COST)
 end
+
 function Cost.SelfReveal(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return not c:IsPublic() end
 	Duel.ConfirmCards(1-tp,c)
 end
 
-local self_discard_costs={}
+cost_tables.self_discard={}
 function Cost.SelfDiscard(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsDiscardable() end
 	Duel.SendtoGrave(c,REASON_DISCARD|REASON_COST)
 end
-self_discard_costs[Cost.SelfDiscard]=true
+cost_tables.self_discard[Cost.SelfDiscard]=true
+
 function Cost.SelfDiscardToGrave(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsDiscardable() and c:IsAbleToGraveAsCost() end
 	Duel.SendtoGrave(c,REASON_DISCARD|REASON_COST)
 end
-self_tograve_costs[Cost.SelfDiscardToGrave]=true
-self_discard_costs[Cost.SelfDiscardToGrave]=true
+cost_tables.self_tograve[Cost.SelfDiscardToGrave]=true
+cost_tables.self_discard[Cost.SelfDiscardToGrave]=true
 
 --Aliases for historical reasons:
 Cost.SelfRelease=Cost.SelfTribute
@@ -1477,7 +1486,7 @@ function Cost.RemoveCounterFromField(counter_type,count)
 	end
 end
 
-local self_changepos_costs={}
+cost_tables.self_changepos={}
 function Cost.SelfChangePosition(position)
 	local function cost_func(e,tp,eg,ep,ev,re,r,rp,chk)
 		local c=e:GetHandler()
@@ -1486,7 +1495,7 @@ function Cost.SelfChangePosition(position)
 		Duel.ChangePosition(c,position)
 		if fd_chk then c:SetStatus(STATUS_EFFECT_ENABLED,true) end
 	end
-	self_changepos_costs[cost_func]=true
+	cost_tables.self_changepos[cost_func]=true
 	return cost_func
 end
 
@@ -1549,7 +1558,7 @@ function Cost.Reveal(filter,other,min,max,op,location)
 	return cost_func
 end
 
-local detach_costs={}
+cost_tables.detach={}
 function Cost.DetachFromSelf(min,max,op)
 	max=max or min
 
@@ -1579,10 +1588,9 @@ function Cost.DetachFromSelf(min,max,op)
 		end
 	end
 
-	detach_costs[cost_func]=true
+	cost_tables.detach[cost_func]=true
 	return cost_func
 end
-
 
 --check for cards that can stay on the field, but not always
 function Auxiliary.RemainFieldCost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -1603,6 +1611,8 @@ function Auxiliary.RemainFieldCost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e2:SetReset(RESET_CHAIN)
 	Duel.RegisterEffect(e2,tp)
 end
+
+cost_tables.remain_field={}
 function Auxiliary.RemainFieldDisabled(e,tp,eg,ep,ev,re,r,rp)
 	local cid=Duel.GetChainInfo(ev,CHAININFO_CHAIN_ID)
 	if cid~=e:GetLabel() then return end
@@ -1610,18 +1620,17 @@ function Auxiliary.RemainFieldDisabled(e,tp,eg,ep,ev,re,r,rp)
 		e:GetOwner():CancelToGrave(false)
 	end
 end
-local remain_field_costs={}
-remain_field_costs[aux.RemainFieldCost]=true
+cost_tables.remain_field[aux.RemainFieldCost]=true
 
-local function cost_table_check(t)
-	return function(eff) return t[eff:GetCost()] end
+local function cost_table_check(key)
+	return function(eff) return cost_tables[key][eff:GetCost()] end
 end
 
-Effect.HasSelfToGraveCost=cost_table_check(self_tograve_costs)
-Effect.HasSelfDiscardCost=cost_table_check(self_discard_costs)
-Effect.HasDetachCost=cost_table_check(detach_costs)
-Effect.HasSelfChangePositionCost=cost_table_check(self_changepos_costs)
-Effect.HasRemainFieldCost=cost_table_check(remain_field_costs)
+Effect.HasSelfToGraveCost        = cost_table_check("self_tograve")
+Effect.HasSelfDiscardCost        = cost_table_check("self_discard")
+Effect.HasDetachCost             = cost_table_check("detach")
+Effect.HasSelfChangePositionCost = cost_table_check("self_changepos")
+Effect.HasRemainFieldCost        = cost_table_check("remain_field")
 
 --Default cost for "You can pay X LP;"
 function Cost.PayLP(lp_value,pay_until)
@@ -1695,12 +1704,12 @@ function Cost.AND(...)
 		end
 	end
 
-	for _,fn in ipairs(fns) do
-		if detach_costs[fn] then detach_costs[full_cost]=true end
-		if self_discard_costs[fn] then self_discard_costs[full_cost]=true end
-		if self_tograve_costs[fn] then self_tograve_costs[full_cost]=true end
-		if remain_field_costs[fn] then remain_field_costs[full_cost]=true end
+	for _,t in pairs(cost_tables) do
+		for _,fn in ipairs(fns) do
+			if t[fn] then t[full_cost]=true end
+		end
 	end
+
 	return full_cost
 end
 
@@ -1725,13 +1734,13 @@ function Cost.Choice(...)
         e:SetLabel(op)
     end
 
-    detach_costs[full_cost]=true
-    self_discard_costs[full_cost]=true
-    for _,choice in ipairs(choices) do
-        local fn=choice[1]
-        if not detach_costs[fn] then detach_costs[full_cost]=false end
-        if not self_discard_costs[fn] then self_discard_costs[full_cost]=false end
-    end
+	for _,t in pairs(cost_tables) do
+		t[full_cost]=true
+		for _,choice in ipairs(choices) do
+			local fn=choice[1]
+			if not t[fn] then t[full_cost]=false end
+		end
+	end
 
     return full_cost
 end

@@ -69,9 +69,10 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 		e:SetCategory(0)
 		Duel.ClearOperationInfo(0)
 	end
+	Duel.SetTargetParam(op)
 end
 function s.effop(e,tp,eg,ep,ev,re,r,rp)
-	local op=e:GetLabel()
+	local op=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
 	if op==1 then
 		--● Add 1 "Witchcrafter" Spell from your Deck to your hand
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)

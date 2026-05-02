@@ -2883,6 +2883,7 @@ function Auxiliary.DefaultFieldReturnOp(rg)
 end
 
 Duel.LoadScript("debug_utility.lua")
+Duel.LoadScript("chain.lua")
 Duel.LoadScript("cards_specific_functions.lua")
 Duel.LoadScript("proc_fusion.lua")
 Duel.LoadScript("proc_fusion_spell.lua")

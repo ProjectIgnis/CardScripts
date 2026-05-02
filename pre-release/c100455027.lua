@@ -31,7 +31,7 @@ function s.desfilter(c,opp)
 	return (c:IsSetCard(SET_WITCHCRAFTER) and c:IsMonster() and c:IsFaceup()) or c:IsControler(opp)
 end
 function s.matfilter(c)
-	return c:IsRace(RACE_SPELLCASTER) and c:IsAbleToDeck()
+	return c:IsRace(RACE_SPELLCASTER) and c:IsAbleToDeck() and c:IsFaceup()
 end
 function s.fextra(e,tp,mg)
 	return Duel.GetMatchingGroup(aux.NecroValleyFilter(s.matfilter),tp,LOCATION_GRAVE|LOCATION_REMOVED,0,nil)

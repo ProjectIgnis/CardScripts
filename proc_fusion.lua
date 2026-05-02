@@ -262,8 +262,9 @@ function Fusion.SelectMix(c,tp,mg,sg,mustg,fc,sub,sub2,contact,sumtype,chkf,...)
 		res=mg2:IsExists(Fusion.SelectMix,1,sg,tp,mg2,sg,mustg-sg,fc,sub,sub2,contact,sumtype,chkf,...)
 	else
 		res=Fusion.CheckMixGoal(tp,sg,fc,sub,sub2,contact,sumtype,chkf,...)
+		--This is the end of the recursion
+		res=res and sg:Includes(mustg)
 	end
-	res = res and sg:Includes(mustg)
 	sg:RemoveCard(c)
 	-- mg2:Merge(rg)
 	return res

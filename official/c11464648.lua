@@ -52,15 +52,10 @@ function s.immcon(e)
 	return eqpg and eqpg:IsExists(s.equipfilter,1,nil)
 end
 function s.immval(e,te)
-	local tc=te:GetHandler()
-	local trig_loc,trig_setcodes=Duel.GetChainInfo(0,CHAININFO_TRIGGERING_LOCATION,CHAININFO_TRIGGERING_SETCODES)
-	if not Duel.IsChainSolving() or (tc:IsRelateToEffect(te) and tc:IsFaceup() and tc:IsLocation(trig_loc)) then
-		return not tc:IsSetCard(SET_FIENDSMITH)
+	if Chain.IsResolving() and Chain.GetTriggeringEffect()==te then
+		return not Chain.IsSetCard(0,SET_FIENDSMITH)
 	end
-	for _,setcode in ipairs(trig_setcodes) do
-		if (SET_FIENDSMITH&0xfff)==(setcode&0xfff) and (SET_FIENDSMITH&setcode)==SET_FIENDSMITH then return false end
-	end
-	return true
+	return not te:GetHandler():IsSetCard(SET_FIENDSMITH)
 end
 function s.tgcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end

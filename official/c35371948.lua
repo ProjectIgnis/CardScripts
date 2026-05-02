@@ -148,22 +148,10 @@ function s.rstop2(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	if not (ep==1-tp and Duel.GetLP(1-tp)>0) then return false end
-	if r&REASON_BATTLE>0 then
-		return eg:GetFirst():IsSetCard(SET_TRICKSTAR)
-	else
-		if not(re and re:IsMonsterEffect()) then return false end
-		local rc=re:GetHandler()
-		if re:IsActivated() and (rc:IsFacedown() or not rc:IsRelateToEffect(re)) then
-			local ch=Duel.GetCurrentChain()
-			local trig_loc,setcodes=Duel.GetChainInfo(ch,CHAININFO_TRIGGERING_LOCATION,CHAININFO_TRIGGERING_SETCODES)
-			if trig_loc&LOCATION_MZONE==0 then return false end
-			for _,set in ipairs(setcodes) do
-				if (SET_TRICKSTAR&0xfff)==(set&0xfff) and (SET_TRICKSTAR&set)==SET_TRICKSTAR then return true end
-			end
-		else
-			return rc:IsSetCard(SET_TRICKSTAR)
-		end
-	end
+	if r&REASON_BATTLE>0 then return eg:GetFirst():IsSetCard(SET_TRICKSTAR) end
+	if not (re and re:IsMonsterEffect()) then return false end
+	if not re:IsActivated() then return re:GetHandler():IsSetCard(SET_TRICKSTAR) end
+	return Chain.IsTriggeringPlayer(0,tp) and Chain.IsTriggeringLocation(0,LOCATION_MZONE) and Chain.IsTriggeringSetcode(0,SET_TRICKSTAR)
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,id)

@@ -70,16 +70,7 @@ s.listed_series={SET_ARMED_DRAGON}
 s.LVnum=10
 s.LVset=SET_ARMED_DRAGON_THUNDER
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
-	if not (re and re:IsMonsterEffect()) then return false end
-	local rc=re:GetHandler()
-	local trig_loc,trig_setcodes=Duel.GetChainInfo(0,CHAININFO_TRIGGERING_LOCATION,CHAININFO_TRIGGERING_SETCODES)
-	if not Duel.IsChainSolving() or (rc:IsRelateToEffect(re) and rc:IsFaceup() and rc:IsLocation(trig_loc)) then
-		return rc:IsSetCard(SET_ARMED_DRAGON)
-	else
-		for _,setcode in ipairs(trig_setcodes) do
-			if (SET_ARMED_DRAGON&0xfff)==(setcode&0xfff) and (SET_ARMED_DRAGON&setcode)==SET_ARMED_DRAGON then return true end
-		end
-	end
+	return Chain.IsSetcode(0,SET_ARMED_DRAGON) and re:IsMonsterEffect()
 end
 function s.atkcon(atk)
 	return function(e,tp,eg,ep,ev,re,r,rp)

@@ -63,16 +63,9 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 	aux.RegisterClientHint(c,0,tp,1,0,aux.Stringid(id,1))
 end
 function s.drawcon(e,tp,eg,ep,ev,re,r,rp)
-	local chainlink=Duel.GetCurrentChain(true)-1
-	if not (chainlink>0 and ep==1-tp) then return false end
-	local trig_p,trig_typ,setcodes=Duel.GetChainInfo(chainlink,CHAININFO_TRIGGERING_PLAYER,CHAININFO_TRIGGERING_TYPE,CHAININFO_TRIGGERING_SETCODES)
-	if not (trig_p==tp and (trig_typ&TYPE_MONSTER)>0) then return false end
-	for _,set in ipairs(setcodes) do
-		if ((SET_KI_SIKIL&0xfff)==(set&0xfff) and (SET_KI_SIKIL&set)==SET_KI_SIKIL)
-		or ((SET_LIL_LA&0xfff)==(set&0xfff) and (SET_LIL_LA&set)==SET_LIL_LA) then
-			return true
-		end
-	end
+	return ch>0 and ep==1-tp and Chain.IsTriggeringPlayer(ch,tp)
+		and Chain.IsTriggeringType(ch,TYPE_MONSTER)
+		and Chain.IsTriggeringSetcode(ch,{SET_KI_SIKIL,SET_LIL_LA})
 end
 function s.drawop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,1-tp,id)

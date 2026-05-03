@@ -1,9 +1,8 @@
 Chain={}
 
-local function chaininfo_fn(...)
-	local params={...}
+local function chaininfo_fn(info)
 	return function(ch)
-		return Duel.GetChainInfo(ch or 0,table.unpack(params))
+		return Duel.GetChainInfo(ch or 0,info)
 	end
 end
 
@@ -16,26 +15,31 @@ Chain.GetDisablePlayer = chaininfo_fn(CHAININFO_DISABLE_PLAYER)
 
 Chain.GetID            = chaininfo_fn(CHAININFO_CHAIN_ID)
 
-Chain.GetTriggeringEffect         = chaininfo_fn(CHAININFO_TRIGGERING_EFFECT)
-Chain.GetTriggeringPlayer         = chaininfo_fn(CHAININFO_TRIGGERING_PLAYER)
-Chain.GetTriggeringControler      = chaininfo_fn(CHAININFO_TRIGGERING_CONTROLER)
-Chain.GetTriggeringLocation       = chaininfo_fn(CHAININFO_TRIGGERING_LOCATION,CHAININFO_TRIGGERING_LOCATION_SYMBOLIC)
-Chain.GetTriggeringSequence       = chaininfo_fn(CHAININFO_TRIGGERING_SEQUENCE,CHAININFO_TRIGGERING_SEQUENCE_SYMBOLIC)
-Chain.GetTriggeringPosition       = chaininfo_fn(CHAININFO_TRIGGERING_POSITION)
-Chain.GetTriggeringCode           = chaininfo_fn(CHAININFO_TRIGGERING_CODE,CHAININFO_TRIGGERING_CODE2)
-Chain.GetTriggeringType           = chaininfo_fn(CHAININFO_TRIGGERING_TYPE,CHAININFO_TYPE,CHAININFO_EXTTYPE)
-Chain.GetTriggeringLevel          = chaininfo_fn(CHAININFO_TRIGGERING_LEVEL)
-Chain.GetTriggeringRank           = chaininfo_fn(CHAININFO_TRIGGERING_RANK)
-Chain.GetTriggeringAttribute      = chaininfo_fn(CHAININFO_TRIGGERING_ATTRIBUTE)
-Chain.GetTriggeringRace           = chaininfo_fn(CHAININFO_TRIGGERING_RACE)
-Chain.GetTriggeringATK            = chaininfo_fn(CHAININFO_TRIGGERING_ATTACK)
-Chain.GetTriggeringDEF            = chaininfo_fn(CHAININFO_TRIGGERING_DEFENSE)
-Chain.GetTriggeringStatus         = chaininfo_fn(CHAININFO_TRIGGERING_STATUS)
-Chain.GetTriggeringSummonLocation = chaininfo_fn(CHAININFO_TRIGGERING_SUMMON_LOCATION)
-Chain.GetTriggeringSummonType     = chaininfo_fn(CHAININFO_TRIGGERING_SUMMON_TYPE)
-Chain.GetTriggeringSetcodes       = chaininfo_fn(CHAININFO_TRIGGERING_SETCODES)
+Chain.GetTriggeringEffect           = chaininfo_fn(CHAININFO_TRIGGERING_EFFECT)
+Chain.GetTriggeringPlayer           = chaininfo_fn(CHAININFO_TRIGGERING_PLAYER)
+Chain.GetTriggeringControler        = chaininfo_fn(CHAININFO_TRIGGERING_CONTROLER)
+Chain.GetTriggeringLocation         = chaininfo_fn(CHAININFO_TRIGGERING_LOCATION)
+Chain.GetTriggeringLocationSymbolic = chaininfo_fn(CHAININFO_TRIGGERING_LOCATION_SYMBOLIC)
+Chain.GetTriggeringSequence         = chaininfo_fn(CHAININFO_TRIGGERING_SEQUENCE)
+Chain.GetTriggeringLocationSymbolic = chaininfo_fn(CHAININFO_TRIGGERING_SEQUENCE_SYMBOLIC)
+Chain.GetTriggeringPosition         = chaininfo_fn(CHAININFO_TRIGGERING_POSITION)
+Chain.GetTriggeringType             = chaininfo_fn(CHAININFO_TRIGGERING_TYPE)
+Chain.GetTriggeringLevel            = chaininfo_fn(CHAININFO_TRIGGERING_LEVEL)
+Chain.GetTriggeringRank             = chaininfo_fn(CHAININFO_TRIGGERING_RANK)
+Chain.GetTriggeringAttribute        = chaininfo_fn(CHAININFO_TRIGGERING_ATTRIBUTE)
+Chain.GetTriggeringRace             = chaininfo_fn(CHAININFO_TRIGGERING_RACE)
+Chain.GetTriggeringATK              = chaininfo_fn(CHAININFO_TRIGGERING_ATTACK)
+Chain.GetTriggeringDEF              = chaininfo_fn(CHAININFO_TRIGGERING_DEFENSE)
+Chain.GetTriggeringStatus           = chaininfo_fn(CHAININFO_TRIGGERING_STATUS)
+Chain.GetTriggeringSummonLocation   = chaininfo_fn(CHAININFO_TRIGGERING_SUMMON_LOCATION)
+Chain.GetTriggeringSummonType       = chaininfo_fn(CHAININFO_TRIGGERING_SUMMON_TYPE)
+Chain.GetTriggeringSetcodes         = chaininfo_fn(CHAININFO_TRIGGERING_SETCODES)
 
 Chain.IsTriggeringCardProperlySummoned = chaininfo_fn(CHAININFO_TRIGGERING_SUMMON_PROC_COMPLETE)
+
+function Chain.GetTriggeringCode(ch)
+	return Duel.GetChainInfo(ch or 0,CHAININFO_TRIGGERING_CODE,CHAININFO_TRIGGERING_CODE2)
+end
 
 -- boolean check versions for chain info functions
 
@@ -45,6 +49,7 @@ local function chaininfo_equals(fn)
 	end
 end
 
+Chain.IsTriggeringEffect     = chaininfo_equals(Chain.GetTriggeringEffect)
 Chain.IsTriggeringPlayer     = chaininfo_equals(Chain.GetTriggeringPlayer)
 Chain.IsDisablePlayer        = chaininfo_equals(Chain.GetDisablePlayer)
 Chain.IsTriggeringControler  = chaininfo_equals(Chain.GetTriggeringControler)
@@ -58,13 +63,19 @@ local function chaininfo_includes_bits(fn)
 	end
 end
 
-
 Chain.IsTriggeringPosition       = chaininfo_includes_bits(Chain.GetTriggeringPosition)
+Chain.IsTriggeringType           = chaininfo_includes_bits(Chain.GetTriggeringType)
 Chain.IsTriggeringAttribute	     = chaininfo_includes_bits(Chain.GetTriggeringAttribute)
 Chain.IsTriggeringRace	         = chaininfo_includes_bits(Chain.GetTriggeringRace)
 Chain.IsTriggeringStatus         = chaininfo_includes_bits(Chain.GetTriggeringStatus)
 Chain.IsTriggeringSummonLocation = chaininfo_includes_bits(Chain.GetTriggeringSummonLocation)
 Chain.IsTriggeringSummonType     = chaininfo_includes_bits(Chain.GetTriggeringSummonType)
+
+--integrates symbolic locations to be consistent with Card.IsLocation
+Chain.IsTriggeringLocation = aux.OR(
+	chaininfo_includes_bits(Chain.GetTriggeringLocation),
+	chaininfo_includes_bits(Chain.GetTriggeringLocationSymbolic)
+)
 
 local function chaininfo_equals_any(fn)
 	return function(ch,...)
@@ -80,26 +91,12 @@ Chain.IsTriggeringSequence = chaininfo_equals_any(Chain.GetTriggeringSequence)
 Chain.IsTriggeringLevel	   = chaininfo_equals_any(Chain.GetTriggeringLevel)
 Chain.IsTriggeringRank	   = chaininfo_equals_any(Chain.GetTriggeringRank)
 
-function Chain.IsTriggeringLocation(ch,loc)
-	local trig_loc,trig_loc_sym=Chain.GetTriggeringLocation(ch)
-	return (trig_loc&loc)==loc,
-		(trig_loc_sym&loc)==loc
-end
-
 function Chain.IsTriggeringCode(ch,...)
 	local code1,code2=Chain.GetTriggeringCode(ch)
 	for _,code in ipairs({...}) do
 		if code==code1 or code==code2 then return true end
 	end
 	return false
-end
-
-function Chain.IsTriggeringType(ch,typ)
-	--hard to name these properly
-	local typ1,typ2,typ3=Chain.GetTriggeringType(ch)
-	return (typ1&typ)==typ,
-		(typ2&typ)==typ,
-		(typ3&typ)==typ
 end
 
 function Chain.IsTriggeringSetcode(ch,setcodes)
@@ -207,8 +204,7 @@ Chain.SetLimitTillEnd	 = Duel.SetChainLimitTillChainEnd
 -- split Duel.GetChainEvent into individual functions
 local function chain_event_fn(n)
 	return function(ch)
-		local returns={Duel.GetChainEvent(ch or 0)}
-		return returns[n]
+		return (select(n,Duel.GetChainEvent(ch or 0)))
 	end
 end
 

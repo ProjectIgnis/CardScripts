@@ -44,6 +44,7 @@ function s.gytg(e,tp,eg,ep,ev,re,r,rp,chk)
 		local g=Duel.GetMatchingGroup(s.gyfilter,tp,LOCATION_HAND|LOCATION_ONFIELD,0,e:GetHandler())
 		return aux.SelectUnselectGroup(g,e,tp,3,3,s.rescon,0)
 	end
+	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,3,tp,LOCATION_HAND|LOCATION_ONFIELD)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATIONS_HAND_DECK_GRAVE_REMOVED)
 end
@@ -85,6 +86,7 @@ function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,2) end
+	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 	Duel.SetTargetPlayer(tp)
 	Duel.SetTargetParam(2)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,2)

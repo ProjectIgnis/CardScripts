@@ -15,19 +15,24 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_series={SET_DARKLORD}
+function s.matfilter(exc)
+	return function(c)
+		return c~=exc and c:IsAbleToGrave()
+	end
+end
+function s.costcardcheck(exc)
+	return function(tp,sg,fc)
+		return Duel.GetLocationCountFromEx(tp,tp,sg+exc,fc)>0
+	end
+end
 function s.fextra(exc)
 	return function(e,tp,mg)
 		return nil,s.costcardcheck(exc)
 	end
 end
-function s.costcardcheck(exc)
-	return function(tp,sg,fc)
-		return not (exc and sg:IsContains(exc))
-	end
-end
 function s.costfilter(c,e,tp,eg,ep,ev,re,r,rp)
 	if not (c:IsSetCard(SET_DARKLORD) and c:IsMonster() and (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and c:IsAbleToGraveAsCost()) then return false end
-	local params={fusfilter=aux.FilterBoolFunction(Card.IsAttribute,ATTRIBUTE_DARK),extrafil=s.fextra(c)}
+	local params={fusfilter=aux.FilterBoolFunction(Card.IsAttribute,ATTRIBUTE_DARK),matfilter=s.matfilter(c),extrafil=s.fextra(c),chkf=PLAYER_NONE}
 	return Fusion.SummonEffTG(params)(e,tp,eg,ep,ev,re,r,rp,0)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -50,12 +55,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,chk)
 	local cost_card=e:GetLabelObject()
-	local params={}
-	if cost_card then
-		params={fusfilter=aux.FilterBoolFunction(Card.IsAttribute,ATTRIBUTE_DARK),extrafil=s.fextra(cost_card),stage2=s.stage2}
-	else
-		params={fusfilter=aux.FilterBoolFunction(Card.IsAttribute,ATTRIBUTE_DARK)}
-	end
+	local params={fusfilter=aux.FilterBoolFunction(Card.IsAttribute,ATTRIBUTE_DARK),stage2=cost_card and s.stage2 or nil}
 	Fusion.SummonEffOP(params)(e,tp,eg,ep,ev,re,r,rp,1)
 end
 function s.stage2(e,tc,tp,sg,chk)

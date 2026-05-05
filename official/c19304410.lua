@@ -48,7 +48,7 @@ function s.selfspop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.gyspfilter(c,e,tp)
 	return (c:IsSetCard({SET_TRI_BRIGADE,SET_SPRINGANS}) or (c:IsCode(CARD_ALBAZ) or c:ListsCode(CARD_ALBAZ))) and not c:IsCode(id)
-		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.gysptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -60,6 +60,6 @@ function s.gyspop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.gyspfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 	if #g>0 then
-		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
+		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 	end
 end

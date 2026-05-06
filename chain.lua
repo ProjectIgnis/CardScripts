@@ -176,41 +176,56 @@ function Chain.IsAttributeExcept(ch,attr)
 end
 
 -- a mechanism for saving any amount of custom information that is strictly associated to a specific chain link
-local info_table={}
-local info_reset=Effect.GlobalEffect()
-info_reset:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-info_reset:SetCode(EVENT_CHAIN_END)
-info_reset:SetOperation(function() info_table={} end)
-Duel.RegisterEffect(info_reset,0)
+local data_table={}
 
-function Chain.Info(ch)
+do
+	-- prevent Debug.ReloadFieldBegin from resetting the global effect
+	local old=Debug.ReloadFieldBegin
+	function Debug.ReloadFieldBegin(...)
+		old(...)
+		local data_reset=Effect.GlobalEffect()
+		data_reset:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		data_reset:SetCode(EVENT_CHAIN_END)
+		data_reset:SetCountLimit(1)
+		data_reset:SetOperation(function() data_table={} end)
+		Duel.RegisterEffect(data_reset,0)
+	end
+end
+
+local shared_data_key={} -- dummy table to be used as a unique key
+
+function Chain.Data(ch,key)
+	local current_link=Chain.GetCurrentLink()
+	if current_link==0 then
+		return error("Attempted to access Chain Data table while there is currently no Chain",2)
+	elseif ch and ch>current_link then
+		return error("Attempted to access Chain Link higher than current Chain",2)
+	end
+
+	if not ch or ch==0 then ch=current_link end
+
 	local cid=Chain.GetID(ch)
-	info_table[cid]=info_table[cid] or {}
-	return info_table[cid]
+	local chain_link_data=data_table[cid] or {}
+	data_table[cid]=chain_link_data
+
+	-- if no key is supplied, use a default key for shared data table
+	key=key or shared_data_key
+
+	chain_link_data[key]=chain_link_data[key] or {}
+	return chain_link_data[key]
+end
+
+function Effect.GetChainData(e,ch)
+	return Chain.Data(ch,e)
 end
 
 -- aliases for existing chain-related functions (should eventually become the main names)
 Chain.ChangeOperation	 = Duel.ChangeChainOperation
 Chain.CanTarget		     = Duel.CheckChainTarget
 Chain.HasUniqueCardNames = Duel.CheckChainUniqueness
-Chain.GetTriggeringEvent = Duel.GetChainEvent
 Chain.GetCurrentLink	 = Duel.GetCurrentChain
 Chain.IsDisablable	     = Duel.IsChainDisablable
 Chain.IsNegatable		 = Duel.IsChainNegatable
 Chain.IsResolving		 = Duel.IsChainSolving
 Chain.SetLimit		     = Duel.SetChainLimit
 Chain.SetLimitTillEnd	 = Duel.SetChainLimitTillChainEnd
-
--- split Duel.GetChainEvent into individual functions
-local function chain_event_fn(n)
-	return function(ch)
-		return (select(n,Duel.GetChainEvent(ch or 0)))
-	end
-end
-
-Chain.GetEventGroup   = chain_event_fn(1)
-Chain.GetEventPlayer  = chain_event_fn(2)
-Chain.GetEventValue   = chain_event_fn(3)
-Chain.GetReasonEffect = chain_event_fn(4)
-Chain.GetReason       = chain_event_fn(5)
-Chain.GetReasonPlayer = chain_event_fn(6)

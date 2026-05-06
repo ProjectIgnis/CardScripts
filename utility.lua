@@ -1583,8 +1583,12 @@ function Cost.DetachFromSelf(min,max,op)
 		local min_count=min_type=="function" and min(e,tp) or min
 		local max_count=max_type=="function" and max(e,tp) or max
 		if chk==0 then return min_count>0 and max_count>=min_count and c:CheckRemoveOverlayCard(tp,min_count,REASON_COST) end
-		if c:RemoveOverlayCard(tp,min_count,max_count,REASON_COST)>0 and op then
-			op(e,Duel.GetOperatedGroup())
+		if c:RemoveOverlayCard(tp,min_count,max_count,REASON_COST)>0 then
+			local cd=Chain.Data()
+			cd.cost_detached_materials=Duel.GetOperatedGroup()
+			if op then
+				op(e,cd.cost_detached_materials)
+			end
 		end
 	end
 
@@ -1729,9 +1733,9 @@ function Cost.Choice(...)
 
         if chk==0 then return has_choice end
 
-        local op=Duel.SelectEffect(tp,table.unpack(ops))
-        choices[op][1](e,tp,eg,ep,ev,re,r,rp,1)
-        e:SetLabel(op)
+        local cd=e:GetChainData()
+        cd.cost_choice=Duel.SelectEffect(tp,table.unpack(ops))
+        choices[cd.cost_choice][1](e,tp,eg,ep,ev,re,r,rp,1)
     end
 
 	for _,t in pairs(cost_tables) do

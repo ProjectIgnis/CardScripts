@@ -34,22 +34,23 @@ function s.attrcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local sc=Duel.SelectMatchingCard(tp,s.attrcfilter,tp,LOCATION_GRAVE,0,1,1,nil,attr):GetFirst()
 	Duel.Remove(sc,POS_FACEUP,REASON_COST)
-	local tn_chk=sc:IsType(TYPE_TUNER) and 1 or 0
-	e:SetLabel(sc:GetAttribute(),tn_chk)
+	local cd=e:GetChainData()
+	cd.attribute=sc:GetAttribute()
+	cd.banished_tuner=sc:IsType(TYPE_TUNER)
 end
 function s.attrop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not (c:IsFaceup() and c:IsRelateToEffect(e)) then return end
-	local attr,tn_chk=e:GetLabel()
-	if c:IsAttribute(attr) then return end
+	local cd=e:GetChainData()
+	if c:IsAttribute(cd.attribute) then return end
 	--This card gains that monster's Attribute
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_ADD_ATTRIBUTE)
-	e1:SetValue(attr)
+	e1:SetValue(cd.attribute)
 	e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 	c:RegisterEffect(e1)
-	if tn_chk==0 then return end
+	if not cd.banished_tuner then return end
 	Duel.BreakEffect()
 	--Can be treated as a Tuner this turn
 	local e2=Effect.CreateEffect(c)

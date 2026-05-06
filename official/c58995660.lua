@@ -27,27 +27,25 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local bc1=Duel.GetBattleMonster(tp)
 	local bc2=bc1:GetBattleTarget()
-	if bc2 and bc1:GetColumnGroup():IsContains(bc2) then
-		e:SetLabel(1)
-	else
-		e:SetLabel(0)
-	end
-	e:SetLabelObject(bc1)
+	local cd=e:GetChainData()
+	cd.in_same_column=bc2 and bc1:GetColumnGroup():IsContains(bc2)
+	cd.own_monster=bc1
 	bc1:CreateEffectRelation(e)
 	Duel.SetOperationInfo(0,CATEGORY_DICE,nil,0,tp,1)
 end
 function s.effop(e,tp,eg,ep,ev,re,r,rp)
-	local bc=e:GetLabelObject()
+	local cd=e:GetChainData()
+	local bc=cd.own_monster
 	if not bc:IsRelateToEffect(e) then return end
 	local op=nil
-	if e:GetLabel()==0 then
-		op=Duel.TossDice(tp,1)
-	else
+	if cd.in_same_column then
 		local is_faceup=bc:IsFaceup()
 		op=Duel.SelectEffect(tp,
 			{true,aux.Stringid(id,1)},
 			{is_faceup,aux.Stringid(id,2)},
 			{is_faceup,aux.Stringid(id,3)})
+	else
+		op=Duel.TossDice(tp,1)
 	end
 	local c=e:GetHandler()
 	if op==1 or op==4 then

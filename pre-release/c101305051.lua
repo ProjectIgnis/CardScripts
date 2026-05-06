@@ -45,11 +45,11 @@ function s.effcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	--● Return 1 Thunder monster you control to the hand, then target 1 card on the field; destroy it
 	local b2=Duel.IsExistingMatchingCard(s.descostfilter,tp,LOCATION_MZONE,0,1,nil,c)
 	if chk==0 then return b1 or b2 end
-	local op=Duel.SelectEffect(tp,
+	local cd=e:GetChainData()
+	cd.choice=Duel.SelectEffect(tp,
 		{b1,aux.Stringid(id,2)},
 		{b2,aux.Stringid(id,3)})
-	e:SetLabel(op)
-	if op==2 then
+	if cd.choice==2 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 		local g=Duel.SelectMatchingCard(tp,s.descostfilter,tp,LOCATION_MZONE,0,1,1,nil,c)
 		Duel.HintSelection(g)
@@ -66,21 +66,15 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	--● Return 1 Thunder monster you control to the hand, then target 1 card on the field; destroy it
 	local b2=Duel.IsExistingTarget(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c)
 	if chk==0 then return b1 or b2 end
-	local op=nil
-	local label=e:GetLabel()
-	if label~=0 then
-		op=label
-	else
-		op=Duel.SelectEffect(tp,
+	local cd=e:GetChainData()
+	cd.choice=cd.choice
+		or Duel.SelectEffect(tp,
 			{b1,aux.Stringid(id,2)},
 			{b2,aux.Stringid(id,3)})
-	end
-	e:SetLabel(0)
-	Duel.SetTargetParam(op)
-	if op==1 then
+	if cd.choice==1 then
 		e:SetCategory(0)
 		e:SetProperty(0)
-	elseif op==2 then
+	elseif cd.choice==2 then
 		e:SetCategory(CATEGORY_DESTROY)
 		e:SetProperty(EFFECT_FLAG_CARD_TARGET)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
@@ -89,8 +83,8 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	end
 end
 function s.effop(e,tp,eg,ep,ev,re,r,rp)
-	local op=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
-	if op==1 then
+	local cd=e:GetChainData()
+	if cd.choice==1 then
 		--● Place 1 "Blitzclique" Continuous Trap from your Deck face-up on your field
 		if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
@@ -98,7 +92,7 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 		if sc then
 			Duel.MoveToField(sc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
 		end
-	elseif op==2 then
+	elseif cd.choice==2 then
 		--● Return 1 Thunder monster you control to the hand, then target 1 card on the field; destroy it
 		local tc=Duel.GetFirstTarget()
 		if tc:IsRelateToEffect(e) then

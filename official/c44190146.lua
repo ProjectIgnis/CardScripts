@@ -28,35 +28,6 @@ function s.initial_effect(c)
 	e2:SetTarget(s.destg)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
-	--Global check
-	aux.GlobalCheck(s,function()
-		s[0]=nil
-		s[1]=Group.CreateGroup()
-		local tmp_g=Group.CreateGroup()
-		--Keep track of an Xyz Monster activating its effect by detaching a Normal Monster
-		local ge1=Effect.CreateEffect(c)
-		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge1:SetCode(EVENT_DETACH_MATERIAL)
-		ge1:SetLabelObject(tmp_g)
-		ge1:SetOperation(function(e,tp,eg,ep,ev,re,r,rp)
-					local cid=Duel.GetCurrentChain()
-					if cid>0 and #tmp_g>0 then 
-						s[0]=Duel.GetChainInfo(cid,CHAININFO_CHAIN_ID)
-						s[1]=tmp_g-eg:GetFirst():GetOverlayGroup()
-						tmp_g:Clear()
-					end
-				end)
-		Duel.RegisterEffect(ge1,0)
-		local ge2=Effect.CreateEffect(c)
-		ge2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge2:SetCode(EFFECT_OVERLAY_REMOVE_REPLACE)
-		ge2:SetLabelObject(ge1)
-		ge2:SetCondition(function(e,tp,eg,ep,ev,re,r,rp)
-					tmp_g:Merge(re:GetHandler():GetOverlayGroup())
-					return false
-				end)
-		Duel.RegisterEffect(ge2,0)
-	end)
 end
 s.listed_names={CARD_PRINCESS_COLOGNE}
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -102,24 +73,30 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummonComplete()
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetChainInfo(0,CHAININFO_CHAIN_ID)==s[0] and re:GetHandler():IsControler(tp) and re:IsActiveType(TYPE_XYZ)
-		and s[1] and s[1]:IsExists(Card.IsOriginalType,1,nil,TYPE_NORMAL)
+	local dg=Chain.Data().cost_detached_materials
+	return dg and re:GetHandler():IsControler(tp) and re:IsActiveType(TYPE_XYZ)
+		and dg:IsExists(Card.IsOriginalType,1,nil,TYPE_NORMAL)
 end
-function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	local rc=re:GetHandler()
 	if chk==0 then return rc:IsCanBeEffectTarget(e) and Duel.IsExistingTarget(nil,tp,0,LOCATION_MZONE,1,rc) end
 	Duel.SetTargetCard(rc)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local tc=Duel.SelectTarget(tp,nil,tp,0,LOCATION_MZONE,1,1,rc):GetFirst()
-	e:SetLabelObject({tc,rc})
+	local cd=e:GetChainData()
+	cd.xyz_card=rc
+	cd.opp_card=tc
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,tc,1,tp,0)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,rc:GetRank()*300)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	local opp_c,xyz_c=table.unpack(e:GetLabelObject())
-	if opp_c:IsRelateToEffect(e) and opp_c:IsControler(1-tp) and Duel.Destroy(opp_c,REASON_EFFECT)>0
-		and xyz_c:IsRelateToEffect(e) and xyz_c:IsFaceup() then
-		Duel.Damage(1-tp,xyz_c:GetRank()*300,REASON_EFFECT)
+	local cd=e:GetChainData()
+	if cd.opp_card:IsRelateToEffect(e)
+		and cd.opp_card:IsControler(1-tp)
+		and Duel.Destroy(cd.opp_card,REASON_EFFECT)>0
+		and cd.xyz_card:IsRelateToEffect(e)
+		and cd.xyz_card:IsFaceup() then
+		Duel.Damage(1-tp,cd.xyz_card:GetRank()*300,REASON_EFFECT)
 	end
 end

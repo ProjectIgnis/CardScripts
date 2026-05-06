@@ -57,7 +57,10 @@ function s.deckspcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.deckspcostfilter,tp,LOCATION_MZONE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local sc=Duel.SelectMatchingCard(tp,s.deckspcostfilter,tp,LOCATION_MZONE,0,1,1,nil,e,tp):GetFirst()
-	e:SetLabel(sc:GetOriginalRace(),sc:GetOriginalAttribute(),sc:GetOriginalLevel())
+	local cd=e:GetChainData()
+	cd.race=sc:GetOriginalRace()
+	cd.attribute=sc:GetOriginalAttribute()
+	cd.level=sc:GetOriginalLevel()
 	Duel.Remove(sc,POS_FACEUP,REASON_COST)
 end
 function s.decksptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -66,9 +69,9 @@ function s.decksptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.deckspop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
-	local rac,att,lvl=e:GetLabel()
+	local cd=e:GetChainData()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.deckspfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp,rac,att,lvl)
+	local g=Duel.SelectMatchingCard(tp,s.deckspfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp,cd.race,cd.attribute,cd.level)
 	if #g>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end

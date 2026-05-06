@@ -66,31 +66,28 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		local tg=eff:GetTarget()
 		if tg then
 			tg(e,tp,eg,ep,ev,re,r,rp,1)
-			eff:SetLabel(e:GetLabel())
-			eff:SetLabelObject(e:GetLabelObject())
 			Duel.ClearOperationInfo(0)
 		end
 	end
-	e:SetLabelObject({tc,eff})
+	local cd=e:GetChainData()
+	cd.playlist_target_card=tc
+	cd.playlist_target_effect=eff
 	e:SetCategory(CATEGORY_TOHAND)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,tc,1,tp,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local tc=e:GetLabelObject()[1]
+	local cd=e:GetChainData()
+	local tc=cd.playlist_target_card
 	if tc and tc:IsRelateToEffect(e) then
 		local break_chk=false
-		local te=e:GetLabelObject()[2]
+		local te=cd.playlist_target_effect
 		if te then
 			--● Apply that target's effect that activates when it is sent to the GY as Synchro Material
 			local op=te:GetOperation()
 			if tc:IsFaceup() and op then
-				e:SetLabel(te:GetLabel())
-				e:SetLabelObject(te:GetLabelObject())
 				op(e,tp,eg,ep,ev,re,r,rp)
 				break_chk=true
 			end
-			e:SetLabel(0)
-			e:SetLabelObject(nil)
 		end
 		--● Return that target to the hand
 		if break_chk then Duel.BreakEffect() end

@@ -61,17 +61,17 @@ function s.applycost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local rc=Duel.SelectMatchingCard(tp,s.rmfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp):GetFirst()
 	Duel.Remove(rc,POS_FACEUP,REASON_COST)
-	local available_effs={}
+	local cd=e:GetChainData()
+	cd.available_effects={}
 	local effs={rc:GetOwnEffects()}
 	for _,eff in ipairs(effs) do
 		if eff:GetCode()==EVENT_BE_MATERIAL then
 			local tg=eff:GetTarget()
 			if tg==nil or tg(eff,tp,Group.CreateGroup(),PLAYER_NONE,0,e,REASON_EFFECT,PLAYER_NONE,0) then
-				table.insert(available_effs,eff)
+				table.insert(cd.available_effects,eff)
 			end
 		end
 	end
-	e:SetLabelObject(available_effs)
 end
 function s.applytg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then
@@ -80,16 +80,16 @@ function s.applytg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	end
 	if chk==0 then return true end
 	local eff=nil
-	local available_effs=e:GetLabelObject()
-	if #available_effs>1 then
+	local cd=e:GetChainData()
+	if #cd.available_effects>1 then
 		local available_effs_desc={}
-		for _,eff in ipairs(available_effs) do
+		for _,eff in ipairs(cd.available_effects) do
 			table.insert(available_effs_desc,eff:GetDescription())
 		end
 		local op=Duel.SelectOption(tp,table.unpack(available_effs_desc))
-		eff=available_effs[op+1]
+		eff=cd.available_effects[op+1]
 	else
-		eff=available_effs[1]
+		eff=cd.available_effects[1]
 	end
 	Duel.Hint(HINT_OPSELECTED,1-tp,eff:GetDescription())
 	e:SetLabel(eff:GetLabel())
@@ -99,21 +99,15 @@ function s.applytg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if tg then
 		tg(e,tp,eg,ep,ev,re,r,rp,1)
 	end
-	eff:SetLabel(e:GetLabel())
-	eff:SetLabelObject(e:GetLabelObject())
-	e:SetLabelObject(eff)
 	e:SetCategory(0)
 	Duel.ClearOperationInfo(0)
+	cd.loudness_war_target_effect=eff
 end
 function s.applyop(e,tp,eg,ep,ev,re,r,rp)
-	local eff=e:GetLabelObject()
+	local eff=e:GetChainData().loudness_war_target_effect
 	if not eff then return end
-	e:SetLabel(eff:GetLabel())
-	e:SetLabelObject(eff:GetLabelObject())
 	local op=eff:GetOperation()
 	if op then
 		op(e,tp,Group.CreateGroup(),PLAYER_NONE,0,e,REASON_EFFECT,PLAYER_NONE)
 	end
-	e:SetLabel(0)
-	e:SetLabelObject(nil)
 end

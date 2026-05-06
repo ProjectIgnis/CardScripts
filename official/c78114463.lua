@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_CHAINING)
-	e1:SetCondition(function(e,tp,eg,ep,ev,re,r,rp) return re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev) end)
+	e1:SetCondition(function(e,tp,eg,ep,ev,re,r,rp) return re:IsHasType(EFFECT_TYPE_ACTIVATE) and Chain.IsNegatable(ev) end)
 	e1:SetCost(Cost.AND(s.revealcost,s.paylpcost))
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
@@ -35,7 +35,7 @@ function s.revealcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function s.banish_activation_chk(e,tp)
-	local re=Duel.GetChainInfo(Duel.GetCurrentChain(),CHAININFO_TRIGGERING_EFFECT)
+	local re=Chain.GetTriggeringEffect()
 	local rc=re:GetHandler()
 	return rc:IsAbleToRemove(tp) or (not rc:IsRelateToEffect(re) and Duel.IsPlayerCanRemove(tp))
 end
@@ -45,16 +45,16 @@ s.paylpcost=Cost.Choice(
 )
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	local op=e:GetLabel()
 	local rc=re:GetHandler()
 	local relation=rc:IsRelateToEffect(re)
+	local cd=e:GetChainData()
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,tp,0)
-	if op==1 then
+	if cd.cost_choice==1 then
 		e:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
 		if rc:IsDestructable() and relation then
 			Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,1,tp,0)
 		end
-	elseif op==2 then
+	elseif cd.cost_choice==2 then
 		e:SetCategory(CATEGORY_NEGATE+CATEGORY_REMOVE)
 		if relation then
 			Duel.SetOperationInfo(0,CATEGORY_REMOVE,rc,1,tp,0)
@@ -67,10 +67,10 @@ function s.banfilter(c,code,opp)
 	return c:IsOriginalCodeRule(code) and c:IsAbleToRemove(opp)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local op=e:GetLabel()
 	local rc=re:GetHandler()
 	local code=rc:GetOriginalCodeRule()
-	if op==1 then
+	local cd=e:GetChainData()
+	if cd.cost_choice==1 then
 		--● Pay 1500 LP; negate the activation, and if you do, destroy that card, and if you do that, for the rest of this turn, neither player can activate cards, or the effects of cards, with its same original name
 		if Duel.NegateActivation(ev) and rc:IsRelateToEffect(re) and Duel.Destroy(eg,REASON_EFFECT)>0 then
 			--For the rest of this turn, neither player can activate cards, or the effects of cards, with its same original name
@@ -84,7 +84,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetReset(RESET_PHASE|PHASE_END)
 			Duel.RegisterEffect(e1,tp)
 		end
-	elseif op==2 then
+	elseif cd.cost_choice==2 then
 		--● Pay 3000 LP; negate the activation, and if you do, banish that card, then your opponent banishes all cards with its same original name from their hand and Deck
 		if Duel.NegateActivation(ev) and rc:IsRelateToEffect(re) and Duel.Remove(eg,POS_FACEUP,REASON_EFFECT)>0 then
 			local opp=1-tp

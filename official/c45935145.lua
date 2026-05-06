@@ -61,12 +61,12 @@ s.effdetachcost=Cost.Choice(
 function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	if chk==0 then return true end
-	local op=e:GetLabel()
+	local cd=e:GetChainData()
 	local tc=Duel.GetFirstTarget()
-	if op==1 then
+	if cd.cost_choice==1 then
 		e:SetCategory(CATEGORY_TODECK)
 		Duel.SetOperationInfo(0,CATEGORY_TODECK,tc,1,tp,0)
-	elseif op==2 then
+	elseif cd.cost_choice==2 then
 		local categ=CATEGORY_SET|CATEGORY_LEAVE_GRAVE
 		if tc:IsMonster() then
 			e:SetCategory(CATEGORY_SPECIAL_SUMMON|categ)
@@ -79,11 +79,11 @@ end
 function s.effop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not tc:IsRelateToEffect(e) then return end
-	local op=e:GetLabel()
-	if op==1 then
+	local cd=e:GetChainData()
+	if cd.cost_choice==1 then
 		--Return it to the Deck
 		Duel.SendtoDeck(tc,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
-	elseif op==2 then
+	elseif cd.cost_choice==2 then
 		--If the target is a monster, Special Summon it face-up, or in face-down Defense Position, to your field
 		if tc:IsMonster() and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 			and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP|POS_FACEDOWN_DEFENSE)>0

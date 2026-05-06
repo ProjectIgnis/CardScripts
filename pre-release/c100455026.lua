@@ -18,7 +18,7 @@ function s.initial_effect(c)
 			--● Add 1 "Witchcrafter" Spell from your Deck to your hand
 			{aux.TRUE,aux.Stringid(id,2),function(e,tp) return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end},
 			--● Reveal 1 "Witchcrafter" Normal or Quick-Play Spell in your hand; apply that Spell's activation effect
-			{Cost.Reveal(s.revealfilter,nil,1,1,function(e,tp,og) e:SetLabelObject(og) end),aux.Stringid(id,3),nil}
+			{Cost.Reveal(s.revealfilter,nil,1,1,function(e,tp,og) e:GetChainData().revealed_card=og:GetFirst() end),aux.Stringid(id,3),nil}
 		)
 	)
 	e1:SetTarget(s.efftg)
@@ -58,8 +58,7 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	elseif cd.cost_choice==2 then
 		--● Reveal 1 "Witchcrafter" Normal or Quick-Play Spell in your hand; apply that Spell's activation effect
 		e:SetCategory(0)
-		local revealed_card=e:GetLabelObject():GetFirst()
-		local te,ceg,cep,cev,cre,cr,crp=revealed_card:CheckActivateEffect(true,true,true)
+		local te,ceg,cep,cev,cre,cr,crp=cd.revealed_card:CheckActivateEffect(true,true,true)
 		Duel.ClearTargetCard()
 		local tg=te:GetTarget()
 		e:SetProperty(te:GetProperty())

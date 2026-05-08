@@ -2,7 +2,7 @@
 --Blue Flame Swordsman (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
-	--atk
+	--During either player's turn, you can have this card lose ATK in multiples of 100 to have another face-up monster on the field gain an equal amount of ATK. 
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_ATKCHANGE)
@@ -11,38 +11,34 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(TIMING_DAMAGE_STEP)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCondition(s.atkcon)
+	e1:SetCondition(aux.StatChangeDamageStepCondition)
 	e1:SetCost(s.atkcost)
 	e1:SetTarget(s.atktg)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
-	--summon
+	--When this card is destroyed, you can Special Summon 1 "Flame Swordsman" from your Deck or Graveyard.
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
-	e2:SetCode(EVENT_TO_GRAVE)
-	e2:SetCondition(s.spcon)
+	e2:SetCode(EVENT_DESTROYED)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={45231177}
-function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
-end
+s.listed_names={45231177} --"Flame Swordsman"
 function s.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return c:GetAttack()>0 end
-	local finatk=aux.ComposeNumberDigitByDigit(tp,1,c:GetAttack())
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_OATH)
-	e1:SetCode(EFFECT_UPDATE_ATTACK)
-	e1:SetValue(-finatk)
-	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
-	c:RegisterEffect(e1)
+	if chk==0 then return c:HasNonZeroAttack() end
+	local maxc=c:GetAttack()
+	maxc=math.floor(maxc/100)*100
+	local t={}
+	for i=1,maxc/100 do
+		t[i]=i*100
+	end
+	local finatk=Duel.AnnounceNumber(tp,table.unpack(t))
+	c:UpdateAttack(-finatk)
 	Duel.SetTargetParam(finatk)
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -55,17 +51,9 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,c)
 	local tc=g:GetFirst()
 	if tc then
-		Duel.HintSelection(g)
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
-		e1:SetValue(atk)
-		tc:RegisterEffect(e1)
+		Duel.HintSelection(tc)
+		tc:UpdateAttack(atk,RESET_EVENT|RESETS_STANDARD,c)
 	end
-end
-function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsReason(REASON_DESTROY)
 end
 function s.spfilter(c,e,tp)
 	return c:IsCode(45231177) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_SZONE)
 	e1:SetCountLimit(1,id)
-	e1:SetCost(Cost.AND(Cost.HardOncePerChain(id),Cost.HintSelectedEffect))
+	e1:SetCost(Cost.AND(s.opccost1,Cost.HintSelectedEffect))
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	e1:SetHintTiming(0,TIMING_STANDBY_PHASE|TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E)
@@ -29,12 +29,20 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_CHAINING)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCondition(function(e,tp,eg,ep,ev,re,r,rp) return rp==1-tp end)
-	e2:SetCost(Cost.AND(s.spcost,Cost.HardOncePerChain(id),Cost.HintSelectedEffect))
+	e2:SetCost(Cost.AND(s.spcost,s.opccost2,Cost.HintSelectedEffect))
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
 s.listed_names={CARD_RITUAL_OF_LIGHT_AND_DARKNESS}
+function s.opccost1(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return not Duel.HasFlagEffect(tp,id) end
+	Duel.RegisterFlagEffect(tp,id+100,RESET_CHAIN,0,1)
+end
+function s.opccost2(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return not Duel.HasFlagEffect(tp,id+100) end
+	Duel.RegisterFlagEffect(tp,id,RESET_CHAIN,0,1)
+end
 function s.thfilter(c)
 	return c:IsMonster() and c:ListsCode(CARD_RITUAL_OF_LIGHT_AND_DARKNESS) and c:IsAbleToHand()
 end

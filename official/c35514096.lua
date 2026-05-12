@@ -21,6 +21,7 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local b2=Duel.IsExistingTarget(Card.IsFacedown,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
 	local b3=Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_MULTI,0,TYPES_TOKEN,1200,1200,4,RACE_MACHINE,ATTRIBUTE_LIGHT)
+	if not (b1 or b2 or b3) then return end
 	local op=Duel.SelectEffect(tp,
 		{b1,aux.Stringid(id,1)},
 		{b2,aux.Stringid(id,2)},

@@ -62,7 +62,7 @@ s.listed_names={CARD_REDEYES_B_DRAGON,CARD_DARK_TIME_WIZARD,id}
 s.material={CARD_REDEYES_B_DRAGON}
 s.material_setcode={SET_RED_EYES}
 function s.selfspcostfilter(c,tp,fc)
-	return c:IsReleasable() and c:IsFaceup() and c:IsCanBeFusionMaterial(fc,SUMMON_TYPE_SPECIAL+1,tp)
+	return c:IsReleasable() and c:IsFaceup() and c:IsCanBeFusionMaterial(fc,MATERIAL_FUSION,tp)
 		and Duel.GetLocationCountFromEx(tp,tp,c,fc)>0
 end
 function s.selfspcon(e,c)

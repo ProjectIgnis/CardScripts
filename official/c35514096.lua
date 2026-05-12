@@ -3,7 +3,7 @@
 local s,id=GetID()
 local TOKEN_MULTI=id+1
 function s.initial_effect(c)
-	--Activate 1 of these effects
+	--If this card destroys an opponent's monster by battle: Activate 1 of these effects;
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
@@ -17,16 +17,20 @@ s.listed_names={TOKEN_MULTI}
 function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsFacedown() end
 	if chk==0 then return true end
+	--● This card can make a second attack in a row
 	local b1=e:GetHandler():CanChainAttack()
+	--● Target 1 Set card on the field; destroy that target
 	local b2=Duel.IsExistingTarget(Card.IsFacedown,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
+	--● Special Summon 1 "Multi Token" (Machine/LIGHT/Level 4/ATK 1200/DEF 1200)
 	local b3=Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_MULTI,0,TYPES_TOKEN,1200,1200,4,RACE_MACHINE,ATTRIBUTE_LIGHT)
-	if not (b1 or b2 or b3) then return end
 	local op=Duel.SelectEffect(tp,
 		{b1,aux.Stringid(id,1)},
 		{b2,aux.Stringid(id,2)},
 		{b3,aux.Stringid(id,3)})
-	e:SetLabel(op)
+	if op then
+		e:SetLabel(op)
+	end
 	if op==1 then
 		e:SetCategory(0)
 		e:SetProperty(0)
@@ -46,19 +50,19 @@ end
 function s.effop(e,tp,eg,ep,ev,re,r,rp)
 	local op=e:GetLabel()
 	if op==1 then
-		--This card can make a second attack in a row
+		--● This card can make a second attack in a row
 		local c=e:GetHandler()
 		if c:IsRelateToBattle() then
 			Duel.ChainAttack()
 		end
 	elseif op==2 then
-		--Destroy 1 Set card on the field
+		--● Target 1 Set card on the field; destroy that target
 		local tc=Duel.GetFirstTarget()
 		if tc:IsRelateToEffect(e) and tc:IsFacedown() then
 			Duel.Destroy(tc,REASON_EFFECT)
 		end
 	elseif op==3 then
-		--Special Summon 1 "Multi Token"
+		--● Special Summon 1 "Multi Token" (Machine/LIGHT/Level 4/ATK 1200/DEF 1200)
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 			and Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_MULTI,0,TYPES_TOKEN,1200,1200,4,RACE_MACHINE,ATTRIBUTE_LIGHT) then
 			local token=Duel.CreateToken(tp,TOKEN_MULTI)

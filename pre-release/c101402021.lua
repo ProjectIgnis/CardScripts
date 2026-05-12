@@ -92,7 +92,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
 	e1:SetCountLimit(1)
-	e1:SetOperation(function() Duel.Damage(1-tp,2000,REASON_EFFECT) end)
+	e1:SetOperation(function() Duel.Hint(HINT_CARD,0,id) Duel.Damage(1-tp,2000,REASON_EFFECT) end)
 	e1:SetReset(RESET_PHASE|PHASE_STANDBY)
 	Duel.RegisterEffect(e1,tp)
 end

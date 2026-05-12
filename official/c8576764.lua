@@ -3,7 +3,7 @@
 --Scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
-	--Special Summon 1 aqua, fish, or sea serpent monster from GY
+	--You can target 1 Fish, Sea Serpent, or Aqua monster in your GY with an equal or lower Level than the number of cards in your opponent's hand; Special Summon it, but it cannot activate its effects this turn. You can only use this effect of "Gluttonous Reptolphin Greethys" once per turn.
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -14,15 +14,15 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--If sent to GY as synchro material, the synchro monster gains ATK/DEF
+	--If this card is sent to the GY as Synchro Material: You can make the Synchro Monster that used this card as material gain 200 ATK/DEF for each card currently in your opponent's hand.
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DEFCHANGE)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_BE_MATERIAL)
-	e2:SetCondition(s.con)
-	e2:SetOperation(s.op)
+	e2:SetCondition(s.atkdefchcon)
+	e2:SetOperation(s.atkdefchop)
 	c:RegisterEffect(e2)
 end
 function s.spfilter(c,e,tp,lv)
@@ -53,22 +53,17 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	Duel.SpecialSummonComplete()
 end
-function s.con(e,tp,eg,ep,ev,re,r,rp)
+function s.atkdefchcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsLocation(LOCATION_GRAVE) and r==REASON_SYNCHRO and Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)>0
 end
-function s.op(e,tp,eg,ep,ev,re,r,rp)
-	local ct=Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)
+function s.atkdefchop(e,tp,eg,ep,ev,re,r,rp)
+	local val=Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)*200
 	local c=e:GetHandler()
 	local sync=c:GetReasonCard()
-	--Gains ATK/DEF
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_UPDATE_ATTACK)
-	e1:SetValue(200*ct)
-	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
-	sync:RegisterEffect(e1)
-	local e2=e1:Clone()
-	e2:SetCode(EFFECT_UPDATE_DEFENSE)
-	sync:RegisterEffect(e2)
+	if sync and sync:IsFaceup() then
+		--Gains 200 ATK/DEF for each card currently in your opponent's hand
+		sync:UpdateAttack(val,RESET_EVENT|RESETS_STANDARD,c)
+		sync:UpdateDefense(val,RESET_EVENT|RESETS_STANDARD,c)
+	end
 end

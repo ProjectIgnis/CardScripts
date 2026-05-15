@@ -49,16 +49,18 @@ function s.sctg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local lvl=math.max(1,scale-2)
 	local g=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_MZONE,0,nil,lvl)
 	if scale>1 then
-		Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
+		Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,tp,0)
 	end
 end
 function s.scop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:GetLeftScale()<=1 then return end
-	local g=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_MZONE,0,nil,c:GetLeftScale())
-	if c:UpdateScale(-2)~=0 and #g>0 then
-		Duel.BreakEffect()
-		Duel.Destroy(g,REASON_EFFECT)
+	if c:UpdateScale(-2)~=0 then
+		local g=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_MZONE,0,nil,c:GetLeftScale())
+		if #g>0 then
+			Duel.BreakEffect()
+			Duel.Destroy(g,REASON_EFFECT)
+		end
 	end
 end
 function s.rthfilter(c)

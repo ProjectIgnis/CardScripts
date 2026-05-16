@@ -7,7 +7,7 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCondition(function s.condition(e,tp) return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,511000157),tp,LOCATION_MZONE,0,1,nil) end)
+	e1:SetCondition(function(e,tp) return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,511000157),tp,LOCATION_MZONE,0,1,nil) end)
 	e1:SetHintTiming(0,TIMING_END_PHASE)
 	c:RegisterEffect(e1)
 	--Special Summon 1 "Necro Mannquein" from your hand or Deck

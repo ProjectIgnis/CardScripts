@@ -59,13 +59,13 @@ function s.initial_effect(c)
 	e6:SetOperation(s.oppeffdesdamop)
 	c:RegisterEffect(e6)
 end
-function s.selfepdamdamtg(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.selfepdamtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetTargetPlayer(tp)
 	Duel.SetTargetParam(800)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,0,0,tp,800)
 end
-function s.selfepdamdamop(e,tp,eg,ep,ev,re,r,rp)
+function s.selfepdamop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Damage(p,d,REASON_EFFECT)

@@ -307,8 +307,11 @@ if not AnimeArchetype then
 	-- Wood Remains/Wodan the Resident of the Forest/Alpacaribou, Mystical Beast of the Forest
 	-- Valerifawn, Mystical Beast of the Forest/Kalantosa, Mystical Beast of the Forest/Uniflora, Mystical Beast of the Forest
 	-- Eco, Mystical Spirit of the Forest/Green Baboon, Defender of the Forest
+	-- Wonko, Noble Knight of the Forest/Bat, the Forest Ninja
 	AnimeArchetype.OCGForest={
-		77797992,87624166,14015067,4192696,87430998,46668237,60398723,37322745,36318200,24096499,78010363,42883273,65303664,17733394
+		77797992,87624166,14015067,4192696,87430998,46668237,
+		60398723,37322745,36318200,24096499,78010363,42883273,65303664,
+		17733394,17832359,80447641
 	}
 	Card.IsForest=MakeCheck({0x51f},AnimeArchetype.OCGForest)
 

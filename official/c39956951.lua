@@ -2,7 +2,7 @@
 --Flash of the Forbidden Spell
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--If your opponent controls monsters in all of their Main Monster Zones: Destroy all monsters your opponent controls.
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -12,11 +12,16 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-function s.cfilter(c)
-	return c:GetSequence()<5
+function s.filter(c)
+	local seq=c:GetSequence()
+	if Duel.IsDuelType(DUEL_3_COLUMNS_FIELD) then
+		return seq>0 and seq<4
+	else
+		return seq<5
+	end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetMatchingGroupCount(s.cfilter,tp,0,LOCATION_MZONE,nil)>=5
+	return Duel.GetMatchingGroupCount(s.filter,tp,0,LOCATION_MZONE,nil)==(Duel.IsDuelType(DUEL_3_COLUMNS_FIELD) and 3 or 5)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.TRUE,tp,0,LOCATION_MZONE,1,nil) end

@@ -45,10 +45,7 @@ function s.matcheck(g,lc,sumtype,tp)
 	return g:IsExists(s.matfilter,1,nil,lc,sumtype,tp)
 end
 function s.immval(e,te)
-	if Chain.IsResolving() and Chain.GetTriggeringEffect()==te then
-		return not Chain.IsSetcode(0,SET_VAALMONICA)
-	end
-	return not te:GetHandler():IsSetCard(SET_VAALMONICA)
+	return not te:IsCardSetcode(SET_VAALMONICA)
 end
 function s.atkfilter(c)
 	return c:IsLevel(4) and c:IsSetCard(SET_VAALMONICA) and c:IsFaceup()

@@ -70,7 +70,7 @@ s.listed_series={SET_ARMED_DRAGON}
 s.LVnum=10
 s.LVset=SET_ARMED_DRAGON_THUNDER
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
-	return Chain.IsSetcode(0,SET_ARMED_DRAGON) and re:IsMonsterEffect()
+	return re and re:IsCardType(TYPE_MONSTER) and re:IsCardSetcode(SET_ARMED_DRAGON)
 end
 function s.atkcon(atk)
 	return function(e,tp,eg,ep,ev,re,r,rp)

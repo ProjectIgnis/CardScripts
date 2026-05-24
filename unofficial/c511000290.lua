@@ -36,6 +36,7 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge1,0)
 	end)
 end
+s.listed_series={SET_DARK_WORLD}
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	if ep==e:GetHandlerPlayer() then
 		Duel.RegisterFlagEffect(ep,id,RESET_PHASE|PHASE_END,0,1)

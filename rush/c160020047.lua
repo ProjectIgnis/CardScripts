@@ -25,7 +25,7 @@ function s.ffilter(c,fc,sumtype,tp)
 	return c:IsAttribute(ATTRIBUTE_EARTH,fc,sumtype,tp) and c:IsLevelBelow(4)
 end
 function s.contactfil(tp)
-	return Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsAbleToDeckOrExtraAsCost),tp,LOCATION_ONFIELD,0,nil)
+	return Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsAbleToDeckOrExtraAsCost),tp,LOCATION_MZONE,0,nil)
 end
 function s.contactop(g,tp)
 	Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST+REASON_MATERIAL)

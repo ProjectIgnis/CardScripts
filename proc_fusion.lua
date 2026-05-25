@@ -1027,3 +1027,14 @@ function Fusion.AddProcMixN(c,sub,insf,...)
 	end
 	return Fusion.AddProcMix(c,sub,insf,table.unpack(fun))
 end
+function Fusion.AddUnionFusionProc(c)
+	Fusion.AddContactProc(c,Fusion.UnionFusFilter,Fusion.UnionFusOp,nil,nil,SUMMON_TYPE_FUSION,nil,false)
+end
+function Fusion.UnionFusFilter(tp)
+	return Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsAbleToDeckOrExtraAsCost),tp,LOCATION_ONFIELD,0,nil)
+end
+function Fusion.UnionFusOp(g,tp)
+	Duel.SendtoDeck(g,nil,SEQ_DECKBOTTOM,REASON_COST+REASON_MATERIAL)
+	local og=Duel.GetOperatedGroup():Filter(Card.IsLocation,nil,LOCATION_DECK)
+	if #og>1 then Duel.SortDeckbottom(tp,tp,#og) end
+end

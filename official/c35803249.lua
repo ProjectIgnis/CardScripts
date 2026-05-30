@@ -62,7 +62,7 @@ s.listed_names={CARD_JINZO}
 function s.hspfilter(c)
 	return c:IsFaceup() and c:IsCode(CARD_JINZO) and c:IsAbleToGraveAsCost()
 end
-function s.spcon(e,c)
+function s.hspcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	local rg=Duel.GetMatchingGroup(s.hspfilter,tp,LOCATION_MZONE,0,nil)

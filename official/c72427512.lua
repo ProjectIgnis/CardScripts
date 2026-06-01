@@ -23,7 +23,9 @@ function s.initial_effect(c)
 	--Cannot be destroyed by effects of monsters of the same type
 	local e3=e2:Clone()
 	e3:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
-	e3:SetValue(s.efindes)
+	e3:SetValue(function(e,re)
+		return re and re:IsMonsterEffect() and re:IsCardRace(e:GetHandler():GetRace())
+	end)
 	c:RegisterEffect(e3)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -56,8 +58,4 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			c:RegisterEffect(e2)
 		end
 	end
-end
-function s.efindes(e,re)
-	local tc=re:GetHandler()
-	return tc and e:GetHandler():IsRace(tc:GetRace())
 end

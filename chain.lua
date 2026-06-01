@@ -445,7 +445,9 @@ local function effect_card_prop(mode)
 			if Chain.IsTriggeringEffect(0,e) then
 				return chain_fn(0,...)
 			end
-			--should there be a default (current properties?)
+			--default to current properties
+			local current_fn = Card[mode..prop] or get_all_current_properties
+			return current_fn(e:GetOwner(),...)
 		end
 	end
 end

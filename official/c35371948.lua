@@ -149,9 +149,7 @@ end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	if not (ep==1-tp and Duel.GetLP(1-tp)>0) then return false end
 	if r&REASON_BATTLE>0 then return eg:GetFirst():IsSetCard(SET_TRICKSTAR) end
-	if not (re and re:IsMonsterEffect()) then return false end
-	if not re:IsActivated() then return re:GetHandler():IsSetCard(SET_TRICKSTAR) end
-	return Chain.IsTriggeringPlayer(0,tp) and Chain.IsTriggeringLocation(0,LOCATION_MZONE) and Chain.IsTriggeringSetcode(0,SET_TRICKSTAR)
+	return re and re:IsMonsterEffect() and re:IsCardSetcode(SET_TRICKSTAR) and re:IsCardLocation(LOCATION_MZONE) and re:IsCardControler(tp)
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,id)

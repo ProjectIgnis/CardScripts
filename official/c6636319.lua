@@ -63,6 +63,7 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 	aux.RegisterClientHint(c,0,tp,1,0,aux.Stringid(id,1))
 end
 function s.drawcon(e,tp,eg,ep,ev,re,r,rp)
+	local ch=Chain.GetCurrentLink(true)-1
 	return ch>0 and ep==1-tp and Chain.IsTriggeringPlayer(ch,tp)
 		and Chain.IsTriggeringType(ch,TYPE_MONSTER)
 		and Chain.IsTriggeringSetcode(ch,{SET_KI_SIKIL,SET_LIL_LA})

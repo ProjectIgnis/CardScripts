@@ -57,7 +57,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.inactop(e,tp,eg,ep,ev,re,r,rp)
-	if ep==tp and Chain.IsTriggeringType(0,TYPE_MONSTER) and Chain.IsTriggeringSetcode(0,SET_POWER_PATRON) then
+	if ep==tp and Chain.IsType(ev,TYPE_MONSTER) and Chain.IsSetcode(ev,SET_POWER_PATRON) then
 		Duel.SetChainLimit(function(e,rp,tp) return rp==tp end)
 	end
 end

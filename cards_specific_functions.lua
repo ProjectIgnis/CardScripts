@@ -290,9 +290,9 @@ function Witchcrafter.CreateCostReplaceEffect(c)
 	e:SetValue(function(base,extracon,e,tp,eg,ep,ev,re,r,rp,chk)
 		if chk==0 then
 			local c=e:GetHandler()
-			return c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:IsSetCard(SET_WITCHCRAFTER)
+			return c:IsSetCard(SET_WITCHCRAFTER) and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE)
 		end
-		return Chain.IsTriggeringPlayer(0,tp) and Chain.IsTriggeringLocation(0,LOCATION_MZONE) and Chain.IsTriggeringSetcode(0,SET_WITCHCRAFTER)
+		return Chain.IsTriggeringSetcode(0,SET_WITCHCRAFTER) and Chain.IsTriggeringPlayer(0,tp) and Chain.IsTriggeringLocation(0,LOCATION_MZONE)
 	end)
 	return e
 end

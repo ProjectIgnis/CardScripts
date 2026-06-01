@@ -58,7 +58,7 @@ end
 s.listed_series={SET_RYU_GE}
 s.listed_names={id}
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
-	local ch=Duel.GetCurrentChain(true)-1
+	local ch=Chain.GetCurrentLink(true)-1
 	return ch>0 and ep==1-tp and not Duel.HasFlagEffect(tp,id)
 		and Duel.IsChainDisablable(ev) and Chain.IsTriggeringPlayer(ch,tp)
 		and Chain.IsTriggeringType(ch,TYPE_SPELL) and Chain.IsTriggeringSetcode(ch,SET_RYU_GE)

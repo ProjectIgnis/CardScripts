@@ -52,7 +52,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_DRACOTAIL}
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return rp==tp and Chain.IsTriggeringSetcode(0,SET_DRACOTAIL)
+	return rp==tp and Chain.IsSetcode(ev,SET_DRACOTAIL)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) end

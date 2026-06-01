@@ -54,7 +54,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return re and Chain.IsTriggeringSetcode(0,{SET_AZAMINA,SET_SINFUL_SPOILS}) and not Chain.IsTriggeringCode(0,id)
+	return Chain.IsSetcode(ev,{SET_AZAMINA,SET_SINFUL_SPOILS}) and not Chain.IsCode(ev,id)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() end

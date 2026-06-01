@@ -206,7 +206,7 @@ local function setcode_check(setcodes_to_match,...)
 end
 
 function Chain.IsTriggeringSetcode(ch,setcodes)
-	return setcode_check(setcodes,{Chain.GetTriggeringSetcode(ch)})
+	return setcode_check({setcodes},Chain.GetTriggeringSetcode(ch))
 end
 
 function Chain.IsTriggeringRaceExcept(ch,race)

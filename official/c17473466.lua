@@ -39,8 +39,8 @@ end
 s.listed_names={id,53589300} --"Nerva the Power Patron of Creation"
 s.listed_series={SET_POWER_PATRON,SET_ARTMAGE}
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
-	local ch=Duel.GetCurrentChain()-1
-	return ch>0 and ep==1-tp and not Duel.HasFlagEffect(tp,id)
+	local ch=Chain.GetCurrentLink()-1
+	return ch>0 and ep==1-tp and re:IsMonsterEffect() and not Duel.HasFlagEffect(tp,id)
 		and Duel.IsChainDisablable(ev) and Chain.IsTriggeringControler(ch,tp)
 		and Chain.IsTriggeringType(ch,TYPE_MONSTER) and Chain.IsTriggeringSetcode(ch,{SET_POWER_PATRON,SET_ARTMAGE})
 end

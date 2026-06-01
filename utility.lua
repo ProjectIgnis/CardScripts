@@ -120,33 +120,37 @@ if not c946 then
 	c946.initial_effect=function()end
 end
 
+Card.IsCompositeType = Card.IsExactType
 
-
-Card.IsMonster=aux.FilterBoolFunction(Card.IsType,TYPE_MONSTER)
-Card.IsSpell=aux.FilterBoolFunction(Card.IsType,TYPE_SPELL)
-Card.IsTrap=aux.FilterBoolFunction(Card.IsType,TYPE_TRAP)
-Card.IsSpellTrap=aux.FilterBoolFunction(Card.IsType,TYPE_SPELL|TYPE_TRAP)
-
-local function make_exact_type_check(type)
-	return aux.FilterBoolFunction(Card.IsExactType,type)
+function Card.IsExactType(c,typ,...)
+	return c:GetType(...)==typ
 end
 
-Card.IsQuickPlaySpell=make_exact_type_check(TYPE_SPELL|TYPE_QUICKPLAY)
-Card.IsContinuousSpell=make_exact_type_check(TYPE_SPELL|TYPE_CONTINUOUS)
-Card.IsEquipSpell=make_exact_type_check(TYPE_SPELL|TYPE_EQUIP)
-Card.IsFieldSpell=make_exact_type_check(TYPE_SPELL|TYPE_FIELD)
-Card.IsRitualSpell=make_exact_type_check(TYPE_SPELL|TYPE_RITUAL)
-Card.IsLinkSpell=make_exact_type_check(TYPE_SPELL|TYPE_LINK)
+Card.IsMonster   = aux.FilterBoolFunction(Card.IsType,TYPE_MONSTER)
+Card.IsSpell     = aux.FilterBoolFunction(Card.IsType,TYPE_SPELL)
+Card.IsTrap      = aux.FilterBoolFunction(Card.IsType,TYPE_TRAP)
+Card.IsSpellTrap = aux.FilterBoolFunction(Card.IsType,TYPE_SPELL|TYPE_TRAP)
 
-Card.IsContinuousTrap=make_exact_type_check(TYPE_TRAP|TYPE_CONTINUOUS)
-Card.IsCounterTrap=make_exact_type_check(TYPE_TRAP|TYPE_COUNTER)
+local function make_composite_type_check(type)
+	return aux.FilterBoolFunction(Card.IsCompositeType,type)
+end
 
-Card.IsFusionMonster=make_exact_type_check(TYPE_MONSTER|TYPE_FUSION)
-Card.IsRitualMonster=make_exact_type_check(TYPE_MONSTER|TYPE_RITUAL)
-Card.IsSynchroMonster=make_exact_type_check(TYPE_MONSTER|TYPE_SYNCHRO)
-Card.IsXyzMonster=make_exact_type_check(TYPE_MONSTER|TYPE_XYZ)
-Card.IsPendulumMonster=make_exact_type_check(TYPE_MONSTER|TYPE_PENDULUM)
-Card.IsLinkMonster=make_exact_type_check(TYPE_MONSTER|TYPE_LINK)
+Card.IsQuickPlaySpell  = make_composite_type_check(TYPE_SPELL|TYPE_QUICKPLAY)
+Card.IsContinuousSpell = make_composite_type_check(TYPE_SPELL|TYPE_CONTINUOUS)
+Card.IsEquipSpell      = make_composite_type_check(TYPE_SPELL|TYPE_EQUIP)
+Card.IsFieldSpell      = make_composite_type_check(TYPE_SPELL|TYPE_FIELD)
+Card.IsRitualSpell     = make_composite_type_check(TYPE_SPELL|TYPE_RITUAL)
+Card.IsLinkSpell       = make_composite_type_check(TYPE_SPELL|TYPE_LINK)
+
+Card.IsContinuousTrap  = make_composite_type_check(TYPE_TRAP|TYPE_CONTINUOUS)
+Card.IsCounterTrap     = make_composite_type_check(TYPE_TRAP|TYPE_COUNTER)
+
+Card.IsFusionMonster   = make_composite_type_check(TYPE_MONSTER|TYPE_FUSION)
+Card.IsRitualMonster   = make_composite_type_check(TYPE_MONSTER|TYPE_RITUAL)
+Card.IsSynchroMonster  = make_composite_type_check(TYPE_MONSTER|TYPE_SYNCHRO)
+Card.IsXyzMonster      = make_composite_type_check(TYPE_MONSTER|TYPE_XYZ)
+Card.IsPendulumMonster = make_composite_type_check(TYPE_MONSTER|TYPE_PENDULUM)
+Card.IsLinkMonster     = make_composite_type_check(TYPE_MONSTER|TYPE_LINK)
 
 function Card.IsNormalSpell(c)
 	return c:GetType()==TYPE_SPELL
@@ -790,6 +794,10 @@ end
 
 function Effect.IsSpellTrapEffect(e)
 	return e:IsActiveType(TYPE_SPELL|TYPE_TRAP)
+end
+
+function Effect.IsGlobalEffect(e)
+	return e:GetOwner():IsCode(0)
 end
 
 

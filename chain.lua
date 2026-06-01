@@ -7,6 +7,7 @@ local CARD_PROPERTIES = {
 	"Sequence",
 	"Position",
 	"Type",
+	"Level",
 	"Rank",
 	"Attribute",
 	"Race",
@@ -143,7 +144,7 @@ local function return_equals(fn)
 	end
 end
 
-local function return_includes_bits(fn)
+local function return_has_common_bits(fn)
 	return function(ch,val)
 		local res=fn(ch)
 		return res and (res&val)>0
@@ -160,22 +161,22 @@ local function return_equals_any(fn)
 	end
 end
 
-Chain.IsDisablePlayer            = return_equals        (Chain.GetDisablePlayer)
-Chain.IsTriggeringEffect         = return_equals        (Chain.GetTriggeringEffect)
-Chain.IsTriggeringPlayer         = return_equals        (Chain.GetTriggeringPlayer)
-Chain.IsTriggeringControler      = return_equals        (Chain.GetTriggeringControler)
-Chain.IsTriggeringSequence       = return_equals_any    (Chain.GetTriggeringSequence)
-Chain.IsTriggeringPosition       = return_includes_bits (Chain.GetTriggeringPosition)
-Chain.IsTriggeringType           = return_includes_bits (Chain.GetTriggeringType)
-Chain.IsTriggeringLevel          = return_equals_any    (Chain.GetTriggeringLevel)
-Chain.IsTriggeringRank           = return_equals_any    (Chain.GetTriggeringRank)
-Chain.IsTriggeringAttribute      = return_includes_bits (Chain.GetTriggeringAttribute)
-Chain.IsTriggeringRace           = return_includes_bits (Chain.GetTriggeringRace)
-Chain.IsTriggeringATK            = return_equals        (Chain.GetTriggeringATK)
-Chain.IsTriggeringDEF            = return_equals        (Chain.GetTriggeringDEF)
-Chain.IsTriggeringStatus         = return_includes_bits (Chain.GetTriggeringStatus)
-Chain.IsTriggeringSummonLocation = return_includes_bits (Chain.GetTriggeringSummonLocation)
-Chain.IsTriggeringSummonType     = return_includes_bits (Chain.GetTriggeringSummonType)
+Chain.IsDisablePlayer            = return_equals          (Chain.GetDisablePlayer)
+Chain.IsTriggeringEffect         = return_equals          (Chain.GetTriggeringEffect)
+Chain.IsTriggeringPlayer         = return_equals          (Chain.GetTriggeringPlayer)
+Chain.IsTriggeringControler      = return_equals          (Chain.GetTriggeringControler)
+Chain.IsTriggeringSequence       = return_equals_any      (Chain.GetTriggeringSequence)
+Chain.IsTriggeringPosition       = return_has_common_bits (Chain.GetTriggeringPosition)
+Chain.IsTriggeringType           = return_has_common_bits (Chain.GetTriggeringType)
+Chain.IsTriggeringLevel          = return_equals_any      (Chain.GetTriggeringLevel)
+Chain.IsTriggeringRank           = return_equals_any      (Chain.GetTriggeringRank)
+Chain.IsTriggeringAttribute      = return_has_common_bits (Chain.GetTriggeringAttribute)
+Chain.IsTriggeringRace           = return_has_common_bits (Chain.GetTriggeringRace)
+Chain.IsTriggeringATK            = return_equals          (Chain.GetTriggeringATK)
+Chain.IsTriggeringDEF            = return_equals          (Chain.GetTriggeringDEF)
+Chain.IsTriggeringStatus         = return_has_common_bits (Chain.GetTriggeringStatus)
+Chain.IsTriggeringSummonLocation = return_has_common_bits (Chain.GetTriggeringSummonLocation)
+Chain.IsTriggeringSummonType     = return_has_common_bits (Chain.GetTriggeringSummonType)
 
 local function code_check(codes,...)
 	if not codes then return false end
@@ -191,8 +192,8 @@ end
 
 --integrates symbolic locations to be consistent with Card.IsLocation
 Chain.IsTriggeringLocation = aux.OR(
-	return_includes_bits(Chain.GetTriggeringLocation),
-	return_includes_bits(Chain.GetTriggeringLocationSymbolic)
+	return_has_common_bits(Chain.GetTriggeringLocation),
+	return_has_common_bits(Chain.GetTriggeringLocationSymbolic)
 )
 
 local function setcode_check(setcodes_to_match,...)
@@ -216,6 +217,13 @@ end
 function Chain.IsTriggeringAttributeExcept(ch,attr)
 	return Chain.IsTriggeringAttribute(ch,ATTRIBUTE_ALL&~attr)
 end
+
+function Chain.IsTriggeringCompositeType(ch,typ)
+	local trig_typ=Chain.GetTriggeringType(ch)
+	return trig_typ and (trig_typ&typ)==typ
+end
+
+Chain.IsTriggeringExactType = return_equals(Chain.GetTriggeringType)
 
 Chain.GetTriggeringAttack           = Chain.GetTriggeringATK
 Chain.GetTriggeringDefense          = Chain.GetTriggeringDEF
@@ -259,19 +267,19 @@ for _,prop in ipairs(CARD_PROPERTIES) do
 	end
 end
 
-resolving_fns.IsControler      = return_equals        (resolving_fns.GetControler)
-resolving_fns.IsSequence       = return_equals_any    (resolving_fns.GetSequence)
-resolving_fns.IsPosition       = return_includes_bits (resolving_fns.GetPosition)
-resolving_fns.IsType           = return_includes_bits (resolving_fns.GetType)
-resolving_fns.IsLevel          = return_equals_any    (resolving_fns.GetLevel)
-resolving_fns.IsRank           = return_equals_any    (resolving_fns.GetRank)
-resolving_fns.IsAttribute      = return_includes_bits (resolving_fns.GetAttribute)
-resolving_fns.IsRace           = return_includes_bits (resolving_fns.GetRace)
-resolving_fns.IsAttack         = return_equals        (resolving_fns.GetAttack)
-resolving_fns.IsDefense        = return_equals        (resolving_fns.GetDefense)
-resolving_fns.IsStatus         = return_includes_bits (resolving_fns.GetStatus)
-resolving_fns.IsSummonLocation = return_includes_bits (resolving_fns.GetSummonLocation)
-resolving_fns.IsSummonType     = return_includes_bits (resolving_fns.GetSummonType)
+resolving_fns.IsControler      = return_equals          (resolving_fns.GetControler)
+resolving_fns.IsSequence       = return_equals_any      (resolving_fns.GetSequence)
+resolving_fns.IsPosition       = return_has_common_bits (resolving_fns.GetPosition)
+resolving_fns.IsType           = return_has_common_bits (resolving_fns.GetType)
+resolving_fns.IsLevel          = return_equals_any      (resolving_fns.GetLevel)
+resolving_fns.IsRank           = return_equals_any      (resolving_fns.GetRank)
+resolving_fns.IsAttribute      = return_has_common_bits (resolving_fns.GetAttribute)
+resolving_fns.IsRace           = return_has_common_bits (resolving_fns.GetRace)
+resolving_fns.IsAttack         = return_equals          (resolving_fns.GetAttack)
+resolving_fns.IsDefense        = return_equals          (resolving_fns.GetDefense)
+resolving_fns.IsStatus         = return_has_common_bits (resolving_fns.GetStatus)
+resolving_fns.IsSummonLocation = return_has_common_bits (resolving_fns.GetSummonLocation)
+resolving_fns.IsSummonType     = return_has_common_bits (resolving_fns.GetSummonType)
 
 function resolving_fns.IsCode(ch,...)
 	local res_props=Chain.Data(ch).resolving_properties
@@ -309,19 +317,19 @@ for _,prop in ipairs(CARD_PROPERTIES) do
 	end
 end
 
-registering_fns.IsControler      = return_equals        (registering_fns.GetControler)
-registering_fns.IsSequence       = return_equals_any    (registering_fns.GetSequence)
-registering_fns.IsPosition       = return_includes_bits (registering_fns.GetPosition)
-registering_fns.IsType           = return_includes_bits (registering_fns.GetType)
-registering_fns.IsLevel          = return_equals_any    (registering_fns.GetLevel)
-registering_fns.IsRank           = return_equals_any    (registering_fns.GetRank)
-registering_fns.IsAttribute      = return_includes_bits (registering_fns.GetAttribute)
-registering_fns.IsRace           = return_includes_bits (registering_fns.GetRace)
-registering_fns.IsAttack         = return_equals        (registering_fns.GetAttack)
-registering_fns.IsDefense        = return_equals        (registering_fns.GetDefense)
-registering_fns.IsStatus         = return_includes_bits (registering_fns.GetStatus)
-registering_fns.IsSummonLocation = return_includes_bits (registering_fns.GetSummonLocation)
-registering_fns.IsSummonType     = return_includes_bits (registering_fns.GetSummonType)
+registering_fns.IsControler      = return_equals          (registering_fns.GetControler)
+registering_fns.IsSequence       = return_equals_any      (registering_fns.GetSequence)
+registering_fns.IsPosition       = return_has_common_bits (registering_fns.GetPosition)
+registering_fns.IsType           = return_has_common_bits (registering_fns.GetType)
+registering_fns.IsLevel          = return_equals_any      (registering_fns.GetLevel)
+registering_fns.IsRank           = return_equals_any      (registering_fns.GetRank)
+registering_fns.IsAttribute      = return_has_common_bits (registering_fns.GetAttribute)
+registering_fns.IsRace           = return_has_common_bits (registering_fns.GetRace)
+registering_fns.IsAttack         = return_equals          (registering_fns.GetAttack)
+registering_fns.IsDefense        = return_equals          (registering_fns.GetDefense)
+registering_fns.IsStatus         = return_has_common_bits (registering_fns.GetStatus)
+registering_fns.IsSummonLocation = return_has_common_bits (registering_fns.GetSummonLocation)
+registering_fns.IsSummonType     = return_has_common_bits (registering_fns.GetSummonType)
 
 function registering_fns.IsCode(e,...)
 	local reg_props=registering_properties[tostring(e)]
@@ -413,6 +421,13 @@ function Chain.IsAttributeExcept(ch,attr)
 	return Chain.IsAttribute(ch,ATTRIBUTE_ALL&~attr)
 end
 
+function Chain.IsCompositeType(ch,typ)
+	local ch_typ=Chain.GetType(ch)
+	return ch_typ and (ch_typ&typ)==typ
+end
+
+Chain.IsExactType = return_equals(Chain.GetType)
+
 Chain.GetAttack           = Chain.GetATK
 Chain.GetDefense          = Chain.GetDEF
 Chain.GetSetCard          = Chain.GetSetcode
@@ -435,18 +450,20 @@ local function effect_card_prop(mode)
 		local chain_fn = Chain[mode..prop] or get_all_chain_properties
 		return function(e,...)
 			if e:IsHasProperty(EFFECT_FLAG_FIELD_ONLY) then
+				if e:IsGlobalEffect() then
+					return (mode=="Is") and false or nil
+				end
 				return registering_fn(e,...)
 			end
+			--retrieve current_fn as late as possible, since it could be overwritten in other utility files
+			local current_fn = Card[mode..prop] or get_all_current_properties
 			if not e:IsActivated() then
-				--retrieve current_fn as late as possible, since it could be overwritten in other utility files
-				local current_fn = Card[mode..prop] or get_all_current_properties
 				return current_fn(e:GetOwner(),...)
 			end
 			if Chain.IsTriggeringEffect(0,e) then
 				return chain_fn(0,...)
 			end
 			--default to current properties
-			local current_fn = Card[mode..prop] or get_all_current_properties
 			return current_fn(e:GetOwner(),...)
 		end
 	end
@@ -497,6 +514,14 @@ function Effect.IsCardAttributeExcept(e,attr)
 	return e:IsCardAttribute(ATTRIBUTE_ALL&~attr)
 end
 
+function Effect.IsCardCompositeType(e,typ)
+	return (e:GetCardType()&typ)==typ
+end
+
+function Effect.IsCardExactType(e,typ)
+	return e:GetCardType()==typ
+end
+
 Effect.GetCardAttack  = Effect.GetCardATK
 Effect.GetCardDefense = Effect.GetCardDEF
 Effect.GetCardSetCard = Effect.GetCardSetcode
@@ -513,7 +538,7 @@ do
 	local oldfunc=Duel.RegisterEffect
 	function Duel.RegisterEffect(e,player,...)
 		local registering_effect=Duel.GetReasonEffect()
-		if registering_effect then
+		if registering_effect and not e:IsGlobalEffect() then
 			registering_properties[tostring(e)]=effect_get_all_card_props(registering_effect)
 		end
 		oldfunc(e,player,...)

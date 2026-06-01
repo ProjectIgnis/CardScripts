@@ -45,7 +45,7 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.inactop(e,tp,eg,ep,ev,re,r,rp)
-	if ep==tp and Chain.IsTriggeringType(ev,TYPE_RITUAL|TYPE_MONSTER) and Chain.IsTriggeringSetcode(ev,SET_MEGALITH) then
+	if ep==tp and Chain.IsTriggeringCompositeType(ev,TYPE_RITUAL|TYPE_MONSTER) and Chain.IsTriggeringSetcode(ev,SET_MEGALITH) then
 		Duel.SetChainLimit(function(e,rp,tp) return rp==tp end)
 	end
 end

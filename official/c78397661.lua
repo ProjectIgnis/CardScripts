@@ -80,7 +80,11 @@ end
 function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tg=Duel.GetTargetCards(e)
-	if c:IsRelateToEffect(e) and #tg==2 then
-		Duel.SendtoDeck(tg+c,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
+	if c:IsRelateToEffect(e) then
+		tg:AddCard(c)
+		tg:Match(Card.IsAbleToDeck,nil)
+		if #tg==3 then
+			Duel.SendtoDeck(tg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
+		end
 	end
 end

@@ -41,7 +41,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_RECIPE,SET_NOUVELLES}
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
-	return re and re:IsCardType(TYPE_MONSTER) and re:IsCardSetcode(SET_NOUVELLES)
+	return re and re:IsMonsterEffect() and re:IsCardSetcode(SET_NOUVELLES)
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsAbleToDeck() end

@@ -44,7 +44,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_NOUVELLES,SET_RECIPE}
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
-	return re and re:IsCardType(TYPE_MONSTER) and re:IsCardSetcode(SET_NOUVELLES)
+	return re and re:IsMonsterEffect() and re:IsCardSetcode(SET_NOUVELLES)
 end
 function s.thfilter(c)
 	return c:IsSetCard({SET_NOUVELLES,SET_RECIPE}) and c:IsAbleToHand()

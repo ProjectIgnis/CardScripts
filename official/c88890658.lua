@@ -40,7 +40,7 @@ end
 s.listed_series={SET_RECIPE,SET_NOUVELLES}
 s.listed_names={30243636}
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
-	return re and re:IsCardType(TYPE_MONSTER) and re:IsCardSetcode(SET_NOUVELLES)
+	return re and re:IsMonsterEffect() and re:IsCardSetcode(SET_NOUVELLES)
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsNegatable,tp,0,LOCATION_ONFIELD,1,nil) end

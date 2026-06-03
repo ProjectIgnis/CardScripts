@@ -41,7 +41,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_RECIPE,SET_NOUVELLES}
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
-	return re and re:IsCardType(TYPE_MONSTER) and re:IsCardSetcode(SET_NOUVELLES)
+	return re and re:IsMonsterEffect() and re:IsCardSetcode(SET_NOUVELLES)
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end

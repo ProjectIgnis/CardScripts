@@ -1592,7 +1592,7 @@ function Cost.DetachFromSelf(min,max,op)
 		local max_count=max_type=="function" and max(e,tp) or max
 		if chk==0 then return min_count>0 and max_count>=min_count and c:CheckRemoveOverlayCard(tp,min_count,REASON_COST) end
 		if c:RemoveOverlayCard(tp,min_count,max_count,REASON_COST)>0 then
-			local cd=Chain.Data()
+			local cd=e:GetChainData()
 			cd.cost_detached_materials=Duel.GetOperatedGroup()
 			if op then
 				op(e,cd.cost_detached_materials)

@@ -34,7 +34,7 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCondition(s.effcond(4))
 	e3:SetValue(function(e,te)
-		return te:IsActivated() and not not te:IsCardSetcode(SET_VIRTUAL_WORLD)
+		return te:IsActivated() and not te:IsCardSetcode(SET_VIRTUAL_WORLD)
 	end)
 	c:RegisterEffect(e3)
 end

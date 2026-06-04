@@ -46,8 +46,11 @@ function s.linksumtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetTargetCard(tg)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
+function s.linkmatimmunefilter(c,e)
+	return c:IsFaceup() and c:IsCanBeLinkMaterial() and not c:IsImmuneToEffect(e)
+end
 function s.linksumop(e,tp,eg,ep,ev,re,r,rp)
-	local tg=Duel.GetTargetCards(e):Match(aux.FaceupFilter(Card.IsCanBeLinkMaterial),nil)
+	local tg=Duel.GetTargetCards(e):Match(s.linkmatimmunefilter,nil,e)
 	if #tg==2 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local link=Duel.SelectMatchingCard(tp,s.linkfilter,tp,LOCATION_EXTRA,0,1,1,nil,tg):GetFirst()

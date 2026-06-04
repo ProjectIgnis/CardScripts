@@ -66,7 +66,7 @@ Card.IsAbleToRemove=card_isableto_update(Card.IsAbleToRemove,LOCATION_REMOVED)
 	allow EFFECT_EXTRA_RELEASE_NONSUM effects to work on cards in the Extra Deck
 	used by "Duel Evolution - Assault Zone"
 	possibly to be expanded on to also include other locations such as the Deck
-	
+
 	will add more comments later
 --]]
 Duel.GetReleaseGroup=(function()
@@ -90,28 +90,6 @@ Duel.GetReleaseGroup=(function()
 			end
 		end
 		return g
-	end
-end)()
-Duel.Release=(function()
-	local oldfunc=Duel.Release
-	return function(targets,reason,rp)
-		rp=rp or Duel.GetReasonPlayer()
-		local exg=Group.CreateGroup()
-		local others=Group.CreateGroup()
-		if type(targets)=="Group" then
-			exg,others=targets:Split(Card.IsLocation,nil,LOCATION_EXTRA)
-		elseif type(targets)=="Card" then
-			if targets:IsLocation(LOCATION_EXTRA) then
-				exg:AddCard(targets)
-			else
-				others:AddCard(targets)
-			end
-		end
-		local res=oldfunc(others,reason,rp)
-		if #exg>0 then
-			res=res+Duel.SendtoGrave(exg,REASON_RELEASE|reason,nil,rp)
-		end
-		return res
 	end
 end)()
 
@@ -254,7 +232,7 @@ do
 				end
 			end)
 	Duel.RegisterEffect(sum_status_eff,0)
-	
+
 	--set the summon turn status to 'false' for any monster that is Normal Set
 	--normally that status would cover both Normal Summons and Normal Sets
 	--however there's currently no card (that I can find) that cares for a monster that was Normal Set that specific turn
@@ -358,7 +336,7 @@ do
 					if check_opinfo(ev,CATEGORY_RELEASE,rc) then return end
 					--otherwise, shuffle
 					Duel.ShuffleHand(player)
-					
+
 					--if the activating card itself ends up moving then shuffle the hand after the current Chain Link finishes resolving
 					--this will make it so it matches the behaviour of the core which automatically shuffles the hand if the activating card is still there at the end of the resolution
 					local move_eff=Effect.CreateEffect(rc)
@@ -377,7 +355,7 @@ do
 							end)
 					move_eff:SetReset(RESET_CHAIN)
 					rc:RegisterEffect(move_eff)
-					
+
 					player_table[player]=true
 				end)
 	Duel.RegisterEffect(shuffle_eff,0)
@@ -416,7 +394,7 @@ end)()
 	The flag will reset if the monster stops being face-up in the Monster Zone
 	Intended to be used with Rush cards like "Wicked Dragon of Darkness" [160214042] that require having been Normal/Special Summoned during a specific phase
 	If the monster is Summoned again (e.g. a Gemini Monster) the previous value will be overwritten (could be improved by adding such handling but it's not needed for Rush anyways)
-	
+
 	Also added basic "get" and "is" functions:
 		- Card.GetSummonPhase: Returns the flag effect's label, or 0 if the flag effect doesn't exist
 		- Card.IsSummonPhase: Returns 'true' or 'false' depending on the passed phase

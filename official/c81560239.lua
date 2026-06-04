@@ -20,19 +20,13 @@ end
 function s.extragroup(e,tp,eg,ep,ev,re,r,rp,chk)
 	return Duel.GetMatchingGroup(s.deckmatfilter,tp,LOCATION_DECK,0,nil)
 end
-function s.extraop(mat,e,tp,eg,ep,ev,re,r,rp,tc)
-	local mat2=mat:Filter(Card.IsLocation,nil,LOCATION_DECK)
-	mat:Sub(mat2)
-	Duel.ReleaseRitualMaterial(mat)
-	Duel.SendtoGrave(mat2,REASON_EFFECT|REASON_MATERIAL|REASON_RITUAL|REASON_RELEASE)
-end
 function s.tributelimit(e,tp,g,sc)
 	return #g<=2,#g>2
 end
 function s.effcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(-100)
 	local params1={lvtype=RITPROC_EQUAL,filter=aux.FilterBoolFunction(Card.IsRace,RACE_REPTILE),location=LOCATION_DECK,matfilter=aux.FilterBoolFunction(Card.IsRace,RACE_REPTILE)}
-	local params2={lvtype=RITPROC_EQUAL,filter=aux.FilterBoolFunction(Card.IsRace,RACE_REPTILE),matfilter=aux.FilterBoolFunction(Card.IsRace,RACE_REPTILE),extrafil=s.extragroup,extraop=s.extraop,forcedselection=s.tributelimit}
+	local params2={lvtype=RITPROC_EQUAL,filter=aux.FilterBoolFunction(Card.IsRace,RACE_REPTILE),matfilter=aux.FilterBoolFunction(Card.IsRace,RACE_REPTILE),extrafil=s.extragroup,forcedselection=s.tributelimit}
 	local b1=not Duel.HasFlagEffect(tp,id) and Ritual.Target(params1)(e,tp,eg,ep,ev,re,r,rp,0)
 	local b2=not Duel.HasFlagEffect(tp,id+1) and Ritual.Target(params2)(e,tp,eg,ep,ev,re,r,rp,0)
 	if chk==0 then return b1 or b2 end
@@ -40,7 +34,7 @@ end
 function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local cost_skip=e:GetLabel()~=-100
 	local params1={lvtype=RITPROC_EQUAL,filter=aux.FilterBoolFunction(Card.IsRace,RACE_REPTILE),location=LOCATION_DECK,matfilter=aux.FilterBoolFunction(Card.IsRace,RACE_REPTILE)}
-	local params2={lvtype=RITPROC_EQUAL,filter=aux.FilterBoolFunction(Card.IsRace,RACE_REPTILE),matfilter=aux.FilterBoolFunction(Card.IsRace,RACE_REPTILE),extrafil=s.extragroup,extraop=s.extraop,forcedselection=s.tributelimit}
+	local params2={lvtype=RITPROC_EQUAL,filter=aux.FilterBoolFunction(Card.IsRace,RACE_REPTILE),matfilter=aux.FilterBoolFunction(Card.IsRace,RACE_REPTILE),extrafil=s.extragroup,forcedselection=s.tributelimit}
 	local b1=(cost_skip or not Duel.HasFlagEffect(tp,id))
 		and Ritual.Target(params1)(e,tp,eg,ep,ev,re,r,rp,0)
 	local b2=(cost_skip or not Duel.HasFlagEffect(tp,id+1))
@@ -66,7 +60,7 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 		local params1={lvtype=RITPROC_EQUAL,filter=aux.FilterBoolFunction(Card.IsRace,RACE_REPTILE),location=LOCATION_DECK,matfilter=aux.FilterBoolFunction(Card.IsRace,RACE_REPTILE)}
 		Ritual.Operation(params1)(e,tp,eg,ep,ev,re,r,rp)
 	elseif op==2 then
-		local params2={lvtype=RITPROC_EQUAL,filter=aux.FilterBoolFunction(Card.IsRace,RACE_REPTILE),matfilter=aux.FilterBoolFunction(Card.IsRace,RACE_REPTILE),extrafil=s.extragroup,extraop=s.extraop,forcedselection=s.tributelimit}
+		local params2={lvtype=RITPROC_EQUAL,filter=aux.FilterBoolFunction(Card.IsRace,RACE_REPTILE),matfilter=aux.FilterBoolFunction(Card.IsRace,RACE_REPTILE),extrafil=s.extragroup,forcedselection=s.tributelimit}
 		Ritual.Operation(params2)(e,tp,eg,ep,ev,re,r,rp)
 	end
 end

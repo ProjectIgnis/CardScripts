@@ -10,10 +10,8 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_TO_GRAVE)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e1:SetTargetRange(1,1)
+	e1:SetTargetRange(LOCATION_DECK,LOCATION_DECK)
 	e1:SetCondition(s.effcon)
-	e1:SetTarget(s.tgfilter)
 	c:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
@@ -49,9 +47,6 @@ end
 function s.ovfilter(c,tp,xyzc)
 	return c:IsFaceup() and c:IsSetCard(SET_TELLARKNIGHT,xyzc,SUMMON_TYPE_XYZ,tp) and c:IsType(TYPE_XYZ,xyzc,SUMMON_TYPE_XYZ,tp)
 		and not c:IsSummonCode(xyzc,SUMMON_TYPE_XYZ,tp,id) and Duel.IsPhase(PHASE_MAIN2)
-end
-function s.tgfilter(e,c,rp,r)
-	return c:IsLocation(LOCATION_DECK) and (r&REASON_RELEASE)==0
 end
 function s.effcon(e)
 	return e:GetHandler():GetOverlayCount()>0

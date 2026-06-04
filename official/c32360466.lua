@@ -34,8 +34,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #sg>0 then
 		Duel.ConfirmCards(1-tp,sg)
 		Duel.ShuffleDeck(tp)
-		local tg=sg:Select(1-tp,1,1,nil)
-		local tc=tg:GetFirst()
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SELECT)
+		local tc=sg:Select(1-tp,1,1,nil):GetFirst()
 		Duel.Hint(HINT_CARD,0,tc:GetCode())
 		if s.filter2(tc) and tc:IsAbleToHand() then
 			Duel.SendtoHand(tc,nil,REASON_EFFECT)

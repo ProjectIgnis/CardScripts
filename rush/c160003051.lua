@@ -26,6 +26,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--requirement
 	if Duel.DiscardDeck(tp,1,REASON_COST)>0 then
 		--Effect
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATKDEF)
 		local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil)
 		if #g>0 then
 			Duel.HintSelection(g)

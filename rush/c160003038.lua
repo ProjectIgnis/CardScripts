@@ -25,10 +25,12 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local td=Duel.SelectMatchingCard(tp,s.tdfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 	Duel.HintSelection(td)
-	if Duel.SendtoDeck(td,nil,SEQ_DECKBOTTOM,REASON_COST)~0 then
+	if Duel.SendtoDeck(td,nil,SEQ_DECKBOTTOM,REASON_COST)~=0 then
 		--Effect
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEDOWN)
 		local g=Duel.SelectMatchingCard(tp,Card.IsFacedown,tp,0,LOCATION_ONFIELD,1,1,nil):GetFirst()
 		Duel.HintSelection(Group.FromCards(g))
 		if g and g:IsFacedown() then

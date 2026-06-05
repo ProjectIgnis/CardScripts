@@ -33,7 +33,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		--Effect
 		local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 		if Duel.Recover(p,d,REASON_EFFECT)>0 and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
-			local g=Duel.GetMatchingGroup(g,s.filter,LOCATION_GRAVE,0,nil)
+			local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_GRAVE,0,nil)
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 			local sg=g:Select(tp,1,#g,nil)
 			if #sg>0 then

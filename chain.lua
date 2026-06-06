@@ -371,7 +371,9 @@ local function chain_prop(mode)
 				return current_fn(ec,...)
 			end
 
-			return resolving_fn(ch,...) or triggering_fn(ch,...)
+			local res=resolving_fn(ch,...)
+			if res~=nil then return res end
+			return triggering_fn(ch,...)
 		end
 	end
 end

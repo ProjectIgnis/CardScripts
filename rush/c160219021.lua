@@ -20,7 +20,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return not c:IsCode(160219019) end
+	if chk==0 then return not c:IsCode(160219020) end
 end
 function s.thfilter(c)
 	return c:IsCode(160213069) and c:IsAbleToHand()
@@ -32,12 +32,12 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.SendtoGrave(g,REASON_COST)==0 then return end
 	--Effect
 	local c=e:GetHandler()
-	--Name becomes "Pliage"
+	--Name becomes "Spirit of the Stars"
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e1:SetCode(EFFECT_CHANGE_CODE)
-	e1:SetValue(160219019)
+	e1:SetValue(160219020)
 	e1:SetReset(RESETS_STANDARD_PHASE_END)
 	c:RegisterEffect(e1)
 	if Duel.IsExistingMatchingCard(aux.NecroValleyFilter(s.thfilter),tp,LOCATION_GRAVE,0,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then

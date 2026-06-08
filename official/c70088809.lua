@@ -68,8 +68,8 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end
 	if cd.reveal_count>=4 then
-		cd.revealed_synchros:Match(Card.IsRelateToEffect,nil,e)
 		--● 4+: Send 1 of the revealed Synchro Monsters to the GY
+		cd.revealed_synchros:Match(Card.IsRelateToEffect,nil,e)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		local g=cd.revealed_synchros:FilterSelect(tp,Card.IsAbleToGrave,1,1,nil)
 		if #g>0 then

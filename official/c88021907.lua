@@ -56,8 +56,8 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 		{b3,aux.Stringid(id,3)}
 	}
 	local locations=0
-	local ct=#Chain.Data().cost_detached_materials
 	local cd=e:GetChainData()
+	local ct=#cd.cost_detached_materials
 	cd.selected_effects={}
 	for i=1,ct do
 		local op=Duel.SelectEffect(tp,table.unpack(options))

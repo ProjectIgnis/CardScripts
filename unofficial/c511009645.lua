@@ -55,7 +55,9 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_IMMUNE_EFFECT)
 			e1:SetRange(LOCATION_MZONE)
-			e1:SetValue(s.efilterS)
+			e1:SetValue(function(e,te)
+				return te:IsSpellEffect() and e:GetHandlerPlayer()~=te:GetHandlerPlayer()
+			end)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 			tc:RegisterEffect(e1)
 		elseif op==1 then
@@ -65,7 +67,9 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetType(EFFECT_TYPE_SINGLE)
 			e2:SetRange(LOCATION_MZONE)
 			e2:SetCode(EFFECT_IMMUNE_EFFECT)
-			e2:SetValue(s.efilterT)
+			e2:SetValue(function(e,te)
+				return te:IsTrapEffect() and e:GetHandlerPlayer()~=te:GetHandlerPlayer()
+			end)
 			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 			tc:RegisterEffect(e2)
 		elseif op==2 then
@@ -76,17 +80,10 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 			e3:SetRange(LOCATION_MZONE)
 			e3:SetCode(EFFECT_IMMUNE_EFFECT)
 			e3:SetReset(RESET_EVENT+RESETS_STANDARD)
-			e3:SetValue(s.efilterM)
+			e3:SetValue(function(e,te)
+				return te:IsMonsterEffect() and not te:IsCardSetcode(0x572)
+			end)
 			tc:RegisterEffect(e3)
 		end
 	end
-end
-function s.efilterS(e,te)
-	return te:IsActiveType(TYPE_SPELL) and e:GetHandlerPlayer()~=te:GetHandlerPlayer()
-end
-function s.efilterT(e,te)
-	return te:IsActiveType(TYPE_TRAP) and e:GetHandlerPlayer()~=te:GetHandlerPlayer()
-end
-function s.efilterM(e,te)
-	return te:IsActiveType(TYPE_MONSTER) and not te:GetHandler():IsSetCard(0x572)
 end

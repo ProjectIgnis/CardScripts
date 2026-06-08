@@ -73,7 +73,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummonComplete()
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	local dg=Chain.Data().cost_detached_materials
+	local dg=re:GetChainData().cost_detached_materials
 	return dg and re:GetHandler():IsControler(tp) and re:IsActiveType(TYPE_XYZ)
 		and dg:IsExists(Card.IsOriginalType,1,nil,TYPE_NORMAL)
 end

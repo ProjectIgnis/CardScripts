@@ -140,20 +140,24 @@ end
 
 local function return_equals(fn)
 	return function(ch,val)
-		return fn(ch)==val
+		local res=fn(ch)
+		if res==nil then return nil end
+		return res==val
 	end
 end
 
 local function return_has_common_bits(fn)
 	return function(ch,val)
 		local res=fn(ch)
-		return res and (res&val)>0
+		if res==nil then return nil end
+		return (res&val)>0
 	end
 end
 
 local function return_equals_any(fn)
 	return function(ch,...)
 		local res=fn(ch)
+		if res==nil then return nil end
 		for _,val in ipairs({...}) do
 			if res==val then return true end
 		end
@@ -179,7 +183,7 @@ Chain.IsTriggeringSummonLocation = return_has_common_bits (Chain.GetTriggeringSu
 Chain.IsTriggeringSummonType     = return_has_common_bits (Chain.GetTriggeringSummonType)
 
 local function code_check(codes,...)
-	if not codes then return false end
+	if codes==nil then return nil end
 	for _,code in ipairs({...}) do
 		if code==codes[1] or code==codes[2] then return true end
 	end
@@ -197,7 +201,7 @@ Chain.IsTriggeringLocation = aux.OR(
 )
 
 local function setcode_check(setcodes_to_match,...)
-	if not setcodes_to_match then return false end
+	if setcodes_to_match==nil then return nil end
 	for _,sa in ipairs(setcodes_to_match) do
 		for _,sb in ipairs({...}) do
 			if (sa&0xfff)==(sb&0xfff) and (sa&sb)==sa then return true end
@@ -220,7 +224,8 @@ end
 
 function Chain.IsTriggeringCompositeType(ch,typ)
 	local trig_typ=Chain.GetTriggeringType(ch)
-	return trig_typ and (trig_typ&typ)==typ
+	if trig_typ==nil then return nil end
+	return (trig_typ&typ)==typ
 end
 
 Chain.IsTriggeringExactType = return_equals(Chain.GetTriggeringType)
@@ -283,14 +288,14 @@ resolving_fns.IsSummonType     = return_has_common_bits (resolving_fns.GetSummon
 
 function resolving_fns.IsCode(ch,...)
 	local res_props=Chain.Data(ch).resolving_properties
-	if res_props then return code_check(res_props.Code,...) end
-	return false
+	if res_props==nil then return nil end
+	return code_check(res_props.Code,...)
 end
 
 function resolving_fns.IsSetCard(ch,...)
 	local res_props=Chain.Data(ch).resolving_properties
-	if res_props then return setcode_check(res_props.SetCard,...) end
-	return false
+	if res_props==nil then return nil end
+	return setcode_check(res_props.SetCard,...)
 end
 
 --[[
@@ -333,14 +338,14 @@ registering_fns.IsSummonType     = return_has_common_bits (registering_fns.GetSu
 
 function registering_fns.IsCode(e,...)
 	local reg_props=registering_properties[tostring(e)]
-	if reg_props then return code_check(reg_props.Code,...) end
-	return false
+	if reg_props==nil then return nil end
+	return code_check(reg_props.Code,...)
 end
 
 function registering_fns.IsSetCard(e,...)
 	local reg_props=registering_properties[tostring(e)]
-	if reg_props then return setcode_check(reg_props.SetCard,...) end
-	return false
+	if reg_props==nil then return nil end
+	return setcode_check(reg_props.SetCard,...)
 end
 
 --[[
@@ -425,7 +430,8 @@ end
 
 function Chain.IsCompositeType(ch,typ)
 	local ch_typ=Chain.GetType(ch)
-	return ch_typ and (ch_typ&typ)==typ
+	if ch_typ==nil then return nil end
+	return (ch_typ&typ)==typ
 end
 
 Chain.IsExactType = return_equals(Chain.GetType)

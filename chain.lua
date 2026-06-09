@@ -104,7 +104,6 @@ Chain.GetTriggeringPosition         = chaininfo_fn(CHAININFO_TRIGGERING_POSITION
 Chain.GetTriggeringType             = chaininfo_fn(CHAININFO_TRIGGERING_TYPE)
 Chain.GetTriggeringLevel            = chaininfo_fn(CHAININFO_TRIGGERING_LEVEL)
 Chain.GetTriggeringRank             = chaininfo_fn(CHAININFO_TRIGGERING_RANK)
-Chain.GetTriggeringLevel            = chaininfo_fn(CHAININFO_TRIGGERING_LEVEL)
 Chain.GetTriggeringScale            = chaininfo_fn(CHAININFO_TRIGGERING_LSCALE) --assume Left and Right Scales are the same
 Chain.GetTriggeringLink             = chaininfo_fn(CHAININFO_TRIGGERING_LINK)
 Chain.GetTriggeringAttribute        = chaininfo_fn(CHAININFO_TRIGGERING_ATTRIBUTE)
@@ -211,10 +210,11 @@ Chain.IsTriggeringLocation = aux.OR(
 	return_has_common_bits(Chain.GetTriggeringLocationSymbolic)
 )
 
-local function setcode_check(setcodes_to_match,...)
+local function setcode_check(setcodes_to_match,setcodes)
 	if setcodes_to_match==nil then return nil end
+	if type(setcodes)=="number" then setcodes={setcodes} end
 	for _,sa in ipairs(setcodes_to_match) do
-		for _,sb in ipairs({...}) do
+		for _,sb in ipairs(setcodes) do
 			if (sa&0xfff)==(sb&0xfff) and (sa&sb)==sa then return true end
 		end
 	end
@@ -222,11 +222,11 @@ local function setcode_check(setcodes_to_match,...)
 end
 
 function Chain.IsTriggeringSetcode(ch,setcodes)
-	--should not use Chain.GetTriggeringSetcode here because it unpacks the returned table,
+	--should not use Chain.GetTriggeringSetcode here because it unpacks the table (to be consistent with Card.GetSetCard),
 	--making it impossible to tell if there is no triggering property, or the card just happened to not have setcodes
 	local trig_setcodes=Duel.GetChainInfo(ch or 0,CHAININFO_TRIGGERING_SETCODES)
 	if trig_setcodes==nil then return nil end
-	return setcode_check(trig_setcodes,table.unpack(setcodes))
+	return setcode_check(trig_setcodes,setcodes)
 end
 
 function Chain.IsTriggeringRaceExcept(ch,race)
@@ -309,10 +309,10 @@ function resolving_fns.IsCode(ch,...)
 	return code_check(res_props.Code,...)
 end
 
-function resolving_fns.IsSetCard(ch,...)
+function resolving_fns.IsSetCard(ch,setcodes)
 	local res_props=Chain.Data(ch).resolving_properties
 	if res_props==nil then return nil end
-	return setcode_check(res_props.SetCard,...)
+	return setcode_check(res_props.SetCard,setcodes)
 end
 
 --[[
@@ -361,10 +361,10 @@ function registering_fns.IsCode(e,...)
 	return code_check(reg_props.Code,...)
 end
 
-function registering_fns.IsSetCard(e,...)
+function registering_fns.IsSetCard(e,setcodes)
 	local reg_props=registering_properties[tostring(e)]
 	if reg_props==nil then return nil end
-	return setcode_check(reg_props.SetCard,...)
+	return setcode_check(reg_props.SetCard,setcodes)
 end
 
 --[[

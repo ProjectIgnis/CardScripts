@@ -9,6 +9,8 @@ local CARD_PROPERTIES = {
 	"Type",
 	"Level",
 	"Rank",
+	"Scale",
+	"Link",
 	"Attribute",
 	"Race",
 	"Attack",
@@ -102,6 +104,9 @@ Chain.GetTriggeringPosition         = chaininfo_fn(CHAININFO_TRIGGERING_POSITION
 Chain.GetTriggeringType             = chaininfo_fn(CHAININFO_TRIGGERING_TYPE)
 Chain.GetTriggeringLevel            = chaininfo_fn(CHAININFO_TRIGGERING_LEVEL)
 Chain.GetTriggeringRank             = chaininfo_fn(CHAININFO_TRIGGERING_RANK)
+Chain.GetTriggeringLevel            = chaininfo_fn(CHAININFO_TRIGGERING_LEVEL)
+Chain.GetTriggeringScale            = chaininfo_fn(CHAININFO_TRIGGERING_LSCALE) --assume Left and Right Scales are the same
+Chain.GetTriggeringLink             = chaininfo_fn(CHAININFO_TRIGGERING_LINK)
 Chain.GetTriggeringAttribute        = chaininfo_fn(CHAININFO_TRIGGERING_ATTRIBUTE)
 Chain.GetTriggeringRace             = chaininfo_fn(CHAININFO_TRIGGERING_RACE)
 Chain.GetTriggeringATK              = chaininfo_fn(CHAININFO_TRIGGERING_ATTACK)
@@ -118,7 +123,9 @@ function Chain.GetTriggeringCode(ch)
 end
 
 function Chain.GetTriggeringSetcode(ch)
-	return table.unpack(Duel.GetChainInfo(ch or 0,CHAININFO_TRIGGERING_SETCODES))
+	local trig_setcodes=Duel.GetChainInfo(ch or 0,CHAININFO_TRIGGERING_SETCODES)
+	if trig_setcodes==nil then return nil end
+	return table.unpack(trig_setcodes)
 end
 
 local function get_all_triggering_properties(ch)
@@ -174,10 +181,12 @@ Chain.IsTriggeringPosition       = return_has_common_bits (Chain.GetTriggeringPo
 Chain.IsTriggeringType           = return_has_common_bits (Chain.GetTriggeringType)
 Chain.IsTriggeringLevel          = return_equals_any      (Chain.GetTriggeringLevel)
 Chain.IsTriggeringRank           = return_equals_any      (Chain.GetTriggeringRank)
+Chain.IsTriggeringScale          = return_equals_any      (Chain.GetTriggeringScale)
+Chain.IsTriggeringLink           = return_equals_any      (Chain.GetTriggeringLink)
 Chain.IsTriggeringAttribute      = return_has_common_bits (Chain.GetTriggeringAttribute)
 Chain.IsTriggeringRace           = return_has_common_bits (Chain.GetTriggeringRace)
-Chain.IsTriggeringATK            = return_equals          (Chain.GetTriggeringATK)
-Chain.IsTriggeringDEF            = return_equals          (Chain.GetTriggeringDEF)
+Chain.IsTriggeringATK            = return_equals_any      (Chain.GetTriggeringATK)
+Chain.IsTriggeringDEF            = return_equals_any      (Chain.GetTriggeringDEF)
 Chain.IsTriggeringStatus         = return_has_common_bits (Chain.GetTriggeringStatus)
 Chain.IsTriggeringSummonLocation = return_has_common_bits (Chain.GetTriggeringSummonLocation)
 Chain.IsTriggeringSummonType     = return_has_common_bits (Chain.GetTriggeringSummonType)
@@ -191,7 +200,9 @@ local function code_check(codes,...)
 end
 
 function Chain.IsTriggeringCode(ch,...)
-	return code_check({Chain.GetTriggeringCode(ch)},...)
+	local trig_code_1,trig_code_2=Chain.GetTriggeringCode(ch)
+	if trig_code_1==nil then return nil end
+	return code_check({trig_code_1,trig_code_2},...)
 end
 
 --integrates symbolic locations to be consistent with Card.IsLocation
@@ -211,7 +222,11 @@ local function setcode_check(setcodes_to_match,...)
 end
 
 function Chain.IsTriggeringSetcode(ch,setcodes)
-	return setcode_check({setcodes},Chain.GetTriggeringSetcode(ch))
+	--should not use Chain.GetTriggeringSetcode here because it unpacks the returned table,
+	--making it impossible to tell if there is no triggering property, or the card just happened to not have setcodes
+	local trig_setcodes=Duel.GetChainInfo(ch or 0,CHAININFO_TRIGGERING_SETCODES)
+	if trig_setcodes==nil then return nil end
+	return setcode_check(trig_setcodes,table.unpack(setcodes))
 end
 
 function Chain.IsTriggeringRaceExcept(ch,race)
@@ -278,10 +293,12 @@ resolving_fns.IsPosition       = return_has_common_bits (resolving_fns.GetPositi
 resolving_fns.IsType           = return_has_common_bits (resolving_fns.GetType)
 resolving_fns.IsLevel          = return_equals_any      (resolving_fns.GetLevel)
 resolving_fns.IsRank           = return_equals_any      (resolving_fns.GetRank)
+resolving_fns.IsScale          = return_equals_any      (resolving_fns.GetScale)
+resolving_fns.IsLink           = return_equals_any      (resolving_fns.GetLink)
 resolving_fns.IsAttribute      = return_has_common_bits (resolving_fns.GetAttribute)
 resolving_fns.IsRace           = return_has_common_bits (resolving_fns.GetRace)
-resolving_fns.IsAttack         = return_equals          (resolving_fns.GetAttack)
-resolving_fns.IsDefense        = return_equals          (resolving_fns.GetDefense)
+resolving_fns.IsAttack         = return_equals_any      (resolving_fns.GetAttack)
+resolving_fns.IsDefense        = return_equals_any      (resolving_fns.GetDefense)
 resolving_fns.IsStatus         = return_has_common_bits (resolving_fns.GetStatus)
 resolving_fns.IsSummonLocation = return_has_common_bits (resolving_fns.GetSummonLocation)
 resolving_fns.IsSummonType     = return_has_common_bits (resolving_fns.GetSummonType)
@@ -328,10 +345,12 @@ registering_fns.IsPosition       = return_has_common_bits (registering_fns.GetPo
 registering_fns.IsType           = return_has_common_bits (registering_fns.GetType)
 registering_fns.IsLevel          = return_equals_any      (registering_fns.GetLevel)
 registering_fns.IsRank           = return_equals_any      (registering_fns.GetRank)
+registering_fns.IsScale          = return_equals_any      (registering_fns.GetScale)
+registering_fns.IsLink           = return_equals_any      (registering_fns.GetLink)
 registering_fns.IsAttribute      = return_has_common_bits (registering_fns.GetAttribute)
 registering_fns.IsRace           = return_has_common_bits (registering_fns.GetRace)
-registering_fns.IsAttack         = return_equals          (registering_fns.GetAttack)
-registering_fns.IsDefense        = return_equals          (registering_fns.GetDefense)
+registering_fns.IsAttack         = return_equals_any      (registering_fns.GetAttack)
+registering_fns.IsDefense        = return_equals_any      (registering_fns.GetDefense)
 registering_fns.IsStatus         = return_has_common_bits (registering_fns.GetStatus)
 registering_fns.IsSummonLocation = return_has_common_bits (registering_fns.GetSummonLocation)
 registering_fns.IsSummonType     = return_has_common_bits (registering_fns.GetSummonType)
@@ -394,6 +413,8 @@ Chain.GetPosition       = get_chain_prop("Position")
 Chain.GetType           = get_chain_prop("Type")
 Chain.GetLevel          = get_chain_prop("Level")
 Chain.GetRank           = get_chain_prop("Rank")
+Chain.GetScale          = get_chain_prop("Scale")
+Chain.GetLink           = get_chain_prop("Link")
 Chain.GetAttribute      = get_chain_prop("Attribute")
 Chain.GetRace           = get_chain_prop("Race")
 Chain.GetATK            = get_chain_prop("Attack")
@@ -412,6 +433,8 @@ Chain.IsPosition       = is_chain_prop("Position")
 Chain.IsType           = is_chain_prop("Type")
 Chain.IsLevel          = is_chain_prop("Level")
 Chain.IsRank           = is_chain_prop("Rank")
+Chain.IsScale          = is_chain_prop("Scale")
+Chain.IsLink           = is_chain_prop("Link")
 Chain.IsAttribute      = is_chain_prop("Attribute")
 Chain.IsRace           = is_chain_prop("Race")
 Chain.IsATK            = is_chain_prop("Attack")
@@ -488,6 +511,8 @@ Effect.GetCardPosition       = effect_get_card_prop("Position")
 Effect.GetCardType           = effect_get_card_prop("Type")
 Effect.GetCardLevel          = effect_get_card_prop("Level")
 Effect.GetCardRank           = effect_get_card_prop("Rank")
+Effect.GetCardScale          = effect_get_card_prop("Scale")
+Effect.GetCardLink           = effect_get_card_prop("Link")
 Effect.GetCardAttribute      = effect_get_card_prop("Attribute")
 Effect.GetCardRace           = effect_get_card_prop("Race")
 Effect.GetCardATK            = effect_get_card_prop("Attack")
@@ -506,6 +531,8 @@ Effect.IsCardPosition       = effect_is_card_prop("Position")
 Effect.IsCardType           = effect_is_card_prop("Type")
 Effect.IsCardLevel          = effect_is_card_prop("Level")
 Effect.IsCardRank           = effect_is_card_prop("Rank")
+Effect.IsCardScale          = effect_is_card_prop("Scale")
+Effect.IsCardLink           = effect_is_card_prop("Link")
 Effect.IsCardAttribute      = effect_is_card_prop("Attribute")
 Effect.IsCardRace           = effect_is_card_prop("Race")
 Effect.IsCardATK            = effect_is_card_prop("Attack")

@@ -238,8 +238,11 @@ function Card.IsPreviousRankOnField(c,rank)
 	return c:HasRank() and c:GetPreviousRankOnField()==rank
 end
 
-function Card.IsScale(c,scale)
-	return c:GetScale()==scale
+function Card.IsScale(c,...)
+	for _,scale in ipairs({...}) do
+		if c:GetScale()==scale then return true end
+	end
+	return false
 end
 
 function Card.IsNormalSummoned(c)

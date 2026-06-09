@@ -18,7 +18,7 @@ function s.initial_effect(c)
 			--● Add 1 "Witchcrafter" Spell from your Deck to your hand
 			{aux.TRUE,aux.Stringid(id,2),function(e,tp) return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end},
 			--● Reveal 1 "Witchcrafter" Normal or Quick-Play Spell in your hand; apply that Spell's activation effect
-			{Cost.Reveal(s.revealfilter,nil,1,1,function(e,tp,og) e:SetLabelObject(og) end),aux.Stringid(id,3),nil}
+			{Cost.Reveal(s.revealfilter,nil,1,1,function(e,tp,og) e:GetChainData().revealed_card=og:GetFirst() end),aux.Stringid(id,3),nil}
 		)
 	)
 	e1:SetTarget(s.efftg)
@@ -50,30 +50,29 @@ function s.revealfilter(c)
 end
 function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	local op=e:GetLabel()
-	if op==1 then
+	local cd=e:GetChainData()
+	if cd.cost_choice==1 then
 		--● Add 1 "Witchcrafter" Spell from your Deck to your hand
 		e:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 		Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
-	elseif op==2 then
+	elseif cd.cost_choice==2 then
 		--● Reveal 1 "Witchcrafter" Normal or Quick-Play Spell in your hand; apply that Spell's activation effect
 		e:SetCategory(0)
-		local revealed_card=e:GetLabelObject():GetFirst()
-		local te,ceg,cep,cev,cre,cr,crp=revealed_card:CheckActivateEffect(true,true,true)
+		local te,ceg,cep,cev,cre,cr,crp=cd.revealed_card:CheckActivateEffect(true,true,true)
 		Duel.ClearTargetCard()
 		local tg=te:GetTarget()
 		e:SetProperty(te:GetProperty())
+		e:SetLabel(te:GetLabel())
+		e:SetLabelObject(te:GetLabelObject())
 		if tg then tg(e,tp,ceg,cep,cev,cre,cr,crp,1) end
-		te:SetLabelObject(e:GetLabelObject())
-		e:SetLabelObject(te)
 		e:SetCategory(0)
 		Duel.ClearOperationInfo(0)
+		cd.pupils_target_effect=te
 	end
-	Duel.SetTargetParam(op)
 end
 function s.effop(e,tp,eg,ep,ev,re,r,rp)
-	local op=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
-	if op==1 then
+	local cd=e:GetChainData()
+	if cd.cost_choice==1 then
 		--● Add 1 "Witchcrafter" Spell from your Deck to your hand
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil)
@@ -81,11 +80,10 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.SendtoHand(g,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,g)
 		end
-	elseif op==2 then
+	elseif cd.cost_choice==2 then
 		--● Reveal 1 "Witchcrafter" Normal or Quick-Play Spell in your hand; apply that Spell's activation effect
-		local te=e:GetLabelObject()
+		local te=cd.pupils_target_effect
 		if not te then return end
-		e:SetLabelObject(te:GetLabelObject())
 		local op=te:GetOperation()
 		if op then
 			op(e,tp,eg,ep,ev,re,r,rp)

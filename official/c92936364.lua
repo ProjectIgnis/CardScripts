@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e2:SetTarget(aux.PersistentTargetFilter)
-	e2:SetValue(function() return e1:GetLabel()*-100 end)
+	e2:SetValue(function() return e1:GetLabel() end)
 	c:RegisterEffect(e2)
 	--Also their effects are negated
 	local e3=e2:Clone()
@@ -69,15 +69,15 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local sg=aux.SelectUnselectGroup(hg,e,tp,1,#hg,rescon,1,tp,HINTMSG_CONFIRM,rescon)
 	Duel.ConfirmCards(1-tp,sg)
 	Duel.ShuffleHand(tp)
-	e:SetLabel(sg:FilterCount(Card.IsType,nil,TYPE_TUNER)+1,#sg)
+	e:SetLabel(#sg*-100)
+	e:GetChainData().tuners_revealed=sg:FilterCount(Card.IsType,nil,TYPE_TUNER)+1
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsEffectMonster() and chkc:IsFaceup() end
 	if chk==0 then return Duel.IsExistingTarget(aux.FaceupFilter(Card.IsEffectMonster),tp,0,LOCATION_MZONE,1,nil) end
-	local target_count,reveal_count=e:GetLabel()
-	e:SetLabel(reveal_count)
+	local ct=e:GetChainData().tuners_revealed
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_NEGATE)
-	local g=Duel.SelectTarget(tp,aux.FaceupFilter(Card.IsEffectMonster),tp,0,LOCATION_MZONE,target_count,target_count,nil)
+	local g=Duel.SelectTarget(tp,aux.FaceupFilter(Card.IsEffectMonster),tp,0,LOCATION_MZONE,ct,ct,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,1,tp,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)

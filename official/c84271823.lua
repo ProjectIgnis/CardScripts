@@ -48,14 +48,10 @@ function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local lg=e:GetHandler():GetLinkedGroup()
 	local g=eg:Filter(s.cfilter,nil,tp,lg)
-	local lv
-	if #g==1 then
-		lv=g:GetFirst():GetLevel()
-	end
+	local cd=e:GetChainData()
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,2))
-	e:SetLabel(Duel.AnnounceLevel(tp,1,8,lv))
-	e:SetLabelObject(g)
-	Duel.SetOperationInfo(0,CATEGORY_LVCHANGE,g,#g,0,e:GetLabel())
+	cd.level=Duel.AnnounceLevel(tp,1,8,#g==1 and g:GetFirst():GetLevel() or nil)
+	Duel.SetOperationInfo(0,CATEGORY_LVCHANGE,g,#g,0,cd.level)
 end
 function s.opfilter(c,e)
 	return c:IsFaceup() and c:IsRelateToEffect(e)
@@ -64,12 +60,13 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local lg=e:GetHandler():GetLinkedGroup()
 	local g=eg:Filter(s.cfilter,nil,tp,lg)
+	local cd=e:GetChainData()
 	--Their levels become the declared Level
 	for tc in g:Iter() do
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_LEVEL)
-		e1:SetValue(e:GetLabel())
+		e1:SetValue(cd.level)
 		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
 	end

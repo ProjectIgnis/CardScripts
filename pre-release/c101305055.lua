@@ -57,13 +57,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.inactop(e,tp,eg,ep,ev,re,r,rp)
-	if ep==1-tp then return end
-	local trig_typ,trig_setcodes=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_TYPE,CHAININFO_TRIGGERING_SETCODES)
-	if trig_typ&TYPE_MONSTER~=TYPE_MONSTER then return end
-	for _,setcode in ipairs(trig_setcodes) do
-		if (SET_POWER_PATRON&0xfff)==(setcode&0xfff) and (SET_POWER_PATRON&setcode)==SET_POWER_PATRON then
-			return Duel.SetChainLimit(function(e,rp,tp) return rp==tp end)
-		end
+	if ep==tp and Chain.IsType(ev,TYPE_MONSTER) and Chain.IsSetcode(ev,SET_POWER_PATRON) then
+		Duel.SetChainLimit(function(e,rp,tp) return rp==tp end)
 	end
 end
 function s.repval(base,extracon,e,tp,eg,ep,ev,re,r,rp,chk)

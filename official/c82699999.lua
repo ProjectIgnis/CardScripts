@@ -30,13 +30,10 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_LIVE_TWIN,SET_KI_SIKIL}
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
-	local chainlink=Duel.GetCurrentChain(true)-1
-	if not (chainlink>0 and Duel.IsChainDisablable(ev) and ep==1-tp) then return false end
-	local trig_p,setcodes=Duel.GetChainInfo(chainlink,CHAININFO_TRIGGERING_PLAYER,CHAININFO_TRIGGERING_SETCODES)
-	if not trig_p==tp then return false end
-	for _,set in ipairs(setcodes) do
-		if (SET_LIVE_TWIN&0xfff)==(set&0xfff) and (SET_LIVE_TWIN&set)==SET_LIVE_TWIN then return true end
-	end
+	local ch=Duel.GetCurrentChain(true)-1
+	return ch>0 and ep==1-tp and Duel.IsChainDisablable(ev)
+		and Chain.IsTriggeringPlayer(ch,tp)
+		and Chain.IsTriggeringSetcode(ch,SET_LIVE_TWIN)
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

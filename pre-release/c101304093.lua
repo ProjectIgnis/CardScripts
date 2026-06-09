@@ -99,17 +99,7 @@ function s.lpop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	if ep==1-tp or r&REASON_EFFECT==0 then return false end
-	local rc=re:GetHandler()
-	if rc:IsRelateToEffect(re) and rc:IsFaceup() then
-		return rc:IsSetCard(SET_GMX)
-	else
-		local trig_setcodes=Duel.GetChainInfo(0,CHAININFO_TRIGGERING_SETCODES)
-		for _,set in ipairs(trig_setcodes) do
-			if (SET_GMX&0xfff)==(set&0xfff) and (SET_GMX&set)==SET_GMX then return true end
-		end
-	end
-	return false
+	return ep==tp and r&REASON_EFFECT>0 and Chain.IsSetcode(0,SET_GMX)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(nil,tp,LOCATION_MZONE,LOCATION_MZONE,e:GetHandler())

@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e2:SetCountLimit(1,id)
 	e2:SetCondition(function(e) return e:GetHandler():IsXyzSummoned() end)
-	e2:SetCost(Cost.DetachFromSelf(1,s.effcostmax,function(e,og) e:SetLabel(#og) end))
+	e2:SetCost(Cost.DetachFromSelf(1,s.effcostmax))
 	e2:SetTarget(s.efftg)
 	e2:SetOperation(s.effop)
 	c:RegisterEffect(e2)
@@ -56,21 +56,21 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 		{b3,aux.Stringid(id,3)}
 	}
 	local locations=0
-	local selection={}
-	local ct=e:GetLabel()
+	local cd=e:GetChainData()
+	local ct=#cd.cost_detached_materials
+	cd.selected_effects={}
 	for i=1,ct do
 		local op=Duel.SelectEffect(tp,table.unpack(options))
 		options[op][1]=false
-		selection[op]=true
+		cd.selected_effects[op]=true
 		locations=locations|((op==1 and LOCATION_HAND) or (op==2 and LOCATION_MZONE) or LOCATION_ONFIELD)
 	end
-	e:SetLabelObject(selection)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,ct,1-tp,locations)
 end
 function s.effop(e,tp,eg,ep,ev,re,r,rp)
 	local break_chk=false
-	local selection=e:GetLabelObject()
-	if selection[1] then
+	local cd=e:GetChainData()
+	if cd.selected_effects[1] then
 		--Send 1 random card from your opponent's hand to the GY
 		local g=Duel.GetMatchingGroup(Card.IsAbleToGrave,tp,0,LOCATION_HAND,nil)
 		if #g>0 then
@@ -79,7 +79,7 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.SendtoGrave(sg,REASON_EFFECT)
 		end
 	end
-	if selection[2] then
+	if cd.selected_effects[2] then
 		--Send 1 monster your opponent controls to the GY
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		local g=Duel.SelectMatchingCard(tp,Card.IsAbleToGrave,tp,0,LOCATION_MZONE,1,1,nil)
@@ -90,7 +90,7 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.SendtoGrave(g,REASON_EFFECT)
 		end
 	end
-	if selection[3] then
+	if cd.selected_effects[3] then
 		--Send 1 Spell/Trap your opponent controls to the GY
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		local g=Duel.SelectMatchingCard(tp,aux.AND(Card.IsSpellTrap,Card.IsAbleToGrave),tp,0,LOCATION_ONFIELD,1,1,nil)

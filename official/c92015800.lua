@@ -12,16 +12,22 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_ADD_ATTRIBUTE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetValue(s.attval)
+	e1:SetValue(function(e,c)
+		return e:GetHandler():GetOverlayGroup():GetBitwiseOr(Card.GetAttribute)
+	end)
 	c:RegisterEffect(e1)
 	--Cannot be destroyed
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-	e2:SetValue(s.btindes)
+	e2:SetValue(function(e,c)
+		return c:IsAttribute(e:GetHandler():GetAttribute())
+	end)
 	c:RegisterEffect(e2)
 	local e3=e1:Clone()
 	e3:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
-	e3:SetValue(s.efindes)
+	e3:SetValue(function(e,re,rp)
+		return re:IsActivated() and re:IsMonsterEffect() and rp==1-e:GetHandlerPlayer() and re:IsCardAttribute(e:GetHandler():GetAttribute())
+	end)
 	c:RegisterEffect(e3)
 	--Attach material
 	local e4=Effect.CreateEffect(c)
@@ -37,17 +43,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 s.xyz_number=76
-function s.attval(e,c)
-	local og=e:GetHandler():GetOverlayGroup()
-	return og:GetBitwiseOr(Card.GetAttribute)
-end
-function s.btindes(e,c)
-	return c:IsAttribute(e:GetHandler():GetAttribute())
-end
-function s.efindes(e,re,rp)
-	local c=e:GetHandler()
-	return re:GetHandler():IsAttribute(c:GetAttribute()) and re:IsActivated() and rp==1-c:GetControler()
-end
 function s.mttg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(1-tp) and chkc:IsMonster() end
 	if chk==0 then return Duel.IsExistingTarget(Card.IsMonster,tp,0,LOCATION_GRAVE,1,nil)

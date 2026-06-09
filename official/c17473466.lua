@@ -39,14 +39,10 @@ end
 s.listed_names={id,53589300} --"Nerva the Power Patron of Creation"
 s.listed_series={SET_POWER_PATRON,SET_ARTMAGE}
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
-	local ch=Duel.GetCurrentChain()-1
-	if not (ch>0 and ep==1-tp and re:IsMonsterEffect() and Duel.IsChainDisablable(ev) and not Duel.HasFlagEffect(tp,id)) then return false end
-	local ctrl,setcodes,trig_eff=Duel.GetChainInfo(ch,CHAININFO_TRIGGERING_CONTROLER,CHAININFO_TRIGGERING_SETCODES,CHAININFO_TRIGGERING_EFFECT)
-	if ctrl~=tp or not trig_eff:IsMonsterEffect() then return false end
-	for _,set in ipairs(setcodes) do
-		if (SET_POWER_PATRON&0xfff)==(set&0xfff) and (SET_POWER_PATRON&set)==SET_POWER_PATRON then return true end
-		if (SET_ARTMAGE&0xfff)==(set&0xfff) and (SET_ARTMAGE&set)==SET_ARTMAGE then return true end
-	end
+	local ch=Chain.GetCurrentLink()-1
+	return ch>0 and ep==1-tp and re:IsMonsterEffect() and not Duel.HasFlagEffect(tp,id)
+		and Duel.IsChainDisablable(ev) and Chain.IsTriggeringControler(ch,tp)
+		and Chain.IsTriggeringType(ch,TYPE_MONSTER) and Chain.IsTriggeringSetcode(ch,{SET_POWER_PATRON,SET_ARTMAGE})
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

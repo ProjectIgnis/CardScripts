@@ -18,7 +18,9 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
-	e1:SetValue(s.indval)
+	e1:SetValue(function(e,re,rp)
+		return re:IsActivated() and re:IsMonsterEffect() and re:IsCardSummonType(SUMMON_TYPE_SPECIAL) and re:IsCardSummonLocation(LOCATION_GRAVE)
+	end)
 	c:RegisterEffect(e1)
 	--Limit effects from GY
 	local e2=Effect.CreateEffect(c)
@@ -49,11 +51,6 @@ function s.valcheck(e,c)
 	if g:IsExists(Card.IsSetCard,1,nil,SET_EXOSISTER) then
 		c:RegisterFlagEffect(id,RESET_EVENT|(RESETS_STANDARD_PHASE_END&~RESET_TOFIELD),0,1)
 	end
-end
-function s.indval(e,re,rp)
-	local rc=re:GetHandler()
-	return rc:IsSpecialSummoned() and rc:IsSummonLocation(LOCATION_GRAVE)
-		and re:IsMonsterEffect() and re:IsActivated()
 end
 function s.limcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

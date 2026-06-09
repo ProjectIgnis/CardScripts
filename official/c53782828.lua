@@ -103,9 +103,7 @@ function s.repval(base,extracon,e,tp,eg,ep,ev,re,r,rp,chk)
 		return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE)
 			and c:IsSetCard(SET_S_FORCE) and extracon(base,e,tp,e,tp,eg,ep,ev,re,r,rp,chk)
 	end
-	local ctrl,loc,pos,setcodes=Duel.GetChainInfo(0,CHAININFO_TRIGGERING_CONTROLER,CHAININFO_TRIGGERING_LOCATION,CHAININFO_TRIGGERING_POSITION,CHAININFO_TRIGGERING_SETCODES)
-	if ctrl==1-tp or (pos&POS_FACEUP)==0 or loc~=LOCATION_MZONE or not extracon(base,e,tp,e,tp,eg,ep,ev,re,r,rp,chk) then return false end
-	for _,setcode in ipairs(setcodes) do
-		if (SET_S_FORCE&0xfff)==(setcode&0xfff) and (SET_S_FORCE&setcode)==SET_S_FORCE then return true end
-	end
+	return Chain.IsTriggeringControler(0,tp) and Chain.IsTriggeringLocation(0,LOCATION_MZONE)
+		and Chain.IsTriggeringPosition(0,POS_FACEUP) and Chain.IsTriggeringSetcode(0,SET_S_FORCE)
+		and extracon(base,e,tp,e,tp,eg,ep,ev,re,r,rp,chk)
 end

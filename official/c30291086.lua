@@ -30,31 +30,31 @@ function s.lvtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return c:HasLevel() and (#rmg>0 or #tgg>0) end
 	e:SetCategory(0)
 	e:SetProperty(0)
-	local op=Duel.SelectEffect(tp,
+	local cd=e:GetChainData()
+	cd.choice=Duel.SelectEffect(tp,
 		{#rmg>0,aux.Stringid(id,1)},
 		{#tgg>0,aux.Stringid(id,2)})
-	if op==1 then
+	if cd.choice==1 then
 		local rg=aux.SelectUnselectGroup(rmg,e,tp,1,2,s.attrescon,1,tp,HINTMSG_REMOVE)
 		Duel.Remove(rg,POS_FACEUP,REASON_COST)
-		local ct=Duel.GetOperatedGroup():FilterCount(Card.IsLocation,nil,LOCATION_REMOVED)
-		e:SetLabel(op,ct)
-	elseif op==2 then
+		cd.banished_amount=Duel.GetOperatedGroup():FilterCount(Card.IsLocation,nil,LOCATION_REMOVED)
+	elseif cd.choice==2 then
 		e:SetCategory(CATEGORY_TOGRAVE)
 		e:SetProperty(EFFECT_FLAG_CARD_TARGET)
 		local tg=aux.SelectUnselectGroup(tgg,e,tp,1,2,s.attrescon,1,tp,HINTMSG_TOGRAVE)
 		Duel.SetTargetCard(tg)
 		Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,tg,#tg,0,0)
-		e:SetLabel(2)
 	end
 end
 function s.lvop(e,tp,eg,ep,ev,re,r,rp)
-	local op,ct=e:GetLabel()
-	if op==2 then
+	local cd=e:GetChainData()
+	local ct=cd.banished_amount
+	if cd.choice==2 then
 		local tg=Duel.GetTargetCards(e)
 		if #tg>0 then
 			ct=Duel.SendtoGrave(tg,REASON_EFFECT|REASON_RETURN)
 		end
-	elseif op~=1 then return end
+	elseif cd.choice~=1 then return end
 	if not ct or ct==0 then return end
 	local c=e:GetHandler()
 	if not (c:IsRelateToEffect(e) and c:IsFaceup() and c:HasLevel()) then return end

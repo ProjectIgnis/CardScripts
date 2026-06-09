@@ -79,11 +79,7 @@ function s.immcon(e)
 	return a and b and ((a:GetScale()+b:GetScale())%2==1)
 end
 function s.immval(e,ct)
-	local trig_player,trig_setcodes=Duel.GetChainInfo(ct,CHAININFO_TRIGGERING_PLAYER,CHAININFO_TRIGGERING_SETCODES)
-	if trig_player==1-e:GetHandlerPlayer() then return false end
-	for _,setcode in ipairs(trig_setcodes) do
-		if (SET_SOLFACHORD&0xfff)==(setcode&0xfff) and (SET_SOLFACHORD&setcode)==SET_SOLFACHORD then return true end
-	end
+	return Chain.IsTriggeringPlayer(ct,e:GetHandlerPlayer()) and Chain.IsSetcode(ct,SET_SOLFACHORD)
 end
 function s.deckthfilter(c)
 	return c:IsSetCard(SET_SOLFACHORD) and not c:IsCode(id) and c:IsAbleToHand()

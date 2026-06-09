@@ -29,7 +29,7 @@ function s.desallcheck(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	local g=e:GetLabel()==1
+	local g=e:GetChainData().cost_choice==1
 		and Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,e:GetHandler())
 		or Duel.GetFieldGroup(tp,0,LOCATION_ONFIELD)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,tp,0)
@@ -37,7 +37,7 @@ end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local exc=c:IsRelateToEffect(e) and c or nil
-	local g=e:GetLabel()==1
+	local g=e:GetChainData().cost_choice==1
 		and Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,exc)
 		or Duel.GetFieldGroup(tp,0,LOCATION_ONFIELD)
 	if #g>0 then

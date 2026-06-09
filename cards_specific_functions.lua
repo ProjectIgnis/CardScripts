@@ -292,14 +292,11 @@ function Witchcrafter.CreateCostReplaceEffect(c)
 			local c=e:GetHandler()
 			return c:IsSetCard(SET_WITCHCRAFTER) and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE)
 		end
-		local ctrl,loc,setcodes=Duel.GetChainInfo(0,CHAININFO_TRIGGERING_CONTROLER,CHAININFO_TRIGGERING_LOCATION,CHAININFO_TRIGGERING_SETCODES)
-		if ctrl==1-tp or loc~=LOCATION_MZONE then return false end
-		for _,setcode in ipairs(setcodes) do
-			if (SET_WITCHCRAFTER&0xfff)==(setcode&0xfff) and (SET_WITCHCRAFTER&setcode)==SET_WITCHCRAFTER then return true end
-		end
+		return Chain.IsTriggeringSetcode(0,SET_WITCHCRAFTER) and Chain.IsTriggeringPlayer(0,tp) and Chain.IsTriggeringLocation(0,LOCATION_MZONE)
 	end)
 	return e
 end
+
 
 --Special Summon limit for "Evil HERO" Fusion monsters
 function Auxiliary.EvilHeroLimit(e,se,sp,st)

@@ -52,14 +52,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_DRACOTAIL}
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	if rp==1-tp then return false end
-	local trig_p,setcodes=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_PLAYER,CHAININFO_TRIGGERING_SETCODES)
-	if trig_p==1-tp then return false end
-	for _,archetype in ipairs(setcodes) do
-		if ((SET_DRACOTAIL&0xfff)==(archetype&0xfff) and (archetype&SET_DRACOTAIL)==SET_DRACOTAIL) then
-			return true
-		end
-	end
+	return rp==tp and Chain.IsSetcode(ev,SET_DRACOTAIL)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) end

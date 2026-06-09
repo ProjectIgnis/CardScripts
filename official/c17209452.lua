@@ -58,14 +58,14 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b1=Duel.IsExistingMatchingCard(Card.IsAbleToDeck,tp,0,LOCATION_GRAVE,1,nil)
 	local b2=Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)>0
 	if chk==0 then return b1 or b2 end
-	local op=Duel.SelectEffect(tp,
+	local cd=e:GetChainData()
+	cd.choice=Duel.SelectEffect(tp,
 		{b1,aux.Stringid(id,2)},
 		{b2,aux.Stringid(id,3)})
-	e:SetLabel(op)
-	if op==1 then
+	if cd.choice==1 then
 		e:SetCategory(CATEGORY_TODECK)
 		Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,1-tp,LOCATION_GRAVE)
-	elseif op==2 then
+	elseif cd.choice==2 then
 		e:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
 		Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 	end
@@ -74,16 +74,16 @@ function s.thfilter(c)
 	return c:IsSetCard(SET_KEWL_TUNE) and c:IsSpellTrap() and c:IsAbleToHand()
 end
 function s.effop(e,tp,eg,ep,ev,re,r,rp)
-	local op=e:GetLabel()
-	if op==1 then
+	local cd=e:GetChainData()
+	if cd.choice==1 then
 		--● Place 1 card from your opponent's GY on the bottom of the Deck
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 		local g=Duel.SelectMatchingCard(tp,Card.IsAbleToDeck,tp,0,LOCATION_GRAVE,1,1,nil)
 		if #g>0 then
 			Duel.HintSelection(g)
 			Duel.SendtoDeck(g,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
-		end		
-	elseif op==2 then
+		end
+	elseif cd.choice==2 then
 		--● Look at your opponent's hand, then you can add 1 "Kewl Tune" Spell/Trap from your Deck to your hand
 		local g=Duel.GetFieldGroup(tp,0,LOCATION_HAND)
 		if #g==0 then return end

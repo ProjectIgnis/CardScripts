@@ -46,10 +46,8 @@ function s.is_normal_hole(c)
 	return c:IsNormalTrap() and c:IsSetCard({SET_TRAP_HOLE,SET_HOLE})
 end
 function s.distarget(e,c)
-	return c:IsNormalTrap() or c:IsExactType(TYPE_TRAP|TYPE_EQUIP)
+	return c:IsNormalTrap() or c:IsCompositeType(TYPE_TRAP|TYPE_EQUIP)
 end
 function s.chainfilter(e,ct)
-	local p=e:GetHandlerPlayer()
-	local te,tp=Duel.GetChainInfo(ct,CHAININFO_TRIGGERING_EFFECT,CHAININFO_TRIGGERING_PLAYER)
-	return p==tp and te:GetActiveType()==TYPE_TRAP
+	return Chain.IsTriggeringControler(ct,e:GetHandlerPlayer()) and Chain.IsTriggeringExactType(ct,TYPE_TRAP)
 end

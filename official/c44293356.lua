@@ -45,13 +45,8 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.inactop(e,tp,eg,ep,ev,re,r,rp)
-	if ep==1-tp then return end
-	local trig_typ,trig_setcodes=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_TYPE,CHAININFO_TRIGGERING_SETCODES)
-	if trig_typ&(TYPE_RITUAL|TYPE_MONSTER)~=(TYPE_RITUAL|TYPE_MONSTER) then return end
-	for _,setcode in ipairs(trig_setcodes) do
-		if (SET_MEGALITH&0xfff)==(setcode&0xfff) and (SET_MEGALITH&setcode)==SET_MEGALITH then
-			return Duel.SetChainLimit(function(e,rp,tp) return rp==tp end)
-		end
+	if ep==tp and Chain.IsSetcode(ev,SET_MEGALITH) and Chain.IsCompositeType(ev,TYPE_RITUAL|TYPE_MONSTER) then
+		Duel.SetChainLimit(function(e,rp,tp) return rp==tp end)
 	end
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)

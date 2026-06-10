@@ -3026,8 +3026,6 @@ do
 			error("Parameter 2 must be a DeclareFilter or nil")
 		end
 
-		Duel.Hint(HINT_SELECTMSG,player,HINTMSG_CODE)
-
 		local ch=Chain.GetCurrentLink()
 		if ch==0 then return old_announce_card(player,filter) end
 

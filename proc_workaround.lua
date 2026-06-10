@@ -660,3 +660,11 @@ do
 		return c1:IsOnField() and c2:IsOnField() and c1:IsSequence(seq2) and c2:IsSequence(seq1)
 	end
 end
+
+do
+	local oldfunc=Duel.ConfirmDecktop
+	function Duel.ConfirmDecktop(player,amount,...)
+		oldfunc(player,amount,...)
+		return Duel.GetDecktopGroup(player,amount)
+	end
+end

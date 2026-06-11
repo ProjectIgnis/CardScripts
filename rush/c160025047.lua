@@ -17,15 +17,24 @@ function s.initial_effect(c)
 	e2:SetTarget(aux.TargetBoolFunction(s.extrafil_repl_filter))
 	e2:SetOperation(s.operation)
 	e2:SetLabelObject({s.extrafil_replacement,s.extramat})
-	e2:SetValue(function(_,c) return c and c:IsRace(RACE_GALAXY) and c:IsAttribute(ATTRIBUTE_LIGHT|ATTRIBUTE_DARK) end)
+	e2:SetValue(1)
 	c:RegisterEffect(e2)
 end
 s.listed_names={CARD_FUSION,160015051}
 function s.extrafil_repl_filter(c)
 	return c:IsMonster() and c:IsAbleToGrave() and c:IsAttribute(ATTRIBUTE_LIGHT|ATTRIBUTE_DARK) and c:IsRace(RACE_GALAXY)
 end
+function s.fcheck(tp,sg,fc)
+	if fc and sg:IsExists(Card.IsLocation,1,nil,LOCATION_HAND) then
+		return fc:IsRace(RACE_GALAXY) and fc:IsAttribute(ATTRIBUTE_LIGHT|ATTRIBUTE_DARK)
+	end
+	return true
+end
 function s.extrafil_replacement(e,tp,mg)
-	return Duel.GetMatchingGroup(aux.NecroValleyFilter(s.extrafil_repl_filter),tp,LOCATION_GRAVE,0,nil)
+	if not e:GetHandler():IsCode(CARD_FUSION) then
+		return Group.CreateGroup()
+	end
+	return Duel.GetMatchingGroup(aux.NecroValleyFilter(s.extrafil_repl_filter),tp,LOCATION_HAND,0,nil),s.fcheck
 end
 function s.extramat(c,e,tp)
 	return c:IsControler(tp) and e:GetHandler():IsCode(CARD_FUSION)

@@ -19,7 +19,7 @@ function Link.AddProcedure(c,f,min,max,specialchk,desc,spcon)
 	e1:SetRange(LOCATION_EXTRA)
 	if max==nil then max=c:GetLink() end
 	e1:SetCondition(Link.Condition(f,min,max,specialchk,spcon))
-	e1:SetTarget(Link.Target(f,min,max,specialchk))
+	e1:SetTarget(Link.Target(f,min,max,specialchk,spcon))
 	e1:SetOperation(Link.Operation(f,min,max,specialchk))
 	e1:SetValue(SUMMON_TYPE_LINK)
 	c:RegisterEffect(e1)
@@ -140,8 +140,11 @@ function Link.Condition(f,minc,maxc,specialchk,spcon)
 				return res
 			end
 end
-function Link.Target(f,minc,maxc,specialchk)
+function Link.Target(f,minc,maxc,specialchk,spcon)
 	return	function(e,tp,eg,ep,ev,re,r,rp,chk,c,must,g,min,max)
+				if spcon and not spcon(e,e,tp,SUMMON_TYPE_LINK) then
+					return false
+				end
 				if not g then
 					g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
 				end

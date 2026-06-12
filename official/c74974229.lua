@@ -4,8 +4,9 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
+	--Link Summon procedure: 2 Reptile monsters
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_REPTILE),2,2)
-	--Place A-Counters equal to the original Level of a discarded monster on face-up monster(s) on the field
+	--(Quick Effect): You can discard 1 monster; place A-Counters equal to its original Level on face-up monster(s) on the field, distributed as you wish
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_COUNTER)
@@ -18,7 +19,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	--Special Summon non-Link Reptile monsters with different names from your GY, up to the number of monsters your opponent controls with A-Counters
+	--If this card is destroyed by battle or card effect and sent to the GY: You can Special Summon non-Link Reptile monsters with different names from your GY, up to the number of monsters your opponent controls with A-Counters
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -39,8 +40,8 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
 	local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_HAND,0,1,1,nil)
-	e:SetLabel(g:GetFirst():GetOriginalLevel())
 	Duel.SendtoGrave(g,REASON_COST|REASON_DISCARD)
+	e:GetChainData().discarded_level=g:GetFirst():GetOriginalLevel()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
@@ -48,10 +49,11 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	if #g==0 then return end
+	local cd=e:GetChainData()
 	if #g==1 then
-		g:GetFirst():AddCounter(COUNTER_A,1)
+		g:GetFirst():AddCounter(COUNTER_A,cd.discarded_level)
 	else
-		for i=1,e:GetLabel() do
+		for i=1,cd.discarded_level do
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_COUNTER)
 			local tc=g:Select(tp,1,1,nil):GetFirst()
 			tc:AddCounter(COUNTER_A,1)
@@ -76,11 +78,14 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	if ft==0 then return end
 	local ct=Duel.GetMatchingGroupCount(s.acfilter,tp,0,LOCATION_MZONE,nil)
+	if ct==0 then return end
 	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.spfilter),tp,LOCATION_GRAVE,0,nil,e,tp)
-	if ft<1 or ct<1 or #g==0 then return end
-	ct=math.min(ft,ct)
-	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ct=1 end
+	if #g==0 then return end
+	ct=Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) and 1 or math.min(ft,ct)
 	local sg=aux.SelectUnselectGroup(g,e,tp,1,ct,aux.dncheck,1,tp,HINTMSG_SPSUMMON)
-	Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
+	if #sg>0 then
+		Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
+	end
 end

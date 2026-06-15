@@ -2576,7 +2576,12 @@ function Auxiliary.ToHandOrElse(card,player,check,oper,str,...)
 		end
 		if opt==0 then
 			local res=Duel.SendtoHand(card,nil,REASON_EFFECT)
-			if res~=0 then Duel.ConfirmCards(1-player,card) end
+			if res>0 then
+				local og=Duel.GetOperatedGroup():Filter(Card.IsPreviousLocation,nil,LOCATION_DECK)
+				if #og>0 then
+					Duel.ConfirmCards(1-player,og)
+				end
+			end
 			return res
 		else
 			return oper(card,...)

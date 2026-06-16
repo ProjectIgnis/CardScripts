@@ -11,9 +11,8 @@ function s.initial_effect(c)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local rc=re:GetHandler()
 	if c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsReason(REASON_EFFECT)
-		and re:IsSpellEffect() and rc:IsContinuousSpell() then
+		and re and re:IsSpellEffect() and re:GetHandler():IsContinuousSpell() then
 		local e1=Effect.CreateEffect(c)
 		e1:SetDescription(aux.Stringid(id,0))
 		e1:SetCategory(CATEGORY_SPECIAL_SUMMON)

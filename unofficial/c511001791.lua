@@ -37,7 +37,9 @@ function s.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_IGNITION)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetCountLimit(1)
-	e4:SetCondition(function(e) return Duel.IsAbleToEnterBP() and s[1-e:GetHandlerPlayer()]>0 end)
+	e4:SetCondition(function(e,tp)
+		return Duel.IsAbleToEnterBP() and s[1-tp]>0
+	end)
 	e4:SetCost(Cost.DetachFromSelf(1))
 	e4:SetTarget(s.atktg)
 	e4:SetOperation(s.atkop)
@@ -58,7 +60,6 @@ function s.initial_effect(c)
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCode(EVENT_DESTROYED)
-		ge1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 		ge1:SetOperation(s.checkop)
 		Duel.RegisterEffect(ge1,0)
 		aux.AddValuesReset(function()
@@ -67,14 +68,17 @@ function s.initial_effect(c)
 		end)
 	end)
 end
-function s.chkfilter(c,tp,tid)
-	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousControler(tp) and c:GetTurnID()==tid
+function s.chkfilter(c,player)
+	return (c:IsPreviousLocation(LOCATION_MZONE) or (c:IsMonsterCard() and not c:IsPreviousLocation(LOCATION_SZONE))) and c:IsPreviousControler(player)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
-	local tid=Duel.GetTurnCount()
-	local g=eg:Filter(s.chkfilter,nil,1-tp,tid)
-	if #g>0 then
-		s[1-tp]=s[1-tp]+#g
+	local p0_count=eg:FilterCount(s.chkfilter,nil,0)
+	local p1_count=eg:FilterCount(s.chkfilter,nil,1)
+	if p0_count>0 then
+		s[0]=s[0]+p0_count
+	end
+	if p1_count>0 then
+		s[1]=s[1]+p1_count
 	end
 end
 function s.plfilter(c)

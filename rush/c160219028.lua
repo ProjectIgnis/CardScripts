@@ -82,7 +82,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local sg=dg:Select(tp,1,1,nil)
 		local sg2=sg:AddMaximumCheck()
 		Duel.HintSelection(sg2)
-		Duel.Destroy(sg,REASON_EFFECT)
-		Duel.Damage(1-tp,500,REASON_EFFECT)
+		if Duel.Destroy(sg,REASON_EFFECT)>0 then
+			Duel.Damage(1-tp,500,REASON_EFFECT)
+		end
 	end
 end

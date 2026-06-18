@@ -4,6 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--If your opponent controls 5 or more face-up cards, this card's activation and effect cannot be negated, also you can activate this card the turn it was Set
+	c:RegisterFlagEffect(id,0,0,1)
 	aux.GlobalCheck(s,function()
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD)
@@ -11,7 +12,7 @@ function s.initial_effect(c)
 		ge1:SetValue(function(e,ch)
 			local trig_eff=Chain.GetTriggeringEffect(ch)
 			local trig_player=Chain.GetTriggeringPlayer(ch)
-			return trig_eff:GetHandler()==c and Duel.GetMatchingGroupCount(Card.IsFaceup,trig_player,0,LOCATION_ONFIELD,nil)>=5
+			return trig_eff:GetHandler():HasFlagEffect(id) and Duel.GetMatchingGroupCount(Card.IsFaceup,trig_player,0,LOCATION_ONFIELD,nil)>=5
 		end)
 		Duel.RegisterEffect(ge1,0)
 		local ge2=ge1:Clone()
@@ -79,6 +80,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			--Negate the effects of as many face-up cards your opponent controls as possible, and if you do, destroy them
 			nc:NegateEffects(c)
 		end
+		Duel.AdjustInstantly()
 		Duel.Destroy(g,REASON_EFFECT)
 	end
 	if not e:IsHasType(EFFECT_TYPE_ACTIVATE) then return end

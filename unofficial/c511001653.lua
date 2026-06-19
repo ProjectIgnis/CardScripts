@@ -11,7 +11,8 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-function s.cfilter(c,tp)
+s.listed_series={SET_RED_DRAGON_ARCHFIEND}
+function s.costfilter(c,tp)
 	return c:IsSetCard(SET_RED_DRAGON_ARCHFIEND) and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 		and Duel.IsExistingMatchingCard(Card.IsFaceup,tp,LOCATION_MZONE,0,1,c)
 end
@@ -23,10 +24,10 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		if e:GetLabel()~=1 then return false end
 		e:SetLabel(0)
-		return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,nil,tp)
+		return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,nil,tp)
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_GRAVE,0,1,1,nil,tp)
+	local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,1,nil,tp)
 	local code=g:GetFirst():GetOriginalCode()
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 	Duel.SetTargetParam(code)
@@ -37,7 +38,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,Card.IsFaceup,tp,LOCATION_MZONE,0,1,1,nil)
 	local tc=g:GetFirst()
 	if tc then
-		Duel.HintSelection(g)
-		tc:CopyEffect(code,RESET_EVENT+RESETS_STANDARD,1)
+		Duel.HintSelection(tc)
+		tc:CopyEffect(code,RESET_EVENT|RESETS_STANDARD,1)
 	end
 end

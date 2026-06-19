@@ -614,3 +614,4 @@ SET_ALEISTER                      = 0x1d8
 SET_WHITE_KNIGHT_NIGHT            = 0x1d9
 SET_DAEDALUS                      = 0x1da
 SET_ASUTRA                        = 0x1db
+SET_ANGELECHY                     = 0x1dc

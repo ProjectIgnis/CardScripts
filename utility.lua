@@ -2805,12 +2805,17 @@ end
 		int|nil hint: a string to show on the affected cards
 		int|nil effect_desc: a string to be used as the description of the delayed effect (useful when the same effect registers multiple different delayed effects)
 --]]
+local delayed_operation_id=0
 function Auxiliary.DelayedOperation(card_or_group,phase,flag,e,tp,oper,cond,reset,reset_count,hint,effect_desc)
 	local g=(type(card_or_group)=="Group" and card_or_group or Group.FromCards(card_or_group))
 	if #g==0 then return end
+
 	reset=reset or (RESET_PHASE|phase)
 	reset_count=reset_count or 1
-	local fid=e:GetFieldID()
+
+	delayed_operation_id=delayed_operation_id+1
+	local fid=delayed_operation_id
+
 	local function agfilter(c,lbl) return c:GetFlagEffectLabel(flag)==lbl end
 	local function get_affected_group(e) return e:GetLabelObject():Filter(agfilter,nil,e:GetLabel()) end
 
@@ -2840,7 +2845,6 @@ function Auxiliary.DelayedOperation(card_or_group,phase,flag,e,tp,oper,cond,rese
 	for tc in g:Iter() do
 		tc:RegisterFlagEffect(flag,RESET_EVENT+RESETS_STANDARD,flagprop,1,fid,hint):SetCondition(flagcond)
 	end
-	g:KeepAlive()
 
 	return e1
 end

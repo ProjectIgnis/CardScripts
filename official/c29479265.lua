@@ -6,7 +6,7 @@ function s.initial_effect(c)
 	--link summon
 	Link.AddProcedure(c,nil,2,4,s.lcheck)
 	c:EnableReviveLimit()
-	--destroy
+	--If a card(s) on the field is destroyed by card effect, except by "Unchained Abomination" (except during the Damage Step): You can target 1 card on the field; destroy it
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY)
@@ -19,16 +19,16 @@ function s.initial_effect(c)
 	e1:SetTarget(s.destg)
 	e1:SetOperation(s.desop)
 	c:RegisterEffect(e1)
-	--destroy!
+	--When another monster is destroyed by battle: You can target 1 card on the field; destroy it
 	local e2=e1:Clone()
-	e2:SetDescription(aux.Stringid(id,0))
+	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetCondition(s.descon2)
 	c:RegisterEffect(e2)
-	--destroy!!
+	--During the End Phase: You can target 1 card on the field; destroy it
 	local e3=e1:Clone()
-	e3:SetDescription(aux.Stringid(id,0))
+	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetCode(EVENT_PHASE+PHASE_END)
 	e3:SetCondition(aux.TRUE)

@@ -3,8 +3,9 @@
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Add 1 "Endymion" card from your Deck to your hand, then you can count the number of "Spell Power Mastery" and "Spell Power Grasp" you control and/or have in your GY, and place that many Spell Counters among card(s) you control that you can place a Spell Counter on
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -33,6 +34,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		if ct>0 and #cg>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 			Duel.BreakEffect()
 			while ct>0 and #cg>0 do
+				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_COUNTER)
 				cg:Select(tp,1,1,nil):GetFirst():AddCounter(COUNTER_SPELL,1)
 				ct=ct-1
 				cg=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsCanAddCounter,COUNTER_SPELL,1),tp,LOCATION_ONFIELD,0,nil)

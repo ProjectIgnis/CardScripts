@@ -36,8 +36,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local dg=Duel.SelectMatchingCard(tp,Card.IsNotMaximumModeSide,tp,0,LOCATION_ONFIELD,1,1,nil)
 	local dg2=dg:AddMaximumCheck()
 	Duel.HintSelection(dg2)
-	Duel.Destroy(dg,REASON_EFFECT)
-	if Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,1,nil,76103675) and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,1,nil,160301014) then
+	if Duel.Destroy(dg,REASON_EFFECT)>0 and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,1,nil,76103675) and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,1,nil,160301014) then
 		Duel.BreakEffect()
 		Duel.Damage(1-tp,700,REASON_EFFECT)
 	end

@@ -1607,6 +1607,46 @@ function Cost.DetachFromSelf(min,max,op)
 	return cost_func
 end
 
+function Cost.DetachChoiceFromSelf(choices,op)
+	local choices_type=type(choices)
+
+	do --Perform some sanity checks, simplifies debugging
+		if choices_type~="table" and choices_type~="function" then
+			error("Parameter 1 should be table|function",2)
+		end
+		local op_type=type(op)
+		if op_type~="nil" and op_type~="function" then
+			error("Parameter 2 should be nil|function",2)
+		end
+	end
+
+	local function cost_func(e,tp,eg,ep,ev,re,r,rp,chk)
+		local c=e:GetHandler()
+		local final_choices={}
+		for _,ct in ipairs(choices_type=="function" and choices(e,tp) or choices) do
+			if c:CheckRemoveOverlayCard(tp,ct,REASON_COST) then
+				table.insert(final_choices,ct)
+			end
+		end
+		if chk==0 then return #final_choices>0 end
+		local amt=final_choices[1]
+		if #final_choices>1 then
+			--Duel.Hint(HINT_SELECTMSG,tp,) --needs global string
+			amt=Duel.AnnounceNumber(tp,final_choices)
+		end
+		if c:RemoveOverlayCard(tp,amt,amt,REASON_COST)>0 then
+			local cd=e:GetChainData()
+			cd.cost_detached_materials=Duel.GetOperatedGroup()
+			if op then
+				op(e,cd.cost_detached_materials)
+			end
+		end
+	end
+
+	cost_tables.detach[cost_func]=true
+	return cost_func
+end
+
 --check for cards that can stay on the field, but not always
 function Auxiliary.RemainFieldCost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

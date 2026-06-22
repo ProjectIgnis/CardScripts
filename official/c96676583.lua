@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetValue(LOCATION_REMOVED)
 	e1:SetTarget(s.linkfilter)
 	c:RegisterEffect(e1)
-	--Banish 1 "Maliss" card from your hand
+	--During your Main Phase: You can banish 1 "Maliss" card from your hand, then you can draw 2 cards
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_REMOVE+CATEGORY_DRAW)
@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.rmtg)
 	e2:SetOperation(s.rmop)
 	c:RegisterEffect(e2)
-	--Special Summon this card
+	--If this card is banished: You can pay 300 LP; Special Summon it, also you cannot Special Summon from the Extra Deck for the rest of this turn, except Link Monstes
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -49,7 +49,7 @@ function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_DRAW,nil,0,tp,2)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,s.rmfilter,tp,LOCATION_HAND,0,1,1,nil)
 	if #g>0 and Duel.Remove(g,POS_FACEUP,REASON_EFFECT)>0 and Duel.IsPlayerCanDraw(tp,2)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
@@ -68,7 +68,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(e) then
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end
-	--Cannot Special Summon monsters from the Extra Deck, except Link Monsters
+	--You cannot Special Summon from the Extra Deck for the rest of this turn, except Link Monstes
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,3))
 	e1:SetType(EFFECT_TYPE_FIELD)

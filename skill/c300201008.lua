@@ -21,7 +21,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
 	e1:SetCode(EFFECT_PUBLIC)
 	e1:SetRange(0x5f)
-	e1:SetCondition(function(e,tp) return Duel.HasFlagEffect(tp,id) and Duel.GetLP(tp)>=3000 end)
+	e1:SetCondition(function(e) return Duel.HasFlagEffect(e:GetHandlerPlayer(),id) and Duel.GetLP(e:GetHandlerPlayer())>=3000 end)
 	e1:SetTargetRange(0,LOCATION_SZONE)
 	Duel.RegisterEffect(e1,tp)
 	--If your LP fall below 3000, flip this card face-down.

@@ -456,9 +456,18 @@ function Maximum.battlecon(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()
     return c:IsReason(REASON_BATTLE) and eg:IsContains(c)
 end
+function Maximum.GetSidePieces(c,tc)
+	return c:HasFlagEffect(FLAG_MAXIMUM_SIDE_RELATION+tc:GetCardID())
+end
 function Maximum.battleop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(Card.IsMaximumMode,e:GetHandler():GetPreviousControler(),LOCATION_MZONE,0,nil)
-	Duel.Sendto(g,e:GetHandler():GetDestination(),0)
+	local g=Duel.GetMatchingGroup(Maximum.GetSidePieces,e:GetHandler():GetPreviousControler(),LOCATION_ALL,LOCATION_ALL,nil,e:GetHandler())
+	if e:GetHandler():GetDestination()==LOCATION_DECK then
+		--We assume that the monsters are placed on the bottom of the Deck. We need to find another way if the monsters should be shuffled into the Deck instead.
+		Duel.SendtoDeck(g,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
+		Duel.SortDeckbottom(e:GetHandler():GetOwner(),e:GetHandler():GetOwner(),3)
+	else
+		Duel.Sendto(g,e:GetHandler():GetDestination(),0)
+	end
 	for tc in aux.Next(g) do
 		tc:SetReason(eg:GetFirst():GetReason())
 	end

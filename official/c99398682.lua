@@ -3,7 +3,7 @@
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
-	--Add 1 Level 4 or lower Fiend monster from your GY to your hand
+	--Add 1 Level 4 or lower Fiend monster from your GY to your hand, or if you control "Red Dragon Archfiend" or a Synchro Monster that mentions it, you can add the monster from your Deck instead
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	--Allow your "/Assault Mode" monster or "Red Dragon Archfiend" to make a second attack in a row
+	--If your "/Assault Mode" monster or "Red Dragon Archfiend" attacks, at the end of the Damage Step: You can banish this card from your GY; that monster can make a second attack in a row
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -33,12 +33,12 @@ function s.rdafilter(c)
 	return (c:IsCode(CARD_RED_DRAGON_ARCHFIEND) or (c:IsSynchroMonster() and c:ListsCode(CARD_RED_DRAGON_ARCHFIEND))) and c:IsFaceup()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local locations=Duel.IsExistingMatchingCard(s.rdafilter,tp,LOCATION_MZONE,0,1,nil) and LOCATION_GRAVE|LOCATION_DECK or LOCATION_GRAVE 
+	local locations=Duel.IsExistingMatchingCard(s.rdafilter,tp,LOCATION_ONFIELD,0,1,nil) and LOCATION_GRAVE|LOCATION_DECK or LOCATION_GRAVE 
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,locations,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,locations)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local locations=Duel.IsExistingMatchingCard(s.rdafilter,tp,LOCATION_MZONE,0,1,nil) and LOCATION_GRAVE|LOCATION_DECK or LOCATION_GRAVE 
+	local locations=Duel.IsExistingMatchingCard(s.rdafilter,tp,LOCATION_ONFIELD,0,1,nil) and LOCATION_GRAVE|LOCATION_DECK or LOCATION_GRAVE 
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.thfilter),tp,locations,0,1,1,nil)
 	if #g>0 then

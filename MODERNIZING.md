@@ -23,9 +23,9 @@ When the card has not yet been imported to the TCG regions, an unofficial transl
 
 Activated effects should have their own descriptions, set through `Effect.SetDescription`. Previously, they were usually not set if a card has only one activated effect of a given type, the idea being that there is no need to differentiate between effects if there is only one. Nowadays however, it is not too uncommon for cards to gain additional effects mid-duel through copying and granting effects, or for other cards to apply other cards' effects. 
 
-Rather than trying to think of such or similar scenarios in each individual script, it it more practical to simply be consistent about it and have a description explicitly associated to each activated effect. It also has the added benefit of letting AI frameworks like Windbot properly check which effect is which through their descriptions.
+Rather than trying to think of such or similar scenarios in each individual script, it is more practical to simply be consistent about it and have a description for each activated effect. It also has the added benefit of letting AI frameworks like Windbot properly check which effect is which through their descriptions.
 
-The exceptions to this are the activations of Field Spells, Continuous Spells, Pendulum Spells, _i.e._, their `EFFECT_TYPE_ACTIVATE` effects that place them face-up on the field.
+The exceptions to this are the activations of Field Spells, Continuous Spells/Traps, Equip Spells, and Pendulum Spells, _i.e._, their `EFFECT_TYPE_ACTIVATE` effects that place them face-up on the field.
 
 Note that their database strings would also have to be updated to add the missing strings for the new descriptions, especially if some older strings need to be moved up to match the script (string `0` may become string `1` due to a newly-added description).
 
@@ -34,7 +34,7 @@ Note that their database strings would also have to be updated to add the missin
 Comments such as "sp.summon" and "draw" are not very useful to describe what an effect is supposed to do. Detailed versions of what the effect is supposed to do are preferred, using at most 1 line. The first word and gameplay terms that are capitalized in the rulebook should be capitalized. _e.g._:
 
 ```lua
---Special Summon 1 "tellarknight" monster from the Deck
+--If this card is placed in the Spell & Trap Zone as a Continuous Spell: You can add 1 "Angelechy" Trap from your Deck or GY to your hand
 ```
 
 ## Use the `SET_` constants instead of hardcoded values for archetypes
@@ -43,7 +43,7 @@ If a card script uses a setcode, replace its hexadecimal value by the correspond
 
 ## Add timing hints to quick effects
 
-Even though hints do not have a functional impact, they substantially improve the user experience when used properly in key effects. Effects that should specially be considered for this are quick effects that can be activated only in certain phases. _e.g._:
+Even though hints do not have a functional impact, they substantially improve user experience when used properly in key effects. Effects that should specially be considered for this are Quick Effects that can be activated only in certain phases. _e.g._:
 
 ```lua
 --for a Quick Effect that destroys monsters on either field, this would prompt the user when a monster is summoned or an attack is declared.
@@ -54,7 +54,7 @@ e1:SetHintTiming(0,TIMING_MAIN_END)
 
 ## Remove the Damage Step flag from SINGLE+TRIGGER effects
 
-For effects that have their type set as `EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_*` (* is either `O` or `F`), the correct Damage Step behavior is already automatically handled in the core, remove the `EFFECT_FLAG_DAMAGE_STEP` in the `SetProperty` call.
+For `EFFECT_TYPE_SINGLE` effects with `EFFECT_TYPE_TRIGGER_O` or `EFFECT_TYPE_TRIGGER_O`, the correct Damage Step behavior is already automatically handled in the core, so `EFFECT_FLAG_DAMAGE_STEP` should be removed from the `SetProperty` call.
 Exceptions to this can be made based on rulings. _e.g._: "Proof of Pruflas" and "Fusion Parasite" are single effects ruled not to be activatable in the Damage Step.
 
 ## Remove `if tc` check from targetting effects unless it's mandatory 
@@ -87,7 +87,7 @@ If an effect summons a monster but requires (either by effect or by cost) removi
 
 ## Use `Duel.SelectEffect` when choosing effects to apply/activate
 
-Try to use this helper function instead of writing boilerplate code to choose effects (read its documentation).
+Try to use this helper function instead of writing boilerplate code to choose effects.
 Confirm if the effect should be kept as separated effects due to ruling reasons (_e.g._: "Daigusto Emeral").
 
 Another example:
@@ -108,33 +108,21 @@ end
 e:SetLabel(op) --Potentially do something else with the choice down the line.
 ```
 
-## Use `aux.dxmcostgen` for simple detachment costs
-
-Try not to re-write boilerplate code for a card that detaches an Xyz Material(s) as cost, instead, use the aforementioned auxiliary function to generate the function for `Effect.SetCost`, if the situation permits it. Read the documentation of the function for more information.
-
-_e.g._:
-```lua
---"detach 1 Xyz material from this card;"
-e1:SetCost(aux.dxmcostgen(1,1,nil))
---"detach 2 Xyz materials from this card + Other cost;
-e1:SetCost(aux.AND(aux.dxmcostgen(1,1,nil),s.othercost))
-```
-
-## Use `aux.selfreleasecost` for cards that tribute only themselves as cost
+## Use `Cost` functions for common costs
 
 _e.g._:
 ```lua
 --"You can Tribute this card;"
-e1:SetCost(aux.selfreleasecost)
+e1:SetCost(Cost.SelfTribute)
 ```
 
 ## Use `Card.IsCanBeXyzMaterial` on effects that attach
 
-Do not simply call `Duel.Overlay` or `Card.Overlay`, first check if the card(s) can be attached with the aforementioned function.
+Do not simply call `Duel.Overlay` or `Card.Overlay`. First check if the card(s) can be attached with the aforementioned function.
 
 ## Use `aux.SelectUnselectGroup` for effects that target/select cards with different filters at the same time
 
-If an effect targets/selects cards that must meet different criteria at the same time, `SelectUnselectGroup` provides a clean way to do it, possibly shortening the script and/or avoiding multiple nested filters. _e.g._: "Swordsoul Blackout", "Marincess Aqua Argonaut" and "Ninjitsu Art Notebook of Mystery".
+If an effect targets/selects cards that must meet different criteria at the same time, `SelectUnselectGroup` lets players perform the selection seamlessly, rather than being prompted to select twice (or more). This can also help shorten the script and/or avoid multiple nested filters. _e.g._: "Swordsoul Blackout", "Marincess Aqua Argonaut" and "Ninjitsu Art Notebook of Mystery".
 
 ## Replace the id in effect codes if they are a magic value meant to be used to interact with other cards
 
@@ -153,9 +141,11 @@ if c:IsHasEffect(EFFECT_SYNSUB_NORDIC) then
 end
 ```
 
-## Use bitwise operations for values that are meant to be used as bitfields
+## Use bitwise operations for values that are meant to be used as bitsets
 
-Constants like location, timing, resets, etc. should be binary or'd (op `|`) instead of just summed (op `+`), because you shouldn't rely on sum carry to set the correct bit in a value.
+Constants like location, types, attributes, resets, etc. should be combined with bitwise OR (`|`) instead of addition (`+`). This avoids potential errors from mistakenly adding two values with shared bits. It also better communicates that the bits are what's relevant to the computation, rather than the resulting numerical value.
+
+In the same vein, bitwise AND with bitwise NOT (`&~`) should be used instead of subtraction (`-`), and bit-shifting to the left (`1<<n`) is preferred over raising 2 to a power (`2^n`).
 
 ## Remove the `IsRelateToEffect` check from cards that need to remain face-up to resolve their effects
 

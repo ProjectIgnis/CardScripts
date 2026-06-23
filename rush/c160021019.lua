@@ -44,9 +44,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,0,LOCATION_MZONE,1,1,nil)
 	if #g>0 then
 		Duel.HintSelection(g)
-		Duel.ChangePosition(g,POS_FACEDOWN_DEFENSE)
 		local g2=Duel.GetMatchingGroup(aux.NecroValleyFilter(s.setfilter),tp,LOCATION_GRAVE,0,nil)
-		if #g2>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+		if Duel.ChangePosition(g,POS_FACEDOWN_DEFENSE)>0 and #g2>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
 			local sg=g2:Select(tp,1,1,nil)
 			Duel.BreakEffect()

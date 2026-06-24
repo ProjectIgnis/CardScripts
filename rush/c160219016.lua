@@ -44,7 +44,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.HintSelection(td)
 	if Duel.SendtoDeck(td,nil,SEQ_DECKSHUFFLE,REASON_COST)<1 then return end
 	--Effect
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	local g=Duel.SelectMatchingCard(tp,s.namefilter2,tp,LOCATION_GRAVE,0,1,1,nil,c:GetCode())
 	if #g>0 then
 		Duel.HintSelection(g)

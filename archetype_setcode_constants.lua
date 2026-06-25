@@ -604,13 +604,13 @@ SET_END_OF_THE_WORLD              = 0x1d1
 SET_FAIRY_TAIL                    = 0x1d2
 SET_ELFNOTE                       = 0x1d0
 SET_GMX                           = 0x1d4
---Released but the official English name is unconfirmed
 SET_CLOWN_CREW                    = 0x1d3
-SET_DARK_TUNER                    = 0x1d5
---Pre-release archetypes
 SET_BLITZCLIQUE                   = 0x1d6
 SET_THEOREALIZE                   = 0x1d7
 SET_ALEISTER                      = 0x1d8
+--Released but the official English name is unconfirmed
+SET_DARK_TUNER                    = 0x1d5
+--Pre-release archetypes
 SET_WHITE_KNIGHT_NIGHT            = 0x1d9
 SET_DAEDALUS                      = 0x1da
 SET_ASUTRA                        = 0x1db

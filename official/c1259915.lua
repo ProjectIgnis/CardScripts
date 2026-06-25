@@ -1,5 +1,5 @@
 --三幻魔の霹靂
---Skyfire of the Sacred Beast
+--Sacred Beasts Thunderclap
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	e0:SetType(EFFECT_TYPE_ACTIVATE)
 	e0:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e0)
-	--During your Main Phase: You can place 2 "Skyfire of the Sacred Beast" from your hand, Deck, and/or GY face-up on your field, then you can reveal 1 Level 10 "Sacred Beast" monster in your hand, then place 1 "Fallen Paradise of the Sacred Beasts" from your Deck face-up in your Field Zone
+	--During your Main Phase: You can place 2 "Sacred Beasts Thunderclap" from your hand, Deck, and/or GY face-up on your field, then you can reveal 1 Level 10 "Sacred Beast" monster in your hand, then place 1 "Fallen Paradise of the Sacred Beasts" from your Deck face-up in your Field Zone
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={id,101305048} --"Fallen Paradise of the Sacred Beasts"
+s.listed_names={id,65861210} --"Fallen Paradise of the Sacred Beasts"
 s.listed_series={SET_SACRED_BEAST}
 function s.selfplfilter(c,tp)
 	return c:IsCode(id) and not c:IsForbidden() and c:CheckUniqueOnField(tp)
@@ -43,7 +43,7 @@ function s.revealfilter(c)
 	return c:IsLevel(10) and c:IsSetCard(SET_SACRED_BEAST) and not c:IsPublic()
 end
 function s.fieldplfilter(c,tp)
-	return c:IsCode(101305048) and not c:IsForbidden() and c:CheckUniqueOnField(tp)
+	return c:IsCode(65861210) and not c:IsForbidden() and c:CheckUniqueOnField(tp)
 end
 function s.plop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<2 then return end

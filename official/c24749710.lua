@@ -34,17 +34,17 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={CARD_RITUAL_OF_LIGHT_AND_DARKNESS}
+s.listed_names={CARD_LIGHT_AND_DARKNESS_RITUAL}
 function s.opccost1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not Duel.HasFlagEffect(tp,id) end
-	Duel.RegisterFlagEffect(tp,id+100,RESET_CHAIN,0,1)
+	Duel.RegisterFlagEffect(tp,id+1,RESET_CHAIN,0,1)
 end
 function s.opccost2(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return not Duel.HasFlagEffect(tp,id+100) end
+	if chk==0 then return not Duel.HasFlagEffect(tp,id+1) end
 	Duel.RegisterFlagEffect(tp,id,RESET_CHAIN,0,1)
 end
 function s.thfilter(c)
-	return c:IsMonster() and c:ListsCode(CARD_RITUAL_OF_LIGHT_AND_DARKNESS) and c:IsAbleToHand()
+	return c:IsMonster() and c:ListsCode(CARD_LIGHT_AND_DARKNESS_RITUAL) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -65,7 +65,7 @@ function s.spcostfilter(c,e,tp)
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp,c:GetCode())
 end
 function s.spfilter(c,e,tp,code)
-	return c:IsMonster() and c:ListsCode(CARD_RITUAL_OF_LIGHT_AND_DARKNESS) and not c:IsCode(code)
+	return c:IsMonster() and c:ListsCode(CARD_LIGHT_AND_DARKNESS_RITUAL) and not c:IsCode(code)
 		and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)

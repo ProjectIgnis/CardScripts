@@ -18,9 +18,9 @@ function s.initial_effect(c)
 	--For the Ritual Summon of exactly 1 Level 8 Ritual Monster with a card effect that requires use of monsters, this card can be used as the entire Tribute
 	Ritual.AddWholeLevelTribute(c,aux.FilterBoolFunction(Card.IsLevel,8))
 end
-s.listed_names={CARD_RITUAL_OF_LIGHT_AND_DARKNESS}
+s.listed_names={CARD_LIGHT_AND_DARKNESS_RITUAL}
 function s.setfilter(c)
-	return (c:IsQuickPlaySpell() or c:IsTrap()) and c:ListsCode(CARD_RITUAL_OF_LIGHT_AND_DARKNESS) and c:IsSSetable()
+	return (c:IsQuickPlaySpell() or c:IsTrap()) and c:ListsCode(CARD_LIGHT_AND_DARKNESS_RITUAL) and c:IsSSetable()
 end
 function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b1=true

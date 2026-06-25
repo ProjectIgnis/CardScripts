@@ -19,13 +19,12 @@ function s.initial_effect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCode(EVENT_SPSUMMON_SUCCESS)
 		ge1:SetOperation(function(e,tp,eg,ep,ev,re,r,rp)
-							for p=0,1 do
-								if eg:IsExists(Card.IsSummonPlayer,1,nil,p) then
-									Duel.RegisterFlagEffect(p,id,RESET_PHASE|PHASE_END,0,1)
-								end
-							end
-						end
-					)
+			for p=0,1 do
+				if eg:IsExists(Card.IsSummonPlayer,1,nil,p) then
+					Duel.RegisterFlagEffect(p,id,RESET_PHASE|PHASE_END,0,1)
+				end
+			end
+		end)
 		Duel.RegisterEffect(ge1,0)
 	end)
 end

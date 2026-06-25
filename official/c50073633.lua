@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={CARD_RITUAL_OF_LIGHT_AND_DARKNESS}
+s.listed_names={CARD_LIGHT_AND_DARKNESS_RITUAL}
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not Duel.IsExistingMatchingCard(Card.IsPublic,tp,LOCATION_HAND,0,1,nil) end
 	Duel.SetPossibleOperationInfo(0,CATEGORY_DRAW,nil,0,tp,3)
@@ -50,7 +50,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(tp,LOCATION_HAND,0)
 	Duel.ConfirmCards(1-tp,g)
 	Duel.ShuffleHand(tp)
-	if g:IsExists(Card.ListsCode,1,nil,CARD_RITUAL_OF_LIGHT_AND_DARKNESS) and Duel.IsPlayerCanDraw(tp,3)
+	if g:IsExists(Card.ListsCode,1,nil,CARD_LIGHT_AND_DARKNESS_RITUAL) and Duel.IsPlayerCanDraw(tp,3)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,3)) and Duel.Draw(tp,3,REASON_EFFECT)==3 then
 		Duel.ShuffleHand(tp)
 		Duel.BreakEffect()
@@ -78,7 +78,7 @@ function s.sprestrictionop(e,tp,eg,ep,ev,re,r,rp)
 	aux.addTempLizardCheck(c,tp)
 end
 function s.spfilter(c,e,tp)
-	return c:IsRitualMonster() and c:ListsCode(CARD_RITUAL_OF_LIGHT_AND_DARKNESS) and c:IsCanBeSpecialSummoned(e,0,tp,false,true)
+	return c:IsRitualMonster() and c:ListsCode(CARD_LIGHT_AND_DARKNESS_RITUAL) and c:IsCanBeSpecialSummoned(e,0,tp,false,true)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetMZoneCount(tp,e:GetHandler())>0

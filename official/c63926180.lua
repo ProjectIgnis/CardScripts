@@ -13,16 +13,16 @@ function s.initial_effect(c)
 	e1:SetOperation(s.effop)
 	c:RegisterEffect(e1)
 end
-s.listed_names={101305016} --"Aiwass the Spirit of the Law"
+s.listed_names={84288367} --"Aiwass, Divine Spirit of the Law"
 s.listed_series={SET_ALEISTER}
 function s.spfilter(c,e,tp)
-	return c:IsCode(101305016) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsCode(84288367) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.tgbanfilter(c)
 	return c:IsSetCard(SET_ALEISTER) and c:IsMonster() and (c:IsAbleToGrave() or c:IsAbleToRemove())
 end
 function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
-	--● Special Summon 1 "Aiwass the Spirit of the Law" from your Deck or GY
+	--● Special Summon 1 "Aiwass, Divine Spirit of the Law" from your Deck or GY
 	local b1=Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK|LOCATION_GRAVE,0,1,nil,e,tp)
 	--● Send to the GY, or banish, 1 "Aleister" monster from your Deck
@@ -50,7 +50,7 @@ end
 function s.effop(e,tp,eg,ep,ev,re,r,rp)
 	local op=e:GetLabel()
 	if op==1 then
-		--● Special Summon 1 "Aiwass the Spirit of the Law" from your Deck or GY
+		--● Special Summon 1 "Aiwass, Divine Spirit of the Law" from your Deck or GY
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 			local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter),tp,LOCATION_DECK|LOCATION_GRAVE,0,1,1,nil,e,tp)

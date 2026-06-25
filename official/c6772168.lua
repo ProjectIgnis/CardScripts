@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--Fusion Naterials: 1 "Aleister" monster + 1 DARK or WATER monster
+	--Fusion Materials: 1 "Aleister" monster + 1 DARK or WATER monster
 	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_ALEISTER),aux.FilterBoolFunctionEx(Card.IsAttribute,ATTRIBUTE_DARK|ATTRIBUTE_WATER))
 	--While this card is in the Main Monster Zone, your opponent's monsters cannot target monsters for attacks, except this one
 	local e1=Effect.CreateEffect(c)

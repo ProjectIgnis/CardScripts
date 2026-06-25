@@ -2,7 +2,7 @@
 --Elfnotes: Quatrain of Succession
 --scripted by pyrQ
 local s,id=GetID()
-local TOKEN_ELFNOTE_SERAPHIM=id+100
+local TOKEN_ELFNOTE_SERAPHIM=id+1
 function s.initial_effect(c)
 	--Activate
 	local e0=Effect.CreateEffect(c)

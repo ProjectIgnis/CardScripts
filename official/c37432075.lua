@@ -5,10 +5,10 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Fusion Summon 1 Fusion Monster from your Extra Deck, using monsters you control. If Summoning an "Invoked" Fusion Monster this way, you can also return banished monsters to the GY as material
 	local e1=Fusion.CreateSummonEff({
-					handler=c,
-					matfilter=Fusion.OnFieldMat,
-					extrafil=s.fextra,
-				})
+		handler=c,
+		matfilter=Fusion.OnFieldMat,
+		extrafil=s.fextra,
+	})
 	e1:SetCountLimit(1,{id,0})
 	e1:SetHintTiming(0,TIMING_STANDBY_PHASE|TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E)
 	c:RegisterEffect(e1)

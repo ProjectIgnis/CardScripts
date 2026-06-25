@@ -52,7 +52,7 @@ function s.initial_effect(c)
 	e4:SetOperation(s.banop)
 	c:RegisterEffect(e4)
 end
-s.listed_names={CARD_RITUAL_OF_LIGHT_AND_DARKNESS}
+s.listed_names={CARD_LIGHT_AND_DARKNESS_RITUAL}
 function s.immval(e,re)
 	if not (re:IsActivated() and e:GetOwnerPlayer()==1-re:GetOwnerPlayer()) then return false end
 	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return true end

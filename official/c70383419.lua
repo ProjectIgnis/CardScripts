@@ -32,9 +32,9 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_ALEISTER}
 s.material_setcode={SET_ALEISTER}
-s.listed_names={101305017,101305070} --"Virakam the Artificial Spirit", "Magical Name - "Rosa Mundi""
+s.listed_names={10673071,86319972} --"Virakam, the Divine Spirit of Artifice", "Gamma Summon"
 function s.thfilter(c)
-	return c:IsCode(101305017,101305070) and c:IsAbleToHand()
+	return c:IsCode(10673071,86319972) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

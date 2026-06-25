@@ -2,7 +2,7 @@
 --Kowloon, Citadel of the Sky
 --scripted by pyrQ
 local s,id=GetID()
-local TOKEN_MECHBEAST=id+100
+local TOKEN_MECH_BEAST=id+1
 function s.initial_effect(c)
 	--Activate
 	local e0=Effect.CreateEffect(c)
@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	local e1b=e1a:Clone()
 	e1b:SetCode(EFFECT_UPDATE_DEFENSE)
 	c:RegisterEffect(e1b)
-	--During your Main Phase: You can Special Summon 1 "Mechbeast Token" (Machine/EARTH/Level 6/ATK 2000/DEF 2000) to your opponent's field, and if you do, add 1 "Blitzclique" monster from your Deck to your hand
+	--During your Main Phase: You can Special Summon 1 "Mech Beast Token" (Machine/EARTH/Level 6/ATK 2000/DEF 2000) to your opponent's field, and if you do, add 1 "Blitzclique" monster from your Deck to your hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN+CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -45,14 +45,14 @@ function s.initial_effect(c)
 	e3:SetOperation(s.selfthop)
 	c:RegisterEffect(e3)
 end
-s.listed_names={TOKEN_MECHBEAST}
+s.listed_names={TOKEN_MECH_BEAST}
 s.listed_series={SET_BLITZCLIQUE}
 function s.thfilter(c)
 	return c:IsSetCard(SET_BLITZCLIQUE) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.tokentg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0 
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_MECHBEAST,0,TYPES_TOKEN,2000,2000,6,RACE_MACHINE,ATTRIBUTE_EARTH,POS_FACEUP,1-tp)
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_MECH_BEAST,0,TYPES_TOKEN,2000,2000,6,RACE_MACHINE,ATTRIBUTE_EARTH,POS_FACEUP,1-tp)
 		and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0)
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,tp,0)
@@ -61,8 +61,8 @@ end
 function s.tokenop(e,tp,eg,ep,ev,re,r,rp)
 	local opp=1-tp
 	if Duel.GetLocationCount(opp,LOCATION_MZONE)<=0
-		or not Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_MECHBEAST,0,TYPES_TOKEN,2000,2000,6,RACE_MACHINE,ATTRIBUTE_EARTH,POS_FACEUP,opp) then return end
-	local token=Duel.CreateToken(tp,TOKEN_MECHBEAST)
+		or not Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_MECH_BEAST,0,TYPES_TOKEN,2000,2000,6,RACE_MACHINE,ATTRIBUTE_EARTH,POS_FACEUP,opp) then return end
+	local token=Duel.CreateToken(tp,TOKEN_MECH_BEAST)
 	if Duel.SpecialSummon(token,0,tp,opp,false,false,POS_FACEUP)>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil)

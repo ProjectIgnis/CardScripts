@@ -22,13 +22,19 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--If this card is in your GY: You can Fusion Summon 1 "Invoked" Fusion Monster from your Extra Deck, by banishing its materials from your field and/or GY, including this card in the GY
 	local fusion_params={
-			fusfilter=function(c) return c:IsSetCard(SET_INVOKED) end,
-			matfilter=aux.FALSE,
-			extrafil=s.fextra,
-			extraop=Fusion.BanishMaterial,
-			gc=Fusion.ForcedHandler,
-			extratg=s.extratg
-		}
+		fusfilter=function(c) return c:IsSetCard(SET_INVOKED) end,
+		matfilter=aux.FALSE,
+		extrafil=function(e,tp,mg)
+			local locations=not Duel.IsPlayerAffectedByEffect(tp,CARD_SPIRIT_ELIMINATION) and (LOCATION_MZONE|LOCATION_GRAVE) or LOCATION_MZONE
+			return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsAbleToRemove),tp,locations,0,nil)
+		end,
+		extraop=Fusion.BanishMaterial,
+		gc=Fusion.ForcedHandler,
+		extratg=function(e,tp,eg,ep,ev,re,r,rp,chk)
+			if chk==0 then return true end
+			Duel.SetOperationInfo(0,CATEGORY_REMOVE,e:GetHandler(),1,tp,LOCATION_MZONE|LOCATION_GRAVE)
+		end
+	}
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_REMOVE+CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
@@ -59,12 +65,4 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		tc:NegateEffects(e:GetHandler())
 	end
 	Duel.SpecialSummonComplete()
-end
-function s.fextra(e,tp,mg)
-	local locations=not Duel.IsPlayerAffectedByEffect(tp,CARD_SPIRIT_ELIMINATION) and (LOCATION_MZONE|LOCATION_GRAVE) or LOCATION_MZONE
-	return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsAbleToRemove),tp,locations,0,nil)
-end
-function s.extratg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,e:GetHandler(),1,tp,LOCATION_MZONE|LOCATION_GRAVE)
 end

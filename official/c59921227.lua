@@ -46,7 +46,7 @@ function s.initial_effect(c)
 	e3:SetHintTiming(0,TIMING_STANDBY_PHASE|TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E)
 	c:RegisterEffect(e3)
 end
-s.listed_names={101305050} --"Kowloon, Citadel of the Sky"
+s.listed_names={CARD_HIDEOUT_IN_THE_SKY_COULOMB}
 s.listed_series={SET_BLITZCLIQUE}
 function s.thunderthcostfilter(c,tp)
 	return c:IsSetCard(SET_BLITZCLIQUE) and c:IsAbleToDeckAsCost() and (c:IsLocation(LOCATION_HAND) or c:IsFaceup())
@@ -81,7 +81,7 @@ function s.thunderthop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.blitzthfilter(c)
-	return ((c:IsSetCard(SET_BLITZCLIQUE) and c:IsSpell()) or c:IsCode(101305050)) and c:IsAbleToHand()
+	return ((c:IsSetCard(SET_BLITZCLIQUE) and c:IsSpell()) or c:IsCode(CARD_HIDEOUT_IN_THE_SKY_COULOMB)) and c:IsAbleToHand()
 end
 function s.blitzthtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.blitzthfilter,tp,LOCATION_DECK,0,1,nil) end

@@ -14,12 +14,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
-s.listed_names={CARD_RITUAL_OF_LIGHT_AND_DARKNESS,id}
+s.listed_names={CARD_LIGHT_AND_DARKNESS_RITUAL,id}
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp and (re:IsMonsterEffect() or (re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:GetHandler():IsNormalSpellTrap()))
 end
 function s.setfilter(c)
-	return c:ListsCode(CARD_RITUAL_OF_LIGHT_AND_DARKNESS) and c:IsCanTurnSet()
+	return c:ListsCode(CARD_LIGHT_AND_DARKNESS_RITUAL) and c:IsCanTurnSet()
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then

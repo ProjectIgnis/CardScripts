@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={101305050} --Kowloon, Citadel of the Sky
+s.listed_names={CARD_HIDEOUT_IN_THE_SKY_COULOMB}
 s.listed_series={SET_BLITZCLIQUE}
 function s.desfilter(c,tp)
 	return c:IsSpellTrap() and Duel.GetMZoneCount(tp,c)>0
@@ -67,7 +67,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.thfilter(c)
-	return ((c:IsSetCard(SET_BLITZCLIQUE) and c:IsSpell()) or c:IsCode(101305050)) and c:IsAbleToHand()
+	return ((c:IsSetCard(SET_BLITZCLIQUE) and c:IsSpell()) or c:IsCode(CARD_HIDEOUT_IN_THE_SKY_COULOMB)) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

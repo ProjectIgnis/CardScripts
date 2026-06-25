@@ -27,9 +27,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={CARD_RITUAL_OF_LIGHT_AND_DARKNESS}
+s.listed_names={CARD_LIGHT_AND_DARKNESS_RITUAL}
 function s.rescon(sg,e,tp,mg)
-	return sg:IsExists(Card.ListsCode,1,nil,CARD_RITUAL_OF_LIGHT_AND_DARKNESS)
+	return sg:IsExists(Card.ListsCode,1,nil,CARD_LIGHT_AND_DARKNESS_RITUAL)
 end
 function s.tdsptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

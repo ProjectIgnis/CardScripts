@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={CARD_RITUAL_OF_LIGHT_AND_DARKNESS}
+s.listed_names={CARD_LIGHT_AND_DARKNESS_RITUAL}
 function s.thdesconfilter(c,tp)
 	return c:IsControler(tp) and c:IsOnField() and c:IsAbleToHand()
 end
@@ -45,7 +45,7 @@ function s.thconfilter(c,re,tp)
 	return c:IsRelateToEffect(re) and c:IsControler(tp)
 end
 function s.handspfilter(c,e,tp,code)
-	return c:IsMonster() and c:ListsCode(CARD_RITUAL_OF_LIGHT_AND_DARKNESS) and not c:IsCode(code)
+	return c:IsMonster() and c:ListsCode(CARD_LIGHT_AND_DARKNESS_RITUAL) and not c:IsCode(code)
 		and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function s.thdesop(e,tp,eg,ep,ev,re,r,rp)
@@ -81,7 +81,7 @@ function s.thdesop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.ritualspfilter(c,e,tp)
-	return c:IsRitualMonster() and c:ListsCode(CARD_RITUAL_OF_LIGHT_AND_DARKNESS) and c:IsCanBeSpecialSummoned(e,0,tp,false,true)
+	return c:IsRitualMonster() and c:ListsCode(CARD_LIGHT_AND_DARKNESS_RITUAL) and c:IsCanBeSpecialSummoned(e,0,tp,false,true)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

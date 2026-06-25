@@ -45,7 +45,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.rmop)
 	c:RegisterEffect(e3)
 end
-s.listed_names={CARD_RITUAL_OF_LIGHT_AND_DARKNESS}
+s.listed_names={CARD_LIGHT_AND_DARKNESS_RITUAL}
 function s.spconfilter(c)
 	return c:IsRace(RACE_SPELLCASTER|RACE_WARRIOR) and c:IsRitualMonster() and c:IsAbleToDeckAsCost()
 end
@@ -76,7 +76,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	end
 end
 function s.plfilter(c,tp)
-	return c:IsContinuousTrap() and c:ListsCode(CARD_RITUAL_OF_LIGHT_AND_DARKNESS) and not c:IsForbidden() and c:CheckUniqueOnField(tp) 
+	return c:IsContinuousTrap() and c:ListsCode(CARD_LIGHT_AND_DARKNESS_RITUAL) and not c:IsForbidden() and c:CheckUniqueOnField(tp) 
 end
 function s.pltg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0

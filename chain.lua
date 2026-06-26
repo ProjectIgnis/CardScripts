@@ -215,7 +215,7 @@ local function setcode_check(setcodes_to_match,setcodes)
 	if type(setcodes)=="number" then setcodes={setcodes} end
 	for _,sa in ipairs(setcodes_to_match) do
 		for _,sb in ipairs(setcodes) do
-			if (sa&0xfff)==(sb&0xfff) and (sa&sb)==sa then return true end
+			if (sa&0xfff)==(sb&0xfff) and (sa&sb)==sb then return true end
 		end
 	end
 	return false

@@ -38,12 +38,12 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_CHANGE_RACE)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e3:SetTarget(function(e,c) return c:IsCode(CARD_FAIRY_PRINCE) end)
+	e3:SetTarget(function(e,c) return c:IsCode(CARD_PRINCE_OF_FAIRIES) end)
 	e3:SetValue(RACE_SPELLCASTER)
 	c:RegisterEffect(e3)
 end
 s.listed_series={SET_FAIRY_TAIL}
-s.listed_names={CARD_FAIRY_PRINCE}
+s.listed_names={CARD_PRINCE_OF_FAIRIES}
 s.material_setcode={SET_FAIRY_TAIL}
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(SET_FAIRY_TAIL) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and (c:IsLocation(LOCATION_DECK) or c:IsFaceup())
@@ -68,7 +68,7 @@ function s.discon(e,tp,eg,ep,ev,re,r,rp)
 	return not eg:IsContains(e:GetHandler()) and eg:IsExists(s.disconfilter,1,nil,tp)
 end
 function s.disfilter(c)
-	return c:IsType(TYPE_EFFECT) and c:IsFaceup() and (c:IsNegatableMonster() or not c:IsCode(CARD_FAIRY_PRINCE))
+	return c:IsType(TYPE_EFFECT) and c:IsFaceup() and (c:IsNegatableMonster() or not c:IsCode(CARD_PRINCE_OF_FAIRIES))
 end
 function s.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and s.disfilter(chkc) end
@@ -88,7 +88,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetCode(EFFECT_CHANGE_CODE)
-		e1:SetValue(CARD_FAIRY_PRINCE)
+		e1:SetValue(CARD_PRINCE_OF_FAIRIES)
 		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 	end

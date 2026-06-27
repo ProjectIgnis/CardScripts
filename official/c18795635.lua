@@ -1,4 +1,4 @@
---JP name
+--第５５次ＧＭＸ応用試験
 --GMX Applied Experiment #55
 --scripted by pyrQ
 local s,id=GetID()
@@ -31,7 +31,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #gmx_g==0 or #dino_g==0 then
 		Duel.ConfirmDecktop(tp,deck_count)
 		local excav_g=Duel.GetDecktopGroup(tp,deck_count)
-		Duel.RaiseEvent(excav_g,EVENT_CUSTOM+101304092,e,REASON_EFFECT,tp,tp,deck_count)
+		Duel.RaiseEvent(excav_g,EVENT_CUSTOM+1595137,e,REASON_EFFECT,tp,tp,deck_count)
 		Duel.SetLP(tp,Duel.GetLP(tp)-deck_count*400)
 	else
 		local gmx_c=gmx_g:GetMaxGroup(Card.GetSequence):GetFirst()
@@ -39,7 +39,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		local excav_count=deck_count-math.min(gmx_c:GetSequence(),dino_c:GetSequence())
 		Duel.ConfirmDecktop(tp,excav_count)
 		local excav_g=Duel.GetDecktopGroup(tp,excav_count)
-		Duel.RaiseEvent(excav_g,EVENT_CUSTOM+101304092,e,REASON_EFFECT,tp,tp,excav_count)
+		Duel.RaiseEvent(excav_g,EVENT_CUSTOM+1595137,e,REASON_EFFECT,tp,tp,excav_count)
 		Duel.SetLP(tp,Duel.GetLP(tp)-excav_count*400)
 		local excav_monsters=Duel.GetDecktopGroup(tp,excav_count):Match(Card.IsMonster,nil)
 		local fusion_params={

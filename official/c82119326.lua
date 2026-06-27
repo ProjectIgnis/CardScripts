@@ -12,10 +12,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--Fusion Summon 1 Spellcaster Fusion Monster from your Extra Deck, using monsters from your hand or field, when you do, you can also use any "Fairy Prince" your opponent controls
 	local fusion_params={
-			handler=c,
-			fusfilter=aux.FilterBoolFunction(Card.IsRace,RACE_SPELLCASTER),
-			extrafil=function(e,tp,mg) return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(aux.FaceupFilter(Card.IsCode,CARD_FAIRY_PRINCE)),tp,0,LOCATION_ONFIELD,nil) end
-		}
+		handler=c,
+		fusfilter=aux.FilterBoolFunction(Card.IsRace,RACE_SPELLCASTER),
+		extrafil=function(e,tp,mg) return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(aux.FaceupFilter(Card.IsCode,CARD_PRINCE_OF_FAIRIES)),tp,0,LOCATION_ONFIELD,nil) end
+	}
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
@@ -37,7 +37,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={SET_FAIRY_TAIL}
-s.listed_names={CARD_FAIRY_PRINCE}
+s.listed_names={CARD_PRINCE_OF_FAIRIES}
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
 		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_FAIRY_TAIL),tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end

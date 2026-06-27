@@ -1,4 +1,4 @@
---JP name
+--祭司 レヴァリー
 --Officiating Reverie
 --scripted by pyrQ
 local s,id=GetID()

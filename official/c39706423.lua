@@ -1,4 +1,4 @@
---JP name
+--ＧＭＸ鎮圧部隊アプト
 --GMX Suppression Squad
 --scripted by pyrQ
 local s,id=GetID()
@@ -63,14 +63,14 @@ function s.excavop(e,tp,eg,ep,ev,re,r,rp)
 		if #g==0 then
 			Duel.ConfirmDecktop(tp,deck_count)
 			local excav_g=Duel.GetDecktopGroup(tp,deck_count)
-			Duel.RaiseEvent(excav_g,EVENT_CUSTOM+101304092,e,REASON_EFFECT,tp,tp,deck_count)
+			Duel.RaiseEvent(excav_g,EVENT_CUSTOM+1595137,e,REASON_EFFECT,tp,tp,deck_count)
 		else
 			local sc=g:GetMaxGroup(Card.GetSequence):GetFirst()
 			local sc_seq=sc:GetSequence()
 			local excav_count=deck_count-sc_seq
 			Duel.ConfirmDecktop(tp,excav_count)
 			local excav_g=Duel.GetDecktopGroup(tp,excav_count)
-			Duel.RaiseEvent(excav_g,EVENT_CUSTOM+101304092,e,REASON_EFFECT,tp,tp,excav_count)
+			Duel.RaiseEvent(excav_g,EVENT_CUSTOM+1595137,e,REASON_EFFECT,tp,tp,excav_count)
 			local tc=Duel.GetFirstTarget()
 			if Duel.SendtoGrave(sc,REASON_EFFECT|REASON_EXCAVATE) and sc:IsLocation(LOCATION_GRAVE) and tc:IsRelateToEffect(e)
 				and tc:IsFaceup() and not tc:IsRace(RACE_DINOSAUR) then

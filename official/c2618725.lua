@@ -1,4 +1,4 @@
---JP name
+--ＧＭＸ同絆者セランディア
 --GMX Partner Selandea
 --scripted by pyrQ
 local s,id=GetID()

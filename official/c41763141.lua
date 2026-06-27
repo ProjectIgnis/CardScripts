@@ -1,4 +1,4 @@
---JP name
+--蜃欺龍
 --Fata Dragna
 --Scripted by The Razgriz
 local s,id=GetID()

@@ -1,4 +1,4 @@
---JP name
+--死宰 サムエル
 --Officiator of Doom Samuel
 --scripted by pyrQ
 local s,id=GetID()

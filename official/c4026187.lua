@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	local e2b=Effect.CreateEffect(c)
 	e2b:SetType(EFFECT_TYPE_SINGLE)
 	e2b:SetCode(EFFECT_MATERIAL_CHECK)
-	e2b:SetValue(function(e,c) e2a:SetLabel(c:GetMaterial():IsExists(Card.IsCode,1,nil,CARD_FAIRY_PRINCE) and 1 or 0) end)
+	e2b:SetValue(function(e,c) e2a:SetLabel(c:GetMaterial():IsExists(Card.IsCode,1,nil,CARD_PRINCE_OF_FAIRIES) and 1 or 0) end)
 	c:RegisterEffect(e2b)
 	--Negate the activation of an opponent's card or effect, and if you do, destroy that card
 	local e3=Effect.CreateEffect(c)
@@ -48,7 +48,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={SET_FAIRY_TAIL}
-s.listed_names={CARD_FAIRY_PRINCE}
+s.listed_names={CARD_PRINCE_OF_FAIRIES}
 s.material_setcode={SET_FAIRY_TAIL}
 function s.matfilter(c,fc,sumtype,tp)
 	return c:IsAttribute(ATTRIBUTE_LIGHT,fc,sumtype,tp) and c:IsSetCard(SET_FAIRY_TAIL,fc,sumtype,tp)

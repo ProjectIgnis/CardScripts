@@ -1,15 +1,15 @@
---JP name
+--第５５次ＧＭＸ試験報告
 --GMX 55th Experiment Report
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
 	--Fusion Summon 1 Dinosaur Fusion Monster from your Extra Deck using monsters from your hand or field. If your opponent controls a monster, you can also use 1 "GMX" monster in your Deck as material
 	local e1=Fusion.CreateSummonEff({
-			handler=c,
-			fusfilter=function(c) return c:IsRace(RACE_DINOSAUR) end,
-			extrafil=s.fextra,
-			extratg=s.extratg
-		})
+		handler=c,
+		fusfilter=function(c) return c:IsRace(RACE_DINOSAUR) end,
+		extrafil=s.fextra,
+		extratg=s.extratg
+	})
 	e1:SetCountLimit(1,id)
 	e1:SetHintTiming(0,TIMING_STANDBY_PHASE|TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E)
 	c:RegisterEffect(e1)
@@ -59,14 +59,14 @@ function s.excavop(e,tp,eg,ep,ev,re,r,rp)
 		if #g==0 then
 			Duel.ConfirmDecktop(tp,deck_count)
 			local excav_g=Duel.GetDecktopGroup(tp,deck_count)
-			Duel.RaiseEvent(excav_g,EVENT_CUSTOM+101304092,e,REASON_EFFECT,tp,tp,deck_count)
+			Duel.RaiseEvent(excav_g,EVENT_CUSTOM+1595137,e,REASON_EFFECT,tp,tp,deck_count)
 		else
 			local sc=g:GetMaxGroup(Card.GetSequence):GetFirst()
 			local sc_seq=sc:GetSequence()
 			local excav_count=deck_count-sc_seq
 			Duel.ConfirmDecktop(tp,excav_count)
 			local excav_g=Duel.GetDecktopGroup(tp,excav_count)
-			Duel.RaiseEvent(excav_g,EVENT_CUSTOM+101304092,e,REASON_EFFECT,tp,tp,excav_count)
+			Duel.RaiseEvent(excav_g,EVENT_CUSTOM+1595137,e,REASON_EFFECT,tp,tp,excav_count)
 			if Duel.SendtoHand(sc,nil,REASON_EFFECT) then
 				Duel.ConfirmCards(1-tp,sc)
 				Duel.ShuffleHand(tp)

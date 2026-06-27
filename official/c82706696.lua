@@ -1,4 +1,4 @@
---JP name
+--ＧＭＸ－ＶＥＬＯＸ
 --GMX - VELOX
 --scripted by pyrQ
 local s,id=GetID()
@@ -78,7 +78,7 @@ function s.excavop(e,tp,eg,ep,ev,re,r,rp)
 		if #g==0 then
 			Duel.ConfirmDecktop(tp,deck_count)
 			local excav_g=Duel.GetDecktopGroup(tp,deck_count)
-			Duel.RaiseEvent(excav_g,EVENT_CUSTOM+101304092,e,REASON_EFFECT,tp,tp,deck_count)
+			Duel.RaiseEvent(excav_g,EVENT_CUSTOM+1595137,e,REASON_EFFECT,tp,tp,deck_count)
 			Duel.SetLP(tp,Duel.GetLP(tp)-deck_count*400)
 		else
 			local sc=g:GetMaxGroup(Card.GetSequence):GetFirst()
@@ -86,7 +86,7 @@ function s.excavop(e,tp,eg,ep,ev,re,r,rp)
 			local excav_count=deck_count-sc_seq
 			Duel.ConfirmDecktop(tp,excav_count)
 			local excav_g=Duel.GetDecktopGroup(tp,excav_count)
-			Duel.RaiseEvent(excav_g,EVENT_CUSTOM+101304092,e,REASON_EFFECT,tp,tp,excav_count)
+			Duel.RaiseEvent(excav_g,EVENT_CUSTOM+1595137,e,REASON_EFFECT,tp,tp,excav_count)
 			Duel.SetLP(tp,Duel.GetLP(tp)-excav_count*400)
 			aux.ToHandOrElse(sc,tp,
 				function()

@@ -1,8 +1,8 @@
---JP name
+--チェツカー
 --Checkker
 --Scripted by The Razgriz
 local s,id=GetID()
-local TOKEN_IRON_RUBBLE=id+100
+local TOKEN_IRON_RUBBLE=id+1
 function s.initial_effect(c)
 	--Cannot be Normal Summoned if you control a monster
 	local e0=Effect.CreateEffect(c)

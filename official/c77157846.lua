@@ -1,4 +1,4 @@
---JP name
+--暗翳の信仰者
 --Shade the Obscure
 --Scripted by Hatter
 local s,id=GetID()

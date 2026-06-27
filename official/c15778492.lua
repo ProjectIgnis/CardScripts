@@ -1,4 +1,4 @@
---JP name
+--ゲーミング・ゲーマーＧＧ
 --Gaming Gamer GG
 --scripted by Naim
 local s,id=GetID()

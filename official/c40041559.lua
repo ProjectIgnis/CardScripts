@@ -1,4 +1,4 @@
---JP name
+--指環の精霊ジーニャ
 --Genia of the Ring
 --scripted by Naim
 local s,id=GetID()

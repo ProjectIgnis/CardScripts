@@ -1,4 +1,4 @@
---JP name
+--ＧＭＸ－ＣＯＭＰＲＥＸ
 --GMX - COMPREX
 --scripted by pyrQ
 local s,id=GetID()
@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetCategory(CATEGORY_DESTROY)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
-	e2:SetCode(EVENT_CUSTOM+101304092)
+	e2:SetCode(EVENT_CUSTOM+1595137)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
 	e2:SetCondition(s.descon)

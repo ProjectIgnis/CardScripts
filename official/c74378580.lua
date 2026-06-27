@@ -1,4 +1,4 @@
---JP name
+--旧ＧＭＸ第５研究所
 --GMX Lab #5
 --scripted by pyrQ
 local s,id=GetID()

@@ -1,4 +1,4 @@
---JP name
+--ラスティン・マンモス
 --Rustin Mammoth
 --scripted by Naim
 local s,id=GetID()

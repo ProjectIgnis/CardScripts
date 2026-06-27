@@ -1,4 +1,4 @@
---JP name
+--暁世竜ダニアン
 --Evolved Daneen
 --scripted by pyrQ
 local s,id=GetID()
@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
-	e2:SetCode(EVENT_CUSTOM+101304092)
+	e2:SetCode(EVENT_CUSTOM+1595137)
 	e2:SetRange(LOCATION_MZONE|LOCATION_GRAVE)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetCondition(s.effcon)
@@ -55,7 +55,7 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	--● Field: Gain 1500 LP
 	local b1=not Duel.HasFlagEffect(tp,id) and c:IsLocation(LOCATION_MZONE)
 	--● GY: Special Summon this card
-	local b2=not Duel.HasFlagEffect(tp,id+100) and c:IsLocation(LOCATION_GRAVE)
+	local b2=not Duel.HasFlagEffect(tp,id+1) and c:IsLocation(LOCATION_GRAVE)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 	if chk==0 then return b1 or b2 end
@@ -67,7 +67,7 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,1500)
 	elseif op==2 then
 		e:SetCategory(CATEGORY_SPECIAL_SUMMON)
-		Duel.RegisterFlagEffect(tp,id+100,RESET_PHASE|PHASE_END,0,1)
+		Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE|PHASE_END,0,1)
 		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,tp,0)
 	end
 end

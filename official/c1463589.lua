@@ -1,4 +1,4 @@
---JP name
+--Ａ－ＧＭＸ最終検証
 --Anti-GMX Final Experiment
 --scripted by pyrQ
 local s,id=GetID()
@@ -34,7 +34,7 @@ function s.excavop(e,tp,eg,ep,ev,re,r,rp)
 	local decktop5=Duel.GetDecktopGroup(tp,5)
 	if #decktop5==0 then return end
 	Duel.ConfirmDecktop(tp,5)
-	Duel.RaiseEvent(decktop5,EVENT_CUSTOM+101304092,e,REASON_EFFECT,tp,tp,#decktop5)
+	Duel.RaiseEvent(decktop5,EVENT_CUSTOM+1595137,e,REASON_EFFECT,tp,tp,#decktop5)
 	if decktop5:IsExists(Card.IsSetCard,1,nil,SET_GMX) then
 		Duel.BreakEffect()
 		Duel.NegateEffect(ev)

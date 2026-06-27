@@ -1,4 +1,4 @@
---JP name
+--豪回遊鯨ＶＩＰホエール
 --VIP Whale
 --scripted by pyrQ
 local s,id=GetID()

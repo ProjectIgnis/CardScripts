@@ -7,6 +7,8 @@ function s.initial_effect(c)
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_ACTIVATE)
 	e0:SetCode(EVENT_FREE_CHAIN)
+	e0:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
+	e0:SetHintTiming(TIMING_DAMAGE_STEP)
 	c:RegisterEffect(e0)
 	--Monsters your opponent controls lose 300 ATK/DEF for each Thunder monster you control
 	local e1a=Effect.CreateEffect(c)

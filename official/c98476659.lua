@@ -1,5 +1,5 @@
 --怠慢な壺
---Pot of Procrastination
+--Pot of Sloth
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

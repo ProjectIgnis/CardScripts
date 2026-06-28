@@ -1,5 +1,5 @@
 --終刻なる獄神影
---Power Patron Shadows of the End Times
+--Power Patron Shade of the Final Hour
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

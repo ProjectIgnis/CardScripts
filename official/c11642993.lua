@@ -1,5 +1,5 @@
 --Ｓ－Ｆｏｒｃｅ ソート・ワールド
---S-Force Sorted World
+--S-Force World Sorting
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

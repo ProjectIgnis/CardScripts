@@ -1,5 +1,5 @@
 --どきどきメルフィータイム
---Exciting Melffy Time
+--Melffy Playtime Surprise
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

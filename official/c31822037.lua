@@ -1,5 +1,5 @@
 --無垢なる祈りの獄神使
---Power Patron Envoy of Pure Prayers
+--Purification Power Patron
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --嗚呼な落とし穴
---Oh my Trap Hole!
+--Foolish Trap Hole
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

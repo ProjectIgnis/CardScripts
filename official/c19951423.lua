@@ -1,5 +1,5 @@
 --Ｓ－Ｆｏｒｃｅ シグナス
---S-Force Signus
+--S-Force Signify
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

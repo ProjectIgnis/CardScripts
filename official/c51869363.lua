@@ -1,5 +1,5 @@
 --超電導閃輝プラズマ・ブラスト
---Plasma Blast
+--Superconductive Plasma Blast
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

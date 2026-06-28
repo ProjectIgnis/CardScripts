@@ -1,5 +1,5 @@
 --護石の作庭
---Protective Stone Gardenscaping
+--Garden of Talistones
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

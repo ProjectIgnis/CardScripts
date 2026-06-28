@@ -1,5 +1,5 @@
 --時空穿つ遡光
---Annihilating Retrolight
+--Annihilate Retroglight
 --scripted by Naim
 local s,id=GetID()
 local STATUS_SUMMONED_THIS_TURN=STATUS_SUMMON_TURN|STATUS_FLIP_SUMMON_TURN|STATUS_SPSUMMON_TURN

@@ -1,5 +1,5 @@
 --メルフィーゴッド・マミィ
---Melffy God Mommy
+--Melffy Godmommy
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

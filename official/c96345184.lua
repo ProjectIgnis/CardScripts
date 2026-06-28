@@ -1,5 +1,5 @@
 --無窮の三幻魔－幻魔皇ラビエル
---Raviel, Lord of Phantasms - Sacred Beast of Endless Eternity
+--Infinity of the Sacred Beasts - Raviel, Lord of Phantasms
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

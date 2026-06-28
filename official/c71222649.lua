@@ -1,5 +1,5 @@
 --薄明の魔 レイラージュ
---Rayrage, the Twilight Fiend
+--Twilight Specter Rayrage
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

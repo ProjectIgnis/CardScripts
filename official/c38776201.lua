@@ -1,5 +1,5 @@
 --三幻魔解放
---Unleashing the Sacred Beasts
+--Sacred Beasts Released
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

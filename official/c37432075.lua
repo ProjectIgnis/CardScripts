@@ -1,5 +1,5 @@
 --召喚魔術－「剣」
---Invocation "Sword"
+--Invocation - "Sword"
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

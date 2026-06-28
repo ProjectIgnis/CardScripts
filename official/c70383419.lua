@@ -1,5 +1,5 @@
 --召喚獣ベイバロン
---Invoked Babalon
+--Invoked Baybarron
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --光と闇の儀式
---Ritual of Light and Darkness
+--Light and Darkness Ritual
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

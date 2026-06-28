@@ -1,5 +1,5 @@
 --カオスシルクハット
---Chaos Hats
+--Chaos Magical Hats
 --scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

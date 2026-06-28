@@ -1,5 +1,5 @@
 --エルフの聖賢者
---Mystical Celtic Sage
+--Celtic Mystic
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

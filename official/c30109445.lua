@@ -1,5 +1,5 @@
 --道化の一座 ドリッシュ
---Clown Crew Drish
+--Clown Crew Dristy
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

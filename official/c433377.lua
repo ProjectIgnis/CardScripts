@@ -1,5 +1,5 @@
 --雷盟－ステップリーダ
---Blitzclique - Stepped Leader
+--Blitzclique - Steppleader
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

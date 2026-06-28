@@ -1,5 +1,5 @@
 --朽ちた祭儀要録
---Corrupted Ritual Records
+--Ragged Records of Rites
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

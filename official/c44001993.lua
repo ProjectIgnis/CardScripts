@@ -1,5 +1,5 @@
 --黒き混沌の魔術師ブラック・カオス
---Black Chaos the Dark Chaos Magician
+--Magician of Dark Chaos - Black Chaos
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --天空城塞クーロン
---Kowloon, Citadel of the Sky
+--Hideout in the Sky, Coulomb
 --scripted by pyrQ
 local s,id=GetID()
 local TOKEN_MECH_BEAST=id+1

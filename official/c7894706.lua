@@ -1,5 +1,5 @@
 --混沌の三幻魔
---Phantasmal Sacred Beasts of Chaos
+--The Chaotic Phantasmal Sacred Beasts
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --三幻魔合殺
---Destruction Chant of the Sacred Beast
+--Sacred Beasts Combined Assault
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

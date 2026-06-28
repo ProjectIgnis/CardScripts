@@ -1,5 +1,5 @@
 --三幻魔の操世者
---The Orchestrator of the Sacred Beasts
+--Summoner of the Sacred Beasts
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

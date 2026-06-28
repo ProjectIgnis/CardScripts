@@ -1,5 +1,5 @@
 --始まりの神ファーラ
---Phara, the Goddess of the Beginning
+--Phara the Primordial Goddess
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

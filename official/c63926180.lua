@@ -1,5 +1,5 @@
 --神霊剣アイワス
---Spirit Sword Aiwass
+--Sacred Spirit Sword Aiwass
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

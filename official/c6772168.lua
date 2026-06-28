@@ -1,5 +1,5 @@
 --召喚獣オーケアノス
---Invoked Okeanos
+--Invoked Oceanus
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

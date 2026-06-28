@@ -1,5 +1,5 @@
 --罪禍の三幻魔－降雷皇ハモン
---Hamon, Lord of Striking Thunder - Sacred Beast of Sinful Catastrophe
+--Calamity of the Sacred Beasts - Hamon, Lord of Striking Thunder
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

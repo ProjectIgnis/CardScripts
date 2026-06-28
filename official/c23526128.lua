@@ -1,5 +1,5 @@
 --雷盟－リターンストローク
---Blitzclique - Return Stroke
+--Blitzclique Return Stroke
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

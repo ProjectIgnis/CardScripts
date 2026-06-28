@@ -1,5 +1,5 @@
 --超魔剣士ブラック・カオス
---Black Chaos the Ultimate Magical Swordsman
+--Black Chaos
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

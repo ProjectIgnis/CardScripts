@@ -1,5 +1,5 @@
 --繋星の雷后
---Astrolasma Urania
+--Astrazma Urania
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

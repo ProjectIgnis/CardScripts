@@ -1,5 +1,5 @@
 --魔法名－「新しき世界の始まり」
---Magical Name - "Rosa Mundi"
+--Gamma Summon
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

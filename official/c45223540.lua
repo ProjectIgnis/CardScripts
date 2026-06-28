@@ -1,5 +1,5 @@
 --沼地の魔道王
---Magical King of the Swamp
+--Sorcerer of the Swamp
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

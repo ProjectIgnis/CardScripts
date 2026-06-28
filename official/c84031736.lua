@@ -1,5 +1,5 @@
 --道化の一座『終演』
---Clown Crew "Finale"
+--Clown Crew Finale
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

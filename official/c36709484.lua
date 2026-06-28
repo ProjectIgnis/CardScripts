@@ -1,5 +1,5 @@
 --予幻なき日々のまぼろし
---Pasto-Ral Theorealize
+--Theorealize Past Lull
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

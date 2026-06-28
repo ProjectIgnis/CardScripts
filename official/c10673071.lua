@@ -1,5 +1,5 @@
 --人工神霊ヴィラカム
---Virakam the Artificial Spirit
+--Virakam, the Divine Spirit of Artifice
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

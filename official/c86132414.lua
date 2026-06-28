@@ -1,5 +1,5 @@
 --三幻魔の神淵
---Divine Abyss of the Sacred Beast
+--Abyss of the Sacred Beasts
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --誇り高き耀聖の詩－エルフェンノーツ
---June Pride - Elfnotes
+--Elfnote June Pride
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

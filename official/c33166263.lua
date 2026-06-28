@@ -1,5 +1,5 @@
 --超越召喚獣アイオーン
---Invoked Transcendence Aeon
+--Hyperinvoked Aeon
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

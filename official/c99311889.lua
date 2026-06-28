@@ -1,5 +1,5 @@
 --絶境なる獄神域－ヴィライア
---Dead-End Power Patron Realm - Viraia
+--Prohibitive Power Patron Purview - Vilaea
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

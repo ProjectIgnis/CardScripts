@@ -1,5 +1,5 @@
 --劫火の三幻魔－神炎皇ウリア
---Uria, Lord of Searing Flames - Sacred Beast of Cataclysmic Fire
+--Inferno of the Sacred Beasts - Uria, Lord of Searing Flames
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

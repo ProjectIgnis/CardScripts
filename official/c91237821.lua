@@ -1,5 +1,5 @@
 --道化の一座 デビルズ
---Clown Crew Devils
+--Clown Crew Fiends
 --scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

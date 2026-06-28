@@ -1,5 +1,5 @@
 --テールズオブ妖精伝姫
---Tales of Fairy Tail
+--Tails of the Fairy Tails
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

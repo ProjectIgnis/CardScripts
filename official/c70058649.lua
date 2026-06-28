@@ -1,5 +1,5 @@
 --道化の一座『怪演』
---Clown Crew "Soiree"
+--Clown Crew Soiree Operations
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

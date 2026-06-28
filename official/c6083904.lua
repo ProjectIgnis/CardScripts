@@ -1,5 +1,5 @@
 --妖光のディアーブロッケン
---Diabrocken of the Ghost Light
+--Diabrocken the Ominous Specter
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

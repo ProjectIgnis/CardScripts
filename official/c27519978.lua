@@ -1,5 +1,5 @@
 --四花繚乱の霊使い
---Four Charmers in Profusion
+--Charmer Quartet in Bloom
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

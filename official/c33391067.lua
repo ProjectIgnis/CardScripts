@@ -1,5 +1,5 @@
 --呪詛返しのヒトガタ
---Curse Reflection Doll 
+--Curse Reflection Doll
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --絶無なる獄神界－ヴィードリア
---Null Power Patron Realm - Vidria
+--Plundered Power Patron Plane - Vidolia
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

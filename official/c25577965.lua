@@ -1,5 +1,5 @@
 --炎魔刃フレイムタン
---Flametongue the Blazing Magical Blade
+--Flametongue the Burning Blade
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

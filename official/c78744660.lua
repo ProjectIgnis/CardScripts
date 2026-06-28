@@ -1,5 +1,5 @@
 --デス・レジーナ・デーモン
---Doom Regina Archfiend
+--Archfiend Matriarch
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

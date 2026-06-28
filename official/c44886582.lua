@@ -1,5 +1,5 @@
 --超逸融合
---Apex Polymerization
+--Super Duper Polymerization
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

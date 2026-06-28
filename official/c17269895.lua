@@ -1,5 +1,5 @@
 --覇者の鳴動
---The Ruler's Rumbling
+--King's Resonance
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

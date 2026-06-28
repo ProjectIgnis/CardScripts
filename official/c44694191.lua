@@ -1,5 +1,5 @@
 --仮初の幻臉師
---Transient Masquerader of Illusion
+--Fleeting Phantom Mask Master
 local s,id=GetID()
 function s.initial_effect(c)
 	--If this card is Normal or Special Summoned: You can send 1 Fiend, Illusion, or Spellcaster monster from your Deck to the GY, then you can change this card's Type to the sent monster's original Type

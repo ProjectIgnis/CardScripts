@@ -1,5 +1,5 @@
 --神書の使いラハムゥ
---Lahamu the Messenger of Sacred Scripture
+--Rahamu, Envoy of the Sacred Tome
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

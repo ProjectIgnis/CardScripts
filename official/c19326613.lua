@@ -1,5 +1,5 @@
 --妖精伝姫のはじまりはじまり
---Fairy Tail Long Long Ago
+--Once Upon a Fairy Tail
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --道化の一座『新加入』
---Clown Crew "New Face"
+--Clown Crew New Face
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

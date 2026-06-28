@@ -1,5 +1,5 @@
 --獄神影機－ゼグレド
---Power Patron Shadow Machine Zegredo
+--Jupredo the Shademachine Power Patron
 --scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

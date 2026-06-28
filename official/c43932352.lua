@@ -1,5 +1,5 @@
 --見えざる導き手
---Bayt'al-Hecahands
+--Hecahands Bait
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate

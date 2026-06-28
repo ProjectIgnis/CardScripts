@@ -1,5 +1,5 @@
 --動点するＰ
---Moving Point Pendulum
+--Solving for Pendulum
 --scripted by pyrQ
 local s,id=GetID()
 local COUNTER_T=0x218

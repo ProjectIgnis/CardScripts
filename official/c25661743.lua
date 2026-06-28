@@ -1,5 +1,5 @@
 --絶解なる獄神門－テルミナス
---Unleashed Power Patron Portal - Terminus
+--Prohibited Power Patron Portal - Terminus
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

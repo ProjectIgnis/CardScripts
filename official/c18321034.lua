@@ -1,5 +1,5 @@
 --見えざる手マキブエル
---Hecahands Makibel
+--Hecahands Mankibuel
 local s,id=GetID()
 function s.initial_effect(c)
 	--If this card battles a monster, neither can be destroyed by that battle

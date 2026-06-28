@@ -1,5 +1,5 @@
 --ダイナレスラー・キメラ・Ｔレッスル
---Dinowrestler Chimera T Wrextle 
+--Dinowrestler Chimera T Wrextle
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

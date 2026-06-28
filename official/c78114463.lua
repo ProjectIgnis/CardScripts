@@ -1,5 +1,5 @@
 --神の密告
---Solemn Report
+--Solemn Accusation
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

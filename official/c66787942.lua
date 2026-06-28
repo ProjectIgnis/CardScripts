@@ -1,5 +1,5 @@
 --捕食植物バアル・テア
---Predaplant Baalthea
+--Predaplant Bal Teah
 --Scripted by The Razgriz
 local s,id=GetID()
 function s.initial_effect(c)

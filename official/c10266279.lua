@@ -1,5 +1,5 @@
 --獄神影精－ジュノルド
---Power Patron Shadow Spirit Junordo
+--Junoldo the Shadespirit Power Patron
 --scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

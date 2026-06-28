@@ -1,5 +1,5 @@
 --終刻竜機ⅩⅢ－グラフレイオ
---DoomZ XIII Over - Graflario
+--DoomZ XIII Over - Graflareio
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

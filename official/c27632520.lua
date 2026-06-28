@@ -1,5 +1,5 @@
 --妖精伝姫－ウィキャット
---Fairy Tail - Wickat
+--Fairy Tail - Wiccat
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

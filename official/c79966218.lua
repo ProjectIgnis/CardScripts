@@ -1,5 +1,5 @@
 --血樹竜姫ドラセレア
---Draselea the Blood Tree Dragon Princess
+--Princess Dracaena, the Thirsting Tree
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

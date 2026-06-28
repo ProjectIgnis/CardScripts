@@ -1,5 +1,5 @@
 --Ｈ・Ｅ・Ｒ・Ｏ フラッシュ！
---H-E-R-O Flash!
+--H.E.R.O. Flash!
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate 1 of these effects

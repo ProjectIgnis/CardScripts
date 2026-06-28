@@ -1,5 +1,5 @@
 --妖精伝姫－マチリル
---Fairy Tail - Matchlille
+--Fairy Tail - Matchgiru
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --魔神儀-キャンドール
---Impcantation Candoll 
+--Impcantation Candoll
 local s,id=GetID()
 function s.initial_effect(c)
 --spsummon

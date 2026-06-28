@@ -1,5 +1,5 @@
 --２つに１つ
---One of Two
+--Fifty Fifty?
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

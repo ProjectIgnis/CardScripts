@@ -1,5 +1,5 @@
 --調和ノ天救竜
---Fidraulis Harmonia
+--Fydraulis Harmonia
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --道化の一座『下稽古』
---Clown Crew "Rehearsal"
+--Clown Crew Rehearsal
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

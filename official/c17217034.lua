@@ -1,5 +1,5 @@
 --合体術式－エンゲージ・ゼロ
---Combination Maneuver - Engage Zero
+--Combined Maneuver - Engage Zero!
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

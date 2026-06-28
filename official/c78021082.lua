@@ -1,5 +1,5 @@
 --妖精伝姫を紡ぐ者
---Weaver of Fairy Tail Tales
+--Weaver of Fairy Tails
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

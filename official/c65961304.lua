@@ -1,5 +1,5 @@
 --キラーチューン Ｂ２Ｂ
---Kewl Tune Back 2 Back
+--Kewl Tune B2B
 --scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

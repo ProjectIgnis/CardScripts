@@ -1,5 +1,5 @@
 --道化の一座『極芸』
---Clown Crew "Malabarism"
+--Clown Crew Malabarisme
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

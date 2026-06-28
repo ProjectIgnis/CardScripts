@@ -1,5 +1,5 @@
 --閃刀機－アディルセイバー
---Sky Striker Mecha - Adhilsaber
+--Sky Striker Mecha - Adil Saber
 --Scripted by The Razgriz
 local s,id=GetID()
 function s.initial_effect(c)

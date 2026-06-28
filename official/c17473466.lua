@@ -1,5 +1,5 @@
 --獄神影獣－ネルヴェド
---Power Patron Shadow Beast Nervedo
+--Nervedo the Shadebeast Power Patron
 --scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

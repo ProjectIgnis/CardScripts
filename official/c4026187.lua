@@ -1,5 +1,5 @@
 --妖精伝姫を語る者
---Chronicler of Fairy Tail Tales
+--Teller of Fairy Tails
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

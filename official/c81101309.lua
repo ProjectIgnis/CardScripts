@@ -1,5 +1,5 @@
 --夜光列車ブルートラベラー
---Noctilucent Train Bleu Traveler
+--Night Train Blue Traveler
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

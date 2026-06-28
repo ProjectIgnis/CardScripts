@@ -1,5 +1,5 @@
 --黒智天至イリスフィール
---Cherubidamn Irisfiel
+--Dark Ceruvim Irisfil
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

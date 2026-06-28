@@ -1,5 +1,5 @@
 --妖精の伝姫
---Fairy Tail Tales
+--Fairy Tale Tails
 --Logical Nonsense and DyXel
 local s,id=GetID()
 function s.initial_effect(c)

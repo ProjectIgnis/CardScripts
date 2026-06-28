@@ -1,5 +1,5 @@
 --精霊術の使い魔
---Familiars of the Spiritual Arts
+--Spiritual Art Familiars
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --道化の一座『開演』
---Clown Crew "Matinee"
+--Clown Crew Matinee Operatics
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

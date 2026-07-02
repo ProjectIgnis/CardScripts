@@ -1,21 +1,17 @@
 --旧神ノーデン
---Elder Entity Norden
+--Elder Entity Norden (Pre-Errata)
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--Fusion Materials: 1 Synchro or Xyz Monster + 1 Synchro or Xyz Monster
 	Fusion.AddProcMixN(c,true,true,aux.FilterBoolFunctionEx(Card.IsType,TYPE_SYNCHRO|TYPE_XYZ),2)
-	--When this card is Special Summoned from the Extra Deck: You can target 1 Level 4 or lower monster in your GY; Special Summon it, but its effects are negated, also banish it when this card leaves the field. You can only use this effect of "Elder Entity Norden" once per turn
+	--When this card is Special Summoned: You can target 1 Level 4 or lower monster in your Graveyard; Special Summon it, but its effects are negated, also banish it when this card leaves the field
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_DISABLE+CATEGORY_REMOVE)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e1:SetCountLimit(1,id)
-	e1:SetCondition(function(e)
-		return e:GetHandler():IsSummonLocation(LOCATION_EXTRA)
-	end)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)

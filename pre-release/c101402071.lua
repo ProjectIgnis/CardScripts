@@ -53,7 +53,12 @@ function s.counterop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then
 		local die_roll=Duel.TossDice(tp,1)
-		c:AddCounter(COUNTER_REVERSAL_BOX,die_roll,true)
+		local ct=1
+		if die_roll~=1 then
+			Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,2))
+			ct=Duel.AnnounceNumberRange(tp,1,die_roll)
+		end
+		c:AddCounter(COUNTER_REVERSAL_BOX,ct,true)
 	end
 end
 function s.coincon(e,tp,eg,ep,ev,re,r,rp)
@@ -76,7 +81,7 @@ end
 function s.coinop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.CallCoin(tp) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp)
-		and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
+		and Duel.SelectYesNo(tp,aux.Stringid(id,3)) then
 		local tc=Duel.GetFirstTarget()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)

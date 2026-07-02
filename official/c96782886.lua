@@ -2,27 +2,25 @@
 --Mind Master
 local s,id=GetID()
 function s.initial_effect(c)
-	--You can pay 800 Life Points and Tribute 1 Psychic-Type monster; Special Summon 1 Level 4 or lower Psychic-Type monster from your Deck in Attack Position
+	--You can pay 800 LP and Tribute 1 Psychic monster; Special Summon 1 Level 4 or lower Psychic monster from your Deck in Attack Position. You can only use this effect of "Mind Master" once per turn
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCountLimit(1,{id,0})
-	e1:SetCost(s.cost)
+	e1:SetCountLimit(1,id)
+	e1:SetCost(Cost.AND(Cost.PayLP(800),s.spcost))
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,800)
-		and Duel.CheckReleaseGroupCost(tp,Card.IsRace,1,false,aux.ReleaseCheckMMZ,nil,RACE_PSYCHIC) end
-	Duel.PayLPCost(tp,800)
-	local sg=Duel.SelectReleaseGroupCost(tp,Card.IsRace,1,1,false,aux.ReleaseCheckMMZ,nil,RACE_PSYCHIC)
-	Duel.Release(sg,REASON_COST)
+function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,Card.IsRace,1,false,aux.ReleaseCheckMMZ,nil,RACE_PSYCHIC) end
+	local g=Duel.SelectReleaseGroupCost(tp,Card.IsRace,1,1,false,aux.ReleaseCheckMMZ,nil,RACE_PSYCHIC)
+	Duel.Release(g,REASON_COST)
 end
 function s.spfilter(c,e,tp)
-	return c:IsRace(RACE_PSYCHIC) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsLevelBelow(4) and c:IsRace(RACE_PSYCHIC) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_ATTACK)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp) end

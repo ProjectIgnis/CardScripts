@@ -1,3 +1,3 @@
 --進軍するルイーズ
 --Marching Beaver Warrior
-Duel.LoadCardScriptAlias(160452047)
+Duel.LoadCardScriptAlias(160323007)

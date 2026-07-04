@@ -17,7 +17,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=eg:Filter(Card.IsControler,nil,1-tp)
 	Duel.SetTargetCard(g)
 end
-function s.op(e,tp,eg,ep,ev,re,r,rp)
+function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		local ph=Duel.GetCurrentPhase()

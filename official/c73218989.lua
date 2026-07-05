@@ -4,90 +4,77 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(COUNTER_FEATHER)
+	c:EnableReviveLimit()
 	--Synchro Summon procedure: 1 Tuner Synchro Monster + 1+ non-Tuner monsters
 	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsType,TYPE_SYNCHRO),1,1,Synchro.NonTuner(nil),1,99)
-	c:EnableReviveLimit()
-	--Special Summoning condition
+	--Must be either Synchro Summoned, or Special Summoned from your Extra Deck by banishing 1 Tuner Synchro Monster and 1 "Black-Winged Dragon" from your face-up Monster Zone and/or GY
+	c:AddMustBeSynchroSummoned()
 	local e0=Effect.CreateEffect(c)
+	e0:SetDescription(aux.Stringid(id,0))
+	e0:SetType(EFFECT_TYPE_FIELD)
 	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e0:SetType(EFFECT_TYPE_SINGLE)
-	e0:SetCode(EFFECT_SPSUMMON_CONDITION)
-	e0:SetValue(aux.synlimit)
+	e0:SetCode(EFFECT_SPSUMMON_PROC)
+	e0:SetRange(LOCATION_EXTRA)
+	e0:SetCondition(s.spcon)
+	e0:SetTarget(s.sptg)
+	e0:SetOperation(s.spop)
 	c:RegisterEffect(e0)
-	--Special Summon procedure: Banish 1 Tuner Synchro Monster and 1 "Black-Winged Dragon" from your face-up Monster Zone and/or GY
-	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetCode(EFFECT_SPSUMMON_PROC)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e1:SetRange(LOCATION_EXTRA)
-	e1:SetCondition(s.spcon)
-	e1:SetTarget(s.sptg)
-	e1:SetOperation(s.spop)
-	c:RegisterEffect(e1)
-	--Each time your opponent activates a monster effect, place 1 Black Feather Counter on this card when that effect resolves, and if you do, inflict 700 damage to your opponent.
+	--Each time your opponent activates a monster effect, place 1 Black Feather Counter on this card when that effect resolves, and if you do, inflict 700 damage to your opponent
+	local e1a=Effect.CreateEffect(c)
+	e1a:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
+	e1a:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e1a:SetCode(EVENT_CHAINING)
+	e1a:SetRange(LOCATION_MZONE)
+	e1a:SetOperation(aux.chainreg)
+	c:RegisterEffect(e1a)
+	local e1b=Effect.CreateEffect(c)
+	e1b:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
+	e1b:SetCode(EVENT_CHAIN_SOLVED)
+	e1b:SetRange(LOCATION_MZONE)
+	e1b:SetCondition(function(e,tp,eg,ep,ev,re,r,rp)
+		return ep==1-tp and re:IsMonsterEffect() and e:GetHandler():HasFlagEffect(1)
+	end)
+	e1b:SetOperation(s.damop)
+	c:RegisterEffect(e1b)
+	--During your opponent's turn (Quick Effect): You can Tribute this card with 4 or more Black Feather Counters on it; destroy all cards on the field
 	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
-	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e2:SetCode(EVENT_CHAINING)
+	e2:SetDescription(aux.Stringid(id,1))
+	e2:SetCategory(CATEGORY_DESTROY)
+	e2:SetType(EFFECT_TYPE_QUICK_O)
+	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetOperation(aux.chainreg)
+	e2:SetHintTiming(0,TIMING_STANDBY_PHASE|TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E)
+	e2:SetCondition(function(e,tp)
+		return Duel.IsTurnPlayer(1-tp)
+	end)
+	e2:SetCost(s.descost)
+	e2:SetTarget(s.destg)
+	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
-	e3:SetCode(EVENT_CHAIN_SOLVED)
-	e3:SetRange(LOCATION_MZONE)
-	e3:SetCondition(s.damcon)
-	e3:SetOperation(s.damop)
-	c:RegisterEffect(e3)
-	--During your opponent's turn (Quick Effect): You can Tribute this card with 4 or more Black Feather Counters on it; destroy all cards on the field.
-	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(id,1))
-	e4:SetCategory(CATEGORY_DESTROY)
-	e4:SetType(EFFECT_TYPE_QUICK_O)
-	e4:SetCode(EVENT_FREE_CHAIN)
-	e4:SetRange(LOCATION_MZONE)
-	e4:SetHintTiming(0,TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E)
-	e4:SetCondition(function(e,tp) return Duel.IsTurnPlayer(1-tp) end)
-	e4:SetCost(s.descost)
-	e4:SetTarget(s.destg)
-	e4:SetOperation(s.desop)
-	c:RegisterEffect(e4)
 end
 s.counter_list={COUNTER_FEATHER}
 s.listed_names={CARD_BLACK_WINGED_DRAGON}
 s.synchro_tuner_required=1
---Special Summon procedure (Alternate)
-function s.spfilter1(c,tp)
-	return c:IsType(TYPE_SYNCHRO) and c:IsType(TYPE_TUNER) and c:IsFaceup()
-		and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true,true)
-end
-function s.spfilter2(c,tp)
-	return c:IsCode(CARD_BLACK_WINGED_DRAGON) and c:IsFaceup()
-		and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true,true)
+function s.spfilter(c,tp)
+	return (c:IsCompositeType(TYPE_SYNCHRO|TYPE_TUNER) or c:IsCode(CARD_BLACK_WINGED_DRAGON))
+		and c:IsFaceup() and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true,true)
 end
 function s.rescon(sg,e,tp)
-	return Duel.GetLocationCountFromEx(tp,tp,sg,e:GetHandler())>0
-		and sg:FilterCount(s.spfilter1,nil,tp)==1
-		and sg:FilterCount(s.spfilter2,nil,tp)==1
+	if #sg~=2 or Duel.GetLocationCountFromEx(tp,tp,sg,e:GetHandler())==0 then return false end
+	local a,b=sg:GetFirst(),sg:GetNext()
+	return (a:IsCompositeType(TYPE_SYNCHRO|TYPE_TUNER) and b:IsCode(CARD_BLACK_WINGED_DRAGON))
+		or (b:IsCompositeType(TYPE_SYNCHRO|TYPE_TUNER) and a:IsCode(CARD_BLACK_WINGED_DRAGON))
 end
 function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	local g1=Duel.GetMatchingGroup(s.spfilter1,tp,LOCATION_MZONE|LOCATION_GRAVE,0,nil,tp)
-	local g2=Duel.GetMatchingGroup(s.spfilter2,tp,LOCATION_MZONE|LOCATION_GRAVE,0,nil,tp)
-	local g=g1:Clone()
-	g:Merge(g2)
-	return #g1>0 and #g2>0 and aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,0)
+	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,nil,tp)
+	return aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,0)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
-	local g1=Duel.GetMatchingGroup(s.spfilter1,tp,LOCATION_MZONE|LOCATION_GRAVE,0,nil,tp)
-	local g2=Duel.GetMatchingGroup(s.spfilter2,tp,LOCATION_MZONE|LOCATION_GRAVE,0,nil,tp)
-	local rg=g1:Clone()
-	rg:Merge(g2)
-	local g=aux.SelectUnselectGroup(rg,e,tp,2,2,s.rescon,1,tp,HINTMSG_REMOVE,nil,nil,true)
+	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,nil,tp)
+	local g=aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,1,tp,HINTMSG_REMOVE,nil,nil,true)
 	if #g>0 then
-		g:KeepAlive()
 		e:SetLabelObject(g)
 		return true
 	end
@@ -95,14 +82,9 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	local g=e:GetLabelObject()
-	if not g then return end
-	Duel.Remove(g,POS_FACEUP,REASON_COST)
-	g:DeleteGroup()
-end
---Place counter and inflict damage
-function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	return ep==1-tp and re:IsMonsterEffect() and c:GetFlagEffect(1)~=0
+	if g then
+		Duel.Remove(g,POS_FACEUP,REASON_COST)
+	end
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -111,15 +93,14 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Damage(1-tp,700,REASON_EFFECT)
 	end
 end
---Destroy all cards on the field
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:GetCounter(COUNTER_FEATHER)>=4 and c:IsReleasable() end
 	Duel.Release(c,REASON_COST)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,e:GetHandler()) end
-	local g=Duel.GetMatchingGroup(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
+	local g=Duel.GetMatchingGroup(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,e:GetHandler())
+	if chk==0 then return #g>0 end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)

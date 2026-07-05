@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableCounterPermit(COUNTER_FEATHER)
-	--Synchro Summon procedure
+	--Synchro Summon procedure: 1 Tuner Synchro Monster + 1+ non-Tuner monsters
 	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsType,TYPE_SYNCHRO),1,1,Synchro.NonTuner(nil),1,99)
 	c:EnableReviveLimit()
 	--Special Summoning condition
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e0:SetCode(EFFECT_SPSUMMON_CONDITION)
 	e0:SetValue(aux.synlimit)
 	c:RegisterEffect(e0)
-	--Special Summon procedure
+	--Special Summon procedure: Banish 1 Tuner Synchro Monster and 1 "Black-Winged Dragon" from your face-up Monster Zone and/or GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--Place counter and inflict damage
+	--Each time your opponent activates a monster effect, place 1 Black Feather Counter on this card when that effect resolves, and if you do, inflict 700 damage to your opponent.
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
@@ -40,7 +40,7 @@ function s.initial_effect(c)
 	e3:SetCondition(s.damcon)
 	e3:SetOperation(s.damop)
 	c:RegisterEffect(e3)
-	--Destroy all cards on the field
+	--During your opponent's turn (Quick Effect): You can Tribute this card with 4 or more Black Feather Counters on it; destroy all cards on the field.
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetCategory(CATEGORY_DESTROY)
@@ -48,7 +48,7 @@ function s.initial_effect(c)
 	e4:SetCode(EVENT_FREE_CHAIN)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetHintTiming(0,TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E)
-	e4:SetCondition(s.descon)
+	e4:SetCondition(function(e,tp) return Duel.IsTurnPlayer(1-tp) end)
 	e4:SetCost(s.descost)
 	e4:SetTarget(s.destg)
 	e4:SetOperation(s.desop)
@@ -57,7 +57,7 @@ end
 s.counter_list={COUNTER_FEATHER}
 s.listed_names={CARD_BLACK_WINGED_DRAGON}
 s.synchro_tuner_required=1
---summon proc
+--Special Summon procedure (Alternate)
 function s.spfilter1(c,tp)
 	return c:IsType(TYPE_SYNCHRO) and c:IsType(TYPE_TUNER) and c:IsFaceup()
 		and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true,true)
@@ -75,7 +75,7 @@ function s.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	local g1=Duel.GetMatchingGroup(s.spfilter1,tp,LOCATION_MZONE|LOCATION_GRAVE,0,nil,tp)
-	local g2=Duel.GetMatchingGroup(s.spfilter2,tp,LOCATION_ONFIELD|LOCATION_GRAVE,0,nil,tp)
+	local g2=Duel.GetMatchingGroup(s.spfilter2,tp,LOCATION_MZONE|LOCATION_GRAVE,0,nil,tp)
 	local g=g1:Clone()
 	g:Merge(g2)
 	return #g1>0 and #g2>0 and aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,0)
@@ -99,7 +99,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 	g:DeleteGroup()
 end
---counter and damage
+--Place counter and inflict damage
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return ep==1-tp and re:IsMonsterEffect() and c:GetFlagEffect(1)~=0
@@ -111,10 +111,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Damage(1-tp,700,REASON_EFFECT)
 	end
 end
---destroy field
-function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsTurnPlayer(1-tp)
-end
+--Destroy all cards on the field
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:GetCounter(COUNTER_FEATHER)>=4 and c:IsReleasable() end

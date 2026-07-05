@@ -16,7 +16,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_LV}
 function s.costfilter(c,e,tp,ft)
-	if not (c:IsFaceup() and c:IsSetCard(SET_LV)) or not c:IsAbleToGraveAsCost()) then return false end
+	if not (c:IsFaceup() and c:IsSetCard(SET_LV)) or not c:IsAbleToGraveAsCost() then return false end
 	local class=c:GetMetatable(true)
 	return (ft>0 or c:GetSequence()<5) and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,class,e,tp)
 end

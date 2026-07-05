@@ -25,6 +25,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)<5 then return end
 	local g=Duel.GetDeckbottomGroup(tp,5)
 	Duel.ConfirmCards(tp,g)
+	Duel.ConfirmCards(1-tp,g)
 	if g:IsExists(s.filter,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local tg=g:FilterSelect(tp,s.filter,1,2,nil)

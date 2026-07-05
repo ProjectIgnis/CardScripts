@@ -8,18 +8,15 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(0,TIMING_END_PHASE)
-	e1:SetCondition(s.condition)
+	e1:SetCondition(function(e,tp) return Duel.IsEndPhase(1-tp) end)
 	e1:SetCost(s.cost)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x41}
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_END and Duel.IsTurnPlayer(1-tp)
-end
+s.listed_series={SET_LV}
 function s.costfilter(c,e,tp,ft)
-	if not c:IsSetCard(SET_LV) or not c:IsAbleToGraveAsCost() then return false end
+	if not (c:IsFaceup() and c:IsSetCard(SET_LV)) or not c:IsAbleToGraveAsCost()) then return false end
 	local class=c:GetMetatable(true)
 	return (ft>0 or c:GetSequence()<5) and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,class,e,tp)
 end

@@ -32,7 +32,7 @@ function s.initial_effect(c)
 	e4:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e4:SetCode(EFFECT_SELF_DESTROY)
 	e4:SetRange(LOCATION_SZONE)
-	e4:SetCondition(function(e) return not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsRace,RACE_FIEND),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
+	e4:SetCondition(function(e) return not Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsRace,RACE_FIEND),e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil) end)
 	c:RegisterEffect(e4)
 end
 function s.atfilter(c,atk)

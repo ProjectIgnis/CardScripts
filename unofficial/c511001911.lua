@@ -1,3 +1,4 @@
+--アラート
 --Alert
 local s,id=GetID()
 function s.initial_effect(c)
@@ -10,7 +11,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.filter(c)
-	return c:IsSpell() and c:IsType(TYPE_CONTINUOUS) and c:IsFacedown() 
+	return (c:IsContinuousSpell() or c:IsFieldSpell()) and c:IsFacedown() 
 		and c:CheckActivateEffect(false,false,false)~=nil
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

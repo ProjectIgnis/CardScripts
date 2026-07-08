@@ -3,18 +3,20 @@
 --Scripted by The Razgriz
 local s,id=GetID()
 function s.initial_effect(c)
-	--Pendulum Summon procedure
 	Pendulum.AddProcedure(c)
-	--Xyz Monsters you control gain 100 ATK for each material attached to monsters on the field
+	--Xyz Monsters you control gain 100 ATK for each Xyz Material on the field
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetRange(LOCATION_PZONE)
 	e1:SetTargetRange(LOCATION_MZONE,0)
-	e1:SetTarget(function(e,c) return c:IsFaceup() and c:IsType(TYPE_XYZ) end)
-	e1:SetValue(function(e,c) return Duel.GetOverlayCount(0,1,1)*100 end)
+	e1:SetTarget(function(e,c)
+		return c:IsXyzMonster() end)
+	e1:SetValue(function(e,c)
+		return Duel.GetOverlayCount(0,1,1)*100
+	end)
 	c:RegisterEffect(e1)
-	--Attach this card to 1 "Materiactor" Xyz Monster you control as material, then draw 1 card
+	--You can target 1 "Materiactor" Xyz Monster you control; attach this card to it as material, then draw 1 card. You can only use this effect of "Prima Materiactor" once per turn
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_DRAW)
@@ -28,7 +30,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_MATERIACTOR}
 function s.xyzfilter(c,tp,hc)
-	return c:IsSetCard(SET_MATERIACTOR) and c:IsType(TYPE_XYZ) and c:IsFaceup() and hc:IsCanBeXyzMaterial(c,tp,REASON_EFFECT)
+	return c:IsSetCard(SET_MATERIACTOR) and c:IsXyzMonster() and c:IsFaceup() and hc:IsCanBeXyzMaterial(c,tp,REASON_EFFECT)
 end
 function s.attachtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
@@ -37,6 +39,7 @@ function s.attachtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		and Duel.IsExistingTarget(s.xyzfilter,tp,LOCATION_MZONE,0,1,nil,tp,c) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	Duel.SelectTarget(tp,s.xyzfilter,tp,LOCATION_MZONE,0,1,1,nil,tp,c)
+	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
 function s.attachop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

@@ -51,7 +51,7 @@ end
 s.listed_names={63679166} --"Throne of Archfiends"
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
-	if chkc then return c:IsOnField() and c:IsSpellTrap() and c:IsFaceup() and chkc~=c end
+	if chkc then return chkc:IsOnField() and chkc:IsSpellTrap() and chkc:IsFaceup() and chkc~=c end
 	if chk==0 then return Duel.IsExistingTarget(aux.FaceupFilter(Card.IsSpellTrap),tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectTarget(tp,aux.FaceupFilter(Card.IsSpellTrap),tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,c)

@@ -617,3 +617,4 @@ SET_ASUTRA                        = 0x1db
 SET_ANGELECHY                     = 0x1dc
 SET_ARS_MAGNA                     = 0x1dd
 SET_DIACTORUS                     = 0x1de
+SET_MEDIUS                        = 0x1df

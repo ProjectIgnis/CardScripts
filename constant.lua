@@ -975,6 +975,7 @@ ACTIVITY_CHAIN        = 7 -- only available in custom counter
 ANNOUNCE_CARD        = 0x7
 ANNOUNCE_CARD_FILTER = 0x8
 --Commonly used hardcoded effects
+EFFECT_ARS_MAGNA_CITRINITAS  = 101402061
 EFFECT_CAN_BE_TUNER          = 30765615 --Uses "Ringowurm"'s code, hardcoding effects that treat the card as Tuner only optionally (for a Synchro Summon)
 EFFECT_CLEAR_WALL            = 6089145
 EFFECT_CLEAR_WORLD_IMMUNE    = 97811903

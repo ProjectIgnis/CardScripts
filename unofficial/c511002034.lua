@@ -2,24 +2,22 @@
 --Clear Wing Synchro Dragon (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
-	--synchro summon
-	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTuner(nil),1,99)
 	c:EnableReviveLimit()
-	--negate
+	--Synchro Summon procedure: 1 Tuner + 1 or more non-Tuner monsters
+	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTuner(nil),1,99)
+	--If a Level 5 or higher monster activates its effect on the field, or a monster effect is activated that targets a Level 5 or higher monster(s) on the field, during this chain (Quick Effect): 
+	--You can target 1 monster that activated 1 of those effects; negate that monster's effects, and if you do, destroy it, then this card gains ATK equal to the ATK that monster had when it was destroyed until the end of this turn.
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(82044279,0))
 	e1:SetCategory(CATEGORY_DISABLE+CATEGORY_DESTROY+CATEGORY_ATKCHANGE)
-	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_QUICK_O)
-	e1:SetCode(EVENT_CHAINING)
+	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL+EFFECT_FLAG_CARD_TARGET)
+	e1:SetCode(EVENT_CHAINING)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCondition(s.condition)
+	e1:SetCondition(function(e) return not not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) end)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-end
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
 end
 function s.cfilter(c)
 	return c:IsLevelAbove(5) and c:IsLocation(LOCATION_MZONE)
@@ -69,14 +67,14 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 			end
 			if check then
 				g:AddCard(tc)
-				tc:RegisterFlagEffect(511002034,RESET_CHAIN,0,1,i)
+				tc:RegisterFlagEffect(id,RESET_CHAIN,0,1,i)
 			end
 		end
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local sg=g:Select(tp,1,1,nil)
 	Duel.SetTargetCard(sg)
-	local i=sg:GetFirst():GetFlagEffectLabel(511002034)
+	local i=sg:GetFirst():GetFlagEffectLabel(id)
 	local te=Duel.GetChainInfo(i,CHAININFO_TRIGGERING_EFFECT)
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,sg,1,0,0)
 	if sg:GetFirst():IsRelateToEffect(te) then
@@ -87,39 +85,13 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if not tc or not tc:IsRelateToEffect(e) or tc:IsDisabled() then return end
-	Duel.NegateRelatedChain(tc,RESET_TURN_SET)
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e1:SetCode(EFFECT_DISABLE)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-	tc:RegisterEffect(e1)
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e2:SetCode(EFFECT_DISABLE_EFFECT)
-	e2:SetValue(RESET_TURN_SET)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
-	tc:RegisterEffect(e2)
-	if tc:IsType(TYPE_TRAPMONSTER) then
-		local e3=Effect.CreateEffect(c)
-		e3:SetType(EFFECT_TYPE_SINGLE)
-		e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e3:SetCode(EFFECT_DISABLE_TRAPMONSTER)
-		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
-		tc:RegisterEffect(e3)
-	end
-	local i=tc:GetFlagEffectLabel(511002034)
+	tc:NegateEffects(c)
+	local i=tc:GetFlagEffectLabel(id)
 	local te=Duel.GetChainInfo(i,CHAININFO_TRIGGERING_EFFECT)
 	if not tc:IsImmuneToEffect(e1) and not tc:IsImmuneToEffect(e2) and (not e3 or not tc:IsImmuneToEffect(e3)) and tc:IsRelateToEffect(te) 
 		and Duel.Destroy(tc,REASON_EFFECT)>0 and c:IsRelateToEffect(e) and c:IsFaceup() then
-		local atk=tc:GetTextAttack()
+		local atk=tc:GetPreviousAttackOnField()
 		if atk<=0 then return end
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetValue(atk)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE+RESET_PHASE+PHASE_END)
-		c:RegisterEffect(e1)
+		c:UpdateAttack(atk,RESETS_STANDARD_DISABLE_PHASE_END)
 	end
 end

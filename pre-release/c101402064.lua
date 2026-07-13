@@ -10,10 +10,11 @@ function s.initial_effect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetTarget(s.efftg)
 	e1:SetOperation(s.effop)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
-	e1:SetHintTiming(0,TIMING_STANDBY_PHASE|TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E)
+	e1:SetHintTiming(0,TIMING_STANDBY_PHASE|TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E|TIMING_DAMAGE_STEP)
 	c:RegisterEffect(e1)
 	--If this card in its owner's possession is destroyed by an opponent's card: You can destroy 1 card in your opponent's hand (at random) or field
 	local e2=Effect.CreateEffect(c)
@@ -61,10 +62,11 @@ end
 function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	--● Destroy all face-up Spells your opponent controls
 	local opp_spells=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSpell),tp,0,LOCATION_ONFIELD,nil)
-	local option_1=#opp_spells>0
+	local option_1=#opp_spells>0 and not Duel.IsDamageStep()
 	--● Target 1 face-up monster your opponent controls; show 1 "Light and Darkness Ritual" from your hand or GY, then change that monster's ATK to 0, also negate its effects
 	local option_2=Duel.IsExistingTarget(s.disfilter,tp,0,LOCATION_MZONE,1,nil)
 		and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_HAND|LOCATION_GRAVE,0,1,nil,CARD_LIGHT_AND_DARKNESS_RITUAL)
+		and aux.StatChangeDamageStepCondition()
 	if chk==0 then return option_1 or option_2 end
 	local cd=e:GetChainData()
 	cd.choice=Duel.SelectEffect(tp,

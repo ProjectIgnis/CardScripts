@@ -619,3 +619,4 @@ SET_ARS_MAGNA                     = 0x1dd
 SET_DIACTORUS                     = 0x1de
 SET_MEDIUS                        = 0x1df
 SET_MASQUERADE                    = 0x1e0
+SET_SENNET                        = 0x1e1

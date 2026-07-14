@@ -2946,6 +2946,147 @@ function Auxiliary.DefaultFieldReturnOp(rg)
 	select_field_return_cards(1-turn_p,g1)
 end
 
+
+
+DeclareFilter={}
+DF=DeclareFilter
+
+do
+	local mt={}
+
+	local function create_filter(filter)
+		return setmetatable(filter,mt)
+	end
+
+	local function concat(op)
+		return function(...)
+			local res={}
+
+			--OPCODE_ALLOW_ALIASES and OPCODE_ALLOW_TOKENS cannot be combined like the other OPCODES:
+			--they are only applied once, they cannot be negated by OPCODE_NOT,
+			--and they cannot be partially applied to specific parts of a filter
+			local aliases=false
+			local tokens=false
+
+			for i,filter in ipairs({...}) do
+				local is_empty=true
+				for _,val in ipairs(filter) do
+					if val==OPCODE_ALLOW_ALIASES then
+						aliases=true
+					elseif val==OPCODE_ALLOW_TOKENS then
+						tokens=true
+					else
+						is_empty=false
+						table.insert(res,val)
+					end
+				end
+
+				if i>1 and not is_empty then
+					table.insert(res,op)
+				end
+			end
+
+			if aliases then table.insert(res,OPCODE_ALLOW_ALIASES) end
+			if tokens then table.insert(res,OPCODE_ALLOW_TOKENS) end
+
+			return create_filter(res)
+		end
+	end
+
+	local function append(op)
+		--enforces a single filter parameter, so the resulting function
+		--cannot be accidentally called with more than one table
+		return function(filter)
+			return concat(op)({},filter)
+		end
+	end
+
+	DF.AND = concat(OPCODE_AND)
+	DF.OR  = concat(OPCODE_OR)
+	DF.NOT = append(OPCODE_NOT)
+
+	mt.__band = DF.AND
+	mt.__bor  = DF.OR
+	mt.__bnot = DF.NOT
+
+	local function matches_arg(op)
+		return function(val)
+			if type(val)~="number" then
+				error("Parameter 1 must be a number",2)
+			end
+			return create_filter({val,op})
+		end
+	end
+
+	DF.IsType      = matches_arg(OPCODE_ISTYPE)
+	DF.IsRace      = matches_arg(OPCODE_ISRACE)
+	DF.IsAttribute = matches_arg(OPCODE_ISATTRIBUTE)
+
+	local function matches_any_arg(op)
+		return function(...)
+			local args={...}
+			if #args==1 and type(args[1])=="table" then args=args[1] end
+
+			local res={}
+			for i,val in ipairs(args) do
+				if type(val)~="number" then
+					error("Parameter " .. tostring(i) .. " must be a number",2)
+				end
+
+				table.insert(res,val)
+				table.insert(res,op)
+				if i>1 then
+					table.insert(res,OPCODE_OR)
+				end
+			end
+
+			return create_filter(res)
+		end
+	end
+
+	DF.IsCode    = matches_any_arg(OPCODE_ISCODE)
+	DF.IsSetCard = matches_any_arg(OPCODE_ISSETCARD)
+
+	DF.WithAliases = append(OPCODE_ALLOW_ALIASES)
+	DF.WithTokens  = append(OPCODE_ALLOW_TOKENS)
+
+	function DF.WithAliasesAndTokens(filter)
+		return DF.WithAliases(DF.WithTokens(filter))
+	end
+
+	function DF.IsExtraDeckCard()
+		if Duel.IsDuelType(DUEL_MODE_RUSH) then
+			return DF.WithAliases(DF.IsType(TYPE_EXTRA|TYPE_RITUAL) & DF.IsType(TYPE_MONSTER))
+		end
+		return DF.IsType(TYPE_EXTRA)
+	end
+
+	function DF.IsMainDeckCard()
+		return ~DF.IsExtraDeckCard()
+	end
+
+	function DF.IsMainDeckMonster()
+		return DF.IsMainDeckCard() & DF.IsType(TYPE_MONSTER)
+	end
+
+	local old_announce_card=Duel.AnnounceCard
+	function Duel.AnnounceCard(player,filter)
+		if filter and getmetatable(filter)~=mt then
+			error("Parameter 2 must be a DeclareFilter or nil")
+		end
+
+		local ch=Chain.GetCurrentLink()
+		if ch==0 then return old_announce_card(player,filter) end
+
+		local cd=Chain.GetTriggeringEffect(ch):GetChainData()
+		cd.announce_filter=filter
+		cd.announced_card=old_announce_card(player,filter)
+
+		return cd.announced_card
+	end
+end
+
+
 Duel.LoadScript("debug_utility.lua")
 Duel.LoadScript("chain.lua")
 Duel.LoadScript("cards_specific_functions.lua")

@@ -1,3 +1,4 @@
+TributeSub={}
 EFFECT_IS_LEGEND=160212041
 -- List of Legend cards, to be used with Card.IsLegend
 local LEGEND_LIST={160001000,160205001,160418001,160002000,160421015,160404001,160421016,160432004,160003000,
@@ -10,8 +11,7 @@ local LEGEND_LIST={160001000,160205001,160418001,160002000,160421015,160404001,1
 160210058,160440010,160016033,160016034,160440011,160211080,160402039,160017033,160402040,160429003,160320014,
 160320038,160018036,160212004,160212003,160402044,160212075,160212001,160402045,160019063,160019064,160019065,
 160213078,160213082,160402047,160213084,160020059,160213076,160020001,160020040,160020000,160214052,160323029,
-160214020,160021065,160021027,160402052,160215086,160324001,160402055,160324022,160023000,160217058,160024000,
-160024029,160402062,160402064,160219001,160402065,160459002,160459004,160459003,160459025,160219053,160219101}
+160214020}
 -- Returns if a card is a Legend. Can be updated if a GetOT function is added to the core
 function Card.IsLegend(c)
 	return c:IsHasEffect(EFFECT_IS_LEGEND) or c:IsOriginalCode(table.unpack(LEGEND_LIST))
@@ -133,16 +133,12 @@ FLAG_DOUBLE_TRIB_WYRM=160015011 -- Demolition Soldier Ashiba Bikke
 FLAG_DOUBLE_TRIB_FIEND=160210078 -- Royal Rebel's Guardian
 FLAG_DOUBLE_TRIB_SPELLCASTER=160017008 -- Releaslayer
 FLAG_DOUBLE_TRIB_0_ATK=160017041 -- Multiply Skull
-FLAG_DOUBLE_TRIB_0_DEF=160017141
+FLAG_DOUBLE_TRIB_0_DEF=160017141 
 FLAG_DOUBLE_TRIB_EFFECT=160017241
 FLAG_DOUBLE_TRIB_LEGEND=160212047 -- Legend Scout
 FLAG_DOUBLE_TRIB_FAIRY=160019009 -- Dice Key Lilith
 FLAG_DOUBLE_TRIB_OBLIVION=160020004 -- Chaos Coolstars
 FLAG_DOUBLE_TRIB_REQUIEM=160020104
-FLAG_DOUBLE_TRIB_EARTH=160021008 --Mamabot
-FLAG_DOUBLE_TRIB_OTS_OBLIVION=160022005 --OuTerverSe Needle Maker
-FLAG_DOUBLE_TRIB_ZOMBIE=160023012 --Necromaid Guard
-FLAG_DOUBLE_TRIB_INSECT=160024025 --Delirium Teega
 function Card.AddDoubleTribute(c,id,otfilter,eftg,reset,...)
 	for i,flag in ipairs{...} do
 		c:RegisterFlagEffect(flag,reset,0,1)
@@ -295,7 +291,7 @@ end
 --Utility functions for Rush
 --Returns true if a monster can get a piercing effect as per Rush rules
 function Card.CanGetPiercingRush(c)
-	if c:IsHasEffect(EFFECT_CANNOT_ATTACK) or not Duel.IsAbleToEnterBP() then return false end
+	if c:IsHasEffect(EFFECT_CANNOT_ATTACK) then return false end
 	local e=c:IsHasEffect(EFFECT_PIERCE)
 	if e==nil then return true end
     return e:GetReset()==0
@@ -352,4 +348,114 @@ function Duel.ChangeToFaceupAttackOrFacedownDefense(card,tp)
 			Duel.ChangePosition(card,POS_FACEDOWN_DEFENSE)
 		end
 	end
+end
+
+TRIBUTE_SUB_FLAG=160020055
+--Tribute Substitute ("if you would Tribute Summon a X monster in Attack Position, you can Tribute the chosen opponent's monster instead of 1 monster on your field.")
+function Card.AddTributeSubstitute(tc,filter,resets,rc)
+	local e1=nil
+	local e2=nil
+	local e3=nil
+	local stringid=TRIBUTE_SUB_FLAG
+	if rc then stringid=rc:GetCode() end
+	local tp=tc:GetControler()
+	if rc then tp=rc:GetControler() end
+	--Target flag
+	if rc then
+		e1=Effect.CreateEffect(rc)
+	else
+		e1=Effect.CreateEffect(tc)
+	end
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e1:SetCode(TRIBUTE_SUB_FLAG)
+	e1:SetValue(2)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD|resets)
+	tc:RegisterEffect(e1)
+	--Summon proc for Level 5-6 monsters
+	if rc then
+		e2=Effect.CreateEffect(rc)
+	else
+		e2=Effect.CreateEffect(tc)
+	end
+	e2:SetDescription(aux.Stringid(stringid,1))
+	e2:SetType(EFFECT_TYPE_FIELD)
+	e2:SetCode(EFFECT_SUMMON_PROC)
+	e2:SetTargetRange(LOCATION_HAND,0)
+	e2:SetCondition(TributeSub.otcon1)
+	e2:SetTarget(aux.FieldSummonProcTg(TributeSub.ottg1(filter),TributeSub.sumtg1))
+	e2:SetOperation(TributeSub.otop)
+	e2:SetValue(SUMMON_TYPE_TRIBUTE)
+	e2:SetReset(resets)
+	Duel.RegisterEffect(e2,tp)
+	--Summon proc for Level 7+ monsters
+	if rc then
+		e3=Effect.CreateEffect(rc)
+	else
+		e3=Effect.CreateEffect(tc)
+	end
+	e3:SetDescription(aux.Stringid(stringid,1))
+	e3:SetType(EFFECT_TYPE_FIELD)
+	e3:SetCode(EFFECT_SUMMON_PROC)
+	e3:SetTargetRange(LOCATION_HAND,0)
+	e3:SetCondition(TributeSub.otcon2)
+	e3:SetTarget(aux.FieldSummonProcTg(TributeSub.ottg2(filter),TributeSub.sumtg2))
+	e3:SetOperation(TributeSub.otop)
+	e3:SetValue(SUMMON_TYPE_TRIBUTE)
+	e3:SetReset(resets)
+	Duel.RegisterEffect(e3,tp)
+end
+function TributeSub.tgfilter1(c,e)
+	return c:IsReleasable(REASON_SUMMON) and c:IsNotMaximumModeSide()
+end
+function TributeSub.tgfilter2(c,e)
+	return c:IsReleasable(REASON_SUMMON) and c:IsNotMaximumModeSide() and c:IsHasEffect(TRIBUTE_SUB_FLAG) and not c:IsHasEffect(EFFECT_UNRELEASABLE_SUM)
+end
+function TributeSub.tgfilter(c,e,tp)
+	if c:IsControler(tp) then return TributeSub.tgfilter1(c,e) end
+	return TributeSub.tgfilter2(c,e)
+end
+function TributeSub.otcon1(e,c)
+	if c==nil then return true end
+	local tp=c:GetControler()
+	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(TributeSub.tgfilter2,tp,0,LOCATION_MZONE,1,nil,e)
+end
+function TributeSub.ottg1(filter)
+	return function(e,c)
+		return filter(c) and c:IsLevel(5,6)
+	end
+end
+function TributeSub.sumtg1(e,tp,eg,ep,ev,re,r,rp,c)
+	local oppg=Duel.GetMatchingGroup(TributeSub.tgfilter2,tp,0,LOCATION_MZONE,nil,e)
+	local g1=oppg:Select(tp,1,1,true,nil)
+	if not g1 then return false end
+	g1:KeepAlive()
+	e:SetLabelObject(g1)
+	return true
+end
+function TributeSub.otop(e,tp,eg,ep,ev,re,r,rp,c)
+	local sg=e:GetLabelObject()
+	if not sg then return end
+	c:SetMaterial(sg)
+	Duel.Release(sg,REASON_SUMMON)
+	sg:DeleteGroup()
+end
+function TributeSub.otcon2(e,c)
+	if c==nil then return true end
+	local tp=c:GetControler()
+	return Duel.GetLocationCount(tp,LOCATION_MZONE)>-1
+		and Duel.IsExistingMatchingCard(TributeSub.tgfilter,tp,LOCATION_MZONE,LOCATION_MZONE,2,nil,e,tp)
+end
+function TributeSub.ottg2(filter)
+	return function(e,c)
+		return filter(c) and c:IsLevelAbove(7)
+	end
+end
+function TributeSub.sumtg2(e,tp,eg,ep,ev,re,r,rp,c)
+	local sg=Duel.GetMatchingGroup(TributeSub.tgfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,e,tp)
+	local g1=aux.SelectUnselectGroup(sg,1,tp,2,2,aux.ChkfMMZ(1),1,tp,HINTMSG_RELEASE,nil,nil,true)
+	if #g1<2 then return false end
+	g1:KeepAlive()
+	e:SetLabelObject(g1)
+	return true
 end

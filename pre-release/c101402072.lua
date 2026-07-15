@@ -62,7 +62,7 @@ function s.negop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.HintSelection(xyzc)
 		if not xyzc:IsImmuneToEffect(e) then
 			Duel.BreakEffect()
-			Duel.Overlay(xyzc,mc)
+			Duel.Overlay(xyzc,mc,true)
 		end
 	end
 end

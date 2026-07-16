@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--Fusion Materials: "Returned Dino Daneen" + 1 Dinosaur monster
-	Fusion.AddProcMix(c,false,false,29927283,aux.FilterBoolFunctionEx(Card.IsRace,RACE_DINOSAUR))
+	Fusion.AddProcMix(c,true,true,29927283,aux.FilterBoolFunctionEx(Card.IsRace,RACE_DINOSAUR))
 	--If this card is Special Summoned: You can add 1 "GMX" card from your Deck to your hand. You can only use this effect of "Evolved Daneen" once per turn
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))

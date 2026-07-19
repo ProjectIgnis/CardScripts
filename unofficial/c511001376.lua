@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1a:SetCode(EFFECT_CANNOT_DISABLE)
 	c:RegisterEffect(e1a)
 	local e1b=Effect.CreateEffect(c)
-	e1b:SetType(EFFECT_TYPE_FIELD
+	e1b:SetType(EFFECT_TYPE_FIELD)
 	e1b:SetCode(EFFECT_CANNOT_DISEFFECT)
 	e1b:SetRange(LOCATION_MZONE)
 	e1b:SetValue(function(e,ct) return Duel.GetChainInfo(ct,CHAININFO_TRIGGERING_EFFECT):GetHandler()==e:GetHandler() end)

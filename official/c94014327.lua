@@ -59,7 +59,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		for tc in tg:Iter() do
 			if Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
 				tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,1))
-				--ou cannot Special Summon, except Fiend monsters, while you control either of those face-up monsters
+				--You cannot Special Summon, except Fiend monsters, while you control either of those face-up monsters
 				local e1=Effect.CreateEffect(e:GetHandler())
 				e1:SetType(EFFECT_TYPE_FIELD)
 				e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CANNOT_DISABLE)

@@ -2,6 +2,7 @@
 --Dark-Eyes Illusionist Faceless Mage
 --scripted by Naim
 local s,id=GetID()
+local CARD_MIND_SCAN=34298391
 function s.initial_effect(c)
 	--If this card battles a monster, neither can be destroyed by that battle
 	local e1=Effect.CreateEffect(c)
@@ -23,13 +24,13 @@ function s.initial_effect(c)
 	e2:SetOperation(s.effop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={100455007,CARD_TOON_WORLD} --"Mind Scan"
+s.listed_names={CARD_MIND_SCAN,CARD_TOON_WORLD} --"Mind Scan"
 function s.indestg(e,c)
 	local handler=e:GetHandler()
 	return c==handler or c==handler:GetBattleTarget()
 end
 function s.plfilter(c,tp)
-	return c:IsCode(100455007) and not c:IsForbidden() and c:CheckUniqueOnField(tp)
+	return c:IsCode(CARD_MIND_SCAN) and not c:IsForbidden() and c:CheckUniqueOnField(tp)
 end
 function s.thfilter(c)
 	return c:IsMonster() and c:ListsCode(CARD_TOON_WORLD) and c:IsAbleToHand()
@@ -39,7 +40,7 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 		and Duel.IsExistingMatchingCard(s.plfilter,tp,LOCATION_HAND|LOCATION_DECK,0,1,nil,tp)
 		and not Duel.HasFlagEffect(tp,id)
 	local b2=Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_GRAVE,0,1,e:GetHandler())
-		and not Duel.HasFlagEffect(tp,id+100)
+		and not Duel.HasFlagEffect(tp,id+1)
 	if chk==0 then return b1 or b2 end
 	local op=Duel.SelectEffect(tp,
 		{b1,aux.Stringid(id,1)},
@@ -51,7 +52,7 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	elseif op==2 then
 		e:GetHandler():CreateEffectRelation(e)
 		e:SetCategory(CATEGORY_TOHAND+CATEGORY_SPECIAL_SUMMON)
-		Duel.RegisterFlagEffect(tp,id+100,RESET_PHASE|PHASE_END,0,1)
+		Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE|PHASE_END,0,1)
 		Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_GRAVE)
 		Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 	end

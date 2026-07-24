@@ -608,13 +608,13 @@ SET_CLOWN_CREW                    = 0x1d3
 SET_BLITZCLIQUE                   = 0x1d6
 SET_THEOREALIZE                   = 0x1d7
 SET_ALEISTER                      = 0x1d8
+SET_ANGELECHY                     = 0x1dc
 --Released but the official English name is unconfirmed
 SET_DARK_TUNER                    = 0x1d5
 --Pre-release archetypes
 SET_WHITE_KNIGHT_NIGHT            = 0x1d9
 SET_DAEDALUS                      = 0x1da
 SET_ASUTRA                        = 0x1db
-SET_ANGELECHY                     = 0x1dc
 SET_ARS_MAGNA                     = 0x1dd
 SET_DIACTORUS                     = 0x1de
 SET_MEDIUS                        = 0x1df

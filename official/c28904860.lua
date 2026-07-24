@@ -2,6 +2,7 @@
 --Angelechy Bastion
 --Scripted by Hatter
 local s,id=GetID()
+local CARD_ANGELECHY_SHATRANGA=42410161
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--Synchro Summon procedure: 1 Tuner + 1+ non-Tuners
@@ -39,7 +40,7 @@ function s.initial_effect(c)
 	e3:SetValue(aux.indoval)
 	c:RegisterEffect(e3)
 end
-s.listed_names={101305090} --"Angelechy Shatranga"
+s.listed_names={CARD_ANGELECHY_SHATRANGA}
 s.listed_series={SET_ANGELECHY}
 function s.bantg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
@@ -62,7 +63,7 @@ function s.plcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsContains(c) and not c:IsPreviousLocation(LOCATION_SZONE)
 end
 function s.plfilter(c)
-	return c:IsCode(101305090) and not c:IsForbidden()
+	return c:IsCode(CARD_ANGELECHY_SHATRANGA) and not c:IsForbidden()
 end
 function s.pltg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsContinuousSpell()

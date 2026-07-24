@@ -2,7 +2,7 @@
 --Imposter Shift
 --scripted by pyrQ
 local s,id=GetID()
-local TOKEN_IMPOSTER=id+100
+local TOKEN_IMPOSTER=id+1
 function s.initial_effect(c)
 	--Activate
 	local e0=Effect.CreateEffect(c)

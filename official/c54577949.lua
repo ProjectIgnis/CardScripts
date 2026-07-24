@@ -2,7 +2,7 @@
 --Witness of the Ancient
 --Scripted by The Razgriz
 local s,id=GetID()
-local TOKEN_ARC=id+100
+local TOKEN_ARC=id+1
 function s.initial_effect(c)
 	--If you have a Synchro Monster in your field or GY: You can Special Summon this card from your hand
 	local e1=Effect.CreateEffect(c)

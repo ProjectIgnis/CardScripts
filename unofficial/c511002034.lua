@@ -88,8 +88,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	tc:NegateEffects(c)
 	local i=tc:GetFlagEffectLabel(id)
 	local te=Duel.GetChainInfo(i,CHAININFO_TRIGGERING_EFFECT)
-	if not tc:IsImmuneToEffect(e1) and not tc:IsImmuneToEffect(e2) and (not e3 or not tc:IsImmuneToEffect(e3)) and tc:IsRelateToEffect(te) 
-		and Duel.Destroy(tc,REASON_EFFECT)>0 and c:IsRelateToEffect(e) and c:IsFaceup() then
+	if not tc:IsImmuneToEffect(e) and tc:IsRelateToEffect(te) and Duel.Destroy(tc,REASON_EFFECT)>0 and c:IsRelateToEffect(e) and c:IsFaceup() then
 		local atk=tc:GetPreviousAttackOnField()
 		if atk<=0 then return end
 		c:UpdateAttack(atk,RESETS_STANDARD_DISABLE_PHASE_END)

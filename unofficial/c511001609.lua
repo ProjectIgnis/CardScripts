@@ -25,7 +25,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if#g==0 then return end
 	local sum=g:GetSum(Card.GetRank)*300
 	Duel.Recover(p,sum,REASON_EFFECT)
-	--This turn if an Xyz Monster(s) you control leaves the field, you can Special Summon 1 Xyz Monster from your Extra Deck, and attach that monster(s) to it as Xyz Material
+	--This turn if an Xyz Monster(s) you control leaves the field, you can Special Summon 1 Xyz Monster from your Extra Deck, and attach that monster(s) to it as its Xyz Material
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)

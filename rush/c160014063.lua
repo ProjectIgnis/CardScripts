@@ -61,6 +61,7 @@ end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local ep=e:GetHandler():GetControler() --The actual card's controler
 	if not e:GetHandler():IsLocation(LOCATION_SZONE) or not e:GetHandler():IsFacedown() then return end --no need to check if the card is not on the field
+	if e:GetLabelObject():GetLabel()==1 then return end --no need to check where it's sent from if you already found one sent from the deck
 	--Use the label object of e1 to store the cards
 	local g=e:GetLabelObject():GetLabelObject()
 	g:Merge(eg)
@@ -73,7 +74,6 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	--Raise 1 event per chain
 	if Duel.GetCurrentChain()==0 then
-		g:Clear()
 		if Duel.GetFlagEffect(ep,id)==0 then
 			Duel.RaiseEvent(e:GetHandler(),EVENT_CUSTOM+id,e,0,tp,tp,0)
 		end

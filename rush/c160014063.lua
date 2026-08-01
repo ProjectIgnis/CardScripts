@@ -62,8 +62,8 @@ end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local ep=e:GetHandler():GetControler() --The actual card's controler
 	if not e:GetHandler():IsLocation(LOCATION_SZONE) or not e:GetHandler():IsFacedown() then return end --no need to check if the card is not on the field
-	if eg:GetFirst():GetReasonEffect() and eg:GetFirst():GetReasonEffect():GetHandler():IsOriginalCode(id) and eg:GetFirst():GetReasonCard():IsCode(id) then e:GetLabelObject():SetLabel(0) end --Amusi Annoyance itself cannot send from the Deck, so this handles multiple triggers
-	if e:GetLabelObject():GetLabel()==1 then return end --no need to check where it's sent from if you already found one sent from the deck
+	if eg:GetFirst():GetReasonEffect() and eg:GetFirst():GetReasonEffect():GetHandler():IsOriginalCode(id) then e:GetLabelObject():SetLabel(0) end --Amusi Annoyance itself cannot send from the Deck, so this handles multiple triggers
+	if e:GetLabelObject():GetLabel()==1 and Duel.GetCurrentChain()>0 then return end --no need to check where it's sent from if you already found one sent from the deck
 	--Use the label object of e1 to store the cards
 	local g=e:GetLabelObject():GetLabelObject()
 	g:Merge(eg)
@@ -76,7 +76,8 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	--Raise 1 event per chain
 	if Duel.GetCurrentChain()==0 then
-		g:Clear()
+		g=g:Clear()
+		e:GetLabelObject():SetLabelObject(g)
 		if Duel.GetFlagEffect(ep,id)==0 then
 			Duel.RaiseEvent(e:GetHandler(),EVENT_CUSTOM+id,e,0,tp,tp,0)
 		end
@@ -89,11 +90,18 @@ function s.regop2(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsLocation(LOCATION_SZONE) and e:GetHandler():IsFacedown() then --need to check here because face-down Defense Position cards cannot use effects
 		local cg=e:GetLabelObject():GetLabelObject()
 		local ep=e:GetHandler():GetControler()
-		--Raise 1 event after chain
-		if Duel.GetFlagEffect(ep,id)==0 and #cg>0 then
-			Duel.RegisterFlagEffect(ep,id,RESET_CHAIN,0,1)
-			Duel.RaiseEvent(e:GetHandler(),EVENT_CUSTOM+id,e,0,ep,ep,0)
-			cg:Clear() --Must be cleared so multiple copies cannot trigger
+		if #cg>0 then
+			local tc=cg:GetFirst()
+			while tc do
+				if #cg>0 then cg:RemoveCard(tc) end
+				tc=cg:GetFirst()
+			end
+			e:GetLabelObject():SetLabelObject(cg)
+			--Raise 1 event after chain
+			if Duel.GetFlagEffect(ep,id)==0 then
+				Duel.RegisterFlagEffect(ep,id,RESET_CHAIN,0,1)
+				Duel.RaiseEvent(e:GetHandler(),EVENT_CUSTOM+id,e,0,ep,ep,0)
+			end
 		end
 	elseif #e:GetLabelObject():GetLabelObject()>0 then --if the card has seen a card but is not face-down in the S/T zone anymore, it should forget about it
 		e:GetLabelObject():GetLabelObject():Clear()

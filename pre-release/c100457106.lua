@@ -87,7 +87,7 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 		local c=e:GetHandler()
 		local tc=Duel.GetFirstTarget()
 		if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) and tc:IsCanBeXyzMaterial(c,tp,REASON_EFFECT) then
-			Duel.Overlay(c,tc)
+			Duel.Overlay(c,tc,true)
 		end
 	end
 end

@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--Once per turn, if you gain LP: This card gains 1000 ATK and DEF until the end of your opponent's turn.
 	local e2=Effect.CreateEffect(c)
-	e:SetDescription(aux.Stringid(id,0))
+	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DEFCHANGE)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e2:SetCode(EVENT_RECOVER)

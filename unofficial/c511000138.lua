@@ -14,10 +14,10 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_names={25833572,511000137}
+s.listed_names={25833572,26746975} --"Gate Guardian", "Dark Guardian"
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetActivityCount(tp,ACTIVITY_NORMALSUMMON)==0 end
-	Duel.PayLPCost(tp,Duel.GetLP(tp)//2)
+	if chk==0 then return Duel.GetActivityCount(tp,ACTIVITY_NORMALSUMMON)==0 and Duel.GetActivityCount(tp,ACTIVITY_SPSUMMON)==0 end
+	Duel.PayLPCost(tp,math.floor(Duel.GetLP(tp)/2))
 	--Cannot Normal Summon/Set
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -27,15 +27,14 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetTargetRange(1,0)
 	Duel.RegisterEffect(e1,tp)
 	local e2=e1:Clone(e1)
-	e2:SetCode(EFFECT_CANNOT_MSET)
+	e2:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	Duel.RegisterEffect(e2,tp)
 end
-s.listed_names={25833572,511000137} --Guate Guardian, Dark Guardian
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,1,nil,25833572)
 end
 function s.spfilter(c,e,tp)
-	return c:IsCode(511000137) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+	return c:IsCode(26746975) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

@@ -1,79 +1,43 @@
+--ドローラー
 --Drawler
 local s,id=GetID()
 function s.initial_effect(c)
-	--Return to the deck and increase ATK
+	--When this card is Normal Summoned, you can place any number of cards from your hand on the bottom of the Deck (in a random order) to have this card's ATK and DEF become equal to the number of returned cards x 500.
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TODECK+CATEGORY_ATKCHANGE+CATEGORY_DEFCHANGE)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
-	e1:SetTarget(s.hdtg)
-	e1:SetOperation(s.hdop)
+	e1:SetTarget(s.tdatkdeftg)
+	e1:SetOperation(s.tdatkdefop)
 	c:RegisterEffect(e1)
-	--Send destroyed monster to deck
+	--If this card destroys an Attack Position monster by battle, place the destroyed monster on the bottom of the Deck instead of sending it to the Graveyard.
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,1))
-	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
-	e2:SetCategory(CATEGORY_TODECK)
+	e2:SetType(EFFECT_TYPE_FIELD)
+	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e2:SetCode(EFFECT_BATTLE_DESTROY_REDIRECT)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCode(EVENT_BATTLED)
-	e2:SetCondition(s.condition)
-	e2:SetOperation(s.operation)
+	e2:SetTargetRange(LOCATION_MZONE,0)
+	e2:SetTarget(function(e,c) return c==e:GetHandler() and c:GetBattleTarget():IsAttackPos() end)
+	e2:SetValue(LOCATION_DECKBOT)
 	c:RegisterEffect(e2)
 end
-function s.hdtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToDeck,tp,LOCATION_HAND,0,1,nil) end
-	local ct=Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)
+function s.tdatkdeftg(e,tp,eg,ep,ev,re,r,rp,chk)
+	local ct=Duel.GetFieldGroup(tp,LOCATION_HAND,0):FilterCount(Card.IsAbleToDeck,nil)
+	if chk==0 then return ct>0 end
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,ct,0,0)
+end
+function s.tdatkdefop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local hdct=Duel.GetFieldGroup(tp,LOCATION_HAND,0):FilterCount(Card.IsAbleToDeck,nil)
+	if hdct==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local g=Duel.SelectTarget(tp,Card.IsAbleToDeck,tp,LOCATION_HAND,0,1,ct,nil)
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,#g,0,0)
-end
-function s.hdop(e,tp,eg,ep,ev,re,r,rp)
-	local hd=Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)
-	if hd<1 then return end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local sg=Duel.SelectMatchingCard(tp,Card.IsAbleToDeck,tp,LOCATION_HAND,0,1,hd,nil)
-	Duel.SendtoDeck(sg,nil,2,REASON_EFFECT)
-	local ct=sg:FilterCount(Card.IsLocation,nil,LOCATION_DECK)
-	local c=e:GetHandler()
-	if ct~=0 and c:IsRelateToEffect(e) and c:IsFaceup() then
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-		e1:SetRange(LOCATION_MZONE)
-		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetValue(ct*500)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD_DISABLE)
-		c:RegisterEffect(e1)
-		local e2=e1:Clone()
-		e2:SetCode(EFFECT_UPDATE_DEFENSE)
-		c:RegisterEffect(e2)
+	local sg=Duel.SelectMatchingCard(tp,Card.IsAbleToDeck,tp,LOCATION_HAND,0,1,hdct,nil)
+	if Duel.SendtoDeck(sg,nil,SEQ_DECKBOTTOM,REASON_EFFECT)>0 then
+		local ct=sg:FilterCount(Card.IsLocation,nil,LOCATION_DECK)
+		if ct>0 and c:IsRelateToEffect(e) and c:IsFaceup() then
+			c:UpdateAttack(ct*500,RESET_EVENT|RESETS_STANDARD_DISABLE)
+			c:UpdateDefense(ct*500,RESET_EVENT|RESETS_STANDARD_DISABLE)
+		end
 	end
-end
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	if c:IsStatus(STATUS_BATTLE_DESTROYED) then return false end
-	local bc=c:GetBattleTarget()
-	return bc and bc:IsStatus(STATUS_BATTLE_DESTROYED) and bc:GetBattlePosition()==POS_FACEUP_ATTACK and not bc:IsType(TYPE_TOKEN) and bc:GetLeaveFieldDest()==0
-end
-function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local bc=c:GetBattleTarget()
-	if bc:IsRelateToBattle() then
-		local e1=Effect.CreateEffect(c)
-		e1:SetCode(EFFECT_SEND_REPLACE)
-		e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-		e1:SetTarget(s.reptg)
-		e1:SetOperation(s.repop)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE)
-		bc:RegisterEffect(e1)
-	end
-end
-function s.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:GetDestination()==LOCATION_GRAVE and c:IsReason(REASON_BATTLE) end
-	return true
-end
-function s.repop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.SendtoDeck(e:GetHandler(),nil,1,REASON_EFFECT)
 end

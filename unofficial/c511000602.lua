@@ -11,28 +11,29 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 	aux.GlobalCheck(s,function()
-		s[0]=false
-		s[1]=false
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge1:SetCode(EVENT_DAMAGE_STEP_END)
+		ge1:SetCode(EVENT_BATTLE_DESTROYED)
 		ge1:SetOperation(s.checkop)
 		Duel.RegisterEffect(ge1,0)
-		aux.AddValuesReset(function()
-			s[0]=false
-			s[1]=false
-		end)
 	end)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
-	local at=Duel.GetAttackTarget()
-	if at and at:IsRelateToBattle() and not at:IsStatus(STATUS_BATTLE_DESTROYED) then
-		s[0]=true
-		s[1]=true
+	local tc=eg:GetFirst()
+	local bc=tc:GetBattleTarget()
+	local p1=false
+	local p2=false
+	for tc in aux.Next(eg) do
+		if tc:IsPreviousLocation(LOCATION_MZONE) then
+			if bc:IsControler(tp) and tc:IsPreviousControler(1) then p1=true end
+			if bc:IsControler(1-tp) and tc:IsPreviousControler(0) then p2=true end
+		end
 	end
+	if p1 then Duel.RegisterFlagEffect(0,id,RESET_PHASE+PHASE_END,0,1) end
+	if p2 then Duel.RegisterFlagEffect(1,id,RESET_PHASE+PHASE_END,0,1) end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return s[tp]
+	return Duel.GetFlagEffect(tp,id)==0 and Duel.GetCurrentPhase()==PHASE_MAIN2
 end
 function s.spfilter(c,e,tp)
 	return c:IsLevelBelow(4) and c:IsSetCard(SET_ARCANA_FORCE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

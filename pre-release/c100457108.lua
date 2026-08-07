@@ -63,7 +63,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ShuffleHand(tp)
 		Duel.ShuffleDeck(tp)
 		Duel.BreakEffect()
-		Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_EFFECT,nil,REASON_EFFECT)
+		Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_EFFECT|REASON_DISCARD,nil,REASON_EFFECT)
 	end
 end
 function s.setfilter(c)

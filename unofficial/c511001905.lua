@@ -1,18 +1,21 @@
+--デカラケ
 --Giant Racket
 local s,id=GetID()
 function s.initial_effect(c)
-	aux.AddEquipProcedure(c)
-	--
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e3:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
-	e3:SetRange(LOCATION_SZONE)
-	e3:SetCountLimit(1)
-	e3:SetCondition(s.indescon)
-	e3:SetOperation(s.indesop)
-	c:RegisterEffect(e3)
+	--Equip only to "The Big Server"
+	aux.AddEquipProcedure(c,nil,aux.FilterBoolFunction(Card.IsCode,511000644))
+	--Once per turn, the equipped monster cannot be destroyed by battle, and its controller takes no Battle Damage from that battle.
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e1:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
+	e1:SetRange(LOCATION_SZONE)
+	e1:SetCountLimit(1)
+	e1:SetCondition(s.batindesnobatdamcon)
+	e1:SetOperation(s.batindesnobatdamop)
+	c:RegisterEffect(e1)
 end
-function s.indescon(e,tp,eg,ep,ev,re,r,rp)
+s.listed_names={511000644} --"The Big Server"
+function s.batindesnobatdamcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
 	local bc=tc:GetBattleTarget()
 	if tc~=e:GetHandler():GetEquipTarget() then
@@ -58,22 +61,23 @@ function s.indescon(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-function s.indesop(e,tp,eg,ep,ev,re,r,rp)
-	local eq=e:GetHandler():GetEquipTarget()
+function s.batindesnobatdamop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local eq=c:GetEquipTarget()
 	if eq then
-		local e1=Effect.CreateEffect(e:GetHandler())
+		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 		e1:SetValue(1)
-		e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
+		e1:SetReset(RESET_PHASE|PHASE_DAMAGE)
 		eq:RegisterEffect(e1)
-		local e2=Effect.CreateEffect(e:GetHandler())
+		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_FIELD)
 		e2:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
 		e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 		e2:SetTargetRange(1,0)
 		e2:SetValue(1)
-		e2:SetReset(RESET_PHASE+PHASE_DAMAGE)
+		e2:SetReset(RESET_PHASE|PHASE_DAMAGE)
 		Duel.RegisterEffect(e2,eq:GetControler())
 	end
 end

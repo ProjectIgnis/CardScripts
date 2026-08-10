@@ -622,3 +622,4 @@ SET_MEDIUS                        = 0x1df
 SET_MASQUERADE                    = 0x1e0
 SET_SENNET                        = 0x1e1
 SET_DOMINATORS                    = 0x1e2
+SET_XENOVADER                     = 0x1e3

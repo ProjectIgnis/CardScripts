@@ -43,7 +43,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_MZONE)
 end
 function s.thfilter(c)
-	return ((c:IsRace(RACE_PYRO) and c:IsLevelAbove(7)) or c:IsCode(160026050)) and c:IsAbleToHand()
+	return ((c:IsRace(RACE_PYRO) and c:IsLevelAbove(7)) or c:IsCode(160026053)) and c:IsAbleToHand()
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Effect

@@ -623,3 +623,4 @@ SET_MASQUERADE                    = 0x1e0
 SET_SENNET                        = 0x1e1
 SET_DOMINATORS                    = 0x1e2
 SET_XENOVADER                     = 0x1e3
+SET_RAISE_MOON                    = 0x1e4

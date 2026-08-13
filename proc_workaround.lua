@@ -460,6 +460,9 @@ Duel.Overlay=(function()
 			end
 		end
 		local res=oldfunc(xyz_monster,xyz_mats,send_to_grave)
+		for ec in eg:Iter() do
+			ec:SetReasonPlayer(rp)
+		end
 		Duel.RaiseEvent(eg,EVENT_MOVE,re,r,rp,0,0)
 		return res
 	end

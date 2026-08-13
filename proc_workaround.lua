@@ -440,7 +440,7 @@ end
 Duel.Overlay=(function()
 	local oldfunc=Duel.Overlay
 	return function(xyz_monster,xyz_mats,send_to_grave)
-		local eg=Group.FromCards(xyz_mats)
+		local eg=Group.CreateGroup():AddCard(xyz_mats)
 		local re=nil
 		local r=REASON_RULE
 		local rp=PLAYER_NONE

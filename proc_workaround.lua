@@ -440,7 +440,7 @@ end
 Duel.Overlay=(function()
 	local oldfunc=Duel.Overlay
 	return function(xyz_monster,xyz_mats,send_to_grave)
-		local eg=xyz_mats
+		local eg=Group.FromCards(xyz_mats)
 		local re=nil
 		local r=REASON_RULE
 		local rp=PLAYER_NONE
@@ -452,10 +452,10 @@ Duel.Overlay=(function()
 		end
 		if not send_to_grave then
 			if type(xyz_mats)=="Card" then
-				eg=eg+xyz_mats:GetOverlayGroup()
+				eg:Merge(xyz_mats:GetOverlayGroup())
 			elseif type(xyz_mats)=="Group" then
 				for c in xyz_mats:Iter() do
-					eg=eg+c:GetOverlayGroup()
+					eg:Merge(c:GetOverlayGroup())
 				end
 			end
 		end

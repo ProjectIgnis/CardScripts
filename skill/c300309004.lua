@@ -1,6 +1,5 @@
 --Advent of Ra
 --Scripted by The Razgriz
-Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	aux.AddSkillProcedure(c,2,false,nil,nil)
@@ -15,7 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 s.listed_names={CARD_RA}
-s.listed_series={0x584} --"The Winged Dragon of Ra" archetype
+s.listed_series={SET_THE_WINGED_DRAGON_OF_RA} 
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
 	Duel.Hint(HINT_CARD,tp,id)
@@ -29,6 +28,8 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetOperation(s.atkdefop)
 	Duel.RegisterEffect(e1,tp)
 	--Activate 1 of these Skills once per turn
+	--● Reveal 1 "The Winged Dragon of Ra" monster in your hand, place it on the bottom of the Deck, then draw 1 card.
+	--● Once per Duel, you can discard 1 card, then add 1 "The Winged Dragon of Ra" monster from your Deck to your hand.
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EVENT_FREE_CHAIN)
@@ -67,10 +68,10 @@ function s.atkdefop(e,tp,eg,ep,ev,re,r,rp)
 end
 --Skill choice functions
 function s.tdfilter(c)
-	return c:IsTheWingedDragonofRa() and c:IsAbleToDeck() and not c:IsPublic()
+	return c:IsSetCard(SET_THE_WINGED_DRAGON_OF_RA) and c:IsMonster() and c:IsAbleToDeck() and not c:IsPublic()
 end
 function s.thfilter(c)
-	return c:IsTheWingedDragonofRa() and c:IsAbleToHand()
+	return c:IsSetCard(SET_THE_WINGED_DRAGON_OF_RA) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.effcon(e,tp,eg,ep,ev,re,r,rp)
 	local b1=Duel.IsExistingMatchingCard(s.tdfilter,tp,LOCATION_HAND,0,1,nil) and Duel.IsPlayerCanDraw(tp,1)
@@ -88,7 +89,7 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_CARD,tp,id)
 		--You can only use 1 Skill per turn
 		Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1)
-		--Place 1 "The Winged Dragon of Ra" monster on the bottom of the Deck to draw 1 card
+		--Place 1 "The Winged Dragon of Ra" monster on the bottom of the Deck, then draw 1 card
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
 		local tc=Duel.SelectMatchingCard(tp,s.tdfilter,tp,LOCATION_HAND,0,1,1,nil):GetFirst()
 		Duel.ConfirmCards(1-tp,tc)

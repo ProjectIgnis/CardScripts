@@ -624,3 +624,6 @@ SET_SENNET                        = 0x1e1
 SET_DOMINATORS                    = 0x1e2
 SET_XENOVADER                     = 0x1e3
 SET_RAISE_MOON                    = 0x1e4
+SET_DRAGON_CARD                   = 0x1e5
+SET_SUN_GOD                       = 0x1e6
+SET_THE_WINGED_DRAGON_OF_RA       = 0x1e7

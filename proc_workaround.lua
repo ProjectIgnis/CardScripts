@@ -468,6 +468,18 @@ Duel.Overlay=(function()
 	end
 end)()
 
+--Overwritten because it does not set the Reason Player properly, which is required by cards like "Raise Moon Hope Squeeze - Jackpot" (DBGV-JP023)
+Duel.MoveToField=(function()
+	local oldfunc=Duel.MoveToField
+	return function(card,move_player,target_player,destination,position,enabled,zone)
+		local rp=Duel.GetReasonEffect() and Duel.GetReasonPlayer() or PLAYER_NONE
+		card:SetReasonPlayer(rp)
+		local res=oldfunc(card,move_player,target_player,destination,position,enabled,zone)
+		return res
+	end
+end)()
+
+
 --[[
 	Return false by default if the card to attach and the Xyz Monster to attach the card to are the same card
 --]]

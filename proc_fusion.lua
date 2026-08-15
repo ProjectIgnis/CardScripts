@@ -865,9 +865,8 @@ function Fusion.SelectMixRepUnfix(c,tp,mg,sg,mustg,fc,sub,sub2,minc,maxc,chkf,..
 end
 
 
-
-function Fusion.AddContactProc(c,group,op,sumcon,condition,sumtype,desc,cannotBeLizard)
-	if c:IsStatus(STATUS_COPYING_EFFECT) then return end
+function Fusion.CreateContactProc(c,group,op,sumcon,condition,sumtype,desc,cannotBeLizard)
+	if c:IsStatus(STATUS_COPYING_EFFECT) then return nil end
 	local mt=c.__index
 	local t={}
 	if mt.contactfus then
@@ -891,22 +890,27 @@ function Fusion.AddContactProc(c,group,op,sumcon,condition,sumtype,desc,cannotBe
 	e1:SetCondition(Fusion.ContactCon(group,condition))
 	e1:SetTarget(Fusion.ContactTg(group))
 	e1:SetOperation(Fusion.ContactOp(op))
-	c:RegisterEffect(e1)
+	local e2=nil
 	if sumcon then
 		--spsummon condition
-		local e2=Effect.CreateEffect(c)
+		e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 		e2:SetCode(EFFECT_SPSUMMON_CONDITION)
 		if type(sumcon)=='function' then
 			e2:SetValue(sumcon)
 		end
-		c:RegisterEffect(e2)
 	end
 	--lizard check
 	if cannotBeLizard~=false then
 		Auxiliary.addLizardCheck(c)
 	end
+	return e1,e2
+end
+function Fusion.AddContactProc(c,group,op,sumcon,condition,sumtype,desc,cannotBeLizard)
+	local e1,e2=Fusion.CreateContactProc(c,group,op,sumcon,condition,sumtype,desc,cannotBeLizard)
+	if e1 then c:RegisterEffect(e1) end
+	if e2 then c:RegisterEffect(e2) end
 end
 function Fusion.ContactCon(f,fcon)
 	return function(e,c)

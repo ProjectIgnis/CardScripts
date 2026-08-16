@@ -1534,7 +1534,11 @@ function Cost.Discard(filter,other,min,max,op)
 		if chk==0 then return min_count>0 and max_count>=min_count
 			and Duel.IsExistingMatchingCard(filter_final,tp,LOCATION_HAND,0,min_count,exclude,e,tp) end
 		Duel.DiscardHand(tp,filter_final,min_count,max_count,REASON_COST|REASON_DISCARD,exclude,e,tp)
-		if op then op(e,tp,Duel.GetOperatedGroup()) end
+		local cd=e:GetChainData()
+		cd.cost_discarded_cards=Duel.GetOperatedGroup()
+		if op then
+			op(e,tp,cd.cost_discarded_cards)
+		end
 	end
 	return cost_func
 end
@@ -1695,12 +1699,15 @@ function Cost.PayLP(lp_value,pay_until)
 			return function(e,tp,eg,ep,ev,re,r,rp,chk)
 				if chk==0 then return Duel.CheckLPCost(tp,lp_value) end
 				Duel.PayLPCost(tp,lp_value)
+				e:GetChainData().cost_lp_paid=lp_value
 			end
 		else
 			--Pay a fraction of your LP (half, one third, etc)
 			return function(e,tp,eg,ep,ev,re,r,rp,chk)
 				if chk==0 then return true end
-				Duel.PayLPCost(tp,math.floor(Duel.GetLP(tp)*lp_value))
+				local cost_lp_paid=math.floor(Duel.GetLP(tp)*lp_value)
+				Duel.PayLPCost(tp,cost_lp_paid)
+				e:GetChainData().cost_lp_paid=cost_lp_paid
 			end
 		end
 	else
@@ -1709,6 +1716,7 @@ function Cost.PayLP(lp_value,pay_until)
 			local pay_lp_value=math.floor(Duel.GetLP(tp)-lp_value)
 			if chk==0 then return pay_lp_value>0 and Duel.CheckLPCost(tp,pay_lp_value) end
 			Duel.PayLPCost(tp,pay_lp_value)
+			e:GetChainData().cost_lp_paid=pay_lp_value
 		end
 	end
 end

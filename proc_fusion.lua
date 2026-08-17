@@ -865,8 +865,8 @@ function Fusion.SelectMixRepUnfix(c,tp,mg,sg,mustg,fc,sub,sub2,minc,maxc,chkf,..
 	return res
 end
 
-
-function Fusion.CreateContactProc(c,group,op,sumcon,condition,sumtype,desc,cannotBeLizard)
+Fusion.CreateContactProc = aux.FunctionWithNamedArgs(
+function(c,group,op,sumcon,condition,sumtype,desc,cannotBeLizard,summonToPlayer,summonToZones)
 	if c:IsStatus(STATUS_COPYING_EFFECT) then return nil end
 	local mt=c.__index
 	local t={}
@@ -883,13 +883,23 @@ function Fusion.CreateContactProc(c,group,op,sumcon,condition,sumtype,desc,canno
 		e1:SetDescription(desc)
 	end
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
-	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
+	local effectFlag=EFFECT_FLAG_UNCOPYABLE
 	e1:SetRange(LOCATION_EXTRA)
-	if sumtype then
+	if summonToPlayer then
+		e1:SetTargetRange(POS_FACEUP,summonToPlayer)
+		effectFlag=effectFlag|EFFECT_FLAG_SPSUM_PARAM
+	end
+	e1:SetProperty(effectFlag)
+	if summonToZones then
+		sumtype=sumtype or 0
+		e1:SetValue(function(e,c)
+			return sumtype,ZONES_MMZ,true
+		end)
+	elseif sumtype then
 		e1:SetValue(sumtype)
 	end
-	e1:SetCondition(Fusion.ContactCon(group,condition))
-	e1:SetTarget(Fusion.ContactTg(group))
+	e1:SetCondition(Fusion.ContactCon(group,condition,summonToPlayer,summonToZones))
+	e1:SetTarget(Fusion.ContactTg(group,summonToPlayer,summonToZones))
 	e1:SetOperation(Fusion.ContactOp(op))
 	local e2=nil
 	if sumcon then
@@ -907,27 +917,36 @@ function Fusion.CreateContactProc(c,group,op,sumcon,condition,sumtype,desc,canno
 		Auxiliary.addLizardCheck(c)
 	end
 	return e1,e2
-end
-function Fusion.AddContactProc(c,group,op,sumcon,condition,sumtype,desc,cannotBeLizard)
-	local e1,e2=Fusion.CreateContactProc(c,group,op,sumcon,condition,sumtype,desc,cannotBeLizard)
+end,"handler","materialFilter","materialOperation","sumcon","condition","sumtype","desc","cannotBeLizard","summonToPlayer","summonToZones")
+
+function Fusion.AddContactProc(c,...)
+	local tab=type(c)=="table"
+	local e1,e2=Fusion.CreateContactProc(tab and c or c,...)
+	c=(tab and c["handler"] or c)
 	if e1 then c:RegisterEffect(e1) end
 	if e2 then c:RegisterEffect(e2) end
 end
-function Fusion.ContactCon(f,fcon)
+function Fusion.ContactCon(f,fcon,summonToPlayer,summonToZones)
 	return function(e,c)
 		if c==nil then return true end
 		local m=f(e:GetHandlerPlayer())
-		local chkf=c:GetControler()|FUSPROC_CONTACTFUS
-		return c:IsFacedown() and c:CheckFusionMaterial(m,nil,chkf) and (not fcon or fcon(e:GetHandlerPlayer()))
+		Fusion.UseZone=summonToZones
+		local chkp=summonToPlayer==1 and (1-c:GetControler()) or c:GetControler()
+		local chkf=chkp|FUSPROC_CONTACTFUS
+		local res=c:IsFacedown() and c:CheckFusionMaterial(m,nil,chkf) and (not fcon or fcon(e:GetHandlerPlayer()))
+		Fusion.UseZone=nil
+		return res
 	end
 end
-function Fusion.ContactTg(f)
+function Fusion.ContactTg(f,summonToPlayer,summonToZones)
 	return function(e,tp,eg,ep,ev,re,r,rp)
 		local m=f(tp)
-		local chkf=tp|FUSPROC_CONTACTFUS
+		Fusion.UseZone=summonToZones
+		local chkp=summonToPlayer==1 and (1-tp) or tp
+		local chkf=chkp|FUSPROC_CONTACTFUS
 		local sg=Duel.SelectFusionMaterial(tp,e:GetHandler(),m,nil,chkf)
+		Fusion.UseZone=nil
 		if #sg>0 then
-			sg:KeepAlive()
 			e:SetLabelObject(sg)
 			return true
 		else return false end
@@ -938,7 +957,6 @@ function Fusion.ContactOp(f)
 		local g=e:GetLabelObject()
 		c:SetMaterial(g)
 		f(g,tp,c)
-		g:DeleteGroup()
 	end
 end
 --Fusion monster, name + name

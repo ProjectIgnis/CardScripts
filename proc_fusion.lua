@@ -6,6 +6,13 @@ if not Fusion then
 	Fusion = aux.FusionProcedure
 end
 
+local ForcedUseZone=nil
+local function GetForcedZone(chkfnf)
+	local zone=(chkfnf>>40)&0xff
+	if zone==0 then zone=0xff end
+	return zone
+end
+
 --The current reason effect that corresponds to the effect that is performing the fusion summon
 Fusion.SummonEffect=nil
 local function returnAndClearSummonEffect(value)
@@ -98,6 +105,7 @@ function Fusion.ConditionMix(insf,sub,...)
 				end
 				Fusion.SummonEffect=summonEff
 				local chkf=chkfnf&0xff
+				ForcedUseZone=GetForcedZone(chkfnf)
 				local notfusion=(chkfnf&FUSPROC_NOTFUSION)~=0
 				local contact=(chkfnf&FUSPROC_CONTACTFUS)~=0
 				local listedmats=(chkfnf&FUSPROC_LISTEDMATS)~=0
@@ -130,6 +138,7 @@ function Fusion.OperationMix(insf,sub,...)
 	return	function(e,tp,eg,ep,ev,re,r,rp,gc,chkfnf,summonEff)
 				Fusion.SummonEffect=summonEff
 				local chkf=chkfnf&0xff
+				ForcedUseZone=GetForcedZone(chkfnf)
 				local c=e:GetHandler()
 				local tp=c:GetControler()
 				local notfusion=(chkfnf&FUSPROC_NOTFUSION)~=0
@@ -212,12 +221,11 @@ Fusion.CheckExact=nil
 Fusion.CheckMin=nil
 Fusion.CheckMax=nil
 Fusion.CheckAdditional=nil
-Fusion.UseZone=nil
 --if sg1 is subset of sg2 then not Fusion.CheckAdditional(tp,sg1,fc) -> not Fusion.CheckAdditional(tp,sg2,fc)
 function Fusion.CheckMixGoal(tp,sg,fc,sub,sub2,contact,sumtype,chkf,...)
 	local g=Group.CreateGroup()
 	return sg:IsExists(Fusion.CheckMix,1,nil,sg,g,fc,sub,sub2,contact,sumtype,tp,...) and
-		(chkf==PLAYER_NONE or (fc:IsLocation(LOCATION_EXTRA) and Duel.GetLocationCountFromEx(chkf,tp,sg,fc,Fusion.UseZone) or Duel.GetMZoneCount(chkf,sg,tp))>0)
+		(chkf==PLAYER_NONE or (fc:IsLocation(LOCATION_EXTRA) and Duel.GetLocationCountFromEx(chkf,tp,sg,fc,ForcedUseZone) or Duel.GetMZoneCount(chkf,sg,tp))>0)
 		and (not Fusion.CheckAdditional or Fusion.CheckAdditional(tp,sg,fc,sumtype,tp))
 end
 function Fusion.SelectMix(c,tp,mg,sg,mustg,fc,sub,sub2,contact,sumtype,chkf,...)
@@ -322,6 +330,7 @@ function Fusion.ConditionMixRep(insf,sub,fun1,minc,maxc,...)
 				end
 				Fusion.SummonEffect=summonEff
 				local chkf=chkfnf&0xff
+				ForcedUseZone=GetForcedZone(chkfnf)
 				local notfusion=(chkfnf&FUSPROC_NOTFUSION)~=0
 				local contact=(chkfnf&FUSPROC_CONTACTFUS)~=0
 				local listedmats=(chkfnf&FUSPROC_LISTEDMATS)~=0
@@ -354,6 +363,7 @@ function Fusion.OperationMixRep(insf,sub,fun1,minc,maxc,...)
 	return	function(e,tp,eg,ep,ev,re,r,rp,gc,chkfnf,summonEff)
 				Fusion.SummonEffect=summonEff
 				local chkf=chkfnf&0xff
+				ForcedUseZone=GetForcedZone(chkfnf)
 				local c=e:GetHandler()
 				local tp=c:GetControler()
 				local notfusion=(chkfnf&FUSPROC_NOTFUSION)~=0
@@ -428,7 +438,7 @@ end
 function Fusion.CheckMixRepGoal(tp,sg,mustg,fc,sub,sub2,contact,sumtype,chkf,fun1,minc,maxc,...)
 	if #sg<minc+#{...} or #sg>maxc+#{...} then return false end
 	local g=Group.CreateGroup()
-	return Fusion.CheckMixRep(sg,g,fc,sub,sub2,contact,sumtype,chkf,tp,fun1,minc,maxc,...) and (chkf==PLAYER_NONE or Duel.GetLocationCountFromEx(chkf,tp,sg,fc,Fusion.UseZone)>0)
+	return Fusion.CheckMixRep(sg,g,fc,sub,sub2,contact,sumtype,chkf,tp,fun1,minc,maxc,...) and (chkf==PLAYER_NONE or Duel.GetLocationCountFromEx(chkf,tp,sg,fc,ForcedUseZone)>0)
 		and (not Fusion.CheckAdditional or Fusion.CheckAdditional(tp,sg,fc,sumtype,tp))
 end
 function Fusion.CheckMixRepTemplate(c,cond,tp,mg,sg,mustg,g,fc,sub,sub2,contact,sumtype,chkf,fun1,minc,maxc,...)
@@ -466,7 +476,7 @@ function Fusion.CheckMixRepSelected(c,...)
 end
 function Fusion.CheckSelectMixRep(tp,mg,sg,mustg,g,fc,sub,sub2,contact,sumtype,chkf,fun1,minc,maxc,...)
 	if Fusion.CheckAdditional and not Fusion.CheckAdditional(tp,g,fc,sumtype,tp) then return false end
-	if chkf==PLAYER_NONE or Duel.GetLocationCountFromEx(chkf,tp,g,fc,Fusion.UseZone)>0 then
+	if chkf==PLAYER_NONE or Duel.GetLocationCountFromEx(chkf,tp,g,fc,ForcedUseZone)>0 then
 		if minc<=0 and #{...}==0 and g:Includes(mustg) then return true end
 		return mg:IsExists(Fusion.CheckSelectMixRepAll,1,g,tp,mg,sg,mustg,g,fc,sub,sub2,contact,sumtype,chkf,fun1,minc,maxc,...)
 	else
@@ -615,6 +625,7 @@ function Fusion.ConditionMixRepUnfix(insf,sub,minc,maxc,...)
 				end
 				Fusion.SummonEffect=summonEff
 				local chkf=chkfnf&0xff
+				ForcedUseZone=GetForcedZone(chkfnf)
 				local c=e:GetHandler()
 				local tp=c:GetControler()
 				local notfusion=(chkfnf&FUSPROC_NOTFUSION)~=0
@@ -646,6 +657,7 @@ function Fusion.OperationMixRepUnfix(insf,sub,minc,maxc,...)
 	return	function(e,tp,eg,ep,ev,re,r,rp,gc,chkfnf,summonEff)
 				Fusion.SummonEffect=summonEff
 				local chkf=chkfnf&0xff
+				ForcedUseZone=GetForcedZone(chkfnf)
 				local c=e:GetHandler()
 				local tp=c:GetControler()
 				local notfusion=(chkfnf&FUSPROC_NOTFUSION)~=0
@@ -755,7 +767,7 @@ function Fusion.CheckMixRepUnfixSelected(c,...)
 end
 function Fusion.CheckSelectMixRepUnfix(tp,mg,sg,mustg,g,fc,sub,sub2,chkf,minc,maxc,...)
 	if Fusion.CheckAdditional and not Fusion.CheckAdditional(tp,g,fc,sumtype,tp) then return false end
-	if chkf==PLAYER_NONE or Duel.GetLocationCountFromEx(chkf,tp,g,fc,Fusion.UseZone)>0 then
+	if chkf==PLAYER_NONE or Duel.GetLocationCountFromEx(chkf,tp,g,fc,ForcedUseZone)>0 then
 		if minc<=0 and g:Includes(mustg) then return true end
 		return mg:IsExists(Fusion.CheckSelectMixRepUnfixAll,1,g,tp,mg,sg,mustg,g,fc,sub,sub2,chkf,minc,maxc,...)
 	else
@@ -930,22 +942,18 @@ function Fusion.ContactCon(f,fcon,summonToPlayer,summonToZones)
 	return function(e,c)
 		if c==nil then return true end
 		local m=f(e:GetHandlerPlayer())
-		Fusion.UseZone=summonToZones
 		local chkp=summonToPlayer==1 and (1-c:GetControler()) or c:GetControler()
-		local chkf=chkp|FUSPROC_CONTACTFUS
+		local chkf=chkp|FUSPROC_CONTACTFUS|((summonToZones and summonToZones or 0)<<40)
 		local res=c:IsFacedown() and c:CheckFusionMaterial(m,nil,chkf) and (not fcon or fcon(e:GetHandlerPlayer()))
-		Fusion.UseZone=nil
 		return res
 	end
 end
 function Fusion.ContactTg(f,summonToPlayer,summonToZones)
 	return function(e,tp,eg,ep,ev,re,r,rp)
 		local m=f(tp)
-		Fusion.UseZone=summonToZones
 		local chkp=summonToPlayer==1 and (1-tp) or tp
-		local chkf=chkp|FUSPROC_CONTACTFUS
+		local chkf=chkp|FUSPROC_CONTACTFUS|((summonToZones and summonToZones or 0)<<40)
 		local sg=Duel.SelectFusionMaterial(tp,e:GetHandler(),m,nil,chkf)
-		Fusion.UseZone=nil
 		if #sg>0 then
 			e:SetLabelObject(sg)
 			return true

@@ -1,9 +1,10 @@
 --不死なる太陽神
---Immortal Sun God
+--The Immortal Sun God
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special Summon 1 "The Winged Dragon of Ra" monster from your GY or banishment, ignoring its Summoning conditions, then if you Special Summoned "The Winged Dragon of Ra" by this effect, send it to the GY, and if you do, you can Special Summon 1 "The Winged Dragon of Ra" monster from your Extra Deck. During the End Phase, send the monsters Special Summoned by this effect to the GY
+	--Special Summon 1 "The Winged Dragon of Ra" monster from your GY or banishment, ignoring its Summoning conditions, then if you Special Summoned "The Winged Dragon of Ra" by this effect, you can send it to the GY, and if you do, Special Summon 1 "The Winged Dragon of Ra" monster from your Extra Deck. During the End Phase, send the monsters Special Summoned by this effect to the GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOGRAVE)
@@ -41,9 +42,9 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_MZONE)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
-function s.extraspfilter(c,e,tp)
+function s.extraspfilter(c,e,tp,exc)
 	return c:IsSetCard(SET_THE_WINGED_DRAGON_OF_RA) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
+		and Duel.GetLocationCountFromEx(tp,tp,exc,c)>0
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
@@ -52,15 +53,16 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if sc and Duel.SpecialSummonStep(sc,0,tp,tp,true,false,POS_FACEUP)
 		and sc:IsCode(CARD_RA) then
 		Duel.SpecialSummonComplete()
-		Duel.BreakEffect()
-		if Duel.SendtoGrave(sc,REASON_EFFECT)>0 and sc:IsLocation(LOCATION_GRAVE)
-			and Duel.IsExistingMatchingCard(s.extraspfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp)
+		if sc:IsAbleToGrave() and Duel.IsExistingMatchingCard(s.extraspfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,sc)
 			and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
-			sc=nil
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-			sc=Duel.SelectMatchingCard(tp,s.extraspfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp):GetFirst()
-			if sc then
-				Duel.SpecialSummonStep(sc,0,tp,tp,false,false,POS_FACEUP)
+			Duel.BreakEffect()
+			if Duel.SendtoGrave(sc,REASON_EFFECT)>0 and sc:IsLocation(LOCATION_GRAVE) then
+				sc=nil
+				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+				sc=Duel.SelectMatchingCard(tp,s.extraspfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp):GetFirst()
+				if sc then
+					Duel.SpecialSummonStep(sc,0,tp,tp,false,false,POS_FACEUP)
+				end
 			end
 		end
 	end

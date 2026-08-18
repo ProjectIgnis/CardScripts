@@ -23,7 +23,7 @@ function s.initial_effect(c)
 		return e:GetHandler():IsPreviousLocation(LOCATION_HAND|LOCATION_ONFIELD)
 	end)
 	c:RegisterEffect(e1c)
-	--During the End Phase, if "Immortal Sun God" was sent to your GY this turn: You can add this card from your GY to your hand
+	--During the End Phase, if "The Immortal Sun God" was sent to your GY this turn: You can add this card from your GY to your hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TOHAND)

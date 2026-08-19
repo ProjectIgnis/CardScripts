@@ -48,7 +48,13 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	while #sg<2 do
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
 		local sc=Group.SelectUnselect(g,sg,tp,false,false,2,2)
-		if sc~=c then sg:AddCard(sc) end
+		if not sg:IsContains(sc) then
+			sg:AddCard(sc)
+			g:RemoveCard(sc)
+		elseif sc~=c then
+			sg:RemoveCard(sc)
+			g:AddCard(sc)
+		end
 	end
 	Duel.SendtoGrave(sg,REASON_COST|REASON_DISCARD)
 end

@@ -23,9 +23,6 @@ function s.initial_effect(c)
 	e2a:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_EVENT_PLAYER)
 	e2a:SetCode(EVENT_CUSTOM+id)
 	e2a:SetRange(LOCATION_SZONE)
-	e2a:SetCondition(function(e,tp,eg,ep,ev,re,r,rp)
-		return not Duel.IsDamageStep()
-	end)
 	e2a:SetTarget(s.efftg)
 	e2a:SetOperation(s.effop)
 	c:RegisterEffect(e2a)
@@ -35,6 +32,7 @@ function s.initial_effect(c)
 	e2b:SetCode(EVENT_TOSS_DICE)
 	e2b:SetRange(LOCATION_SZONE)
 	e2b:SetOperation(function(e,tp,eg,ep,ev,re,r,rp)
+		if Duel.IsDamageStep() then return end
 		local c=e:GetHandler()
 		local dice_results={Duel.GetDiceResult()}
 		local self_dice_count=aux.GetDiceCountSelfFromEv(ev)
@@ -114,7 +112,11 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 		--● They destroy 1 monster their opponent controls, and if they do, they negate the effects of 1 monster their opponent controls
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 		local dg=Duel.SelectMatchingCard(tp,s.desfilter,tp,0,LOCATION_MZONE,1,1,nil,tp)
-		if #dg==0 then return end
+		if #dg==0 then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+			dg=Duel.SelectMatchingCard(tp,nil,tp,0,LOCATION_MZONE,1,1,nil)
+			if #dg==0 then return end
+		end
 		Duel.HintSelection(dg)
 		if Duel.Destroy(dg,REASON_EFFECT)>0 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_NEGATE)

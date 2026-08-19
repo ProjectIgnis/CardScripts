@@ -73,7 +73,7 @@ function s.tgfilter(c,e,tp,opp,mmz_chk)
 end
 function s.thspfilter(c,e,tp,mmz_chk,attr)
 	return c:IsFacedown() and c:IsSetCard(SET_XENOVADER) and c:IsAttribute(attr) and s.attr_list[tp]&c:GetAttribute()==0
-		and (c:IsAbleToHand() or (mmz_chk and Duel.IsPlayerCanSpecialSummonMonster(tp,c:GetOriginalCodeRule())))
+		and (c:IsAbleToHand() or (mmz_chk and c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
 end
 function s.thsptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local mmz_chk=Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -93,6 +93,7 @@ function s.thsptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_REMOVED)
 end
 function s.thspop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		local mmz_chk=Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -104,7 +105,7 @@ function s.thspop(e,tp,eg,ep,ev,re,r,rp)
 			s.attr_list[tp]=s.attr_list[tp]|attr
 			aux.ToHandOrElse(sc,tp,
 				function()
-					return mmz_chk and Duel.IsPlayerCanSpecialSummonMonster(tp,sc:GetOriginalCodeRule())
+					return mmz_chk and sc:IsCanBeSpecialSummoned(e,0,tp,false,false)
 				end,
 				function()
 					Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP)
@@ -112,10 +113,13 @@ function s.thspop(e,tp,eg,ep,ev,re,r,rp)
 				aux.Stringid(id,3)
 			)
 			if sc:IsLocation(LOCATION_HAND) then Duel.ConfirmCards(1-tp,sc) end
+			for _,str in aux.GetAttributeStrings(attr) do
+				c:RegisterFlagEffect(0,RESETS_STANDARD_PHASE_END,EFFECT_FLAG_CLIENT_HINT,1,0,str)
+			end
 		end
 	end
 	--You cannot activate cards or effects for the rest of this turn, except "Xenovader△" cards or effects
-	local e1=Effect.CreateEffect(e:GetHandler())
+	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,4))
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)

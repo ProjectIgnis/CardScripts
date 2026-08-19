@@ -71,8 +71,7 @@ function s.selfspop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.spfilter(c,e,tp)
 	return c:IsFacedown() and c:IsLevelAbove(5) and c:IsSetCard(SET_XENOVADER)
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,c:GetOriginalCodeRule())
-		-- and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

@@ -3,7 +3,7 @@
 --Scripted by The Razgriz
 local s,id=GetID()
 function s.initial_effect(c)
-	--Take control of all your opponent's monsters in this card's column
+	--ake control of all your opponent's monsters in this card's column
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_CONTROL)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	e1:SetHintTiming(0,TIMING_STANDBY_PHASE|TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E)
 	c:RegisterEffect(e1)
-	--If this Set card in its owner's control has left the field by an opponent's effect, and is now in the GY or banished: You can Special Summon this card as an Effect Monster (Fiend/DARK/Level 10/ATK 4000/DEF 4000) with the following effect (this card is NOT treated as a Trap) 
+	--If this Set card in its owner's control has left the field by an opponent's effect, and is now in the GY or banished: You can Special Summon this card as an Effect Monster (Fiend/DARK/Level 10/ATK 4000/DEF 4000) with the following effect (this card is NOT treated as a Trap)
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -55,8 +55,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local colg=c:GetColumnGroup():Match(s.ctrlfilter,nil,tp)
 	local ctrl_colg=colg:Filter(Card.IsAbleToChangeControler,nil)
 	local ctrl_colg_count=#ctrl_colg
-	local mzone_count=Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_CONTROL)
-	if ctrl_colg_count>0 and ctrl_colg_count==#colg and (mzone_count<=0 or mzone_count>=ctrl_colg_count) then
+	if ctrl_colg_count>0 and ctrl_colg_count==#colg then
 		Duel.GetControl(ctrl_colg,tp)
 	end
 end

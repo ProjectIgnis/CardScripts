@@ -15,13 +15,15 @@ function s.initial_effect(c)
 	c:RegisterEffect(e0a)
 	--Must be either Fusion Summoned, or Special Summoned (from your Extra Deck) to your opponent's Main Monster Zone by sending the above cards from either field to the GY, but if you Special Summon this card with the second method, you can only Special Summon once for the rest of this turn
 	c:AddMustBeFusionSummoned()
-	local e0b=Fusion.CreateContactProc(c,s.contactfil,s.contactop,nil,nil,1,aux.Stringid(id,0),false)
-	e0b:SetProperty(EFFECT_FLAG_SPSUM_PARAM+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e0b:SetTargetRange(POS_FACEUP,1)
-	e0b:SetValue(function(e,c)
-		return 1,ZONES_MMZ
-	end)
-	c:RegisterEffect(e0b)
+	Fusion.AddContactProc({
+		handler=c,
+		materialFilter=s.contactfil,
+		materialOperation=s.contactop,
+		sumtype=1,
+		desc=aux.Stringid(id,0),
+		summonToPlayer=1,
+		summonToZones=ZONES_MMZ
+	})
 	--You can only Special Summon "The Sun God's Steelcage - Lava Golem" once per turn this way, no matter which method you use
 	local e0c=Effect.CreateEffect(c)
 	e0c:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)

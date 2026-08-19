@@ -905,7 +905,7 @@ function(c,group,op,sumcon,condition,sumtype,desc,cannotBeLizard,summonToPlayer,
 	if summonToZones then
 		sumtype=sumtype or 0
 		e1:SetValue(function(e,c)
-			return sumtype,ZONES_MMZ,true
+			return sumtype,summonToZones,true
 		end)
 	elseif sumtype then
 		e1:SetValue(sumtype)

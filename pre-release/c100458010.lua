@@ -30,9 +30,9 @@ function s.initial_effect(c)
 	e2:SetHintTiming(0,TIMING_STANDBY_PHASE|TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E)
 	c:RegisterEffect(e2)
 end
-s.listed_series={SET_SENNET}
+s.listed_series={SET_ZENET}
 function s.ctfilter(c)
-	return (c:IsType(TYPE_NORMAL) or (c:IsSetCard(SET_SENNET) and c:IsRitualMonster())) and c:IsFaceup()
+	return (c:IsType(TYPE_NORMAL) or (c:IsSetCard(SET_ZENET) and c:IsRitualMonster())) and c:IsFaceup()
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=Duel.GetMatchingGroupCount(s.ctfilter,tp,LOCATION_MZONE,0,nil)

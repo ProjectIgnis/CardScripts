@@ -42,7 +42,7 @@ function s.initial_effect(c)
 	e3:SetHintTiming(0,TIMING_STANDBY_PHASE|TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E)
 	c:RegisterEffect(e3)
 end
-s.listed_series={SET_ASUTRA}
+s.listed_series={SET_ASHTRA}
 function s.spconfilter(c)
 	return c:IsFacedown() and (c:IsAbleToHandAsCost() or c:IsAbleToExtraAsCost())
 end
@@ -69,7 +69,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	end
 end
 function s.setfilter(c)
-	return c:IsSetCard(SET_ASUTRA) and c:IsSpellTrap() and c:IsSSetable()
+	return c:IsSetCard(SET_ASHTRA) and c:IsSpellTrap() and c:IsSSetable()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_DECK,0,1,nil) end

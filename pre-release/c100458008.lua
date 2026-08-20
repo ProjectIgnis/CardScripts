@@ -38,7 +38,7 @@ function s.initial_effect(c)
 		end)()
 	end)
 end
-s.listed_series={SET_SENNET}
+s.listed_series={SET_ZENET}
 local LOCATIONS_HAND_DECK_ONFIELD_GRAVE=LOCATION_HAND|LOCATION_DECK|LOCATION_ONFIELD|LOCATION_GRAVE
 function s.showfilter(c)
 	return c:IsOriginalType(TYPE_NORMAL) and (c:IsFaceup() or not c:IsOnField())
@@ -48,7 +48,7 @@ function s.exspfilter(c,e,tp)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.deckgyspfilter(c,e,tp)
-	return ((c:IsSetCard(SET_SENNET) and c:IsLocation(LOCATION_DECK)) or (c:IsType(TYPE_NORMAL) and c:IsLocation(LOCATION_GRAVE)))
+	return ((c:IsSetCard(SET_ZENET) and c:IsLocation(LOCATION_DECK)) or (c:IsType(TYPE_NORMAL) and c:IsLocation(LOCATION_GRAVE)))
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

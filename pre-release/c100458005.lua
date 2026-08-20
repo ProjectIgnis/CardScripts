@@ -39,10 +39,10 @@ function s.initial_effect(c)
 	e3:SetHintTiming(0,TIMING_STANDBY_PHASE|TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E)
 	c:RegisterEffect(e3)
 end
-s.listed_series={SET_SENNET}
+s.listed_series={SET_ZENET}
 s.listed_names={id}
 function s.thfilter(c)
-	return c:IsSetCard(SET_SENNET) and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsSetCard(SET_ZENET) and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_GRAVE,0,1,nil) end

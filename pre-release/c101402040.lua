@@ -33,9 +33,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.setop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={SET_ASUTRA}
+s.listed_series={SET_ASHTRA}
 function s.tgfilter(c)
-	return c:IsSetCard(SET_ASUTRA) and c:IsAbleToGrave()
+	return c:IsSetCard(SET_ASHTRA) and c:IsAbleToGrave()
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil)
@@ -56,7 +56,7 @@ function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.setfilter(c,allow_any_trap)
 	return c:IsTrap() and c:IsFaceup() and c:IsSSetable()
-		and (c:IsSetCard(SET_ASUTRA) or (allow_any_trap and c:IsLocation(LOCATION_GRAVE)))
+		and (c:IsSetCard(SET_ASHTRA) or (allow_any_trap and c:IsLocation(LOCATION_GRAVE)))
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local allow_any_trap=Duel.GetMatchingGroupCount(Card.IsFacedown,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)>=3

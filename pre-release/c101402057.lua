@@ -44,9 +44,9 @@ function s.initial_effect(c)
 	e2d:SetCondition(aux.AND(s.changeposcon,s.rthcon))
 	c:RegisterEffect(e2d)
 end
-s.listed_series={SET_ASUTRA}
+s.listed_series={SET_ASHTRA}
 function s.thfilter(c)
-	return c:IsSetCard(SET_ASUTRA) and not c:IsFieldSpell() and c:IsAbleToHand()
+	return c:IsSetCard(SET_ASHTRA) and not c:IsFieldSpell() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local search_group=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_DECK,0,nil)
@@ -73,7 +73,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.rthcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_ASUTRA),tp,LOCATION_MZONE,0,1,eg)
+	return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_ASHTRA),tp,LOCATION_MZONE,0,1,eg)
 		and Duel.IsExistingMatchingCard(Card.IsFacedown,tp,LOCATION_ONFIELD,0,1,eg)
 end
 function s.spsuccesscon(e,tp,eg,ep,ev,re,r,rp)

@@ -14,15 +14,15 @@ function s.initial_effect(c)
 	e1:SetHintTiming(0,TIMING_STANDBY_PHASE|TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E)
 	c:RegisterEffect(e1)
 end
-s.listed_series={SET_ASUTRA}
+s.listed_series={SET_ASHTRA}
 function s.desconfilter(c)
-	return c:IsSetCard(SET_ASUTRA) and c:IsMonster() and c:IsFaceup()
+	return c:IsSetCard(SET_ASHTRA) and c:IsMonster() and c:IsFaceup()
 end
 function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) end
 	--● Special Summon this card as a Normal Monster (Spellcaster/Tuner/DARK/Level 1/ATK 0/DEF 0) (this card is NOT treated as a Trap), then immediately after this effect resolves, you can Synchro Summon 1 Synchro Monster
 	local b1=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and e:IsHasType(EFFECT_TYPE_ACTIVATE)
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id,SET_ASUTRA,TYPE_MONSTER|TYPE_NORMAL|TYPE_TUNER,0,0,1,RACE_SPELLCASTER,ATTRIBUTE_DARK)
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,id,SET_ASHTRA,TYPE_MONSTER|TYPE_NORMAL|TYPE_TUNER,0,0,1,RACE_SPELLCASTER,ATTRIBUTE_DARK)
 	--● If you have an "Asutra" monster in your field or GY: Target 1 monster your opponent controls; destroy it
 	local b2=Duel.IsExistingMatchingCard(s.desconfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,nil)
 		and Duel.IsExistingTarget(nil,tp,0,LOCATION_MZONE,1,nil)
@@ -51,7 +51,7 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 	if cd.choice==1 then
 		--● Special Summon this card as a Normal Monster (Spellcaster/Tuner/DARK/Level 1/ATK 0/DEF 0) (this card is NOT treated as a Trap), then immediately after this effect resolves, you can Synchro Summon 1 Synchro Monster
 		local c=e:GetHandler()
-		if c:IsRelateToEffect(e) and Duel.IsPlayerCanSpecialSummonMonster(tp,id,SET_ASUTRA,TYPE_MONSTER|TYPE_NORMAL|TYPE_TUNER,0,0,1,RACE_SPELLCASTER,ATTRIBUTE_DARK) then
+		if c:IsRelateToEffect(e) and Duel.IsPlayerCanSpecialSummonMonster(tp,id,SET_ASHTRA,TYPE_MONSTER|TYPE_NORMAL|TYPE_TUNER,0,0,1,RACE_SPELLCASTER,ATTRIBUTE_DARK) then
 			c:AddMonsterAttribute(TYPE_NORMAL|TYPE_TUNER)
 			Duel.SpecialSummonStep(c,0,tp,tp,true,false,POS_FACEUP)
 			c:AddMonsterAttributeComplete()

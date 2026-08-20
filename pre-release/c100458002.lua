@@ -31,13 +31,13 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tdop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={SET_SENNET}
+s.listed_series={SET_ZENET}
 local LOCATIONS_HAND_DECK_ONFIELD_GRAVE=LOCATION_HAND|LOCATION_DECK|LOCATION_ONFIELD|LOCATION_GRAVE
 function s.showfilter(c)
 	return c:IsOriginalType(TYPE_NORMAL) and (c:IsFaceup() or not c:IsOnField())
 end
 function s.setfilter(c)
-	return c:IsSetCard(SET_SENNET) and c:IsTrap() and c:IsSSetable()
+	return c:IsSetCard(SET_ZENET) and c:IsTrap() and c:IsSSetable()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.showfilter,tp,LOCATIONS_HAND_DECK_ONFIELD_GRAVE,0,1,nil)

@@ -29,10 +29,10 @@ function s.initial_effect(c)
 	e2:SetHintTiming(0,TIMING_STANDBY_PHASE|TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E)
 	c:RegisterEffect(e2)
 end
-s.listed_series={SET_SENNET}
+s.listed_series={SET_ZENET}
 s.listed_names={id}
 function s.negconfilter(c)
-	return (c:IsType(TYPE_NORMAL) or (c:IsSetCard(SET_SENNET) and c:IsRitualMonster())) and c:IsFaceup()
+	return (c:IsType(TYPE_NORMAL) or (c:IsSetCard(SET_ZENET) and c:IsRitualMonster())) and c:IsFaceup()
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)
@@ -55,7 +55,7 @@ function s.setcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsOriginalType,TYPE_NORMAL),tp,LOCATION_ONFIELD,0,nil):GetSum(Card.GetAttack)>3000
 end
 function s.setfilter(c)
-	return c:IsSetCard(SET_SENNET) and c:IsSpellTrap() and not c:IsCode(id) and c:IsSSetable()
+	return c:IsSetCard(SET_ZENET) and c:IsSpellTrap() and not c:IsCode(id) and c:IsSSetable()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_DECK|LOCATION_GRAVE,0,1,e:GetHandler()) end

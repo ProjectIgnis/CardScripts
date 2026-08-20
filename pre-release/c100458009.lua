@@ -7,7 +7,7 @@ function s.initial_effect(c)
 	local ritual_params={
 		lvtype=RITPROC_GREATER,
 		filter=function(c)
-			return c:IsSetCard(SET_SENNET)
+			return c:IsSetCard(SET_ZENET)
 		end,
 		location=LOCATION_HAND|LOCATION_GRAVE,
 		matfilter=function(c)
@@ -76,7 +76,7 @@ function s.initial_effect(c)
 	end)
 	c:RegisterEffect(e2)
 end
-s.listed_series={SET_SENNET}
+s.listed_series={SET_ZENET}
 function s.eqfilter(c,tp)
 	return c:IsType(TYPE_NORMAL) and not c:IsForbidden() and c:CheckUniqueOnField(tp)
 end

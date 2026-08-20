@@ -37,7 +37,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.setop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={SET_ASUTRA}
+s.listed_series={SET_ASHTRA}
 function s.spconfilter(c)
 	return c:IsFacedown() and (c:IsAbleToHandAsCost() or c:IsAbleToExtraAsCost())
 end
@@ -64,7 +64,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	end
 end
 function s.thfilter(c)
-	return not c:IsRace(RACE_WYRM) and c:IsSetCard(SET_ASUTRA) and c:IsMonster() and c:IsAbleToHand()
+	return not c:IsRace(RACE_WYRM) and c:IsSetCard(SET_ASHTRA) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -80,7 +80,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.setcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsLocation(LOCATION_GRAVE) and r==REASON_SYNCHRO and c:GetReasonCard():IsSetCard(SET_ASUTRA)
+	return c:IsLocation(LOCATION_GRAVE) and r==REASON_SYNCHRO and c:GetReasonCard():IsSetCard(SET_ASHTRA)
 end
 function s.setfilter(c)
 	return c:IsNormalTrap() and c:IsSSetable()

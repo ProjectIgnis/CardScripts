@@ -49,9 +49,9 @@ function s.initial_effect(c)
 		end)()
 	end)
 end
-s.listed_series={SET_SENNET}
+s.listed_series={SET_ZENET}
 function s.thfilter(c)
-	return c:IsSetCard(SET_SENNET) and c:IsMonster() and c:IsAbleToHand()
+	return c:IsSetCard(SET_ZENET) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -66,7 +66,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spconfilter(c,tp)
-	return c:IsPreviousControler(tp) and c:IsSetCard(SET_SENNET) and c:IsRitualMonster()
+	return c:IsPreviousControler(tp) and c:IsSetCard(SET_ZENET) and c:IsRitualMonster()
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return not eg:IsContains(e:GetHandler()) and eg:IsExists(s.spconfilter,1,nil,tp)

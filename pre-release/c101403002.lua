@@ -44,7 +44,7 @@ function s.initial_effect(c)
 		ge1:SetCode(EVENT_TO_GRAVE)
 		ge1:SetOperation(function(e,tp,eg,ep,ev,re,r,rp)
 			for tc in eg:Iter() do
-				if tc:IsCode(CARD_IMMORTAL_SUN_GOD) then 
+				if tc:IsCode(CARD_THE_IMMORTAL_SUN_GOD) then 
 					Duel.RegisterFlagEffect(tc:GetControler(),id,RESET_PHASE|PHASE_END,0,1)
 				end
 			end
@@ -52,7 +52,7 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge1,0)
 	end)
 end
-s.listed_names={CARD_IMMORTAL_SUN_GOD}
+s.listed_names={CARD_THE_IMMORTAL_SUN_GOD}
 s.listed_series={SET_SUN_GOD}
 function s.setfilter(c)
 	return c:IsSetCard(SET_SUN_GOD) and c:IsSpellTrap() and c:IsSSetable()

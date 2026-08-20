@@ -34,7 +34,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thsetop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={SET_ASUTRA}
+s.listed_series={SET_ASHTRA}
 function s.bancost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.AND(Card.IsTrap,Card.IsAbleToRemoveAsCost),tp,LOCATION_GRAVE,0,1,nil) end
 	local max_banish_count=Duel.GetMatchingGroupCount(Card.IsAbleToRemove,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
@@ -59,7 +59,7 @@ function s.banop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.setfilter(c,e,tp,mmz_chk)
-	if not (c:IsSetCard(SET_ASUTRA) and c:IsFaceup()) then return end
+	if not (c:IsSetCard(SET_ASHTRA) and c:IsFaceup()) then return end
 	if c:IsMonster() then
 		return c:IsAbleToHand() or (mmz_chk and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE))
 	elseif c:IsTrap() then

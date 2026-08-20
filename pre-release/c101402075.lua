@@ -14,11 +14,10 @@ function s.initial_effect(c)
 	e1:SetHintTiming(0,TIMING_STANDBY_PHASE|TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E)
 	c:RegisterEffect(e1)
 end
-s.listed_series={SET_ASUTRA}
 function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	--● Special Summon this card as a Normal Monster (Aqua/Tuner/WATER/Level 1/ATK 0/DEF 0) (this card is NOT treated as a Trap), then immediately after this effect resolves, you can Synchro Summon 1 Synchro Monster
 	local b1=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and e:IsHasType(EFFECT_TYPE_ACTIVATE)
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id,SET_ASUTRA,TYPE_MONSTER|TYPE_NORMAL|TYPE_TUNER,0,0,1,RACE_AQUA,ATTRIBUTE_WATER)
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,id,SET_ASHTRA,TYPE_MONSTER|TYPE_NORMAL|TYPE_TUNER,0,0,1,RACE_AQUA,ATTRIBUTE_WATER)
 	--● When your opponent activates a Spell/Trap Card or effect and they control no face-down cards: Negate that effect
 	local b2_event,_,event_p,event_v,event_reff=Duel.CheckEvent(EVENT_CHAINING,true)
 	local b2=b2_event and event_p==1-tp and event_reff:IsSpellTrapEffect() and Chain.IsDisablable(event_v)
@@ -45,7 +44,7 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 	if cd.choice==1 then
 		--● Special Summon this card as a Normal Monster (Aqua/Tuner/WATER/Level 1/ATK 0/DEF 0) (this card is NOT treated as a Trap), then immediately after this effect resolves, you can Synchro Summon 1 Synchro Monster
 		local c=e:GetHandler()
-		if c:IsRelateToEffect(e) and Duel.IsPlayerCanSpecialSummonMonster(tp,id,SET_ASUTRA,TYPE_MONSTER|TYPE_NORMAL|TYPE_TUNER,0,0,1,RACE_AQUA,ATTRIBUTE_WATER) then
+		if c:IsRelateToEffect(e) and Duel.IsPlayerCanSpecialSummonMonster(tp,id,SET_ASHTRA,TYPE_MONSTER|TYPE_NORMAL|TYPE_TUNER,0,0,1,RACE_AQUA,ATTRIBUTE_WATER) then
 			c:AddMonsterAttribute(TYPE_NORMAL|TYPE_TUNER)
 			Duel.SpecialSummonStep(c,0,tp,tp,true,false,POS_FACEUP)
 			c:AddMonsterAttributeComplete()

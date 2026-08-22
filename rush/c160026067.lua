@@ -37,7 +37,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			g=g:AddMaximumCheck()
 			Duel.BreakEffect()
 			Duel.SendtoHand(g,nil,REASON_EFFECT)
-			Duel.SkipPhase(Duel.GetTurnPlayer(),Duel.GetCurrentPhase(),RESET_PHASE|PHASE_END,1)
 		end
 	end
+	Duel.SkipPhase(Duel.GetTurnPlayer(),Duel.GetCurrentPhase(),RESET_PHASE|PHASE_END,1)
 end

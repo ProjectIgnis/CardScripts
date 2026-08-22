@@ -29,7 +29,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,1-tp) and Duel.IsMainPhase() and Duel.IsTurnPlayer(1-tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToDeck,tp,0,LOCATION_GRAVE,2,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToDeck,tp,0,LOCATION_GRAVE,1,nil) end
 end
 function s.spfilter(c,e,tp)
 	return c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_EARTH) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
@@ -37,12 +37,14 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Effect
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToDeck,tp,0,LOCATION_GRAVE,2,2,nil)
+	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToDeck,tp,0,LOCATION_GRAVE,1,2,nil)
 	if #g==0 then return end
 	Duel.HintSelection(g)
 	Duel.BreakEffect()
-	Duel.SendtoDeck(g,nil,SEQ_DECKTOP,REASON_EFFECT)
-	Duel.SortDecktop(tp,1-tp,2)
+	local ct=Duel.SendtoDeck(g,nil,SEQ_DECKTOP,REASON_EFFECT)
+	if ct>1 then
+		Duel.SortDecktop(tp,1-tp,ct)
+	end
 	local ft=Duel.GetMZoneCount(tp)
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
 	local g2=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_HAND,0,nil,e,tp)

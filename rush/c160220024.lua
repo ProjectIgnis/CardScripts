@@ -67,7 +67,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.HintSelection(g)
 	if #g>0 then
 		Duel.ChangePosition(g,POS_FACEUP_DEFENSE,POS_FACEDOWN_DEFENSE,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK)
-		local g=Duel.GetMatchingGroup(Card.IsMonster,0,LOCATION_GRAVE,0,nil)
+		local g=Duel.GetMatchingGroup(Card.IsMonster,tp,LOCATION_GRAVE,0,nil)
 		if g:GetClassCount(Card.GetRace)>=3 then
 			c:AddPiercing(RESETS_STANDARD_PHASE_END)
 		end

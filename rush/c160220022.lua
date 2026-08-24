@@ -24,10 +24,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.atkval(e,c)
-	local g=Duel.GetMatchingGroup(Card.IsMonster,0,LOCATION_GRAVE,0,nil)
+	local g=Duel.GetMatchingGroup(Card.IsMonster,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil)
 	return g:GetClassCount(Card.GetRace)*100
 end
 function s.con(e)
-	local g=Duel.GetMatchingGroup(Card.IsMonster,0,LOCATION_GRAVE,0,nil)
+	local g=Duel.GetMatchingGroup(Card.IsMonster,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil)
 	return g:GetClassCount(Card.GetRace)>=3
 end

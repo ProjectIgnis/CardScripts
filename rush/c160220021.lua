@@ -40,7 +40,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local dg2=dg:AddMaximumCheck()
 	Duel.HintSelection(dg2)
 	if Duel.Destroy(dg,REASON_EFFECT)>0 then
-		local g=Duel.GetMatchingGroup(Card.IsMonster,0,LOCATION_GRAVE,0,nil)
+		local g=Duel.GetMatchingGroup(Card.IsMonster,tp,LOCATION_GRAVE,0,nil)
 		if g:GetClassCount(Card.GetRace)>=3 then
 			local e0=Effect.CreateEffect(c)
 			e0:SetType(EFFECT_TYPE_SINGLE)

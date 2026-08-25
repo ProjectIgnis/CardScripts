@@ -20,7 +20,6 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCondition(s.con)
-	e2:SetValue(aux.indoval)
 	c:RegisterEffect(e2)
 end
 function s.atkval(e,c)

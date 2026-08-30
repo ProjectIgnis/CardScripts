@@ -612,8 +612,8 @@ SET_ALEISTER                      = 0x1d8
 SET_ANGELECHY                     = 0x1dc
 --Released but the official English name is unconfirmed
 SET_DARK_TUNER                    = 0x1d5
---Pre-release archetypes
 SET_WHITE_KNIGHT_NIGHT            = 0x1d9
+--Pre-release archetypes
 SET_DAEDALUS                      = 0x1da
 SET_ASHTRA                        = 0x1db
 SET_ARS_MAGNA                     = 0x1dd

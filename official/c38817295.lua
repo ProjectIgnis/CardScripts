@@ -34,7 +34,7 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		and Duel.CheckLPCost(tp,800)
 	--● When your opponent activates a monster effect in the hand or GY: Negate that effect
 	local event_chk,_,event_player,event_value,event_reff=Duel.CheckEvent(EVENT_CHAINING,true)
-	local option_2=not Duel.HasFlagEffect(tp,id+100)
+	local option_2=not Duel.HasFlagEffect(tp,id+1)
 		and event_chk and event_player==1-tp and event_reff:IsMonsterEffect()
 		and Chain.IsTriggeringLocation(event_value,LOCATION_HAND|LOCATION_GRAVE)
 		and Duel.IsChainDisablable(event_value)
@@ -55,7 +55,7 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		Duel.SetOperationInfo(0,CATEGORY_DISABLE,tg,#tg,tp,0)
 	elseif choice==2 then
 		--● When your opponent activates a monster effect in the hand or GY: Negate that effect
-		Duel.RegisterFlagEffect(tp,id+100,RESET_PHASE|PHASE_END,0,1)
+		Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE|PHASE_END,0,1)
 		e:SetProperty(0)
 		cd.event_value=event_value
 		Duel.SetOperationInfo(0,CATEGORY_DISABLE,eg,1,tp,0)

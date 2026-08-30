@@ -12,7 +12,9 @@ function s.initial_effect(c)
 	e1:SetCode(EVENT_PHASE+PHASE_END)
 	e1:SetRange(LOCATION_HAND|LOCATION_GRAVE)
 	e1:SetCountLimit(1,{id,0})
-	e1:SetCondition(function() return Duel.HasFlagEffect(0,id) end)
+	e1:SetCondition(function(e,tp,eg,ep,ev,re,r,rp)
+		return Duel.HasFlagEffect(0,id)
+	end)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
@@ -31,11 +33,11 @@ function s.initial_effect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCode(EVENT_BATTLE_DESTROYED)
 		ge1:SetOperation(function(e,tp,eg,ep,ev,re,r,rp)
-				Duel.RegisterFlagEffect(0,id,RESET_PHASE|PHASE_END,0,1)
-				if eg:IsExists(Card.IsPreviousCodeOnField,1,nil,id) then
-					Duel.RegisterFlagEffect(1,id,RESET_PHASE|PHASE_END,0,1)
-				end
-			end)
+			Duel.RegisterFlagEffect(0,id,RESET_PHASE|PHASE_END,0,1)
+			if eg:IsExists(Card.IsPreviousCodeOnField,1,nil,id) then
+				Duel.RegisterFlagEffect(1,id,RESET_PHASE|PHASE_END,0,1)
+			end
+		end)
 		Duel.RegisterEffect(ge1,0)
 	end)
 end

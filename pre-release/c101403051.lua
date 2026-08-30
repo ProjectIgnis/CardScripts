@@ -3,7 +3,6 @@
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
-	--Special Summon 1 "The Winged Dragon of Ra" monster from your GY or banishment, ignoring its Summoning conditions, then if you Special Summoned "The Winged Dragon of Ra" by this effect, send it to the GY, and if you do, you can Special Summon 1 "The Winged Dragon of Ra" monster from your Extra Deck. During the End Phase, send the monsters Special Summoned by this effect to the GY
 	--Special Summon 1 "The Winged Dragon of Ra" monster from your GY or banishment, ignoring its Summoning conditions, then if you Special Summoned "The Winged Dragon of Ra" by this effect, you can send it to the GY, and if you do, Special Summon 1 "The Winged Dragon of Ra" monster from your Extra Deck. During the End Phase, send the monsters Special Summoned by this effect to the GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))

@@ -3,7 +3,7 @@
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
-	--Prevent battle destruction and Special Summon 1 Normal Monster
+	--Pay 2000 LP, then declare 1 Normal Monster Card name; the declared Normal Monsters and "Primite" monsters you control cannot be destroyed by battle (until the end of your opponent's turn), then if you control no monsters, you can Special Summon 1 declared Normal Monster from your Deck in Defense Position
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	--Banish 1 monster on the field
+	--If your opponent Normal Summons a monster: You can banish this card from your GY, then target 1 Normal Monster you control or in your GY; banish 1 monster from the field with less ATK than that monster
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_REMOVE)
@@ -31,10 +31,7 @@ end
 s.listed_series={SET_PRIMITE}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	s.announce_filter={TYPE_NORMAL,OPCODE_ISTYPE}
-	local code=Duel.AnnounceCard(tp,s.announce_filter)
-	Duel.SetTargetParam(code)
-	Duel.SetOperationInfo(0,CATEGORY_ANNOUNCE,nil,0,tp,ANNOUNCE_CARD_FILTER)
+	Duel.AnnounceCard(tp,DF.IsType(TYPE_NORMAL))
 	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function s.spfilter(c,e,tp,code)
@@ -42,8 +39,8 @@ function s.spfilter(c,e,tp,code)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local code=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
-	--Your Normal Monsters with the declared name and "Primite" monsters cannot be destroyed by battle
+	local code=e:GetChainData().announced_card
+	--The declared Normal Monsters and "Primite" monsters you control cannot be destroyed by battle (until the end of your opponent's turn)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)

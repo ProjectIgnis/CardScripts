@@ -7,8 +7,8 @@ function s.initial_effect(c)
 	--Special Summon this card by sending 1 face-up "Jinzo" you control to the Graveyard
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
-	e2:SetCode(EFFECT_SPSUMMON_PROC)
 	e2:SetProperty(EFFECT_FLAG_UNCOPYABLE)
+	e2:SetCode(EFFECT_SPSUMMON_PROC)
 	e2:SetRange(LOCATION_HAND)
 	e2:SetCondition(s.hspcon)
 	e2:SetTarget(s.hsptg)
@@ -17,8 +17,8 @@ function s.initial_effect(c)
 	--Trap Cards cannot be activated and the effects of all Trap Cards on the field are negated.
 	local e3a=Effect.CreateEffect(c)
 	e3a:SetType(EFFECT_TYPE_FIELD)
-	e3a:SetCode(EFFECT_CANNOT_TRIGGER)
 	e3a:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
+	e3a:SetCode(EFFECT_CANNOT_TRIGGER)
 	e3a:SetRange(LOCATION_MZONE)
 	e3a:SetTargetRange(LOCATION_ONFIELD,LOCATION_ONFIELD)
 	e3a:SetTarget(aux.TargetBoolFunction(Card.IsTrap))
@@ -45,16 +45,6 @@ function s.initial_effect(c)
 	e3d:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e3d:SetTarget(aux.TargetBoolFunction(Card.IsTrap))
 	c:RegisterEffect(e3d)
-	--Once per turn: You can destroy as many face-up Traps on the field as possible, and if you do, inflict 300 damage to your opponent for each card destroyed.
-	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(id,0))
-	e4:SetCategory(CATEGORY_DESTROY+CATEGORY_DAMAGE)
-	e4:SetType(EFFECT_TYPE_IGNITION)
-	e4:SetRange(LOCATION_MZONE)
-	e4:SetCountLimit(1)
-	e4:SetTarget(s.destg)
-	e4:SetOperation(s.desop)
-	c:RegisterEffect(e4)
 	-- Once per turn: You can look at all cards in your opponent's hand and Spell & Trap Card Zones, and if there are any Trap Cards among them, you can destroy those Trap Cards. Inflict 300 damage to your opponent for each card destroyed by this effect.
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(35803249,0))
@@ -102,19 +92,23 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.NegateEffect(ev)
 	end
 end
+function s.descffilter(c)
+	return c:IsLocation(LOCATION_HAND) or (c:IsFacedown() and c:IsLocation(LOCATION_STZONE))
+end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.TRUE,tp,0,LOCATION_SZONE|LOCATION_HAND,1,nil) end
-	local sg=Duel.GetMatchingGroup(Card.IsTrap,tp,0,LOCATION_SZONE|LOCATION_HAND,nil)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,sg,#sg,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,#sg*300)
+	if chk==0 then return Duel.IsExistingMatchingCard(nil,tp,0,LOCATION_HAND|LOCATION_STZONE,1,nil) end
+	Duel.SetPossibleOperationInfo(0,CATEGORY_DESTROY,nil,1,tp,0)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,0)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	local hg=Duel.GetFieldGroup(tp,0,LOCATION_HAND)
-	local sg=Duel.GetMatchingGroup(Card.IsFacedown,tp,0,LOCATION_SZONE,nil)
-	hg:Merge(sg)
-	Duel.ConfirmCards(tp,hg)
-	Duel.ShuffleHand(1-tp)
-	local dg=hg:Filter(Card.IsTrap,nil)
+	local g=Duel.GetFieldGroup(tp,0,LOCATION_HAND|LOCATION_STZONE)
+	if #g==0 then return end
+	local cg=g:Filter(s.descffilter,nil)
+	Duel.ConfirmCards(tp,cg)
+	local dg=g:Filter(Card.IsTrap,nil)
 	local ct=Duel.Destroy(dg,REASON_EFFECT)
-	Duel.Damage(1-tp,ct*300,REASON_EFFECT)
+	if ct>0 then 
+		Duel.Damage(1-tp,ct*300,REASON_EFFECT)
+	end
+	Duel.ShuffleHand(1-tp)
 end

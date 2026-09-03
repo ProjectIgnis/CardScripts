@@ -18,5 +18,5 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function s.filter(e,c)
-	return not c:IsControler(e:GetHandlerPlayer())
+	return not (c:IsControler(e:GetHandlerPlayer()) and c:IsLocation(LOCATION_MZONE))
 end

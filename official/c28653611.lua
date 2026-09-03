@@ -83,7 +83,7 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 	elseif op==2 then
 		--Special Summon 1 Level 6 or higher FIRE monster from your hand, Deck, or GY, but if you Special Summoned a non-Fiend monster by this effect, negate its effects
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter),tp,LOCATION_HAND|LOCATION_DECK|LOCATION_GRAVE,0,1,1,nil,e,tp):GetFirst()
 		if sc and Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP)>0 and not sc:IsRace(RACE_FIEND) then
 			--Negate its effects

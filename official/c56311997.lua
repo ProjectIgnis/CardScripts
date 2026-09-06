@@ -78,7 +78,7 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	c:RegisterEffect(e1)
 end
 function s.spfilter(c,e,tp)
-	return (c:IsSetCard(SET_GMX) or c:IsRace(RACE_DINOSAUR)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return (c:IsSetCard(SET_GMX) or c:IsRace(RACE_DINOSAUR)) and c:IsFaceup() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE|LOCATION_REMOVED) and s.spfilter(chkc,e,tp) end

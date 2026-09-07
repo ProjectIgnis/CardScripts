@@ -3,24 +3,24 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_ACTIVATE)
+	e0:SetCode(EVENT_FREE_CHAIN)
+	e0:SetHintTiming(0,TIMING_BATTLE_START)
+	c:RegisterEffect(e0)
+	--When an opponent's monster declares an attack on a monster you control: You can target 1 "Revival Jam" you control; switch the attack target to that target.
 	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(0,TIMING_BATTLE_START)
+	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e1:SetCode(EVENT_ATTACK_ANNOUNCE)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e1:SetRange(LOCATION_SZONE)
+	e1:SetCondition(s.atkcon)
+	e1:SetTarget(s.atktg2)
+	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
-	--Switch the attack target to 1 "Revival Jam" you control
-	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,0))
-	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e2:SetCode(EVENT_ATTACK_ANNOUNCE)
-	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e2:SetRange(LOCATION_SZONE)
-	e2:SetCondition(s.atkcon)
-	e2:SetTarget(s.atktg2)
-	e2:SetOperation(s.atkop)
-	c:RegisterEffect(e2)
 end
-s.listed_names={31709826}
+s.listed_names={31709826} --"Revival Jam"
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker():IsControler(1-tp) and Duel.GetAttackTarget()~=nil
 end

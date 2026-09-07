@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
 	e3:SetCode(EFFECT_CHANGE_TYPE)
-	e3:SetValue(TYPE_NORMAL)
+	e3:SetValue(TYPE_MONSTER|TYPE_NORMAL)
 	c:RegisterEffect(e3)
 end
 s.listed_names={511009536}

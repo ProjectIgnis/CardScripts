@@ -2,11 +2,12 @@
 --Spiral Spear Strike
 local s,id=GetID()
 function s.initial_effect(c)
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--pierce
+	--Piercing battle damage
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_PIERCE)
@@ -14,7 +15,7 @@ function s.initial_effect(c)
 	e2:SetTargetRange(LOCATION_MZONE,0)
 	e2:SetTarget(s.pietg)
 	c:RegisterEffect(e2)
-	--shuffle
+	--Draw 2 cards, then discard 1 card
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_DRAW+CATEGORY_HANDES)
@@ -26,7 +27,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.operation)
 	c:RegisterEffect(e3)
 end
-s.listed_names={CARD_GAIA_CHAMPION}
+s.listed_names={6368038,16589042,CARD_GAIA_CHAMPION}
 function s.pietg(e,c)
 	return c:IsCode(6368038,16589042,CARD_GAIA_CHAMPION)
 end
@@ -41,7 +42,6 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_HANDES,nil,0,tp,1)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) or Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)==0 then return end
 	if Duel.Draw(tp,2,REASON_EFFECT)==2 then
 		Duel.ShuffleHand(tp)
 		Duel.BreakEffect()

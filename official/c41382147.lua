@@ -2,6 +2,7 @@
 --Rallis the Star Bird
 local s,id=GetID()
 function s.initial_effect(c)
+	--Gains ATK equal to the Level of the monster that it battles x 200 during the Damage Step only
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -10,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.atkcon)
 	e1:SetValue(s.atkval)
 	c:RegisterEffect(e1)
-	--remove
+	--Remove from play this card at the end of the Damage Step and return it to your side of the field
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
@@ -25,6 +26,7 @@ function s.atkcon(e)
 	local ph=Duel.GetCurrentPhase()
 	return (ph==PHASE_DAMAGE or ph==PHASE_DAMAGE_CAL)
 		and (Duel.GetAttacker()==e:GetHandler() or Duel.GetAttackTarget()==e:GetHandler()) and Duel.GetAttackTarget()~=nil
+		and Duel.GetAttackTarget():IsFaceup()
 end
 function s.atkval(e,c)
 	return e:GetHandler():GetBattleTarget():GetLevel()*200

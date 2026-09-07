@@ -2,8 +2,9 @@
 --Cloning
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Special Summon 1 "Clone Token"
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
@@ -22,6 +23,7 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ec=eg:GetFirst()
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and ec:IsFaceup() and ec:IsLocation(LOCATION_MZONE) 	
 		and ec:GetOriginalLevel()>0
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0,TYPES_TOKEN,ec:GetBaseAttack(),ec:GetBaseDefense(),
 			ec:GetOriginalLevel(),ec:GetOriginalRace(),ec:GetOriginalAttribute()) end

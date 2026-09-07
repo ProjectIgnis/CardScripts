@@ -1,4 +1,4 @@
---
+--Ｒ．Ｂ．ラムダブレード
 --R.B. Lambda Blade
 --Scripted by Hatter
 local s,id=GetID()

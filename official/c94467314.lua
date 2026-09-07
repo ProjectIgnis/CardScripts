@@ -1,4 +1,4 @@
---JP name
+--悪鵺死ノ雨
 --Rain of Frogs
 local s,id=GetID()
 function s.initial_effect(c)

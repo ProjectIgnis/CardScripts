@@ -1,4 +1,4 @@
---JP Name
+--Ｒ．Ｂ．ジャンプ・ナンバー
 --R.B. Stage Landing
 --Scripted by The Razgriz
 local s,id=GetID()

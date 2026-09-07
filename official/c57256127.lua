@@ -1,4 +1,4 @@
---JP name
+--カップリング・デーモン
 --Shipping Archfiend
 --scripted by pyrQ
 local s,id=GetID()

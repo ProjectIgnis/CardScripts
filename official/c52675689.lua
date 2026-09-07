@@ -2,7 +2,8 @@
 --Invitation to a Dark Sleep
 local s,id=GetID()
 function s.initial_effect(c)
-	--While this card is in the Monster Zone, 1 monster your opponent controls cannot attack
+	--If this card is Normal or Flip Summoned: target 1 monster your opponent controls; this card gains this effect.
+	--● The targeted monster cannot attack
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)

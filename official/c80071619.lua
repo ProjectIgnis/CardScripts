@@ -1,4 +1,4 @@
---JP name
+--Ｒ．Ｂ．シェパード・クルーク
 --R.B. Shepherd's Crook
 --Scripted by The Razgriz
 local s,id=GetID()

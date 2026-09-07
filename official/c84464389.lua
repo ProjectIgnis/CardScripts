@@ -62,7 +62,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.eqfilter(c,tp)
-	return c:IsAttribute(ATTRIBUTE_DARK)  and c:IsLinkMonster() and c:IsFaceup() and c:CheckUniqueOnField(tp)
+	return c:IsAttribute(ATTRIBUTE_DARK) and c:IsLinkMonster() and c:IsFaceup() and c:CheckUniqueOnField(tp)
 		and not c:IsForbidden()
 end
 function s.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

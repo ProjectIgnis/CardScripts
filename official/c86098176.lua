@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	local e2b=e2a:Clone()
 	e2b:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e2b)
-	--Add 1 "Assault Slash" or "Assault Counter"  from your Deck to your hand
+	--Add 1 "Assault Slash" or "Assault Counter" from your Deck to your hand
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)

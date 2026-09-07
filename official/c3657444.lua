@@ -2,7 +2,7 @@
 --Cyber Valley
 local s,id=GetID()
 function s.initial_effect(c)
-	--Draw 1 card and end the Battle Phase
+	--When this card is targeted for an attack: You can banish this card; draw 1 card, then end the Battle Phase
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DRAW)
@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.drawtg1)
 	e1:SetOperation(s.drawop1)
 	c:RegisterEffect(e1)
-	--Draw 2 cards
+	--You can target 1 face-up monster you control and this card; banish both those targets, then draw 2 cards
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_REMOVE+CATEGORY_DRAW)
@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.drawtg2)
 	e2:SetOperation(s.drawop2)
 	c:RegisterEffect(e2)
-	--Banish itself and 1 card from the hand, then place 1 card of the top of the Deck
+	--You can target 1 card in your GY; banish both this card and 1 card from your hand, then place that target on top of the Deck
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetCategory(CATEGORY_REMOVE+CATEGORY_TODECK)

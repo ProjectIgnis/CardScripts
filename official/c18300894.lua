@@ -1,4 +1,4 @@
---JP name
+--シルクボムモース
 --Silk Bomb Moth
 --Scripted by Hatter
 local s,id=GetID()

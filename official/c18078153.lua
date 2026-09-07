@@ -1,4 +1,4 @@
---Japanese name
+--生ける屍の軍団
 --Army of the Haunted
 --scripted by Naim
 local s,id=GetID()

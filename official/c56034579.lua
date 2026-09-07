@@ -1,4 +1,4 @@
---JP name
+--ＧＭＸ主任教授キンリッジ
 --GMX Chairman Kimridge
 --scripted by pyrQ
 local s,id=GetID()

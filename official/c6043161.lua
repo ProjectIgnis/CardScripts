@@ -1,4 +1,4 @@
---
+--Ｒ．Ｂ．ＧＡ１０ドリラー
 --R.B. Ga10 Driller
 --Scripted by Hatter
 local s,id=GetID()

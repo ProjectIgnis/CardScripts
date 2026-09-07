@@ -47,18 +47,18 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Damage(p,d,REASON_EFFECT)
 	--Your opponent takes no damage from non-Fiend monsters' effects for the rest of this turn
 	local e1=Effect.CreateEffect(e:GetHandler())
-    e1:SetType(EFFECT_TYPE_FIELD)
-    e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-    e1:SetCode(EFFECT_CHANGE_DAMAGE)
-    e1:SetTargetRange(0,1)
-    e1:SetValue(s.damval)
-    e1:SetReset(RESET_PHASE|PHASE_END)
-    Duel.RegisterEffect(e1,tp)
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e1:SetCode(EFFECT_CHANGE_DAMAGE)
+	e1:SetTargetRange(0,1)
+	e1:SetValue(s.damval)
+	e1:SetReset(RESET_PHASE|PHASE_END)
+	Duel.RegisterEffect(e1,tp)
 end
 function s.damval(e,re,val,r,rp,rc)
 	if re and r&REASON_EFFECT>0 and re:IsMonsterEffect() and re:GetHandler():IsRaceExcept(RACE_FIEND) then 
 		return 0
-	else 
+	else
 		return val 
 	end
 end

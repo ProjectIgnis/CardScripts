@@ -1,4 +1,4 @@
---Japanese name
+--凍てつく眼光のメデューサ
 --Stare of the Snake Hair
 --scripted by Naim
 local s,id=GetID()

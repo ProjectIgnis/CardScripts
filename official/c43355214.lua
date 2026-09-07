@@ -1,4 +1,4 @@
---Japanese name
+--不死の大軍団
 --The Undying Legion
 --scripted by pyrQ
 local s,id=GetID()

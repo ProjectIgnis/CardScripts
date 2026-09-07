@@ -1,4 +1,4 @@
---JP name
+--Ｒ．Ｂ．ネクスト・フェーズ
 --R.B. Next Phase
 --Scripted by The Razgriz
 local s,id=GetID()

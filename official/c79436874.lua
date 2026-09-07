@@ -1,4 +1,4 @@
---
+--Ｒ．Ｂ．バルカンロケット
 --R.B. VALCan Rocket
 --Scripted by Hatter
 local s,id=GetID()

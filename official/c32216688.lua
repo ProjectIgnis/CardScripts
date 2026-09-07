@@ -1,4 +1,4 @@
---JP Name
+--Ｒ．Ｂ．ブルート・ブルース
 --R.B. The Brute Blues
 --Scripted by The Razgriz
 local s,id=GetID()

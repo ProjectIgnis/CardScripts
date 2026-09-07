@@ -1,4 +1,4 @@
---JP name
+--嵐忌竜デストゥビム
 --Storm-Bane Dragon Destorbim
 --scripted by pyrQ
 local s,id=GetID()

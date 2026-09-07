@@ -1,4 +1,4 @@
---JP name
+--ハンティングホーン
 --Hunting Horn
 --scripted by pyrQ
 local s,id=GetID()

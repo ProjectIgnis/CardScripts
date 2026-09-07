@@ -1,4 +1,4 @@
---JP name
+--翠鋁の機竜
 --Jade Dragon Mech
 --scripted by pyrQ
 local s,id=GetID()

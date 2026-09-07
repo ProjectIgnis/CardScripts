@@ -1,4 +1,4 @@
---JP name
+--大狼のいたずら
 --Mischief of the Wolves
 --scripted by pyrQ
 local s,id=GetID()

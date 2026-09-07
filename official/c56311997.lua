@@ -1,4 +1,4 @@
---JP name
+--ＧＭＸ－ＡＬＬＯＳ
 --GMX - ALLOS
 --scripted by pyrQ
 local s,id=GetID()

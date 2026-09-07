@@ -1,4 +1,4 @@
---JP name
+--虚英雄ディスガイス
 --Disguise, the Copycat Hero
 --Scripted by the Razgriz
 local s,id=GetID()

@@ -3,31 +3,31 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_ACTIVATE)
+	e0:SetCode(EVENT_FREE_CHAIN)
+	c:RegisterEffect(e0)
+	--If "Gaia The Fierce Knight", "Swift Gaia the Fierce Knight", or "Gaia the Dragon Champion" you control attacks a Defense Position monster, inflict piercing battle damage to your opponent
 	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_PIERCE)
+	e1:SetRange(LOCATION_SZONE)
+	e1:SetTargetRange(LOCATION_MZONE,0)
+	e1:SetTarget(s.pietg)
 	c:RegisterEffect(e1)
-	--Piercing battle damage
+	--If "Gaia the Dragon Champion" inflicts battle damage with this effect: Draw 2 cards, then discard 1 card.
 	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_FIELD)
-	e2:SetCode(EFFECT_PIERCE)
+	e2:SetDescription(aux.Stringid(id,0))
+	e2:SetCategory(CATEGORY_DRAW+CATEGORY_HANDES)
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
+	e2:SetCode(EVENT_BATTLE_DAMAGE)
 	e2:SetRange(LOCATION_SZONE)
-	e2:SetTargetRange(LOCATION_MZONE,0)
-	e2:SetTarget(s.pietg)
+	e2:SetCondition(s.condition)
+	e2:SetTarget(s.target)
+	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
-	--Draw 2 cards, then discard 1 card
-	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(id,0))
-	e3:SetCategory(CATEGORY_DRAW+CATEGORY_HANDES)
-	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
-	e3:SetCode(EVENT_BATTLE_DAMAGE)
-	e3:SetRange(LOCATION_SZONE)
-	e3:SetCondition(s.condition)
-	e3:SetTarget(s.target)
-	e3:SetOperation(s.operation)
-	c:RegisterEffect(e3)
 end
-s.listed_names={6368038,16589042,CARD_GAIA_CHAMPION}
+s.listed_names={6368038,16589042,CARD_GAIA_CHAMPION} --"Gaia The Fierce Knight", "Swift Gaia the Fierce Knight"
 function s.pietg(e,c)
 	return c:IsCode(6368038,16589042,CARD_GAIA_CHAMPION)
 end

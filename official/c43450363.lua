@@ -1,4 +1,4 @@
---JP name
+--Ｒ．Ｂ．ラスト・スタンド
 --R.B. Last Stand
 --Scripted by The Razgriz
 local s,id=GetID()

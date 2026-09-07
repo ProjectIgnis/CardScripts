@@ -2,10 +2,10 @@
 --Knightmare Goblin
 local s,id=GetID()
 function s.initial_effect(c)
-	--link summon
-	Link.AddProcedure(c,nil,2,2,s.lcheck)
 	c:EnableReviveLimit()
-	--extra summon
+	--Link Summon procedure: 2 monsters with different names
+	Link.AddProcedure(c,nil,2,2,s.lcheck)
+	--If this card is Link Summoned during your turn: You can discard 1 card; if this card was co-linked when this effect was activated, you can draw 1 card, also, during your Main Phase this turn, you can Normal Summon 1 monster from your hand to your zone this card points to, in addition to your Normal Summon/Set
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sumtg)
 	e1:SetOperation(s.sumop)
 	c:RegisterEffect(e1)
-	--cannot target
+	--Neither player can target co-linked monsters you control with card effects
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
@@ -35,7 +35,7 @@ function s.sumcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsTurnPlayer(tp) and e:GetHandler():IsLinkSummoned() and Duel.IsPlayerCanAdditionalSummon(tp)
 end
 function s.sumcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 and  Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
+	if chk==0 then return Duel.GetFlagEffect(tp,id)==0 and Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
 	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST|REASON_DISCARD)
 end
 function s.sumtg(e,tp,eg,ep,ev,re,r,rp,chk)

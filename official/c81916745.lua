@@ -1,4 +1,4 @@
---JP name
+--リコリス・リリィパー
 --Lycoris Lilyreaper
 --Scripted by Hatter
 local s,id=GetID()

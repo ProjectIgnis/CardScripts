@@ -1,4 +1,4 @@
---Japanese name
+--ゴースト大王－パンプキング－
 --Pumpking the Great Ghost King
 --Scripted by Eerie Code
 local s,id=GetID()

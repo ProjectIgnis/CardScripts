@@ -1,4 +1,4 @@
---Japanese name
+--時空の渦
 --Vortex of Time
 --scripted by pyrQ
 local s,id=GetID()

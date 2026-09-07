@@ -1,4 +1,4 @@
---JP name
+--生命の汞 メルクリウム
 --Mercurium the Living Quicksilver
 --scripted by pyrQ
 local s,id=GetID()

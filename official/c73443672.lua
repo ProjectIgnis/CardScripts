@@ -30,9 +30,9 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(Card.IsMonster,tp,LOCATION_GRAVE,0,5,nil) and Duel.IsExistingMatchingCard(Card.IsMonster,tp,0,LOCATION_GRAVE,5,nil)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-    local g=Duel.GetMatchingGroup(nil,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	local g=Duel.GetMatchingGroup(nil,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	if chk==0 then return #g>0 end
-    Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,tp,0)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,tp,0)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,PLAYER_ALL,LOCATION_DECK)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 end

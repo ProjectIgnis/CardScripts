@@ -1,4 +1,4 @@
---Japanese name
+--朽ち果ての吐息
 --Deadly Zombie Breath
 --scripted by pyrQ
 local s,id=GetID()

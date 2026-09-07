@@ -2,7 +2,7 @@
 --Hysteric Sign
 local s,id=GetID()
 function s.initial_effect(c)
-	--Search when activated
+	--When this card is activated: Add 1 "Elegant Egotist" from your Deck or GY to your hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	e2:SetCondition(s.regcon)
 	e2:SetOperation(s.regop)
 	c:RegisterEffect(e2)
-	--Search up to 3 "Harpie" cards
+	--During the End Phase, if this card is in the GY because it was sent there from the hand or field this turn: Add up to 3 "Harpie" cards with different names from each other from your Deck to your hand
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={SET_HARPIE}
-s.listed_names={90219263}
+s.listed_names={90219263} --"Elegant Egotist"
 function s.filter(c)
 	return c:IsCode(90219263) and c:IsAbleToHand()
 end
@@ -71,7 +71,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	if #g==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local tg=aux.SelectUnselectGroup(g,e,tp,1,3,aux.dncheck,1,tp,HINTMSG_ATOHAND)
-	if #tg>0  then
+	if #tg>0 then
 		Duel.SendtoHand(tg,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,tg)
 	end

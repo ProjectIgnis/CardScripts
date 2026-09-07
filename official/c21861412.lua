@@ -1,4 +1,4 @@
---JP name
+--フラックス・オクセンフェルト
 --Flux Ochsenfeld
 --scripted by pyrQ
 local s,id=GetID()

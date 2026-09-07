@@ -2,7 +2,7 @@
 --Primal Seed
 local s,id=GetID()
 function s.initial_effect(c)
-	--Add 2 of your banished cards to your hand
+	--If there is a "Black Luster Soldier - Envoy of the Beginning" or "Chaos Emperor Dragon - Envoy of the End" on the field: Target 2 of your banished cards; add both those targets to your hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_names={72989439,82301904}
+s.listed_names={72989439,82301904} --"Black Luster Soldier - Envoy of the Beginning", "Chaos Emperor Dragon - Envoy of the End"
 function s.cfilter(c)
 	return c:IsFaceup() and c:IsCode(72989439,82301904)
 end
@@ -26,7 +26,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingTarget(Card.IsAbleToHand,tp,LOCATION_REMOVED,0,2,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectTarget(tp,Card.IsAbleToHand,tp,LOCATION_REMOVED,0,2,2,nil)
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,2,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,2,tp,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetTargetCards(e)

@@ -1,4 +1,4 @@
---JP name
+--ＧＭＸ准教授ノーマ
 --GMX Associate Noma
 --scripted by pyrQ
 local s,id=GetID()

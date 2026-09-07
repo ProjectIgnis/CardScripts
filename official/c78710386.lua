@@ -1,4 +1,4 @@
---JP Name
+--Ｒ．Ｂ．ファンク・ドック
 --R.B. Funk Dock
 --Scripted by The Razgriz
 local s,id=GetID()

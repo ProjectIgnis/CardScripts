@@ -1,4 +1,4 @@
---JP name
+--Ｒ．Ｂ．ＧＡ１０パイルバンカー
 --R.B. Ga10 Pile Bunker
 --Scripted by The Razgriz
 local s,id=GetID()

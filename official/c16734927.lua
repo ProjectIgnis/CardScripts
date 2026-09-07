@@ -1,4 +1,4 @@
---Japanese name
+--霊魂プラズマ
 --Ectoplasmic Fortification
 --scripted by pyrQ
 local s,id=GetID()

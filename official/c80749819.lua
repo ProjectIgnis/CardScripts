@@ -1,4 +1,4 @@
---Japanese name
+--生ける屍の呼び声
 --Call of the Forgotten
 --Scripted by Eerie Code
 local s,id=GetID()

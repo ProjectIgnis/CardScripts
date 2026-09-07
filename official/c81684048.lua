@@ -1,4 +1,4 @@
---Japanese name
+--墓場のゴースト王－パンプキング－
 --Pumpking the King of Grave Ghosts
 --Scripted by Eerie Code
 local s,id=GetID()

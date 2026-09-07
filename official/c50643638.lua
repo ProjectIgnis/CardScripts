@@ -1,4 +1,4 @@
---JP name
+--明滅騎士チャンバル
 --Chanbar, the Flashy Sportsknight
 --scripted by pyrQ
 local s,id=GetID()

@@ -1,4 +1,4 @@
---JP name
+--天魔伏聖剣
 --Cursed Copycat Noble Arms
 --Scripted by the Razgriz
 local s,id=GetID()

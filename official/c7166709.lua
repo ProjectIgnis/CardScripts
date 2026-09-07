@@ -1,4 +1,4 @@
---
+--鉄絃の犠打職人
 --Steel-Stringed Sacrifice
 --Scripted by Hatter
 local s,id=GetID()

@@ -1,4 +1,4 @@
---
+--Ｒ．Ｂ．ＧＡ１０カッター
 --R.B. Ga10 Cutter
 --Scripted by Hatter
 local s,id=GetID()

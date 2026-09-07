@@ -1,4 +1,4 @@
---JP name
+--魔術師の空華
 --Fleeting Flower of the Magician
 --Scripted by Hatter
 local s,id=GetID()

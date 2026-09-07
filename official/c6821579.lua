@@ -1,4 +1,4 @@
---
+--Ｒ．Ｂ．バルカンブースター
 --R.B. VALCan Booster
 --Scripted by Hatter
 local s,id=GetID()

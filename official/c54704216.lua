@@ -2,6 +2,7 @@
 --Nightmare Wheel
 local s,id=GetID()
 function s.initial_effect(c)
+	--Activate this card by targeting 1 monster your opponent controls
 	aux.AddPersistentProcedure(c,1,nil,CATEGORY_POSITION,nil,TIMING_STANDBY_PHASE,TIMINGS_CHECK_MONSTER,nil,nil,nil,nil,true)
 	--It cannot attack or change its battle position
 	local e1=Effect.CreateEffect(c)
@@ -15,7 +16,7 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_CANNOT_CHANGE_POSITION)
 	e2:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
 	c:RegisterEffect(e2)
-	--Inflict 500 damage to your opponent
+	--Once per turn, during your Standby Phase: Inflict 500 damage to your opponent
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)

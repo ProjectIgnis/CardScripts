@@ -1,4 +1,4 @@
---
+--Ｒ．Ｂ．ラムダキャノン
 --R.B. Lambda Cannon
 --Scripted by Hatter
 local s,id=GetID()

@@ -1,4 +1,4 @@
---JP name
+--Ｒ．Ｂ．オペレーション・テスト
 --R.B. Operation Test
 --Scripted by The Razgriz
 local s,id=GetID()

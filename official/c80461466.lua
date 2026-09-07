@@ -1,4 +1,4 @@
---Japanese name
+--冥界の魔象
 --Great Mammoth of the Netherworld
 --scripted by Naim
 local s,id=GetID()

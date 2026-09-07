@@ -1,4 +1,4 @@
---JP name
+--還流の精ヴォドニカ
 --Vodnika the Fountain Spirit
 --scripted by pyrQ
 local s,id=GetID()

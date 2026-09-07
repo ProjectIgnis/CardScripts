@@ -1,4 +1,4 @@
---JP name
+--機叡のメカチューナー
 --Mechanical Mechanic
 --scripted by pyrQ
 local s,id=GetID()

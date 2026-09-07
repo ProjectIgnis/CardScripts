@@ -2,7 +2,7 @@
 --Blossom Bombardment
 local s,id=GetID()
 function s.initial_effect(c)
-	--Inflict damage to your opponent equal to the destroyed monster's ATK in the Graveyard
+	--When a Plant-Type monster you control destroys an opponent's monster by battle and sends it to the Graveyard: Inflict damage to your opponent equal to the destroyed monster's ATK in the Graveyard
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DAMAGE)

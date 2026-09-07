@@ -3,40 +3,40 @@
 --Scripted by Larry126
 local s,id=GetID()
 function s.initial_effect(c)
-	--pendulum summon
-	Pendulum.AddProcedure(c,false)
-	--fusion material
 	c:EnableReviveLimit()
+	--Pendulum Summon procedure
+	Pendulum.AddProcedure(c,false)
+	--Fusion Summon procedure: 1 Pendulum Monster + 1 DARK monster
 	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsType,TYPE_PENDULUM),aux.FilterBoolFunctionEx(Card.IsAttribute,ATTRIBUTE_DARK))
-	--Venemy Counter
+	--Place 1 Venemy Counter on this card for each card sent from the field to the GY
 	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_TO_GRAVE)
 	e1:SetRange(LOCATION_PZONE)
-	e1:SetOperation(s.acop)
+	e1:SetOperation(s.counterplaceop)
 	c:RegisterEffect(e1)
-	--atkdown
+	--Monsters on the field lose 200 ATK for each Venemy Counter on this card, except DARK Dragon monsters
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetRange(LOCATION_PZONE)
 	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e2:SetTarget(s.atktg)
-	e2:SetValue(s.atkval)
+	e2:SetTarget(function(e,c) return not (c:IsAttribute(ATTRIBUTE_DARK) and c:IsRace(RACE_DRAGON)) end)
+	e2:SetValue(function(e,c) return Duel.GetCounter(0,1,1,0x1149)*-200 end)
 	c:RegisterEffect(e2)
-	--reduce
+	--Once per turn, you can reduce battle damage you would take to 0
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e3:SetCode(EVENT_PRE_BATTLE_DAMAGE)
 	e3:SetRange(LOCATION_PZONE)
-	e3:SetCondition(s.rdcon)
-	e3:SetOperation(s.rdop)
+	e3:SetCondition(function(e,tp,eg,ep,ev,re,r,rp) return ep==tp and not e:GetHandler():HasFlagEffect(id) end)
+	e3:SetOperation(s.nodamop)
 	c:RegisterEffect(e3)
-	--copy
+	--This card gains the name and original effects of 1 monster your opponent controls, then that monster loses 500 ATK/DEF, its effects are negated and your opponent takes 500 damage
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
-	e4:SetCategory(CATEGORY_DISABLE+CATEGORY_ATKCHANGE+CATEGORY_DAMAGE)
+	e4:SetCategory(CATEGORY_DISABLE+CATEGORY_ATKCHANGE+CATEGORY_DEFCHANGE+CATEGORY_DAMAGE)
 	e4:SetType(EFFECT_TYPE_IGNITION)
 	e4:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e4:SetRange(LOCATION_MZONE)
@@ -44,7 +44,7 @@ function s.initial_effect(c)
 	e4:SetTarget(s.copytg)
 	e4:SetOperation(s.copyop)
 	c:RegisterEffect(e4)
-	--place in pendulum zone
+	--If this card in the Monster Zone is destroyed: You can place it in your Pendulum Zone
 	local e5=Effect.CreateEffect(c)
 	e5:SetDescription(aux.Stringid(id,2))
 	e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -55,23 +55,14 @@ function s.initial_effect(c)
 	e5:SetOperation(s.penop)
 	c:RegisterEffect(e5)
 end
-s.counter_list={0x1149}
-function s.acop(e,tp,eg,ep,ev,re,r,rp)
+s.counter_list={0x1149} --Venemy Counter
+function s.counterplaceop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=eg:FilterCount(Card.IsPreviousLocation,nil,LOCATION_ONFIELD)
 	if ct>0 then
 		e:GetHandler():AddCounter(0x1149,ct)
 	end
 end
-function s.atktg(e,c)
-	return not (c:IsAttribute(ATTRIBUTE_DARK) and c:IsRace(RACE_DRAGON))
-end
-function s.atkval(e,c)
-	return Duel.GetCounter(0,1,1,0x1149)*-200
-end
-function s.rdcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep==tp and e:GetHandler():GetFlagEffect(id)==0
-end
-function s.rdop(e,tp,eg,ep,ev,re,r,rp)
+function s.nodamop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if Duel.SelectEffectYesNo(tp,c) then
 		c:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
@@ -82,7 +73,7 @@ end
 function s.copytg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and chkc:IsNegatableMonster() end
 	if chk==0 then return Duel.IsExistingTarget(Card.IsNegatableMonster,tp,0,LOCATION_MZONE,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g=Duel.SelectTarget(tp,Card.IsNegatableMonster,tp,0,LOCATION_MZONE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,500)
@@ -92,7 +83,7 @@ function s.copyop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and c:IsRelateToEffect(e) and c:IsFaceup() and tc:IsRelateToEffect(e) and tc:IsFaceup() and not tc:IsType(TYPE_TOKEN) then
 		local code=tc:GetOriginalCodeRule()
-		--Copy name + effect
+		--This card's name becomes the targeted monster's name and replaces this card's effects with that target's original effects
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
@@ -102,28 +93,12 @@ function s.copyop(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e1)
 		if c:CopyEffect(code,RESETS_STANDARD_PHASE_END,1)>0 then
 			Duel.BreakEffect()
-			--Decrease ATK/DEF
-			local e2=Effect.CreateEffect(c)
-			e2:SetType(EFFECT_TYPE_SINGLE)
-			e2:SetCode(EFFECT_UPDATE_ATTACK)
-			e2:SetValue(-500)
-			e2:SetReset(RESET_EVENT|RESETS_STANDARD)
-			tc:RegisterEffect(e2)
-			local e3=e2:Clone()
-			e3:SetCode(EFFECT_UPDATE_DEFENSE)
-			tc:RegisterEffect(e3)
+			--It loses 500 ATK and DEF
+			tc:UpdateAttack(-500,RESET_EVENT|RESETS_STANDARD,c)
+			tc:UpdateDefense(-500,RESET_EVENT|RESETS_STANDARD,c)
 			--Negate its effects
-			local e4=Effect.CreateEffect(c)
-			e4:SetType(EFFECT_TYPE_SINGLE)
-			e4:SetCode(EFFECT_DISABLE)
-			e4:SetReset(RESET_EVENT|RESETS_STANDARD)
-			tc:RegisterEffect(e4)
-			local e5=Effect.CreateEffect(c)
-			e5:SetType(EFFECT_TYPE_SINGLE)
-			e5:SetCode(EFFECT_DISABLE_EFFECT)
-			e5:SetValue(RESET_TURN_SET)
-			e5:SetReset(RESET_EVENT|RESETS_STANDARD)
-			tc:RegisterEffect(e5)
+			tc:NegateEffects(c)
+			--Inflict 500 damage to your opponent
 			Duel.Damage(1-tp,500,REASON_EFFECT)
 		end
 	end

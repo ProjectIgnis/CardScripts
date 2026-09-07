@@ -36,9 +36,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.plop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={SET_CENTURION}
+s.listed_series={SET_CENTUR_ION}
 function s.thfilter(c)
-	return c:IsSetCard(SET_CENTURION) and c:IsAbleToHand()
+	return c:IsSetCard(SET_CENTUR_ION) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -53,7 +53,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.plfilter(c,tp)
-	return c:IsSetCard(SET_CENTURION) and c:IsMonster() and not c:IsType(TYPE_SYNCHRO)
+	return c:IsSetCard(SET_CENTUR_ION) and c:IsMonster() and not c:IsType(TYPE_SYNCHRO)
 		and c:IsFaceup() and not c:IsForbidden() and c:CheckUniqueOnField(tp)
 end
 function s.pltg(e,tp,eg,ep,ev,re,r,rp,chk)

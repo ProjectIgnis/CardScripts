@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	--Draw 1 card and Set it if it is a Spell/Trap card
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetCategory(CATEGORY_DRAW)
+	e1:SetCategory(CATEGORY_DRAW+CATEGORY_SET)
 	e1:SetCode(EVENT_CHAINING)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetRange(LOCATION_MZONE)

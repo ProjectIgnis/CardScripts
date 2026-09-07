@@ -3,8 +3,9 @@
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate
+	--Target 1 face-up monster your opponent controls and 1 Warrior monster you control; equip that opponent's face-up monster to your monster as an Equip Spell
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_EQUIP)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -34,16 +35,16 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=g:GetFirst()
 	local oc=g:GetNext()
 	if oc==e:GetLabelObject() then tc,oc=oc,tc end
-	if tc:IsFaceup() and tc:IsLocation(LOCATION_MZONE) and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
+	if tc:IsFaceup() and tc:IsLocation(LOCATION_MZONE) and oc:IsFaceup() and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
 		and tc:IsAbleToChangeControler() and Duel.Equip(tp,oc,tc,false) then
-		--no battle damage
+		--Until the end of this turn, your opponent takes no damage from battles involving that monster you control
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_NO_BATTLE_DAMAGE)
 		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		tc:RegisterEffect(e1)
-		--substitute
+		--If the equipped monster would be destroyed by battle or card effect, destroy the monster equipped to it by this effect, instead
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_EQUIP)
 		e2:SetCode(EFFECT_DESTROY_SUBSTITUTE)

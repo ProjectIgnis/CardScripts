@@ -299,6 +299,7 @@ end
 function Xyz.Target(f,lv,minc,maxc,mustbemat,exchk)
 	return function(e,tp,eg,ep,ev,re,r,rp,chk,c,must,og,min,max)
 				local cancel=not og and Duel.IsSummonCancelable()
+				local g
 				local mg
 				local eqmg
 				local equips_inverse
@@ -434,7 +435,7 @@ function Xyz.Target(f,lv,minc,maxc,mustbemat,exchk)
 								end
 							end
 						end
-						finishable=#matg>=minc and Xyz.CheckMaterialSet(matg,c,tp,exchk,mustg,lv)
+						finishable=#matg+extra_mats>=minc and Xyz.CheckMaterialSet(matg,c,tp,exchk,mustg,lv)
 						::continue::
 					end
 					sg:KeepAlive()

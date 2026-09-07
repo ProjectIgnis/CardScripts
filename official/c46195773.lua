@@ -20,7 +20,10 @@ function s.initial_effect(c)
 	e2:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetValue(s.efilter)
+	e2:SetValue(function(e,re,rp)
+		local lvl=re:GetCardLevel()
+		return lvl>0 and lvl<=6
+	end)
 	c:RegisterEffect(e2)
 end
 s.material={67270095}
@@ -28,9 +31,6 @@ s.listed_names={67270095}
 s.material_setcode=SET_SYNCHRON
 function s.tfilter(c,scard,sumtype,tp)
 	return c:IsSummonCode(scard,sumtype,tp,67270095) or c:IsHasEffect(20932152)
-end
-function s.efilter(e,re,rp)
-	return re:GetHandler():IsLevelBelow(6)
 end
 function s.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local d=Duel.GetAttackTarget()

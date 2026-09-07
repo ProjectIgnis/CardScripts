@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	--pos
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
-	e2:SetCategory(CATEGORY_POSITION)
+	e2:SetCategory(CATEGORY_POSITION+CATEGORY_SET)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_SZONE)
@@ -58,11 +58,11 @@ function s.target2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if op==0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 		local g=Duel.SelectTarget(tp,s.filter1,tp,LOCATION_MZONE,0,1,1,nil)
-		Duel.SetOperationInfo(0,CATEGORY_POSITION,g,1,0,0)
+		Duel.SetOperationInfo(0,CATEGORY_POSITION,g,1,tp,POS_FACEUP_ATTACK|POS_FACEDOWN_DEFENSE)
 	else
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEDOWNDEFENSE)
 		local g=Duel.SelectTarget(tp,s.filter3,tp,LOCATION_MZONE,0,1,1,nil)
-		Duel.SetOperationInfo(0,CATEGORY_POSITION,g,1,0,0)
+		Duel.SetOperationInfo(0,CATEGORY_POSITION,g,1,tp,POS_FACEUP_ATTACK|POS_FACEDOWN_DEFENSE)
 	end
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)

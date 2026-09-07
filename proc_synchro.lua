@@ -1338,8 +1338,9 @@ function Synchro.CreateHandMaterialEffect(c,id,material_filter,synchro_filter,ba
 
 	local e1=Effect.CreateEffect(rc or c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_HAND_SYNCHRO)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e1:SetRange(LOCATION_MZONE)
 	e1:SetLabel(id)
 	e1:SetValue(synval)
 	return e1

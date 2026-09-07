@@ -1,4 +1,4 @@
--- 
+--リブロマンサー・デスブローカー
 --Libromancer Doombroker
 --Scripted by Hatter
 local s,id=GetID()
@@ -19,6 +19,7 @@ function s.initial_effect(c)
 	--Set 1 "Libromancer" Trap from the Deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
+	e2:SetCategory(CATEGORY_SET)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,id)
@@ -41,8 +42,7 @@ end
 s.listed_series={SET_LIBROMANCER}
 function s.matcheck(e,c)
 	if c:GetMaterial():IsExists(Card.IsLocation,1,nil,LOCATION_MZONE) then
-		local reset=RESET_EVENT|RESETS_STANDARD-RESET_TOFIELD
-		c:RegisterFlagEffect(id,reset,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,2))
+		c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD&~RESET_TOFIELD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,2))
 	end
 end
 function s.matcon(e)

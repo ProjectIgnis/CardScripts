@@ -2,50 +2,44 @@
 --Elemental HERO Divine Neos
 local s,id=GetID()
 function s.initial_effect(c)
-	--fusion material
 	c:EnableReviveLimit()
+	--Must be Fusion Summoned
+	c:AddMustBeFusionSummoned()
+	--Fusion Summon materials: 5 "Neos", "Neo Space", "Neo-Spacian", or "HERO" monsters
+	--including at least 1 "Neos" or "Neo Space" monster, 1 "Neo-Spacian" monster, and 1 "HERO" monster
 	Fusion.AddProcMixRep(c,true,true,s.ffilter,2,2,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_NEOS),aux.FilterBoolFunctionEx(Card.IsSetCard,SET_NEO_SPACIAN),aux.FilterBoolFunctionEx(Card.IsSetCard,SET_HERO))
-	--copy
-	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,0))
-	e2:SetCategory(CATEGORY_ATKCHANGE)
-	e2:SetType(EFFECT_TYPE_IGNITION)
-	e2:SetRange(LOCATION_MZONE)
-	e2:SetCountLimit(1)
-	e2:SetTarget(s.copytg)
-	e2:SetOperation(s.copyop)
-	c:RegisterEffect(e2)
-	--spsummon condition
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_SINGLE)
-	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e3:SetCode(EFFECT_SPSUMMON_CONDITION)
-	e3:SetValue(aux.fuslimit)
-	c:RegisterEffect(e3)
+	--Gains 500 ATK and the banished monster's effects
+	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetCategory(CATEGORY_ATKCHANGE)
+	e1:SetType(EFFECT_TYPE_IGNITION)
+	e1:SetRange(LOCATION_MZONE)
+	e1:SetCountLimit(1)
+	e1:SetCost(s.copycost)
+	e1:SetOperation(s.copyop)
+	c:RegisterEffect(e1)
 end
 s.listed_series={SET_NEOS,SET_NEO_SPACIAN,SET_HERO}
 s.material_setcode={SET_HERO,SET_NEOS,SET_NEO_SPACIAN}
 function s.ffilter(c,fc,sumtype,tp)
 	return c:IsSetCard(SET_HERO,fc,sumtype,tp) or c:IsSetCard(SET_NEOS,fc,sumtype,tp) or c:IsSetCard(SET_NEO_SPACIAN,fc,sumtype,tp)
 end
-function s.filter(c)
-	return (c:IsSetCard(SET_NEOS) or c:IsSetCard(SET_NEO_SPACIAN) or c:IsSetCard(SET_HERO)) and c:IsMonster()
-		and not c:IsForbidden() and c:IsAbleToRemove() and aux.SpElimFilter(c,true)
+function s.costfilter(c)
+	return c:IsSetCard({SET_NEOS,SET_NEO_SPACIAN,SET_HERO}) and c:IsMonster()
+		and c:IsAbleToRemoveAsCost() and aux.SpElimFilter(c,true)
 end
-function s.copytg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE|LOCATION_GRAVE) and chkc:IsControler(tp) and s.filter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,nil) end
+function s.copycost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,0,0)
+	local tc=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,1,nil):GetFirst()
+	Duel.Remove(tc,POS_FACEUP,REASON_COST)
+	Duel.SetTargetParam(tc:GetOriginalCode())
 end
 function s.copyop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local tc=Duel.GetFirstTarget()
-	if c:IsRelateToEffect(e) and c:IsFaceup() and tc and tc:IsRelateToEffect(e) then
-		if Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)~=1 then	return end
-		local code=tc:GetOriginalCode()
-		local cid=c:CopyEffect(code,RESETS_STANDARD_PHASE_END,1)
+	local code=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
+	if c:IsRelateToEffect(e) and c:IsFaceup() and code~=0 then
+		--Gains 500 ATK
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
@@ -53,23 +47,28 @@ function s.copyop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(500)
 		e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE)
 		c:RegisterEffect(e1)
+		--Gains the banished monster's effects
+		local cid=c:CopyEffect(code,RESETS_STANDARD_PHASE_END,1)
+		--Reset the copied effect(s) manually
 		local e2=Effect.CreateEffect(c)
 		e2:SetDescription(aux.Stringid(id,1))
 		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e2:SetCode(EVENT_PHASE+PHASE_END)
 		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-		e2:SetCountLimit(1)
 		e2:SetRange(LOCATION_MZONE)
 		e2:SetReset(RESETS_STANDARD_PHASE_END)
+		e2:SetCountLimit(1)
 		e2:SetLabel(cid)
-		e2:SetOperation(s.rstop)
+		--e2:SetLabelObject(e1)
+		e2:SetOperation(s.resettop)
 		c:RegisterEffect(e2)
 	end
 end
-function s.rstop(e,tp,eg,ep,ev,re,r,rp)
+function s.resettop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local cid=e:GetLabel()
 	c:ResetEffect(cid,RESET_COPY)
+	c:ResetEffect(RESET_DISABLE,RESET_EVENT)
 	Duel.HintSelection(Group.FromCards(c))
 	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 end

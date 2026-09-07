@@ -3,23 +3,21 @@
 --added by ClaireStanfield
 local s,id=GetID()
 function s.initial_effect(c)
-	--indestructable
+	--Cannot be destroyed by Spell effects that do not target it
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e1:SetRange(LOCATION_MZONE)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
-	e1:SetValue(s.ind1)
+	e1:SetRange(LOCATION_MZONE)
+	e1:SetValue(s.indval)
 	c:RegisterEffect(e1)
+	--Cannot be destroyed by battle
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-	e2:SetValue(s.ind2)
+	e2:SetValue(1)
 	c:RegisterEffect(e2)
 end
-function s.ind1(e,re,rp,c)
-	return not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) and re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
-end
-function s.ind2(e,c)
-	return c:IsAttackBelow(1900)
+function s.indval(e,re,rp,c)
+	return not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) and re:IsSpellEffect()
 end

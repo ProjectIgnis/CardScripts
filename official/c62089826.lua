@@ -43,6 +43,7 @@ function s.initial_effect(c)
 	--Set Spell/Trap
 	local e5=Effect.CreateEffect(c)
 	e5:SetDescription(aux.Stringid(id,2))
+	e5:SetCategory(CATEGORY_SET)
 	e5:SetType(EFFECT_TYPE_QUICK_O)
 	e5:SetCode(EVENT_FREE_CHAIN)
 	e5:SetRange(LOCATION_SZONE)

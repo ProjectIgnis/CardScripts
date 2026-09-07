@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	--Set itself from GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,2))
-	e2:SetCategory(CATEGORY_DESTROY)
+	e2:SetCategory(CATEGORY_DESTROY+CATEGORY_SET)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCode(EVENT_FREE_CHAIN)
@@ -50,7 +50,7 @@ function s.setcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsMainPhase() and Duel.IsTurnPlayer(1-tp)
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chkc then return chkc:IsLocation(LOCATION_ONFIELD) and chkc:IsFaceup() and c:IsControler(tp) and s.filter(chkc,e) end
+	if chkc then return chkc:IsLocation(LOCATION_ONFIELD) and chkc:IsFaceup() and chkc:IsControler(tp) and s.filter(chkc,e) end
 	if chk==0 then return e:GetHandler():IsSSetable() and Duel.IsExistingTarget(s.filter,tp,LOCATION_ONFIELD,0,1,nil,e) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectTarget(tp,s.filter,tp,LOCATION_ONFIELD,0,1,1,nil,e)

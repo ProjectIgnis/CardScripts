@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e1:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
+	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetCountLimit(1,id)
 	e1:SetCondition(s.gyspcon)
@@ -48,7 +48,7 @@ function s.gyspop(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) or Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local sc=Duel.SelectMatchingCard(tp,s.gyspfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp,c):GetFirst()
-	if sc and Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP)>0 and not sc:IsType(TYPE_TUNER) then
+	if sc and Duel.SpecialSummonStep(sc,0,tp,tp,false,false,POS_FACEUP) and not sc:IsType(TYPE_TUNER) then
 		--It is treated as a Tuner
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -58,6 +58,7 @@ function s.gyspop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		sc:RegisterEffect(e1)
 	end
+	Duel.SpecialSummonComplete()
 end
 function s.selfsptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

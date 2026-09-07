@@ -3,12 +3,17 @@
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
-	--link summon
-	Link.AddProcedure(c,nil,2,2,s.lcheck)
 	c:EnableReviveLimit()
+	--Link Summon procedure: 2 monsters with different names
+	Link.AddProcedure(c,nil,2,2,s.lcheck)
+	--If a monster is Special Summoned to a zone this card points to: You can apply the following effects, in sequence, based on the card types of the monster(s) this card points to:
+	--● Ritual: Draw 2 cards, then discard 2 cards
+	--● Fusion: Special Summon 1 Level 4 or lower monster from your GY
+	--● Synchro: All monsters you control gain 700 ATK
+	--● Xyz: All monsters your opponent controls lose 700 ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetCategory(CATEGORY_DRAW+CATEGORY_HANDES+CATEGORY_SPECIAL_SUMMON)
+	e1:SetCategory(CATEGORY_DRAW+CATEGORY_HANDES+CATEGORY_SPECIAL_SUMMON+CATEGORY_ATKCHANGE)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
@@ -33,7 +38,8 @@ function s.spfilter(c,e,tp)
 	return c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.fustg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():GetLinkedGroup():IsExists(s.fusfilter,1,nil) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	if chk==0 then return e:GetHandler():GetLinkedGroup():IsExists(s.fusfilter,1,nil)
+		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 end
@@ -48,12 +54,14 @@ function s.xyztg(e,tp,eg,ep,ev,re,r,rp,chk)
 		and Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) end
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return s.rittg(e,tp,eg,ep,ev,re,r,rp,0) or s.fustg(e,tp,eg,ep,ev,re,r,rp,0)
-		or s.syntg(e,tp,eg,ep,ev,re,r,rp,0) or s.xyztg(e,tp,eg,ep,ev,re,r,rp,0) end
-	if s.rittg(e,tp,eg,ep,ev,re,r,rp,0) then 
+	if chk==0 then return s.rittg(e,tp,eg,ep,ev,re,r,rp,0)
+		or s.fustg(e,tp,eg,ep,ev,re,r,rp,0)
+		or s.syntg(e,tp,eg,ep,ev,re,r,rp,0)
+		or s.xyztg(e,tp,eg,ep,ev,re,r,rp,0) end
+	if s.rittg(e,tp,eg,ep,ev,re,r,rp,0) then
 		s.rittg(e,tp,eg,ep,ev,re,r,rp,1)
 	end
-	if s.fustg(e,tp,eg,ep,ev,re,r,rp,0) then 
+	if s.fustg(e,tp,eg,ep,ev,re,r,rp,0) then
 		s.fustg(e,tp,eg,ep,ev,re,r,rp,1)
 	end
 	if s.syntg(e,tp,eg,ep,ev,re,r,rp,0) then 
@@ -84,14 +92,14 @@ end
 function s.synop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
-	for tc in aux.Next(g) do
+	for tc in g:Iter() do
 		tc:UpdateAttack(700,nil,c)
 	end
 end
 function s.xyzop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
-	for tc in aux.Next(g) do
+	for tc in g:Iter() do
 		tc:UpdateAttack(-700,nil,c)
 	end
 end

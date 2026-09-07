@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	-- "Masked Fiery Noodle Jonin Kaedama Gockboot" + "Taste Inspector"
+	--"Masked Fiery Noodle Jonin Kaedama Gockboot" + "Taste Inspector"
 	Fusion.AddProcMix(c,true,true,160003033,CARD_TASTE_INSPECTOR)
 	-- Damage and draw
 	local e1=Effect.CreateEffect(c)
@@ -13,12 +13,17 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
-	e1:SetTarget(s.damtg)
-	e1:SetOperation(s.damop)
+	e1:SetCondition(s.condition)
+	e1:SetTarget(s.target)
+	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsStatus(STATUS_SPSUMMON_TURN) end
+function s.condition(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	return c:IsStatus(STATUS_SPSUMMON_TURN) and c:IsSummonPhaseMain()
+end
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
 	Duel.SetTargetPlayer(1-tp)
 	Duel.SetTargetParam(1000)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,1000)
@@ -27,7 +32,7 @@ end
 function s.setfilter(c)
 	return c:IsCode(160003046,160007051) and c:IsSSetable()
 end
-function s.damop(e,tp,eg,ep,ev,re,r,rp)
+function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Damage(p,d,REASON_EFFECT)

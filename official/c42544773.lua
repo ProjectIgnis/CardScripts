@@ -1,5 +1,5 @@
 --封印の魔道士スプーン
---Spoon, the Seal of Magistus
+--Spenta, the Magistus Sealer
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
@@ -49,7 +49,7 @@ end
 function s.effop(e,tp,eg,ep,ev,re,r,rp)
 	local op=e:GetLabel()
 	if op==1 then
-		--Add 1 "Magistus" monster from your Deck to your hand, except "Spoon, the Seal of Magistus"
+		--Add 1 "Magistus" monster from your Deck to your hand, except "Spenta, the Magistus Sealer"
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil)
 		if #g>0 then

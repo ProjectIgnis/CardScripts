@@ -1,5 +1,5 @@
 --ＤＤＤ創始王クロヴィス
---D/D/D Founder King Clovis
+--D/D/D First King Clovis
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

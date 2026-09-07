@@ -4,23 +4,26 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--Link Summon procedure
+	--Link Summon procedure: 1 non-Link "S-Force" monster
 	Link.AddProcedure(c,s.matfilter,1,1)
-	--Limit attack target selection
+	--Each of your opponent's monsters in the same column as one of your "S-Force" monsters cannot target the monsters in its same column for attacks
 	local e1a=Effect.CreateEffect(c)
-	e1a:SetType(EFFECT_TYPE_SINGLE)
-	e1a:SetRange(LOCATION_MZONE)
+	e1a:SetType(EFFECT_TYPE_FIELD)
 	e1a:SetCode(EFFECT_CANNOT_SELECT_BATTLE_TARGET)
-	e1a:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_IGNORE_IMMUNE)
-	e1a:SetValue(s.atlimit)
-	local e1b=Effect.CreateEffect(c)
-	e1b:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_GRANT)
-	e1b:SetRange(LOCATION_MZONE)
-	e1b:SetLabelObject(e1a)
-	e1b:SetTargetRange(0,LOCATION_MZONE)
-	e1b:SetTarget(aux.SForceTarget)
-	c:RegisterEffect(e1b)
-	--Shuffle 1 "S-Force" monster into the Deck and Special Summon banished "S-Force" monster
+	e1a:SetRange(LOCATION_MZONE)
+	e1a:SetTargetRange(0,LOCATION_MZONE)
+	e1a:SetTarget(function(e,c)
+			if SForce.ColumnTarget(e,c) then
+				e:SetLabelObject(c)
+				return true
+			end
+		end)
+	e1a:SetValue(function(e,c)
+			local bc=e:GetLabelObject()
+			return bc and bc:GetColumnGroup():IsContains(c)
+		end)
+	c:RegisterEffect(e1a)
+	--During the Main Phase (Quick Effect): You can target 1 "S-Force" monster you control; shuffle it into the Deck, then you can Special Summon 1 of your banished "S-Force" monsters. You can only use this effect of "S-Force Nightchaser" once per turn
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_TODECK+CATEGORY_SPECIAL_SUMMON)
@@ -28,19 +31,16 @@ function s.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetHintTiming(TIMING_MAIN_END,TIMING_MAIN_END)
 	e2:SetCountLimit(1,id)
 	e2:SetCondition(function() return Duel.IsMainPhase() end)
 	e2:SetTarget(s.tdtg)
 	e2:SetOperation(s.tdop)
+	e2:SetHintTiming(0,TIMING_MAIN_END|TIMINGS_CHECK_MONSTER)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_S_FORCE}
 function s.matfilter(c,lc,stype,tp)
 	return c:IsSetCard(SET_S_FORCE,lc,stype,tp) and not c:IsType(TYPE_LINK,lc,stype,tp)
-end
-function s.atlimit(e,c)
-	return e:GetHandler():GetColumnGroup():IsContains(c)
 end
 function s.tdfilter(c)
 	return c:IsSetCard(SET_S_FORCE) and c:IsFaceup() and c:IsAbleToDeck()

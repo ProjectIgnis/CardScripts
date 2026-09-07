@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	e1:SetValue(function(_,se) return se:IsHasType(EFFECT_TYPE_ACTIONS) end)
 	c:RegisterEffect(e1)
-	--Special Summon this card from your hand
+	--During your opponent's turn (Quick Effect): You can destroy 2 other Dinosaur monsters in your hand and/or field, and if you do, Special Summon this card from your hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_DESTROY)
@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	--Send 1 Dinosaur monster from Deck to the GY
+	--If this card is Special Summoned: You can send 1 Dinosaur monster from your Deck to the GY
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_TOGRAVE)
@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.tgtg)
 	e3:SetOperation(s.tgop)
 	c:RegisterEffect(e3)
-	--Shuffle 1 Normal Monster from your GY into the Deck and Special Summon this card
+	--If this card is destroyed: You can shuffle 1 Normal Monster from your GY into the Deck, then you can Special Summon this card
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,2))
 	e4:SetCategory(CATEGORY_TODECK+CATEGORY_SPECIAL_SUMMON)
@@ -98,7 +98,7 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>0 and g:GetFirst():IsLocation(LOCATION_DECK)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsRelateToEffect(e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and Duel.SelectYesNo(tp,aux.Stringid(id,3)) then
+		and aux.nvfilter(c) and Duel.SelectYesNo(tp,aux.Stringid(id,3)) then
 		Duel.BreakEffect()
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 		c:CompleteProcedure()

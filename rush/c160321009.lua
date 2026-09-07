@@ -18,7 +18,8 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_CYBER_DRAGON}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsStatus(STATUS_SUMMON_TURN+STATUS_SPSUMMON_TURN)
+	local c=e:GetHandler()
+	return c:IsSummonPhaseMain() and c:IsStatus(STATUS_SUMMON_TURN+STATUS_SPSUMMON_TURN)
 end
 function s.costfilter(c)
 	return c:IsMonster() and c:IsAbleToGraveAsCost()

@@ -1,5 +1,5 @@
 --終刻起動『Ｄ．Ｏ．Ｏ．Ｍ．Ｄ．Ｕ．Ｒ．Ｇ．』
---Doom-Z Command "D.O.O.M.D.U.R.G"
+--DoomZ Command "D.O.O.M.D.U.R.G."
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -34,12 +34,12 @@ function s.initial_effect(c)
 	e3:SetCondition(aux.StatChangeDamageStepCondition)
 	e3:SetTarget(s.desatktg)
 	e3:SetOperation(s.desatkop)
-	--Grant the above effects to a "Doom-Z" monster equipped with this card
+	--Grant the above effects to a "DoomZ" monster equipped with this card
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_GRANT)
 	e4:SetRange(LOCATION_SZONE)
 	e4:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e4:SetTarget(function(e,c) return e:GetHandler():GetEquipTarget()==c and c:IsSetCard(SET_DOOM_Z) end)
+	e4:SetTarget(function(e,c) return e:GetHandler():GetEquipTarget()==c and c:IsSetCard(SET_DOOMZ) end)
 	e4:SetLabelObject(e2)
 	c:RegisterEffect(e4)
 	local e5=e4:Clone()
@@ -58,7 +58,7 @@ function s.initial_effect(c)
 	e7:SetCondition(function(e) local c=e:GetHandler() return c:IsAttribute(ATTRIBUTE_WIND) and c:IsRace(RACE_MACHINE) end)
 	c:RegisterEffect(e7)
 end
-s.listed_series={SET_DOOM_Z}
+s.listed_series={SET_DOOMZ}
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local p=e:GetHandler():GetEquipTarget():GetControler()

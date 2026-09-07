@@ -1,4 +1,4 @@
---Japanese name
+--拒神ドゥータン
 --Denial Deity Dotan
 --scripted by Naim
 local s,id=GetID()

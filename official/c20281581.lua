@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	--Change to face-down
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,2))
-	e4:SetCategory(CATEGORY_POSITION)
+	e4:SetCategory(CATEGORY_POSITION+CATEGORY_SET)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e4:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
 	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
@@ -63,7 +63,7 @@ end
 function s.postg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsCanTurnSet() end
-	Duel.SetOperationInfo(0,CATEGORY_POSITION,c,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_POSITION,c,1,tp,POS_FACEDOWN_DEFENSE)
 end
 function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

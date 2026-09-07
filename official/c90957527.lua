@@ -2,38 +2,41 @@
 --Gladiator Beast Gaiodiaz
 local s,id=GetID()
 function s.initial_effect(c)
-	--fusion material
 	c:EnableReviveLimit()
+	--"Gladiator Beast Spartacus" + 1 "Gladiator Beast" monster
 	Fusion.AddProcMix(c,true,true,79580323,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_GLADIATOR))
 	Fusion.AddContactProc(c,s.contactfil,s.contactop,s.splimit)
-	--damage
-	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(id,0))
-	e3:SetCategory(CATEGORY_DAMAGE)
-	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
-	e3:SetCode(EVENT_BATTLE_DESTROYING)
-	e3:SetCondition(s.damcon)
-	e3:SetTarget(s.damtg)
-	e3:SetOperation(s.damop)
-	c:RegisterEffect(e3)
-	--special summon
-	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(id,1))
-	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e4:SetCode(EVENT_PHASE|PHASE_BATTLE)
-	e4:SetRange(LOCATION_MZONE)
-	e4:SetCondition(s.spcon)
-	e4:SetCost(s.spcost)
-	e4:SetTarget(s.sptg)
-	e4:SetOperation(s.spop)
-	c:RegisterEffect(e4)
+	--Inflict damage to your opponent equal to the DEF of the monster destroyed by batlle with tis card
+	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetCategory(CATEGORY_DAMAGE)
+	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
+	e1:SetCode(EVENT_BATTLE_DESTROYING)
+	e1:SetCondition(s.damcon)
+	e1:SetTarget(s.damtg)
+	e1:SetOperation(s.damop)
+	c:RegisterEffect(e1)
+	--Special Summon 2 "Gladiator Beast" monsters from your Deck
+	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,1))
+	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e2:SetCode(EVENT_PHASE|PHASE_BATTLE)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetCondition(s.spcon)
+	e2:SetCost(Cost.SelfToExtra)
+	e2:SetTarget(s.sptg)
+	e2:SetOperation(s.spop)
+	c:RegisterEffect(e2)
 end
+s.listed_names={79580323} --"Gladiator Beast Spartacus"
 s.listed_series={SET_GLADIATOR}
-s.listed_names={79580323}
 s.material_setcode=SET_GLADIATOR
+function s.matfilter(c)
+	return c:IsAbleToDeckOrExtraAsCost() and (c:IsMonster() or c:IsCode(79580323))
+end
 function s.contactfil(tp)
-	return Duel.GetMatchingGroup(function(c) return c:IsMonster() and c:IsAbleToDeckOrExtraAsCost() end,tp,LOCATION_ONFIELD,0,nil)
+	return Duel.GetMatchingGroup(s.matfilter,tp,LOCATION_ONFIELD,0,nil)
 end
 function s.contactop(g,tp)
 	Duel.ConfirmCards(1-tp,g)
@@ -68,36 +71,26 @@ end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetBattledGroupCount()>0
 end
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsAbleToExtraAsCost() end
-	Duel.SendtoDeck(c,nil,SEQ_DECKTOP,REASON_COST)
-end
 function s.filter(c,e,tp)
 	return not c:IsCode(79580323) and c:IsSetCard(SET_GLADIATOR) and c:IsCanBeSpecialSummoned(e,121,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then
-		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-		if e:GetHandler():GetSequence()<5 then ft=ft+1 end
-		return not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) and ft>1 
-			and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,2,nil,e,tp)
+	if chk==0 then return Duel.GetMZoneCount(tp,e:GetHandler())>=2
+		and not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
+		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,2,nil,e,tp)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,tp,LOCATION_DECK)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then return end
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<2 then return end
-	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_DECK,0,nil,e,tp)
-	if #g>=2 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local sg=g:Select(tp,2,2,nil)
-		local tc=sg:GetFirst()
-		Duel.SpecialSummonStep(tc,121,tp,tp,false,false,POS_FACEUP)
-		tc:RegisterFlagEffect(tc:GetOriginalCode(),RESET_EVENT|RESETS_STANDARD_DISABLE,0,0)
-		tc=sg:GetNext()
-		Duel.SpecialSummonStep(tc,121,tp,tp,false,false,POS_FACEUP)
-		tc:RegisterFlagEffect(tc:GetOriginalCode(),RESET_EVENT|RESETS_STANDARD_DISABLE,0,0)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,2,2,nil,e,tp)
+	if #g==2 then
+		for tc in g:Iter() do
+			Duel.SpecialSummonStep(tc,120,tp,tp,false,false,POS_FACEUP)
+			tc:RegisterFlagEffect(tc:GetOriginalCode(),RESET_EVENT|RESETS_STANDARD_DISABLE,0,0)
+		end
 		Duel.SpecialSummonComplete()
 	end
 end

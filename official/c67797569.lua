@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	--Change face-up monsters your opponent controls, up to the number of "Laval" monsters you control, to face-down Defense Position
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
-	e2:SetCategory(CATEGORY_POSITION)
+	e2:SetCategory(CATEGORY_POSITION+CATEGORY_SET)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
@@ -67,7 +67,7 @@ function s.postg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,SET_LAVAL),tp,LOCATION_MZONE,0,nil)
 	local g=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsCanTurnSet),tp,0,LOCATION_MZONE,nil)
 	if chk==0 then return ct>0 and #g>0 end
-	Duel.SetOperationInfo(0,CATEGORY_POSITION,g,1,tp,0)
+	Duel.SetOperationInfo(0,CATEGORY_POSITION,g,1,tp,POS_FACEDOWN_DEFENSE)
 end
 function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,SET_LAVAL),tp,LOCATION_MZONE,0,nil)

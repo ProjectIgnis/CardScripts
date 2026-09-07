@@ -8,11 +8,13 @@ function s.initial_effect(c)
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_BEASTWARRIOR),2,2)
 	--negate cost
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetCode(id)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e1:SetCode(EFFECT_COST_REPLACE)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetTargetRange(1,0)
+	e1:SetValue(s.repval)
 	c:RegisterEffect(e1)
 	--to hand
 	local e2=Effect.CreateEffect(c)
@@ -27,6 +29,10 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_FIRE_FORMATION,SET_FIRE_FIST}
+function s.repval(base,extracon,e,...)
+	local c=e:GetHandler()
+	return c:IsSetCard(SET_FIRE_FIST) and c:IsMonster() and extracon(base,e,...)
+end
 function s.thfilter(c)
 	return c:IsSpellTrap() and c:IsSetCard(SET_FIRE_FORMATION) and c:IsAbleToHand()
 		and (c:IsFaceup() or c:IsLocation(LOCATION_GRAVE))

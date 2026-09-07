@@ -7,31 +7,27 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCondition(s.condition)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0
-end
-function s.filter1(c,e)
+function s.matfilter(c,e)
 	return c:IsCanBeFusionMaterial() and c:IsAbleToRemove() and not c:IsImmuneToEffect(e) and aux.SpElimFilter(c,true)
 end
-function s.filter2(c,e,tp,m)
-	return c:IsType(TYPE_FUSION) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false)
+function s.fusfilter(c,e,tp,m)
+	return c:IsFusionMonster() and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false)
 		and c:CheckFusionMaterial(m,nil,tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
-		local mg1=Duel.GetMatchingGroup(s.filter1,tp,0,LOCATION_MZONE|LOCATION_GRAVE,nil,e)
-		local res=Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_EXTRA,LOCATION_EXTRA,1,nil,e,tp,mg1)
+		local mg1=Duel.GetMatchingGroup(s.matfilter,tp,0,LOCATION_MZONE|LOCATION_GRAVE,nil,e)
+		local res=Duel.IsExistingMatchingCard(s.fusfilter,tp,LOCATION_EXTRA,LOCATION_EXTRA,1,nil,e,tp,mg1)
 		if not res then
 			local ce=Duel.GetChainMaterial(tp)
 			if ce~=nil then
 				local fgroup=ce:GetTarget()
 				local mg2=fgroup(ce,e,tp)
-				res=Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_EXTRA,LOCATION_EXTRA,1,nil,e,tp,mg2)
+				res=Duel.IsExistingMatchingCard(s.fusfilter,tp,LOCATION_EXTRA,LOCATION_EXTRA,1,nil,e,tp,mg2)
 			end
 		end
 		return res
@@ -39,15 +35,15 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local mg1=Duel.GetMatchingGroup(s.filter1,tp,0,LOCATION_MZONE|LOCATION_GRAVE,nil,e)
-	local sg1=Duel.GetMatchingGroup(s.filter2,tp,LOCATION_EXTRA,LOCATION_EXTRA,nil,e,tp,mg1)
+	local mg1=Duel.GetMatchingGroup(s.matfilter,tp,0,LOCATION_MZONE|LOCATION_GRAVE,nil,e)
+	local sg1=Duel.GetMatchingGroup(s.fusfilter,tp,LOCATION_EXTRA,LOCATION_EXTRA,nil,e,tp,mg1)
 	local mg2=nil
 	local sg2=nil
 	local ce=Duel.GetChainMaterial(tp)
 	if ce~=nil then
 		local fgroup=ce:GetTarget()
 		mg2=fgroup(ce,e,tp)
-		sg2=Duel.GetMatchingGroup(s.filter2,tp,LOCATION_EXTRA,LOCATION_EXTRA,nil,e,tp,mg2)
+		sg2=Duel.GetMatchingGroup(s.fusfilter,tp,LOCATION_EXTRA,LOCATION_EXTRA,nil,e,tp,mg2)
 	end
 	if #sg1>0 or (sg2~=nil and #sg2>0) then
 		local sg=sg1:Clone()
@@ -58,7 +54,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		if sg1:IsContains(tc) and (sg2==nil or not sg2:IsContains(tc) or not Duel.SelectYesNo(tp,ce:GetDescription())) then
 			local mat1=Duel.SelectFusionMaterial(tp,tc,mg1,nil,tp)
 			tc:SetMaterial(mat1)
-			Duel.Remove(mat1,POS_FACEUP,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
+			Duel.Remove(mat1,POS_FACEUP,REASON_EFFECT|REASON_MATERIAL|REASON_FUSION)
 			Duel.BreakEffect()
 			Duel.SpecialSummon(tc,SUMMON_TYPE_FUSION,tp,tp,false,false,POS_FACEUP)
 		else

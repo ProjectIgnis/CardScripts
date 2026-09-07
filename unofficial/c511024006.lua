@@ -1,7 +1,6 @@
 --エクシーズ・シフト (Anime)
 --Xyz Shift (Anime)
---Scripter by IanxWaifu
---fixed by MLD
+--Scripted by IanxWaifu
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -19,7 +18,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 end
 function s.cfilter(c,e,tp)
-	return c:IsType(TYPE_XYZ) and c:IsAbleToGraveAsCost()
+	return c:IsXyzMonster() and c:IsReleasable()
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,c:GetRank(),c)
 end
 function s.spfilter(c,e,tp,rk,mc)
@@ -33,9 +32,10 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		return e:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil,e,tp)
 	end
 	e:SetLabel(0)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
 	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_MZONE,0,1,1,nil,e,tp)
 	Duel.SetTargetParam(g:GetFirst():GetRank())
-	Duel.SendtoGrave(g,REASON_COST)
+	Duel.Release(g,REASON_COST)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
@@ -48,4 +48,5 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Overlay(sc,c)
 		end
 	end
+	aux.DelayedOperation(sc,PHASE_END,id,e,tp,function(ag) Duel.Destroy(ag,REASON_EFFECT) end,nil,0)
 end

@@ -3,10 +3,10 @@
 --Scripted by edo9300
 local s,id=GetID()
 function s.initial_effect(c)
-	--flip
+	--FLIP: Destroy all monsters on the field, then both players reveal the top 5 cards from their Decks, then Special Summon all revealed Level 4 or lower monsters in face-up Attack Position or face-down Defense Position, also add any remaining cards to their hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_SPECIAL_SUMMON+CATEGORY_TOHAND+CATEGORY_SEARCH)
+	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_SPECIAL_SUMMON+CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_SET)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_FLIP)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)

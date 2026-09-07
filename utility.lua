@@ -120,111 +120,37 @@ if not c946 then
 	c946.initial_effect=function()end
 end
 
-local function cost_replace_getvalideffs(replacecode,extracon,e,tp,eg,ep,ev,re,r,rp,chk)
-	local t={}
-	for _,eff in ipairs({Duel.GetPlayerEffect(tp,replacecode)}) do
-		if eff:CheckCountLimit(tp) then
-		local val=eff:GetValue()
-			if type(val)=="number" then
-				if val==1 then
-					table.insert(t,eff)
-				end
-			elseif type(val)=="function" then
-				if val(eff,e,tp,eg,ep,ev,re,r,rp,chk,extracon) then
-					table.insert(t,eff)
-				end
-			end
-		end
-	end
-	return t
+Card.IsCompositeType = Card.IsExactType
+
+function Card.IsExactType(c,typ,...)
+	return c:GetType(...)==typ
 end
 
-function Auxiliary.CostWithReplace(base,replacecode,extracon,alwaysexecute)
-	return function(e,tp,eg,ep,ev,re,r,rp,chk)
-		if alwaysexecute and not alwaysexecute(e,tp,eg,ep,ev,re,r,rp,0) then return false end
-		local cost_chk=base(e,tp,eg,ep,ev,re,r,rp,0)
-		if chk==0 then
-			if cost_chk then return true end
-			for _,eff in ipairs({Duel.GetPlayerEffect(tp,replacecode)}) do
-				if eff:CheckCountLimit(tp) then
-					local val=eff:GetValue()
-					if type(val)=="number" and val==1 then return true end
-					if type(val)=="function" and val(eff,e,tp,eg,ep,ev,re,r,rp,chk,extracon) then return true end
-				end
-			end
-			return false
-		end
-		local effs=cost_replace_getvalideffs(replacecode,extracon,e,tp,eg,ep,ev,re,r,rp,chk)
-		if alwaysexecute then alwaysexecute(e,tp,eg,ep,ev,re,r,rp,1) end
-		if not cost_chk or #effs>0 then
-			local eff=effs[1]
-			if #effs>1 then
-				local effsPerCard={}
-				local effsHandlersGroup=Group.CreateGroup()
-				for _,_eff in ipairs(effs) do
-					local _effCard=_eff:GetHandler()
-					effsHandlersGroup:AddCard(_effCard)
-					if not effsPerCard[_effCard] then effsPerCard[_effCard]={} end
-					table.insert(effsPerCard[_effCard],_eff)
-				end
-				local effCard=nil
-				if #effsHandlersGroup==1 and (not cost_chk or Duel.SelectEffectYesNo(tp,effCard)) then
-					effCard=effsHandlersGroup:GetFirst()
-				elseif #effsHandlersGroup>1 then
-					while effCard==nil and (not cost_chk or Duel.SelectYesNo(tp,98)) do
-						Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RESOLVEEFFECT)
-						effCard=effsHandlersGroup:Select(tp,1,1,cost_chk,nil)
-					end
-					if effCard then effCard=effCard:GetFirst() end
-				end
-				if not effCard then return base(e,tp,eg,ep,ev,re,r,rp,1) end
-				local effsOfThatCard=effsPerCard[effCard]
-				if #effsOfThatCard==1 then
-					eff=effsOfThatCard[1]
-				else
-					local desctable={}
-					for _,_eff in ipairs(effsOfThatCard) do
-						table.insert(desctable,_eff:GetDescription())
-					end
-					eff=effsOfThatCard[Duel.SelectOption(tp,false,table.unpack(desctable)) + 1]
-				end
-			elseif cost_chk and not Duel.SelectEffectYesNo(tp,eff:GetHandler()) then
-				return base(e,tp,eg,ep,ev,re,r,rp,1)
-			end
-			local res={eff:GetOperation()(eff,e,tp,eg,ep,ev,re,r,rp,chk,extracon)}
-			eff:UseCountLimit(tp)
-			return table.unpack(res)
-		end
-		return base(e,tp,eg,ep,ev,re,r,rp,1)
-	end
+Card.IsMonster   = aux.FilterBoolFunction(Card.IsType,TYPE_MONSTER)
+Card.IsSpell     = aux.FilterBoolFunction(Card.IsType,TYPE_SPELL)
+Card.IsTrap      = aux.FilterBoolFunction(Card.IsType,TYPE_TRAP)
+Card.IsSpellTrap = aux.FilterBoolFunction(Card.IsType,TYPE_SPELL|TYPE_TRAP)
+
+local function make_composite_type_check(type)
+	return aux.FilterBoolFunction(Card.IsCompositeType,type)
 end
 
+Card.IsQuickPlaySpell  = make_composite_type_check(TYPE_SPELL|TYPE_QUICKPLAY)
+Card.IsContinuousSpell = make_composite_type_check(TYPE_SPELL|TYPE_CONTINUOUS)
+Card.IsEquipSpell      = make_composite_type_check(TYPE_SPELL|TYPE_EQUIP)
+Card.IsFieldSpell      = make_composite_type_check(TYPE_SPELL|TYPE_FIELD)
+Card.IsRitualSpell     = make_composite_type_check(TYPE_SPELL|TYPE_RITUAL)
+Card.IsLinkSpell       = make_composite_type_check(TYPE_SPELL|TYPE_LINK)
 
-Card.IsMonster=aux.FilterBoolFunction(Card.IsType,TYPE_MONSTER)
-Card.IsSpell=aux.FilterBoolFunction(Card.IsType,TYPE_SPELL)
-Card.IsTrap=aux.FilterBoolFunction(Card.IsType,TYPE_TRAP)
-Card.IsSpellTrap=aux.FilterBoolFunction(Card.IsType,TYPE_SPELL|TYPE_TRAP)
+Card.IsContinuousTrap  = make_composite_type_check(TYPE_TRAP|TYPE_CONTINUOUS)
+Card.IsCounterTrap     = make_composite_type_check(TYPE_TRAP|TYPE_COUNTER)
 
-local function make_exact_type_check(type)
-	return aux.FilterBoolFunction(Card.IsExactType,type)
-end
-
-Card.IsQuickPlaySpell=make_exact_type_check(TYPE_SPELL|TYPE_QUICKPLAY)
-Card.IsContinuousSpell=make_exact_type_check(TYPE_SPELL|TYPE_CONTINUOUS)
-Card.IsEquipSpell=make_exact_type_check(TYPE_SPELL|TYPE_EQUIP)
-Card.IsFieldSpell=make_exact_type_check(TYPE_SPELL|TYPE_FIELD)
-Card.IsRitualSpell=make_exact_type_check(TYPE_SPELL|TYPE_RITUAL)
-Card.IsLinkSpell=make_exact_type_check(TYPE_SPELL|TYPE_LINK)
-
-Card.IsContinuousTrap=make_exact_type_check(TYPE_TRAP|TYPE_CONTINUOUS)
-Card.IsCounterTrap=make_exact_type_check(TYPE_TRAP|TYPE_COUNTER)
-
-Card.IsFusionMonster=make_exact_type_check(TYPE_MONSTER|TYPE_FUSION)
-Card.IsRitualMonster=make_exact_type_check(TYPE_MONSTER|TYPE_RITUAL)
-Card.IsSynchroMonster=make_exact_type_check(TYPE_MONSTER|TYPE_SYNCHRO)
-Card.IsXyzMonster=make_exact_type_check(TYPE_MONSTER|TYPE_XYZ)
-Card.IsPendulumMonster=make_exact_type_check(TYPE_MONSTER|TYPE_PENDULUM)
-Card.IsLinkMonster=make_exact_type_check(TYPE_MONSTER|TYPE_LINK)
+Card.IsFusionMonster   = make_composite_type_check(TYPE_MONSTER|TYPE_FUSION)
+Card.IsRitualMonster   = make_composite_type_check(TYPE_MONSTER|TYPE_RITUAL)
+Card.IsSynchroMonster  = make_composite_type_check(TYPE_MONSTER|TYPE_SYNCHRO)
+Card.IsXyzMonster      = make_composite_type_check(TYPE_MONSTER|TYPE_XYZ)
+Card.IsPendulumMonster = make_composite_type_check(TYPE_MONSTER|TYPE_PENDULUM)
+Card.IsLinkMonster     = make_composite_type_check(TYPE_MONSTER|TYPE_LINK)
 
 function Card.IsNormalSpell(c)
 	return c:GetType()==TYPE_SPELL
@@ -251,6 +177,13 @@ Card.IsSpellTrapCard=aux.FilterBoolFunction(Card.IsOriginalType,TYPE_SPELL|TYPE_
 
 function Card.IsTrapMonster(c)
 	return c:IsTrapCard() and (c:GetOriginalLevel()>0 or c:GetOriginalAttribute()>0 or c:GetOriginalRace()>0)
+end
+
+function Card.IsEquipTrap(c)
+	if not c:IsTrap() then return false end
+	if c.self_equip_trap then return true end
+	local activate_eff=c:GetActivateEffect()
+	return activate_eff and activate_eff:HasRemainFieldCost()
 end
 
 function Card.GetMainCardType(c)
@@ -305,8 +238,11 @@ function Card.IsPreviousRankOnField(c,rank)
 	return c:HasRank() and c:GetPreviousRankOnField()==rank
 end
 
-function Card.IsScale(c,scale)
-	return c:GetScale()==scale
+function Card.IsScale(c,...)
+	for _,scale in ipairs({...}) do
+		if c:GetScale()==scale then return true end
+	end
+	return false
 end
 
 function Card.IsNormalSummoned(c)
@@ -379,6 +315,10 @@ function Card.HasCounter(c,counter)
 end
 function Card.HasEquipCard(c)
 	return c:GetEquipCount()>0
+end
+function Card.IsCoLinked(c,count)
+	count=count or 1
+	return c:GetMutualLinkedGroupCount()>=count
 end
 
 function Card.IsDestination(c,dest)
@@ -698,7 +638,6 @@ function Card.AnnounceAnotherAttribute(c,tp)
 	return Duel.AnnounceAttribute(tp,1,att&(att-1)==0 and (~att&ATTRIBUTE_ALL) or ATTRIBUTE_ALL)
 end
 
---Returns true if "c" has any Attribute except "att"
 function Card.IsAttributeExcept(c,att,scard,sumtype,playerid)
 	sumtype=sumtype==nil and 0 or sumtype
 	playerid=playerid==nil and PLAYER_NONE or playerid
@@ -712,8 +651,10 @@ function Card.AnnounceAnotherRace(c,tp)
 	return Duel.AnnounceRace(tp,1,race&(race-1)==0 and (~race&RACE_ALL) or RACE_ALL)
 end
 
-function Card.IsDifferentRace(c,race)
-	local _race=c:GetRace()
+function Card.IsRaceExcept(c,race,scard,sumtype,playerid)
+	sumtype=sumtype==nil and 0 or sumtype
+	playerid=playerid==nil and PLAYER_NONE or playerid
+	local _race=c:GetRace(scard,sumtype,playerid)
 	return (_race&race)~=_race
 end
 
@@ -858,6 +799,10 @@ function Effect.IsSpellTrapEffect(e)
 	return e:IsActiveType(TYPE_SPELL|TYPE_TRAP)
 end
 
+function Effect.IsGlobalEffect(e)
+	return e:GetOwner():IsCode(0)
+end
+
 
 bit={}
 function bit.band(a,b)
@@ -880,7 +825,7 @@ function bit.bnot(a)
 end
 
 local function fieldargs(f,width)
-	w=width or 1
+	local w=width or 1
 	assert(f>=0,"field cannot be negative")
 	assert(w>0,"width must be positive")
 	assert(f+w<=64,"trying to access non-existent bits")
@@ -1471,64 +1416,73 @@ end
 --Functions for commonly used costs:
 Cost={}
 
+local cost_tables={}
+
 function Cost.SelfBanish(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsAbleToRemoveAsCost() end
 	Duel.Remove(c,POS_FACEUP,REASON_COST)
 end
+
 function Cost.SelfTribute(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsReleasable() end
 	Duel.Release(c,REASON_COST)
 end
-local self_tograve_costs={}
+
+cost_tables.self_tograve={}
 function Cost.SelfToGrave(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsAbleToGraveAsCost() end
 	Duel.SendtoGrave(c,REASON_COST)
 end
-self_tograve_costs[Cost.SelfToGrave]=true
+cost_tables.self_tograve[Cost.SelfToGrave]=true
+
 function Cost.SelfToHand(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsAbleToHandAsCost() end
 	Duel.SendtoHand(c,nil,REASON_COST)
 end
+
 function Cost.SelfToDeck(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsAbleToDeckAsCost() end
 	Duel.SendtoDeck(c,nil,SEQ_DECKSHUFFLE,REASON_COST)
 end
+
 function Cost.SelfToExtra(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsAbleToExtraAsCost() end
 	Duel.SendtoDeck(c,nil,SEQ_DECKSHUFFLE,REASON_COST)
 end
+
 function Cost.SelfReveal(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return not c:IsPublic() end
 	Duel.ConfirmCards(1-tp,c)
 end
 
-local self_discard_costs={}
+cost_tables.self_discard={}
 function Cost.SelfDiscard(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsDiscardable() end
 	Duel.SendtoGrave(c,REASON_DISCARD|REASON_COST)
 end
-self_discard_costs[Cost.SelfDiscard]=true
+cost_tables.self_discard[Cost.SelfDiscard]=true
+
 function Cost.SelfDiscardToGrave(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsDiscardable() and c:IsAbleToGraveAsCost() end
 	Duel.SendtoGrave(c,REASON_DISCARD|REASON_COST)
 end
-self_tograve_costs[Cost.SelfDiscardToGrave]=true
-self_discard_costs[Cost.SelfDiscardToGrave]=true
+cost_tables.self_tograve[Cost.SelfDiscardToGrave]=true
+cost_tables.self_discard[Cost.SelfDiscardToGrave]=true
 
 --Aliases for historical reasons:
 Cost.SelfRelease=Cost.SelfTribute
 Auxiliary.bfgcost=Cost.SelfBanish
 
-function Cost.RemoveCounterFromSelf(count,counter_type)
+function Cost.RemoveCounterFromSelf(counter_type,count)
 	return function(e,tp,eg,ep,ev,re,r,rp,chk)
 		local c=e:GetHandler()
 		if chk==0 then return c:IsCanRemoveCounter(tp,counter_type,count,REASON_COST) end
@@ -1536,19 +1490,24 @@ function Cost.RemoveCounterFromSelf(count,counter_type)
 	end
 end
 
-function Cost.RemoveCounterFromField(count,counter_type)
+function Cost.RemoveCounterFromField(counter_type,count)
 	return function(e,tp,eg,ep,ev,re,r,rp,chk)
 		if chk==0 then return Duel.IsCanRemoveCounter(tp,1,0,counter_type,count,REASON_COST) end
 		Duel.RemoveCounter(tp,1,0,counter_type,count,REASON_COST)
 	end
 end
 
+cost_tables.self_changepos={}
 function Cost.SelfChangePosition(position)
-	return function(e,tp,eg,ep,ev,re,r,rp,chk)
+	local function cost_func(e,tp,eg,ep,ev,re,r,rp,chk)
 		local c=e:GetHandler()
 		if chk==0 then return c:IsCanChangePosition() and not c:IsPosition(position) and (position&POS_FACEDOWN==0 or c:IsCanTurnSet()) end
+		local fd_chk=c:IsPosition(POS_FACEDOWN) and position&POS_FACEUP>0
 		Duel.ChangePosition(c,position)
+		if fd_chk then c:SetStatus(STATUS_EFFECT_ENABLED,true) end
 	end
+	cost_tables.self_changepos[cost_func]=true
+	return cost_func
 end
 
 function Cost.HintSelectedEffect(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -1559,11 +1518,11 @@ end
 function Cost.Discard(filter,other,min,max,op)
 	local min_type=type(min)
 	local max_type=type(max)
-	
+
 	local function filter_final(c,e,tp)
 		return (not filter or filter(c,e,tp)) and c:IsDiscardable()
 	end
-	
+
 	local function cost_func(e,tp,eg,ep,ev,re,r,rp,chk)
 		local min_count=(min_type=="function" and min(e,tp))
 			or (min==nil and 1)
@@ -1575,12 +1534,46 @@ function Cost.Discard(filter,other,min,max,op)
 		if chk==0 then return min_count>0 and max_count>=min_count
 			and Duel.IsExistingMatchingCard(filter_final,tp,LOCATION_HAND,0,min_count,exclude,e,tp) end
 		Duel.DiscardHand(tp,filter_final,min_count,max_count,REASON_COST|REASON_DISCARD,exclude,e,tp)
-		if op then op(e,tp,Duel.GetOperatedGroup()) end
+		local cd=e:GetChainData()
+		cd.cost_discarded_cards=Duel.GetOperatedGroup()
+		if op then
+			op(e,tp,cd.cost_discarded_cards)
+		end
 	end
 	return cost_func
 end
 
-local detach_costs={}
+function Cost.Reveal(filter,other,min,max,op,location)
+	local min_type=type(min)
+	local max_type=type(max)
+	location=location or LOCATION_HAND
+
+	local function filter_final(c,e,tp)
+		return (not filter or filter(c,e,tp)) and not c:IsPublic()
+	end
+
+	local function cost_func(e,tp,eg,ep,ev,re,r,rp,chk)
+		local min_count=(min_type=="function" and min(e,tp))
+			or (min==nil and 1)
+			or min
+		local max_count=(max_type=="function" and max(e,tp))
+			or (max==nil and min_count)
+			or max
+		local exclude=other and e:GetHandler() or nil
+		if chk==0 then return min_count>0 and max_count>=min_count
+			and Duel.IsExistingMatchingCard(filter_final,tp,location,0,min_count,exclude,e,tp) end
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
+		local g=Duel.SelectMatchingCard(tp,filter_final,tp,location,0,min_count,max_count,exclude,e,tp)
+		Duel.ConfirmCards(1-tp,g)
+		if g:IsExists(Card.IsLocation,1,nil,LOCATION_HAND) then Duel.ShuffleHand(tp) end
+		if g:IsExists(Card.IsLocation,1,nil,LOCATION_DECK) then Duel.ShuffleDeck(tp) end
+		if g:IsExists(Card.IsLocation,1,nil,LOCATION_EXTRA) then Duel.ShuffleExtra(tp) end
+		if op then op(e,tp,g) end
+	end
+	return cost_func
+end
+
+cost_tables.detach={}
 function Cost.DetachFromSelf(min,max,op)
 	max=max or min
 
@@ -1605,22 +1598,98 @@ function Cost.DetachFromSelf(min,max,op)
 		local min_count=min_type=="function" and min(e,tp) or min
 		local max_count=max_type=="function" and max(e,tp) or max
 		if chk==0 then return min_count>0 and max_count>=min_count and c:CheckRemoveOverlayCard(tp,min_count,REASON_COST) end
-		if c:RemoveOverlayCard(tp,min_count,max_count,REASON_COST)>0 and op then
-			op(e,Duel.GetOperatedGroup())
+		if c:RemoveOverlayCard(tp,min_count,max_count,REASON_COST)>0 then
+			local cd=e:GetChainData()
+			cd.cost_detached_materials=Duel.GetOperatedGroup()
+			if op then
+				op(e,cd.cost_detached_materials)
+			end
 		end
 	end
 
-	detach_costs[cost_func]=true
+	cost_tables.detach[cost_func]=true
 	return cost_func
 end
 
-local function cost_table_check(t)
-	return function(eff) return t[eff:GetCost()] end
+function Cost.DetachChoiceFromSelf(choices,op)
+	local choices_type=type(choices)
+
+	do --Perform some sanity checks, simplifies debugging
+		if choices_type~="table" and choices_type~="function" then
+			error("Parameter 1 should be table|function",2)
+		end
+		local op_type=type(op)
+		if op_type~="nil" and op_type~="function" then
+			error("Parameter 2 should be nil|function",2)
+		end
+	end
+
+	local function cost_func(e,tp,eg,ep,ev,re,r,rp,chk)
+		local c=e:GetHandler()
+		local final_choices={}
+		for _,ct in ipairs(choices_type=="function" and choices(e,tp) or choices) do
+			if c:CheckRemoveOverlayCard(tp,ct,REASON_COST) then
+				table.insert(final_choices,ct)
+			end
+		end
+		if chk==0 then return #final_choices>0 end
+		local amt=final_choices[1]
+		if #final_choices>1 then
+			--Duel.Hint(HINT_SELECTMSG,tp,) --needs global string
+			amt=Duel.AnnounceNumber(tp,final_choices)
+		end
+		if c:RemoveOverlayCard(tp,amt,amt,REASON_COST)>0 then
+			local cd=e:GetChainData()
+			cd.cost_detached_materials=Duel.GetOperatedGroup()
+			if op then
+				op(e,cd.cost_detached_materials)
+			end
+		end
+	end
+
+	cost_tables.detach[cost_func]=true
+	return cost_func
 end
 
-Effect.HasSelfToGraveCost=cost_table_check(self_tograve_costs)
-Effect.HasSelfDiscardCost=cost_table_check(self_discard_costs)
-Effect.HasDetachCost=cost_table_check(detach_costs)
+--check for cards that can stay on the field, but not always
+function Auxiliary.RemainFieldCost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	local c=e:GetHandler()
+	local cid=Duel.GetChainInfo(0,CHAININFO_CHAIN_ID)
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_REMAIN_FIELD)
+	e1:SetProperty(EFFECT_FLAG_OATH)
+	e1:SetReset(RESET_CHAIN)
+	c:RegisterEffect(e1)
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e2:SetCode(EVENT_CHAIN_DISABLED)
+	e2:SetOperation(Auxiliary.RemainFieldDisabled)
+	e2:SetLabel(cid)
+	e2:SetReset(RESET_CHAIN)
+	Duel.RegisterEffect(e2,tp)
+end
+
+cost_tables.remain_field={}
+function Auxiliary.RemainFieldDisabled(e,tp,eg,ep,ev,re,r,rp)
+	local cid=Duel.GetChainInfo(ev,CHAININFO_CHAIN_ID)
+	if cid~=e:GetLabel() then return end
+	if e:GetOwner():IsLocation(LOCATION_ONFIELD) then
+		e:GetOwner():CancelToGrave(false)
+	end
+end
+cost_tables.remain_field[aux.RemainFieldCost]=true
+
+local function cost_table_check(key)
+	return function(eff) return cost_tables[key][eff:GetCost()] end
+end
+
+Effect.HasSelfToGraveCost        = cost_table_check("self_tograve")
+Effect.HasSelfDiscardCost        = cost_table_check("self_discard")
+Effect.HasDetachCost             = cost_table_check("detach")
+Effect.HasSelfChangePositionCost = cost_table_check("self_changepos")
+Effect.HasRemainFieldCost        = cost_table_check("remain_field")
 
 --Default cost for "You can pay X LP;"
 function Cost.PayLP(lp_value,pay_until)
@@ -1630,12 +1699,15 @@ function Cost.PayLP(lp_value,pay_until)
 			return function(e,tp,eg,ep,ev,re,r,rp,chk)
 				if chk==0 then return Duel.CheckLPCost(tp,lp_value) end
 				Duel.PayLPCost(tp,lp_value)
+				e:GetChainData().cost_lp_paid=lp_value
 			end
 		else
 			--Pay a fraction of your LP (half, one third, etc)
 			return function(e,tp,eg,ep,ev,re,r,rp,chk)
 				if chk==0 then return true end
-				Duel.PayLPCost(tp,math.floor(Duel.GetLP(tp)*lp_value))
+				local cost_lp_paid=math.floor(Duel.GetLP(tp)*lp_value)
+				Duel.PayLPCost(tp,cost_lp_paid)
+				e:GetChainData().cost_lp_paid=cost_lp_paid
 			end
 		end
 	else
@@ -1644,6 +1716,7 @@ function Cost.PayLP(lp_value,pay_until)
 			local pay_lp_value=math.floor(Duel.GetLP(tp)-lp_value)
 			if chk==0 then return pay_lp_value>0 and Duel.CheckLPCost(tp,pay_lp_value) end
 			Duel.PayLPCost(tp,pay_lp_value)
+			e:GetChainData().cost_lp_paid=pay_lp_value
 		end
 	end
 end
@@ -1686,17 +1759,20 @@ function Cost.AND(...)
 			end
 			return true
 		end
-		--when executing, run all functions regardless of what they return
+		--when executing, stop if a function returns 'false' specifically
 		for _,fn in ipairs(fns) do
-			fn(e,tp,eg,ep,ev,re,r,rp,1)
+			if fn(e,tp,eg,ep,ev,re,r,rp,1)==false then
+				return false
+			end
 		end
 	end
 
-	for _,fn in ipairs(fns) do
-		if detach_costs[fn] then detach_costs[full_cost]=true end
-		if self_discard_costs[fn] then self_discard_costs[full_cost]=true end
-		if self_tograve_costs[fn] then self_tograve_costs[full_cost]=true end
+	for _,t in pairs(cost_tables) do
+		for _,fn in ipairs(fns) do
+			if t[fn] then t[full_cost]=true end
+		end
 	end
+
 	return full_cost
 end
 
@@ -1716,21 +1792,105 @@ function Cost.Choice(...)
 
         if chk==0 then return has_choice end
 
-        local op=Duel.SelectEffect(tp,table.unpack(ops))
-        choices[op][1](e,tp,eg,ep,ev,re,r,rp,1)
-        e:SetLabel(op)
+        local cd=e:GetChainData()
+        cd.cost_choice=Duel.SelectEffect(tp,table.unpack(ops))
+        choices[cd.cost_choice][1](e,tp,eg,ep,ev,re,r,rp,1)
     end
 
-    detach_costs[full_cost]=true
-    self_discard_costs[full_cost]=true
-    for _,choice in ipairs(choices) do
-        local fn=choice[1]
-        if not detach_costs[fn] then detach_costs[full_cost]=false end
-        if not self_discard_costs[fn] then self_discard_costs[full_cost]=false end
-    end
+	for _,t in pairs(cost_tables) do
+		t[full_cost]=true
+		for _,choice in ipairs(choices) do
+			local fn=choice[1]
+			if not t[fn] then t[full_cost]=false end
+		end
+	end
 
     return full_cost
 end
+
+local function check_cost_replace_effect(eff,extracon,e,tp,...)
+	if not eff:CheckCountLimit(tp) then return false end
+	local val=eff:GetValue()
+	return val==1 or (type(val)=="function" and val(eff,extracon,e,tp,...))
+end
+
+local function select_cost_replace_effect(tp,effs)
+	if #effs==1 then return effs[1] end
+	local desctable={}
+	for _,_eff in ipairs(effs) do
+		table.insert(desctable,_eff:GetDescription())
+	end
+	local op=Duel.SelectOption(tp,false,table.unpack(desctable))
+	return effs[op+1]
+end
+
+--if this function returns nil, then the base cost should be used
+local function get_cost_replace_effect_to_apply(base_chk,extracon,e,tp,...)
+	local effs={}
+	for _,eff in ipairs({Duel.GetPlayerEffect(tp,EFFECT_COST_REPLACE)}) do
+		if check_cost_replace_effect(eff,extracon,e,tp,...) then table.insert(effs,eff) end
+	end
+
+	if #effs==0 then return end
+
+	if #effs==1 then
+		if base_chk and not Duel.SelectEffectYesNo(tp,effs[1]:GetHandler()) then return end
+		return effs[1]
+	end
+
+	local effs_per_card={}
+	local eff_handlers=Group.CreateGroup()
+	for _,eff in ipairs(effs) do
+		local ec=eff:GetHandler()
+		eff_handlers:AddCard(ec)
+		if not effs_per_card[ec] then effs_per_card[ec]={} end
+		table.insert(effs_per_card[ec],eff)
+	end
+
+	if #eff_handlers==1 then
+		if base_chk and not Duel.SelectEffectYesNo(tp,eff_handlers:GetFirst()) then return end
+		return select_cost_replace_effect(tp,effs)
+	end
+
+	local g=nil
+	while true do
+		if base_chk and not Duel.SelectYesNo(tp,98) then return end
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RESOLVEEFFECT)
+		g=eff_handlers:Select(tp,1,1,base_chk,nil)
+		if g and #g>0 then
+			return select_cost_replace_effect(tp,effs_per_card[g:GetFirst()])
+		end
+	end
+end
+
+function Cost.Replaceable(base,extracon)
+	extracon=extracon or aux.TRUE
+
+	return function(e,tp,eg,ep,ev,re,r,rp,chk)
+		local base_chk=base(e,tp,eg,ep,ev,re,r,rp,0)
+
+		if chk==0 then
+			if base_chk then return true end
+			for _,eff in ipairs({Duel.GetPlayerEffect(tp,EFFECT_COST_REPLACE)}) do
+				if check_cost_replace_effect(eff,extracon,e,tp,eg,ep,ev,re,r,rp,chk) then return true end
+			end
+			return false
+		end
+
+		local eff=get_cost_replace_effect_to_apply(base_chk,extracon,e,tp,eg,ep,ev,re,r,rp,chk)
+		if not eff then return base(e,tp,eg,ep,ev,re,r,rp,1) end
+
+		Duel.Hint(HINT_CARD,0,eff:GetHandler():GetOriginalCode())
+		local operation=eff:GetOperation()
+		if not operation then return eff:UseCountLimit(tp) end
+		local res={operation(eff,extracon,e,tp,eg,ep,ev,re,r,rp,chk)}
+		eff:UseCountLimit(tp)
+		return table.unpack(res)
+	end
+end
+
+--temporary alias, to be moved to deprecated aliases
+Auxiliary.CostWithReplace=Cost.Replaceable
 
 function Card.EquipByEffectLimit(e,c)
 	if e:GetOwner()~=c then return false end
@@ -1904,32 +2064,7 @@ function Auxiliary.ChkfMMZ(sumcount)
 				return Duel.GetMZoneCount(tp,sg)>=sumcount
 			end
 end
---check for cards that can stay on the field, but not always
-function Auxiliary.RemainFieldCost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	local c=e:GetHandler()
-	local cid=Duel.GetChainInfo(0,CHAININFO_CHAIN_ID)
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_REMAIN_FIELD)
-	e1:SetProperty(EFFECT_FLAG_OATH)
-	e1:SetReset(RESET_CHAIN)
-	c:RegisterEffect(e1)
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e2:SetCode(EVENT_CHAIN_DISABLED)
-	e2:SetOperation(Auxiliary.RemainFieldDisabled)
-	e2:SetLabel(cid)
-	e2:SetReset(RESET_CHAIN)
-	Duel.RegisterEffect(e2,tp)
-end
-function Auxiliary.RemainFieldDisabled(e,tp,eg,ep,ev,re,r,rp)
-	local cid=Duel.GetChainInfo(ev,CHAININFO_CHAIN_ID)
-	if cid~=e:GetLabel() then return end
-	if e:GetOwner():IsLocation(LOCATION_ONFIELD) then
-		e:GetOwner():CancelToGrave(false)
-	end
-end
+
 --autocheck for Summoning a Group containing Extra Deck/non-Extra Deck monsters to avoid zone issues
 function Auxiliary.MainAndExtraSpSummonLoop(func,sumtype,sump,targetp,nocheck,nolimit,pos,mmz,emz)
 	return	function(e,tp,eg,ep,ev,re,r,rp,sg)
@@ -2489,7 +2624,12 @@ function Auxiliary.ToHandOrElse(card,player,check,oper,str,...)
 		end
 		if opt==0 then
 			local res=Duel.SendtoHand(card,nil,REASON_EFFECT)
-			if res~=0 then Duel.ConfirmCards(1-player,card) end
+			if res>0 then
+				local og=Duel.GetOperatedGroup():Filter(Card.IsPreviousLocation,nil,LOCATION_DECK)
+				if #og>0 then
+					Duel.ConfirmCards(1-player,og)
+				end
+			end
 			return res
 		else
 			return oper(card,...)
@@ -2577,7 +2717,7 @@ function Duel.ActivateFieldSpell(c,e,tp,eg,ep,ev,re,r,rp,target_p)
 		local fc=Duel.GetFieldCard(target_p,LOCATION_FZONE,0)
 		if Duel.IsDuelType(DUEL_1_FIELD) then
 			if fc then Duel.Destroy(fc,REASON_RULE) end
-			of=Duel.GetFieldCard(1-target_p,LOCATION_FZONE,0)
+			local of=Duel.GetFieldCard(1-target_p,LOCATION_FZONE,0)
 			if of and Duel.Destroy(of,REASON_RULE)==0 then
 				Duel.SendtoGrave(c,REASON_RULE)
 				return false
@@ -2713,12 +2853,17 @@ end
 		int|nil hint: a string to show on the affected cards
 		int|nil effect_desc: a string to be used as the description of the delayed effect (useful when the same effect registers multiple different delayed effects)
 --]]
+local delayed_operation_id=0
 function Auxiliary.DelayedOperation(card_or_group,phase,flag,e,tp,oper,cond,reset,reset_count,hint,effect_desc)
 	local g=(type(card_or_group)=="Group" and card_or_group or Group.FromCards(card_or_group))
 	if #g==0 then return end
+
 	reset=reset or (RESET_PHASE|phase)
 	reset_count=reset_count or 1
-	local fid=e:GetFieldID()
+
+	delayed_operation_id=delayed_operation_id+1
+	local fid=delayed_operation_id
+
 	local function agfilter(c,lbl) return c:GetFlagEffectLabel(flag)==lbl end
 	local function get_affected_group(e) return e:GetLabelObject():Filter(agfilter,nil,e:GetLabel()) end
 
@@ -2748,7 +2893,6 @@ function Auxiliary.DelayedOperation(card_or_group,phase,flag,e,tp,oper,cond,rese
 	for tc in g:Iter() do
 		tc:RegisterFlagEffect(flag,RESET_EVENT+RESETS_STANDARD,flagprop,1,fid,hint):SetCondition(flagcond)
 	end
-	g:KeepAlive()
 
 	return e1
 end
@@ -2811,6 +2955,7 @@ function Auxiliary.DefaultFieldReturnOp(rg)
 end
 
 Duel.LoadScript("debug_utility.lua")
+Duel.LoadScript("chain.lua")
 Duel.LoadScript("cards_specific_functions.lua")
 Duel.LoadScript("proc_fusion.lua")
 Duel.LoadScript("proc_fusion_spell.lua")
@@ -2831,4 +2976,3 @@ Duel.LoadScript("proc_gemini.lua")
 Duel.LoadScript("proc_spirit.lua")
 Duel.LoadScript("proc_unofficial.lua")
 Duel.LoadScript("deprecated_functions.lua")
-pcall(dofile,"init.lua")

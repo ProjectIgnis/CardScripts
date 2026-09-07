@@ -54,13 +54,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
-	if not re then return end
-	local trig_code1,trig_code2,trig_setcodes=Duel.GetChainInfo(0,CHAININFO_TRIGGERING_CODE,CHAININFO_TRIGGERING_CODE2,CHAININFO_TRIGGERING_SETCODES)
-	if trig_code1==id or trig_code2==id then return false end
-	for _,setcode in ipairs(trig_setcodes) do
-		if (SET_AZAMINA&0xfff)==(setcode&0xfff) and (SET_AZAMINA&setcode)==SET_AZAMINA then return true end
-		if (SET_SINFUL_SPOILS&0xfff)==(setcode&0xfff) and (SET_SINFUL_SPOILS&setcode)==SET_SINFUL_SPOILS then return true end
-	end
+	return Chain.IsSetcode(ev,{SET_AZAMINA,SET_SINFUL_SPOILS}) and not Chain.IsCode(ev,id)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() end

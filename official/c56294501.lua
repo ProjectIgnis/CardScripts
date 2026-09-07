@@ -26,8 +26,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 	--Flip face-down
 	local e4=Effect.CreateEffect(c)
-	e4:SetCategory(CATEGORY_POSITION)
 	e4:SetDescription(aux.Stringid(id,1))
+	e4:SetCategory(CATEGORY_POSITION+CATEGORY_SET)
 	e4:SetType(EFFECT_TYPE_QUICK_O)
 	e4:SetCode(EVENT_FREE_CHAIN)
 	e4:SetRange(LOCATION_SZONE)
@@ -59,7 +59,7 @@ end
 function s.dntg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsCanTurnSet,tp,LOCATION_MZONE,0,1,nil) end
 	local g=Duel.GetMatchingGroup(Card.IsCanTurnSet,tp,LOCATION_MZONE,0,nil)
-	Duel.SetOperationInfo(0,CATEGORY_POSITION,g,#g,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_POSITION,g,#g,tp,POS_FACEDOWN_DEFENSE)
 end
 function s.dnop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end

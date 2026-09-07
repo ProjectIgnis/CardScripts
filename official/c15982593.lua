@@ -38,7 +38,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.plop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={SET_CENTURION}
+s.listed_series={SET_CENTUR_ION}
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
 	Duel.SetTargetPlayer(tp)
@@ -66,7 +66,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.plfilter(c)
-	return c:IsSetCard(SET_CENTURION) and c:IsMonster() and not c:IsType(TYPE_SYNCHRO) and not c:IsForbidden()
+	return c:IsSetCard(SET_CENTUR_ION) and c:IsMonster() and not c:IsType(TYPE_SYNCHRO) and not c:IsForbidden()
 end
 function s.pltg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0

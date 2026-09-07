@@ -45,15 +45,7 @@ function s.matcheck(g,lc,sumtype,tp)
 	return g:IsExists(s.matfilter,1,nil,lc,sumtype,tp)
 end
 function s.immval(e,te)
-	local tc=te:GetHandler()
-	local trig_loc,trig_setcodes=Duel.GetChainInfo(0,CHAININFO_TRIGGERING_LOCATION,CHAININFO_TRIGGERING_SETCODES)
-	if not Duel.IsChainSolving() or (tc:IsRelateToEffect(te) and tc:IsFaceup() and tc:IsLocation(trig_loc)) then
-		return not tc:IsSetCard(SET_VAALMONICA)
-	end
-	for _,setcode in ipairs(trig_setcodes) do
-		if (SET_VAALMONICA&0xfff)==(setcode&0xfff) and (SET_VAALMONICA&setcode)==SET_VAALMONICA then return false end
-	end
-	return true
+	return not te:IsCardSetcode(SET_VAALMONICA)
 end
 function s.atkfilter(c)
 	return c:IsLevel(4) and c:IsSetCard(SET_VAALMONICA) and c:IsFaceup()

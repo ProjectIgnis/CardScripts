@@ -1,5 +1,5 @@
 --Ｋ９－６６６号 “Ｊａｃｋｓ”
---K9-666 "Jacks"
+--K9-66X "Jacks"
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

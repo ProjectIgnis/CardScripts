@@ -1,5 +1,5 @@
 --黒薔薇と荊棘の魔女
---Hate Rose Witch
+--Rage Rose Witch
 --Scripted by Cybercatman
 local s,id=GetID()
 function s.initial_effect(c)

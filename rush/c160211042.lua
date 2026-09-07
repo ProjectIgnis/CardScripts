@@ -25,7 +25,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.atkfilter,tp,LOCATION_MZONE,0,1,nil) end
 end
 function s.stfilter(c)
-	return c:IsSpellTrap() and c:IsAbleToDeck()
+	return c:IsSpellTrap()
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
@@ -52,7 +52,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 		local g2=Duel.SelectMatchingCard(tp,s.stfilter,tp,0,LOCATION_ONFIELD,1,1,nil)
 		if #g2>0 then
-			Duel.HintSelection(g2,true)
+			Duel.HintSelection(g2)
 			Duel.SendtoDeck(g2,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
 		end
 	end

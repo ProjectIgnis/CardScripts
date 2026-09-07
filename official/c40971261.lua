@@ -52,7 +52,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	if re:GetHandler():GetCode()==e:GetLabelObject():GetLabel() then
-		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD-RESET_TURN_SET|RESET_CHAIN,0,1)
+		e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|(RESETS_STANDARD&~RESET_TURN_SET)|RESET_CHAIN,0,1)
 	return true	end
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)

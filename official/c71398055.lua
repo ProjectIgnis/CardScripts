@@ -1,5 +1,5 @@
 --ＤＤＤＤ偉次元王アーク・クライシス
---D/D/D/D Great Dimension King Arc Crisis
+--D/D/D/D Dimensional King Arc Crisis
 --Scripted by The Razgriz
 local s,id=GetID()
 function s.initial_effect(c)
@@ -11,7 +11,7 @@ function s.initial_effect(c)
 	c:AddMustBeFusionSummoned()
 	--Special Summon this card (from your Extra Deck) by banishing the above materials from your field and/or GY
 	Fusion.AddContactProc(c,s.contactfil,s.contactop,false,nil,1)
-	--You can only Fusion Summon or Special Summon by its alternate procedure "D/D/D/D Great Dimension King Arc Crisis" once per turn
+	--You can only Fusion Summon or Special Summon by its alternate procedure "D/D/D/D Dimensional King Arc Crisis" once per turn
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
@@ -67,8 +67,8 @@ function s.matfilter(typ)
 	end
 end
 function s.contactfil(tp)
-	local loc=LOCATION_ONFIELD|LOCATION_GRAVE
-	if Duel.IsPlayerAffectedByEffect(tp,CARD_SPIRIT_ELIMINATION) then loc=LOCATION_ONFIELD end
+	local loc=LOCATION_MZONE|LOCATION_GRAVE
+	if Duel.IsPlayerAffectedByEffect(tp,CARD_SPIRIT_ELIMINATION) then loc=LOCATION_MZONE end
 	return Duel.GetMatchingGroup(Card.IsAbleToRemoveAsCost,tp,loc,0,nil)
 end
 function s.contactop(g)

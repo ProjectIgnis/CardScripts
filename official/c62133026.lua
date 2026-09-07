@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetValue(aux.tgoval)
 	c:RegisterEffect(e1)
 	--Add 1 "Vernalizer Fairy" card from the GY to the hand
-	c:RegisterEffect(Effect.CreateVernalizerSPEffect(c,id,0,CATEGORY_TOHAND,s.thtg,s.thop))
+	Vernusylph.AddSpSummonEffect(c,id,0,CATEGORY_TOHAND,s.thtg,s.thop)
 end
 s.listed_names={id}
 s.listed_series={SET_VERNUSYLPH}

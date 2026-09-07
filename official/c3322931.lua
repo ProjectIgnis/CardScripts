@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e1:SetCondition(s.atkcon)
 	e1:SetOperation(s.atkop)
 	c:RegisterEffect(e1)
-	--Shuffle all opponent monsters and this card 
+	--Shuffle all opponent monsters and this card
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_TODECK)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
@@ -40,7 +40,7 @@ end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not re:IsMonsterEffect() or re:GetHandler()==c then return end
-	c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD-RESET_TURN_SET|RESET_CHAIN,0,1)
+	c:RegisterFlagEffect(id,RESET_EVENT|(RESETS_STANDARD&~RESET_TURN_SET)|RESET_CHAIN,0,1)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

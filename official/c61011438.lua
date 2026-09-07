@@ -1,5 +1,5 @@
 --ブリリアント・ローズ
---Brilliant Rose 
+--Brilliant Rose
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

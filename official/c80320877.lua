@@ -1,9 +1,9 @@
 --終刻決壊
---Doom-Z Destruction
+--DoomZ Destruction
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
-	--Equip this card to 1 "Doom-Z" Xyz Monster you control
+	--Equip this card to 1 "DoomZ" Xyz Monster you control
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_EQUIP)
@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
-	--Equip 1 "Doom-Z" monster from your Deck to a monster on the field
+	--Equip 1 "DoomZ" monster from your Deck to a monster on the field
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_EQUIP)
@@ -29,9 +29,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.eqpop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={SET_DOOM_Z}
+s.listed_series={SET_DOOMZ}
 function s.xyzfilter(c)
-	return c:IsSetCard(SET_DOOM_Z) and c:IsType(TYPE_XYZ) and c:IsFaceup()
+	return c:IsSetCard(SET_DOOMZ) and c:IsType(TYPE_XYZ) and c:IsFaceup()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.xyzfilter(chkc) end
@@ -66,7 +66,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.eqfilter(c,tp)
-	return c:IsSetCard(SET_DOOM_Z) and c:IsMonster() and c:CheckUniqueOnField(tp) and not c:IsForbidden() 
+	return c:IsSetCard(SET_DOOMZ) and c:IsMonster() and c:CheckUniqueOnField(tp) and not c:IsForbidden()
 end
 function s.eqptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()

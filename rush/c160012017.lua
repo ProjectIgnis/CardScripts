@@ -23,18 +23,15 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
 	if Duel.DiscardDeck(tp,2,REASON_COST)==2 then
 		--Effect
-		if c:IsRelateToEffect(e) and c:IsFaceup() then
-			--Piercing
-			c:AddPiercing(RESETS_STANDARD_PHASE_END)
-			local desg=Duel.GetMatchingGroup(s.desfilter,tp,0,LOCATION_MZONE,nil)
-			if #desg>0 and c:IsStatus(STATUS_SPSUMMON_TURN) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
-				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-				local tg=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.desfilter),tp,0,LOCATION_MZONE,1,1,nil)
-				if #tg>0 then
-					tg=tg:AddMaximumCheck()
-					Duel.HintSelection(tg,true)
-					Duel.Destroy(tg,REASON_EFFECT)
-				end
+		c:AddPiercing(RESETS_STANDARD_PHASE_END)
+		local desg=Duel.GetMatchingGroup(s.desfilter,tp,0,LOCATION_MZONE,nil)
+		if #desg>0 and c:IsSummonPhaseMain() and c:IsStatus(STATUS_SPSUMMON_TURN) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+			local tg=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.desfilter),tp,0,LOCATION_MZONE,1,1,nil)
+			if #tg>0 then
+				tg=tg:AddMaximumCheck()
+				Duel.HintSelection(tg)
+				Duel.Destroy(tg,REASON_EFFECT)
 			end
 		end
 	end

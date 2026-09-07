@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	--Change itself to face-down
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
-	e2:SetCategory(CATEGORY_POSITION)
+	e2:SetCategory(CATEGORY_POSITION+CATEGORY_SET)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,{id,1})
@@ -46,7 +46,7 @@ end
 function s.postg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsCanTurnSet() end
-	Duel.SetOperationInfo(0,CATEGORY_POSITION,c,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_POSITION,c,1,tp,POS_FACEDOWN_DEFENSE)
 end
 function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

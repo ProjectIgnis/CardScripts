@@ -1,11 +1,12 @@
 --終刻竜機Ⅶ－エララ
---Doom-Z Seven - Elara
+--DoomZ VII Seven - Elara
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
-	--Set 1 "Doom-Z" Spell/Trap directly from your Deck
+	--Set 1 "DoomZ" Spell/Trap directly from your Deck
 	local e1a=Effect.CreateEffect(c)
 	e1a:SetDescription(aux.Stringid(id,0))
+	e1a:SetCategory(CATEGORY_SET)
 	e1a:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1a:SetProperty(EFFECT_FLAG_DELAY)
 	e1a:SetCode(EVENT_SUMMON_SUCCESS)
@@ -34,9 +35,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={SET_DOOM_Z}
+s.listed_series={SET_DOOMZ}
 function s.setfilter(c)
-	return c:IsSetCard(SET_DOOM_Z) and c:IsSpellTrap() and c:IsSSetable()
+	return c:IsSetCard(SET_DOOMZ) and c:IsSpellTrap() and c:IsSSetable()
 end
 function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_DECK,0,1,nil) end

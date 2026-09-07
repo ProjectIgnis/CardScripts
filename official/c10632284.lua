@@ -44,7 +44,7 @@ function s.chfilter(c,e)
 	return c:IsFaceup() and c:IsCanBeEffectTarget(e)
 end
 function s.tgfilter(c,rc,att)
-	return c:IsDifferentRace(rc) and c:IsAttributeExcept(att)
+	return c:IsRaceExcept(rc) and c:IsAttributeExcept(att)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsFaceup() and chkc:IsLocation(LOCATION_MZONE) and s.tgfilter(chkc,e:GetLabel()) end
@@ -62,7 +62,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if not tc:IsRelateToEffect(e) or tc:IsFacedown() then return end
 	local rc,att=e:GetLabel()
 	local c=e:GetHandler()
-	if tc:IsDifferentRace(rc) then
+	if tc:IsRaceExcept(rc) then
 		--Change monster type
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)

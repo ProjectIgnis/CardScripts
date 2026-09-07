@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Set
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_LEAVE_GRAVE)
+	e1:SetCategory(CATEGORY_LEAVE_GRAVE+CATEGORY_SET)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)

@@ -44,7 +44,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
 	local ct=Duel.GetFieldGroupCountRush(tp,LOCATION_MZONE,0)
-	if ct>0 and c:IsStatus(STATUS_SUMMON_TURN|STATUS_SPSUMMON_TURN) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+	if ct>0 and c:IsSummonPhaseMain() and c:IsStatus(STATUS_SUMMON_TURN|STATUS_SPSUMMON_TURN) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.BreakEffect()
 		Duel.Damage(1-tp,ct*400,REASON_EFFECT)
 	end

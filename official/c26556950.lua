@@ -51,7 +51,7 @@ function s.defval(e,c)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	if rp==tp or not re:IsHasType(EFFECT_TYPE_ACTIVATE) then return end
-	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD-RESET_TURN_SET|RESET_CHAIN,0,1)
+	e:GetHandler():RegisterFlagEffect(id,RESET_EVENT|(RESETS_STANDARD&~RESET_TURN_SET)|RESET_CHAIN,0,1)
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

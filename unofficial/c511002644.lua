@@ -1,12 +1,13 @@
 --地獄蛆
+--Hell Grub
 Duel.LoadScript("c420.lua")
 local s,id=GetID()
 function s.initial_effect(c)
-	--spsummon
+	--Special Summon 1 Synchro Monster that was previously Summoned this Duel with its effects negated
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(38667773,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
+	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
 	e1:SetCost(s.spcost)
 	e1:SetTarget(s.sptg)
@@ -21,29 +22,33 @@ function s.initial_effect(c)
 	aux.GlobalCheck(s,function()
 		local ge1=Effect.CreateEffect(c)
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge1:SetCode(EVENT_SUMMON_SUCCESS)
+		ge1:SetCode(EVENT_SPSUMMON_SUCCESS)
 		ge1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
 		ge1:SetOperation(s.checkop)
 		Duel.RegisterEffect(ge1,0)
 		local ge2=ge1:Clone()
 		ge2:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
 		Duel.RegisterEffect(ge2,0)
-		local ge3=ge1:Clone()
-		ge3:SetCode(EVENT_SPSUMMON_SUCCESS)
-		Duel.RegisterEffect(ge3,0)
 	end)
 end
-function s.costfilter(c,e,tp)
-	return c:IsHell() and c:IsAbleToGraveAsCost()
+s.listed_series={0x567} --"Hell" archetype
+function s.checkop(e,tp,eg,ep,ev,re,r,rp)
+	local g=eg:Filter(Card.IsSynchroMonster,nil)
+	for tc in g:Iter() do
+		tc:RegisterFlagEffect(id,0,0,0)
+	end
+end
+function s.spcostfilter(c)
+	return c:IsHell() and c:IsMonster() and c:IsAbleToGraveAsCost()
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_MZONE,0,1,e:GetHandler()) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.spcostfilter,tp,LOCATION_HAND,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local cc=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_MZONE,0,1,1,e:GetHandler())
-	Duel.SendtoGrave(cc,REASON_COST)
+	local sc=Duel.SelectMatchingCard(tp,s.spcostfilter,tp,LOCATION_HAND,0,1,1,nil)
+	Duel.SendtoGrave(sc,REASON_COST)
 end
-function s.filter(c,e,tp)
-	if c:GetFlagEffect(id)==0 or not c:IsType(TYPE_SYNCHRO) or not c:IsCanBeSpecialSummoned(e,0,tp,false,false) then return false end
+function s.spfilter(c,e,tp)
+	if not c:HasFlagEffect(id) or not c:IsType(TYPE_SYNCHRO) or not c:IsCanBeSpecialSummoned(e,0,tp,false,false) then return false end
 	if c:IsLocation(LOCATION_EXTRA) then
 		return Duel.GetLocationCountFromEx(tp)>0
 	else
@@ -55,27 +60,11 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA|LOCATION_GRAVE|LOCATION_REMOVED)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.filter),tp,LOCATION_EXTRA|LOCATION_GRAVE|LOCATION_REMOVED,0,1,1,nil,e,tp):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter),tp,LOCATION_EXTRA|LOCATION_GRAVE|LOCATION_REMOVED,0,1,1,nil,e,tp):GetFirst()
 	if tc and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
-		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_DISABLE)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-		tc:RegisterEffect(e1)
-		local e2=Effect.CreateEffect(e:GetHandler())
-		e2:SetType(EFFECT_TYPE_SINGLE)
-		e2:SetCode(EFFECT_DISABLE_EFFECT)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
-		tc:RegisterEffect(e2)
+		tc:NegateEffects(c)
 		Duel.SpecialSummonComplete()
-	end
-end
-function s.checkop(e,tp,eg,ep,ev,re,r,rp)
-	local g=eg:Filter(Card.IsType,nil,TYPE_SYNCHRO)
-	local tc=g:GetFirst()
-	while tc do
-		tc:RegisterFlagEffect(id,0,0,0)
-		tc=g:GetNext()
 	end
 end

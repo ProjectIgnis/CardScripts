@@ -2,13 +2,17 @@
 --Vaalmonica Creation
 --Scripted by Hatter
 local s,id=GetID()
+local AGATHOKAKOLOGICAL_VOICE=39210885
 function s.initial_effect(c)
 	--Activate
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_ACTIVATE)
 	e0:SetCode(EVENT_FREE_CHAIN)
+	e0:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
+	e0:SetHintTiming(TIMING_DAMAGE_STEP,TIMING_DAMAGE_STEP)
+	e0:SetCondition(aux.StatChangeDamageStepCondition)
 	c:RegisterEffect(e0)
-	--"Vaalmonica" Link Monsters gain 1200 ATK
+	--While you have 6 or more Resonance Counters on your field, "Vaalmonica" Link Monsters you control gain 1200 ATK
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
@@ -18,7 +22,7 @@ function s.initial_effect(c)
 	e1:SetTargetRange(LOCATION_MZONE,0)
 	e1:SetValue(1200)
 	c:RegisterEffect(e1)
-	--Link Summon 1 "Vaalmonica" Link Monster
+	--If your opponent Special Summons a monster(s), you can: Immediately after this effect resolves, Link Summon 1 "Vaalmonica" Link Monster
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -31,7 +35,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.lktg)
 	e2:SetOperation(s.lkop)
 	c:RegisterEffect(e2)
-	--Place Resonance Counters
+	-- If this card is sent from the hand or field to the GY: You can place Resonance Counters on 1 card in your Pendulum Zone that you can place a Resonance Counter on, so it has 3 Resonance Counters
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_COUNTER)
@@ -71,6 +75,6 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	local tc=Duel.SelectMatchingCard(tp,s.ctfilter,tp,LOCATION_PZONE,0,1,1,nil):GetFirst()
 	if tc and tc:AddCounter(COUNTER_RESONANCE,3-tc:GetCounter(COUNTER_RESONANCE),true) then
-		Duel.RaiseEvent(tc,EVENT_CUSTOM+39210885,e,0,tp,tp,1)
+		Duel.RaiseEvent(tc,EVENT_CUSTOM+AGATHOKAKOLOGICAL_VOICE,e,0,tp,tp,1)
 	end
 end

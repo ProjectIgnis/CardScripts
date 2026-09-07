@@ -25,7 +25,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Effect
 	if Duel.DiscardDeck(tp,2,REASON_EFFECT)==0 then return end
 	local c=e:GetHandler()
-	if Duel.IsMainPhase() and c:IsStatus(STATUS_SPSUMMON_TURN+STATUS_SUMMON_TURN) and Duel.IsExistingMatchingCard(aux.NecroValleyFilter(s.spfilter),tp,LOCATION_GRAVE,0,1,nil,e,tp) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
+	if c:IsSummonPhaseMain() and c:IsStatus(STATUS_SPSUMMON_TURN+STATUS_SUMMON_TURN) and Duel.IsExistingMatchingCard(aux.NecroValleyFilter(s.spfilter),tp,LOCATION_GRAVE,0,1,nil,e,tp) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.SelectYesNo(tp,aux.Stringid(id,0)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 		if #g>0 then

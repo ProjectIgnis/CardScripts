@@ -1,17 +1,15 @@
 --[[
 	Archetype setcode constants list (akin to common card names).
-	Includes every archetype that's being used in official card scripts.
+	Includes every archetype that's being used in OCG/TCG card scripts.
+	
+	To be formatted, probably alphabetically while keeping sub-archetypes with the original.
 
-	Notes:
-- To be formatted, probably alphabetically while keeping sub-archetypes with the original.
-
-- 0x8c Druid (unused, non-existent archetype, ドルイド, 4 OCG cards include it in their names)
-
-- 0x106d Djinn of Rituals (unused sub-archetype of "Djinn")
-- 0x8a Envy (unused super-archetype of "Traptrix")
-
-- 0xb6 not used at all
-- 0xb8 not used at all
+	Available/unused values:
+	- 0x68
+	- 0x6c
+	- 0x8c
+	- 0xb6
+	- 0xb8
 --]]
 
 SET_ALLY_OF_JUSTICE               = 0x1
@@ -19,7 +17,7 @@ SET_GENEX                         = 0x2
 SET_R_GENEX                       = 0x1002
 SET_GENEX_ALLY                    = 0x2002
 SET_HORUS                         = 0x3
-SET_HORUS_BLACK_FLAME_DRAGON      = 0x1003
+SET_HORUS_THE_BLACK_FLAME_DRAGON  = 0x1003
 SET_AMAZONESS                     = 0x4
 SET_ARCANA_FORCE                  = 0x5
 SET_DARK_WORLD                    = 0x6
@@ -115,6 +113,7 @@ SET_JUNK                          = 0x43
 SET_THE_AGENT                     = 0x44
 SET_ARCHFIEND                     = 0x45
 SET_RED_DRAGON_ARCHFIEND          = 0x1045
+SET_POLYMERIZATION                = 0x46
 SET_FUSION                        = 0x46
 SET_FUSION_DRAGON                 = 0x1046
 SET_GEM                           = 0x47
@@ -122,6 +121,7 @@ SET_GEM_KNIGHT                    = 0x1047
 SET_NUMBER                        = 0x48
 SET_NUMBER_C                      = 0x1048
 SET_NUMBER_C39                    = 0x5048
+SET_NUMBER_99                     = 0x8048
 SET_SKYBLASTER                    = 0x49
 SET_TIMELORD                      = 0x4a
 SET_AESIR                         = 0x4b
@@ -157,13 +157,14 @@ SET_TOON                          = 0x62
 SET_REACTOR                       = 0x63
 SET_HARPIE                        = 0x64
 SET_INFESTATION                   = 0x65
-SET_WARRIOR                       = 0x66
-SET_SYMPHONIC_WARRIOR             = 0x1066
-SET_MAGNET_WARRIOR                = 0x2066
+SET_MAGNET                        = 0x1066
+SET_WARRIOR                       = 0x2066
+SET_MAGNET_WARRIOR                = 0x3066
+SET_SYMPHONIC_WARRIOR             = 0x6066
+SET_MAGNET_WARRIOR_SIGMA          = 0xb066
 SET_HIERATIC                      = 0x69
 SET_BUTTERSPY                     = 0x6a
 SET_BOUNZER                       = 0x6b
-SET_HELIOS                        = 0x6c
 SET_DJINN                         = 0x6d
 SET_PROPHECY                      = 0x6e
 SET_SPELLBOOK                     = 0x106e
@@ -212,7 +213,7 @@ SET_STAR_SERAPH                   = 0x86
 SET_UMBRAL_HORROR                 = 0x87
 SET_BUJIN                         = 0x88
 SET_HOLE                          = 0x89
-SET_TRAPTRIX                      = 0x108a
+SET_TRAPTRIX                      = 0x8a
 SET_MALICEVOROUS                  = 0x8b
 SET_GHOSTRICK                     = 0x8d
 SET_VAMPIRE                       = 0x8e
@@ -436,6 +437,7 @@ SET_ELDLICH                       = 0x142
 SET_ELDLIXIR                      = 0x143
 SET_GOLDEN_LAND                   = 0x144
 SET_PHANTASM                      = 0x145
+SET_SACRED_BEAST                  = 0x1145
 SET_DOGMATIKA                     = 0x146
 SET_MELFFY                        = 0x147
 SET_POTAN                         = 0x148
@@ -520,7 +522,6 @@ SET_GHOTI                         = 0x18b
 SET_KASHTIRA                      = 0x18a
 SET_GOLD_PRIDE                    = 0x193
 SET_KOALA                         = 0x67
-SET_KANGAROO                      = 0x68
 SET_RESCUE_ACE                    = 0x18c
 SET_PURRELY                       = 0x18d
 SET_MIKANKO                       = 0x18e
@@ -535,7 +536,7 @@ SET_NOUVELLES                     = 0x197
 SET_RECIPE                        = 0x198
 SET_VISAS                         = 0x199
 SET_MEMENTO                       = 0x19a
-SET_CENTURION                     = 0x19b
+SET_CENTUR_ION                    = 0x19b
 SET_VAALMONICA                    = 0x19c
 SET_YUBEL                         = 0x19d
 SET_VOICELESS_VOICE               = 0x19e
@@ -553,7 +554,7 @@ SET_COUNTER                       = 0x200
 SET_BATTLIN_BOXING                = 0x201
 SET_VEDA                          = 0x202
 SET_DIABELL                       = 0x203
-SET_DIABELLESTARR                 = 0x1203
+SET_DIABELLSTAR                   = 0x1203
 SET_SINFUL_SPOILS                 = 0x204
 SET_SNAKE_EYE                     = 0x205
 SET_PATISSCIEL                    = 0x206
@@ -582,6 +583,7 @@ SET_AQUA_JET                      = 0x1bb
 SET_DRAGON_RULER                  = 0x1bc
 SET_MITSURUGI                     = 0x1bd
 SET_DOMINUS                       = 0x1bf
+SET_DOMINUS_PURGE                 = 0x11bf
 SET_APOPHIS                       = 0x1c2
 SET_SERKET                        = 0x1c3
 SET_REGENESIS                     = 0x1be
@@ -593,10 +595,35 @@ SET_DRACOTAIL                     = 0x1c0
 SET_YUMMY                         = 0x1c1
 SET_K9                            = 0x1c4
 SET_DOOM_KING                     = 0x1c8
---Released but the official English name is unconfirmed
-SET_MAGNIFISTORM                  = 0x1c9
-SET_DOOM_Z                        = 0x1cb
---Pre-release archetypes
+SET_RADIANT_TYPHOON               = 0x1c9
+SET_DOOMZ                         = 0x1cb
 SET_HECAHANDS                     = 0x1cc
 SET_ENNEACRAFT                    = 0x1cd
-SET_KILLER_TUNE                   = 0x1ce
+SET_KEWL_TUNE                     = 0x1ce
+SET_ECCLESIA                      = 0x1cf
+SET_END_OF_THE_WORLD              = 0x1d1
+SET_FAIRY_TAIL                    = 0x1d2
+SET_ELFNOTE                       = 0x1d0
+SET_GMX                           = 0x1d4
+SET_CLOWN_CREW                    = 0x1d3
+SET_BLITZCLIQUE                   = 0x1d6
+SET_THEOREALIZE                   = 0x1d7
+SET_ALEISTER                      = 0x1d8
+SET_ANGELECHY                     = 0x1dc
+--Released but the official English name is unconfirmed
+SET_DARK_TUNER                    = 0x1d5
+SET_WHITE_KNIGHT_NIGHT            = 0x1d9
+--Pre-release archetypes
+SET_DAEDALUS                      = 0x1da
+SET_ASHTRA                        = 0x1db
+SET_ARS_MAGNA                     = 0x1dd
+SET_DIACTORUS                     = 0x1de
+SET_MEDIUS                        = 0x1df
+SET_MASQUERADE                    = 0x1e0
+SET_ZENET                         = 0x1e1
+SET_DOMINATORS                    = 0x1e2
+SET_XENOVADER                     = 0x1e3
+SET_RAISE_MOON                    = 0x1e4
+SET_DRAGON_CARD                   = 0x1e5
+SET_SUN_GOD                       = 0x1e6
+SET_THE_WINGED_DRAGON_OF_RA       = 0x1e7

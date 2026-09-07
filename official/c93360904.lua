@@ -48,7 +48,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_YUMMY}
 function s.desconfilter(c,tp)
-	return c:IsSynchroSummoned() and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsRace(RACE_BEAST) and c:IsSummonPlayer(tp) and c:IsFaceup() 
+	return c:IsSynchroSummoned() and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsRace(RACE_BEAST) and c:IsSummonPlayer(tp) and c:IsFaceup()
 end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.desconfilter,1,nil,tp)

@@ -1,16 +1,14 @@
+--被弾回避
 --Evasion Under Fire
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--If a player(s) would take battle damage: That damage becomes 0.
 	local e1=Effect.CreateEffect(c)	
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
-	e1:SetCondition(s.con)
+	e1:SetCondition(function(_,tp) return Duel.GetBattleDamage(tp)>0 or Duel.GetBattleDamage(1-tp)>0 end)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-end
-function s.con(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetBattleDamage(tp)>0 or Duel.GetBattleDamage(1-tp)>0
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local dam=0
@@ -25,7 +23,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EVENT_PRE_BATTLE_DAMAGE)
 	e1:SetOperation(s.damop)
 	e1:SetLabel(dam)
-	e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
+	e1:SetReset(RESET_PHASE|PHASE_DAMAGE)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)

@@ -6,8 +6,8 @@ function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
-	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
+	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_TO_HAND)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetCondition(s.condition)
@@ -42,13 +42,12 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetCode(EFFECT_CANNOT_ACTIVATE)
 			e1:SetTargetRange(1,0)
 			e1:SetValue(s.aclimit)
-			e1:SetLabelObject(tc)
+			e1:SetLabel(tc:GetCode())
 			e1:SetReset(RESET_PHASE|PHASE_END)
 			Duel.RegisterEffect(e1,tp)
 		end
 	end
 end
 function s.aclimit(e,re,tp)
-	local tc=e:GetLabelObject()
-	return re:GetHandler():IsCode(tc:GetCode())
+	return re:GetHandler():IsCode(e:GetLabel())
 end

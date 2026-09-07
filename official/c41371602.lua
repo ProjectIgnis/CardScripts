@@ -42,13 +42,13 @@ function s.initial_effect(c)
 	e4:SetOperation(s.synop)
 	c:RegisterEffect(e4)
 end
-s.listed_series={SET_CENTURION}
+s.listed_series={SET_CENTUR_ION}
 function s.reg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	e:GetHandler():RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,EFFECT_FLAG_OATH,1)
 end
 function s.indfilter(c)
-	return c:IsFaceup() and c:IsOriginalType(TYPE_MONSTER) and c:IsSetCard(SET_CENTURION)
+	return c:IsFaceup() and c:IsOriginalType(TYPE_MONSTER) and c:IsSetCard(SET_CENTUR_ION)
 end
 function s.indcon(e)
 	return Duel.IsExistingMatchingCard(s.indfilter,e:GetHandlerPlayer(),LOCATION_ONFIELD,0,1,nil)
@@ -60,7 +60,7 @@ function s.tfcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function s.plfilter(c)
-	return c:IsSetCard(SET_CENTURION) and c:IsMonster() and not c:IsForbidden()
+	return c:IsSetCard(SET_CENTUR_ION) and c:IsMonster() and not c:IsForbidden()
 end
 function s.tftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
@@ -82,7 +82,7 @@ function s.tfop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.syncheck(tp,sg,sc)
-	return sg:IsExists(Card.IsSetCard,1,nil,SET_CENTURION)
+	return sg:IsExists(Card.IsSetCard,1,nil,SET_CENTUR_ION)
 end
 function s.syntg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then

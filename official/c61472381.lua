@@ -8,6 +8,7 @@ function s.initial_effect(c)
 	--Set 1 "Fire Formation" spell/trap from deck or GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetCategory(CATEGORY_SET)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1,id)
@@ -24,7 +25,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetCondition(s.negcon)
-	e2:SetCost(s.negcost)
+	e2:SetCost(Cost.Replaceable(s.negcost))
 	e2:SetTarget(s.negtg)
 	e2:SetOperation(s.negop)
 	c:RegisterEffect(e2)
@@ -53,21 +54,16 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
-		and ep~=tp and re:IsMonsterEffect() and Duel.IsChainDisablable(ev)
+		and ep==1-tp and re:IsMonsterEffect() and Duel.IsChainDisablable(ev)
 end
-function s.cfilter(c)
-	return c:IsFaceup() and (c:IsSetCard(SET_FIRE_FIST) or c:IsSetCard(SET_FIRE_FORMATION)) and not c:IsCode(id) and c:IsAbleToGraveAsCost()
+function s.negcostfilter(c)
+	return c:IsFaceup() and c:IsSetCard({SET_FIRE_FIST,SET_FIRE_FORMATION}) and not c:IsCode(id) and c:IsAbleToGraveAsCost()
 end
 function s.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local nc=Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD,0,1,nil)
-	if chk==0 then 
-		if Duel.IsPlayerAffectedByEffect(tp,CARD_FIRE_FIST_EAGLE) then return true else return nc end
-	end
-	if nc and not (Duel.IsPlayerAffectedByEffect(tp,CARD_FIRE_FIST_EAGLE) and Duel.SelectYesNo(tp,aux.Stringid(CARD_FIRE_FIST_EAGLE,0))) then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-		local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_ONFIELD,0,1,1,nil)
-		Duel.SendtoGrave(g,REASON_COST)
-	end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.negcostfilter,tp,LOCATION_ONFIELD,0,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+	local g=Duel.SelectMatchingCard(tp,s.negcostfilter,tp,LOCATION_ONFIELD,0,1,1,nil)
+	Duel.SendtoGrave(g,REASON_COST)
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

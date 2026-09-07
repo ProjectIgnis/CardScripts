@@ -15,14 +15,14 @@ end
 function Ritual.CheckMatFilter(matfilter,e,tp,mg,mg2)
 	if matfilter then
 		if type(matfilter)=="function" then
-			mg:Sub(mg:Filter(aux.NOT(matfilter),nil,e,tp))
-			mg2:Sub(mg2:Filter(aux.NOT(matfilter),nil,e,tp))
+			mg:Remove(aux.NOT(matfilter),nil,e,tp)
+			mg2:Remove(aux.NOT(matfilter),nil,e,tp)
 		else
 			local f=function(c)
 						return not matfilter:IsContains(c)
 					end
-			mg:Sub(mg:Filter(f,nil))
-			mg2:Sub(mg2:Filter(f,nil))
+			mg:Remove(f,nil)
+			mg2:Remove(f,nil)
 		end
 	end
 end

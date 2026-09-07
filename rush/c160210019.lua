@@ -33,7 +33,7 @@ function s.rescon(sg,e,tp,mg)
 	return sg:GetClassCount(Card.GetRace)==#sg
 end
 function s.filter(c)
-	return c:IsFaceup() and c:IsAbleToDeck()
+	return c:IsFaceup()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(s.filter),tp,0,LOCATION_ONFIELD,1,nil) end
@@ -49,6 +49,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(s.filter),tp,0,LOCATION_ONFIELD,1,2,nil)
 	if #g==0 then return end
 	g=g:AddMaximumCheck()
-	Duel.HintSelection(g,true)
+	Duel.HintSelection(g)
 	Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 end

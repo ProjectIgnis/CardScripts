@@ -20,7 +20,8 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_FUSION,160210022}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsStatus(STATUS_SPSUMMON_TURN)
+	local c=e:GetHandler()
+	return c:IsSummonPhaseMain() and c:IsStatus(STATUS_SPSUMMON_TURN)
 end
 function s.ssfilter(c)
 	return (c:IsCode(CARD_FUSION,160210022) or c:IsEquipSpell()) and c:IsSpellTrap() and c:IsSSetable() and not c:IsType(TYPE_FIELD)

@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	--Special Summon this card from your hand, then you can Set 1 "Artmage" Spell from your Deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
-	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_SET)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_HAND)
 	e2:SetCountLimit(1,id)

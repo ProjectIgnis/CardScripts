@@ -38,7 +38,7 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(op)
 	Duel.RegisterFlagEffect(tp,id+op,RESET_PHASE|PHASE_END,0,1)
 	if op==1 then
-		e:SetCategory(CATEGORY_HANDES+CATEGORY_TOHAND+CATEGORY_SEARCH)
+		e:SetCategory(CATEGORY_HANDES+CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_SPECIAL_SUMMON)
 		Duel.SetOperationInfo(0,CATEGORY_HANDES,nil,0,tp,1)
 		Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,2,tp,LOCATION_DECK)
 		Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)

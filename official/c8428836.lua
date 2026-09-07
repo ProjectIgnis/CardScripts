@@ -4,11 +4,12 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Ritual Summon
-	Ritual.AddProcGreater({handler=c,filter=s.ritualfil,lvtype=RITPROC_GREATER,sumpos=POS_FACEUP_ATTACK|POS_FACEDOWN_DEFENSE,location=LOCATION_HAND|LOCATION_GRAVE})
+	local e0=Ritual.AddProcGreater({handler=c,filter=s.ritualfil,lvtype=RITPROC_GREATER,sumpos=POS_FACEUP_ATTACK|POS_FACEDOWN_DEFENSE,location=LOCATION_HAND|LOCATION_GRAVE})
+	e0:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_SET)
 	--Special Summon 1 non-Ritual "Prediction Princess" from your Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,1))
-	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_SET)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_PHASE|PHASE_STANDBY)
 	e1:SetRange(LOCATION_GRAVE)

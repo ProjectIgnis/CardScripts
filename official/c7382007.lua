@@ -1,6 +1,6 @@
 --剛鬼シーク・オーガ
 --Gouki Sheik Ogre
---scripted by Naim
+--Scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
@@ -20,15 +20,14 @@ function s.initial_effect(c)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 	--Fusion Summon 1 "Gouki" Fusion Monster from your Extra Deck, using monsters from your hand or field
-	local params={function(c) return c:IsSetCard(SET_GOUKI) end}
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,{id,1})
-	e2:SetTarget(Fusion.SummonEffTG(params))
-	e2:SetOperation(Fusion.SummonEffOP(params))
+	e2:SetTarget(Fusion.SummonEffTG(aux.FilterBoolFunction(Card.IsSetCard,SET_GOUKI)))
+	e2:SetOperation(Fusion.SummonEffOP(aux.FilterBoolFunction(Card.IsSetCard,SET_GOUKI)))
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_GOUKI}

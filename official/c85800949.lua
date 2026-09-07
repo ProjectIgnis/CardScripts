@@ -22,6 +22,7 @@ function s.initial_effect(c)
 	--Set 1 Trap card from the GY
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
+	e3:SetCategory(CATEGORY_SET)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_BE_BATTLE_TARGET)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)

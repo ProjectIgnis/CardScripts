@@ -41,15 +41,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_RECIPE,SET_NOUVELLES}
 function s.regcon(e,tp,eg,ep,ev,re,r,rp)
-	if not (re and re:IsMonsterEffect()) then return false end
-	local rc=re:GetHandler()
-	local trig_loc,trig_setcodes=Duel.GetChainInfo(0,CHAININFO_TRIGGERING_LOCATION,CHAININFO_TRIGGERING_SETCODES)
-	if not Duel.IsChainSolving() or (rc:IsRelateToEffect(re) and rc:IsFaceup() and rc:IsLocation(trig_loc)) then
-		return rc:IsSetCard(SET_NOUVELLES)
-	end
-	for _,set in ipairs(trig_setcodes) do
-		if (SET_NOUVELLES&0xfff)==(set&0xfff) and (SET_NOUVELLES&set)==SET_NOUVELLES then return true end
-	end
+	return re and re:IsMonsterEffect() and re:IsCardSetcode(SET_NOUVELLES)
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end

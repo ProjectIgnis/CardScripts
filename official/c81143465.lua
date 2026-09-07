@@ -1,5 +1,5 @@
 --あないみじや玉の緒ふたつ
---Tragic Twin Threads
+--Tragic Twin Twined Jewels
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

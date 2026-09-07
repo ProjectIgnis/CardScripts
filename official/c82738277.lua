@@ -22,7 +22,7 @@ function s.initial_effect(c)
 	--Return 1 set S/T, then can set 1 S/T from hand
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
-	e3:SetCategory(CATEGORY_TOHAND)
+	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SET)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetRange(LOCATION_MZONE)

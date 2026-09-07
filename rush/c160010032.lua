@@ -15,7 +15,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsMainPhase() and e:GetHandler():IsStatus(STATUS_SPSUMMON_TURN+STATUS_SUMMON_TURN)
+	local c=e:GetHandler()
+	return c:IsSummonPhaseMain() and c:IsStatus(STATUS_SPSUMMON_TURN+STATUS_SUMMON_TURN)
 end
 function s.spfilter(c,e,tp)
 	local lv=c:GetLevel()

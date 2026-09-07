@@ -1,5 +1,5 @@
 --竜呼双搏
---Draco Stand-off
+--Draco Awakening
 --Scripted by The Razgriz
 local s,id=GetID()
 function s.initial_effect(c)
@@ -71,7 +71,7 @@ end
 function s.pltg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=e:GetLabelObject():Filter(s.plfilter,nil,e,tp)
 	if chkc then return g:IsContains(chkc) and s.plfilter(chkc,e,tp) end
-	if chk==0 then return #g>0 end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and #g>0 end
 	local tc=nil
 	if #g>1 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)

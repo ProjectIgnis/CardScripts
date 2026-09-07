@@ -25,7 +25,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsStatus(STATUS_SUMMON_TURN) and c:IsSummonType(SUMMON_TYPE_TRIBUTE) and Duel.GetFieldGroupCount(tp,LOCATION_EXTRA,0)==0
 end
 function s.filter(c)
-	return c:IsAbleToDeck() and c:IsNotMaximumModeSide()
+	return c:IsNotMaximumModeSide()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local dg=Duel.GetMatchingGroup(s.filter,tp,0,LOCATION_ONFIELD,nil)

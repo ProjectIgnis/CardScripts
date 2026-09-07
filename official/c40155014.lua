@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={SET_CENTURION}
+s.listed_series={SET_CENTUR_ION}
 function s.rmvfilter(c)
 	return c:IsFaceup() and c:IsOriginalType(TYPE_MONSTER) and c:IsAbleToRemove()
 end
@@ -60,7 +60,7 @@ function s.rmvop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(SET_CENTURION) and c:IsType(TYPE_SYNCHRO) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_CENTUR_ION) and c:IsType(TYPE_SYNCHRO) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.spfilter(chkc,e,tp) end

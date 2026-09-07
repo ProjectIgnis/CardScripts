@@ -1,9 +1,10 @@
+--ワンダー・クラウド
 --Wonder Cloud
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_DRAW)
+	e1:SetCategory(CATEGORY_DRAW+CATEGORY_REMOVE)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -23,25 +24,29 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetTargetPlayer(tp)
 	Duel.SetTargetParam(ct)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,ct)
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,tp,LOCATION_DECK)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
-	local ct=Duel.GetFieldGroupCount(tp,0,LOCATION_ONFIELD)
-	if Duel.Draw(p,ct,REASON_EFFECT) then
-		local ct2=Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)
-		local g=Duel.GetDecktopGroup(tp,ct2)
-		if Duel.Remove(g,POS_FACEUP,REASON_EFFECT) then
-			local e1=Effect.CreateEffect(c)
-			e1:SetType(EFFECT_TYPE_FIELD)
-			e1:SetCode(EFFECT_DISABLE)
-			e1:SetTargetRange(0,LOCATION_ONFIELD|LOCATION_HAND|LOCATION_DECK|LOCATION_GRAVE|LOCATION_REMOVED|LOCATION_EXTRA)
-			e1:SetTarget(s.distarget)
-			e1:SetReset(RESET_PHASE+PHASE_END)
-			Duel.RegisterEffect(e1,tp)
+	local drct=Duel.GetFieldGroupCount(tp,0,LOCATION_ONFIELD)
+	if Duel.Draw(p,drct,REASON_EFFECT) then
+		local deckg=Duel.GetFieldGroup(tp,LOCATION_DECK,0):Filter(Card.IsAbleToRemove,nil)
+		if #deckg>0 then
+			Duel.Remove(deckg,POS_FACEUP,REASON_EFFECT)
 		end
 	end
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e1:SetCode(EVENT_CHAIN_SOLVING)
+	e1:SetOperation(s.disop)
+	e1:SetReset(RESET_PHASE|PHASE_END)
+	Duel.RegisterEffect(e1,tp)
 end
-function s.distarget(e,c)
-	return c~=e:GetHandler() and c:IsType(TYPE_TRAP+TYPE_SPELL+TYPE_MONSTER)
+function s.disop(e,tp,eg,ep,ev,re,r,rp)
+	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) or rp~=tp then return end
+	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
+	if g:IsExists(Card.IsLocation,1,nil,LOCATION_REMOVED) then
+		Duel.NegateEffect(ev)
+	end
 end

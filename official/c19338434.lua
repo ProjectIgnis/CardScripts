@@ -31,7 +31,7 @@ function s.tgfilter(c)
 	return c:IsFacedown() and (c:IsCanChangePosition() or (c:IsAbleToGrave() and Duel.IsPlayerCanDraw(c:GetOwner(),2)))
 end
 function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return c:IsLocation(LOCATION_MZONE) and c:IsControler(1-tp) and s.tgfilter(chkc) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and s.tgfilter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(s.tgfilter,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local tc=Duel.SelectTarget(tp,s.tgfilter,tp,0,LOCATION_MZONE,1,1,nil):GetFirst()

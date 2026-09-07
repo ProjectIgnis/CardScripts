@@ -27,7 +27,7 @@ function s.ctop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCountLimit(1)
 	e1:SetTarget(s.drtg)
 	e1:SetOperation(s.drop)
-	e1:SetReset(RESET_EVENT|RESETS_STANDARD-(RESET_LEAVE|RESET_TEMP_REMOVE|RESET_TURN_SET)|RESET_PHASE|PHASE_END)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD_PHASE_END&~(RESET_LEAVE|RESET_TEMP_REMOVE|RESET_TURN_SET))
 	c:RegisterEffect(e1)
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)

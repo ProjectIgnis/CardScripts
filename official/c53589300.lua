@@ -68,12 +68,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	g:DeleteGroup()
 end
 function s.chcon(e,tp,eg,ep,ev,re,r,rp)
-	if not (re:IsMonsterEffect() and rp==tp) then return false end
-	local setcodes=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_SETCODES)
-	for _,set in ipairs(setcodes) do
-		if (SET_ARTMAGE&0xfff)==(set&0xfff) and (SET_ARTMAGE&set)==SET_ARTMAGE then return true end
-	end
-	return false
+	return rp==tp and re:IsMonsterEffect() and Chain.IsSetcode(ev,SET_ARTMAGE)
 end
 function s.chtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,0,LOCATION_ONFIELD)>0 end

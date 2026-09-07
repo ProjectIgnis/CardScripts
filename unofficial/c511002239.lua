@@ -1,7 +1,8 @@
---Stealth
+--ステルスロイド (Manga)
+--Stealthroid (Manga)
 local s,id=GetID()
 function s.initial_effect(c)
-	--flip
+	--Once per turn, you can flip 1 facedown monster your opponent controls face-up (Flip Effects are not activated at this time)
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(3648368,0))
 	e1:SetCategory(CATEGORY_POSITION)
@@ -12,16 +13,15 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsFacedown,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,nil,1,0,0)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEDOWN)
-	local g=Duel.SelectMatchingCard(tp,Card.IsFacedown,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
-	local tc=g:GetFirst()
-	if tc then
-		Duel.HintSelection(g)
-		Duel.ChangePosition(tc,0,0,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK,true)
+	local tc=Duel.SelectMatchingCard(tp,Card.IsFacedown,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil):GetFirst()
+	if tc and tc:IsFacedown() then
+		Duel.HintSelection(tc)
+		Duel.ChangePosition(tc,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK,POS_FACEUP_DEFENSE,POS_FACEUP_DEFENSE,true)
 	end
 end

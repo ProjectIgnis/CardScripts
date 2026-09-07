@@ -3,13 +3,17 @@
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
+	--You can only control 1 "Crystal Brilliance"
 	c:SetUniqueOnField(1,0,id)
 	--Activate
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_ACTIVATE)
 	e0:SetCode(EVENT_FREE_CHAIN)
+	e0:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
+	e0:SetHintTiming(TIMING_DAMAGE_STEP,TIMING_DAMAGE_STEP)
+	e0:SetCondition(aux.StatChangeDamageStepCondition)
 	c:RegisterEffect(e0)
-	--"Crystal Beast" monsters gain ATK equal to their original DEF
+	--Each "Crystal Beast" monster you control gains ATK equal to its original DEF
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
@@ -18,7 +22,7 @@ function s.initial_effect(c)
 	e1:SetTarget(function(_,c) return c:IsSetCard(SET_CRYSTAL_BEAST) end)
 	e1:SetValue(function(_,c) return c:GetBaseDefense() end)
 	c:RegisterEffect(e1)
-	--Special Summon 1 "Crystal Beast" monster from hand or Deck and halve damage
+	--If a "Crystal Beast" card(s) is placed in your Spell & Trap Zone, even during the Damage Step: You can send this face-up card to the GY; Special Summon 1 "Crystal Beast" monster from your hand or GY, also any damage you take this turn is halved
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -34,8 +38,8 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_CRYSTAL_BEAST}
 function s.cbstfilter(c,tp)
-	return c:IsLocation(LOCATION_SZONE) and not c:IsPreviousLocation(LOCATION_SZONE) and c:IsSetCard(SET_CRYSTAL_BEAST) and c:IsFaceup()
-		and c:IsControler(tp)
+	return c:IsLocation(LOCATION_SZONE) and not c:IsPreviousLocation(LOCATION_SZONE) and c:IsSetCard(SET_CRYSTAL_BEAST)
+		and c:IsFaceup() and c:IsControler(tp)
 end
 function s.spcond(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cbstfilter,1,nil,tp)
@@ -54,7 +58,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND|LOCATION_GRAVE)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
-	--Halve all damage
+	--Any damage you take this turn is halved
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetType(EFFECT_TYPE_FIELD)

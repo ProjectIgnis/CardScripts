@@ -3,82 +3,81 @@
 --Script by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
-	--Special Summon this card from your hand
+	--This card must attack, if able
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_POSITION)
-	e1:SetType(EFFECT_TYPE_IGNITION)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e1:SetRange(LOCATION_HAND)
-	e1:SetCountLimit(1,id)
-	e1:SetTarget(s.sptg)
-	e1:SetOperation(s.spop)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_MUST_ATTACK)
 	c:RegisterEffect(e1)
-	--This card must attack
+	--Change the battle position of this card
 	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetCode(EFFECT_MUST_ATTACK)
+	e2:SetDescription(aux.Stringid(id,0))
+	e2:SetCategory(CATEGORY_POSITION)
+	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
+	e2:SetCode(EVENT_BE_BATTLE_TARGET)
+	e2:SetOperation(s.selfposop)
 	c:RegisterEffect(e2)
-	--Change this card's battle position if it's attacked
+	--Change the battle position of 1 "Karakuri" monster you control, and if you do, Special Summon this card as a Tuner, also, you cannot Special Summon monsters from the Extra Deck for the rest of this turn, except EARTH Machine monsters
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
-	e3:SetCategory(CATEGORY_POSITION)
-	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
-	e3:SetCode(EVENT_BE_BATTLE_TARGET)
-	e3:SetOperation(s.posop)
+	e3:SetCategory(CATEGORY_POSITION+CATEGORY_SPECIAL_SUMMON)
+	e3:SetType(EFFECT_TYPE_IGNITION)
+	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e3:SetRange(LOCATION_HAND)
+	e3:SetCountLimit(1,id)
+	e3:SetTarget(s.sptg)
+	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
 s.listed_series={SET_KARAKURI}
+function s.selfposop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	if c:IsRelateToEffect(e) then
+		Duel.ChangePosition(c,POS_FACEUP_DEFENSE,POS_FACEDOWN_DEFENSE,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK)
+	end
+end
 function s.posfilter(c)
-	return c:IsFaceup() and c:IsSetCard(SET_KARAKURI) and c:IsCanChangePosition()
+	return c:IsSetCard(SET_KARAKURI) and c:IsFaceup() and c:IsCanChangePosition()
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local c=e:GetHandler()
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and s.posfilter(chkc) end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and Duel.IsExistingTarget(s.posfilter,tp,LOCATION_MZONE,0,1,nil) end
+	local c=e:GetHandler()
+	c:AssumeProperty(ASSUME_TYPE,c:GetType()|TYPE_TUNER)
+	if chk==0 then return Duel.IsExistingTarget(s.posfilter,tp,LOCATION_MZONE,0,1,nil)
+		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
 	local g=Duel.SelectTarget(tp,s.posfilter,tp,LOCATION_MZONE,0,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_POSITION,g,1,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_POSITION,g,1,tp,0)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,tp,0)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and Duel.ChangePosition(tc,POS_FACEUP_DEFENSE,POS_FACEDOWN_DEFENSE,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK)>0 and c:IsRelateToEffect(e)
-		and Duel.SpecialSummonStep(c,0,tp,tp,false,false,POS_FACEUP) then
-		--Treated as a Tuner
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetCode(EFFECT_ADD_TYPE)
-		e1:SetValue(TYPE_TUNER)
-		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
-		c:RegisterEffect(e1)
+	if tc:IsRelateToEffect(e) and Duel.ChangePosition(tc,POS_FACEUP_DEFENSE,POS_FACEDOWN_DEFENSE,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK)>0
+		and c:IsRelateToEffect(e) then
+		c:AssumeProperty(ASSUME_TYPE,c:GetType()|TYPE_TUNER)
+		if Duel.SpecialSummonStep(c,0,tp,tp,false,false,POS_FACEUP) then
+			--Treated as a Tuner
+			local e1=Effect.CreateEffect(c)
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+			e1:SetCode(EFFECT_ADD_TYPE)
+			e1:SetValue(TYPE_TUNER)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
+			c:RegisterEffect(e1)
+		end
 	end
 	Duel.SpecialSummonComplete()
-	--Cannot Special Summon from the Extra Deck, except EARTH Machines
-	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(id,2))
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
-	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e1:SetTargetRange(1,0)
-	e1:SetTarget(s.splimit)
-	e1:SetReset(RESET_PHASE|PHASE_END)
-	Duel.RegisterEffect(e1,tp)
-	--Clock Lizard check
-	aux.addTempLizardCheck(c,tp,s.lizfilter)
-end
-function s.splimit(e,c)
-	return not (c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_EARTH)) and c:IsLocation(LOCATION_EXTRA)
-end
-function s.lizfilter(e,c)
-	return not (c:IsOriginalRace(RACE_MACHINE) and c:IsOriginalAttribute(ATTRIBUTE_EARTH))
-end
-function s.posop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	if c:IsFaceup() and c:IsRelateToEffect(e) then
-		Duel.ChangePosition(c,POS_FACEUP_DEFENSE,POS_FACEDOWN_DEFENSE,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK)
-	end
+	--You cannot Special Summon from the Extra Deck for the rest of this turn, except EARTH Machine monsters
+	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,2))
+	e2:SetType(EFFECT_TYPE_FIELD)
+	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
+	e2:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+	e2:SetTargetRange(1,0)
+	e2:SetTarget(function(e,c) return c:IsLocation(LOCATION_EXTRA) and not (c:IsAttribute(ATTRIBUTE_EARTH) and c:IsRace(RACE_MACHINE)) end)
+	e2:SetReset(RESET_PHASE|PHASE_END)
+	Duel.RegisterEffect(e2,tp)
+	--"Clock Lizard" check
+	aux.addTempLizardCheck(c,tp,function(e,c) return not (c:IsOriginalAttribute(ATTRIBUTE_EARTH) and c:IsOriginalRace(RACE_MACHINE)) end)
 end

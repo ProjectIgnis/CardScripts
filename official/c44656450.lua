@@ -2,7 +2,7 @@
 --Condemned Witch
 local s,id=GetID()
 function s.initial_effect(c)
-	--search
+	--Add 1 "Forbidden" Quick-Play Spell from your Deck to your hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -12,25 +12,25 @@ function s.initial_effect(c)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
-	--special summon
+	--Special Summon 1 Level 4 Fairy monster from your Deck, except "Condemned Witch"
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
-	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER|TIMING_MAIN_END)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,{id,1})
-	e2:SetCondition(s.spcon)
+	e2:SetCondition(function(e,tp) return Duel.IsMainPhase(1-tp) end)
 	e2:SetCost(Cost.SelfTribute)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
+	e2:SetHintTiming(0,TIMING_MAIN_END|TIMINGS_CHECK_MONSTER)
 	c:RegisterEffect(e2)
 end
 s.listed_series={SET_FORBIDDEN}
 s.listed_names={id}
 function s.thfilter(c)
-	return (c:IsSetCard(SET_FORBIDDEN) or c:IsCode(25789292,27243130,54773234,96864811)) and c:IsType(TYPE_QUICKPLAY) and c:IsAbleToHand()
+	return c:IsSetCard(SET_FORBIDDEN) and c:IsQuickPlaySpell() and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -43,9 +43,6 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 	end
-end
-function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsTurnPlayer(1-tp) and Duel.IsMainPhase()
 end
 function s.spfilter(c,e,tp)
 	return c:IsLevel(4) and c:IsRace(RACE_FAIRY) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

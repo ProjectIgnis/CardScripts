@@ -31,7 +31,7 @@ function s.valcheck(e,c)
 		e1:SetCountLimit(1)
 		e1:SetTarget(s.sptg)
 		e1:SetOperation(s.spop)
-		e1:SetReset(RESET_EVENT|RESETS_STANDARD-(RESET_TOFIELD|RESET_TURN_SET)|RESET_PHASE|PHASE_END)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD_PHASE_END&~(RESET_TOFIELD|RESET_TURN_SET))
 		c:RegisterEffect(e1)
 	end
 end

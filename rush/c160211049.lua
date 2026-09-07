@@ -19,7 +19,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return #g>=6 and atk==0
 end
 function s.filter(c)
-	return c:IsAbleToDeck() and not c:IsMaximumModeSide()
+	return not c:IsMaximumModeSide()
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_ONFIELD,1,nil) end
@@ -30,9 +30,9 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,0,LOCATION_ONFIELD,1,1,nil)
 	if #g>0 then
-		Duel.HintSelection(g,true)
+		Duel.HintSelection(g)
 		g=g:AddMaximumCheck()
-		Duel.SendtoDeck(g,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
+		if Duel.SendtoDeck(g,nil,SEQ_DECKBOTTOM,REASON_EFFECT)<1 then return end
 		if #g>1 then
 			Duel.SortDeckbottom(1-tp,1-tp,#g)
 		end

@@ -3,134 +3,112 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_ACTIVATE)
+	e0:SetCode(EVENT_FREE_CHAIN)
+	c:RegisterEffect(e0)
+	--During your End Phase: You can activate each of these effects up to once per turn, depending on the total number of "Noble Knight" cards with different names in your GY and/or you control;
 	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e1:SetCode(EVENT_PHASE+PHASE_END)
+	e1:SetRange(LOCATION_FZONE)
+	e1:SetCondition(function(e,tp) return Duel.IsTurnPlayer(tp) end)
+	e1:SetTarget(s.efftg)
+	e1:SetOperation(s.effop)
 	c:RegisterEffect(e1)
-	--
-	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,0))
-	e2:SetCategory(CATEGORY_TOGRAVE)
-	e2:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_FIELD)
-	e2:SetRange(LOCATION_FZONE)
-	e2:SetCode(EVENT_PHASE+PHASE_END)
-	e2:SetLabel(3)
-	e2:SetCountLimit(1)
-	e2:SetCondition(s.effcon)
-	e2:SetTarget(s.target1)
-	e2:SetOperation(s.operation1)
-	c:RegisterEffect(e2)
-	--Special Summon
-	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(id,1))
-	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e3:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_FIELD)
-	e3:SetRange(LOCATION_FZONE)
-	e3:SetCode(EVENT_PHASE+PHASE_END)
-	e3:SetLabel(6)
-	e3:SetCountLimit(1)
-	e3:SetCondition(s.effcon)
-	e3:SetTarget(s.target2)
-	e3:SetOperation(s.operation2)
-	c:RegisterEffect(e3)
-	--tohand
-	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(id,2))
-	e4:SetCategory(CATEGORY_TOHAND)
-	e4:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_FIELD)
-	e4:SetRange(LOCATION_FZONE)
-	e4:SetCode(EVENT_PHASE+PHASE_END)
-	e4:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e4:SetLabel(9)
-	e4:SetCountLimit(1)
-	e4:SetCondition(s.effcon)
-	e4:SetTarget(s.target3)
-	e4:SetOperation(s.operation3)
-	c:RegisterEffect(e4)
-	--draw
-	local e5=Effect.CreateEffect(c)
-	e5:SetDescription(aux.Stringid(id,3))
-	e5:SetCategory(CATEGORY_DRAW)
-	e5:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_FIELD)
-	e5:SetRange(LOCATION_FZONE)
-	e5:SetCode(EVENT_PHASE+PHASE_END)
-	e5:SetCountLimit(1)
-	e5:SetCondition(s.condition4)
-	e5:SetTarget(s.target4)
-	e5:SetOperation(s.operation4)
-	c:RegisterEffect(e5)
 end
 s.listed_series={SET_NOBLE_KNIGHT,SET_NOBLE_ARMS}
-function s.confilter(c)
-	return c:IsFaceup() and c:IsSetCard(SET_NOBLE_KNIGHT)
-end
-function s.effcon(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.IsTurnPlayer(1-tp) then return false end
-	local g=Duel.GetMatchingGroup(s.confilter,tp,LOCATION_GRAVE|LOCATION_ONFIELD,0,nil)
-	return g:GetClassCount(Card.GetCode)>=e:GetLabel()
-end
-function s.filter1(c)
+function s.tgfilter(c)
 	return c:IsSetCard(SET_NOBLE_KNIGHT) and c:IsAbleToGrave()
 end
-function s.target1(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_DECK,0,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
-end
-function s.operation1(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,s.filter1,tp,LOCATION_DECK,0,1,1,nil)
-	Duel.SendtoGrave(g,REASON_EFFECT)
-end
-function s.filter2(c,e,tp)
+function s.spfilter(c,e,tp)
 	return c:IsSetCard(SET_NOBLE_KNIGHT) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-end
-function s.target2(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(s.filter2,tp,LOCATION_HAND,0,1,nil,e,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
-end
-function s.eqfilter(c,tc,tp)
-	return c:IsType(TYPE_EQUIP) and c:IsSetCard(SET_NOBLE_ARMS) and c:CheckEquipTarget(tc) and c:CheckUniqueOnField(tp)
-end
-function s.operation2(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.filter2,tp,LOCATION_HAND,0,1,1,nil,e,tp)
-	local tc=g:GetFirst()
-	if not tc or Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)==0 then return end
-	local tg=Duel.GetMatchingGroup(s.eqfilter,tp,LOCATION_HAND,0,nil,tc,tp)
-	if #tg>0 and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and Duel.SelectYesNo(tp,aux.Stringid(id,4)) then
-		Duel.BreakEffect()
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-		local sg=tg:Select(tp,1,1,nil)
-		Duel.Equip(tp,sg:GetFirst(),tc,true)
-	end
 end
 function s.thfilter(c)
 	return c:IsSetCard(SET_NOBLE_KNIGHT) and c:IsMonster() and c:IsAbleToHand()
 end
-function s.target3(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(s.thfilter,tp,LOCATION_GRAVE,0,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectTarget(tp,s.thfilter,tp,LOCATION_GRAVE,0,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
-end
-function s.operation3(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
-		Duel.SendtoHand(tc,nil,REASON_EFFECT)
+function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return e:GetLabel()==3 and chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.thfilter(chkc) end
+	local c=e:GetHandler()
+	local noble_knights_count=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,SET_NOBLE_KNIGHT),tp,LOCATION_GRAVE|LOCATION_ONFIELD,0,nil):GetClassCount(Card.GetCode)
+	--● 3+: Send 1 "Noble Knight" card from your Deck to the GY
+	local b1=noble_knights_count>=3 and not c:HasFlagEffect(id+1)
+		and Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil)
+	--● 6+: Special Summon 1 "Noble Knight" monster from your hand, then you can equip 1 "Noble Arms" Equip Spell from your hand to that monster
+	local b2=noble_knights_count>=6 and not c:HasFlagEffect(id+2)
+		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp)
+	--● 9+: Target 1 "Noble Knight" monster in your GY; add that target to your hand
+	local b3=noble_knights_count>=9 and not c:HasFlagEffect(id+3)
+		and Duel.IsExistingTarget(s.thfilter,tp,LOCATION_GRAVE,0,1,nil)
+	--● 12: Draw 1 card
+	local b4=noble_knights_count==12 and not c:HasFlagEffect(id+4)
+		and Duel.IsPlayerCanDraw(tp,1)
+	if chk==0 then return b1 or b2 or b3 or b4 end
+	local op=Duel.SelectEffect(tp,
+		{b1,aux.Stringid(id,1)},
+		{b2,aux.Stringid(id,2)},
+		{b3,aux.Stringid(id,3)},
+		{b4,aux.Stringid(id,4)})
+	e:SetLabel(op)
+	if op==1 then
+		e:SetCategory(CATEGORY_TOGRAVE)
+		e:SetProperty(0)
+		Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
+	elseif op==2 then
+		e:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_EQUIP)
+		e:SetProperty(0)
+		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
+		Duel.SetPossibleOperationInfo(0,CATEGORY_EQUIP,nil,1,tp,LOCATION_HAND)
+	elseif op==3 then
+		e:SetCategory(CATEGORY_TOHAND)
+		e:SetProperty(EFFECT_FLAG_CARD_TARGET)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+		local g=Duel.SelectTarget(tp,s.thfilter,tp,LOCATION_GRAVE,0,1,1,nil)
+		Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,tp,0)
+	elseif op==4 then
+		e:SetCategory(CATEGORY_DRAW)
+		e:SetProperty(0)
+		Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 	end
+	c:RegisterFlagEffect(id+op,RESETS_STANDARD_PHASE_END,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,op+5))
 end
-function s.condition4(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.IsTurnPlayer(1-tp) then return false end
-	local g=Duel.GetMatchingGroup(s.confilter,tp,LOCATION_GRAVE|LOCATION_ONFIELD,0,nil)
-	return g:GetClassCount(Card.GetCode)==12
+function s.eqfilter(c,sc,tp)
+	return c:IsSetCard(SET_NOBLE_ARMS) and c:IsEquipSpell() and c:CheckEquipTarget(sc) and c:CheckUniqueOnField(tp)
 end
-function s.target4(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
-	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
-end
-function s.operation4(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Draw(tp,1,REASON_EFFECT)
+function s.effop(e,tp,eg,ep,ev,re,r,rp)
+	local op=e:GetLabel()
+	if op==1 then
+		--● 3+: Send 1 "Noble Knight" card from your Deck to the GY
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+		local g=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_DECK,0,1,1,nil)
+		if #g>0 then
+			Duel.SendtoGrave(g,REASON_EFFECT)
+		end
+	elseif op==2 then
+		--● 6+: Special Summon 1 "Noble Knight" monster from your hand, then you can equip 1 "Noble Arms" Equip Spell from your hand to that monster
+		if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+		local sc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp):GetFirst()
+		if sc and Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP)>0 and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
+			and Duel.IsExistingMatchingCard(s.eqfilter,tp,LOCATION_HAND,0,1,nil,sc,tp)
+			and Duel.SelectYesNo(tp,aux.Stringid(id,5)) then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
+			local ec=Duel.SelectMatchingCard(tp,s.eqfilter,tp,LOCATION_HAND,0,1,1,nil,sc,tp):GetFirst()
+			if ec then
+				Duel.BreakEffect()
+				Duel.Equip(tp,ec,sc)
+			end
+		end
+	elseif op==3 then
+		--● 9+: Target 1 "Noble Knight" monster in your GY; add that target to your hand
+		local tc=Duel.GetFirstTarget()
+		if tc:IsRelateToEffect(e) then
+			Duel.SendtoHand(tc,nil,REASON_EFFECT)
+		end
+	elseif op==4 then
+		--● 12: Draw 1 card
+		Duel.Draw(tp,1,REASON_EFFECT)
+	end
 end

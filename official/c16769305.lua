@@ -64,7 +64,7 @@ function s.filter(c,this,tp)
 		local mg=Group.FromCards(this,c)
 		return Duel.IsExistingMatchingCard(Card.IsSynchroSummonable,tp,LOCATION_EXTRA,0,1,nil,nil,mg)
 	end
-	--Temporarily register EFFECT_SYNCHRO_MATERIAL otherwise IsSynchroSummonable will fail with opponent's monsters 
+	--Temporarily register EFFECT_SYNCHRO_MATERIAL otherwise IsSynchroSummonable will fail with opponent's monsters
 	local e1=Effect.CreateEffect(this)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_SYNCHRO_MATERIAL)
@@ -104,7 +104,7 @@ function s.syncsumop(e,tp,eg,ep,ev,re,r,rp)
 			local e2=Effect.CreateEffect(c)
 			e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 			e2:SetCode(EVENT_SPSUMMON_SUCCESS)
-			e2:SetReset(RESET_EVENT|RESETS_STANDARD-RESET_TOFIELD)
+			e2:SetReset(RESET_EVENT|(RESETS_STANDARD&~RESET_TOFIELD))
 			e2:SetOperation(s.regop)
 			e2:SetLabelObject(e1)
 			sc:RegisterEffect(e2,true)

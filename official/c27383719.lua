@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,{id,1})
-	e2:SetCost(aux.SForceCost)
+	e2:SetCost(SForce.BanishCost)
 	e2:SetTarget(s.destg)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
@@ -46,7 +46,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.desfilter(c,e)
-	return aux.SForceTarget(e,c)
+	return SForce.ColumnTarget(e,c)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.desfilter,tp,0,LOCATION_MZONE,nil,e)

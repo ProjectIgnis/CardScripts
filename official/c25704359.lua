@@ -31,7 +31,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 	--Special Summon
 	local e4=Effect.CreateEffect(c)
-	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e4:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_SET)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e4:SetCode(EVENT_DESTROYED)
 	e4:SetRange(LOCATION_SZONE)

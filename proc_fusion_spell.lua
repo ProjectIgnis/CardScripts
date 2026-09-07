@@ -16,7 +16,7 @@ Fusion.ExtraGroup=nil
 local geff=Effect.GlobalEffect()
 geff:SetType(EFFECT_TYPE_FIELD)
 geff:SetCode(EFFECT_EXTRA_FUSION_MATERIAL)
-geff:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
+geff:SetProperty(EFFECT_FLAG_SET_AVAILABLE+EFFECT_FLAG_IGNORE_IMMUNE)
 geff:SetTargetRange(0xff,0xff)
 geff:SetTarget(function(e,c)
 	return Fusion.ExtraGroup and Fusion.ExtraGroup:IsContains(c)
@@ -31,7 +31,7 @@ Debug.ReloadFieldBegin=(function()
 			geff=Effect.GlobalEffect()
 			geff:SetType(EFFECT_TYPE_FIELD)
 			geff:SetCode(EFFECT_EXTRA_FUSION_MATERIAL)
-			geff:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
+			geff:SetProperty(EFFECT_FLAG_SET_AVAILABLE+EFFECT_FLAG_IGNORE_IMMUNE)
 			geff:SetTargetRange(0xff,0xff)
 			geff:SetTarget(function(e,c)
 				return Fusion.ExtraGroup and Fusion.ExtraGroup:IsContains(c)
@@ -310,7 +310,9 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 	sumpos = sumpos or POS_FACEUP
 	return	function(e,tp,eg,ep,ev,re,r,rp)
 				location=location or LOCATION_EXTRA
-				chkf = chkf and chkf|tp or tp
+				if not chkf or ((chkf&PLAYER_NONE)~=PLAYER_NONE) then
+					chkf=chkf and chkf|tp or tp
+				end
 				if not preselect then chkf=chkf|FUSPROC_CANCELABLE end
 				local sumlimit=(chkf&(FUSPROC_NOTFUSION|FUSPROC_NOLIMIT))~=0
 				local notfusion=(chkf&FUSPROC_NOTFUSION)~=0

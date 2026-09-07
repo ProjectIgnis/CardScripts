@@ -45,8 +45,8 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	--Reveal "Spirit Message" card to draw 1 card
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetCountLimit(1)
 	e3:SetRange(0x5f)
 	e3:SetCondition(s.drawcon)
@@ -92,15 +92,17 @@ function s.extraop(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	local code=c:GetOriginalCode()
 	local cid=CARDS_SPIRIT_MESSAGE[c:GetFlagEffect(code)+1]
-	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(code,1))
-	local sc=Duel.SelectMatchingCard(tp,s.plfilter,tp,LOCATION_DECK|LOCATION_HAND,0,1,1,nil,cid):GetFirst()
-	if not sc then return end
 	local stzone_chk=Duel.GetLocationCount(tp,LOCATION_SZONE)>0
 	local dark_sanctuary_chk=Duel.IsPlayerAffectedByEffect(tp,CARD_DARK_SANCTUARY)
 	local fear_of_the_dark_chk=Duel.IsPlayerAffectedByEffect(tp,id)
 	local can_sp_chk=Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,cid,0,TYPE_MONSTER|TYPE_NORMAL,0,0,1,RACE_FIEND,ATTRIBUTE_DARK,POS_FACEUP,tp,181)
-	if not (dark_sanctuary_chk or fear_of_the_dark_chk) and stzone_chk then
+	if not (dark_sanctuary_chk or fear_of_the_dark_chk or stzone_chk) then return end
+	if (dark_sanctuary_chk or fear_of_the_dark_chk) and not can_sp_chk and not stzone_chk then return end
+	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(code,1))
+	local sc=Duel.SelectMatchingCard(tp,s.plfilter,tp,LOCATION_DECK|LOCATION_HAND,0,1,1,nil,cid):GetFirst()
+	if not sc then return end
+	if not ((dark_sanctuary_chk or fear_of_the_dark_chk) and can_sp_chk) and stzone_chk then
 		Duel.MoveToField(sc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
 		c:RegisterFlagEffect(code,RESET_EVENT|RESETS_STANDARD,0,0)
 	elseif can_sp_chk and (dark_sanctuary_chk or fear_of_the_dark_chk) then
@@ -156,13 +158,13 @@ function s.smtdfilter(c)
 	return c:IsSetCard(SET_SPIRIT_MESSAGE) and c:IsAbleToDeckAsCost() and not c:IsPublic()
 end
 function s.drawcon(e,tp,eg,ep,ev,re,rp)
-	return aux.CanActivateSkill(tp) and Duel.IsExistingMatchingCard(s.smtdfilter,tp,LOCATION_HAND,0,1,nil) and Duel.IsPlayerCanDraw(tp,1) and not Duel.HasFlagEffect(tp,id)
+	return aux.CanActivateSkill(tp) and Duel.IsExistingMatchingCard(s.smtdfilter,tp,LOCATION_HAND,0,1,nil) and Duel.IsPlayerCanDraw(tp,1) and not Duel.HasFlagEffect(tp,id+100)
 end
 function s.drawop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
 	Duel.Hint(HINT_CARD,tp,id)
 	--You can only use this Skill once per turn
-	Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1)
+	Duel.RegisterFlagEffect(tp,id+100,RESET_PHASE|PHASE_END,0,1)
 	--Place 1 "Spirit Message" card on the bottom of the Deck to draw 1 card
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
 	local tc=Duel.SelectMatchingCard(tp,s.smtdfilter,tp,LOCATION_HAND,0,1,1,nil):GetFirst()

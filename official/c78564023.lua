@@ -2,11 +2,11 @@
 --Blackwing - Etesian of Two Swords
 local s,id=GetID()
 function s.initial_effect(c)
-	--atkup
+	--Inflict 1000 Damage to your opponent
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DAMAGE)
-	e1:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_FIELD)
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_DAMAGE_STEP_END)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
@@ -20,7 +20,9 @@ s.listed_series={SET_BLACKWING}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
-	return a:IsControler(tp) and a:IsSetCard(SET_BLACKWING) and a:IsRelateToBattle() and d and d:IsRelateToBattle()
+	return a and d and
+		((a:IsControler(tp) and a:IsSetCard(SET_BLACKWING) and d:IsRelateToBattle()) or
+		(d:IsControler(tp) and d:IsSetCard(SET_BLACKWING) and a:IsRelateToBattle()))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

@@ -17,7 +17,8 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsStatus(STATUS_SUMMON_TURN|STATUS_SPSUMMON_TURN)
+	local c=e:GetHandler()
+	return c:IsSummonPhaseMain() and c:IsStatus(STATUS_SUMMON_TURN+STATUS_SPSUMMON_TURN)
 end
 function s.costfilter(c)
 	return c:IsFaceup() and c:IsLevelBelow(4) and c:IsType(TYPE_EFFECT) and c:IsAbleToGraveAsCost()

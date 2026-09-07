@@ -39,7 +39,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		local tc=Duel.SelectTarget(tp,Card.IsFaceup,tp,LOCATION_MZONE,0,1,1,nil)
 		Duel.SetOperationInfo(0,CATEGORY_ATKCHANGE,tc,1,tp,800)
 	else
-		e:SetCategory(CATEGORY_EQUIP)
+		e:SetCategory(CATEGORY_EQUIP+CATEGORY_SET)
 		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(id,3))
 		local tc=Duel.SelectTarget(tp,s.eqcfilter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,1,nil,tp):GetFirst()
 		Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,tc,1,tc:GetControler(),0)

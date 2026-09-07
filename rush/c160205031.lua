@@ -28,10 +28,10 @@ function s.spcon(e,c)
 		and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
 end
 function s.tdfilter1(c)
-	return c:IsFaceup() and c:IsAbleToDeck() and c:IsLevel(6)
+	return c:IsFaceup() and c:IsLevel(6)
 end
 function s.tdfilter2(c)
-	return c:IsFaceup() and c:IsAbleToDeck() and (c:IsLevel(7) or c:IsLevel(8))
+	return c:IsFaceup() and (c:IsLevel(7) or c:IsLevel(8))
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(s.tdfilter1),tp,LOCATION_MZONE,0,1,nil)

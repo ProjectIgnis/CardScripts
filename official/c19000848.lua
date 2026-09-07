@@ -1,4 +1,4 @@
---Japanese name
+--暁光のブイオ
 --Buio the Dawn's Light
 --scripted by Naim
 local s,id=GetID()

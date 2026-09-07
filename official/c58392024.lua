@@ -2,9 +2,10 @@
 --Mispolymerization
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--When a Fusion Monster is Special Summoned: Return all Fusion Monsters on the field to the Extra Deck
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_TODECK)
+	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetCategory(CATEGORY_TOEXTRA)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetCondition(s.condition)
@@ -13,17 +14,19 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(Card.IsType,1,nil,TYPE_FUSION)
+	return eg:IsExists(aux.FaceupFilter(Card.IsFusionMonster),1,nil)
 end
-function s.filter(c)
-	return c:IsType(TYPE_FUSION) and c:IsAbleToExtra()
+function s.rtexfilter(c)
+	return c:IsFusionMonster() and c:IsFaceup() and c:IsAbleToExtra()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
-	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,#g,0,0)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.rtexfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
+	local g=Duel.GetMatchingGroup(s.rtexfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,#g,tp,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-	Duel.SendtoDeck(g,nil,SEQ_DECKTOP,REASON_EFFECT)
+	local g=Duel.GetMatchingGroup(s.rtexfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	if #g>0 then
+		Duel.SendtoDeck(g,nil,SEQ_DECKTOP,REASON_EFFECT)
+	end
 end

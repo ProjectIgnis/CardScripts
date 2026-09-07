@@ -5,7 +5,7 @@ function s.initial_effect(c)
 	--Tribute this card and at least 1 other monster and Special Summon 1 "Subterror" monster
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetCategory(CATEGORY_RELEASE+CATEGORY_SPECIAL_SUMMON)
+	e1:SetCategory(CATEGORY_RELEASE+CATEGORY_SPECIAL_SUMMON+CATEGORY_SET)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_MZONE)

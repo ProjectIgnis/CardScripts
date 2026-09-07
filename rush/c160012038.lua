@@ -45,6 +45,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToDeckOrExtraAsCost,tp,LOCATION_ONFIELD,0,1,1,e:GetHandler())
+	Duel.ConfirmCards(1-tp,g)
 	if Duel.SendtoDeck(g,nil,SEQ_DECKBOTTOM,REASON_COST)==0 then return end
 	--Effect
 	local ct=Duel.GetMatchingGroupCount(aux.FilterMaximumSideFunctionEx(s.filter),tp,LOCATION_MZONE,0,nil)
@@ -52,7 +53,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local dg=Duel.SelectMatchingCard(tp,Card.IsSpellTrap,tp,0,LOCATION_ONFIELD,1,ct,nil)
 	if #dg==0 then return end
-	Duel.HintSelection(dg,true)
+	Duel.HintSelection(dg)
 	Duel.Destroy(dg,REASON_EFFECT)
 end
 function s.thfilter(c)
@@ -66,6 +67,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToDeckOrExtraAsCost,tp,LOCATION_ONFIELD,0,1,1,e:GetHandler())
+	Duel.ConfirmCards(1-tp,g)
 	if Duel.SendtoDeck(g,nil,SEQ_DECKBOTTOM,REASON_COST)==0 then return end
 	--Effect
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)

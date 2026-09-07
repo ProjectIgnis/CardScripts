@@ -34,16 +34,16 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	--Replace cost
 	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetDescription(aux.Stringid(id,1))
+	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e3:SetCode(EFFECT_SFORCE_REPLACE)
+	e3:SetCode(EFFECT_COST_REPLACE)
 	e3:SetRange(LOCATION_GRAVE)
 	e3:SetTargetRange(1,0)
 	e3:SetCountLimit(1,{id,2})
-	e3:SetCondition(s.repcon)
+	e3:SetCondition(function(e) return e:GetHandler():IsAbleToRemoveAsCost() end)
 	e3:SetValue(s.repval)
-	e3:SetOperation(s.repop)
+	e3:SetOperation(function(base) Duel.Remove(base:GetHandler(),POS_FACEUP,REASON_COST) end)
 	c:RegisterEffect(e3)
 end
 s.listed_series={SET_S_FORCE}
@@ -97,15 +97,13 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-function s.repcon(e)
-	return e:GetHandler():IsAbleToRemoveAsCost()
-end
-function s.repval(base,e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE)
-		and c:IsSetCard(SET_S_FORCE)
-end
-function s.repop(base,e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_CARD,0,id)
-	Duel.Remove(base:GetHandler(),POS_FACEUP,REASON_COST)
+function s.repval(base,extracon,e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then
+		local c=e:GetHandler()
+		return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE)
+			and c:IsSetCard(SET_S_FORCE) and extracon(base,e,tp,e,tp,eg,ep,ev,re,r,rp,chk)
+	end
+	return Chain.IsTriggeringControler(0,tp) and Chain.IsTriggeringLocation(0,LOCATION_MZONE)
+		and Chain.IsTriggeringPosition(0,POS_FACEUP) and Chain.IsTriggeringSetcode(0,SET_S_FORCE)
+		and extracon(base,e,tp,e,tp,eg,ep,ev,re,r,rp,chk)
 end

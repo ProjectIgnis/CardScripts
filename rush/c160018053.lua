@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.cfilter(c,tp)
-	return c:IsFaceup() and c:IsAbleToGraveAsCost() and c:IsRace(RACE_WYRM) and c:IsLevelAbove(7)
+	return c:IsFaceup() and c:IsAbleToGraveAsCost() and c:IsRace(RACE_WYRM) and c:IsLevelAbove(7) and c:IsNotMaximumModeSide()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil,tp) end
@@ -32,13 +32,17 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_MZONE,0,1,1,nil,tp)
+	g=g:AddMaximumCheck()
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function s.extrafil_repl_filter(c)
     return c:IsMonster() and c:IsAbleToDeck() and c:IsRace(RACE_WYRM)
 end
+function s.checkmat(tp,sg,fc)
+	return sg:GetClassCount(Card.GetLocation)==1
+end
 function s.extrafil_replacement(e,tp,mg)
-    return Duel.GetMatchingGroup(aux.NecroValleyFilter(s.extrafil_repl_filter),tp,LOCATION_GRAVE,0,nil)
+    return Duel.GetMatchingGroup(aux.NecroValleyFilter(s.extrafil_repl_filter),tp,LOCATION_GRAVE,0,nil),s.checkmat
 end
 function s.extramat(c,e,tp)
     return c:IsControler(tp) and e:GetHandler():IsCode(CARD_FUSION)

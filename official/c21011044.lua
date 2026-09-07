@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	e0:SetType(EFFECT_TYPE_ACTIVATE)
 	e0:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e0)
-	--Fusion Summon 1 "Shaddoll"  Fusion Monster from your Extra Deck, by banishing Fusion Materials mentioned on it from your field or GY, but it cannot attack directly
+	--Fusion Summon 1 "Shaddoll" Fusion Monster from your Extra Deck, by banishing Fusion Materials mentioned on it from your field or GY, but it cannot attack directly
 	local e1=Fusion.CreateSummonEff({handler=c,fusfilter=aux.FilterBoolFunction(Card.IsSetCard,SET_SHADDOLL),matfilter=Fusion.OnFieldMat(Card.IsAbleToRemove),
 									extrafil=s.fextra,extraop=Fusion.BanishMaterial,stage2=s.stage2,desc=aux.Stringid(id,0),extratg=s.extratg})
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON+CATEGORY_TOGRAVE)

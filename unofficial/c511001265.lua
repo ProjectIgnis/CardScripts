@@ -8,8 +8,8 @@ function s.initial_effect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DAMAGE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetCode(id)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
+	e1:SetCode(id)
 	e1:SetCondition(s.condition)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
@@ -42,15 +42,7 @@ end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local ec=eg:GetFirst()
-	local g=eg:Filter(s.diffilter1,nil,eg)
-	local g2=Group.CreateGroup()
-	if #g>0 then g2=g:Select(tp,1,1,nil) ec=g2:GetFirst() end
-	if #g2>0 then Duel.HintSelection(g2) end
-	local dam=0
-	local val=0
-	if ec:GetFlagEffect(284)>0 then val=ec:GetFlagEffectLabel(284) end
-	if ec:GetAttack()>val then dam=ec:GetAttack()-val
-	else dam=val-ec:GetAttack() end
+	local dam=math.abs(ec:GetBaseAttack()-ec:GetAttack())
 	Duel.SetTargetPlayer(1-tp)
 	Duel.SetTargetParam(dam)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,dam)

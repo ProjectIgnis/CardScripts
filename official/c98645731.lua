@@ -2,8 +2,9 @@
 --Pot of Duality
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Excavate the top 3 cards of your Deck, add 1 of them to your hand, also, after that, shuffle the rest back into your Deck
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
@@ -13,144 +14,47 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
-	aux.GlobalCheck(s,function()
-		s[0]=true
-		s[1]=true
-		s[2]={}
-		s[3]={}
-		s[4]=0
-		local ge1=Effect.CreateEffect(c)
-		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge1:SetCode(EVENT_CHAINING)
-		ge1:SetOperation(s.checkop1)
-		Duel.RegisterEffect(ge1,0)
-		local ge2=Effect.CreateEffect(c)
-		ge2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge2:SetCode(EVENT_CHAIN_NEGATED)
-		ge2:SetOperation(s.checkop2)
-		Duel.RegisterEffect(ge2,0)
-		local ge2a=ge2:Clone()
-		ge2a:SetCode(EVENT_CHAIN_DISABLED)
-		Duel.RegisterEffect(ge2a,0)
-		local ge3=Effect.CreateEffect(c)
-		ge3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge3:SetCode(EVENT_CHAIN_SOLVED)
-		ge3:SetOperation(s.checkop3)
-		Duel.RegisterEffect(ge3,0)
-		local ge4=Effect.CreateEffect(c)
-		ge4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge4:SetCode(EVENT_ADJUST)
-		ge4:SetCountLimit(1)
-		ge4:SetOperation(s.clear)
-		Duel.RegisterEffect(ge4,0)
-	end)
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetActivityCount(tp,ACTIVITY_SPSUMMON)==0 and not s[tp] end
-	--Cannot Special Summon
+	if chk==0 then return Duel.GetActivityCount(tp,ACTIVITY_SPSUMMON)==0 end
+	--You cannot Special Summon during the turn you activate this card
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetDescription(aux.Stringid(id,1))
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e1:SetReset(RESET_PHASE|PHASE_END)
 	e1:SetTargetRange(1,0)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
-		if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)<3 then return false end
 		local g=Duel.GetDecktopGroup(tp,3)
-		local result=g:FilterCount(Card.IsAbleToHand,nil)>0
-		return result
+		return #g==3 and g:IsExists(Card.IsAbleToHand,1,nil)
 	end
 	Duel.SetTargetPlayer(tp)
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,0,LOCATION_DECK)
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
-	Duel.ConfirmDecktop(p,3)
-	local g=Duel.GetDecktopGroup(p,3)
-	if #g>0 then
-		Duel.Hint(HINT_SELECTMSG,p,HINTMSG_ATOHAND)
-		local sg=g:Select(p,1,1,nil)
-		if sg:GetFirst():IsAbleToHand() then
-			Duel.SendtoHand(sg,nil,REASON_EFFECT)
-			Duel.ConfirmCards(1-p,sg)
-			Duel.ShuffleHand(p)
-		else
-			Duel.SendtoGrave(sg,REASON_RULE)
-		end
-		Duel.BreakEffect()
-		Duel.ShuffleDeck(p)
+	local affected_player=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
+	local decktop3=Duel.GetDecktopGroup(affected_player,3)
+	if #decktop3==0 then return end
+	Duel.ConfirmDecktop(affected_player,3)
+	local hint=HINTMSG_ATOHAND
+	local filter=Card.IsAbleToHand
+	if not decktop3:IsExists(Card.IsAbleToHand,1,nil) then
+		hint=HINTMSG_TOGRAVE
+		filter=aux.TRUE
 	end
-end
-function s.checkop1(e,tp,eg,ep,ev,re,r,rp)
-	if not s[0] then
-		local ex,cg,ct,cp,cv=Duel.GetOperationInfo(ev,CATEGORY_SPECIAL_SUMMON)
-		if ex then
-			if cg and #cg>0 then
-				if rp==0 or cp==PLAYER_ALL then
-					s[2][ev]=true
-				end
-			else
-				local ex2,cg2,ct2,cp2,cv2=Duel.GetOperationInfo(ev,CATEGORY_TOKEN)
-				if ex2 then
-					if cp==0 or cp==PLAYER_ALL then
-						s[2][ev]=true
-					end
-				else
-					if rp==0 or cp==0 or cp==PLAYER_ALL then
-						s[2][ev]=true
-					end
-				end
-			end
-			if ev>s[4] then
-				s[4]=ev
-			end
-		end
+	Duel.Hint(HINT_SELECTMSG,affected_player,hint)
+	local sc=decktop3:FilterSelect(affected_player,filter,1,1,nil):GetFirst()
+	if sc:IsAbleToHand() then
+		Duel.SendtoHand(sc,nil,REASON_EFFECT)
+		Duel.ConfirmCards(1-affected_player,sc)
+		Duel.ShuffleHand(affected_player)
+	else
+		Duel.SendtoGrave(sc,REASON_RULE)
 	end
-	if not s[1] then
-		local ex,cg,ct,cp,cv=Duel.GetOperationInfo(ev,CATEGORY_SPECIAL_SUMMON)
-		if ex then
-			if cg and #cg>0 then
-				if rp==1 or cp==PLAYER_ALL then
-					s[3][ev]=true
-				end
-			else
-				local ex2,cg2,ct2,cp2,cv2=Duel.GetOperationInfo(ev,CATEGORY_TOKEN)
-				if ex2 then
-					if cp==1 or cp==PLAYER_ALL then
-						s[2][ev]=true
-					end
-				else
-					if rp==1 or cp==1 or cp==PLAYER_ALL then
-						s[3][ev]=true
-					end
-				end
-			end
-			if ev>s[4] then
-				s[4]=ev
-			end
-		end
-	end
-end
-function s.checkop2(e,tp,eg,ep,ev,re,r,rp)
-	if s[2][ev] then s[2][ev]=false end
-	if s[3][ev] then s[3][ev]=false end
-end
-function s.checkop3(e,tp,eg,ep,ev,re,r,rp)
-	if ev~=1 or s[4]<=0 then return end
-	for i=1,s[4] do
-		if s[2][i] then s[0]=true end
-		if s[3][i] then s[1]=true end
-	end
-	s[4]=0
-end
-function s.clear(e,tp,eg,ep,ev,re,r,rp)
-	s[0]=false
-	s[1]=false
-	s[2]={}
-	s[3]={}
-	s[4]=0
+	Duel.BreakEffect()
+	Duel.ShuffleDeck(affected_player)
 end

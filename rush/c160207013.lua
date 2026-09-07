@@ -22,7 +22,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(Card.IsRace,tp,LOCATION_GRAVE,0,5,nil,RACE_SEASERPENT)
 end
 function s.tdfilter(c)
-	return c:IsMonster() and c:IsAbleToDeckAsCost()
+	return c:IsMonster() and c:IsAbleToDeckOrExtraAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tdfilter,tp,LOCATION_GRAVE,0,1,nil) end
@@ -39,8 +39,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.tdfilter,tp,LOCATION_GRAVE,0,nil)
 	Duel.SendtoDeck(g,nil,SEQ_DECKBOTTOM,REASON_COST)
 	local g2=Duel.GetOperatedGroup()
+	local og=g2:Filter(Card.IsLocation,nil,LOCATION_DECK)
 	local ct=g2:FilterCount(s.filter,nil)
-	Duel.SortDeckbottom(tp,tp,#g)
+	if #og>0 then Duel.SortDeckbottom(tp,tp,#og) end
 	--Effect
 	local g=Duel.GetMatchingGroup(Card.IsNotMaximumModeSide,tp,0,LOCATION_MZONE,nil)
 	if #g>0 then

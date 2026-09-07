@@ -24,7 +24,9 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTargetRange(LOCATION_MZONE,0)
 	e2:SetTarget(aux.TargetBoolFunction(Card.IsAttribute,ATTRIBUTE_WATER))
-	e2:SetValue(s.ntval)
+	e2:SetValue(function(e,re,rp)
+		return rp==1-e:GetHandlerPlayer() and re:IsMonsterEffect() and re:IsCardAttributeExcept(ATTRIBUTE_WATER)
+	end)
 	c:RegisterEffect(e2)
 	--Special Summon 1 monster that mentions "Umi" or 1 WATER Normal Monster from your hand or GY
 	local e3=Effect.CreateEffect(c)
@@ -39,15 +41,6 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={CARD_UMI}
-function s.ntval(e,re,rp)
-	if not (re:IsMonsterEffect() and rp==1-e:GetHandlerPlayer()) then return false end
-	local attr,eff=Duel.GetChainInfo(0,CHAININFO_TRIGGERING_ATTRIBUTE,CHAININFO_TRIGGERING_EFFECT)
-	if eff==re then
-		return attr~=ATTRIBUTE_WATER
-	else
-		return re:GetHandler():IsAttributeExcept(ATTRIBUTE_WATER)
-	end
-end
 function s.spfilter(c,e,tp)
 	return ((c:IsMonster() and c:ListsCode(CARD_UMI)) or (c:IsType(TYPE_NORMAL) and c:IsAttribute(ATTRIBUTE_WATER)))
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)

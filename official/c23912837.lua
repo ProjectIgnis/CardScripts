@@ -6,7 +6,7 @@ function s.initial_effect(c)
 	--Special Summon 1 "Shaddoll" monster from your GY in face-up or face-down Defense Position
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_SET)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -65,7 +65,13 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 		{b1,aux.Stringid(id,2)},
 		{b2,aux.Stringid(id,3)})
 	e:SetLabel(op)
-	Duel.SetOperationInfo(0,CATEGORY_POSITION,nil,1,tp,0)
+	if op==1 then
+		e:SetCategory(CATEGORY_POSITION)
+		Duel.SetOperationInfo(0,CATEGORY_POSITION,nil,1,tp,POS_FACEUP_DEFENSE)
+	elseif op==2 then
+		e:SetCategory(CATEGORY_POSITION+CATEGORY_SET)
+		Duel.SetOperationInfo(0,CATEGORY_POSITION,nil,1,tp,POS_FACEDOWN_DEFENSE)
+	end
 end
 function s.effop(e,tp,eg,ep,ev,re,r,rp)
 	local op=e:GetLabel()

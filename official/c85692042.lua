@@ -75,9 +75,9 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
-	local op=e:GetLabel()
-	local filter=(op==1 and s.mmfilter)
-		or (op==2 and s.l4filter)
+	local cd=e:GetChainData()
+	local filter=(cd.cost_choice==1 and s.mmfilter)
+		or (cd.cost_choice==2 and s.l4filter)
 		or s.stfilter
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,filter,tp,LOCATION_DECK,0,1,1,nil)

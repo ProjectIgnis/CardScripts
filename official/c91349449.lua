@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	c:RegisterEffect(e1)
-	--Special summon procedure (from hand)
+	-- Must be Special Summoned (from your hand) while 3 or more of your LIGHT monsters are banished
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_SPSUMMON_PROC)
@@ -18,7 +18,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_HAND)
 	e2:SetCondition(s.spcon)
 	c:RegisterEffect(e2)
-	--Banish 1 monster on the field
+	-- Once per turn: You can target 1 of your banished LIGHT monsters and 1 face-up monster on the field; shuffle the first target into the Deck, and if you do, banish the second target
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,0))
 	e3:SetCategory(CATEGORY_TODECK+CATEGORY_REMOVE)
@@ -42,7 +42,7 @@ function s.spcon(e,c)
 end
 function s.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetAttackAnnouncedCount()==0 end
-	--Cannot attack this turn
+	--This card cannot attack during the turn you activate this effect
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetDescription(3206)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -51,30 +51,30 @@ function s.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetReset(RESETS_STANDARD_PHASE_END)
 	e:GetHandler():RegisterEffect(e1,true)
 end
-function s.filter1(c)
+function s.tdfilter(c)
 	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsAbleToDeck()
 end
-function s.filter2(c)
+function s.rmvfilter(c)
 	return c:IsFaceup() and c:IsAbleToRemove()
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	if chk==0 then return Duel.IsExistingTarget(s.filter1,tp,LOCATION_REMOVED,0,1,nil)
-		and Duel.IsExistingTarget(s.filter2,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
+	if chk==0 then return Duel.IsExistingTarget(s.tdfilter,tp,LOCATION_REMOVED,0,1,nil)
+		and Duel.IsExistingTarget(s.rmvfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local g1=Duel.SelectTarget(tp,s.filter1,tp,LOCATION_REMOVED,0,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,g1,1,0,0)
+	local g1=Duel.SelectTarget(tp,s.tdfilter,tp,LOCATION_REMOVED,0,1,1,nil)
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,g1,1,tp,0)
 	e:SetLabelObject(g1:GetFirst())
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g2=Duel.SelectTarget(tp,s.filter2,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g2,1,0,0)
+	local g2=Duel.SelectTarget(tp,s.rmvfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g2,1,tp,0)
 end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local tc1=e:GetLabelObject()
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	local tc2=g:GetFirst()
 	if tc1==tc2 then tc2=g:GetNext() end
-	if tc1:IsRelateToEffect(e) and Duel.SendtoDeck(tc1,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)~=0 then
+	if tc1:IsRelateToEffect(e) and Duel.SendtoDeck(tc1,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>0 and tc2:IsLocation(LOCATION_DECK|LOCATION_EXTRA) then
 		if tc2:IsFaceup() and tc2:IsRelateToEffect(e) then
 			Duel.Remove(tc2,POS_FACEUP,REASON_EFFECT)
 		end

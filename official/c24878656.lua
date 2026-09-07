@@ -69,7 +69,7 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 		{b2,aux.Stringid(id,3)})
 	e:SetLabel(op)
 	if op==1 then
-		e:SetCategory(0)
+		e:SetCategory(CATEGORY_SET)
 	elseif op==2 then
 		e:SetCategory(CATEGORY_DESTROY)
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,tp,0)

@@ -1,5 +1,5 @@
 --融合募兵
---Fusion Recruitment
+--Fusion Draft
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

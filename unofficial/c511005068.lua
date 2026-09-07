@@ -84,6 +84,6 @@ function s.con_op(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_SET_CONTROL)
 	e1:SetValue(rc:GetOwner())
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD-(RESET_TOFIELD+RESET_TEMP_REMOVE+RESET_TURN_SET))
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD&~(RESET_TOFIELD|RESET_TEMP_REMOVE|RESET_TURN_SET))
 	rc:RegisterEffect(e1)
 end

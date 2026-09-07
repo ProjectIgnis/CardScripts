@@ -45,7 +45,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e1:SetCode(EFFECT_SET_ATTACK)
 	e1:SetValue(1700)
-	e1:SetReset(RESET_EVENT|RESETS_STANDARD_DISABLE-RESET_TOFIELD)
+	e1:SetReset(RESET_EVENT|(RESETS_STANDARD_DISABLE&~RESET_TOFIELD))
 	e:GetHandler():RegisterEffect(e1)
 	g:DeleteGroup()
 end

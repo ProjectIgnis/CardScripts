@@ -1,5 +1,5 @@
 --葬角のカルノヴルス
---Burial Bicorn Carnovorus
+--Horned Brute Carnovorus
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

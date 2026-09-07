@@ -41,11 +41,9 @@ s.listed_series={SET_MELODIOUS}
 s.material_setcode={SET_MELODIOUS}
 s.listed_names={id}
 function s.effval(e,ct)
-	local trig_p,trig_typ,setcodes=Duel.GetChainInfo(ct,CHAININFO_TRIGGERING_PLAYER,CHAININFO_TRIGGERING_TYPE,CHAININFO_TRIGGERING_SETCODES)
-	if not (trig_p==e:GetHandlerPlayer() and (trig_typ&TYPE_FUSION)>0) then return false end
-	for _,set in ipairs(setcodes) do
-		if (SET_MELODIOUS&0xfff)==(set&0xfff) and (SET_MELODIOUS&set)==SET_MELODIOUS then return true end
-	end
+	return Chain.IsTriggeringPlayer(ct,e:GetHandlerPlayer())
+		and Chain.IsTriggeringType(ct,TYPE_FUSION)
+		and Chain.IsTriggeringSetcode(ct,SET_MELODIOUS)
 end
 function s.deckspfilter(c,e,tp)
 	return c:IsSetCard(SET_MELODIOUS) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

@@ -42,6 +42,6 @@ function s.pzop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then
 		Duel.MoveToField(c,tp,tp,LOCATION_PZONE,POS_FACEUP,true)
-		c:RegisterFlagEffect(id,RESET_EVENT+RESETS_STANDARD-(RESET_TOFIELD+RESET_TURN_SET)+RESET_PHASE+PHASE_END,0,1)
+		c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD_PHASE_END&~(RESET_TOFIELD|RESET_TURN_SET),0,1)
 	end
 end

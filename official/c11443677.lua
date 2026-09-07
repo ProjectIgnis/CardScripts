@@ -33,6 +33,7 @@ function s.initial_effect(c)
 	--Set Trap from GY
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,0))
+	e4:SetCategory(CATEGORY_SET)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e4:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e4:SetCode(EVENT_DAMAGE_STEP_END)
@@ -78,7 +79,7 @@ function s.fgtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
 		and Duel.IsExistingTarget(s.stfilter,tp,LOCATION_GRAVE,0,1,nil)
 		and c:GetFlagEffect(id)==0 end
-	c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD-RESET_TOGRAVE-RESET_REMOVE-RESET_LEAVE|RESET_PHASE|PHASE_END,0,1)
+	c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD_PHASE_END&~(RESET_TOGRAVE|RESET_REMOVE|RESET_LEAVE),0,1)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
 	local g=Duel.SelectTarget(tp,s.stfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,g,1,0,0)

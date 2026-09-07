@@ -1,5 +1,5 @@
 --魂宿りし暗黒騎士ガイア
---Soul of Gaia the Fierce Knight
+--Heart of Gaia
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

@@ -27,7 +27,7 @@ function s.matcheck(e,c)
 		e1:SetCost(s.addcost)
 		e1:SetTarget(s.addtg)
 		e1:SetOperation(s.addop)
-		e1:SetReset(RESET_EVENT|RESETS_STANDARD-RESET_TOFIELD)
+		e1:SetReset(RESET_EVENT|(RESETS_STANDARD&~RESET_TOFIELD))
 		c:RegisterEffect(e1)
 	end
 end

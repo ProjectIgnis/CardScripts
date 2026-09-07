@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	--Change an opponent's monster with 2500 or more ATK that activates its effect to face-down Defense Position
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
-	e3:SetCategory(CATEGORY_POSITION)
+	e3:SetCategory(CATEGORY_POSITION+CATEGORY_SET)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetCode(EVENT_CHAINING)
 	e3:SetRange(LOCATION_MZONE)
@@ -92,7 +92,7 @@ end
 function s.postg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local rc=re:GetHandler()
 	if chk==0 then return rc:IsFaceup() and rc:IsCanTurnSet() and rc:IsRelateToEffect(re) end
-	Duel.SetOperationInfo(0,CATEGORY_POSITION,rc,1,tp,0)
+	Duel.SetOperationInfo(0,CATEGORY_POSITION,rc,1,tp,POS_FACEDOWN_DEFENSE)
 end
 function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()

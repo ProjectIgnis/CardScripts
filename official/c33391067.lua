@@ -1,5 +1,5 @@
 --呪詛返しのヒトガタ
---Curse Reflection Doll 
+--Curse Reflection Doll
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -14,6 +14,7 @@ function s.initial_effect(c)
 	--Set itself when you take battle damage
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
+	e2:SetCategory(CATEGORY_SET)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_BATTLE_DAMAGE)
 	e2:SetRange(LOCATION_GRAVE)

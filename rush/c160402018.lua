@@ -10,27 +10,28 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
-	e1:SetCondition(s.descond)
-	e1:SetTarget(s.destg)
-	e1:SetOperation(s.desop)
+	e1:SetCondition(s.condition)
+	e1:SetTarget(s.target)
+	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-function s.descond(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsStatus(STATUS_SUMMON_TURN+STATUS_SPSUMMON_TURN)
+function s.condition(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	return c:IsSummonPhaseMain() and c:IsStatus(STATUS_SUMMON_TURN+STATUS_SPSUMMON_TURN)
 end
 function s.desfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_NORMAL) and c:IsNotMaximumModeSide()
 end
-function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	if chk==0 then return #g>0 end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end
-function s.desop(e,tp,eg,ep,ev,re,r,rp)
+function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g=Duel.GetMatchingGroup(s.desfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	g=g:AddMaximumCheck()
-	if Duel.Destroy(g,REASON_EFFECT)>0 and c:IsRelateToEffect(e) and c:IsFaceup() then
+	if Duel.Destroy(g,REASON_EFFECT)>0 then
 		Duel.BreakEffect()
 		local ct=#Duel.GetOperatedGroup()
 		local e1=Effect.CreateEffect(c)

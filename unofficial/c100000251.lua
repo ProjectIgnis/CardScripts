@@ -1,4 +1,5 @@
 --レベル・ソウル
+--Level Soul
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_series={0x41}
+s.listed_series={SET_LV}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(1)
 	return true
@@ -24,7 +25,7 @@ function s.rmfilter(c,e,tp,ft)
 	local ct=c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5 and 1 or 0
 	if not c:IsSetCard(SET_LV) or not c:IsAbleToRemoveAsCost() or not aux.SpElimFilter(c,true) or ct+ft<=0 then return false end
 	local class=c:GetMetatable(true)
-	return class and class.listed_names and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,class,e,tp)
+	return class and class.listed_names and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND|LOCATION_DECK,0,1,nil,class,e,tp)
 end
 function s.spfilter(c,class,e,tp)
 	local code=c:GetCode()
@@ -43,12 +44,12 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=Duel.SelectReleaseGroupCost(tp,s.cfilter,1,1,false,nil,nil,e,tp,ft):GetFirst()
 	local ct=tc:IsControler(tp) and tc:GetSequence()<5 and 1 or 0
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g2=Duel.SelectMatchingCard(tp,s.rmfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,1,tc,e,tp,ct+ft)
-	local code=g2:GetFirst():GetCode()
+	local rg=Duel.SelectMatchingCard(tp,s.rmfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,1,1,tc,e,tp,ct+ft)
+	local code=rg:GetFirst():GetCode()
 	Duel.Release(tc,REASON_COST)
-	Duel.Remove(g2,POS_FACEUP,REASON_COST)
+	Duel.Remove(rg,POS_FACEUP,REASON_COST)
 	Duel.SetTargetParam(code)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND|LOCATION_DECK)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local code=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
@@ -56,7 +57,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local class=Duel.GetMetatable(code)
 	if class==nil or class.listed_names==nil then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK,0,1,1,nil,class,e,tp)
+	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND|LOCATION_DECK,0,1,1,nil,class,e,tp)
 	if #g>0 then
 		Duel.SpecialSummon(g,0,tp,tp,true,false,POS_FACEUP)
 	end

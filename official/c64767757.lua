@@ -6,7 +6,7 @@ function s.initial_effect(c)
 	--Add 1 card attached to 1 "Materiactor" Xyz Monster you control to your hand and negate the activation
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_NEGATE+CATEGORY_TODECK+CATEGORY_ATKCHANGE)
+	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_NEGATE+CATEGORY_TODECK+CATEGORY_ATKCHANGE+CATEGORY_SET)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_CHAINING)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)

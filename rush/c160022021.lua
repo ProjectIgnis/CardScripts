@@ -16,7 +16,8 @@ function s.initial_effect(c)
 end
 s.listed_names={160022048,80811661}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsStatus(STATUS_SUMMON_TURN|STATUS_SPSUMMON_TURN)
+	local c=e:GetHandler()
+	return c:IsSummonPhaseMain() and c:IsStatus(STATUS_SUMMON_TURN+STATUS_SPSUMMON_TURN)
 end
 function s.setfilter(c)
 	return c:IsCode(160022048,80811661) and c:IsSSetable()

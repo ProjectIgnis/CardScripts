@@ -1,7 +1,8 @@
+--ラフ・ボンバー
 --Rough Exploder
 local s,id=GetID()
 function s.initial_effect(c)
-	--destroy
+	--If you control an Attack Position "Fool Clown": You can banish this card from your Graveyard; inflict 500 damage to your opponent.
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(69764158,0))
 	e1:SetCategory(CATEGORY_DAMAGE)
@@ -14,12 +15,12 @@ function s.initial_effect(c)
 	e1:SetOperation(s.damop)
 	c:RegisterEffect(e1)
 end
-s.listed_names={511009200}
-function s.cfilter(c)
-	return c:IsFaceup() and c:IsCode(511009200)
+s.listed_names={511009200} --"Fool Clown"
+function s.damconfilter(c)
+	return c:IsFaceup() and c:IsCode(511009200) and c:IsAttackPos()
 end
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD,0,1,nil)
+	return Duel.IsExistingMatchingCard(s.damconfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

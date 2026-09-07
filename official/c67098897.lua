@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	--Change up to 2 face-up monsters to face-down Defense Position
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetCategory(CATEGORY_POSITION)
+	e1:SetCategory(CATEGORY_POSITION+CATEGORY_SET)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)

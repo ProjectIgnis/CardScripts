@@ -6,7 +6,7 @@ function s.initial_effect(c)
 	--Set 1 Normal Trap Card from the Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetCategory(CATEGORY_REMOVE)
+	e1:SetCategory(CATEGORY_REMOVE+CATEGORY_SET)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(0,TIMING_STANDBY_PHASE|TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E)

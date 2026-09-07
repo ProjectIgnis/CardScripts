@@ -42,6 +42,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--turn set
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
+	e2:SetCategory(CATEGORY_SET)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e2:SetCode(EVENT_PHASE+PHASE_END)
 	e2:SetRange(LOCATION_MZONE)

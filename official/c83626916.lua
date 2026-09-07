@@ -6,10 +6,10 @@ function s.initial_effect(c)
 	--Activate
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_ACTIVATE)
-	e0:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e0:SetCode(EVENT_FREE_CHAIN)
-	e0:SetHintTiming(TIMING_DAMAGE_STEP)
-	e0:SetCondition(function() return not (Duel.IsPhase(PHASE_DAMAGE) and Duel.IsDamageCalculated()) end)
+	e0:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
+	e0:SetHintTiming(TIMING_DAMAGE_STEP,TIMING_DAMAGE_STEP)
+	e0:SetCondition(aux.StatChangeDamageStepCondition)
 	c:RegisterEffect(e0)
 	--Monsters you control gain 300 ATK for each card type (Monster, Spell, or Trap) among your banished cards
 	local e1=Effect.CreateEffect(c)
@@ -32,7 +32,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.rmtg)
 	e2:SetOperation(s.rmop)
 	c:RegisterEffect(e2)
-	--Place this card face-up on your field
+	--If this card is banished: You can place it face-up on your field
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)

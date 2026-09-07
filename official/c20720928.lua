@@ -36,7 +36,7 @@ function s.nttg(e,c)
 	return c:IsLevelAbove(5) and c:IsSetCard(SET_METAPHYS)
 end
 function s.ntop(e,tp,eg,ep,ev,re,r,rp,c)
-	c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD-RESET_TOFIELD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,1))
+	c:RegisterFlagEffect(id,RESET_EVENT|(RESETS_STANDARD&~RESET_TOFIELD),EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,1))
 	local e2=Effect.CreateEffect(e:GetHandler())
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EVENT_PHASE+PHASE_END)

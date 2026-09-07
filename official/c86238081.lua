@@ -1,4 +1,4 @@
---覇王烈竜オッドアイズ・レイジング・ドラゴン 
+--覇王烈竜オッドアイズ・レイジング・ドラゴン
 --Odd-Eyes Raging Dragon
 local s,id=GetID()
 function s.initial_effect(c)

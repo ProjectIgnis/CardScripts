@@ -4,7 +4,7 @@ Duel.LoadCardScript("c47387961.lua")
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--Xyz Summon procedure
+	--Xyz Summon procedure: 2 Level 4 "Heraldic Beast" monsters
 	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,SET_HERALDIC_BEAST),4,2)
 	--Cannot be destroyed by battle, except with a "Number" monster
 	local e1=Effect.CreateEffect(c)
@@ -35,11 +35,11 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b1=true
 	local b2=Duel.IsExistingMatchingCard(s.efffilter,tp,0,LOCATION_MZONE,1,nil)
 	local tchk,teg=Duel.CheckEvent(EVENT_ATTACK_ANNOUNCE,true)
-	local b3=tchk and teg:GetFirst():IsControler(1-tp) and not teg:GetFirst():IsCode(511001375)
+	local b3=tchk and teg:GetFirst():IsControler(1-tp) and not teg:GetFirst():IsCode(CARD_UNKNOWN)
 	local op=Duel.SelectEffect(tp,{b1,aux.Stringid(id,1)},{b2,aux.Stringid(id,2)},{b3,aux.Stringid(id,3)})
 	e:SetLabel(op)
 	if op==2 then
-		Duel.SetOperationInfo(0,CATEGORY_DISABLE,nil,1,1-tp,LOCATION_MZONE) 
+		Duel.SetOperationInfo(0,CATEGORY_DISABLE,nil,1,1-tp,LOCATION_MZONE)
 	end
 end
 function s.effop(e,tp,eg,ep,ev,re,r,rp)
@@ -50,7 +50,7 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetDescription(aux.Stringid(id,1))
 		e1:SetCategory(CATEGORY_ATKCHANGE)
-		e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+		e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_BATTLE_START)
 		e1:SetCondition(s.atkcon)
 		e1:SetOperation(s.atkop)
@@ -92,24 +92,27 @@ end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
-	return c:IsRelateToBattle() and bc and bc:IsFaceup() and bc:IsRelateToBattle() 
-		and bc:GetBaseAttack()~=c:GetAttack() and bc:HasNonZeroAttack()
+	return c:IsRelateToBattle() and bc and bc:IsFaceup() and bc:IsRelateToBattle() and bc:HasNonZeroAttack()
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local bc=c:GetBattleTarget()
+	Duel.Hint(HINT_CARD,0,id)
 	if c:IsFaceup() and c:IsRelateToBattle() and bc:IsFaceup() and bc:IsRelateToBattle() then
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
-		e1:SetValue(bc:GetBaseAttack())
-		e1:SetReset(RESETS_STANDARD_PHASE_END)
-		c:RegisterEffect(e1)
+		--Battling monster's ATK becomes 0
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetValue(0)
 		e1:SetReset(RESETS_STANDARD_PHASE_END)
 		bc:RegisterEffect(e1)
+		--This card's ATK becomes the battling monster's original ATK
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
+		e1:SetValue(bc:GetBaseAttack())
+		e1:SetReset(RESETS_STANDARD_PHASE_END)
+		c:RegisterEffect(e1)
+
 	end
 end

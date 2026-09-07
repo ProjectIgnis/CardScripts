@@ -6,7 +6,7 @@ function s.initial_effect(c)
 	--Set 1 "Dragontail" Spell/Trap from your Deck, then you can destroy 1 Spell/Trap on the field
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetCategory(CATEGORY_DESTROY)
+	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_SET)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_BE_MATERIAL)

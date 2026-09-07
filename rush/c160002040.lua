@@ -26,6 +26,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Effect
 	local dg=Duel.GetMatchingGroup(Card.IsNotMaximumModeSide,tp,0,LOCATION_MZONE,nil)
 	if dg and #dg>0 then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 		local sg=dg:Select(tp,1,1,nil)
 		sg=sg:AddMaximumCheck()
 		Duel.HintSelection(sg)

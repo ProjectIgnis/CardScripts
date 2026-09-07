@@ -1,12 +1,12 @@
 --終刻獄徒 ディアクトロス
---Doom-Z Break Diactorus
+--DoomZ Break - Diactorus
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--Xyz Summon procedure: 2 Level 4 monsters
 	Xyz.AddProcedure(c,nil,4,2)
-	--Destroy 1 "Doom-Z" card in your hand or face-up field, then you can destroy 1 monster on the field
+	--Destroy 1 "DoomZ" card in your hand or face-up field, then you can destroy 1 monster on the field
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY)
@@ -31,9 +31,9 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 s.listed_names={CARD_MEDIUS_THE_PURE}
-s.listed_series={SET_DOOM_Z}
+s.listed_series={SET_DOOMZ}
 function s.desfilter(c)
-	return c:IsSetCard(SET_DOOM_Z) and (c:IsFaceup() or c:IsLocation(LOCATION_HAND))
+	return c:IsSetCard(SET_DOOMZ) and (c:IsFaceup() or c:IsLocation(LOCATION_HAND))
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.desfilter,tp,LOCATION_HAND|LOCATION_ONFIELD,0,1,nil) end
@@ -56,7 +56,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thtgconfilter(c)
-	return (c:IsSetCard(SET_DOOM_Z) and c:IsMonster()) or c:IsCode(CARD_MEDIUS_THE_PURE)
+	return (c:IsSetCard(SET_DOOMZ) and c:IsMonster()) or c:IsCode(CARD_MEDIUS_THE_PURE)
 end
 function s.thtgcon(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

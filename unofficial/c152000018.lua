@@ -10,13 +10,14 @@ function s.flipcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFlagEffect(tp,id)==0
 end
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
-	--opt Register
+	--OPT Register
 	Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,0)
 	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
 	Duel.Hint(HINT_CARD,tp,id)
+	--Checks for "Anti-Skill"
 	if aux.CheckSkillNegation(e,tp) then return end
 	--Add Cyberse monster to Extra Deck
-	s.announce_filter={TYPE_EXTRA,OPCODE_ISTYPE,RACE_CYBERSE,OPCODE_ISRACE,OPCODE_AND}
+	s.announce_filter={TYPE_EXTRA,OPCODE_ISTYPE,RACE_CYBERSE,OPCODE_ISRACE,OPCODE_AND,OPCODE_ALLOW_ALIASES}
 	local storm=Duel.AnnounceCard(tp,table.unpack(s.announce_filter))
 	local tc=Duel.CreateToken(tp,storm)
 	if tc:IsAbleToDeck() then

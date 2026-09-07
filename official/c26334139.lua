@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	--Return 1 face-down card to the hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
-	e2:SetCategory(CATEGORY_TOHAND)
+	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SET)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCode(EVENT_FREE_CHAIN)

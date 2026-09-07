@@ -57,7 +57,8 @@ function s.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,dmg)
 end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
-	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
+	local p=Chain.GetTargetPlayer()
+	local d=Chain.GetTargetParam()
 	Duel.Damage(p,d,REASON_EFFECT)
 end
 function s.damrmcon(e,tp,eg,ep,ev,re,r,rp)
@@ -71,6 +72,7 @@ function s.damrmcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.damrmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
+	local cd=e:GetChainData()
 	local bc=e:GetHandler():GetBattleTarget()
 	local dam=0
 	if bc:IsRelateToBattle() then
@@ -78,19 +80,20 @@ function s.damrmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.SetOperationInfo(0,CATEGORY_REMOVE,bc,1,0,0)
 	else
 		dam=bc:GetPreviousAttackOnField()
-		e:SetLabel(dam)
+		cd.atk_on_field=dam
 	end
-	e:SetLabelObject(bc)
+	cd.battled_monster=bc
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,dam)
 end
 function s.damrmop(e,tp,eg,ep,ev,re,r,rp)
-	local dam=0
-	local bc=e:GetLabelObject()
+	local cd=e:GetChainData()
+	local bc=cd.battled_monster
 	local battle_relation=bc:IsRelateToBattle()
+	local dam=0
 	if battle_relation and bc:IsFaceup() and bc:IsControler(1-tp) then
 		dam=bc:GetAttack()
 	elseif not battle_relation then
-		dam=e:GetLabel()
+		dam=cd.atk_on_field
 	end
 	if Duel.Damage(1-tp,dam,REASON_EFFECT)>0 and battle_relation then
 		Duel.Remove(bc,POS_FACEUP,REASON_EFFECT)

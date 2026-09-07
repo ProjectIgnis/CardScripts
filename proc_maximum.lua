@@ -24,7 +24,9 @@ function Debug.AddMaximumCard(player,center,left,right)
 	for _,tc in ipairs({l,r}) do
 		tc:RegisterFlagEffect(FLAG_MAXIMUM_SIDE,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD,0,1)
 		tc:RegisterFlagEffect(FLAG_MAXIMUM_SIDE_PREONFIELD,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD-RESET_TOGRAVE-RESET_LEAVE,0,1)
+		tc:RegisterFlagEffect(FLAG_MAXIMUM_SIDE_RELATION+c:GetCardID(),RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD-RESET_TOGRAVE-RESET_LEAVE,0,1)
 	end
+	return c
 end
 --Maximum Summon
 function Maximum.AddProcedure(c,desc,...)
@@ -127,12 +129,10 @@ function Maximum.Operation(mats)
 		--adding the "maximum mode" flag
 		--center
 		c:RegisterFlagEffect(FLAG_MAXIMUM_CENTER,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD,0,1)
-		c:RegisterFlagEffect(FLAG_MAXIMUM_CENTER_PREONFIELD,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD-RESET_TOGRAVE-RESET_LEAVE,0,1)
 
 		--side
 		for tc in aux.Next(tg) do
 			tc:RegisterFlagEffect(FLAG_MAXIMUM_SIDE,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD,0,1)
-			tc:RegisterFlagEffect(FLAG_MAXIMUM_SIDE_PREONFIELD,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD-RESET_TOGRAVE-RESET_LEAVE,0,1)
 			tc:RegisterFlagEffect(FLAG_MAXIMUM_SIDE_RELATION+c:GetCardID(),RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD-RESET_TOGRAVE-RESET_LEAVE,0,1)
 		end
 		g=Duel.GetFieldGroup(tp,LOCATION_MZONE,0)
@@ -140,6 +140,11 @@ function Maximum.Operation(mats)
 		Duel.MoveToField(c,tp,tp,LOCATION_MZONE,POS_FACEUP_ATTACK,true)
 		for tc in aux.Next(tg) do
 			Duel.MoveToField(tc,tp,tp,LOCATION_MZONE,POS_FACEUP_ATTACK,true)
+		end
+
+		c:RegisterFlagEffect(FLAG_MAXIMUM_CENTER_PREONFIELD,RESET_EVENT+RESETS_STANDARD-RESET_TOGRAVE-RESET_LEAVE,0,1)
+		for tc in aux.Next(tg) do
+			tc:RegisterFlagEffect(FLAG_MAXIMUM_SIDE_PREONFIELD,RESET_EVENT+RESETS_STANDARD-RESET_TOGRAVE-RESET_LEAVE,0,1)
 		end
 	end
 end
@@ -397,7 +402,7 @@ end
 local function summon_pos_target(e,c)
 	return c:IsMaximumMode()
 end
-local function initial_effect()
+local function register_spsummon_pos()
 	local e1=Effect.GlobalEffect()
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_FORCE_SPSUMMON_POSITION)
@@ -421,7 +426,15 @@ local function initial_effect()
 				end)
 	Duel.RegisterEffect(e2,0)
 end
-initial_effect()
+register_spsummon_pos()
+Debug.ReloadFieldBegin=(function()
+	local old=Debug.ReloadFieldBegin
+	return function(...)
+			old(...)
+			register_spsummon_pos()
+		end
+	end
+)()
 
 --handling for tribute summon (when a Maximum monster is Tributed, its side pieces go at the same place as the center piece for the same reason)
 function Maximum.cfilter(c,tp)
@@ -440,12 +453,21 @@ function Maximum.tribop(e,tp,eg,ep,ev,re,r,rp)
 end
 --handling for battle destruction (same as above but for battle destruction)
 function Maximum.battlecon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	return c:IsReason(REASON_BATTLE) and eg:IsExists(Card.IsControler,1,nil,tp)
+    local c=e:GetHandler()
+    return c:IsReason(REASON_BATTLE) and eg:IsContains(c)
+end
+function Maximum.GetSidePieces(c,tc)
+	return c:HasFlagEffect(FLAG_MAXIMUM_SIDE_RELATION+tc:GetCardID())
 end
 function Maximum.battleop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(Card.IsMaximumMode,e:GetHandler():GetPreviousControler(),LOCATION_MZONE,0,nil)
-	Duel.Sendto(g,e:GetHandler():GetDestination(),0)
+	local g=Duel.GetMatchingGroup(Maximum.GetSidePieces,e:GetHandler():GetPreviousControler(),LOCATION_ALL,LOCATION_ALL,nil,e:GetHandler())
+	if e:GetHandler():GetDestination()==LOCATION_DECK then
+		--We assume that the monsters are placed on the bottom of the Deck. We need to find another way if the monsters should be shuffled into the Deck instead.
+		Duel.SendtoDeck(g,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
+		Duel.SortDeckbottom(e:GetHandler():GetOwner(),e:GetHandler():GetOwner(),3)
+	else
+		Duel.Sendto(g,e:GetHandler():GetDestination(),0)
+	end
 	for tc in aux.Next(g) do
 		tc:SetReason(eg:GetFirst():GetReason())
 	end

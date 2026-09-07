@@ -59,7 +59,7 @@ function s.lvop(e,tp,eg,ep,ev,re,r,rp,c)
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
-	if chkc then return chkc:IsOnField() and c:IsControler(tp) and chkc~=c and chkc:IsAbleToGrave() end
+	if chkc then return chkc:IsOnField() and chkc:IsControler(tp) and chkc~=c and chkc:IsAbleToGrave() end
 	if chk==0 then return c:IsAbleToGrave() and Duel.IsExistingTarget(Card.IsAbleToGrave,tp,LOCATION_ONFIELD,0,1,c) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectTarget(tp,Card.IsAbleToGrave,tp,LOCATION_ONFIELD,0,1,1,c)

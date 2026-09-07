@@ -58,17 +58,10 @@ end
 s.listed_series={SET_RYU_GE}
 s.listed_names={id}
 function s.discon(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.HasFlagEffect(tp,id) then return false end
-	local chainlink=Duel.GetCurrentChain(true)-1
-	if not (chainlink>0 and ep==1-tp and Duel.IsChainDisablable(ev)) then return false end
-	local trig_p,trig_typ,setcodes=Duel.GetChainInfo(chainlink,CHAININFO_TRIGGERING_PLAYER,CHAININFO_TRIGGERING_TYPE,CHAININFO_TRIGGERING_SETCODES)
-	if not (trig_p==tp and (trig_typ&TYPE_SPELL)>0) then return false end
-	for _,set in ipairs(setcodes) do
-		if ((SET_RYU_GE&0xfff)==(set&0xfff) and (SET_RYU_GE&set)==SET_RYU_GE) then
-			return true
-		end
-	end
-	return false
+	local ch=Chain.GetCurrentLink(true)-1
+	return ch>0 and ep==1-tp and not Duel.HasFlagEffect(tp,id)
+		and Duel.IsChainDisablable(ev) and Chain.IsTriggeringPlayer(ch,tp)
+		and Chain.IsTriggeringType(ch,TYPE_SPELL) and Chain.IsTriggeringSetcode(ch,SET_RYU_GE)
 end
 function s.disop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

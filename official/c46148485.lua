@@ -1,5 +1,5 @@
 --転輪のスフィンクス
---Chakravartin Sphinx
+--Sphinx of the Cycle
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
@@ -33,6 +33,7 @@ function s.initial_effect(c)
 	--Set 1 "Book of Taiyou" and/or 1 "Book of Moon" from your Deck and/or GY
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
+	e3:SetCategory(CATEGORY_SET)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1,{id,1})

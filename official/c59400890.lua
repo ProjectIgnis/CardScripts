@@ -76,6 +76,7 @@ function s.selfspcon(e,c)
 		and Duel.IsExistingMatchingCard(s.selfspcostfilter,tp,LOCATION_MZONE,0,1,nil,tp,c)
 end
 function s.selfsptg(e,tp,eg,ep,ev,re,r,rp,chk,c)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,s.selfspcostfilter,tp,LOCATION_MZONE,0,1,1,true,nil,tp,c)
 	if g and #g>0 then
 		g:KeepAlive()

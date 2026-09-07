@@ -97,7 +97,7 @@ function s.cfilter(c,tc,seq)
 	return false
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsOnField() and chkc:IsFaceup() and c:IsCode(NYTRO_TOKEN) end
+	if chkc then return chkc:IsOnField() and chkc:IsFaceup() and chkc:IsCode(NYTRO_TOKEN) end
 	if chk==0 then return Duel.IsExistingTarget(aux.FaceupFilter(Card.IsCode,NYTRO_TOKEN),tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local tc=Duel.SelectTarget(tp,aux.FaceupFilter(Card.IsCode,NYTRO_TOKEN),tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil):GetFirst()

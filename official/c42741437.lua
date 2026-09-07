@@ -50,8 +50,7 @@ s.listed_series={SET_EXOSISTER}
 function s.valcheck(e,c)
 	local g=c:GetMaterial()
 	if g:IsExists(Card.IsSetCard,1,nil,SET_EXOSISTER) then
-		local reset=RESET_EVENT|RESETS_STANDARD-RESET_TOFIELD|RESET_PHASE|PHASE_END
-		c:RegisterFlagEffect(id,reset,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,2))
+		c:RegisterFlagEffect(id,RESET_EVENT|(RESETS_STANDARD_PHASE_END&~RESET_TOFIELD),EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,2))
 	end
 end
 function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

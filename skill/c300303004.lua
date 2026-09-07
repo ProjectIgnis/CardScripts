@@ -12,6 +12,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.flipop2)
 	c:RegisterEffect(e1)
 end
+s.listed_series={SET_JINZO}
 function s.setfilter(c)
 	return c:IsFacedown() and c:GetSequence()<5
 end
@@ -37,17 +38,14 @@ function s.flipop2(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,tp,id)
 	local c=e:GetHandler()
 	if Duel.GetFlagEffect(tp,id+1)==0 then
-		--immune
+		--"Jinzo" monsters you control are unaffected by your opponent's Skill Cards
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD)
 		e1:SetCode(EFFECT_IMMUNE_EFFECT)
 		e1:SetTargetRange(LOCATION_MZONE,0)
-		e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0xbc))
-		e1:SetValue(s.efilter)
+		e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,SET_JINZO))
+		e1:SetValue(function(e,re) return e:GetHandlerPlayer()~=re:GetOwnerPlayer() and re:IsActiveType(TYPE_SKILL) end)
 		Duel.RegisterEffect(e1,tp)
 	end
-	Duel.RegisterFlagEffect(ep,id+1,0,0,0)
-end
-function s.efilter(e,re)
-	return e:GetHandlerPlayer()~=re:GetOwnerPlayer() and re:IsActiveType(TYPE_SKILL)
+	Duel.RegisterFlagEffect(tp,id+1,0,0,0)
 end

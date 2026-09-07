@@ -1,6 +1,4 @@
 --Constants
-ATTRIBUTE_LAUGH = 0x80
-RACE_CHARISMA   = 0x8000000000000000
 SET_NUMBER_S	= 0x2048
 SET_SUPREME_KING	= 0xf8
 
@@ -842,7 +840,7 @@ function UnofficialProc.icePillar()
 	e2:SetOperation(function(e,tp)
 		if Duel.CheckEvent(EVENT_ATTACK_ANNOUNCE) then
 			local tc=Duel.GetAttacker()
-			if CheckPillars(tp,1) and tc and tc:GetControler()~=tp
+			if IcePillarZone.CheckPillars(tp,1) and tc and tc:GetControler()~=tp
 				and tc:IsRelateToBattle() and not tc:IsStatus(STATUS_ATTACK_CANCELED)
 				and Duel.SelectYesNo(tp,aux.Stringid(422,0)) then
 				IcePillarZone[tp+1]=IcePillarZone[tp+1] & ~Duel.SelectFieldZone(tp,1,LOCATION_MZONE,LOCATION_MZONE,~IcePillarZone[tp+1])
@@ -857,14 +855,14 @@ function UnofficialProc.icePillar()
 	e3:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e3:SetOperation(function(e,tp)
 		local tc=Duel.GetAttacker()
-		if CheckPillars(tp,1) and tc and tc:GetControler()~=tp and Duel.SelectYesNo(tp,aux.Stringid(422,0)) then
+		if IcePillarZone.CheckPillars(tp,1) and tc and tc:GetControler()~=tp and Duel.SelectYesNo(tp,aux.Stringid(422,0)) then
 			IcePillarZone[tp+1]=IcePillarZone[tp+1] & ~Duel.SelectFieldZone(tp,1,LOCATION_MZONE,LOCATION_MZONE,~IcePillarZone[tp+1])
 			Duel.NegateAttack()
 		end
 	end)
 	Duel.RegisterEffect(e3,0)
 	Duel.RegisterEffect(e3:Clone(),1)
-	CheckPillars=function(tp,c,zone)
+	IcePillarZone.CheckPillars=function(tp,c,zone)
 		local chkzone = zone and zone&IcePillarZone[1+tp] or IcePillarZone[1+tp]
 		local seq=0
 		for seq=0,7 do
@@ -904,7 +902,7 @@ function UnofficialProc.raDefusion()
 			and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 			and fusc:CheckFusionMaterial(mg,c,PLAYER_NONE|FUSPROC_NOTFUSION)
 	end
-	function activate(e,tp,eg,ep,ev,re,r,rp)
+	local function activate(e,tp,eg,ep,ev,re,r,rp)
 		local tc=Duel.GetFirstTarget()
 		if not tc:IsRelateToEffect(e) or tc:IsFacedown() then return end
 		if not tc:IsCode(CARD_RA) then

@@ -1,4 +1,4 @@
---Japanese name
+--宵闇のルーチェ
 --Luce the Dusk's Dark
 --scripted by Naim
 local s,id=GetID()

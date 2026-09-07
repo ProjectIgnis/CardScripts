@@ -1,76 +1,61 @@
 --契珖のヴルーレセンス
 --Radiant Vouirescence
 --Logical Nonsense
---Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
-	--When normal summoned, send any number of "Fluorescent Vluorescences" from deck to GY
+	--Send any number of "Radiant Vouirescence" from your Deck to the GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOGRAVE)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
-	e1:SetCost(s.tgcost)
-	e1:SetCondition(s.tgcon)
+	e1:SetCondition(function(e,tp) return Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0 end)
+	e1:SetCost(Cost.Discard())
 	e1:SetTarget(s.tgtg)
 	e1:SetOperation(s.tgop)
 	c:RegisterEffect(e1)
-	--Make itself become DARK
+	--Make this card in the GY become DARK until the end of this turn
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1)
-	e2:SetTarget(s.atttg)
-	e2:SetOperation(s.attop)
+	e2:SetTarget(s.attrtg)
+	e2:SetOperation(s.attrop)
 	c:RegisterEffect(e2)
 end
-	--Specifically lists itself
 s.listed_names={id}
-	--If opponent controls a monster
-function s.tgcon(e,tp)
-	return Duel.IsExistingMatchingCard(aux.TRUE,tp,0,LOCATION_MZONE,1,nil)
-end
-	--Discard 1 card as cost
-function s.tgcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST|REASON_DISCARD)
-end
-	--Check for "Fluorescent Vluorescences"
 function s.tgfilter(c)
 	return c:IsCode(id) and c:IsAbleToGrave()
 end
-	--Activation legality
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 end
-	--Send any number of "Fluorescent Vluorescences" from deck to GY
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)
+	local max_ct=Duel.GetMatchingGroupCount(s.tgfilter,tp,LOCATION_DECK,0,nil)
+	if max_ct==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.GetMatchingGroup(s.tgfilter,tp,LOCATION_DECK,0,nil)
+	local g=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_DECK,0,1,max_ct,nil)
 	if #g>0 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-		local sg=g:Select(tp,1,99,nil)
-		Duel.SendtoGrave(sg,REASON_EFFECT)
+		Duel.SendtoGrave(g,REASON_EFFECT)
 	end
 end
-	--Activation legality
-function s.atttg(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.attrtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return not e:GetHandler():IsAttribute(ATTRIBUTE_DARK) end
+	if chk==0 then return c:IsAttributeExcept(ATTRIBUTE_DARK) end
 	--Operation info needed to handle the interaction with "Necrovalley"
-	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,c,1,tp,LOCATION_GRAVE)
+	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,c,1,tp,0)
 end
-	--Make itself become DARK
-function s.attop(e,tp,eg,ep,ev,re,r,rp)
+function s.attrop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) then return end
-	--Change Attribute
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_CHANGE_ATTRIBUTE)
-	e1:SetValue(ATTRIBUTE_DARK)
-	e1:SetReset(RESETS_STANDARD_DISABLE_PHASE_END)
-	c:RegisterEffect(e1)
+	if c:IsRelateToEffect(e) then
+		--This card becomes DARK until the end of this turn
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_CHANGE_ATTRIBUTE)
+		e1:SetValue(ATTRIBUTE_DARK)
+		e1:SetReset(RESETS_STANDARD_DISABLE_PHASE_END)
+		c:RegisterEffect(e1)
+	end
 end

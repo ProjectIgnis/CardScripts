@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--Synchro Summon procedure
+	--Synchro Summon procedure: 1 Tuner + 1+ non-Tuner monsters
 	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTuner(nil),1,99)
 	--Cannot be destroyed by battle
 	local e1=Effect.CreateEffect(c)
@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
-	--Your Dinosaur monsters Special Summoned from the GY cannot be destroyed by the opponent's effects
+	--Dinosaur monsters you control that were Special Summoned from the GY cannot be destroyed by your opponent's card effects
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
@@ -21,13 +21,13 @@ function s.initial_effect(c)
 	e2:SetTarget(function(_,c) return c:IsRace(RACE_DINOSAUR) and c:IsSummonLocation(LOCATION_GRAVE) end)
 	e2:SetValue(aux.indoval)
 	c:RegisterEffect(e2)
-	--Opponent cannot target with effects Dinosaur monsters Special Summoned from the GY
+	--Opponent cannot target with effects Dinosaur monsters you control that were Special Summoned from the GY
 	local e3=e2:Clone()
 	e3:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
 	e3:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e3:SetValue(aux.tgoval)
 	c:RegisterEffect(e3)
-	--Shuffle 1 Normal Monster from your GY into the Deck and Special Summon this card
+	--If this card is destroyed: You can shuffle 1 Normal Monster from your GY into the Deck, then you can Special Summon this card
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,0))
 	e4:SetCategory(CATEGORY_TODECK+CATEGORY_SPECIAL_SUMMON)
@@ -55,7 +55,7 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>0 and g:GetFirst():IsLocation(LOCATION_DECK)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsRelateToEffect(e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+		and aux.nvfilter(c) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.BreakEffect()
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end

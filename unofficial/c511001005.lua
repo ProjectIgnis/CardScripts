@@ -1,43 +1,41 @@
+--断絶拳
 --Extinction Fist
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--When an opponent's Fusion or Ritual monster declares a direct attack: Destroy that monster, and Special Summon the Material(s) that were used to Summon that monster from your opponent's Graveyard to their side of the field, then, end the Battle Phase.
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_DESTROY)
+	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_ATTACK_ANNOUNCE)
-	e1:SetCondition(s.condition)
+	e1:SetCondition(function(e,tp) return Duel.GetAttacker():IsControler(1-tp) and Duel.GetAttackTarget()==nil end)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsTurnPlayer(1-tp) and Duel.GetAttackTarget()==nil
+function s.mgfilter(c,e,tp,fusrit)
+	return c:IsControler(1-tp) and c:IsLocation(LOCATION_GRAVE)
+		and ((c:GetReason()&(REASON_MATERIAL|REASON_RITUAL)==(REASON_MATERIAL|REASON_RITUAL)) or (c:GetReason()&(REASON_MATERIAL|REASON_FUSION)==(REASON_MATERIAL|REASON_FUSION))) and c:GetReasonCard()==fusrit
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tg=Duel.GetAttacker()
-	if chk==0 then return tg:IsOnField() and tg:IsDestructable() and (tg:IsType(TYPE_RITUAL) or tg:IsType(TYPE_FUSION)) end
-	Duel.SetTargetCard(tg)
+	local mg=tg:GetMaterial():Filter(aux.NecroValleyFilter(s.mgfilter),nil,e,tp,tg)
+	local ft=Duel.GetMZoneCount(1-tp,tg)
+	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
+	if chk==0 then return (tg:IsRitualMonster() or tg:IsFusionMonster()) and #mg>0 and #mg<=ft end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,tg,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,mg,#mg,tp,LOCATION_GRAVE)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.GetAttacker()
-	local op=1-tp
-	if tc and tc:IsRelateToEffect(e) and tc:CanAttack() and not tc:IsStatus(STATUS_ATTACK_CANCELED) then
-		if Duel.Destroy(tc,REASON_EFFECT)>0 then
-			local mg=tc:GetMaterial()
-			if mg:IsExists(s.mgfilter,1,nil,e,op,tc) then
-				local ft=Duel.GetLocationCount(op,LOCATION_MZONE)
-				if ft>0 then
-					local g=mg:FilterSelect(op,s.mgfilter,ft,ft,nil,e,op,tc)
-					Duel.SpecialSummon(g,0,op,op,false,false,POS_FACEUP)
-				end
-				Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)
-			end
+	local tg=Duel.GetAttacker()
+	if not (tg:IsFaceup() and tg:IsOnField() and tg:IsDestructable()) then return end
+	local mg=tg:GetMaterial():Filter(aux.NecroValleyFilter(s.mgfilter),nil,e,tp,tg)
+	local ft=Duel.GetMZoneCount(1-tp,tg)
+	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
+	if tg and Duel.Destroy(tg,REASON_EFFECT)>0 and #mg>0 and #mg<=ft then
+		if Duel.SpecialSummon(mg,0,tp,1-tp,false,false,POS_FACEUP)>0 then
+			Duel.BreakEffect()
+			Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE|PHASE_BATTLE,1)
 		end
 	end
-end
-function s.mgfilter(c,e,tp,tc)
-	return c:IsControler(tp) and c:IsLocation(LOCATION_GRAVE) 
-		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	--Change this card to face-down Defense Position
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
-	e3:SetCategory(CATEGORY_POSITION)
+	e3:SetCategory(CATEGORY_POSITION+CATEGORY_SET)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetTarget(s.postg)
@@ -68,7 +68,7 @@ function s.postg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsCanTurnSet() and c:GetFlagEffect(id)==0 end
 	c:RegisterFlagEffect(id,RESET_EVENT|(RESETS_STANDARD&~RESET_TURN_SET)|RESET_PHASE|PHASE_END,0,1)
-	Duel.SetOperationInfo(0,CATEGORY_POSITION,c,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_POSITION,c,1,tp,POS_FACEDOWN_DEFENSE)
 end
 function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

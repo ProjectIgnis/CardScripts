@@ -4,7 +4,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Special summon 1 level 3+ flip monster from hand or deck
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_SET)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_FLIP+EFFECT_TYPE_TRIGGER_O)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetTarget(s.sptg)

@@ -3,47 +3,45 @@
 --Scripted by The Razgriz
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Target 2 FIRE monsters (1 Tuner and 1 non-Tuner) with 200 DEF in your GY; banish both monsters, and if you do, Special Summon 1 FIRE Synchro Monster from your Extra Deck whose Level equals the total Levels of those monsters. You can only activate 1 "Birth of the Prominence Flame" per turn
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_REMOVE+CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-function s.rmfilter1(c,e,tp)
-	return c:IsAttribute(ATTRIBUTE_FIRE) and c:IsDefense(200) and not c:IsType(TYPE_TUNER) and c:IsAbleToRemove() 
-		and Duel.IsExistingMatchingCard(s.rmfilter2,tp,LOCATION_GRAVE|LOCATION_MZONE,0,1,nil,e,tp,c:GetOriginalLevel()) and aux.SpElimFilter(c,true)
+function s.tgfilter(c)
+	return c:IsAttribute(ATTRIBUTE_FIRE) and c:IsDefense(200) and c:HasLevel() and c:IsAbleToRemove() and aux.SpElimFilter(c,true)
 end
-function s.rmfilter2(c,e,tp,lv)
-	return c:IsAttribute(ATTRIBUTE_FIRE) and c:IsDefense(200) and c:IsType(TYPE_TUNER) and c:IsAbleToRemove()
-		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,c:GetOriginalLevel()+lv) and aux.SpElimFilter(c,true)
+function s.rescon(sg,e,tp,mg)
+	return sg:IsExists(Card.IsType,1,nil,TYPE_TUNER) and sg:IsExists(aux.NOT(Card.IsType),1,nil,TYPE_TUNER)
+		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,sg:GetSum(Card.GetLevel),sg)
 end
-function s.spfilter(c,e,tp,lv)
-	return c:GetLevel()==lv and c:IsType(TYPE_SYNCHRO) and c:IsAttribute(ATTRIBUTE_FIRE) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+function s.spfilter(c,e,tp,lv,sg)
+	return c:IsAttribute(ATTRIBUTE_FIRE) and c:IsSynchroMonster() and c:IsLevel(lv) and Duel.GetLocationCountFromEx(tp,tp,sg,c)>0
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and s.rmfilter1(chkc,e,tp) end
-	if chk==0 then return Duel.IsExistingTarget(s.rmfilter1,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g1=Duel.SelectTarget(tp,s.rmfilter1,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g2=Duel.SelectTarget(tp,s.rmfilter2,tp,LOCATION_GRAVE,0,1,1,nil,e,tp,g1:GetFirst():GetLevel())
-	g1:Merge(g2)
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g1,1,0,0)
+	if chkc then return false end
+	local g=Duel.GetTargetGroup(s.tgfilter,tp,LOCATION_MZONE|LOCATION_GRAVE,0,nil)
+	if chk==0 then return #g>=2 and aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,0) end
+	local tg=aux.SelectUnselectGroup(g,e,tp,2,2,s.rescon,1,tp,HINTMSG_REMOVE)
+	Duel.SetTargetCard(tg)
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,tg,2,tp,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-	if not tg or tg:FilterCount(Card.IsRelateToEffect,nil,e)~=2 then return end
-	if Duel.Remove(tg,POS_FACEUP,REASON_EFFECT)==2 then
-		local og=Duel.GetOperatedGroup()
-		local lv=og:GetSum(Card.GetLevel)
+	local tg=Duel.GetTargetCards(e)
+	if #tg==2 and Duel.Remove(tg,POS_FACEUP,REASON_EFFECT)==2 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local sg=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,lv)
-		if #sg>0 then Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP) end
+		local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,tg:GetSum(Card.GetLevel))
+		if #g>0 then
+			Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
+		end
 	end
 end

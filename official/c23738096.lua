@@ -1,4 +1,4 @@
---Japanese name
+--無死虫団の補給兵
 --Supply Soldier of the Indestructible Insects
 --scripted by Naim
 local s,id=GetID()

@@ -13,21 +13,25 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_TOHAND)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
-	e1:SetCondition(function(e) return e:GetHandler():IsStatus(STATUS_SPSUMMON_TURN) end)
-	e1:SetTarget(s.destg)
-	e1:SetOperation(s.desop)
+	e1:SetCondition(s.condition)
+	e1:SetTarget(s.target)
+	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
 s.listed_materials={160201007,160009009}
 s.listed_names={160009060,160009061}
-function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.condition(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	return c:IsStatus(STATUS_SPSUMMON_TURN) and c:IsSummonPhaseMain()
+end
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsType,TYPE_NORMAL),tp,0,LOCATION_MZONE,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,1-tp,LOCATION_MZONE)
 end
 function s.thfilter(c)
 	return c:IsCode(160009060,160009061) and c:IsAbleToHand()
 end
-function s.desop(e,tp,eg,ep,ev,re,r,rp)
+function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local dg=Duel.SelectMatchingCard(tp,aux.FaceupFilter(Card.IsType,TYPE_NORMAL),tp,0,LOCATION_MZONE,1,1,nil)
 	if #dg<1 then return end

@@ -114,7 +114,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp,chk)
 	local eqt=c:GetEquipTarget()
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if ft>1 and Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
-	if ft<1 then return end 
+	if ft<1 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local spg=eqt:GetEquipGroup():FilterSelect(tp,s.spfilter,1,ft,nil,e,tp)
 	if #spg>0 then

@@ -2,10 +2,10 @@
 --Stellarknight Constellar Diamond
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
-	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsAttribute,ATTRIBUTE_LIGHT),5,3,s.ovfilter,aux.Stringid(id,0),Xyz.InfiniteMats)
 	c:EnableReviveLimit()
-	--
+	--Xyz Summon procedure: 3+ Level 5 LIGHT monsters OR During your Main Phase 2, you can also Xyz Summon this card by using a "tellarknight" Xyz Monster you control as material, except "Stellarknight Constellar Diamond"
+	Xyz.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsAttribute,ATTRIBUTE_LIGHT),5,3,s.ovfilter,aux.Stringid(id,0),Xyz.InfiniteMats)
+	--While this card has material, neither player can send cards from the Deck to the GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_TO_GRAVE)
@@ -13,7 +13,6 @@ function s.initial_effect(c)
 	e1:SetTargetRange(LOCATION_DECK,LOCATION_DECK)
 	e1:SetCondition(s.effcon)
 	c:RegisterEffect(e1)
-	--
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_CANNOT_DISCARD_DECK)
@@ -22,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetTargetRange(1,1)
 	e2:SetCondition(s.effcon)
 	c:RegisterEffect(e2)
-	--
+	--Any card that returns from the GY to the hand is banished instead
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetCode(EFFECT_TO_HAND_REDIRECT)
@@ -31,7 +30,7 @@ function s.initial_effect(c)
 	e3:SetValue(LOCATION_REMOVED)
 	e3:SetCondition(s.effcon)
 	c:RegisterEffect(e3)
-	--Negate
+	--When an opponent's DARK monster's effect is activated (Quick Effect): You can detach 1 material from this card; negate that activation, and if you do, destroy it
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
 	e4:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
@@ -53,7 +52,7 @@ function s.effcon(e)
 	return e:GetHandler():GetOverlayCount()>0
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and re:IsMonsterEffect() and re:GetHandler():IsAttribute(ATTRIBUTE_DARK) and Duel.IsChainNegatable(ev)
+	return ep==1-tp and re:IsMonsterEffect() and re:GetHandler():IsAttribute(ATTRIBUTE_DARK) and Duel.IsChainNegatable(ev)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

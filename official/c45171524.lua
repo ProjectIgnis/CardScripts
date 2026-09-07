@@ -9,11 +9,11 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_DAMAGE+CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(0,TIMING_STANDBY_PHASE|TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetCost(s.effcost)
 	e1:SetTarget(s.efftg)
 	e1:SetOperation(s.effop)
+	e1:SetHintTiming(0,TIMING_STANDBY_PHASE|TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E)
 	c:RegisterEffect(e1)
 end
 s.listed_series={SET_MITSURUGI}
@@ -59,11 +59,9 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 	if op==2 or op==3 then
-		--Take 800 damage
 		if breakeffect then Duel.BreakEffect() end
-		Duel.Damage(tp,800,REASON_EFFECT)
-		--Special Summon 1 "Mitsurugi" monster from your hand or GY, but it cannot attack directly
-		if Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		--Take 800 damage, then you can Special Summon 1 "Mitsurugi" monster from your hand or GY, but it cannot attack directly
+		if Duel.Damage(tp,800,REASON_EFFECT)>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 			and Duel.IsExistingMatchingCard(aux.NecroValleyFilter(s.spfilter),tp,LOCATION_HAND|LOCATION_GRAVE,0,1,nil,e,tp)
 			and Duel.SelectYesNo(tp,aux.Stringid(id,5)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
 	e3:SetTargetRange(0,LOCATION_MZONE)
 	e3:SetValue(LOCATION_REMOVED)
-	e3:SetTarget(aux.SForceTarget)
+	e3:SetTarget(SForce.ColumnTarget)
 	c:RegisterEffect(e3)
 end
 s.listed_series={SET_S_FORCE}

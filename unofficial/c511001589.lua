@@ -1,73 +1,49 @@
+--ウルルの守護者
 --Uluru's Guardian
 local s,id=GetID()
 function s.initial_effect(c)
-	--negate
+	--Cannot be Normal Summoned unless you control no monsters
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_SINGLE)
+	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e0:SetCode(EFFECT_CANNOT_SUMMON)
+	e0:SetCondition(function(e) return Duel.GetFieldGroupCount(e:GetHandlerPlayer(),LOCATION_MZONE,0)>0 end)
+	c:RegisterEffect(e0)
+	--When this card is Normal Summoned: Change this card to Defense Position.
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetCategory(CATEGORY_NEGATE+CATEGORY_DISABLE)
-	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_QUICK_O)
-	e1:SetCode(EVENT_CHAINING)
-	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
-	e1:SetRange(LOCATION_MZONE)
-	e1:SetCondition(s.negcon)
-	e1:SetCost(s.cbcost)
-	e1:SetTarget(s.negtg)
-	e1:SetOperation(s.negop)
+	e1:SetCategory(CATEGORY_POSITION)
+	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
+	e1:SetCode(EVENT_SUMMON_SUCCESS)
+	e1:SetTarget(s.postg)
+	e1:SetOperation(s.posop)
 	c:RegisterEffect(e1)
-	--Double Snare
+	--When this card is changed from face-down Defense Position to face-up Defense Position: Destroy it.
 	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_SINGLE_RANGE)
-	e2:SetRange(LOCATION_MZONE)
-	e2:SetCode(3682106)
-	c:RegisterEffect(e2)
+    e2:SetDescription(aux.Stringid(id,1))
+    e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+    e2:SetCode(EVENT_CHANGE_POS)
+    e2:SetCondition(s.selfdescon)
+    e2:SetOperation(s.selfdesop)
+    c:RegisterEffect(e2)
 end
-function s.cfilter(c)
-	return c:IsTrap() and c:IsFaceup() and c:IsAbleToGraveAsCost()
-end
-function s.cbcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD,0,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_ONFIELD,0,1,1,nil)
-	Duel.SendtoGrave(g,REASON_COST)
-end
-function s.negcon(e,tp,eg,ep,ev,re,r,rp)
+function s.postg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
-	if rp==tp or not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
-	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
-	if not g or not g:IsContains(c) then return false end
-	return Duel.IsChainNegatable(ev) or Duel.IsChainDisablable(ev)
+	if chk==0 then return c:IsAttackPos() end
+	Duel.SetOperationInfo(0,CATEGORY_POSITION,c,1,0,0)
 end
-function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_DISABLE,eg,1,0,0)
-end
-function s.negop(e,tp,eg,ep,ev,re,r,rp)
+function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local tc=re:GetHandler()
-	Duel.NegateActivation(ev)
-	Duel.NegateEffect(ev)
-	Duel.NegateRelatedChain(tc,RESET_TURN_SET)
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e1:SetCode(EFFECT_DISABLE)
-	e1:SetReset(RESET_PHASE+PHASE_END)
-	tc:RegisterEffect(e1)
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e2:SetCode(EFFECT_DISABLE_EFFECT)
-	e2:SetValue(RESET_TURN_SET)
-	e2:SetReset(RESET_PHASE+PHASE_END)
-	tc:RegisterEffect(e2)
-	if tc:IsType(TYPE_TRAPMONSTER) then
-		local e3=Effect.CreateEffect(c)
-		e3:SetType(EFFECT_TYPE_SINGLE)
-		e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e3:SetCode(EFFECT_DISABLE_TRAPMONSTER)
-		e3:SetReset(RESET_PHASE+PHASE_END)
-		tc:RegisterEffect(e3)
+	if c:IsFaceup() and c:IsAttackPos() and c:IsRelateToEffect(e) then
+		Duel.ChangePosition(c,POS_FACEUP_DEFENSE)
 	end
+end
+function s.selfdescon(e,tp,eg,ep,ev,re,r,rp)
+    local c=e:GetHandler()
+    return (c:GetPreviousPosition()&POS_FACEDOWN_DEFENSE)>0 and c:IsFaceup() and c:IsDefensePos()
+end
+function s.selfdesop(e,tp,eg,ep,ev,re,r,rp)
+    local c=e:GetHandler()
+	Duel.Hint(HINT_CARD,0,id)
+	Duel.Destroy(c,REASON_EFFECT)
 end

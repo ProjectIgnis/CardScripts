@@ -32,7 +32,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	if e:GetLabel()==1 then
+	if e:GetChainData().cost_choice==1 then
 		Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,1,0,0x1101)
 	end
 end
@@ -45,7 +45,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetValue(1)
 	e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
 	c:RegisterEffect(e1)
-	if e:GetLabel()==1 then
+	if e:GetChainData().cost_choice==1 then
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_FIELD)
 		e2:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)

@@ -64,7 +64,7 @@ function s.spop1(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<1 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter1,tp,LOCATION_REMOVED,0,1,1,nil,e,tp)
-	if #g>0 then 
+	if #g>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
@@ -82,7 +82,7 @@ end
 function s.spop2(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,s.spfilter2,tp,LOCATION_EXTRA,0,1,1,nil,e,tp)
-	if #g>0 then 
+	if #g>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
@@ -106,7 +106,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and Duel.Remove(tc,0,REASON_EFFECT|REASON_TEMPORARY)>0 then
 		local ct=Duel.GetCurrentPhase()<=PHASE_STANDBY and 2 or 1
-		tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD-RESET_TEMP_REMOVE|RESET_PHASE|PHASE_STANDBY,0,ct)
+		tc:RegisterFlagEffect(id,RESET_EVENT|(RESETS_STANDARD&~RESET_TEMP_REMOVE)|RESET_PHASE|PHASE_STANDBY,0,ct)
 		--Banish it until the Standby Phase of the next turn
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)

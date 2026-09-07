@@ -34,15 +34,15 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local _,min_link=lg:GetMinGroup(Card.GetLink)
 	local b2=not Duel.HasFlagEffect(tp,id+1) and min_link and min_link<=#rg
 	if chk==0 then return b1 or b2 end
-	local op=Duel.SelectEffect(tp,
+	local cd=e:GetChainData()
+	cd.choice=Duel.SelectEffect(tp,
 		{b1,aux.Stringid(id,1)},
 		{b2,aux.Stringid(id,2)})
-	e:SetLabel(op)
-	if op==1 then
+	if cd.choice==1 then
 		Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1)
 		e:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 		Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
-	elseif op==2 then
+	elseif cd.choice==2 then
 		Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE|PHASE_END,0,1)
 		e:SetCategory(CATEGORY_SPECIAL_SUMMON)
 		local link_map={}
@@ -52,13 +52,13 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 		local rescon=function(sg) return link_map[#sg] end
 		local sg=aux.SelectUnselectGroup(rg,e,tp,min_link,#rg,rescon,1,tp,HINTMSG_REMOVE,rescon)
 		Duel.Remove(sg,POS_FACEUP,REASON_COST)
-		e:SetLabel(op,#sg)
+		cd.banished_amount=#sg
 		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 	end
 end
 function s.effop(e,tp,eg,ep,ev,re,r,rp)
-	local op,link=e:GetLabel()
-	if op==1 then
+	local cd=e:GetChainData()
+	if cd.choice==1 then
 		--Add 1 "Tri-Brigade" Spell/Trap from your Deck to your hand, except "Tri-Brigade Hammer"
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil)
@@ -66,10 +66,10 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.SendtoHand(g,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,g)
 		end
-	elseif op==2 and link then
+	elseif cd.choice==2 and cd.banished_amount then
 		--Special Summon 1 "Tri-Brigade" Link Monster from your Extra Deck, with Link Rating equal to the number banished, ignoring its Summoning conditions
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,nil,link)
+		local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,nil,cd.banished_amount)
 		if #g>0 then
 			Duel.SpecialSummon(g,0,tp,tp,true,false,POS_FACEUP)
 		end

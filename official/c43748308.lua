@@ -5,6 +5,7 @@ function s.initial_effect(c)
 	--set
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
+	e2:SetCategory(CATEGORY_SET)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_CHAINING)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
@@ -22,7 +23,7 @@ function s.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1)
-	e3:SetCost(s.spcost)
+	e3:SetCost(Cost.Replaceable(s.spcost,function(_,_,tp) return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end))
 	e3:SetTarget(s.sptg)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
@@ -49,21 +50,14 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SSet(tp,g:GetFirst())
 	end
 end
-function s.cfilter(c)
+function s.spcostfilter(c)
 	return c:IsFaceup() and c:IsSetCard(SET_FIRE_FORMATION) and c:IsSpellTrap() and c:IsAbleToGraveAsCost()
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_ONFIELD,0,nil)
-	local nc=Duel.GetLocationCount(tp,LOCATION_MZONE)>-2 and #g>1 and aux.SelectUnselectGroup(g,e,tp,2,2,aux.ChkfMMZ(1),0)
-	if chk==0 then 
-		if Duel.IsPlayerAffectedByEffect(tp,CARD_FIRE_FIST_EAGLE) then 
-			return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		else return nc end
-	end
-	if nc and not (Duel.IsPlayerAffectedByEffect(tp,CARD_FIRE_FIST_EAGLE) and Duel.SelectYesNo(tp,aux.Stringid(CARD_FIRE_FIST_EAGLE,0))) then
-		local sg=aux.SelectUnselectGroup(g,e,tp,2,2,aux.ChkfMMZ(1),1,tp,HINTMSG_TOGRAVE)
-		Duel.SendtoGrave(sg,REASON_COST)
-	end
+	local g=Duel.GetMatchingGroup(s.spcostfilter,tp,LOCATION_ONFIELD,0,nil)
+	if chk==0 then return aux.SelectUnselectGroup(g,e,tp,2,2,aux.ChkfMMZ(1),0) end
+	local sg=aux.SelectUnselectGroup(g,e,tp,2,2,aux.ChkfMMZ(1),1,tp,HINTMSG_TOGRAVE)
+	Duel.SendtoGrave(sg,REASON_COST)
 end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(SET_FIRE_FIST) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

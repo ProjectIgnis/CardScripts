@@ -1,5 +1,5 @@
 --絢嵐豪火フォニクス
---Magnifistorm Great Pyre Phonix
+--Radiant Typhoon Fonix, the Great Flame
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--Shuffle up to 2 cards your opponent controls into the Deck 
+	--Shuffle up to 2 cards your opponent controls into the Deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TODECK)

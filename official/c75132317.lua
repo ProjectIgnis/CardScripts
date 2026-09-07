@@ -5,6 +5,7 @@ function s.initial_effect(c)
 	--set
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetCategory(CATEGORY_SET)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_TO_GRAVE)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
@@ -23,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
 	e2:SetCondition(s.drcon)
-	e2:SetCost(s.drcost)
+	e2:SetCost(Cost.Replaceable(s.drcost))
 	e2:SetTarget(s.drtg)
 	e2:SetOperation(s.drop)
 	c:RegisterEffect(e2)
@@ -53,17 +54,14 @@ end
 function s.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==1
 end
-function s.cfilter(c)
+function s.drcostfilter(c)
 	return c:IsFaceup() and c:IsSetCard(SET_FIRE_FORMATION) and c:IsSpellTrap() and c:IsAbleToGraveAsCost()
 end
 function s.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local nc=Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD,0,2,nil)
-	if chk==0 then return nc or Duel.IsPlayerAffectedByEffect(tp,CARD_FIRE_FIST_EAGLE) end
-	if nc and not (Duel.IsPlayerAffectedByEffect(tp,CARD_FIRE_FIST_EAGLE) and Duel.SelectYesNo(tp,aux.Stringid(CARD_FIRE_FIST_EAGLE,0))) then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-		local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_ONFIELD,0,2,2,nil)
-		Duel.SendtoGrave(g,REASON_COST)
-	end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.drcostfilter,tp,LOCATION_ONFIELD,0,2,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+	local g=Duel.SelectMatchingCard(tp,s.drcostfilter,tp,LOCATION_ONFIELD,0,2,2,nil)
+	Duel.SendtoGrave(g,REASON_COST)
 end
 function s.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end

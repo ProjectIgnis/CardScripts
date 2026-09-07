@@ -46,7 +46,7 @@ function s.matfilter(c,lc,sumtype,tp)
 	return c:IsAttribute(ATTRIBUTE_DARK,lc,sumtype,tp) and c:IsRace(RACE_SPELLCASTER,lc,sumtype,tp)
 end
 function s.matcheck(g,lc,sumtype,tp)
-	return g:IsExists(s.matfilter,1,nil,lc,sumtype,tp) 
+	return g:IsExists(s.matfilter,1,nil,lc,sumtype,tp)
 end
 function s.thfilter(c)
 	return c:IsLevelAbove(5) and c:IsAttribute(ATTRIBUTE_DARK) and c:IsRace(RACE_SPELLCASTER) and c:IsAbleToHand()

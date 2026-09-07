@@ -3,15 +3,15 @@
 --Scripted by Hel
 local s,id=GetID()
 function s.initial_effect(c)
-local e1=Effect.CreateEffect(c)
 	--If normal or special summoned, special summon 1 "Fire Fist" monster from hand
+	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCountLimit(1,id)
-	e1:SetCost(s.spcost)
+	e1:SetCost(Cost.Replaceable(s.spcost,function(_,_,tp) return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end))
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
@@ -32,26 +32,21 @@ local e1=Effect.CreateEffect(c)
 end
 s.listed_names={id}
 s.listed_series={SET_FIRE_FORMATION,SET_FIRE_FIST}
-function s.cfilter(c)
-	return c:IsFaceup() and (c:IsSpell() or c:IsTrap()) and c:IsSetCard(SET_FIRE_FORMATION) and c:IsAbleToGraveAsCost()
+function s.spcostfilter(c,tp)
+	return c:IsFaceup() and c:IsSpellTrap() and c:IsSetCard(SET_FIRE_FORMATION)
+		and c:IsAbleToGraveAsCost() and Duel.GetMZoneCount(tp,c)>0
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local nc=Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_SZONE,0,1,nil)
-	if chk==0 then 
-		if Duel.IsPlayerAffectedByEffect(tp,CARD_FIRE_FIST_EAGLE) then return true else return nc end
-	end
-	if nc and not (Duel.IsPlayerAffectedByEffect(tp,CARD_FIRE_FIST_EAGLE) and Duel.SelectYesNo(tp,aux.Stringid(CARD_FIRE_FIST_EAGLE,0))) then 
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-		local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_SZONE,0,1,1,nil)
-			Duel.SendtoGrave(g,REASON_COST)
-	end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.spcostfilter,tp,LOCATION_ONFIELD,0,1,nil,tp) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+	local g=Duel.SelectMatchingCard(tp,s.spcostfilter,tp,LOCATION_ONFIELD,0,1,1,nil,tp)
+	Duel.SendtoGrave(g,REASON_COST)
 end
 function s.spfilter(c,e,tp)
 	return c:IsSetCard(SET_FIRE_FIST) and not c:IsCode(id) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)

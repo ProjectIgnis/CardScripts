@@ -18,18 +18,18 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToHand,tp,0,LOCATION_MZONE,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsNotMaximumModeSide,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,1-tp,LOCATION_MZONE)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,1-tp,LOCATION_HAND)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
-	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToHand,tp,0,LOCATION_MZONE,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,Card.IsNotMaximumModeSide,tp,0,LOCATION_MZONE,1,1,nil)
 	local tc=g:GetFirst()
 	if not tc then return end
 	g=g:AddMaximumCheck()
-	Duel.HintSelection(g,true)
-	if Duel.SendtoHand(g,nil,REASON_EFFECT)==0 or not tc:IsLocation(LOCATION_HAND) then return end
+	Duel.HintSelection(g)
+	if Duel.SendtoHand(g,nil,REASON_EFFECT)==0 then return end
 	local opp=1-tp
 	local g=Duel.GetMatchingGroup(Card.IsCanBeSpecialSummoned,opp,LOCATION_HAND,0,nil,e,0,opp,false,false,POS_FACEUP_ATTACK)
 	if #g==0 or not Duel.SelectYesNo(opp,aux.Stringid(id,1)) then return end

@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.plop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={SET_CENTURION}
+s.listed_series={SET_CENTUR_ION}
 function s.move_to_stzone(c,hc,tp)
 	if not Duel.MoveToField(c,tp,tp,LOCATION_SZONE,POS_FACEUP,true) then return end
 	--Treat as Continuous Trap
@@ -41,7 +41,7 @@ function s.move_to_stzone(c,hc,tp)
 	return true
 end
 function s.plfilter(c)
-	return c:IsSetCard(SET_CENTURION) and c:IsMonster() and not c:IsForbidden()
+	return c:IsSetCard(SET_CENTUR_ION) and c:IsMonster() and not c:IsForbidden()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
@@ -59,7 +59,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.cfilter(c,tp)
-	return c:IsFaceup() and c:IsControler(tp) and c:IsSetCard(SET_CENTURION) and c:IsType(TYPE_SYNCHRO)
+	return c:IsFaceup() and c:IsControler(tp) and c:IsSetCard(SET_CENTUR_ION) and c:IsType(TYPE_SYNCHRO)
 end
 function s.plcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.cfilter,1,nil,tp)

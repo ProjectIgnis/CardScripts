@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	--Inflict 500 damage to your opponent for each banished Pyro monsters
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetCategory(CATEGORY_DAMAGE)
+	e1:SetCategory(CATEGORY_DAMAGE+CATEGORY_SET)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetCondition(function(e) return e:GetHandler():IsSummonType(SUMMON_TYPE_SPECIAL+1) end)

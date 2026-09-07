@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	--Set 1 "Majespecter" Spell
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,1))
-	e4:SetCategory(CATEGORY_LEAVE_GRAVE)
+	e4:SetCategory(CATEGORY_LEAVE_GRAVE+CATEGORY_SET)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e4:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
 	e4:SetCode(EVENT_SUMMON_SUCCESS)

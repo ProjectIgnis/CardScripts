@@ -9,44 +9,20 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_GRAVE)
 	e1:SetCountLimit(1,id)
-	e1:SetCost(s.spcost)
+	e1:SetCost(Cost.Replaceable(s.spcost,function(_,_,tp) return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end))
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
 end
 s.listed_series={SET_FIRE_FIST,SET_FIRE_FORMATION}
-function s.cfilter(c)
+function s.spcostfilter(c)
 	return (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and c:IsSetCard({SET_FIRE_FIST,SET_FIRE_FORMATION}) and c:IsAbleToGraveAsCost()
 end
-function s.mzfilter(c)
-	return c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5
-end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local ct=-ft+1
-	local sg=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_HAND|LOCATION_ONFIELD,0,nil)
-	local nc=#sg>=2 and (ft>0 or (ct<3 and sg:IsExists(s.mzfilter,ct,nil)))
-	if chk==0 then 
-		if Duel.IsPlayerAffectedByEffect(tp,CARD_FIRE_FIST_EAGLE) then 
-			return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
-		else return nc end
-	end
-	if nc and not (Duel.IsPlayerAffectedByEffect(tp,CARD_FIRE_FIST_EAGLE) and Duel.SelectYesNo(tp,aux.Stringid(CARD_FIRE_FIST_EAGLE,0))) then
-		local g=nil
-		if ft<=0 then
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-			g=sg:FilterSelect(tp,s.mzfilter,ct,ct,nil)
-			if ct<2 then
-				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-				local g1=sg:Select(tp,2-ct,2-ct,g)
-				g:Merge(g1)
-			end
-		else
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-			g=sg:Select(tp,2,2,nil)
-		end
-		Duel.SendtoGrave(g,REASON_COST)
-	end
+	local g=Duel.GetMatchingGroup(s.spcostfilter,tp,LOCATION_HAND|LOCATION_ONFIELD,0,nil)
+	if chk==0 then return aux.SelectUnselectGroup(g,e,tp,2,2,aux.ChkfMMZ(1),0) end
+	local sg=aux.SelectUnselectGroup(g,e,tp,2,2,aux.ChkfMMZ(1),1,tp,HINTMSG_TOGRAVE)
+	Duel.SendtoGrave(sg,REASON_COST)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end

@@ -1,11 +1,10 @@
 --ドラゴニック・スレイヤー
 --Dragonic Slayer
-
---Substitute ID
 local s,id=GetID()
 function s.initial_effect(c)
-	--Destroy 1 spell/trap your opponent controls
+	--Destroy 1 Spell/Trap your opponent controls
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
@@ -32,6 +31,7 @@ end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local dg=Duel.GetMatchingGroup(Card.IsSpellTrap,tp,0,LOCATION_ONFIELD,nil)
 	if #dg>0 then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 		local sg=dg:Select(tp,1,1,nil)
 		Duel.HintSelection(sg)
 		Duel.Destroy(sg,REASON_EFFECT)

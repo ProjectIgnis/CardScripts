@@ -304,13 +304,15 @@ if not AnimeArchetype then
 	-- もり
 	-- Ancient Forest/Witch of the Black Forest/Naturia Forest
 	-- Forest/Yellow Baboon, Archer of the Forest/Murmur of the Forest
-	-- Wood Remains/Wodan the Resident of the Forest/Alpacaribou, Mystical Beast of the Forest
-	-- Valerifawn, Mystical Beast of the Forest/Kalantosa, Mystical Beast of the Forest/Uniflora, Mystical Beast of the Forest
-	-- Eco, Mystical Spirit of the Forest/Green Baboon, Defender of the Forest
+	-- Wood Remains/Wodan the Resident of the Forest
+	-- Green Baboon, Defender of the Forest
+	-- Wonko, Noble Knight of the Forest/Bat, the Forest Ninja
 	AnimeArchetype.OCGForest={
-		77797992,87624166,14015067,4192696,87430998,46668237,60398723,37322745,36318200,24096499,78010363,42883273,65303664,17733394
+		87624166,14015067,87430998,46668237,65303664,
+		60398723,37322745,78010363,42883273,17733394,
+		17832359,80447641
 	}
-	Card.IsForest=MakeCheck({0x51f},AnimeArchetype.OCGForest)
+	Card.IsForest=MakeCheck({0x51f,SET_MYSTICAL_BEAST_OF_THE_FOREST,SET_MYSTICAL_SPIRIT_OF_THE_FOREST,SET_WHITE_FOREST},AnimeArchetype.OCGForest)
 
 	-- Gem-Knight Lady ジェムナイトレディ (Checked 13/05/2024)
 	-- Gem-Knight Lady Brilliant Diamond/Gem-Knight Lady Lapis Lazuli/Gem-Knight Lady Rose Diamond
@@ -581,11 +583,6 @@ if not AnimeArchetype then
 		32476434,41493640,75253697
 	}
 	Card.IsLineMonster=MakeCheck({0x564},AnimeArchetype.OCGLineMonster)
-
-	-- Magnet (Checked 13/05/2024)
-	-- 磁石
-	-- マグネット
-	Card.IsMagnet=MakeCheck({0x534,0x2066})
 
 	-- Mantis カマキリ (need to be discussed, cards used with it in the manga don't have the mantis string)
 	-- Empress Mantis,Praying Mantis,Guard Mantis
@@ -1100,4 +1097,14 @@ if not AnimeArchetype then
 	--Harpie Lady Sisters (Archetype)
 	--Harpie Lady Sisters
 	Card.IsHarpieLadySisters=MakeCheck({0x1064},{12206212})
+	
+	--Helios (Archetype)
+	--Helios - The Primordial Sun/Helios Duo Megistus/Helios Trice Megistus
+	--Heliosphere Dragon/Elemental HERO Heliosphere
+	Card.IsHelios=MakeCheck(nil,{54493213,80887952,17286057,51043053,160214029})
+	
+	--Kangaroo (Archetype)
+	--Des Kangaroo/Kangaroo Champ
+	--Junk Robot Teapot Kangaroo
+	Card.IsKangaroo=MakeCheck(nil,{78613627,95789089,511001684})
 end

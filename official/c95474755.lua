@@ -69,7 +69,7 @@ function s.rmfilter(c,tp)
 	return c:IsAbleToRemove(tp,POS_FACEDOWN) and aux.SpElimFilter(c)
 end
 function s.grtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return c:IsControler(1-tp) and c:IsLocation(LOCATION_MZONE|LOCATION_GRAVE) and s.rmfilter(chkc) end
+	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE|LOCATION_GRAVE) and s.rmfilter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(s.rmfilter,tp,0,LOCATION_MZONE|LOCATION_GRAVE,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectTarget(tp,s.rmfilter,tp,0,LOCATION_MZONE|LOCATION_GRAVE,1,1,nil,tp)

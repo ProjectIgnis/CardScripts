@@ -1,5 +1,5 @@
 --お菊さんの皿算用
---Miss Okiku's Dishrithmetic
+--Okiku's Dish Count
 --scripted by pyrQ
 local COUNTER_DISH=0x216
 local s,id=GetID()

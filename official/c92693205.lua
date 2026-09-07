@@ -4,7 +4,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--turn set
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_POSITION)
+	e1:SetCategory(CATEGORY_POSITION+CATEGORY_SET)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetTarget(s.postg)
@@ -25,8 +25,8 @@ s.listed_series={SET_GEARGIA}
 function s.postg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsCanTurnSet() and c:GetFlagEffect(id)==0 end
-	c:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD-RESET_TURN_SET|RESET_PHASE|PHASE_END,0,1)
-	Duel.SetOperationInfo(0,CATEGORY_POSITION,c,1,0,0)
+	c:RegisterFlagEffect(id,RESET_EVENT|(RESETS_STANDARD_PHASE_END&~RESET_TURN_SET),0,1)
+	Duel.SetOperationInfo(0,CATEGORY_POSITION,c,1,tp,POS_FACEDOWN_DEFENSE)
 end
 function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

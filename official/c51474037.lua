@@ -38,9 +38,9 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		{b1,aux.Stringid(id,1)},
 		{b2,aux.Stringid(id,2)})
 	if op==1 then
-		e:SetCategory(CATEGORY_POSITION)
+		e:SetCategory(CATEGORY_POSITION+CATEGORY_SET)
 		e:SetLabelObject(nil)
-		Duel.SetOperationInfo(0,CATEGORY_POSITION,tg,2,tp,0)
+		Duel.SetOperationInfo(0,CATEGORY_POSITION,tg,2,tp,POS_FACEDOWN_DEFENSE)
 	elseif op==2 then
 		e:SetCategory(CATEGORY_DESTROY+CATEGORY_ATKCHANGE)
 		e:SetLabelObject(self_g:GetFirst())

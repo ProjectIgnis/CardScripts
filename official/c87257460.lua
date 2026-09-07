@@ -2,7 +2,7 @@
 --Allure Queen LV3
 local s,id=GetID()
 function s.initial_effect(c)
-	--Equip 1 Level 3 or lower monster your opponent controls to this card
+	--Once per turn, during your Main Phase, you can select 1 Level 3 or lower monster on your opponent's side of the field and equip it to this card
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_EQUIP)
@@ -23,7 +23,7 @@ function s.initial_effect(c)
 	e2:SetCondition(s.eqconquick)
 	c:RegisterEffect(e2)
 	aux.AddEREquipLimit(c,s.eqconquick,s.eqval,s.equipop,e2)
-	--Special Summon 1 "Allure Queen LV5" from your hand or Deck
+	--During your Standby Phase, by sending this card to the Graveyard while it's equipped due to its effect, Special Summon 1 "Allure Queen LV5" from your hand or Deck
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -47,7 +47,7 @@ function s.eqconignition(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.eqconquick(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return not c:GetEquipGroup():IsExists(Card.HasFlagEffect,1,nil,id) and c:IsOriginalSetCard(SET_ALLURE_QUEEN) and Duel.IsPlayerAffectedByEffect(tp,EFFECT_GOLDEN_ALLURE_QUEEN)
+	return not c:GetEquipGroup():IsExists(Card.HasFlagEffect,1,nil,id) and c:IsOriginalSetCard(SET_ALLURE_QUEEN) and Duel.IsPlayerAffectedByEffect(e:GetHandlerPlayer(),EFFECT_GOLDEN_ALLURE_QUEEN)
 end
 function s.eqfilter(c)
 	return c:IsLevelBelow(3) and c:IsFaceup() and c:IsAbleToChangeControler()

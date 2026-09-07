@@ -9,6 +9,13 @@ function Auxiliary.AddNormalSummonProcedure(c,ns,opt,min,max,val,desc,f,sumop)
 		e1:SetCode(EFFECT_SUMMON_PROC)
 	else
 		e1:SetCode(EFFECT_LIMIT_SUMMON_PROC)
+		local card_metatable=c:GetMetatable()
+		if min~=nil and (card_metatable.min_tribute_req==nil or min<card_metatable.min_tribute_req) then
+			card_metatable.min_tribute_req=min
+		end
+		if max~=nil and (card_metatable.max_tribute_req==nil or max>card_metatable.max_tribute_req) then
+			card_metatable.max_tribute_req=max
+		end
 	end
 	if ns then
 		e1:SetCondition(Auxiliary.NormalSummonCondition1(min,max,f,opt))
@@ -21,7 +28,7 @@ function Auxiliary.AddNormalSummonProcedure(c,ns,opt,min,max,val,desc,f,sumop)
 	c:RegisterEffect(e1)
 	return e1
 end
-function maplevel(level)
+local function maplevel(level)
 	if level>=5 and level<=6 then
 		return 1
 	elseif level>=7 then
@@ -84,6 +91,13 @@ function Auxiliary.AddNormalSetProcedure(c,ns,opt,min,max,val,desc,f,sumop)
 		e1:SetCode(EFFECT_SET_PROC)
 	else
 		e1:SetCode(EFFECT_LIMIT_SET_PROC)
+		local card_metatable=c:GetMetatable()
+		if min~=nil and (card_metatable.min_tribute_req==nil or min<card_metatable.min_tribute_req) then
+			card_metatable.min_tribute_req=min
+		end
+		if max~=nil and (card_metatable.max_tribute_req==nil or max>card_metatable.max_tribute_req) then
+			card_metatable.max_tribute_req=max
+		end
 	end
 	if ns then
 		e1:SetCondition(Auxiliary.NormalSetCondition1(min,max,f))

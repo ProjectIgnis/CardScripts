@@ -31,9 +31,9 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_REMOVE)
 	c:RegisterEffect(e3)
 end
-s.listed_series={SET_CENTURION}
+s.listed_series={SET_CENTUR_ION}
 function s.rmcostfilter(c)
-	return c:IsSetCard(SET_CENTURION) and c:IsMonsterCard() and c:IsFaceup() and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(SET_CENTUR_ION) and c:IsMonsterCard() and c:IsFaceup() and c:IsAbleToRemoveAsCost()
 end
 function s.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.rmcostfilter,tp,LOCATION_STZONE,0,1,nil) end
@@ -60,7 +60,7 @@ function s.plcon(e,tp,eg,ep,ev,re,r,rp)
 		and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEDOWN)
 end
 function s.plfilter(c)
-	return c:IsSetCard(SET_CENTURION) and c:IsMonster() and not c:IsForbidden()
+	return c:IsSetCard(SET_CENTUR_ION) and c:IsMonster() and not c:IsForbidden()
 		and (c:IsFaceup() or c:IsLocation(LOCATION_HAND|LOCATION_DECK))
 end
 function s.pltg(e,tp,eg,ep,ev,re,r,rp,chk)

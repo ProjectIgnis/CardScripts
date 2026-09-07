@@ -48,7 +48,7 @@ function s.target(montype,chkfun)
 	return function(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		local exg=Duel.GetMatchingGroup(s.filter(montype,chkfun),tp,LOCATION_EXTRA,0,nil,nil,tp)
 		local cancelcon=s.rescon(exg,chkfun)
-		if chkc then return chkc:IsControler(tp) and c:IsLocation(LOCATION_GRAVE) and c:IsSetCard(SET_MATHMECH) and chkc:IsCanBeSpecialSummoned(e,0,tp,false,false) and cancelcon(Group.FromCards(chkc)) end
+		if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and chkc:IsSetCard(SET_MATHMECH) and chkc:IsCanBeSpecialSummoned(e,0,tp,false,false) and cancelcon(Group.FromCards(chkc)) end
 		local mg=Duel.GetMatchingGroup(s.matfilter,tp,LOCATION_GRAVE,0,nil,e,tp)
 		local min=math.min(Duel.GetLocationCount(tp,LOCATION_MZONE),Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) and 1 or #mg,1)
 		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)

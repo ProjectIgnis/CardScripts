@@ -41,5 +41,5 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e2,tp)
 end
 function s.aclimit(e,re,tp)
-	return re:GetHandler():IsOriginalCode(e:GetLabel())
+	return re:GetHandler():IsOriginalCodeRule(e:GetLabel())
 end

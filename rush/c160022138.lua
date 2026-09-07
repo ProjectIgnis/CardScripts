@@ -1,3 +1,3 @@
 --なほいとをかしひなひめ
 --Ever-Grace Princess Hina
-Duel.LoadCardScriptAlias(160022037)
+Duel.LoadCardScriptAlias(160022038)

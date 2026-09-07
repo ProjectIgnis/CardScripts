@@ -30,28 +30,26 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToGraveAsCost,tp,LOCATION_HAND,0,1,3,nil)
 	if Duel.SendtoGrave(g,REASON_COST)==0 then return end
 	--Effect
-	if c:IsRelateToEffect(e) and c:IsFaceup() then
-		--Cannot be destroyed by opponent's trap
-		local e1=Effect.CreateEffect(c)
-		e1:SetDescription(3012)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
-		e1:SetValue(s.efilter)
-		e1:SetReset(RESETS_STANDARD_PHASE_END)
-		c:RegisterEffect(e1)
-		--Piercing
-		c:AddPiercing(RESETS_STANDARD_PHASE_END)
-		--Increase ATK
-		local ct=g:FilterCount(Card.IsMonster,nil)
-		if ct>0 and c:IsStatus(STATUS_SPSUMMON_TURN) then
-			local e2=Effect.CreateEffect(c)
-			e2:SetType(EFFECT_TYPE_SINGLE)
-			e2:SetCode(EFFECT_UPDATE_ATTACK)
-			e2:SetValue(ct*1000)
-			e2:SetReset(RESETS_STANDARD_PHASE_END)
-			c:RegisterEffect(e2)
-		end
+	--Cannot be destroyed by opponent's trap
+	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(3012)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
+	e1:SetValue(s.efilter)
+	e1:SetReset(RESETS_STANDARD_PHASE_END)
+	c:RegisterEffect(e1)
+	--Piercing
+	c:AddPiercing(RESETS_STANDARD_PHASE_END)
+	--Increase ATK
+	local ct=g:FilterCount(Card.IsMonster,nil)
+	if ct>0 and c:IsSummonPhaseMain() and c:IsStatus(STATUS_SPSUMMON_TURN) then
+		local e2=Effect.CreateEffect(c)
+		e2:SetType(EFFECT_TYPE_SINGLE)
+		e2:SetCode(EFFECT_UPDATE_ATTACK)
+		e2:SetValue(ct*1000)
+		e2:SetReset(RESETS_STANDARD_PHASE_END)
+		c:RegisterEffect(e2)
 	end
 end
 function s.efilter(e,te)

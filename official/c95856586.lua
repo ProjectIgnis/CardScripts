@@ -48,7 +48,7 @@ function s.initial_effect(c)
 	e5:SetOperation(s.operation)
 	c:RegisterEffect(e5)
 end
-s.listed_names={35906693} --"Shining Draw" 
+s.listed_names={35906693} --"Shining Draw"
 function s.chfilter(c,tp)
 	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE)
 end

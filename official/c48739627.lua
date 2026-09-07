@@ -52,7 +52,7 @@ function s.chngtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local tc=Duel.SelectTarget(tp,Card.IsFaceup,tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
 	local race=Duel.AnnounceRace(tp,1,RACE_ALL)
-	local attr=tc:IsDifferentRace(race) and Duel.AnnounceAttribute(tp,1,ATTRIBUTE_ALL) or tc:AnnounceAnotherAttribute(tp)
+	local attr=tc:IsRaceExcept(race) and Duel.AnnounceAttribute(tp,1,ATTRIBUTE_ALL) or tc:AnnounceAnotherAttribute(tp)
 	e:SetLabel(race,attr)
 end
 function s.chngop(e,tp,eg,ep,ev,re,r,rp)
@@ -60,7 +60,7 @@ function s.chngop(e,tp,eg,ep,ev,re,r,rp)
 	if (not tc:IsFaceup() and tc:IsRelateToEffect(e)) then return end
 	local c=e:GetHandler()
 	local race,attr=e:GetLabel()
-	if tc:IsDifferentRace(race) then
+	if tc:IsRaceExcept(race) then
 		--Change its Monster Type
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)

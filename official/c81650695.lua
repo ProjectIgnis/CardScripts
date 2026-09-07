@@ -1,5 +1,5 @@
 --獄神機Ｄｏｏｍ－Ｚ
---Power Patron Machine Doom-Z
+--Power Patron DoomZ
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetTarget(function(e,c) return c:IsLocation(LOCATION_EXTRA) and not c:IsType(TYPE_XYZ) end)
 	c:RegisterEffect(e1)
 	aux.addContinuousLizardCheck(c,LOCATION_MZONE,function(e,c) return not c:IsOriginalType(TYPE_XYZ) end)
-	--Special Summon from your Extra Deck, 1 "Doom-Z" Xyz Monster or "Jupiter the Power Patron of Destruction" by using another Effect monster as material
+	--Special Summon from your Extra Deck, 1 "DoomZ" Xyz Monster or "Jupiter the Power Patron of Destruction" by using another Effect monster as material
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.sptg)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
-	--Add 1 "Doom-Z" card from your Deck to your hand
+	--Add 1 "DoomZ" card from your Deck to your hand
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -36,7 +36,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={SET_DOOM_Z}
+s.listed_series={SET_DOOMZ}
 s.listed_names={68231287} --"Jupiter the Power Patron of Destruction"
 function s.xyzmatfilter(c,e,tp)
 	local mustg=aux.GetMustBeMaterialGroup(tp,Group.FromCards(c),tp,nil,nil,REASON_XYZ)
@@ -44,8 +44,8 @@ function s.xyzmatfilter(c,e,tp)
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,c,c:GetLevel(),mustg)
 end
 function s.spfilter(c,e,tp,mc,lv,mustg)
-	return c:IsType(TYPE_XYZ) and (c:IsSetCard(SET_DOOM_Z) or c:IsCode(68231287))
-		and c:IsRank(lv) and mc:IsCanBeXyzMaterial(c,tp) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false) 
+	return c:IsType(TYPE_XYZ) and (c:IsSetCard(SET_DOOMZ) or c:IsCode(68231287))
+		and c:IsRank(lv) and mc:IsCanBeXyzMaterial(c,tp) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
 		and (#mustg<=0 or mustg:IsContains(mc)) and Duel.GetLocationCountFromEx(tp,tp,mc,c)>0
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -82,7 +82,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.thfilter(c)
-	return c:IsSetCard(SET_DOOM_Z) and c:IsAbleToHand()
+	return c:IsSetCard(SET_DOOMZ) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

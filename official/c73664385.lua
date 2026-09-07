@@ -43,30 +43,30 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND|LOCATION_DECK,0,1,nil,e,tp)
 	if chk==0 then e:SetLabel(0) return b1 or b2 end
-	local op=Duel.SelectEffect(tp,
+	local cd=e:GetChainData()
+	cd.choice=Duel.SelectEffect(tp,
 		{b1,aux.Stringid(id,1)},
 		{b2,aux.Stringid(id,2)})
-	e:SetLabel(op)
-	if op==1 then
+	if cd.choice==1 then
 		e:SetCategory(CATEGORY_TOGRAVE)
 		if not cost_skip then Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1) end
 		Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
-	elseif op==2 then
+	elseif cd.choice==2 then
 		e:SetCategory(CATEGORY_SPECIAL_SUMMON)
 		if not cost_skip then Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE|PHASE_END,0,1) end
 		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND|LOCATION_DECK)
 	end
 end
 function s.effop(e,tp,eg,ep,ev,re,r,rp)
-	local op=e:GetLabel()
-	if op==1 then
+	local cd=e:GetChainData()
+	if cd.choice==1 then
 		--Send 1 Spellcaster monster or 1 Spell from your Deck to the GY
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		local g=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_DECK,0,1,1,nil)
 		if #g>0 then
 			Duel.SendtoGrave(g,REASON_EFFECT)
 		end
-	elseif op==2 then
+	elseif cd.choice==2 then
 		--Special Summon 1 "Magistus" or "Witchcrafter" monster from your hand or Deck
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

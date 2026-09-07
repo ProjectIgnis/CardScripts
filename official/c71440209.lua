@@ -1,5 +1,5 @@
 --黒魔術の護符
---Dark Magic Amulet
+--Dark Magic Talisman
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	--Set this card
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
-	e2:SetCategory(CATEGORY_LEAVE_GRAVE)
+	e2:SetCategory(CATEGORY_LEAVE_GRAVE+CATEGORY_SET)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_DELAY,EFFECT_FLAG2_CHECK_SIMULTANEOUS)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)

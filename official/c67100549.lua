@@ -61,6 +61,7 @@ function s.regop(e,tp,eg,ep,ev,re,r,rp)
 		and re:GetHandler():IsCode(CARD_ALBAZ) then
 		local e1=Effect.CreateEffect(c)
 		e1:SetDescription(aux.Stringid(id,1))
+		e1:SetCategory(CATEGORY_SET)
 		e1:SetType(EFFECT_TYPE_QUICK_O)
 		e1:SetCode(EVENT_FREE_CHAIN)
 		e1:SetRange(LOCATION_GRAVE)

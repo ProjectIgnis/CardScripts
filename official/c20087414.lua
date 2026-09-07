@@ -28,7 +28,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		--Set this card in the Spell/Trap Zone and negate activated monster effect
 		local e1=Effect.CreateEffect(c)
 		e1:SetDescription(aux.Stringid(id,1))
-		e1:SetCategory(CATEGORY_DISABLE+CATEGORY_TOHAND)
+		e1:SetCategory(CATEGORY_DISABLE+CATEGORY_TOHAND+CATEGORY_SET)
 		e1:SetType(EFFECT_TYPE_QUICK_O)
 		e1:SetCode(EVENT_CHAINING)
 		e1:SetRange(LOCATION_MZONE)

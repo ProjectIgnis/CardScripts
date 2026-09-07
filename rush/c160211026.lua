@@ -24,7 +24,8 @@ function s.matfilter(c,scard,sumtype,tp)
 	return c:IsRace(RACE_ROCK,scard,sumtype,tp) and c:IsLevelBelow(4)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsStatus(STATUS_SPSUMMON_TURN)
+	local c=e:GetHandler()
+	return c:IsSummonPhaseMain() and c:IsStatus(STATUS_SPSUMMON_TURN)
 end
 function s.sfilter(c)
 	return c:IsCode(160211037,160211038) and c:IsSSetable()

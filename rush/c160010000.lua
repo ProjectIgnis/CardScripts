@@ -21,7 +21,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_HAND,0,1,nil) end
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToHand,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,0)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
@@ -31,10 +31,10 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.SendtoGrave(tg,REASON_COST)==0 then return end
 	--Effect:
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
-	local tc=Duel.SelectMatchingCard(tp,Card.IsAbleToHand,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
+	local tc=Duel.SelectMatchingCard(tp,aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
 	if #tc>0 then
 		tc=tc:AddMaximumCheck()
-		Duel.HintSelection(tc,true)
+		Duel.HintSelection(tc)
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 	end
 end

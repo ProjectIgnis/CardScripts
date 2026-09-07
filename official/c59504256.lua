@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	--Flip opponent's monsters face-down
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
-	e2:SetCategory(CATEGORY_POSITION+CATEGORY_TOGRAVE)
+	e2:SetCategory(CATEGORY_POSITION+CATEGORY_TOGRAVE+CATEGORY_SET)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_MZONE)
@@ -63,7 +63,7 @@ end
 function s.postg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(Card.IsCanTurnSet,tp,0,LOCATION_MZONE,nil)
 	if chk==0 then return #g>0 end
-	Duel.SetOperationInfo(0,CATEGORY_POSITION,g,#g,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_POSITION,g,#g,tp,POS_FACEDOWN_DEFENSE)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_TOGRAVE,nil,1,1-tp,LOCATION_ONFIELD)
 end
 function s.posop(e,tp,eg,ep,ev,re,r,rp)

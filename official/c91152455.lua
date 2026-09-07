@@ -16,6 +16,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.self_equip_trap=true
 s.listed_names={CARD_MAX_METALMORPH}
 function s.costfilter(c,tp)
 	return c:ListsCode(CARD_MAX_METALMORPH) and c:IsFaceup() and Duel.GetMZoneCount(tp,c)>0

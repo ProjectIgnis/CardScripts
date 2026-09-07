@@ -49,11 +49,13 @@ function s.ctrltg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONTROL)
 	local g=Duel.SelectTarget(tp,Card.IsControlerCanBeChanged,tp,0,LOCATION_MZONE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_CONTROL,g,1,tp,0)
-	e:SetLabel(Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_SHINING_SARCOPHAGUS),tp,LOCATION_ONFIELD,0,1,nil) and 1 or 0)
+	local cd=e:GetChainData()
+	cd.controlled_sarcophagus=Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_SHINING_SARCOPHAGUS),tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.ctrlop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and Duel.GetControl(tc,tp,PHASE_END,1) and e:GetLabel()==0 then
+	local cd=e:GetChainData()
+	if tc:IsRelateToEffect(e) and Duel.GetControl(tc,tp,PHASE_END,1) and not cd.controlled_sarcophagus then
 		--Cannot attack while you control it
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetDescription(3206)

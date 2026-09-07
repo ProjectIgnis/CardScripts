@@ -1,5 +1,5 @@
 --絢嵐たる顕現
---Magnifistorming Summoning Technique
+--Radiant Typhoon Manifestation
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -8,26 +8,26 @@ function s.initial_effect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(0,TIMING_STANDBY_PHASE|TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E)
 	e1:SetTarget(s.efftg)
 	e1:SetOperation(s.effop)
+	e1:SetHintTiming(0,TIMING_STANDBY_PHASE|TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E)
 	c:RegisterEffect(e1)
 	--Set this card
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
+	e2:SetCategory(CATEGORY_SET)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_DESTROYED)
-	e2:SetCountLimit(1,{id,1})
 	e2:SetCondition(function(e,tp,eg,ep,ev,re,r,rp) return re and re:GetHandler():IsCode(CARD_MYSTICAL_SPACE_TYPHOON) end)
 	e2:SetTarget(s.settg)
 	e2:SetOperation(s.setop)
 	c:RegisterEffect(e2)
 end
 s.listed_names={CARD_MYSTICAL_SPACE_TYPHOON}
-s.listed_series={SET_MAGNIFISTORM}
+s.listed_series={SET_RADIANT_TYPHOON}
 function s.tgfilter(c)
-	return c:IsSetCard(SET_MAGNIFISTORM) and c:IsMonster() and c:IsAbleToGrave()
+	return c:IsSetCard(SET_RADIANT_TYPHOON) and c:IsMonster() and c:IsAbleToGrave()
 end
 function s.thfilter(c)
 	return c:IsCode(CARD_MYSTICAL_SPACE_TYPHOON) and c:IsAbleToHand()
@@ -55,7 +55,7 @@ end
 function s.effop(e,tp,eg,ep,ev,re,r,rp)
 	local op=e:GetLabel()
 	if op==1 then
-		--Send 1 "Magnifistorm" monster from your Deck to the GY
+		--Send 1 "Radiant Typhoon" monster from your Deck to the GY
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		local g=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_DECK,0,1,1,nil)
 		if #g>0 then

@@ -40,9 +40,11 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		op=Duel.SelectOption(tp,aux.Stringid(id,2))+1
 	end
 	if op==0 then
+		e:SetCategory(0)
 		e:SetOperation(s.topop)
 		s.toptg(e,tp,eg,ep,ev,re,r,rp,1)
 	else
+		e:SetCategory(CATEGORY_SET)
 		e:SetOperation(s.setop)
 		s.settg(e,tp,eg,ep,ev,re,r,rp,1)
 	end

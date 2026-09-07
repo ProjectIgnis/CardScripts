@@ -79,7 +79,7 @@ end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=e:GetLabelObject():Filter(s.lvfilter,nil,e,tp)
 	if chkc then return g:IsContains(chkc) and s.lvfilter(chkc,e,tp) end
-	if chk==0 then return #g>0 and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil)  end
+	if chk==0 then return #g>0 and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
 	local tc=nil
 	if #g>1 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)

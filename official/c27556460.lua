@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	--Set this card from the GY but banish it when it leaves the field
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
-	e3:SetCategory(CATEGORY_LEAVE_GRAVE)
+	e3:SetCategory(CATEGORY_LEAVE_GRAVE+CATEGORY_SET)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetRange(LOCATION_GRAVE)

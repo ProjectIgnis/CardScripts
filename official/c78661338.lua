@@ -3,8 +3,9 @@
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
-	--spsummon
+	--If your opponent Special Summons a Link Monster(s) (except during the Damage Step): You can Special Summon this card from your hand, then draw cards equal to the number of Link Monsters your opponent controls +1, then shuffle cards from your hand into the Deck equal to the number of Link Monsters they control.
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_DRAW+CATEGORY_TODECK)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
@@ -15,8 +16,9 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--negate
+	--When your opponent activates a card or effect that targets a monster(s) you control (Quick Effect): You can discard 1 card; negate the activation, and if you do, destroy it
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
@@ -52,11 +54,12 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 then
 		local ct=Duel.GetMatchingGroupCount(Card.IsType,tp,0,LOCATION_MZONE,nil,TYPE_LINK)
 		Duel.BreakEffect()
-		if Duel.Draw(p,ct+1,REASON_EFFECT)==ct+1 and ct ~= 0 then
+		if Duel.Draw(p,ct+1,REASON_EFFECT)==ct+1 and ct>0 then
 			local g=Duel.GetMatchingGroup(Card.IsAbleToDeck,p,LOCATION_HAND,0,nil)
 			if #g==0 then return end
 			Duel.Hint(HINT_SELECTMSG,p,HINTMSG_TODECK)
 			local sg=g:Select(p,ct,ct,nil)
+			Duel.BreakEffect()
 			Duel.SendtoDeck(sg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)
 		end
 	end

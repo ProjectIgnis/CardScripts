@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	--Destroy 1 monster and change monsters to face-down
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
-	e2:SetCategory(CATEGORY_DESTROY+CATEGORY_POSITION)
+	e2:SetCategory(CATEGORY_DESTROY+CATEGORY_POSITION+CATEGORY_SET)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_MZONE)
@@ -86,7 +86,7 @@ function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	else
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,tp,LOCATION_HAND|LOCATION_MZONE)
 	end
-	Duel.SetOperationInfo(0,CATEGORY_POSITION,g,#g,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_POSITION,g,#g,tp,POS_FACEDOWN_DEFENSE)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)

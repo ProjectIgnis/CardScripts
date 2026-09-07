@@ -2,7 +2,7 @@
 --Slash Draw (Anime)
 local s,id=GetID()
 function s.initial_effect(c)
-	--discard deck
+	--Send cards from the top of your Deck to the Graveyard equal to the total number of cards on the field. Then, draw 1 card. If that card is "Slash Draw", send it to the Graveyard and destroy all cards on the field. Inflict 1000 damage to your opponent for each card destroyed and sent to the Graveyard this way.
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DECKDES+CATEGORY_DRAW)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -11,8 +11,16 @@ function s.initial_effect(c)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
+	--Cannot be destroyed when activated
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_SINGLE)
+	e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
+	e2:SetCondition(function(e) return e:GetHandler():IsFaceup() end)
+	e2:SetRange(LOCATION_SZONE)
+	e2:SetValue(1)
+	c:RegisterEffect(e2)
 end
-s.listed_names={71344451}
+s.listed_names={71344451} --"Slash Draw"
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD,LOCATION_ONFIELD)
 	if chk==0 then return ct>0 and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>ct and Duel.IsPlayerCanDiscardDeck(tp,ct)

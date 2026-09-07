@@ -28,7 +28,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,{id,1})
 	e2:SetCondition(s.descon)
-	e2:SetCost(s.descost)
+	e2:SetCost(Cost.Replaceable(s.descost))
 	e2:SetTarget(s.destg)
 	e2:SetOperation(s.desop)
 	e2:SetHintTiming(0,TIMING_BATTLE_START|TIMING_BATTLE_END)
@@ -54,19 +54,14 @@ end
 function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsBattlePhase() and aux.StatChangeDamageStepCondition()
 end
-function s.descfilter(c)
+function s.descostfilter(c)
 	return c:IsFaceup() and c:IsSetCard(SET_FIRE_FORMATION) and c:IsSpellTrap() and c:IsAbleToGraveAsCost()
 end
 function s.descost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local nc=Duel.IsExistingMatchingCard(s.descfilter,tp,LOCATION_ONFIELD,0,1,nil)
-	if chk==0 then 
-		if Duel.IsPlayerAffectedByEffect(tp,CARD_FIRE_FIST_EAGLE) then return true else return nc end
-	end
-	if nc and not (Duel.IsPlayerAffectedByEffect(tp,CARD_FIRE_FIST_EAGLE) and Duel.SelectYesNo(tp,aux.Stringid(CARD_FIRE_FIST_EAGLE,0))) then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-		local g=Duel.SelectMatchingCard(tp,s.descfilter,tp,LOCATION_ONFIELD,0,1,1,nil)
-		Duel.SendtoGrave(g,REASON_COST)
-	end
+	if chk==0 then return Duel.IsExistingMatchingCard(s.descostfilter,tp,LOCATION_ONFIELD,0,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+	local g=Duel.SelectMatchingCard(tp,s.descostfilter,tp,LOCATION_ONFIELD,0,1,1,nil)
+	Duel.SendtoGrave(g,REASON_COST)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsOnField() end

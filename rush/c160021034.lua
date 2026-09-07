@@ -29,12 +29,12 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local dg2=dg:AddMaximumCheck()
 	Duel.HintSelection(dg2)
 	if Duel.Destroy(dg,REASON_EFFECT)>0 and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_GRAVE,0,1,nil,160008032)
-		and Duel.IsExistingMatchingCard(aux.FilterMaximumSideFunctionEx(Card.IsAbleToDeck),tp,0,LOCATION_ONFIELD,1,nil)
+		and Duel.IsExistingMatchingCard(Card.IsNotMaximumModeSide,tp,0,LOCATION_ONFIELD,1,nil)
 		and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
-		local g=Duel.SelectMatchingCard(tp,aux.FilterMaximumSideFunctionEx(Card.IsAbleToDeck),tp,0,LOCATION_ONFIELD,1,1,nil)
+		local g=Duel.SelectMatchingCard(tp,Card.IsNotMaximumModeSide,tp,0,LOCATION_ONFIELD,1,1,nil)
 		g=g:AddMaximumCheck()
 		Duel.HintSelection(g)
-		Duel.SendtoDeck(g,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
+		if Duel.SendtoDeck(g,nil,SEQ_DECKBOTTOM,REASON_EFFECT)<1 then return end
 		if #g>1 then
 			Duel.SortDeckbottom(1-tp,1-tp,#g)
 		end

@@ -38,7 +38,7 @@ function s.matcheck(e,c)
 		e1:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
 		e1:SetRange(LOCATION_MZONE)
 		e1:SetValue(aux.tgoval)
-		e1:SetReset(RESET_EVENT|RESETS_STANDARD-RESET_TOFIELD)
+		e1:SetReset(RESET_EVENT|(RESETS_STANDARD&~RESET_TOFIELD))
 		c:RegisterEffect(e1)
 		--Your opponent cannot destroy with card effects.
 		local e2=e1:Clone()

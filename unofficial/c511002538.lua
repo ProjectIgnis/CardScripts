@@ -1,23 +1,26 @@
+--追火点
 --Extra Blast
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetCategory(CATEGORY_DAMAGE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_DESTROYED)
+	e1:SetHintTiming(TIMING_DESTROY)
 	e1:SetCondition(s.condition)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-function s.filter(c,tp)
-	return c:IsPreviousControler(1-tp) and (c:GetReason()&0x41)==0x41 
+function s.desfilter(c,tp)
+	return c:IsPreviousControler(1-tp) and (c:GetReason()&(REASON_DESTROY|REASON_EFFECT))==(REASON_DESTROY|REASON_EFFECT)
 		and c:IsPreviousLocation(LOCATION_MZONE)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.filter,1,nil,tp)
+	return eg:IsExists(s.desfilter,1,nil,tp)
 end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetTargetPlayer(1-tp)
 	Duel.SetTargetParam(500)

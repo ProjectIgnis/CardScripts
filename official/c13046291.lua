@@ -3,7 +3,7 @@
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
-	--spsummon
+	--Special Summon 1 Level 6 or lower FIRE Dinosaur monster from your Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--search
+	--Attach up to 2 Reptile and/or Dinosaur monsters with different names from your hand and/or GY to 1 Dragon Xyz monster you control
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetType(EFFECT_TYPE_IGNITION)
@@ -75,9 +75,8 @@ function s.atchop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() and not tc:IsImmuneToEffect(e)
 		and Duel.IsExistingMatchingCard(Card.IsRace,tp,LOCATION_HAND|LOCATION_GRAVE,0,1,nil,RACE_REPTILE|RACE_DINOSAUR) then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
 		local g=Duel.GetMatchingGroup(Card.IsRace,tp,LOCATION_HAND|LOCATION_GRAVE,0,nil,RACE_REPTILE|RACE_DINOSAUR)
-		local sg=aux.SelectUnselectGroup(g,e,tp,1,2,aux.dncheck,1,tp,HINTMSG_SPSUMMON)
+		local sg=aux.SelectUnselectGroup(g,e,tp,1,2,aux.dncheck,1,tp,HINTMSG_ATTACH)
 		if sg then
 			Duel.Overlay(tc,sg)
 		end

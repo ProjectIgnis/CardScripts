@@ -1,5 +1,5 @@
 --教導の雷霆フルルドリス
---Dogmatika Fleurdelis, the Thunderous
+--Dogmatika Fleurdelis, the Thunderbolt
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
@@ -19,6 +19,7 @@ function s.initial_effect(c)
 	--Set 1 "Dogmatika" Trap from your Deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
+	e2:SetCategory(CATEGORY_SET)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)

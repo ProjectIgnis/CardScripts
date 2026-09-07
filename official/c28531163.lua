@@ -1,5 +1,5 @@
 --黙歯録
---Apocaries
+--Apocavities
 --scripted by Naim
 local s,id=GetID()
 local COUNTER_CARIES=0x215

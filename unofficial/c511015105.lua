@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	Duel.AddCustomActivityCounter(id,ACTIVITY_SPSUMMON,s.counterfilter)
 end
-s.listed_names={16178681,id+1}
+s.listed_names={16178681,id+1} --"Odd-Eyes Pendulum Dragon", "Odd-Eyes Xyzgate"
 function s.counterfilter(c)
 	return not c:IsPendulumSummoned()
 end
@@ -27,30 +27,30 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e1:SetReset(RESET_PHASE+PHASE_END)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(s.splimit)
+	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	if e:IsHasType(EFFECT_TYPE_ACTIVATE) then
 		aux.RemainFieldCost(e,tp,eg,ep,ev,re,r,rp,1)
 	end
 end
-function s.filter1(c,e,tp)
+function s.oddeyesspfilter(c,e,tp)
 	return c:IsCode(16178681) and c:IsFaceup() and c:IsCanBeSpecialSummoned(e,0,tp,false,false) 
 		and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
-		and Duel.IsExistingTarget(s.filter2,tp,LOCATION_GRAVE,0,1,nil,e,tp,c)
+		and Duel.IsExistingTarget(s.syngyspfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,c)
 end
-function s.filter2(c,e,tp,odd)
-	return c:IsType(TYPE_SYNCHRO) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and Duel.IsExistingMatchingCard(s.filter3,tp,LOCATION_EXTRA,0,1,odd,e,tp,c,odd)
+function s.syngyspfilter(c,e,tp,odd)
+	return c:IsSynchroMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+		and Duel.IsExistingMatchingCard(s.synedspfilter,tp,LOCATION_EXTRA,0,1,odd,e,tp,c,odd)
 end
-function s.filter3(c,e,tp,syn,odd)
+function s.synedspfilter(c,e,tp,syn,odd)
 	if not c:IsType(TYPE_PENDULUM) then return false end
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_CHANGE_LEVEL)
 	e1:SetValue(1)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	odd:RegisterEffect(e1)
 	odd:AssumeProperty(ASSUME_TYPE,odd:GetType()|TYPE_TUNER)
 	local result=c:IsSynchroSummonable(nil,Group.FromCards(syn,odd))
@@ -62,11 +62,11 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) and Duel.IsPlayerCanSpecialSummonCount(tp,2) 
 		and aux.CheckSummonGate(tp,2) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
-		and Duel.GetUsableMZoneCount(tp)>1 and Duel.IsExistingMatchingCard(s.filter1,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
+		and Duel.GetUsableMZoneCount(tp)>1 and Duel.IsExistingMatchingCard(s.oddeyesspfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local c1=Duel.SelectMatchingCard(tp,s.filter1,tp,LOCATION_EXTRA,0,1,1,nil,e,tp):GetFirst()
+	local c1=Duel.SelectMatchingCard(tp,s.oddeyesspfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp):GetFirst()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local c2=Duel.SelectTarget(tp,s.filter2,tp,LOCATION_GRAVE,0,1,1,nil,e,tp,c1):GetFirst()
+	local c2=Duel.SelectTarget(tp,s.syngyspfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp,c1):GetFirst()
 	Duel.SetTargetCard(c1)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,Group.FromCards(c1,c2),2,0,0)
 end
@@ -76,7 +76,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	local sg=g:Filter(Card.IsRelateToEffect,nil,e)
 	if Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP) > 0 then
-		for tc in aux.Next(sg) do
+		for tc in sg:Iter() do
 			if tc:IsLocation(LOCATION_MZONE) then
 				s.disop(e,tp,eg,ep,ev,re,r,rp,tc)
 			end
@@ -101,7 +101,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCondition(s.descon)
 		e1:SetTarget(s.destg)
 		e1:SetOperation(s.desop)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e1:SetLabelObject(sc)
 		c:RegisterEffect(e1)
 	end
@@ -110,7 +110,7 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp,tc)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_DISABLE)
-	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	tc:RegisterEffect(e1)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_DISABLE_EFFECT)
@@ -120,12 +120,12 @@ function s.disop(e,tp,eg,ep,ev,re,r,rp,tc)
 		e3:SetType(EFFECT_TYPE_SINGLE)
 		e3:SetCode(EFFECT_CHANGE_LEVEL)
 		e3:SetValue(1)
-		e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e3:SetReset(RESET_EVENT|RESETS_STANDARD)
 		tc:RegisterEffect(e3)
 		local e4=Effect.CreateEffect(e:GetHandler())
 		e4:SetType(EFFECT_TYPE_SINGLE)
 		e4:SetCode(EFFECT_ADD_TYPE)
-		e4:SetReset(RESET_EVENT+RESETS_STANDARD)
+		e4:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e4:SetValue(TYPE_TUNER)
 		tc:RegisterEffect(e4)
 	end
@@ -138,14 +138,14 @@ function s.thfilter(c)
 	return c:IsAbleToHand() and c:IsCode(id+1)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGrave() 
+	if chk==0 then return e:GetHandler():IsDestructable() 
 		and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,e:GetHandler(),1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) and Duel.SendtoGrave(c,REASON_EFFECT)~=0 and c:IsLocation(LOCATION_GRAVE) then
+	if c:IsRelateToEffect(e) and Duel.Destroy(c,REASON_EFFECT)>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil)
 		if #g>0 then

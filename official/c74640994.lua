@@ -4,6 +4,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetCategory(CATEGORY_SET)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
@@ -36,10 +37,11 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		{b4,aux.Stringid(id,3)})
 	e:SetLabel(op)
 	if op==1 or op==2 then
-		e:SetCategory(CATEGORY_POSITION)
-		Duel.SetOperationInfo(0,CATEGORY_POSITION,nil,1,0,0)
+		e:SetCategory(CATEGORY_POSITION+CATEGORY_SET)
+		local pos=op==1 and (POS_FACEUP_ATTACK|POS_FACEUP_DEFENSE) or POS_FACEDOWN_DEFENSE
+		Duel.SetOperationInfo(0,CATEGORY_POSITION,nil,1,tp,pos)
 	elseif op==3 then
-		e:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DEFCHANGE)
+		e:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DEFCHANGE+CATEGORY_SET)
 	end
 end
 function s.effectfilter(e,ct)

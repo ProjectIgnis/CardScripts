@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetValue(-600)
 	c:RegisterEffect(e1)
 	--Search 1 EARTH Fairy monster
-	c:RegisterEffect(Effect.CreateVernalizerSPEffect(c,id,0,CATEGORY_TOHAND+CATEGORY_SEARCH,s.thtg,s.thop))
+	Vernusylph.AddSpSummonEffect(c,id,0,CATEGORY_TOHAND+CATEGORY_SEARCH,s.thtg,s.thop)
 end
 s.listed_names={id}
 s.listed_series={SET_VERNUSYLPH}

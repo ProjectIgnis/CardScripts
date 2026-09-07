@@ -33,7 +33,9 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_IMMUNE_EFFECT)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCondition(s.effcond(4))
-	e3:SetValue(s.efilter)
+	e3:SetValue(function(e,te)
+		return te:IsActivated() and not te:IsCardSetcode(SET_VIRTUAL_WORLD)
+	end)
 	c:RegisterEffect(e3)
 end
 s.listed_series={SET_VIRTUAL_WORLD,SET_VIRTUAL_WORLD_GATE}
@@ -42,9 +44,6 @@ function s.effcond(value)
 		local ct=Duel.GetMatchingGroupCount(aux.FaceupFilter(Card.IsSetCard,SET_VIRTUAL_WORLD_GATE),e:GetHandlerPlayer(),LOCATION_ONFIELD,0,nil)
 		return (value==2 and ct>=value) or (value==4 and ct==value)
 	end
-end
-function s.efilter(e,te)
-	return te:IsActivated() and not te:GetOwner():IsSetCard(SET_VIRTUAL_WORLD)
 end
 function s.tgfilter(c,e)
 	return c:IsFaceup() and c:IsType(TYPE_EFFECT) and not c:IsDisabled() and c:IsCanBeEffectTarget(e)

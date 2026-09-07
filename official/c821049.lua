@@ -36,6 +36,12 @@ function s.initial_effect(c)
 	e3:SetTarget(s.destg)
 	e3:SetOperation(s.desop)
 	c:RegisterEffect(e3)
+	--Multiple tuners
+	local e4=Effect.CreateEffect(c)
+	e4:SetType(EFFECT_TYPE_SINGLE)
+	e4:SetCode(EFFECT_MATERIAL_CHECK)
+	e4:SetValue(s.valcheck)
+	c:RegisterEffect(e4)
 end
 s.listed_names={CARD_VISAS_STARFROST}
 function s.thfilter(c)
@@ -76,4 +82,15 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	aux.RegisterClientHint(c,nil,tp,1,0,aux.Stringid(id,2))
+end
+function s.valcheck(e,c)
+	local g=c:GetMaterial()
+	if g:IsExists(function(c) return c:IsType(TYPE_TUNER) or c:IsHasEffect(EFFECT_CAN_BE_TUNER) end,2,nil) then
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+		e1:SetCode(EFFECT_MULTIPLE_TUNERS)
+		e1:SetReset(RESET_EVENT|(RESETS_STANDARD&~RESET_TOFIELD)|RESET_PHASE|PHASE_END)
+		c:RegisterEffect(e1)
+	end
 end

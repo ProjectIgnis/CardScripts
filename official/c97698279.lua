@@ -40,10 +40,10 @@ function s.initial_effect(c)
 	e3:SetOperation(s.splvop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={SET_CENTURION}
+s.listed_series={SET_CENTUR_ION}
 s.listed_names={id}
 function s.costfilter(c,tp)
-	return c:IsSetCard(SET_CENTURION) and c:IsFaceup() and c:IsAbleToGraveAsCost() and Duel.GetMZoneCount(tp,c)>0
+	return c:IsSetCard(SET_CENTUR_ION) and c:IsFaceup() and c:IsAbleToGraveAsCost() and Duel.GetMZoneCount(tp,c)>0
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_ONFIELD,0,1,nil,tp) end

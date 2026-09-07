@@ -3,7 +3,7 @@
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
-	--Special Summon itself from the hand
+	--During the Main Phase, if you control no monsters, or control an "Adventurer Token" (Quick Effect): You can Special Summon this card from your hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--Negate the activation of a card or effect
+	-- When a card or effect is activated while you control an "Adventurer Token" (Quick Effect): You can shuffle this card into the Deck, and if you do, negate that activation, and if you do that, destroy that card
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TODECK+CATEGORY_NEGATE+CATEGORY_DESTROY)
@@ -51,15 +51,15 @@ end
 function s.ngtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return not c:IsStatus(STATUS_BATTLE_DESTROYED) and c:IsAbleToDeck() and Duel.IsChainNegatable(ev) end
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,c,1,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,c,1,tp,0)
+	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,tp,0)
 	if re:GetHandler():IsDestructable() and re:GetHandler():IsRelateToEffect(re) then
-		Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,1,0,0)
+		Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,1,tp,0)
 	end
 end
 function s.ngop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) and Duel.SendtoDeck(c,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>0 and c:IsLocation(LOCATION_DECK)
+	if c:IsRelateToEffect(e) and Duel.SendtoDeck(c,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>0 and c:IsLocation(LOCATION_DECK|LOCATION_EXTRA)
 		and Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then
 		Duel.Destroy(eg,REASON_EFFECT)
 	end

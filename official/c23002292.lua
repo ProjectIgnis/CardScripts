@@ -5,7 +5,7 @@ function s.initial_effect(c)
 	--Negate the activation of a Trap Card
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetCategory(CATEGORY_NEGATE)
+	e1:SetCategory(CATEGORY_NEGATE+CATEGORY_SET)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_CHAINING)
 	e1:SetCondition(s.condition)

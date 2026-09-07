@@ -17,10 +17,12 @@ function s.initial_effect(c)
 	--set
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
+	e2:SetCategory(CATEGORY_SET)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
-	e2:SetCost(s.setcost)
+	e2:SetCost(Cost.Replaceable(s.setcost,s.extracon))
+	e2:SetTarget(s.settg)
 	e2:SetOperation(s.setop)
 	c:RegisterEffect(e2)
 end
@@ -43,27 +45,31 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
-function s.cfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(SET_FIRE_FORMATION) and c:IsSpellTrap() and c:IsAbleToGraveAsCost()
-		and ((c:GetSequence()<5 and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,true))
-		or (c:GetSequence()>4 and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil)))
+function s.setfilter(c,field)
+	return c:IsSetCard(SET_FIRE_FORMATION) and c:IsSpellTrap() and c:IsSSetable(not field)
 end
-function s.filter(c,ignore)
-	return c:IsSetCard(SET_FIRE_FORMATION) and c:IsSpellTrap() and c:IsSSetable(ignore)
+function s.setcostfilter(c,tp,has_zone)
+	return c:IsFaceup() and c:IsSetCard(SET_FIRE_FORMATION) and c:IsSpellTrap() and c:IsAbleToGraveAsCost()
+		--needs S/T equivalent of Duel.GetMZoneCount for proper handling
+		and (has_zone or c:IsLocation(LOCATION_STZONE) or Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_DECK,0,1,nil,true))
 end
 function s.setcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local nc=Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_ONFIELD,0,1,nil,tp) and Duel.GetLocationCount(tp,LOCATION_SZONE)>-1
-	if chk==0 then return nc or (Duel.IsPlayerAffectedByEffect(tp,CARD_FIRE_FIST_EAGLE) and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil)) end
-	if nc and not (Duel.IsPlayerAffectedByEffect(tp,CARD_FIRE_FIST_EAGLE) and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil)
-		and Duel.SelectYesNo(tp,aux.Stringid(CARD_FIRE_FIST_EAGLE,0))) then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-		local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_ONFIELD,0,1,1,nil,tp)
-		Duel.SendtoGrave(g,REASON_COST)
-	end
+	local has_zone=Duel.GetLocationCount(tp,LOCATION_SZONE)>0
+	if chk==0 then return Duel.IsExistingMatchingCard(s.setcostfilter,tp,LOCATION_ONFIELD,0,1,nil,tp,has_zone) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+	local g=Duel.SelectMatchingCard(tp,s.setcostfilter,tp,LOCATION_ONFIELD,0,1,1,nil,tp,has_zone)
+	Duel.SendtoGrave(g,REASON_COST)
+end
+function s.settg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_DECK,0,1,nil) end
+end
+function s.extracon(base,e,tp)
+	return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
+		or Duel.IsExistingMatchingCard(s.setfilter,tp,LOCATION_DECK,0,1,nil,true)
 end
 function s.setop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
-	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,s.setfilter,tp,LOCATION_DECK,0,1,1,nil,Duel.GetLocationCount(tp,LOCATION_SZONE)==0)
 	if #g>0 then
 		Duel.SSet(tp,g:GetFirst())
 	end

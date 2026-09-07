@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
-	e3:SetCode(id)
+	e3:SetCode(1)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e3:SetCondition(aux.TRUE)
@@ -33,7 +33,7 @@ end
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	if r&REASON_RETURN~=0 then return end
 	if (r&(REASON_RULE|REASON_DISCARD|REASON_ADJUST))==(REASON_RULE|REASON_DISCARD|REASON_ADJUST) then
-		Duel.RaiseSingleEvent(e:GetHandler(),id,e,0,0,0,0)
+		Duel.RaiseSingleEvent(e:GetHandler(),1,e,0,0,0,0)
 	else
 		e:GetHandler():RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 	end

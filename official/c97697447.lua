@@ -2,42 +2,42 @@
 --Abyss-strom
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Send 1 face-up "Umi" you control to the GY; send all Spells/Traps on the field to the GY
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOGRAVE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCost(s.cost)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
+	e1:SetHintTiming(0,TIMING_STANDBY_PHASE|TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E|TIMING_SSET)
 	c:RegisterEffect(e1)
 end
 s.listed_names={CARD_UMI}
-function s.cfilter(c)
-	return c:IsFaceup() and c:IsCode(CARD_UMI)
+function s.costfilter(c,hc)
+	return c:IsCode(CARD_UMI) and c:IsFaceup() and c:IsAbleToGraveAsCost()
+		and Duel.IsExistingMatchingCard(aux.AND(Card.IsSpellTrap,Card.IsAbleToGrave),0,LOCATION_ONFIELD,LOCATION_ONFIELD,1,Group.FromCards(c,hc))
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	e:SetLabel(1)
-	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_ONFIELD,0,nil)
-	if chk==0 then return #g>0 and g:FilterCount(Card.IsAbleToGraveAsCost,nil)==#g end
+	local c=e:GetHandler()
+	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_ONFIELD,0,1,nil,c) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+	local g=Duel.SelectMatchingCard(tp,s.costfilter,tp,LOCATION_ONFIELD,0,1,1,nil,c)
 	Duel.SendtoGrave(g,REASON_COST)
-end
-function s.filter(c,tp)
-	return (c:IsFacedown() or c:IsControler(1-tp) or c:GetCode()~=CARD_UMI) and c:IsSpellTrap()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
-		if e:GetLabel()==0 then
-			return Duel.IsExistingMatchingCard(Card.IsSpellTrap,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,e:GetHandler())
-		end
-		e:SetLabel(0)
-		return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,e:GetHandler(),tp)
+		local exc=e:IsHasType(EFFECT_TYPE_ACTIVATE) and e:GetHandler() or nil
+		return Duel.IsExistingMatchingCard(aux.AND(Card.IsSpellTrap,Card.IsAbleToGrave),tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,exc)
 	end
-	e:SetLabel(0)
-	local g=Duel.GetMatchingGroup(Card.IsSpellTrap,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,e:GetHandler())
-	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,g,#g,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,PLAYER_ALL,LOCATION_ONFIELD)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(Card.IsSpellTrap,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,e:GetHandler())
-	Duel.SendtoGrave(g,REASON_EFFECT)
+	local c=e:GetHandler()
+	local exc=e:IsHasType(EFFECT_TYPE_ACTIVATE) and c:IsRelateToEffect(e) and c or nil
+	local g=Duel.GetMatchingGroup(aux.AND(Card.IsSpellTrap,Card.IsAbleToGrave),tp,LOCATION_ONFIELD,LOCATION_ONFIELD,exc)
+	if #g>0 then
+		Duel.SendtoGrave(g,REASON_EFFECT)
+	end
 end

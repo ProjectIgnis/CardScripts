@@ -28,9 +28,9 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={SET_DIABELLESTARR}
+s.listed_series={SET_DIABELLSTAR}
 function s.plfilter(c,tp,hand_chk)
-	if not (c:IsMonster() and c:IsSetCard(SET_DIABELLESTARR) and not c:IsForbidden()) then return false end
+	if not (c:IsMonster() and c:IsSetCard(SET_DIABELLSTAR) and not c:IsForbidden()) then return false end
 	local owner=c:GetOwner()
 	local ft=Duel.GetLocationCount(owner,LOCATION_SZONE)
 	if hand_chk and owner==tp then ft=ft-1 end

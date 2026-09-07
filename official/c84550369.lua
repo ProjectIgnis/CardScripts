@@ -1,12 +1,12 @@
 --御巫神舞－二貴子
---Mikanko Divine Dance - Futahashira no Uzu no Miko
+--Mikanko Shinbu - Noble Twins
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)
 	--Send 1 "Mikanko" card from your Deck to the GY, except "Mikanko Divine Dance - Futahashira no Uzu no Miko", then you can Set 1 "Mikanko" Spell/Trap from your Deck, except "Mikanko Divine Dance - Futahashira no Uzu no Miko"
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetCategory(CATEGORY_TOGRAVE)
+	e1:SetCategory(CATEGORY_TOGRAVE+CATEGORY_SET)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,id)

@@ -69,8 +69,8 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if op==1 then
 		e:SetCategory(0)
 	elseif op==2 then
-		e:SetCategory(CATEGORY_POSITION)
-		Duel.SetOperationInfo(0,CATEGORY_POSITION,nil,1,PLAYER_ALL,LOCATION_MZONE)
+		e:SetCategory(CATEGORY_POSITION+CATEGORY_SET)
+		Duel.SetOperationInfo(0,CATEGORY_POSITION,nil,1,PLAYER_ALL,POS_FACEDOWN_DEFENSE)
 	end
 end
 function s.effop(e,tp,eg,ep,ev,re,r,rp)

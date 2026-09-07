@@ -32,6 +32,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Effect
 	local dg=Duel.GetMatchingGroup(aux.FilterMaximumSideFunctionEx(s.desfilter),tp,0,LOCATION_MZONE,nil)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local sg=dg:Select(tp,1,1,nil)
 	if #sg>0 then
 		Duel.HintSelection(sg)

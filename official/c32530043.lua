@@ -36,7 +36,7 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 		e:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 		Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 	elseif op==2 then
-		e:SetCategory(CATEGORY_SPECIAL_SUMMON)
+		e:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_SET)
 		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 	end
 end

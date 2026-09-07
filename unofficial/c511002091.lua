@@ -4,30 +4,31 @@ Duel.EnableUnofficialProc(PROC_STATS_CHANGED)
 Duel.LoadCardScript("c39139935.lua")
 local s,id=GetID()
 function s.initial_effect(c)
-	--xyz summon
-	Xyz.AddProcedure(c,nil,5,2)
 	c:EnableReviveLimit()
-	--activate
+	--Xyz Summon procedure: 2 Level 5 monsters
+	Xyz.AddProcedure(c,nil,5,2)
+	--Cannot be destroyed by battle, except with a "Number" monster
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetCategory(CATEGORY_DAMAGE)
-	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_PLAYER_TARGET)
-	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e1:SetCode(511001265)
-	e1:SetRange(LOCATION_MZONE)
-	e1:SetCountLimit(1)
-	e1:SetCondition(s.damcon)
-	e1:SetCost(Cost.DetachFromSelf(1))
-	e1:SetTarget(s.damtg)
-	e1:SetOperation(s.damop)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
+	e1:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsSetCard,SET_NUMBER)))
 	c:RegisterEffect(e1)
-	--battle indestructable
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_SINGLE)
-	e3:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-	e3:SetValue(s.indes)
-	c:RegisterEffect(e3)
+	--When a monster's ATK is changed: You can detach 1 material from this card; inflict damage to your opponent equal to that change in ATK
+	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,0))
+	e2:SetCategory(CATEGORY_DAMAGE)
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_PLAYER_TARGET)
+	e2:SetCode(511001265)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetCountLimit(1)
+	e2:SetCondition(s.damcon)
+	e2:SetCost(Cost.DetachFromSelf(1))
+	e2:SetTarget(s.damtg)
+	e2:SetOperation(s.damop)
+	c:RegisterEffect(e2)
 end
+s.listed_series={SET_NUMBER}
 s.xyz_number=33
 function s.cfilter(c)
 	local val=0
@@ -72,7 +73,4 @@ end
 function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Damage(p,d,REASON_EFFECT)
-end
-function s.indes(e,c)
-	return not c:IsSetCard(SET_NUMBER)
 end

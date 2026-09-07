@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOGRAVE)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
-	e1:SetCode(EVENT_LEAVE_FIELD)
+	e1:SetCode(EVENT_TO_GRAVE)
 	e1:SetCondition(s.tgcon)
 	e1:SetTarget(s.tgtg)
 	e1:SetOperation(s.tgop)
@@ -17,19 +17,16 @@ end
 s.listed_names={84327329} --"Elemental HERO Clayman"
 function s.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:GetPreviousLocation()==LOCATION_SZONE and not c:IsReason(REASON_LOST_TARGET)
-end
-function s.tgfilter(c)
-	return c:IsSpellTrap() and c:IsAbleToGrave()
+	return c:IsPreviousLocation(LOCATION_SZONE) and c:GetPreviousEquipTarget() and not c:IsReason(REASON_LOST_TARGET)
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	local g=Duel.GetMatchingGroup(s.tgfilter,tp,0,LOCATION_ONFIELD,nil)
+	local g=Duel.GetMatchingGroup(aux.AND(Card.IsSpellTrap,Card.IsAbleToGrave),tp,0,LOCATION_ONFIELD,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,g,1,tp,0)
 end
 function s.tgop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,s.tgfilter,tp,0,LOCATION_ONFIELD,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,aux.AND(Card.IsSpellTrap,Card.IsAbleToGrave),tp,0,LOCATION_ONFIELD,1,1,nil)
 	if #g>0 then
 		Duel.HintSelection(g)
 		Duel.SendtoGrave(g,REASON_EFFECT)

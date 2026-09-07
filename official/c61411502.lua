@@ -2,8 +2,9 @@
 --Elemental Burst
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Tribute 1 each of WIND, WATER, FIRE, and EARTH monsters to activate this card. Destroy all cards on your opponent's side of the field
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -23,11 +24,11 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(sg,REASON_COST)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
-	local g=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_ONFIELD,nil)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
+	if chk==0 then return Duel.IsExistingMatchingCard(nil,tp,0,LOCATION_ONFIELD,1,nil) end
+	local g=Duel.GetMatchingGroup(nil,tp,0,LOCATION_ONFIELD,nil)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,tp,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_ONFIELD,nil)
+	local g=Duel.GetMatchingGroup(nil,tp,0,LOCATION_ONFIELD,nil)
 	Duel.Destroy(g,REASON_EFFECT)
 end

@@ -18,8 +18,9 @@ function s.filter(c)
 	return c:IsRace(RACE_SPELLCASTER) and c:IsAttribute(ATTRIBUTE_DARK)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	return Duel.GetMatchingGroupCount(s.filter,tp,LOCATION_GRAVE,0,nil)>=8
-		and e:GetHandler():IsStatus(STATUS_SPSUMMON_TURN)
+		and c:IsSummonPhaseMain() and c:IsStatus(STATUS_SPSUMMON_TURN)
 end
 function s.desfilter(c)
 	return c:IsFaceup() and c:IsLevelBelow(8) and c:IsNotMaximumModeSide()

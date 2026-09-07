@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	--Set 1 "Change" Quick-Play Spell from your GY
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
-	e3:SetCategory(CATEGORY_LEAVE_GRAVE)
+	e3:SetCategory(CATEGORY_LEAVE_GRAVE+CATEGORY_SET)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetCode(EVENT_PHASE+PHASE_END)

@@ -2,7 +2,7 @@
 --Inzektor Earwig
 local s,id=GetID()
 function s.initial_effect(c)
-	--equip
+	--Equip 1 "Inzektor" monster from your hand or GY to this card
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.eqop)
 	c:RegisterEffect(e1)
 	aux.AddEREquipLimit(c,nil,s.eqval,s.equipop,e1)
-	--equip effect
+	--While this card is equipped to a monster, that monster gains ATK and DEF equal to this card's ATK and DEF
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_EQUIP)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e3:SetCode(EFFECT_UPDATE_DEFENSE)
 	e3:SetValue(1000)
 	c:RegisterEffect(e3)
-	--atkup
+	--The monster this card was equipped to gains 1000 ATK
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_ATKCHANGE)

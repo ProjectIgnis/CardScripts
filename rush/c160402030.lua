@@ -26,7 +26,7 @@ function s.initial_effect(c)
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	for tc in eg:Iter() do
-		if tc:IsSummonType(SUMMON_TYPE_FUSION) then
+		if tc:IsSummonType(SUMMON_TYPE_FUSION) and Duel.IsMainPhase() then
 			Duel.RegisterFlagEffect(tc:GetSummonPlayer(),id,RESET_PHASE|PHASE_END,0,1)
 		end
 	end

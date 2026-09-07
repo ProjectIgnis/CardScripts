@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	e2:SetCondition(function(e) return e:GetHandler():GetOverlayGroup():IsExists(Card.IsType,1,nil,TYPE_XYZ) end)
 	e2:SetValue(3000)
 	c:RegisterEffect(e2)
-	--Special Summon 1 "Doom-Z" monster from your GY, then you can destroy 1 card on the field
+	--Special Summon 1 "DoomZ" monster from your GY, then you can destroy 1 card on the field
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_DESTROY)
@@ -39,7 +39,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={id}
-s.listed_series={SET_DOOM_Z}
+s.listed_series={SET_DOOMZ}
 function s.altprocop(e,tp,chk)
 	if chk==0 then return not Duel.HasFlagEffect(tp,id) end
 	return Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,EFFECT_FLAG_OATH,1)
@@ -69,7 +69,7 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(SET_DOOM_Z) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(SET_DOOMZ) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

@@ -2,7 +2,7 @@
 --Priestess with Eyes of Blue
 local s,id=GetID()
 function s.initial_effect(c)
-	--search
+	--When a card or effect is activated that targets this card (Quick Effect): You can send 1 Effect Monster you control to the GY, and if you do, add up to 2 "Blue-Eyes" monsters with different names from your Deck to your hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOGRAVE+CATEGORY_SEARCH+CATEGORY_TOHAND)
@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
-	--spsummon
+	--If this card is in your GY: You can target 1 "Blue-Eyes" monster you control; shuffle it into the Deck, and if you do, Special Summon this card.
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TODECK+CATEGORY_SPECIAL_SUMMON)
@@ -44,40 +44,33 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local tg=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_MZONE,0,1,1,nil)
-	local tc=tg:GetFirst()
-	if tc and Duel.SendtoGrave(tc,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_GRAVE) then
+	local tc=Duel.SelectMatchingCard(tp,s.tgfilter,tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
+	if tc and Duel.SendtoGrave(tc,REASON_EFFECT)>0 and tc:IsLocation(LOCATION_GRAVE) then
 		local g=Duel.GetMatchingGroup(s.thfilter,tp,LOCATION_DECK,0,nil)
 		if #g<=0 then return end
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-		local sg1=g:Select(tp,1,1,nil)
-		g:Remove(Card.IsCode,nil,sg1:GetFirst():GetCode())
-		if #g>0 and Duel.SelectYesNo(tp,210) then
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-			local sg2=g:Select(tp,1,1,nil)
-			sg1:Merge(sg2)
-		end
-		Duel.SendtoHand(sg1,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,sg1)
+		local sg=aux.SelectUnselectGroup(g,e,tp,1,2,aux.dncheck,1,tp,HINTMSG_ATOHAND)
+		Duel.SendtoHand(sg,nil,REASON_EFFECT)
+		Duel.ConfirmCards(1-tp,sg)
 	end
 end
-function s.spfilter(c,ft)
-	return c:IsFaceup() and c:IsSetCard(SET_BLUE_EYES) and c:IsAbleToDeck() and (ft>0 or c:GetSequence()<5)
+function s.spfilter(c,tp)
+	return c:IsFaceup() and c:IsSetCard(SET_BLUE_EYES) and c:IsAbleToDeck() and Duel.GetMZoneCount(tp,c)>0
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.spfilter(chkc,ft) end
-	if chk==0 then return Duel.IsExistingTarget(s.spfilter,tp,LOCATION_MZONE,0,1,nil,ft)
-		and ft>-1 and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.spfilter(chkc,tp) end
+	local c=e:GetHandler()
+	if chk==0 then return Duel.IsExistingTarget(s.spfilter,tp,LOCATION_MZONE,0,1,nil,tp)
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local g=Duel.SelectTarget(tp,s.spfilter,tp,LOCATION_MZONE,0,1,1,nil,ft)
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,1,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
+	local g=Duel.SelectTarget(tp,s.spfilter,tp,LOCATION_MZONE,0,1,1,nil,tp)
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,1,tp,0)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,tp,0)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and Duel.SendtoDeck(tc,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)~=0 and c:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) and Duel.SendtoDeck(tc,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>0
+		and tc:IsLocation(LOCATION_DECK|LOCATION_EXTRA) and c:IsRelateToEffect(e) then
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end
 end

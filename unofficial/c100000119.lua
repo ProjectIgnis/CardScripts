@@ -6,14 +6,14 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_DAMAGE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCondition(s.condition)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_names={8251996}
+s.listed_names={12482652,42941100,79335209,8251996} --"Ojama Green", "Ojama Yellow", "Ojama Black", "Ojama Delta Hurricane!!"
 function s.cfilter(c,code)
 	return c:IsFaceup() and c:IsCode(code)
 end

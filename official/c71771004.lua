@@ -1,4 +1,4 @@
---
+--供物の下ごしらえ
 --Readying of Rites
 --scripted by pyrQ
 local s,id=GetID()

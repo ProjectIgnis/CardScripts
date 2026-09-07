@@ -31,6 +31,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
 	Duel.DiscardHand(tp,Card.IsDiscardable,2,2,REASON_COST+REASON_DISCARD)
 	--Effect
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_POSCHANGE)
 	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil):GetFirst()
 	Duel.HintSelection(Group.FromCards(tc))
 	if tc and tc:IsFaceup() then

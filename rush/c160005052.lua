@@ -19,7 +19,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,0,0)
 end
 function s.thfilter(c)
-	return c:IsFaceup() and c:IsAbleToHand() and not c:IsMaximumModeSide()
+	return c:IsFaceup() and not c:IsMaximumModeSide()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
@@ -36,6 +36,5 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 				Duel.SendtoHand(sg,nil,REASON_EFFECT)
 			end
 		end
-		
 	end
 end

@@ -24,7 +24,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DICE,nil,0,tp,1)
 end
 function s.tdfilter(c)
-	return c:IsAbleToDeck() and not c:IsMaximumModeSide()
+	return not c:IsMaximumModeSide()
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Requirement
@@ -39,7 +39,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 			local g=Duel.SelectMatchingCard(tp,s.tdfilter,tp,0,LOCATION_ONFIELD,1,1,nil)
 			Duel.HintSelection(g)
 			g=g:AddMaximumCheck()
-			Duel.SendtoDeck(g,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
+			if Duel.SendtoDeck(g,nil,SEQ_DECKBOTTOM,REASON_EFFECT)<1 then return end
 			if #g>1 then
 				Duel.SortDeckbottom(1-tp,1-tp,#g)
 			end

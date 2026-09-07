@@ -67,12 +67,18 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
+function s.textstatfilter(func)
+	return function(c)
+		local stat=func(c)
+		return stat>0 and stat or 0
+	end
+end
 function s.setatkdefop(e,tp,eg,ep,ev,re,r,rp)
 	local sc=eg:GetFirst()
 	if sc:IsSummonPlayer(tp) and sc:IsTributeSummoned() and sc:IsCode(CARD_RA) then
 		local mg=sc:GetMaterial()
-		local atk=mg:GetSum(Card.GetBaseAttack)
-		local def=mg:GetSum(Card.GetBaseDefense)
+		local atk=mg:GetSum(s.textstatfilter(Card.GetTextAttack))
+		local def=mg:GetSum(s.textstatfilter(Card.GetTextDefense))
 		--Its original ATK/DEF become the combined original ATK/DEF of the monsters Tributed for its Summon
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)

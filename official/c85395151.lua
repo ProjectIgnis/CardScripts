@@ -1,4 +1,4 @@
---Japanese name
+--洗脳解放
 --Release Brainwashing
 --scripted by Hatter
 local s,id=GetID()

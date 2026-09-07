@@ -4,9 +4,9 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--Fusion Summon procedure
+	--Fusion Summon materials: 1 Dinosaur monster + 1 Normal Monster
 	Fusion.AddProcMix(c,true,true,aux.FilterBoolFunctionEx(Card.IsRace,RACE_DINOSAUR),aux.FilterBoolFunctionEx(Card.IsType,TYPE_NORMAL))
-	--Add 1 Dinosaur monster from the GY to the hand
+	--If this card is Special Summoned: You can target 1 Dinosaur monster in your GY; add it to your hand, then, if this card was Special Summoned from the GY, you can destroy 2 cards (1 from your hand or field, and 1 your opponent controls)
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_DESTROY)
@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
-	--Shuffle 1 Normal Monster from your GY into the Deck and Special Summon this card
+	--If this card is destroyed: You can shuffle 1 Normal Monster from your GY into the Deck, then you can Special Summon this card
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TODECK+CATEGORY_SPECIAL_SUMMON)
@@ -79,7 +79,7 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>0 and g:GetFirst():IsLocation(LOCATION_DECK)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsRelateToEffect(e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and Duel.SelectYesNo(tp,aux.Stringid(id,3)) then
+		and aux.nvfilter(c) and Duel.SelectYesNo(tp,aux.Stringid(id,3)) then
 		Duel.BreakEffect()
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end

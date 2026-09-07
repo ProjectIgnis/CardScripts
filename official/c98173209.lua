@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	--Change all monsters the opponent controls to face-down
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
-	e3:SetCategory(CATEGORY_POSITION)
+	e3:SetCategory(CATEGORY_POSITION+CATEGORY_SET)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e3:SetRange(LOCATION_SZONE)
@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.postg)
 	e3:SetOperation(s.posop)
 	c:RegisterEffect(e3)
-	--Special Summon 1 "Red Dragon Archfiend" from your GY.
+	--Special Summon 1 "Red Dragon Archfiend" from your GY
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,2))
 	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -68,7 +68,7 @@ end
 function s.postg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsCanTurnSet,tp,0,LOCATION_MZONE,1,nil) end
 	local g=Duel.GetMatchingGroup(Card.IsCanTurnSet,tp,0,LOCATION_MZONE,nil)
-	Duel.SetOperationInfo(0,CATEGORY_POSITION,g,#g,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_POSITION,g,#g,tp,POS_FACEDOWN_DEFENSE)
 end
 function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsCanTurnSet,tp,0,LOCATION_MZONE,nil)

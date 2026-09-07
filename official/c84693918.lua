@@ -1,5 +1,5 @@
 --ドレミコード・ソルフェージア
---Solfachord Solfeggia
+--Solfachord Solfegia
 --Scripted by Hatter
 local s,id=GetID()
 function s.initial_effect(c)

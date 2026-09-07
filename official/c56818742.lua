@@ -4,9 +4,9 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	--Link Summon Procedure
+	--Link Summon Procedure: 2+ Dinosaur monsters, including a Level 6 or higher monster
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsRace,RACE_DINOSAUR),2,nil,s.matcheck)
-	--Special Summon 1 Dinosaur monster from your hand
+	--If this card is Special Summoned: You can Special Summon 1 Dinosaur monster from your hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
 	c:RegisterEffect(e1)
-	--Special Summon 1 "Super Quant" monster
+	--If a face-up Dinosaur monster this card points to is destroyed by battle or sent to the GY: You can draw 1 card
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DRAW)
@@ -35,7 +35,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_TO_GRAVE)
 	e3:SetLabel(2)
 	c:RegisterEffect(e3)
-	--Shuffle 1 Normal Monster from your GY into the Deck and Special Summon this card
+	--If this card is destroyed: You can shuffle 1 Normal Monster from your GY into the Deck, then you can Special Summon this card
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,2))
 	e4:SetCategory(CATEGORY_TODECK+CATEGORY_SPECIAL_SUMMON)
@@ -103,7 +103,7 @@ function s.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)>0 and g:GetFirst():IsLocation(LOCATION_DECK)
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsRelateToEffect(e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and Duel.SelectYesNo(tp,aux.Stringid(id,3)) then
+		and aux.nvfilter(c) and Duel.SelectYesNo(tp,aux.Stringid(id,3)) then
 		Duel.BreakEffect()
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end

@@ -1,9 +1,9 @@
 --終刻竜機Ⅴ－アマルテ
---Doom-Z Five - Amalthe
+--DoomZ V Five - Amalthe
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
-	--Add 1 "Doom-Z" monster from your Deck to your hand
+	--Add 1 "DoomZ" monster from your Deck to your hand
 	local e1a=Effect.CreateEffect(c)
 	e1a:SetDescription(aux.Stringid(id,0))
 	e1a:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
@@ -35,10 +35,10 @@ function s.initial_effect(c)
 	e2:SetOperation(s.spop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={SET_DOOM_Z}
+s.listed_series={SET_DOOMZ}
 s.listed_names={id}
 function s.thfilter(c)
-	return c:IsSetCard(SET_DOOM_Z) and c:IsMonster() and c:IsAbleToHand() and not c:IsCode(id)
+	return c:IsSetCard(SET_DOOMZ) and c:IsMonster() and c:IsAbleToHand() and not c:IsCode(id)
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end

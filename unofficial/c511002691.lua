@@ -1,13 +1,14 @@
+--火縄光線銃士
 --Fuse Ray Blaster
 local s,id=GetID()
 function s.initial_effect(c)
-	--damage
+	--If this card you control is in face-up Attack Position when a "Fuse Ray Blaster" is Summoned to your side of the field, inflict 800 damage to your opponent.
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(48964966,1))
 	e1:SetCategory(CATEGORY_DAMAGE)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
-	e1:SetRange(LOCATION_MZONE)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
+	e1:SetRange(LOCATION_MZONE)
 	e1:SetCondition(s.damcon)
 	e1:SetTarget(s.damtg)
 	e1:SetOperation(s.damop)
@@ -19,6 +20,7 @@ function s.initial_effect(c)
 	e3:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 end
+s.listed_names={id} 
 function s.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return not eg:IsContains(e:GetHandler()) and eg:FilterCount(Card.IsCode,nil,id)>0 and e:GetHandler():IsAttackPos()
 end

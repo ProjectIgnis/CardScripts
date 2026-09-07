@@ -1,5 +1,5 @@
 --漆梏の喰獣 ケルゼブス
---Cerzebuth, Laimargia of the Ebon Irons
+--Kerzebs, the Gaoled Glutton
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
@@ -27,6 +27,7 @@ function s.initial_effect(c)
 	--Set 1 Spell attached to this card
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
+	e3:SetCategory(CATEGORY_SET)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_PHASE+PHASE_END)
 	e3:SetRange(LOCATION_MZONE)

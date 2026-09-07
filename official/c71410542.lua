@@ -1,5 +1,5 @@
 --ＷＡＫＥ ＣＵＰ！ マキ
---WAKE CUP! Macchi
+--WAKE CUP! Macchia
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	--Special Summon both this card and 1 other Flip monster from your hand in face-down Defense Position
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
-	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_SET)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_HAND)
 	e2:SetCountLimit(1,id)

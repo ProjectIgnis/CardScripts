@@ -38,7 +38,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_GOUKI}
 function s.matfilter(c)
-	return c:IsSetCard(SET_GOUKI) and c:IsLinkMonster() 
+	return c:IsSetCard(SET_GOUKI) and c:IsLinkMonster()
 end
 function s.valcheck(e,c)
 	local g=c:GetMaterial()

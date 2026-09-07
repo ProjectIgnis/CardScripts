@@ -25,7 +25,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_HAND,0,1,nil) end
 end
 function s.thfilter(c)
-	return c:IsFaceup() and c:IsLevelBelow(4) and c:IsAbleToHand() and not c:IsMaximumModeSide()
+	return c:IsFaceup() and c:IsLevelBelow(4) and not c:IsMaximumModeSide()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,0,LOCATION_MZONE,1,nil) end

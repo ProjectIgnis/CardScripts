@@ -1,5 +1,5 @@
 --蹴神－ＶＡＲｅｆａｒ
---VARefar the Kick Deity
+--VARefar, the Judge of Ball
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

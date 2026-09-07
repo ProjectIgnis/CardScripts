@@ -1,5 +1,5 @@
 --超未来融合－オーバーフューチャー・フュージョン
---Over Future Fusion
+--Overload Future Fusion
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

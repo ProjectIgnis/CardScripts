@@ -1,4 +1,4 @@
---Japanese name
+--無死虫団の重騎兵
 --Heavy Cavalry of the Indestructible Insects
 --scripted by Naim
 local s,id=GetID()

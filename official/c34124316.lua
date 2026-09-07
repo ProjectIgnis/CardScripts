@@ -39,7 +39,7 @@ local function summon(g,e,p,tograve,ft)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(tp,LOCATION_MZONE,LOCATION_MZONE)
-	if not Duel.Destroy(g,REASON_EFFECT)>0 then return end
+	if Duel.Destroy(g,REASON_EFFECT)==0 then return end
 	Duel.BreakEffect()
 	local p=Duel.GetTurnPlayer()
 	local summonable1,nonsummonable1=Duel.GetDecktopGroup(p,5):Split(s.spchk,nil,e,p)

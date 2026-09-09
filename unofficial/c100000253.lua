@@ -14,7 +14,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_LV}
 function s.lvfilter(c,e,tp)
-	return c:IsFaceup() and c:IsLevelBelow(5) and c:IsSetCard(SET_LV) and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,c:GetCode(),e,tp)
+	return c:IsFaceup() and c:IsLevelBelow(5) and c:IsSetCard(SET_LV) and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetCode())
 end
 function s.spfilter(c,e,tp,code)
 	return c:IsCode(code) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) 

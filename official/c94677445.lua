@@ -3,10 +3,10 @@
 --Scripted by AlphaKretin
 local s,id=GetID()
 function s.initial_effect(c)
-	--synchro summon
 	c:EnableReviveLimit()
+	--Synchro Summon procedure: 1 Tuner + 1+ non-Tuner monsters (For this card's Synchro Summon, you can treat 1 "World Chalice" Normal Monster you control as a Tuner)
 	Synchro.AddProcedure(c,nil,1,1,Synchro.NonTuner(nil),1,99,s.matfilter)
-	--search
+	--If this card is Synchro Summoned: You can add 1 "World Legacy" card from your Deck to your hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -14,11 +14,11 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_SINGLE)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetCountLimit(1,id)
-	e1:SetCondition(s.thcon)
+	e1:SetCondition(function(e) return e:GetHandler():IsSynchroSummoned() end)
 	e1:SetTarget(s.thtg)
 	e1:SetOperation(s.thop)
 	c:RegisterEffect(e1)
-	--special summon
+	-- If this Synchro Summoned card is sent from the field to the GY: You can Special Summon 1 "World Chalice" monster from your Deck or GY, except "Ib the World Chalice Justiciar"
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -35,9 +35,6 @@ s.listed_names={id}
 s.listed_series={SET_WORLD_LEGACY,SET_WORLD_CHALICE}
 function s.matfilter(c,scard,sumtype,tp)
 	return c:IsType(TYPE_NORMAL,scard,sumtype,tp) and c:IsSetCard(SET_WORLD_CHALICE,scard,sumtype,tp)
-end
-function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSynchroSummoned()
 end
 function s.thfilter(c)
 	return c:IsSetCard(SET_WORLD_LEGACY) and c:IsAbleToHand()
@@ -69,7 +66,7 @@ end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK|LOCATION_GRAVE,0,1,1,nil,e,tp)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter),tp,LOCATION_DECK|LOCATION_GRAVE,0,1,1,nil,e,tp)
 	if #g>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end

@@ -42,7 +42,7 @@ function s.initial_effect(c)
 	e3e:SetCode(EFFECT_CANNOT_ACTIVATE)
 	e3e:SetValue(aux.TRUE)
 	c:RegisterEffect(e3e)
-	--Maintenance cost: Send 5 cards from  your hand to the GY during each of your Standby Phases
+	--Maintenance cost: Send 5 cards from your hand to the GY during each of your Standby Phases
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)

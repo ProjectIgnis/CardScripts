@@ -32,7 +32,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.filter(c)
-	return c:IsSpecialSummoned() and  (c:IsNegatableMonster() or c:HasNonZeroAttack())
+	return c:IsSpecialSummoned() and (c:IsNegatableMonster() or c:HasNonZeroAttack())
 end
 function s.negatkchtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and s.filter(chkc) end

@@ -24,7 +24,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
 	local g=Duel.GetMatchingGroup(aux.AND(Card.IsContinuousTrap,Card.IsReleasable),tp,LOCATION_ONFIELD,0,nil)
 	local sg=aux.SelectUnselectGroup(g,e,tp,1,1,aux.ChkfMMZ(1),1,tp,HINTMSG_RELEASE,nil,nil,true)
 	local dg=sg:Filter(Card.IsFacedown,nil)
-    	if #dg>0 then
+	if #dg>0 then
 		Duel.ConfirmCards(1-tp,dg)
 	end
 	if sg then

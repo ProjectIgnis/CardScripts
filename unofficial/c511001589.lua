@@ -20,12 +20,12 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--When this card is changed from face-down Defense Position to face-up Defense Position: Destroy it.
 	local e2=Effect.CreateEffect(c)
-    e2:SetDescription(aux.Stringid(id,1))
-    e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-    e2:SetCode(EVENT_CHANGE_POS)
-    e2:SetCondition(s.selfdescon)
-    e2:SetOperation(s.selfdesop)
-    c:RegisterEffect(e2)
+	e2:SetDescription(aux.Stringid(id,1))
+	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e2:SetCode(EVENT_CHANGE_POS)
+	e2:SetCondition(s.selfdescon)
+	e2:SetOperation(s.selfdesop)
+	c:RegisterEffect(e2)
 end
 function s.postg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
@@ -39,11 +39,11 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.selfdescon(e,tp,eg,ep,ev,re,r,rp)
-    local c=e:GetHandler()
-    return (c:GetPreviousPosition()&POS_FACEDOWN_DEFENSE)>0 and c:IsFaceup() and c:IsDefensePos()
+	local c=e:GetHandler()
+	return (c:GetPreviousPosition()&POS_FACEDOWN_DEFENSE)>0 and c:IsFaceup() and c:IsDefensePos()
 end
 function s.selfdesop(e,tp,eg,ep,ev,re,r,rp)
-    local c=e:GetHandler()
+	local c=e:GetHandler()
 	Duel.Hint(HINT_CARD,0,id)
 	Duel.Destroy(c,REASON_EFFECT)
 end

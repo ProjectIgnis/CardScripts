@@ -36,26 +36,26 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.spconfilter(c,tp)
-    return c:IsXyzMonster() and c:IsPreviousControler(tp)
+	return c:IsXyzMonster() and c:IsPreviousControler(tp)
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)
-    return eg:IsExists(s.spconfilter,1,nil,tp)
+	return eg:IsExists(s.spconfilter,1,nil,tp)
 end
 function s.attachfilter(c,tc,e,tp)
-    return c:IsXyzMonster() and c:IsPreviousControler(tp) and c:IsCanBeXyzMaterial(tc,tp,REASON_EFFECT) and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp)
+	return c:IsXyzMonster() and c:IsPreviousControler(tp) and c:IsCanBeXyzMaterial(tc,tp,REASON_EFFECT)
+		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp)
 end
 function s.spfilter(c,e,tp)
-    return c:IsXyzMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-        and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
+	return c:IsXyzMonster() and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCountFromEx(tp,tp,nil,c)>0
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
-    local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_EXTRA,0,nil,e,tp)
-    if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(102380,0)) then
-        Duel.Hint(HINT_CARD,0,id)
-        Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-        local xyzc=g:Select(tp,1,1,nil):GetFirst()
-        local attach_group=eg:Filter(aux.NecroValleyFilter(s.attachfilter),nil,xyzc,e,tp,REASON_EFFECT)
-        Duel.SpecialSummon(xyzc,0,tp,tp,false,false,POS_FACEUP)
-        Duel.Overlay(xyzc,attach_group,true)
-    end
+	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_EXTRA,0,nil,e,tp)
+	if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(102380,0)) then
+		Duel.Hint(HINT_CARD,0,id)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+		local xyzc=g:Select(tp,1,1,nil):GetFirst()
+		local attach_group=eg:Filter(aux.NecroValleyFilter(s.attachfilter),nil,xyzc,e,tp,REASON_EFFECT)
+		Duel.SpecialSummon(xyzc,0,tp,tp,false,false,POS_FACEUP)
+		Duel.Overlay(xyzc,attach_group,true)
+	end
 end

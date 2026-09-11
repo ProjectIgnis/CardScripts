@@ -48,15 +48,15 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		local og=Duel.GetOverlayGroup(tp,1,0)
 		og:AddCard(c)
 		if Duel.IsExistingMatchingCard(s.nomatfilter,tp,LOCATION_MZONE,0,1,nil) and #g==1 then
-        		local attach_xyz=Duel.SelectMatchingCard(tp,s.nomatfilter,tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
-        		Duel.Overlay(attach_xyz,og)
-        		Duel.RaiseSingleEvent(g:GetFirst(),EVENT_DETACH_MATERIAL,e,0,0,0,0)
+			local attach_xyz=Duel.SelectMatchingCard(tp,s.nomatfilter,tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
+			Duel.Overlay(attach_xyz,og)
+			Duel.RaiseSingleEvent(g:GetFirst(),EVENT_DETACH_MATERIAL,e,0,0,0,0)
 		else
 			local attach_xyz=Duel.SelectMatchingCard(tp,aux.FaceupFilter(Card.IsType,TYPE_XYZ),tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
 			if attach_xyz:GetOverlayCount()>0 then g:RemoveCard(attach_xyz) end
 			Duel.Overlay(attach_xyz,og)
-        		for tc in g:Iter() do
-        			Duel.RaiseSingleEvent(tc,EVENT_DETACH_MATERIAL,e,0,0,0,0)
+			for tc in g:Iter() do
+				Duel.RaiseSingleEvent(tc,EVENT_DETACH_MATERIAL,e,0,0,0,0)
 			end
 		end
 	end

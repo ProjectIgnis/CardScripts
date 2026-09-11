@@ -23,11 +23,11 @@ function s.initial_effect(c)
 end
 s.listed_names={52467217,92826944} --"Gozuki, Mezuki"
 function s.spcon(e,c)
-    if c==nil then return true end
-    local tp=c:GetControler()
-    return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-        and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,52467217),tp,LOCATION_MZONE,0,1,nil)
-	and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,92826944),tp,LOCATION_MZONE,0,1,nil)
+	if c==nil then return true end
+	local tp=c:GetControler()
+	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,52467217),tp,LOCATION_MZONE,0,1,nil)
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,92826944),tp,LOCATION_MZONE,0,1,nil)
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

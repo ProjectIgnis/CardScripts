@@ -16,15 +16,15 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_FLOWER_CARDIAN}
 function s.filter(c)
-    local re=c:GetReasonEffect()
-    return c:IsLevel(8) and c:IsSetCard(SET_FLOWER_CARDIAN) and (not c:IsSpecialSummoned()
-        or (not re or not re:GetHandler():IsSetCard(SET_FLOWER_CARDIAN) or not re:GetHandler():IsMonster()))
+	local re=c:GetReasonEffect()
+	return c:IsLevel(8) and c:IsSetCard(SET_FLOWER_CARDIAN) and (not c:IsSpecialSummoned()
+		or (not re or not re:GetHandler():IsSetCard(SET_FLOWER_CARDIAN) or not re:GetHandler():IsMonster()))
 end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.filter,1,false,aux.ReleaseCheckMMZ,nil) end
-    Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-    local g=Duel.SelectReleaseGroupCost(tp,s.filter,1,1,false,aux.ReleaseCheckMMZ,nil)
-    Duel.Release(g,REASON_COST)
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.filter,1,false,aux.ReleaseCheckMMZ,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
+	local g=Duel.SelectReleaseGroupCost(tp,s.filter,1,1,false,aux.ReleaseCheckMMZ,nil)
+	Duel.Release(g,REASON_COST)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

@@ -231,6 +231,6 @@ end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(Card.IsControler,nil,1-tp):Match(Card.IsRelateToEffect,nil,e)
 	if #g>0 then
-        	Duel.Destroy(g,REASON_EFFECT)
+		Duel.Destroy(g,REASON_EFFECT)
 	end
 end

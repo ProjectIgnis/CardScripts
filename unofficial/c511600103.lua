@@ -36,10 +36,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 	local c=e:GetHandler()
 	if tc:IsSpell() then
-        if Duel.GetAttacker()==c and not c:IsHasEffect(EFFECT_CANNOT_DIRECT_ATTACK)
-            and c:IsRelateToEffect(e) and c:IsFaceup() and Duel.SelectYesNo(tp,aux.Stringid(17732278,1)) then
-            Duel.ChangeAttackTarget(nil)
-        end
+		if Duel.GetAttacker()==c and not c:IsHasEffect(EFFECT_CANNOT_DIRECT_ATTACK)
+			and c:IsRelateToEffect(e) and c:IsFaceup() and Duel.SelectYesNo(tp,aux.Stringid(17732278,1)) then
+			Duel.ChangeAttackTarget(nil)
+		end
 	elseif tc:IsMonster() then
 		Duel.GetAttacker():SetStatus(STATUS_ATTACK_CANCELED,true)
 		c:ResetFlagEffect(id)

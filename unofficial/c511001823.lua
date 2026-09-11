@@ -49,7 +49,7 @@ function s.crystalbeastsptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local g=Duel.GetMatchingGroup(s.crystalbeastspfilter,tp,LOCATION_SZONE,0,nil,e,tp)
-	if chk==0 then return  #g>0 and ft>0 and c:IsLocation(LOCATION_MZONE) end
+	if chk==0 then return #g>0 and ft>0 and c:IsLocation(LOCATION_MZONE) end
 	if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
 	if ft>#g then
 		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,#g,tp,LOCATION_SZONE)

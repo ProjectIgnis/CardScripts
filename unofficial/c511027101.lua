@@ -65,7 +65,7 @@ end
 function s.desdmgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local bc=c:GetEquipTarget():GetBattleTarget()
-	if chk==0 then return bc and bc:IsControler(1-tp)  end
+	if chk==0 then return bc and bc:IsControler(1-tp) end
 	Duel.SetTargetPlayer(1-tp)
 	Duel.SetTargetParam(1000)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,bc,1,0,0)

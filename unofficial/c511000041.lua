@@ -38,7 +38,7 @@ function s.posop(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.cacon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return  Duel.GetAttacker()==c and Duel.GetAttackTarget()~=nil and c:CanChainAttack(0,true)
+	return Duel.GetAttacker()==c and Duel.GetAttackTarget()~=nil and c:CanChainAttack(0,true)
 end
 function s.catg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil):GetMaxGroup(Card.GetAttack)

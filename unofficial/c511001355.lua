@@ -30,7 +30,7 @@ function s.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(Card.IsPreviousLocation,nil,LOCATION_MZONE)
 	for tc in g:Iter() do
 		if tc:IsPreviousControler(0) then
-        		table.insert(s[0],tc:GetPreviousAttackOnField())
+			table.insert(s[0],tc:GetPreviousAttackOnField())
 		end
 		if tc:IsPreviousControler(1) then
 			table.insert(s[1],tc:GetPreviousAttackOnField())

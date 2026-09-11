@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.thfromextg)
 	e1:SetOperation(s.thfromexop)
 	c:RegisterEffect(e1)
-	--Add 1 "Abyss Actor"  monster from your Deck to your hand
+	--Add 1 "Abyss Actor" monster from your Deck to your hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(67808837,0))
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)

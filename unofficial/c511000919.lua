@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_DESTROYED)
 	e1:SetRange(LOCATION_SZONE)
-	e1:SetCondition(function(e,tp,eg,ep,ev,re,r,rp)	return eg:IsExists(s.ctfilter,1,nil) end)
+	e1:SetCondition(function(e,tp,eg,ep,ev,re,r,rp) return eg:IsExists(s.ctfilter,1,nil) end)
 	e1:SetOperation(function(e) e:GetHandler():AddCounter(COUNTER_FULL_MOON,1) end)
 	c:RegisterEffect(e1)
 	--Activate 1 "Infinite Fiend Mirror" from your hand or Deck
@@ -35,7 +35,7 @@ function s.ctfilter(c)
 	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
 end
 function s.actfilter(c,tp)
-	return c:IsCode(100000080)  and c:GetActivateEffect():IsActivatable(tp,true,true)
+	return c:IsCode(100000080) and c:GetActivateEffect():IsActivatable(tp,true,true)
 end
 function s.acttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.actfilter,tp,LOCATION_HAND|LOCATION_DECK,0,1,nil,tp) end

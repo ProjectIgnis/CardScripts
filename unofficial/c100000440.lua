@@ -1,4 +1,5 @@
 --ワイズＡ３
+--Wise A3
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
@@ -11,7 +12,8 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_names={100000048}
+s.listed_series={0x1560} --"Wisel Attack" archetype
+s.listed_names={100000048} --"Wisel Attack 3"
 function s.costfilter(c,ft)
 	return c:IsFaceup() and c:IsSetCard(0x1560) and c:IsAbleToGraveAsCost() and (ft>0 or c:GetSequence()<5)
 end
@@ -30,14 +32,14 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		if e:GetLabel()==0 and Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return false end
 		e:SetLabel(0)
-		return Duel.IsExistingMatchingCard(s.spfilter,tp,0x13,0,1,nil,e,tp)
+		return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp)
 	end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0x13)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.spfilter),tp,0x13,0,1,1,nil,e,tp)
+	local g=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
 	if #g>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end

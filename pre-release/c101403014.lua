@@ -63,7 +63,7 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.setconfilter(c,tp)
-	return c:IsLinkAbove(3) and c:IsAttribute(ATTRIBUTE_FIRE) and c:IsSummonPlayer(tp)
+	return c:IsSummonType(SUMMON_TYPE_LINK) and c:IsLinkAbove(3) and c:IsAttribute(ATTRIBUTE_FIRE) and c:IsSummonPlayer(tp)
 end
 function s.setcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(s.setconfilter,1,nil,tp)

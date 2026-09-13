@@ -1,5 +1,6 @@
 --Numeron Network
 local s,id=GetID()
+s.sent_cards={}
 function s.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)
@@ -85,11 +86,15 @@ function s.accost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,s.cfilter,tp,LOCATION_HAND|LOCATION_DECK,0,1,1,nil,e,tp,eg,ep,ev,re,r,rp,chain,true)
 	copychain=0
+	local tc=g:GetFirst()
+	local cid=Duel.GetChainInfo(0,CHAININFO_CHAIN_ID)
+	s.sent_cards[cid]=tc
 	Duel.SendtoGrave(g,REASON_COST)
-	Duel.SetTargetCard(g:GetFirst())
 end
 function s.acop(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.GetFirstTarget()
+	local cid=Duel.GetChainInfo(0,CHAININFO_CHAIN_ID)
+	local tc=s.sent_cards[cid]
+	s.sent_cards[cid]=nil
 	if tc then
 		local te=tc:GetActivateEffect()
 		if not te then return end
@@ -116,17 +121,17 @@ function s.acop(e,tp,eg,ep,ev,re,r,rp)
 		if tg then tg(e,tp,teg,tep,tev,tre,tr,trp,1) end
 		Duel.BreakEffect()
 		local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-		local etc=g:GetFirst()
-		while etc do
-			etc:CreateEffectRelation(te)
-			etc=g:GetNext()
+		if g then
+			for etc in aux.Next(g) do
+				etc:CreateEffectRelation(te)
+			end
 		end
 		if op then op(e,tp,teg,tep,tev,tre,tr,trp) end
 		e:GetHandler():ReleaseEffectRelation(te)
-		etc=g:GetFirst()
-		while etc do
-			etc:ReleaseEffectRelation(te)
-			etc=g:GetNext()
+		if g then
+			for etc in aux.Next(g) do
+				etc:ReleaseEffectRelation(te)
+			end
 		end
 	end
 end

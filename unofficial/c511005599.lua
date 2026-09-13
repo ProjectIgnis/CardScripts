@@ -1,10 +1,12 @@
+--ラフト・パーティ
 --Raft Party
---scripted by GameMaster(GM)
---fixed by MLD
+--Scripted by GameMaster(GM)
 local s,id=GetID()
+local TOKEN_RAFT=id+1
 function s.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -12,25 +14,27 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
+s.listed_names={TOKEN_RAFT}
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) and Duel.GetLocationCount(tp,LOCATION_MZONE)>1
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0,TYPES_TOKEN,0,0,1,RACE_MACHINE,ATTRIBUTE_WATER) end
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_RAFT,0,TYPES_TOKEN,0,0,1,RACE_AQUA,ATTRIBUTE_WATER) end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,2,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,tp,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)>1 and not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id+1,0,TYPES_TOKEN,0,0,1,RACE_MACHINE,ATTRIBUTE_WATER) then
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_RAFT,0,TYPES_TOKEN,0,0,1,RACE_AQUA,ATTRIBUTE_WATER) then
 		for i=1,2 do
-			local token=Duel.CreateToken(tp,id+1)
+			local token=Duel.CreateToken(tp,TOKEN_RAFT)
 			Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)
-			local e1=Effect.CreateEffect(e:GetHandler())
-			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetCode(EFFECT_UNRELEASABLE_SUM)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-			e1:SetValue(aux.NOT(aux.TargetBoolFunction(Card.IsAttribute,ATTRIBUTE_WATER)))
-			token:RegisterEffect(e1,true)
 		end
 		Duel.SpecialSummonComplete()
 	end
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetDescription(aux.Stringid(id,1))
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_CANNOT_ATTACK)
+	e1:SetTargetRange(LOCATION_MZONE,0)
+	e1:SetReset(RESET_PHASE|PHASE_END)
+	Duel.RegisterEffect(e1,tp)
 end

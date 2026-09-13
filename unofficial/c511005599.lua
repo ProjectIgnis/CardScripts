@@ -22,6 +22,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,tp,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)>1 and not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT)
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_RAFT,0,TYPES_TOKEN,0,0,1,RACE_AQUA,ATTRIBUTE_WATER) then
 		for i=1,2 do
@@ -30,7 +31,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		end
 		Duel.SpecialSummonComplete()
 	end
-	local e1=Effect.CreateEffect(e:GetHandler())
+	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_ATTACK)
 	e1:SetTargetRange(LOCATION_MZONE,0)

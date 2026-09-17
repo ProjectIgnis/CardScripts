@@ -43,7 +43,7 @@ function s.dragcapjarop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_IMMUNE_EFFECT)
 		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
-		e2:SetValue(function(e,te) return te:GetHandler():IsCode(511001040) end)
+		e2:SetValue(function(e,te) return te:GetHandler():IsCode(50045299) end)
 		sc:RegisterEffect(e2)
 	end
 end

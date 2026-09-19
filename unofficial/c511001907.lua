@@ -29,7 +29,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local bc=ac:GetBattleTarget()	
 	if ac and ac:IsRelateToBattle() and ac:IsFaceup() and bc:IsOnField() then
 		ac:UpdateAttack(400)
-		Duel.ChainAttack(bc) then
+		Duel.ChainAttack(bc)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)

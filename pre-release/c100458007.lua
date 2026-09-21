@@ -79,6 +79,7 @@ end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local _,max_atk=eg:Filter(s.spconfilter,nil,tp):GetMaxGroup(Card.GetTextAttack)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,max_atk) end
+	max_atk=max_atk or 0
 	e:GetChainData().max_atk=max_atk
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end

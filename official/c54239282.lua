@@ -3,7 +3,9 @@
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)
-	--activate
+	--Look at 1 random card in your opponent's hand, then apply 1 of the following effects.
+	--● Discard both that opponent's card and 1 card from your hand of the same type (Monster, Spell, or Trap), then add this card from the field to your opponent's hand, and if you do, draw 1 card.
+	--● Lose 1000 LP.
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_HANDES+CATEGORY_DRAW+CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -27,15 +29,13 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #g==0 then return end
 	local oc=g:RandomSelect(tp,1):GetFirst()
 	Duel.ConfirmCards(tp,oc)
-	local b=Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,nil,oc:GetMainCardType())
+	local b1=Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,nil,oc:GetMainCardType())
 		and Duel.IsPlayerCanDraw(tp,1) and c:IsRelateToEffect(e)
-	local op=1
-	if b then
-		op=Duel.SelectOption(tp,aux.Stringid(id,0),aux.Stringid(id,1))
-	else
-		op=Duel.SelectOption(tp,aux.Stringid(id,1))+1
-	end
-	if op==0 then
+	local b2=true
+	local option=Duel.SelectEffect(tp,
+		{b1,aux.Stringid(id,0)},
+		{b2,aux.Stringid(id,1)})
+	if option==option then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
 		local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND,0,1,1,nil,oc:GetMainCardType())
 		g:AddCard(oc)
@@ -48,4 +48,5 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	else
 		Duel.SetLP(tp,math.max(Duel.GetLP(tp)-1000,0))
 	end
+	Duel.ShuffleHand(1-tp)
 end

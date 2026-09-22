@@ -35,7 +35,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local option=Duel.SelectEffect(tp,
 		{b1,aux.Stringid(id,0)},
 		{b2,aux.Stringid(id,1)})
-	if option==option then
+	if option==1 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
 		local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND,0,1,1,nil,oc:GetMainCardType())
 		g:AddCard(oc)
@@ -45,7 +45,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.SendtoHand(c,1-tp,REASON_EFFECT)
 			Duel.Draw(tp,1,REASON_EFFECT)
 		end
-	else
+	elseif option==2
 		Duel.SetLP(tp,math.max(Duel.GetLP(tp)-1000,0))
 	end
 	Duel.ShuffleHand(1-tp)

@@ -24,11 +24,11 @@ function s.filter(c,typ)
 	return c:IsType(typ) and c:IsDiscardable(REASON_EFFECT)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
 	local g=Duel.GetMatchingGroup(aux.NOT(Card.IsPublic),tp,0,LOCATION_HAND,nil)
 	if #g==0 then return end
 	local oc=g:RandomSelect(tp,1):GetFirst()
 	Duel.ConfirmCards(tp,oc)
+	local c=e:GetHandler()
 	local b1=Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,nil,oc:GetMainCardType())
 		and Duel.IsPlayerCanDraw(tp,1) and c:IsRelateToEffect(e)
 	local b2=true
@@ -36,6 +36,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		{b1,aux.Stringid(id,0)},
 		{b2,aux.Stringid(id,1)})
 	if option==1 then
+		--Discard both that opponent's card and 1 card from your hand of the same type (Monster, Spell, or Trap), then add this card from the field to your opponent's hand, and if you do, draw 1 card
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
 		local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND,0,1,1,nil,oc:GetMainCardType())
 		g:AddCard(oc)
@@ -45,7 +46,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.SendtoHand(c,1-tp,REASON_EFFECT)
 			Duel.Draw(tp,1,REASON_EFFECT)
 		end
-	elseif option==2
+	elseif option==2 then
+		--● Lose 1000 LP
 		Duel.SetLP(tp,math.max(Duel.GetLP(tp)-1000,0))
 	end
 	Duel.ShuffleHand(1-tp)

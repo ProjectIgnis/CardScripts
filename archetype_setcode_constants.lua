@@ -613,15 +613,15 @@ SET_ANGELECHY                     = 0x1dc
 --Released but the official English name is unconfirmed
 SET_DARK_TUNER                    = 0x1d5
 SET_WHITE_KNIGHT_NIGHT            = 0x1d9
---Pre-release archetypes
 SET_DAEDALUS                      = 0x1da
 SET_ASHTRA                        = 0x1db
 SET_ARS_MAGNA                     = 0x1dd
 SET_DIACTORUS                     = 0x1de
 SET_MEDIUS                        = 0x1df
 SET_MASQUERADE                    = 0x1e0
-SET_ZENET                         = 0x1e1
 SET_DOMINATORS                    = 0x1e2
+--Pre-release archetypes
+SET_ZENET                         = 0x1e1
 SET_XENOVADER                     = 0x1e3
 SET_RAISE_MOON                    = 0x1e4
 SET_DRAGON_CARD                   = 0x1e5

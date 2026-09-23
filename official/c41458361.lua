@@ -2,7 +2,7 @@
 --Adamancipator Luminous
 --scripted by Naim
 local s,id=GetID()
-local TOKEN_GLIMMER=id+100
+local TOKEN_GLIMMER=id+1
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--Link Summon procedure: 2 Effect Monsters, including a Synchro Monster
@@ -40,6 +40,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.tdop)
 	c:RegisterEffect(e2)
 end
+s.listed_names={TOKEN_GLIMMER}
 s.listed_series={SET_ADAMANCIPATOR}
 function s.linkmatcheck(g,lc,sumtype,tp)
 	return g:IsExists(Card.IsType,1,nil,TYPE_SYNCHRO,lc,sumtype,tp)

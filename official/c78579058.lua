@@ -7,7 +7,7 @@ function s.initial_effect(c)
 	--Link Summon procedure: 3 WATER monsters
 	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsAttribute,ATTRIBUTE_WATER),3,3)
 	--Additional prcedure for "Atlantis, the Dragon City"
-	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsAttribute,ATTRIBUTE_WATER),2,2,nil,aux.Stringid(CARD_ATLANTIS_THE_DRAGON_CITY,0),s.splimit)
+	Link.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsAttribute,ATTRIBUTE_WATER),2,2,nil,aux.Stringid(CARD_ATLANTIS_CITY_OF_THE_SEA_DRAGON,0),s.splimit)
 	--This card's name becomes "Umi" while in the Monster Zone
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -47,9 +47,9 @@ function s.initial_effect(c)
 	e3:SetHintTiming(0,TIMING_MAIN_END|TIMINGS_CHECK_MONSTER)
 	c:RegisterEffect(e3)
 end
-s.listed_names={CARD_UMI,CARD_ATLANTIS_THE_DRAGON_CITY}
+s.listed_names={CARD_UMI,CARD_ATLANTIS_CITY_OF_THE_SEA_DRAGON}
 function s.splimit(e,se,sp,st)
-	if Duel.IsPlayerAffectedByEffect(sp,CARD_ATLANTIS_THE_DRAGON_CITY) then
+	if Duel.IsPlayerAffectedByEffect(sp,CARD_ATLANTIS_CITY_OF_THE_SEA_DRAGON) then
 		local c=e:GetHandler()
 		c:AssumeProperty(ASSUME_LINK,c:GetLink()-1)
 		return true
@@ -57,7 +57,7 @@ function s.splimit(e,se,sp,st)
 	return false
 end
 function s.spfilter(c,e,tp)
-	return c:ListsCode(CARD_ATLANTIS_THE_DRAGON_CITY) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:ListsCode(CARD_ATLANTIS_CITY_OF_THE_SEA_DRAGON) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

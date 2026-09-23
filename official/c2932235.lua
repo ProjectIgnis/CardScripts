@@ -2,7 +2,7 @@
 --Thousand Umbral Horror
 --scripted by Naim
 local s,id=GetID()
-local CARD_SEVENTH_BARIANS=101402055
+local CARD_SEVENTH_BARIANS=39513225
 function s.initial_effect(c)
 	--(Quick Effect): You can send this card from your hand or field to the GY; place 1 "Seventh Barian's" from your hand or Deck face-up in your Field Zone, also you cannot Special Summon from the Extra Deck until the end of your next turn, except Xyz Monsters
 	local e1=Effect.CreateEffect(c)

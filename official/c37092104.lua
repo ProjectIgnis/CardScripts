@@ -46,9 +46,9 @@ function s.initial_effect(c)
 	end)
 	c:RegisterEffect(e3)
 end
-s.listed_names={CARD_UMI,CARD_ATLANTIS_THE_DRAGON_CITY}
+s.listed_names={CARD_UMI,CARD_ATLANTIS_CITY_OF_THE_SEA_DRAGON}
 function s.spfilter(c,e,tp)
-	return c:ListsCode(CARD_ATLANTIS_THE_DRAGON_CITY) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return c:ListsCode(CARD_ATLANTIS_CITY_OF_THE_SEA_DRAGON) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and s.spfilter(chkc,e,tp) end

@@ -37,9 +37,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.thop)
 	c:RegisterEffect(e3)
 end
-s.listed_names={CARD_UMI,CARD_ATLANTIS_THE_DRAGON_CITY}
+s.listed_names={CARD_UMI,CARD_ATLANTIS_CITY_OF_THE_SEA_DRAGON}
 function s.plfilter(c,tp)
-	return c:IsCode(CARD_ATLANTIS_THE_DRAGON_CITY,CARD_UMI) and c:IsFieldSpell() and not c:IsForbidden() and c:CheckUniqueOnField(tp)
+	return c:IsCode(CARD_ATLANTIS_CITY_OF_THE_SEA_DRAGON,CARD_UMI) and c:IsFieldSpell() and not c:IsForbidden() and c:CheckUniqueOnField(tp)
 end
 function s.pltg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.plfilter,tp,LOCATION_DECK,0,1,nil,tp) end

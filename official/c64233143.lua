@@ -32,10 +32,10 @@ function s.initial_effect(c)
 	e2:SetHintTiming(0,TIMING_STANDBY_PHASE|TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E)
 	c:RegisterEffect(e2)
 end
-s.listed_names={CARD_ATLANTIS_THE_DRAGON_CITY,CARD_UMI}
+s.listed_names={CARD_ATLANTIS_CITY_OF_THE_SEA_DRAGON,CARD_UMI}
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentChain(true)==0 and eg:IsExists(Card.IsSummonPlayer,1,nil,1-tp)
-		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_ATLANTIS_THE_DRAGON_CITY),tp,LOCATION_ONFIELD,0,1,nil)
+		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_ATLANTIS_CITY_OF_THE_SEA_DRAGON),tp,LOCATION_ONFIELD,0,1,nil)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

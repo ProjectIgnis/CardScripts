@@ -7,7 +7,7 @@ function s.initial_effect(c)
 	--Link Summon procedure: 4 monsters
 	Link.AddProcedure(c,nil,4,4)
 	--Additional prcedure for "Atlantis, the Dragon City"
-	Link.AddProcedure(c,nil,3,3,nil,aux.Stringid(CARD_ATLANTIS_THE_DRAGON_CITY,0),s.splimit)
+	Link.AddProcedure(c,nil,3,3,nil,aux.Stringid(CARD_ATLANTIS_CITY_OF_THE_SEA_DRAGON,0),s.splimit)
 	--If this card is Link Summoned: You can Special Summon up to 3 monsters that mention "Atlantis, the Dragon City" from your GY to your zones this card points to, also you cannot Special Summon for the rest of this turn
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
@@ -43,9 +43,9 @@ function s.initial_effect(c)
 	e3:SetHintTiming(0,TIMING_STANDBY_PHASE|TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E)
 	c:RegisterEffect(e3)
 end
-s.listed_names={CARD_ATLANTIS_THE_DRAGON_CITY,CARD_UMI}
+s.listed_names={CARD_ATLANTIS_CITY_OF_THE_SEA_DRAGON,CARD_UMI}
 function s.splimit(e,se,sp,st)
-	if Duel.IsPlayerAffectedByEffect(sp,CARD_ATLANTIS_THE_DRAGON_CITY) then
+	if Duel.IsPlayerAffectedByEffect(sp,CARD_ATLANTIS_CITY_OF_THE_SEA_DRAGON) then
 		local c=e:GetHandler()
 		c:AssumeProperty(ASSUME_LINK,c:GetLink()-1)
 		return true
@@ -53,7 +53,7 @@ function s.splimit(e,se,sp,st)
 	return false
 end
 function s.spfilter(c,e,tp,zone)
-	return c:ListsCode(CARD_ATLANTIS_THE_DRAGON_CITY) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
+	return c:ListsCode(CARD_ATLANTIS_CITY_OF_THE_SEA_DRAGON) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local zone=e:GetHandler():GetFreeLinkedZone()

@@ -37,9 +37,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
 end
-s.listed_names={CARD_UMI,CARD_ATLANTIS_THE_DRAGON_CITY,id}
+s.listed_names={CARD_UMI,CARD_ATLANTIS_CITY_OF_THE_SEA_DRAGON,id}
 function s.tgfilter(c)
-	return c:ListsCode(CARD_ATLANTIS_THE_DRAGON_CITY) and not c:IsCode(id) and c:IsAbleToGrave()
+	return c:ListsCode(CARD_ATLANTIS_CITY_OF_THE_SEA_DRAGON) and not c:IsCode(id) and c:IsAbleToGrave()
 end
 function s.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tgfilter,tp,LOCATION_DECK,0,1,nil) end

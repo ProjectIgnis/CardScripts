@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	local e1b=e1a:Clone()
 	e1b:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e1b)
-	--You can send 1 "Destiny HERO" monster from your Deck to the GY; add 1 "Clock Tower Prison" or "Clock Tower Prison City - Dark City" from your Deck or GY to your hand, also you cannot Special Summon for the rest of this turn, except DARK "HERO" monsters
+	--You can send 1 "Destiny HERO" monster from your Deck to the GY; add 1 "Clock Tower Prison" or "Dark City at Midnight" from your Deck or GY to your hand, also you cannot Special Summon for the rest of this turn, except DARK "HERO" monsters
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
 end
-s.listed_names={75041269,101402062} --"Clock Tower Prison", "Clock Tower Prison City - Dark City"
+s.listed_names={75041269,4663194} --"Clock Tower Prison", "Dark City at Midnight"
 s.listed_series={SET_DESTINY_HERO,SET_HERO}
 function s.bantg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and chkc:IsAbleToRemove() end
@@ -62,7 +62,7 @@ function s.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function s.thfilter(c)
-	return c:IsCode(75041269,101402062) and c:IsAbleToHand()
+	return c:IsCode(75041269,4663194) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK|LOCATION_GRAVE,0,1,nil) end

@@ -24,7 +24,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		and Duel.IsExistingMatchingCard(s.deckthfilter,tp,LOCATION_DECK,0,1,nil)
 	--● Toss a coin and call it. If you call it right, destroy as many monsters your opponent controls as possible, and if you do, inflict damage to your opponent equal to half the total original ATK of those monsters. If you call it wrong, destroy all monsters you control
 	local g=Duel.GetFieldGroup(tp,LOCATION_MZONE,LOCATION_MZONE)
-	local b2=not Duel.HasFlagEffect(tp,id+100) and #g>0
+	local b2=not Duel.HasFlagEffect(tp,id+1) and #g>0
 	if chk==0 then return b1 or b2 end
 	local op=Duel.SelectEffect(tp,
 		{b1,aux.Stringid(id,1)},
@@ -36,7 +36,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 		Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_GRAVE)
 	else
-		Duel.RegisterFlagEffect(tp,id+100,RESET_PHASE|PHASE_END,0,1)
+		Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE|PHASE_END,0,1)
 		e:SetCategory(CATEGORY_COIN+CATEGORY_DESTROY+CATEGORY_DAMAGE)
 		Duel.SetOperationInfo(0,CATEGORY_COIN,nil,0,tp,1)
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,tp,0)

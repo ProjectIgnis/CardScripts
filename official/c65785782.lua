@@ -40,9 +40,9 @@ function s.initial_effect(c)
 	end)
 	c:RegisterEffect(e2)
 end
-s.listed_names={CARD_ATLANTIS_THE_DRAGON_CITY,CARD_UMI}
+s.listed_names={CARD_ATLANTIS_CITY_OF_THE_SEA_DRAGON,CARD_UMI}
 function s.thfilter(c)
-	return c:ListsCode(CARD_ATLANTIS_THE_DRAGON_CITY) and c:IsMonster() and c:IsAbleToHand()
+	return c:ListsCode(CARD_ATLANTIS_CITY_OF_THE_SEA_DRAGON) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -56,7 +56,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 		Duel.ShuffleHand(tp)
 		Duel.ShuffleDeck(tp)
-		if Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_ATLANTIS_THE_DRAGON_CITY),tp,LOCATION_ONFIELD,0,1,nil)
+		if Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsCode,CARD_ATLANTIS_CITY_OF_THE_SEA_DRAGON),tp,LOCATION_ONFIELD,0,1,nil)
 			and Duel.IsExistingMatchingCard(aux.AND(Card.IsEffectMonster,Card.IsNegatableMonster),tp,0,LOCATION_MZONE,1,nil)
 			and Duel.SelectYesNo(tp,aux.Stringid(id,2)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_NEGATE)

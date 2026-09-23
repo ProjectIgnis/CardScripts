@@ -2,7 +2,7 @@
 --Sleeping Scapegoats
 --scripted by pyrQ
 local s,id=GetID()
-local TOKEN_SCAPEGOAT=id+100
+local TOKEN_SCAPEGOAT=id+1
 function s.initial_effect(c)
 	--Special Summon up to 4 "Scapegoat Tokens" (Beast/EARTH/Level 1/ATK 0/DEF 0) in Defense Position, then if your opponent controls a monster, you can Special Summon 1 "Swift Panther Warrior" from your Deck, also for the rest of this turn, these Tokens cannot be Tributed for a Tribute Summon, also you cannot Special Summon from the Extra Deck, except Fusion Monsters. If a card(s) you control that mentions "Dark Time Wizard" would be destroyed by battle or card effect, you can destroy 1 Token you control that was Special Summoned by this effect instead
 	local e1=Effect.CreateEffect(c)
@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetHintTiming(0,TIMING_STANDBY_PHASE|TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E)
 	c:RegisterEffect(e1)
 end
-s.listed_names={TOKEN_SCAPEGOAT,101402001,CARD_DARK_TIME_WIZARD} --"Swift Panther Warrior"
+s.listed_names={TOKEN_SCAPEGOAT,77482666,CARD_DARK_TIME_WIZARD} --"Swiftwind Panther Warrior"
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,TOKEN_SCAPEGOAT,0,TYPES_TOKEN,0,0,1,RACE_BEAST,ATTRIBUTE_EARTH,POS_FACEUP_DEFENSE) end
@@ -24,7 +24,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function s.spfilter(c,e,tp)
-	return c:IsCode(101402001) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsCode(77482666) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local mmz_count=Duel.GetLocationCount(tp,LOCATION_MZONE)

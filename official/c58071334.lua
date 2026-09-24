@@ -29,7 +29,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.hspfilter(c)
-	return c:IsMonsterCard() and c:IsFaceup() and c:IsAbleToGraveAsCost()
+	return c:IsMonsterCard() and c:IsFaceup() and c:IsAbleToGraveAsCost() and c:IsCanBeFusionMaterial()
 end
 function s.hspcon(e,c)
 	if not c then return true end

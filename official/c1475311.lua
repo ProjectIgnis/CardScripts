@@ -17,6 +17,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetTargetPlayer(tp)
 	Duel.SetTargetParam(2)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,2)
+	Duel.SetPossibleOperationInfo(0,CATEGORY_HANDES,nil,2,tp,0)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
@@ -24,11 +25,10 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ShuffleHand(p)
 	Duel.BreakEffect()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(p,Card.IsAttribute,p,LOCATION_HAND,0,1,1,nil,ATTRIBUTE_DARK)
-	local tg=g:GetFirst()
-	if tg then
-		if Duel.Remove(tg,POS_FACEUP,REASON_EFFECT)==0 then
-			Duel.ConfirmCards(1-p,tg)
+	local g=Duel.SelectMatchingCard(p,Card.IsAttribute,p,LOCATION_HAND,0,1,1,nil,ATTRIBUTE_DARK):GetFirst()
+	if g then
+		if Duel.Remove(g,POS_FACEUP,REASON_EFFECT)==0 then
+			Duel.ConfirmCards(1-p,g)
 			Duel.ShuffleHand(p)
 		end
 	else

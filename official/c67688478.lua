@@ -20,8 +20,11 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	if ep==tp or (not re:IsHasType(EFFECT_TYPE_ACTIVATE) and not re:IsMonsterEffect())
 		or (not Duel.IsChainNegatable(ev)) then return false end
-	local ex,tg,tc,p=Duel.GetOperationInfo(ev,CATEGORY_HANDES)
-	return re:IsHasCategory(CATEGORY_HANDES) and (not ex or p~=1-tp)
+	local operation_info,op_group,op_count,op_player=Duel.GetOperationInfo(ev,CATEGORY_HANDES)
+	local poperation_info,pop_group,pop_count,pop_player=Duel.GetPossibleOperationInfo(ev,CATEGORY_HANDES)
+	return re:IsHasCategory(CATEGORY_HANDES) and
+		((operation_info and (op_player==1-tp or op_player==PLAYER_EITHER or op_player==PLAYER_ALL)) or
+		(poperation_info and (pop_player==1-tp or pop_player==PLAYER_EITHER or pop_player==PLAYER_ALL)))
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

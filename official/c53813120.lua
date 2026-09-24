@@ -58,9 +58,7 @@ end
 function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	local g=Duel.GetMatchingGroup(s.tdfilter,tp,LOCATION_GRAVE,0,nil,e)
-	if chk==0 then return Duel.IsPlayerCanDraw(tp,1)
-		and #g>=3 and g:IsExists(Card.IsSetCard,1,nil,SET_RADIANT_TYPHOON)
-	end
+	if chk==0 then return #g>=3 and g:IsExists(Card.IsSetCard,1,nil,SET_RADIANT_TYPHOON) end
 	local tg=aux.SelectUnselectGroup(g,e,tp,3,3,s.rescon,1,tp,HINTMSG_TODECK)
 	Duel.SetTargetCard(tg)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,tg,#tg,tp,0)

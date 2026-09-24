@@ -1,5 +1,5 @@
 --顕現する伝説の都
---Atlantis Advent
+--Advent of Atlantis
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

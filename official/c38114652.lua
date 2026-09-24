@@ -1,5 +1,5 @@
 --封神の剣鬼 ミクマリ
---Mikumari the Sealing Deity Asutra
+--Mikumari the Sealing Deity Ashtra
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --アトランティスの竜神－ダイダロス
---Atlantis Dragon Lord - Daedalus
+--Levia-Dragon of Atlantis - Daedalus
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --金神の戦鬼 アカスナ
---Akasuna the Golden Deity Asutra
+--Akasuna the Battle Ashtra
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --色鬼の蟲毒
---Asutra Insect Poison
+--Ashtra Insect Poison
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --疾風の豹戦士パンサーウォリアー
---Swift Panther Warrior
+--Swiftwind Panther Warrior
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

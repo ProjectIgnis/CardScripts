@@ -1,5 +1,5 @@
 --眠れる羊 スケープ・ゴート
---Sleeping Scapegoats
+--Sleepy Scapegoats
 --scripted by pyrQ
 local s,id=GetID()
 local TOKEN_SCAPEGOAT=id+1

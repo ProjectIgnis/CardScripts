@@ -1,5 +1,5 @@
 --天使と悪魔のサイコロ
---Graceful Skull Dice
+--Graceful & Skull Dice
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

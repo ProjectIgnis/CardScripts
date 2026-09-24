@@ -1,5 +1,5 @@
 --鬼神 水子守命
---Asutraya Mikumari no Mikoto
+--Ashtraya Mikumari-no-Mikoto
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --蟲神の色鬼 クズハ
---Kuzuha the Bewitching Deity Asutra
+--Kuzuha the Bewitching Deity Ashtra
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --天下独歩の大義賊
---The World's Greatest Gallant Thief
+--The Great Gallant Bandit
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

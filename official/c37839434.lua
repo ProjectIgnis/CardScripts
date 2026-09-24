@@ -1,5 +1,5 @@
 --剣鬼の神域
---Asutra Divine Domain
+--Ashtra Divine Domain
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

@@ -1,5 +1,5 @@
 --竜都アトランティス
---Atlantis, the Dragon City
+--Atlantis, City of the Sea Dragon
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

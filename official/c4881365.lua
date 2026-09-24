@@ -1,5 +1,5 @@
 --ワイバーンの竜騎士
---Alligator's Sword Dragon Knight
+--Alligator's Dragon Knight
 --Scripted by Eerie Code
 local s,id=GetID()
 function s.initial_effect(c)

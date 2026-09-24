@@ -1,5 +1,5 @@
 --疫神の依鬼 ヨア
---Yoa the Plague Deity Asutra
+--Yoa the Plague Deity Ashtra
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

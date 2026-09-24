@@ -1,5 +1,5 @@
 --鬼神 朱沙之王
---Asutraja Susanoo
+--Ashtraja Susanoo
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

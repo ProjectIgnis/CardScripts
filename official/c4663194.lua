@@ -1,5 +1,5 @@
 --幽獄の時計都市－ダーク・シティ
---Clock Tower Prison City - Dark City
+--Dark City at Midnight
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

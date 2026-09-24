@@ -1,5 +1,5 @@
 --依鬼の呪咆
---Asutra Cursed Roar
+--Ashtra Cursed Roar
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

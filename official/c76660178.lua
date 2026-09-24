@@ -1,5 +1,5 @@
 --大海の伝説－フィッシャーマン
---Fisherman, Legend of the Sea
+--Fisherman of Legend
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)

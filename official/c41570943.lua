@@ -1,5 +1,5 @@
 --蒼海竜神－ネオダイダロス・レイジ
---Blue Ocean Dragon Lord - Neo Daedalus Rage
+--Azure Ocean Dragon Lord - Neo-Daedalus Rage
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

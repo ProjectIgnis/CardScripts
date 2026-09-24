@@ -1,5 +1,5 @@
 --Ｄ－ＨＥＲＯ ドレッドノートガイ
---Destiny HERO - Dreadnought
+--Destiny HERO - Dreadnought Master
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

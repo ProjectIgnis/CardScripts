@@ -1,5 +1,5 @@
 --Ｄ－ＨＥＲＯ デビルロードガイ
---Destiny HERO - Doom Liege
+--Destiny HERO - Doom Overlord
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

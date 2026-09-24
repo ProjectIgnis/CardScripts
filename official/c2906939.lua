@@ -1,5 +1,5 @@
 --艮神鬼門 三千世界
---Asutrashen Trichiliocosm
+--Ashtrashen - Gateway to the Worlds Beyond
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)

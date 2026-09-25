@@ -151,10 +151,13 @@ REASON_EXCAVATE    = 0x8000000 --Not defined by the core
 REASON_LINK        = 0x10000000
 REASON_REVEAL      = REASON_EXCAVATE
 --Location Reason
-LOCATION_REASON_TOFIELD = 0x1 --Duel.GetLocationCount()
-LOCATION_REASON_CONTROL = 0x2 --Card.IsControlerCanBeChanged()
-LOCATION_REASON_COUNT   = 0x4 --Duel.GetLocationCount() for disablefield check
-LOCATION_REASON_RETURN  = 0x8
+LOCATION_REASON_TOFIELD  = 0x1 --Duel.GetLocationCount()
+LOCATION_REASON_CONTROL  = 0x2 --Card.IsControlerCanBeChanged()
+LOCATION_REASON_COUNT    = 0x4 --Duel.GetLocationCount() for disablefield check
+LOCATION_REASON_RETURN   = 0x8
+LOCATION_REASON_SUMMON   = 0x10
+LOCATION_REASON_SPSUMMON = 0x11
+LOCATION_REASON_SET      = 0x12
 --Summon Types
 SUMMON_TYPE_NORMAL   = 0x10000000
 SUMMON_TYPE_TRIBUTE  = 0x11000000
@@ -555,6 +558,7 @@ EFFECT_MAX_MZONE                    = 263
 EFFECT_MAX_SZONE                    = 264
 EFFECT_FORCE_MZONE                  = 265
 EFFECT_BECOME_LINKED_ZONE           = 266
+EFFECT_OPPO_CHOOSES_SPSUMMON_ZONE   = 267
 EFFECT_HAND_LIMIT                   = 270
 EFFECT_DRAW_COUNT                   = 271
 EFFECT_SPIRIT_DONOT_RETURN          = 280

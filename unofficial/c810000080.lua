@@ -2,41 +2,42 @@
 --Shutter Layer 1
 local s,id=GetID()
 function s.initial_effect(c)
-	--Special Summon this card as a Normal Monster
+	--Special Summon this card as an Effect Monster
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetTarget(s.target)
-	e1:SetOperation(s.operation)
+	e1:SetTarget(s.selfsptg)
+	e1:SetOperation(s.selfspop)
 	c:RegisterEffect(e1)
-	--Destroy this card 
+	--Destroy this card when the targeted monster leaves the field
 	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetRange(LOCATION_ONFIELD)
 	e2:SetCode(EVENT_LEAVE_FIELD)
 	e2:SetCondition(s.descon)
 	e2:SetOperation(s.desop)
 	c:RegisterEffect(e2)
 end
-function s.filter(c,e,tp)
-	return c:IsFaceup() and c:GetLevel()>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,id,0,TYPE_MONSTER|TYPE_NORMAL,c:GetBaseAttack(),c:GetBaseDefense(),c:GetLevel(),c:GetRace(),c:GetAttribute())
+function s.selfspfilter(c,e,tp)
+	return c:IsFaceup() and c:HasLevel()
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,id,0,TYPE_MONSTER|TYPE_EFFECT,c:GetBaseAttack(),c:GetBaseDefense(),c:GetLevel(),c:GetRace(),c:GetAttribute())
 end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and s.filter(chkc,e,tp) end
+function s.selfsptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and s.selfspfilter(chkc,e,tp) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
-		and Duel.IsExistingTarget(s.filter,tp,0,LOCATION_MZONE,1,nil,e,tp) end
-	local g=Duel.SelectTarget(tp,s.filter,tp,0,LOCATION_MZONE,1,1,nil,e,tp)
+		and Duel.IsExistingTarget(s.selfspfilter,tp,0,LOCATION_MZONE,1,nil,e,tp) end
+	local g=Duel.SelectTarget(tp,s.selfspfilter,tp,0,LOCATION_MZONE,1,1,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
-function s.operation(e,tp,eg,ep,ev,re,r,rp)
+function s.selfspop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	local tc=Duel.GetFirstTarget()
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) or not tc or tc:IsFacedown() or not tc:IsRelateToEffect(e) then return end
-	if not Duel.IsPlayerCanSpecialSummonMonster(tp,id,0,TYPE_MONSTER|TYPE_NORMAL,tc:GetBaseAttack(),tc:GetBaseDefense(),tc:GetLevel(),tc:GetRace(),tc:GetAttribute()) then return end
-	c:AddMonsterAttribute(TYPE_MONSTER|TYPE_NORMAL|TYPE_SPELL,tc:GetAttribute(),tc:GetRace(),tc:GetLevel(),tc:GetBaseAttack(),tc:GetBaseDefense())
+	if not Duel.IsPlayerCanSpecialSummonMonster(tp,id,0,TYPE_MONSTER|TYPE_EFFECT,tc:GetAttack(),tc:GetDefense(),tc:GetLevel(),tc:GetRace(),tc:GetAttribute()) then return end
+	c:AddMonsterAttribute(TYPE_MONSTER|TYPE_EFFECT|TYPE_SPELL,tc:GetAttribute(),tc:GetRace(),tc:GetLevel(),tc:GetBaseAttack(),tc:GetBaseDefense())
 	if Duel.SpecialSummonStep(c,0,tp,tp,true,false,POS_FACEUP) then
 		c:AddMonsterAttributeComplete()
 		local e1=Effect.CreateEffect(c)
@@ -81,5 +82,6 @@ function s.descon(e,tp,eg,ep,ev,re,r,rp)
 	return tc and eg:IsContains(tc)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_CARD,0,id)
 	Duel.Destroy(e:GetHandler(),REASON_EFFECT)
 end

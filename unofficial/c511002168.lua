@@ -17,14 +17,15 @@ function s.cfilter(c)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
-	return Duel.IsTurnPlayer(1-tp) and ph&(PHASE_MAIN2|PHASE_END)==0
-		and Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
+	local fct=Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)
+	return Duel.IsTurnPlayer(1-tp) and ph&(PHASE_MAIN2|PHASE_END)==0 and fct>0
+		and not Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetCode(EFFECT_CANNOT_ATTACK_ANNOUNCE)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e1:SetCode(EFFECT_CANNOT_ATTACK_ANNOUNCE)
 	e1:SetReset(RESET_PHASE|PHASE_END)
 	e1:SetTargetRange(0,1)
 	Duel.RegisterEffect(e1,tp)

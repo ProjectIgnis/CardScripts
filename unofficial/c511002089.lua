@@ -2,9 +2,10 @@
 --Instant Freeze
 local s,id=GetID()
 function s.initial_effect(c)
-	--Activate
+	--Negate the activation of a Spell/Trap Card, and if you do, Set that card
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_NEGATE+CATEGORY_POSITION)
+	e1:SetDescription(aux.Stringid(id,0))
+	e1:SetCategory(CATEGORY_NEGATE+CATEGORY_SET)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_CHAINING)
 	e1:SetCondition(s.condition)
@@ -13,34 +14,31 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev) and not re:GetHandler():IsType(TYPE_PENDULUM)
+	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsSpellTrapEffect() and Duel.IsChainNegatable(ev)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
-	if re:GetHandler():IsRelateToEffect(re) then
-		Duel.SetOperationInfo(0,CATEGORY_POSITION,eg,1,0,0)
-	end
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-	local ec=re:GetHandler()
-	Duel.NegateActivation(ev)
-	if re:GetHandler():IsRelateToEffect(re) then
-		ec:CancelToGrave()
-		Duel.ChangePosition(ec,POS_FACEDOWN)
-		ec:SetStatus(STATUS_ACTIVATE_DISABLED,false)
-		Duel.RaiseEvent(ec,EVENT_SSET,e,REASON_EFFECT,tp,tp,0)
-		local c=e:GetHandler()
+	local c=e:GetHandler()
+	local rc=re:GetHandler()
+	if Duel.NegateActivation(ev) and rc:IsRelateToEffect(re) and rc:IsSSetable(true) then
+		rc:CancelToGrave()
+		Duel.ChangePosition(rc,POS_FACEDOWN)
+		rc:SetStatus(STATUS_ACTIVATE_DISABLED,false)
+		rc:SetStatus(STATUS_SET_TURN,false)
+		Duel.RaiseEvent(rc,EVENT_SSET,e,REASON_EFFECT,tp,tp,0)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_TRIGGER)
-		if Duel.GetTurnPlayer()==ec:GetControler() then
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN,3)
+		if Duel.GetTurnPlayer()==rc:GetControler() then
+			e1:SetReset(RESETS_STANDARD_PHASE_END|RESET_OPPO_TURN,3)
 		else
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_SELF_TURN,3)
+			e1:SetReset(RESETS_STANDARD_PHASE_END|RESET_SELF_TURN,3)
 		end
 		e1:SetValue(1)
-		ec:RegisterEffect(e1)
+		rc:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e2:SetCode(EVENT_PHASE+PHASE_END)
@@ -48,7 +46,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetLabelObject(e1)
 		e2:SetCondition(s.turncon)
 		e2:SetOperation(s.turnop)
-		e2:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN,3)
+		e2:SetReset(RESET_PHASE|PHASE_END|RESET_OPPO_TURN,3)
 		Duel.RegisterEffect(e2,Duel.GetTurnPlayer())
 		local descnum=tp==c:GetOwner() and 0 or 1
 		local e3=Effect.CreateEffect(c)
@@ -60,9 +58,9 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetOwnerPlayer(tp)
 		e3:SetOperation(s.reset)
 		if Duel.IsTurnPlayer(tp) then
-			e3:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN,3)
+			e3:SetReset(RESET_PHASE|PHASE_END|RESET_OPPO_TURN,3)
 		else
-			e3:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN,3)
+			e3:SetReset(RESET_PHASE|PHASE_END|RESET_SELF_TURN,3)
 		end
 		c:RegisterEffect(e3)
 	end

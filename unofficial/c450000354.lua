@@ -19,7 +19,7 @@ function s.condition(e,tp,eg,ev,ep,re,r,rp)
 	local code=e:GetHandler():GetCode()
 	return Duel.IsExistMatchingCard(s.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,1,code) 
 end
-function s.target(e,tp,eg,ev,ep,re,r,rp,chk,chkc)
+function s.target(e,tp,eg,ev,ep,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingTarget(Card.IsNegatableMonster,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,nil,1,tp,0)
 end

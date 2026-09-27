@@ -629,3 +629,4 @@ SET_SUN_GOD                       = 0x1e6
 SET_THE_WINGED_DRAGON_OF_RA       = 0x1e7
 SET_REINDSURM                     = 0x1e8
 SET_WHITE_CROW                    = 0x1e9
+SET_BUNNILLIN                     = 0x1ea

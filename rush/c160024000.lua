@@ -3,6 +3,7 @@
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)
+	c:RegisterFlagEffect(FLAG_TRIPLE_TRIBUTE,0,0,1)
 	--summon without tribute
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))

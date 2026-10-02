@@ -70,7 +70,7 @@ function s.synchop(e,tp,eg,ep,ev,re,r,rp)
 	local rg=aux.SelectUnselectGroup(g,e,tp,5,5,s.rescon,1,tp,HINTMSG_TODECK)
 	if #rg~=5 then return end
 	Duel.HintSelection(rg,true)
-	if Duel.SendtoDeck(rg,tp,SEQ_DECKSHUFFLE,REASON_EFFECT)==5
+	if Duel.SendtoDeck(rg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)==5
 		and Duel.IsExistingMatchingCard(s.synchfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,false) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sc=Duel.SelectMatchingCard(tp,s.synchfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,false):GetFirst()

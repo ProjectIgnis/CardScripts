@@ -8,7 +8,7 @@ function s.initial_effect(c)
 	e0:SetType(EFFECT_TYPE_ACTIVATE)
 	e0:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e0)
-	--During your Main Phase, you can Normal Summon 1 "Medius the Pure" in addition to your Normal Summon/Set
+	--During your Main Phase, you can Normal Summon 1 "Medius the Pure", in addition to your Normal Summon/Set (you can only gain this effect once per turn)
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e1:SetTargetRange(LOCATION_HAND|LOCATION_MZONE,0)
 	e1:SetTarget(aux.TargetBoolFunction(Card.IsCode,CARD_MEDIUS_THE_PURE))
 	c:RegisterEffect(e1)
-	--Add 1 declared "Artmage" monster from your Deck to your hand
+	--You can discard 1 Spell/Trap, and declare 1 "Artmage" Monster Card name that is not among the monsters you control and has not been declared for "Artmage Academic Arcane Arts Acropolis" this turn; add that monster from your Deck to your hand, also you cannot Special Summon for the rest of this turn, except "Artmage" monsters, "Medius the Pure", or from the Extra Deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -43,43 +43,36 @@ s.listed_names={CARD_MEDIUS_THE_PURE}
 s.listed_series={SET_ARTMAGE}
 function s.declfilter(c,exc1,exc2)
 	return c:IsSetCard(SET_ARTMAGE) and c:IsMonster() and c:IsAbleToHand()
-		and (#exc1==0 or not c:IsCode(table.unpack(exc1))) and (#exc2==0 or not c:IsCode(table.unpack(exc2)))
+		and (#exc1==0 or not c:IsCode(table.unpack(exc1)))
+		and (#exc2==0 or not c:IsCode(table.unpack(exc2)))
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local fcs=Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsSetCard,SET_ARTMAGE),tp,LOCATION_MZONE,0,nil):GetClass(Card.GetCode)
 	local g=Duel.GetMatchingGroup(s.declfilter,tp,LOCATION_DECK,0,nil,fcs,s.declared_names[tp])
 	if chk==0 then return #g>0 end
-	s.announce_filter={}
-	for _,code in ipairs(g:GetClass(Card.GetCode)) do
-		if #s.announce_filter==0 then
-			table.insert(s.announce_filter,code)
-			table.insert(s.announce_filter,OPCODE_ISCODE)
-		else
-			table.insert(s.announce_filter,code)
-			table.insert(s.announce_filter,OPCODE_ISCODE)
-			table.insert(s.announce_filter,OPCODE_OR)
-		end
-	end
-	local ac=Duel.AnnounceCard(tp,table.unpack(s.announce_filter))
-	table.insert(s.declared_names[tp],ac)
-	Duel.SetTargetParam(ac)
+	local announce_filter=DF.IsCode(g:GetClass(Card.GetCode))
+	local announced_card=Duel.AnnounceCard(tp,announce_filter)
+	table.insert(s.declared_names[tp],announced_card)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
-	Duel.SetOperationInfo(0,CATEGORY_ANNOUNCE,nil,0,tp,ANNOUNCE_CARD_FILTER)
+	--if the opponent tries to overwrite the announced name, they don't know what cards are in the player's Deck,
+	--so they should be able to announce any "Artmage" Main Deck monster that the player did not control and had not announced yet
+	local opp_announce_filter=DF.IsMainDeckMonster() & DF.IsSetCard(SET_ARTMAGE) & ~DF.IsCode(fcs) & ~DF.IsCode(s.declared_names[tp])
+	e:GetChainData().announce_filter=function(_,p) return p==tp and announce_filter or opp_announce_filter end
 end
 function s.thfilter(c,code)
 	return c:IsCode(code) and c:IsMonster() and c:IsAbleToHand()
 end
 function s.thop(e,tp,eg,ep,ev,re,r,rp)
-	local code=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
+	local cd=e:GetChainData()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil,code)
+	local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil,cd.announced_card)
 	if #g>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 	end
 	if not Duel.HasFlagEffect(tp,id) then
 		Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1)
-		--Cannot Special Summon from outside the Extra Deck for the rest of this turn, except "Artmage" monsters and "Medius the Pure"
+		--You cannot Special Summon for the rest of this turn, except "Artmage" monsters, "Medius the Pure", or from the Extra Deck.
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetDescription(aux.Stringid(id,2))
 		e1:SetType(EFFECT_TYPE_FIELD)

@@ -2,7 +2,7 @@
 --Engraver of the Mark
 local s,id=GetID()
 function s.initial_effect(c)
-	--Declare 1 other card name
+	--When your opponent activates a card or effect by declaring exactly 1 card name (Quick Effect): You can send this card from your hand to the GY; declare 1 other card name.
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_QUICK_O)
@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetCost(Cost.SelfToGrave)
 	e1:SetOperation(s.declop)
 	c:RegisterEffect(e1)
-	--Destroy 1 face-up card on the field during the End Phase of the next turn
+	--Once per turn (Quick Effect): You can target 1 face-up card on the field; destroy it during the End Phase of the next turn
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DESTROY)
@@ -27,19 +27,22 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function s.declcon(e,tp,eg,ep,ev,re,r,rp)
-	local ex,cg,ct,cp,cv=Duel.GetOperationInfo(ev,CATEGORY_ANNOUNCE)
-	return rp==1-tp and ex and (cv&ANNOUNCE_CARD+ANNOUNCE_CARD_FILTER)~=0
+	local ac=re:GetChainData(ev).announced_card
+	return rp==1-tp and ac and (type(ac)=="number" or #ac==1)
 end
 function s.declop(e,tp,eg,ep,ev,re,r,rp)
-	local ex,cg,ct,cp,cv=Duel.GetOperationInfo(ev,CATEGORY_ANNOUNCE)
-	local ac=0
+	local rcd=re:GetChainData(ev)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CODE)
-	if (cv&ANNOUNCE_CARD)~=0 then
-		ac=Duel.AnnounceCard(tp,cv)
+	if rcd.announce_filter then
+		local announce_filter=type(rcd.announce_filter)=="function"
+			and rcd.announce_filter(e,tp,eg,ep,ev,re,r,rp)
+			or rcd.announce_filter
+		--can't exclude the announced name since we can't guarantee there'll be a declarable name left,
+		--and having a card declaration prompt with no valid options leads to a soft lock
+		rcd.announced_card=Duel.AnnounceCard(tp,announce_filter)
 	else
-		ac=Duel.AnnounceCard(tp,table.unpack(re:GetHandler().announce_filter))
+		rcd.announced_card=Duel.AnnounceCard(tp,~DF.IsCode(rcd.announced_card))
 	end
-	Duel.ChangeTargetParam(ev,ac)
 end
 function s.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsFaceup() end

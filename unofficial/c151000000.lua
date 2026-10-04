@@ -106,7 +106,7 @@ if not ActionDuel then
 			for p=0,1 do
 				if Duel.SelectYesNo(p,aux.Stringid(id,3)) then
 					Duel.Hint(HINT_SELECTMSG,p,aux.Stringid(id,4))
-					local af=Duel.AnnounceCard(p,table.unpack(announceFilter))
+					local af=Duel.AnnounceCard(p,announceFilter)
 					table.insert(actionFieldToBeUsed,af)
 				end
 			end

@@ -25,7 +25,7 @@ function s.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local announce_filter={}
 	for i=1,ct do
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CODE)
-		code=Duel.AnnounceCard(tp,table.unpack(announce_filter))
+		code=Duel.AnnounceCard(tp,announce_filter)
 		table.insert(s.codes,code)
 		table.insert(announce_filter,code)
 		table.insert(announce_filter,OPCODE_ISCODE)

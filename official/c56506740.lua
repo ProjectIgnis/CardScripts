@@ -72,7 +72,7 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 			table.insert(s.announce_filter,OPCODE_OR)
 		end
 	end
-	local code=Duel.AnnounceCard(tp,table.unpack(s.announce_filter))
+	local code=Duel.AnnounceCard(tp,s.announce_filter)
 	Duel.SetTargetParam(code)
 	Duel.SetOperationInfo(0,CATEGORY_ANNOUNCE,nil,0,tp,ANNOUNCE_CARD_FILTER)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND|LOCATION_DECK|LOCATION_GRAVE)

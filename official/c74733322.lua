@@ -60,7 +60,7 @@ function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 			table.insert(s.announce_filter,OPCODE_OR)
 		end
 	end
-	local ac=Duel.AnnounceCard(tp,table.unpack(s.announce_filter))
+	local ac=Duel.AnnounceCard(tp,s.announce_filter)
 	table.insert(s.declared_names[tp],ac)
 	Duel.SetTargetParam(ac)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)

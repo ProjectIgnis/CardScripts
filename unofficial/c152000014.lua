@@ -24,7 +24,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.BreakEffect()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CODE)
 	s.announce_filter={TYPE_TRAP,OPCODE_ISTYPE,TYPE_SKILL,OPCODE_ISTYPE,OPCODE_NOT,OPCODE_AND,TYPE_ACTION,OPCODE_ISTYPE,OPCODE_NOT,OPCODE_AND,OPCODE_ALLOW_ALIASES}
-	local ac=Duel.AnnounceCard(tp,table.unpack(s.announce_filter))
+	local ac=Duel.AnnounceCard(tp,s.announce_filter)
 	local tc=Duel.CreateToken(tp,ac)
 	if tc:IsSSetable() then
 		Duel.SSet(tp,tc)

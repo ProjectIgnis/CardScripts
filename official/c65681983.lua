@@ -31,7 +31,7 @@ function s.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 			table.insert(s.announce_filter,OPCODE_OR)
 		end
 	end
-	local ac=Duel.AnnounceCard(tp,table.unpack(s.announce_filter))
+	local ac=Duel.AnnounceCard(tp,s.announce_filter)
 	Duel.SetTargetParam(ac)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,tp,LOCATION_DECK)
 	Duel.SetOperationInfo(0,CATEGORY_ANNOUNCE,nil,0,tp,ANNOUNCE_CARD_FILTER)

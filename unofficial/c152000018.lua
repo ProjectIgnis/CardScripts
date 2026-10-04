@@ -18,7 +18,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	if aux.CheckSkillNegation(e,tp) then return end
 	--Add Cyberse monster to Extra Deck
 	s.announce_filter={TYPE_EXTRA,OPCODE_ISTYPE,RACE_CYBERSE,OPCODE_ISRACE,OPCODE_AND,OPCODE_ALLOW_ALIASES}
-	local storm=Duel.AnnounceCard(tp,table.unpack(s.announce_filter))
+	local storm=Duel.AnnounceCard(tp,s.announce_filter)
 	local tc=Duel.CreateToken(tp,storm)
 	if tc:IsAbleToDeck() then
 		Duel.SendtoDeck(tc,tp,0,REASON_EFFECT)

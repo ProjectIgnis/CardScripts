@@ -1,41 +1,51 @@
+--鉄壁氷山－ディフェンドアイスバーグ－
 --Defender Iceberg
 local s,id=GetID()
+local RACES_AQUA_FISH_SEASERPENT=RACE_AQUA|RACE_FISH|RACE_SEASERPENT
 function s.initial_effect(c)
-	--pos
-	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(3117804,0))
-	e1:SetCategory(CATEGORY_POSITION)
-	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e1:SetCode(EVENT_SUMMON_SUCCESS)
-	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
-	e1:SetCondition(s.poscon)
-	e1:SetOperation(s.posop)
-	c:RegisterEffect(e1)
-	local e2=e1:Clone()
-	e2:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
-	c:RegisterEffect(e2)
-	local e3=e1:Clone()
-	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
-	c:RegisterEffect(e3)
-	--target
+	--As long as "Defender Iceberg" remains face-up on the field, all other Aqua, Fish, and Sea Serpent-Type monsters cannot be selected as an attack target. 
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_CANNOT_BE_BATTLE_TARGET)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetTargetRange(LOCATION_MZONE,0)
-	e1:SetCode(EFFECT_CANNOT_BE_BATTLE_TARGET)
-	e1:SetTarget(s.tglimit)
+	e1:SetTarget(function(e,c) return c:IsFaceup() and c:IsRace(RACES_AQUA_FISH_SEASERPENT) and not c:IsCode(id) end)
 	e1:SetValue(1)
 	c:RegisterEffect(e1)
+	--If the ATK of a monster that attacks a Defense Position Defender Iceberg is lower than the DEF of Defender Iceberg, damage calculation is not applied.
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e2:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetCondition(s.nodamcon)
+	e2:SetOperation(s.nodamop)
+	c:RegisterEffect(e2)
 end
-function s.poscon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsAttackPos()
+s.listed_names={id}
+function s.nodamcon(e)
+	local a,at=Duel.GetAttacker(),Duel.GetAttackTarget()
+	local p=a:GetControler()
+	local acatk,atdef=a:GetAttack(),at:GetDefense()
+	return a and Duel.GetBattleDamage(p)>0 and at and at:IsDefensePos() and at:IsCode(id) and atdef>acatk
 end
-function s.posop(e,tp,eg,ep,ev,re,r,rp)
+function s.nodamop(e,tp,eg,ev,ep,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsFaceup() and c:IsRelateToEffect(e) then
-		Duel.ChangePosition(c,POS_FACEUP_DEFENSE)
+	local a,at=Duel.GetAttacker(),Duel.GetAttackTarget()
+	local p=a:GetControler()
+	local acatk,atdef=a:GetAttack(),at:GetDefense()
+	if a and at and at:IsDefensePos() and at:IsCode(id) and atdef>acatk then
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		e1:SetCode(EVENT_PRE_BATTLE_DAMAGE)
+		e1:SetLabel(p)
+		e1:SetOperation(s.damop)
+		e1:SetReset(RESET_PHASE|PHASE_DAMAGE)
+		Duel.RegisterEffect(e1,tp)
 	end
 end
-function s.tglimit(e,c)
-	return c~=e:GetHandler() and c:IsAttribute(ATTRIBUTE_WATER)
+function s.damop(e,tp,eg,ep,ev,re,r,rp)
+	local p=e:GetLabel()
+	if Duel.GetBattleDamage(p)>0 then
+		Duel.ChangeBattleDamage(p,0)
+	end
 end

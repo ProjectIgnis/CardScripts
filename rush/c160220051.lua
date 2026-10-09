@@ -27,7 +27,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function s.filter(c)
-	return (c:IsMonster() and c:IsLevel(1)) or c:IsCode(160220053)
+	return c:IsMonster() and c:IsLevel(1)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	--Effect
@@ -37,8 +37,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetDecktopGroup(tp,4)
 	Duel.DisableShuffleCheck()
 	local sg=g:Filter(s.filter,nil)
-	if #sg>0 then
-		local atkval=#sg*700
+	local sg2=g:Filter(Card.IsCode,nil,160220053)
+	if #sg>0 or #sg2>0 then
+		local atkval=(#sg+#sg2)*700
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)

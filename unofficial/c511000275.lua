@@ -7,17 +7,17 @@ function s.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
-	--Activate in the opponent's turn if you control no cards
+	--During you opponent's Draw Phase, if you control no cards: You can activate this card from your hand
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,0))
-	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e2:SetCode(EVENT_PHASE+PHASE_DRAW)
+	e2:SetType(EFFECT_TYPE_SINGLE)
+	e2:SetProperty(EFFECT_FLAG_UNCOPYABLE|EFFECT_FLAG_CANNOT_DISABLE|EFFECT_FLAG_SET_AVAILABLE)
+	e2:SetCode(EFFECT_BECOME_QUICK)
 	e2:SetRange(LOCATION_HAND)
-	e2:SetCountLimit(1)
-	e2:SetCondition(s.actfromhandcon)
-	e2:SetTarget(s.actfromhandtg)
-	e2:SetOperation(s.actfromhandop)
+	e2:SetCondition(s.condition)
 	c:RegisterEffect(e2)
+	local e2a=e2:Clone()
+	e2a:SetCode(EFFECT_QP_ACT_IN_NTPHAND)
+	c:RegisterEffect(e2a)
 	--"Numeron" Xyz Monsters you control do not have to detach materials to activate effects that require detaching materials
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -60,18 +60,9 @@ function s.initial_effect(c)
 	end
 end
 s.listed_series={SET_NUMERON}
-function s.actfromhandcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep==1-tp and Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD,0)==0
-end
-function s.actfromhandtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-end
-function s.actfromhandop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	if c then
-		Duel.MoveToField(c,tp,tp,LOCATION_FZONE,POS_FACEUP,true)
-		Duel.RaiseEvent(c,EVENT_CHAIN_SOLVED,c:GetActivateEffect(),0,tp,tp,Duel.GetCurrentChain())
-	end
+function s.condition(e)
+	return Duel.IsTurnPlayer(1-e:GetHandlerPlayer()) and e:GetHandler():IsLocation(LOCATION_HAND) and Duel.IsPhase(PHASE_DRAW)
+		and Duel.GetFieldGroupCount(e:GetHandlerPlayer(),LOCATION_ONFIELD,0)==0
 end
 function s.numactfilter(c,e,tp,eg,ep,ev,re,r,rp,chain,chk)
 	local te=c:GetActivateEffect()
@@ -85,9 +76,9 @@ function s.numactfilter(c,e,tp,eg,ep,ev,re,r,rp,chain,chk)
 		local tc=te2:GetHandler()
 		local g=Group.FromCards(tc)
 		local p=tc:GetControler()
-		return (not condition or condition(e,tp,g,p,chain,te2,REASON_EFFECT,p)) and (not cost or cost(e,tp,g,p,chain,te2,REASON_EFFECT,p,0)) 
+		return (not condition or condition(e,tp,g,p,chain,te2,REASON_EFFECT,p)) and (not cost or cost(e,tp,g,p,chain,te2,REASON_EFFECT,p,0))
 			and (not target or target(e,tp,g,p,chain,te2,REASON_EFFECT,p,0))
-	elseif (te:GetCode()==EVENT_FREE_CHAIN and e:GetCode()==EVENT_FREE_CHAIN) 
+	elseif (te:GetCode()==EVENT_FREE_CHAIN and e:GetCode()==EVENT_FREE_CHAIN)
 		or (te:GetCode()==EVENT_SPSUMMON and e:GetCode()==EVENT_SPSUMMON) then
 		if te:GetCode()==EVENT_SPSUMMON and chk then copychain=1 end
 		return (not condition or condition(e,tp,eg,ep,ev,re,r,rp)) and (not cost or cost(e,tp,eg,ep,ev,re,r,rp,0))

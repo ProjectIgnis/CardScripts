@@ -44,12 +44,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not sc then return end
 	local op=Duel.SelectOption(tp,aux.Stringid(id,2),aux.Stringid(id,3))
 	local target_p=op==0 and tp or 1-tp
-	local fc=Duel.GetFieldCard(target_p,LOCATION_FZONE,0)
-	if fc then
-		Duel.SendtoGrave(fc,REASON_RULE)
-		Duel.BreakEffect()
-	end
-	if Duel.MoveToField(sc,tp,target_p,LOCATION_FZONE,POS_FACEUP,true) and Duel.GetFieldCard(1-tp,LOCATION_FZONE,0)
+	if Duel.PlaceFieldSpell(sc,tp,target_p) and Duel.GetFieldCard(1-tp,LOCATION_FZONE,0)
 		and Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_DECK,0,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(id,4)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local g=Duel.SelectMatchingCard(tp,s.thfilter,tp,LOCATION_DECK,0,1,1,nil)

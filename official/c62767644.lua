@@ -36,7 +36,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		if sc then
 			local op=Duel.SelectOption(tp,false,aux.Stringid(id,3),aux.Stringid(id,4))
 			local target_player=op==0 and tp or 1-tp
-			Duel.MoveToField(sc,tp,target_player,LOCATION_FZONE,POS_FACEUP,true)
+			Duel.PlaceFieldSpell(sc,tp,target_player)
 		end
 	end
 end

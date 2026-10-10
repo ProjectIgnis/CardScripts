@@ -37,12 +37,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil)
 	if #g>0 then
 		local tc=g:GetFirst()
-		local fc=Duel.GetFieldCard(1-tp,LOCATION_FZONE,0)
-		if fc then
-			Duel.SendtoGrave(fc,REASON_RULE)
-			Duel.BreakEffect()
-		end
-		Duel.MoveToField(tc,tp,1-tp,LOCATION_FZONE,POS_FACEUP,true)
+		Duel.PlaceFieldSpell(tc,tp,1-tp)
 	end
 end
 function s.spcon(e,tp,eg,ep,ev,re,r,rp)

@@ -76,10 +76,5 @@ function s.plop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
 	local tc=Duel.SelectMatchingCard(tp,s.plfilter,tp,LOCATION_DECK,0,1,1,nil):GetFirst()
 	if not tc then return end
-	local fc=Duel.GetFieldCard(tp,LOCATION_FZONE,0)
-	if fc then
-		Duel.SendtoGrave(fc,REASON_RULE)
-		Duel.BreakEffect()
-	end
-	Duel.MoveToField(tc,tp,tp,LOCATION_FZONE,POS_FACEUP,true)
+	Duel.PlaceFieldSpell(tc,tp)
 end

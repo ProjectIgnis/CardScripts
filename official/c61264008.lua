@@ -30,14 +30,6 @@ function s.plfilter(c,targ_p,code)
 	return c:IsFieldSpell() and not c:IsForbidden()
 		and not c:IsOriginalCode(code) and (c:IsControler(targ_p) or c:IsAbleToChangeControler())
 end
-function s.placefield(c,tp,targ_p)
-	local fc=Duel.GetFieldCard(targ_p,LOCATION_FZONE,0)
-	if fc then
-		Duel.SendtoGrave(fc,REASON_RULE)
-		Duel.BreakEffect()
-	end
-	return Duel.MoveToField(c,tp,targ_p,LOCATION_FZONE,POS_FACEUP,true)
-end
 function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	local old_fp=tc:GetControler()
@@ -47,7 +39,7 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 		or (tc:IsControler(old_fp) and not tc:IsAbleToChangeControler())
 		or tc:IsForbidden() then return end
 	Duel.BreakEffect()
-	if not s.placefield(tc,tp,1-old_fp) then return end
+	if not Duel.PlaceFieldSpell(tc,tp,1-old_fp) then return end
 	local g=Duel.GetMatchingGroup(s.plfilter,tc:GetControler(),LOCATION_GRAVE,0,nil,old_fp,tc:GetOriginalCode())
 	if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
@@ -55,6 +47,6 @@ function s.rmop(e,tp,eg,ep,ev,re,r,rp)
 		if not pc then return end
 		Duel.HintSelection(pc,true)
 		Duel.BreakEffect()
-		s.placefield(pc,tp,old_fp)
+		Duel.PlaceFieldSpell(pc,tp,old_fp)
 	end
 end

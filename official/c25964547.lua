@@ -35,11 +35,6 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 	for p=0,1 do
 		local tc=cs[p+1]
-		local fc=Duel.GetFieldCard(p,LOCATION_FZONE,0)
-		if fc then
-			Duel.SendtoGrave(fc,REASON_RULE)
-			Duel.BreakEffect()
-		end
-		Duel.MoveToField(tc,tp,p,LOCATION_FZONE,POS_FACEUP,true)
+		Duel.PlaceFieldSpell(tc,tp,p)
 	end
 end

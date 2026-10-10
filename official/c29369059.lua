@@ -111,12 +111,7 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 				local plc=Duel.SelectMatchingCard(tp,s.plfilter,tp,LOCATION_HAND,0,1,1,nil):GetFirst()
 				if plc then
 					Duel.BreakEffect()
-					local fc=Duel.GetFieldCard(tp,LOCATION_FZONE,0)
-					if fc then
-						Duel.SendtoGrave(fc,REASON_RULE)
-						Duel.BreakEffect()
-					end
-					Duel.MoveToField(plc,tp,tp,LOCATION_FZONE,POS_FACEUP,true)
+					Duel.PlaceFieldSpell(plc,tp)
 				end
 			end
 		end

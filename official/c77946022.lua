@@ -82,14 +82,9 @@ function s.pltg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.plop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not (c:IsRelateToEffect(e) and Duel.SendtoGrave(c,REASON_EFFECT)>0 and c:IsLocation(LOCATION_GRAVE)) then return end 
+	if not (c:IsRelateToEffect(e) and Duel.SendtoGrave(c,REASON_EFFECT)>0 and c:IsLocation(LOCATION_GRAVE)) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
 	local sc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.plfilter),tp,LOCATION_DECK|LOCATION_GRAVE,0,1,1,nil):GetFirst()
 	if not sc then return end
-	local fc=Duel.GetFieldCard(tp,LOCATION_FZONE,0)
-	if fc then
-		Duel.SendtoGrave(fc,REASON_RULE)
-		Duel.BreakEffect()
-	end
-	Duel.MoveToField(sc,tp,tp,LOCATION_FZONE,POS_FACEUP,true)
+	Duel.PlaceFieldSpell(sc,tp)
 end

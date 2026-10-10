@@ -46,7 +46,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
 		local tc=g:Select(tp,1,1,nil):GetFirst()
 		if not tc then return end
-		Duel.MoveToField(tc,tp,tp,LOCATION_FZONE,POS_FACEUP,true)
+		Duel.PlaceFieldSpell(tc,tp)
 	end
 end
 function s.repfilter(c,tp)

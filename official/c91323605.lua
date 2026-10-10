@@ -45,12 +45,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
 	local tc=Duel.SelectMatchingCard(tp,s.fieldfilter,tp,LOCATION_DECK,0,1,1,nil,codes):GetFirst()
 	if not tc then return end
-	local fc=Duel.GetFieldCard(tp,LOCATION_FZONE,0)
-	if fc then
-		Duel.SendtoGrave(fc,REASON_RULE)
-		Duel.BreakEffect()
-	end
-	if Duel.MoveToField(tc,tp,tp,LOCATION_FZONE,POS_FACEUP,true) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
+	if Duel.PlaceFieldSpell(tc,tp) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
 		local sg=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_DECK,0,nil,e,tp)
 		if #sg<5 then return end
 		local g=aux.SelectUnselectGroup(sg,e,tp,5,5,aux.dncheck,1,tp,HINTMSG_CONFIRM)

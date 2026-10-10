@@ -120,6 +120,6 @@ end
 function s.plop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then
-		Duel.MoveToField(c,tp,tp,LOCATION_FZONE,POS_FACEUP,true)
+		Duel.PlaceFieldSpell(c,tp)
 	end
 end

@@ -67,7 +67,7 @@ function s.setop(e,tp,eg,ep,ev,re,r,rp)
 				Duel.BreakEffect()
 			end
 		end
-		if Duel.GetLocationCount(tp,LOCATION_SZONE)>0 then
+		if tc:IsFieldSpell() or Duel.GetLocationCount(tp,LOCATION_SZONE)>0 then
 			Duel.SSet(tp,tc)
 			andifyoudo=true
 		end

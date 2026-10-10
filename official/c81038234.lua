@@ -54,12 +54,7 @@ function s.plop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
 	local plc=Duel.SelectMatchingCard(tp,s.plfilter,tp,LOCATION_REMOVED|LOCATION_GRAVE,0,1,1,nil):GetFirst()
 	if not plc then return end
-	local fc=Duel.GetFieldCard(tp,LOCATION_FZONE,0)
-	if fc then
-		Duel.SendtoGrave(fc,REASON_RULE)
-		Duel.BreakEffect()
-	end
-	if not Duel.MoveToField(plc,tp,tp,LOCATION_FZONE,POS_FACEUP,true) or Duel.GetLocationCount(tp,LOCATION_MZONE)==0 then return end
+	if not Duel.PlaceFieldSpell(plc,tp) or Duel.GetLocationCount(tp,LOCATION_MZONE)==0 then return end
 	local code=plc:GetCode()
 	local g=Duel.GetMatchingGroup(s.spfilter,tp,LOCATION_HAND,0,nil,e,tp,code)
 	if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then

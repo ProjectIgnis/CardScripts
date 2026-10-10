@@ -47,11 +47,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not sc then return end
 	if sc:IsCode(74733322) then
 		if not tohand_chk then
-			Duel.MoveToField(sc,tp,tp,LOCATION_FZONE,POS_FACEUP,true)
+			Duel.PlaceFieldSpell(sc,tp)
 		else
 			aux.ToHandOrElse(sc,tp,
 				function() return tohand_chk and not sc:IsForbidden() end,
-				function() Duel.MoveToField(sc,tp,tp,LOCATION_FZONE,POS_FACEUP,true) end,
+				function() Duel.PlaceFieldSpell(sc,tp) end,
 				aux.Stringid(id,3)
 			)
 		end

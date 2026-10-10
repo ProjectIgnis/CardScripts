@@ -68,7 +68,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
 		Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
 	elseif (tpe&TYPE_FIELD)~=0 then
-		Duel.MoveToField(tc,tp,tp,LOCATION_FZONE,POS_FACEUP,true)
+		Duel.PlaceFieldSpell(tc,tp)
 	end
 	tc:CreateEffectRelation(te)
 	if co then co(te,tp,eg,ep,ev,re,r,rp,1) end
@@ -86,7 +86,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		etc:CreateEffectRelation(te)
 		etc=g:GetNext()
 	end
-	if op then 
+	if op then
 		if tc:IsSetCard(SET_RANK_UP_MAGIC) then
 			op(e,tp,eg,ep,ev,re,r,rp)
 		else

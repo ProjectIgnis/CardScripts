@@ -44,7 +44,7 @@ function s.initial_effect(c)
 	e3:SetOperation(function(e,tp,eg,ep,ev,re,r,rp)
 		local c=e:GetHandler()
 		if c:IsRelateToEffect(e) then
-			Duel.MoveToField(c,tp,tp,LOCATION_FZONE,POS_FACEUP,true)
+			Duel.PlaceFieldSpell(c,tp)
 		end
 	end)
 	c:RegisterEffect(e3)

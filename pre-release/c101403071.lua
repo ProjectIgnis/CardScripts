@@ -82,12 +82,7 @@ function s.plop(e,tp,eg,ep,ev,re,r,rp)
 	if not sc then return end
 	local c=e:GetHandler()
 	local ct=c:GetCounter(COUNTER_SEASON)
-	local fc=Duel.GetFieldCard(tp,LOCATION_FZONE,0)
-	if fc then
-		Duel.SendtoGrave(fc,REASON_RULE)
-		Duel.BreakEffect()
-	end
-	if Duel.MoveToField(sc,tp,tp,LOCATION_FZONE,POS_FACEUP,true) and ct>0 then
+	if Duel.PlaceFieldSpell(sc,tp) and ct>0 then
 		sc:AddCounter(COUNTER_SEASON,ct)
 	end
 end

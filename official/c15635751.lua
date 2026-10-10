@@ -85,7 +85,7 @@ function s.tofieldop(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(e) and aux.RemoveUntil(c,nil,REASON_EFFECT,PHASE_STANDBY,id,e,tp,s.returnop) and c:IsLocation(LOCATION_REMOVED) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
 		local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(s.tofieldfilter),tp,LOCATION_HAND|LOCATION_DECK|LOCATION_GRAVE,0,1,1,nil):GetFirst()
-		if not tc or not Duel.MoveToField(tc,tp,tp,LOCATION_FZONE,POS_FACEUP,true) then return end
+		if not tc or not Duel.PlaceFieldSpell(tc,tp) then return end
 		--Special Summon 1 "Artorigus" monster, or add to your hand 1 "Noble Arms" card, from your Deck or GY
 		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 		if Duel.IsExistingMatchingCard(aux.NecroValleyFilter(s.cfilter),tp,LOCATION_DECK|LOCATION_GRAVE,0,1,nil,e,tp,ft) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
@@ -113,10 +113,5 @@ function s.tofieldop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.returnop(rg,e,tp,eg,ep,ev,re,r,rp)
-	local fc=Duel.GetFieldCard(tp,LOCATION_FZONE,0)
-	if fc then
-		Duel.SendtoGrave(fc,REASON_RULE)
-		Duel.BreakEffect()
-	end
-	Duel.MoveToField(e:GetHandler(),tp,tp,LOCATION_FZONE,POS_FACEUP,true)
+	Duel.PlaceFieldSpell(e:GetHandler(),tp)
 end

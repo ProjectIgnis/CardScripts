@@ -2711,28 +2711,31 @@ end
 function Auxiliary.HarmonizingMagFilter(c,e,f)
 	return f and not f(e,c)
 end
+function Duel.PlaceFieldSpell(c,tp,target_p)
+	if not target_p then target_p=tp end
+	local fc=Duel.GetFieldCard(target_p,LOCATION_FZONE,0)
+	if Duel.IsDuelType(DUEL_1_FIELD) then
+		if fc then Duel.Destroy(fc,REASON_RULE) end
+	else
+		if fc and Duel.SendtoGrave(fc,REASON_RULE)==0 then
+			Duel.SendtoGrave(c,REASON_RULE)
+			return false
+		end
+	end
+	Duel.BreakEffect()
+	local res=Duel.MoveToField(c,tp,target_p,LOCATION_FZONE,POS_FACEUP,true)
+	if res and Duel.IsDuelType(DUEL_1_FIELD) then
+		fc=Duel.GetFieldCard(1-target_p,LOCATION_FZONE,0)
+		if fc and Duel.Destroy(fc,REASON_RULE)==0 then
+			Duel.SendtoGrave(c,REASON_RULE)
+			return false
+		end
+	end
+	return res
+end
 function Duel.ActivateFieldSpell(c,e,tp,eg,ep,ev,re,r,rp,target_p)
 	if not target_p then target_p=tp end
-	if c then
-		local fc=Duel.GetFieldCard(target_p,LOCATION_FZONE,0)
-		if Duel.IsDuelType(DUEL_1_FIELD) then
-			if fc then Duel.Destroy(fc,REASON_RULE) end
-			local of=Duel.GetFieldCard(1-target_p,LOCATION_FZONE,0)
-			if of and Duel.Destroy(of,REASON_RULE)==0 then
-				Duel.SendtoGrave(c,REASON_RULE)
-				return false
-			else
-				Duel.BreakEffect()
-			end
-		else
-			if fc and Duel.SendtoGrave(fc,REASON_RULE)==0 then
-				Duel.SendtoGrave(c,REASON_RULE)
-				return false
-			else
-				Duel.BreakEffect()
-			end
-		end
-		Duel.MoveToField(c,tp,target_p,LOCATION_FZONE,POS_FACEUP,true)
+	if c and Duel.PlaceFieldSpell(c,tp,target_p) then
 		local te=c:GetActivateEffect()
 		te:UseCountLimit(tp,1,true)
 		local tep=c:GetControler()

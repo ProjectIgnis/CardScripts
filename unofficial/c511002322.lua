@@ -21,24 +21,8 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND,0,1,1,nil,tp):GetFirst()
 	if not tc then return end
 	if tc:IsType(TYPE_FIELD) then
-		local fc=Duel.GetFieldCard(tp,LOCATION_FZONE,0)
-		if Duel.IsDuelType(DUEL_1_FIELD) then
-			if fc then Duel.Destroy(fc,REASON_RULE) end
-			of=Duel.GetFieldCard(1-tp,LOCATION_FZONE,0)
-			if of and Duel.Destroy(of,REASON_RULE)==0 then
-				Duel.SendtoGrave(c,REASON_RULE)
-				return false
-			else
-				Duel.BreakEffect()
-			end
-		else
-			if fc and Duel.SendtoGrave(fc,REASON_RULE)==0 then
-				Duel.SendtoGrave(c,REASON_RULE)
-				return false
-			else
-				Duel.BreakEffect()
-			end
-		end
+		Duel.PlaceFieldSpell(tc,tp)
+	else
+		Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
 	end
-	Duel.MoveToField(tc,tp,tp,tc:IsType(TYPE_FIELD) and LOCATION_FZONE or LOCATION_SZONE,POS_FACEUP,true)
 end

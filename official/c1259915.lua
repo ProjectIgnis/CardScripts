@@ -65,7 +65,7 @@ function s.plop(e,tp,eg,ep,ev,re,r,rp)
 			local sc=Duel.SelectMatchingCard(tp,s.fieldplfilter,tp,LOCATION_DECK,0,1,1,nil,tp):GetFirst()
 			if sc then
 				Duel.BreakEffect()
-				Duel.MoveToField(sc,tp,tp,LOCATION_FZONE,POS_FACEUP,true)
+				Duel.PlaceFieldSpell(sc,tp)
 			end
 		end
 	end

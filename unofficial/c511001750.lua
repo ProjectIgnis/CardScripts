@@ -32,7 +32,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EVENT_CHAIN_END)
 		e1:SetCountLimit(1)
 		e1:SetLabelObject(rg)
-		e1:SetCondition(function(e) local tp=e:GetHandlerPlayer() return Duel.IsPlayerCanDraw(tp,1) end) 
+		e1:SetCondition(function(e) local tp=e:GetHandlerPlayer() return Duel.IsPlayerCanDraw(tp,1) end)
 		e1:SetOperation(s.drop)
 		e1:SetReset(RESET_PHASE|PHASE_END)
 		Duel.RegisterEffect(e1,tp)
@@ -67,7 +67,7 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp,c,og)
 					if rc:GetPreviousSequence()==7 or rc:GetPreviousSequence()==4 then seq=1 end
 					Duel.MoveToField(rc,tp,tp,LOCATION_PZONE,rc:GetPreviousPosition(),true,(1<<seq))
 				elseif rc:IsPreviousLocation(LOCATION_FZONE) and rc:IsFieldSpell() then
-					Duel.MoveToField(rc,tp,tp,LOCATION_FZONE,rc:GetPreviousPosition(),true)
+					Duel.PlaceFieldSpell(rc,tp)
 				else
 					Duel.MoveToField(rc,tp,tp,rc:GetPreviousLocation(),rc:GetPreviousPosition(),true)
 					if not rc:IsType(TYPE_MONSTER) and not rc:IsContinuousSpellTrap() and rc:IsPosition(POS_FACEUP) and not rc:IsHasEffect(EFFECT_REMAIN_FIELD) then
@@ -77,5 +77,5 @@ function s.drop(e,tp,eg,ep,ev,re,r,rp,c,og)
 			end
 		end
 		g:DeleteGroup()
-	end	
+	end
 end

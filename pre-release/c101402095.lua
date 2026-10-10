@@ -33,7 +33,7 @@ function s.initial_effect(c)
 	e2:SetTargetRange(0,1)
 	e2:SetCondition(s.angelcountcondition(2))
 	e2:SetOperation(function(e,c,tp,r)
-		return (r&LOCATION_REASON_SPSUMMON)==LOCATION_REASON_SPSUMMON
+		return r==LOCATION_REASON_SPSUMMON
 	end)
 	c:RegisterEffect(e2)
 	--● 3+: Once per turn, you can activate 1 "Angelechy" Trap Card the turn it was Set

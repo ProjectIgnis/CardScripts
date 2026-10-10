@@ -31,7 +31,7 @@ function s.cfilter(c)
 	return c:IsFaceup() and c:IsNotMaximumModeSide()
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE,0,nil)
+	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	return g:GetClassCount(Card.GetRace)>=2 and Duel.GetFlagEffect(tp,id)==0
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)

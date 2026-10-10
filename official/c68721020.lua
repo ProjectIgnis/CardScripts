@@ -73,6 +73,8 @@ function s.eqop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetReset(RESET_EVENT|RESETS_STANDARD)
 		e2:SetHintTiming(0,TIMING_STANDBY_PHASE|TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E)
 		c:RegisterEffect(e2)
+	else
+		c:CancelToGrave(false)
 	end
 end
 function s.thfilter(c)

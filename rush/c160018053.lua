@@ -36,14 +36,14 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function s.extrafil_repl_filter(c)
-    return c:IsMonster() and c:IsAbleToDeck() and c:IsRace(RACE_WYRM)
+	return c:IsMonster() and c:IsAbleToDeck() and c:IsRace(RACE_WYRM)
 end
 function s.checkmat(tp,sg,fc)
 	return sg:GetClassCount(Card.GetLocation)==1
 end
 function s.extrafil_replacement(e,tp,mg)
-    return Duel.GetMatchingGroup(aux.NecroValleyFilter(s.extrafil_repl_filter),tp,LOCATION_GRAVE,0,nil),s.checkmat
+	return Duel.GetMatchingGroup(aux.NecroValleyFilter(s.extrafil_repl_filter),tp,LOCATION_GRAVE,0,nil),s.checkmat
 end
 function s.extramat(c,e,tp)
-    return c:IsControler(tp) and e:GetHandler():IsCode(CARD_FUSION)
+	return c:IsControler(tp) and e:GetHandler():IsCode(CARD_FUSION)
 end

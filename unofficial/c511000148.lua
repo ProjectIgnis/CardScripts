@@ -34,12 +34,12 @@ function s.spcheck(sg,e,tp)
 		and sg:IsExists(Card.IsCode,1,nil,71036835) and sg:IsExists(Card.IsCode,1,nil,34419588)
 		and sg:IsExists(Card.IsCode,1,nil,7021574)
 end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk)	
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local g=Duel.GetMatchingGroup(Card.IsCanBeSpecialSummoned,tp,LOCATION_HDG,0,nil,e,0,tp,false,false)
 		if e:GetLabel()==0 and Duel.GetLocationCount(tp,LOCATION_MZONE)<5 then return false end
 		e:SetLabel(0)
-		return not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) and aux.SelectUnselectGroup(g,e,tp,5,5,s.spcheck,0)  
+		return not Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) and aux.SelectUnselectGroup(g,e,tp,5,5,s.spcheck,0)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,5,tp,LOCATION_HDG)
 end

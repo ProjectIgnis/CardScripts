@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_names={CARD_REDEYES_B_DRAGON,160015057,160015024} --"Meteor Flare Fusion",  "Meteorite Dragon's Chick"
+s.listed_names={CARD_REDEYES_B_DRAGON,160015057,160015024} --"Meteor Flare Fusion", "Meteorite Dragon's Chick"
 function s.thfilter(c)
 	return c:IsCode(CARD_REDEYES_B_DRAGON,160015057) and c:IsAbleToHand()
 end

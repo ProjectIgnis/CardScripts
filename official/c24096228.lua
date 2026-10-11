@@ -2,8 +2,9 @@
 --Double Spell
 local s,id=GetID()
 function s.initial_effect(c)
-	--copy spell
+	--Discard 1 Spell, then target 1 Spell in your opponent's GY; place that target in the appropriate Zone on your field, and as this card's effect resolution, follow its card text as if you had used it yourself.
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -12,7 +13,6 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-s.listed_series={SET_RANK_UP_MAGIC}
 function s.cfilter(c)
 	return c:IsDiscardable() and c:IsSpell()
 end

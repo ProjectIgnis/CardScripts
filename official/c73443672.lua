@@ -40,8 +40,8 @@ function s.spnormalfilter(c,e,tp)
 	return c:IsType(TYPE_NORMAL) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
-    local g=Duel.GetMatchingGroup(nil,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-    if #g>0 and Duel.Destroy(g,REASON_EFFECT)>0 then
+	local g=Duel.GetMatchingGroup(nil,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	if #g>0 and Duel.Destroy(g,REASON_EFFECT)>0 then
 		local rg=Duel.GetMatchingGroup(aux.AND(Card.IsAbleToRemove,Card.IsMonster),tp,LOCATION_DECK,LOCATION_DECK,nil)
 		if #rg==0 then return end
 		Duel.BreakEffect()

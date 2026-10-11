@@ -62,7 +62,7 @@ function s.atkfilter(c)
 	return c:IsFaceup() and (c:IsSetCard(SET_HARPIE) or c:IsSetCard(SET_AMAZONESS))
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return aux.CanActivateSkill(tp) and  Duel.IsExistingMatchingCard(aux.AND(Card.IsMonster,Card.IsDiscardable),tp,LOCATION_HAND,0,1,nil) 
+	return aux.CanActivateSkill(tp) and Duel.IsExistingMatchingCard(aux.AND(Card.IsMonster,Card.IsDiscardable),tp,LOCATION_HAND,0,1,nil) 
 		and Duel.IsExistingMatchingCard(s.atkfilter,tp,LOCATION_MZONE,0,1,nil) and not Duel.HasFlagEffect(tp,id)
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)

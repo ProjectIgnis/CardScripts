@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
-	--(Quick Effect): You can target 1 face-down Defense Position  monster on the field; change it to face-up Defense Position
+	--(Quick Effect): You can target 1 face-down Defense Position monster on the field; change it to face-up Defense Position
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,2))
 	e3:SetCategory(CATEGORY_POSITION)

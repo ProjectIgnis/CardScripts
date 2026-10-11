@@ -3,7 +3,7 @@
 --scripted by pyrQ
 local s,id=GetID()
 function s.initial_effect(c)
-	--Special Summon this card (from your hand)
+	--If "Obsidim, the Ashened City" is in the Field Zone, you can Special Summon this card (from your hand)
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetCondition(s.selfspcon)
 	c:RegisterEffect(e1)
-	--Destroy 1 Pyro monster on the field
+	--During the Main Phase (Quick Effect): You can target 1 Pyro monster on the field; destroy it, then if you destroyed "Veidos the Eruption Dragon of Extinction" by this effect, you can place 1 "Obsidim, the Ashened City" from your Deck face-up in your Field Zone
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_DESTROY)

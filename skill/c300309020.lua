@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.flipop)
 	c:RegisterEffect(e1)
 end
-s.listed_names={86327225,60365591} --"Shinato, King of A Higher Plane", "Shinato's  Ark"
+s.listed_names={86327225,60365591} --"Shinato, King of A Higher Plane", "Shinato's Ark"
 function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SKILL_FLIP,tp,id|(1<<32))
 	Duel.Hint(HINT_CARD,tp,id)
@@ -51,14 +51,14 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 	--Register monsters Normal Summoned on your turn
 	aux.GlobalCheck(s,function()
 		s[0]={} --previous
-    	s[1]={} --current
-        local ge1=Effect.CreateEffect(c)
-    	ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		s[1]={} --current
+		local ge1=Effect.CreateEffect(c)
+		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCode(EVENT_SUMMON_SUCCESS)
 		ge1:SetOperation(s.checkop)
 		Duel.RegisterEffect(ge1,0)
 		aux.AddValuesReset(function()
-        		if Duel.GetTurnPlayer()==ge1:GetHandlerPlayer() then 
+			if Duel.GetTurnPlayer()==ge1:GetHandlerPlayer() then 
 				s[0]=s[1] --set "previous" to "current"
 				s[1]={} --reset current
 			end

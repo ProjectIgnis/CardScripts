@@ -31,14 +31,14 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return not Duel.HasFlagEffect(tp,id)
 end
 function s.cfilter(c,...)
-    if not (c:IsFaceup() and c:IsNotMaximumModeSide()) then return false end
-    local named_mats={...}
-    for key,current_mat in pairs(named_mats) do
-        if not c:IsCode(current_mat) then
-            return true
-        end
-    end
-    return false
+	if not (c:IsFaceup() and c:IsNotMaximumModeSide()) then return false end
+	local named_mats={...}
+	for key,current_mat in pairs(named_mats) do
+		if not c:IsCode(current_mat) then
+			return true
+		end
+	end
+	return false
 end
 function s.revealfilter(c,tp)
 	return c:IsType(TYPE_FUSION) and c:IsAttribute(ATTRIBUTE_FIRE) and c:IsAttack(2900) and not c:IsPublic()

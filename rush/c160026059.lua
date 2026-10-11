@@ -15,13 +15,13 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.cfilter(c,e,tp,...)
-    local named_mats={...}
-    for key,current_mat in pairs(named_mats) do
-        if c:IsCode(current_mat) then
-            return c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-        end
-    end
-    return false
+	local named_mats={...}
+	for key,current_mat in pairs(named_mats) do
+		if c:IsCode(current_mat) then
+			return c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+		end
+	end
+	return false
 end
 function s.revealfilter(c,e,tp)
 	return c:IsType(TYPE_FUSION) and c:IsLevel(7) and c:IsRace(RACE_WARRIOR) and c:IsAttack(2500) and not c:IsPublic()

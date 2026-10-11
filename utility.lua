@@ -2957,6 +2957,14 @@ function Auxiliary.DefaultFieldReturnOp(rg)
 	select_field_return_cards(1-turn_p,g1)
 end
 
+function Auxiliary.LimitParams(f,n)
+	n=n or 1
+	return function(...)
+		local to_unpack=math.min(n, select('#',...))
+		return f(table.unpack({...},1,to_unpack))
+	end
+end
+
 Duel.LoadScript("debug_utility.lua")
 Duel.LoadScript("chain.lua")
 Duel.LoadScript("cards_specific_functions.lua")

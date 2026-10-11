@@ -10,7 +10,7 @@ function s.initial_effect(c)
 			return c:IsSetCard(SET_INVOKED)
 		end,
 		exactcount=2,
-		matfilter=Card.IsAbleToRemove,
+		matfilter=aux.LimitParams(Card.IsAbleToRemove),
 		extrafil=function(e,tp,mg)
 			return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsAbleToRemove),tp,LOCATION_DECK,0,nil),
 				function(tp,sg,fc)
@@ -31,7 +31,7 @@ function s.initial_effect(c)
 			return c:IsSetCard(SET_INVOKED)
 		end,
 		exactcount=2,
-		matfilter=Fusion.OnFieldMat(Card.IsAbleToRemove),
+		matfilter=Fusion.OnFieldMat(aux.LimitParams(Card.IsAbleToRemove)),
 		extrafil=function(e,tp,mg)
 			return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(aux.FaceupFilter(Card.IsAbleToRemove)),tp,0,LOCATION_ONFIELD,nil),
 				function(tp,sg,fc)

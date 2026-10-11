@@ -43,7 +43,7 @@ function s.extratg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.effcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(-100)
-	local fusion_params={handler=e:GetHandler(),fusfilter=aux.FilterBoolFunction(Card.IsSetCard,SET_HECAHANDS),matfilter=Fusion.OnFieldMat(Card.IsAbleToRemove),extrafil=s.fextra,extraop=Fusion.BanishMaterial,extratg=s.extratg}
+	local fusion_params={handler=e:GetHandler(),fusfilter=aux.FilterBoolFunction(Card.IsSetCard,SET_HECAHANDS),matfilter=Fusion.OnFieldMat(aux.LimitParams(Card.IsAbleToRemove)),extrafil=s.fextra,extraop=Fusion.BanishMaterial,extratg=s.extratg}
 	local b1=not Duel.HasFlagEffect(tp,id)
 		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_HECAHANDS),tp,LOCATION_MZONE,0,1,nil)
 		and Duel.IsExistingTarget(aux.AND(Card.IsSpellTrap,Card.IsAbleToHand),tp,0,LOCATION_ONFIELD,1,nil)
@@ -54,7 +54,7 @@ end
 function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return e:GetLabel()==1 and chkc:IsControler(1-tp) and chkc:IsOnField() and chkc:IsAbleToHand() end
 	local cost_skip=e:GetLabel()~=-100
-	local fusion_params={handler=e:GetHandler(),fusfilter=aux.FilterBoolFunction(Card.IsSetCard,SET_HECAHANDS),matfilter=Fusion.OnFieldMat(Card.IsAbleToRemove),extrafil=s.fextra,extraop=Fusion.BanishMaterial,extratg=s.extratg}
+	local fusion_params={handler=e:GetHandler(),fusfilter=aux.FilterBoolFunction(Card.IsSetCard,SET_HECAHANDS),matfilter=Fusion.OnFieldMat(aux.LimitParams(Card.IsAbleToRemove)),extrafil=s.fextra,extraop=Fusion.BanishMaterial,extratg=s.extratg}
 	local b1=(cost_skip or not Duel.HasFlagEffect(tp,id))
 		and Duel.IsExistingMatchingCard(aux.FaceupFilter(Card.IsSetCard,SET_HECAHANDS),tp,LOCATION_MZONE,0,1,nil)
 		and Duel.IsExistingTarget(aux.AND(Card.IsSpellTrap,Card.IsAbleToHand),tp,0,LOCATION_ONFIELD,1,nil)
@@ -89,7 +89,7 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	elseif op==2 then
 		--Fusion Summon 1 "Hecahands" Fusion Monster from your Extra Deck, by banishing its materials from your field and/or GY
-		local fusion_params={handler=e:GetHandler(),fusfilter=aux.FilterBoolFunction(Card.IsSetCard,SET_HECAHANDS),matfilter=Fusion.OnFieldMat(Card.IsAbleToRemove),extrafil=s.fextra,extraop=Fusion.BanishMaterial,extratg=s.extratg}
+		local fusion_params={handler=e:GetHandler(),fusfilter=aux.FilterBoolFunction(Card.IsSetCard,SET_HECAHANDS),matfilter=Fusion.OnFieldMat(aux.LimitParams(Card.IsAbleToRemove)),extrafil=s.fextra,extraop=Fusion.BanishMaterial,extratg=s.extratg}
 		Fusion.SummonEffOP(fusion_params)(e,tp,eg,ep,ev,re,r,rp)
 	end
 end

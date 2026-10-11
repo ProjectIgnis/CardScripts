@@ -42,7 +42,7 @@ function s.initial_effect(c)
 	--During your Main Phase: You can Fusion Summon 1 Dinosaur Fusion Monster from your Extra Deck, by banishing its materials from your field and/or GY, also you cannot Special Summon from the Extra Deck for the rest of this turn, except Dinosaur monsters. You can only use this effect of "Destratification Dino Stratiae" once per turn
 	local fusion_params={
 		fusfilter=function(c) return c:IsRace(RACE_DINOSAUR) end,
-		matfilter=Fusion.OnFieldMat(Card.IsAbleToRemove),
+		matfilter=Fusion.OnFieldMat(aux.LimitParams(Card.IsAbleToRemove)),
 		extrafil=function(e,tp,mg)
 			if not Duel.IsPlayerAffectedByEffect(tp,CARD_SPIRIT_ELIMINATION) then
 				return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsAbleToRemove),tp,LOCATION_GRAVE,0,nil)

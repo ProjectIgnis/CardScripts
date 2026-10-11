@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	local params = {matfilter=Fusion.OnFieldMat(Card.IsAbleToRemove),
+	local params = {matfilter=Fusion.OnFieldMat(aux.LimitParams(Card.IsAbleToRemove)),
 					extrafil=s.fextra,extraop=Fusion.BanishMaterial,extratg=s.extratarget}
 	--Fusion Summon a Fusion monster, including a Cyberse monster as material
 	local e1=Effect.CreateEffect(c)

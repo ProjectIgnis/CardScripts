@@ -2,7 +2,7 @@
 --Speed Spell - Overload Fusion
 local s,id=GetID()
 function s.initial_effect(c)
-	local e1=Fusion.CreateSummonEff(c,s.ffilter,Fusion.OnFieldMat(Card.IsAbleToRemove),s.fextra,Fusion.BanishMaterial,nil,nil,nil,nil,nil,nil,nil,nil,nil,s.extratg)
+	local e1=Fusion.CreateSummonEff(c,s.ffilter,Fusion.OnFieldMat(aux.LimitParams(Card.IsAbleToRemove)),s.fextra,Fusion.BanishMaterial,nil,nil,nil,nil,nil,nil,nil,nil,nil,s.extratg)
 	e1:SetCost(s.cost)
 	c:RegisterEffect(e1)
 end
@@ -17,7 +17,7 @@ function s.ffilter(c)
 end
 function s.fextra(e,tp,mg)
 	if not Duel.IsPlayerAffectedByEffect(tp,69832741) then
-		return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsAbleToRemove),tp,LOCATION_GRAVE,0,nil)
+		return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(aux.LimitParams(Card.IsAbleToRemove)),tp,LOCATION_GRAVE,0,nil)
 	end
 	return nil
 end

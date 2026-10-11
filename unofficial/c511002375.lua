@@ -4,7 +4,7 @@ function s.initial_effect(c)
 	--pendulum summon
 	Pendulum.AddProcedure(c)
 	--Fusion Summon
-	local params = {aux.FilterBoolFunction(Card.IsSetCard,SET_LUNALIGHT),Fusion.IsMonsterFilter(Card.IsAbleToRemove),nil,Fusion.BanishMaterial}
+	local params = {aux.FilterBoolFunction(Card.IsSetCard,SET_LUNALIGHT),Fusion.IsMonsterFilter(aux.LimitParams(Card.IsAbleToRemove)),nil,Fusion.BanishMaterial}
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)

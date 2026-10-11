@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--To hand + potential Fusion Summon
-	local fparams={aux.FilterBoolFunction(Card.IsLevelAbove,8),Fusion.InHandMat(Card.IsAbleToRemove),s.fextra,Fusion.BanishMaterial,nil,s.stage2}
+	local fparams={aux.FilterBoolFunction(Card.IsLevelAbove,8),Fusion.InHandMat(aux.LimitParams(Card.IsAbleToRemove)),s.fextra,Fusion.BanishMaterial,nil,s.stage2}
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON+CATEGORY_TOHAND+CATEGORY_REMOVE)
@@ -35,7 +35,7 @@ end
 function s.thop(fustg,fusop)
 	return function(e,tp,eg,ep,ev,re,r,rp)
 		local tc=Duel.GetFirstTarget()
-		if not tc or not tc:IsRelateToEffect(e) then return end 
+		if not tc or not tc:IsRelateToEffect(e) then return end
 		if Duel.SendtoHand(tc,nil,REASON_EFFECT)==0 or not tc:IsLocation(LOCATION_HAND) then return end
 		Duel.ConfirmCards(1-tp,tc)
 		if fustg(e,tp,eg,ep,ev,re,r,rp,0) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then

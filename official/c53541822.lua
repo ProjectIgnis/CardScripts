@@ -19,7 +19,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e2)
 	--Fusion Summon 1 Fusion Monster that mentions "Ancient Gear Golem"
 	local params={fusfilter=function(c) return c:ListsCode(CARD_ANCIENT_GEAR_GOLEM) end,
-					matfilter=Fusion.OnFieldMat(Card.IsAbleToRemove),
+					matfilter=Fusion.OnFieldMat(aux.LimitParams(Card.IsAbleToRemove)),
 					extrafil=s.fmatextra,
 					extratg=s.extratarget,
 					extraop=Fusion.BanishMaterial,

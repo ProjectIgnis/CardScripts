@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	--Fusion Summon 1 "Shaddoll" Fusion Monster from your Extra Deck, by banishing its materials from your hand, field, and/or GY
 	local fusion_params={
 				fusfilter=function(c) return c:IsSetCard(SET_SHADDOLL) end,
-				matfilter=Card.IsAbleToRemove,
+				matfilter=aux.LimitParams(Card.IsAbleToRemove),
 				extrafil=s.fextra,
 				extraop=Fusion.BanishMaterial,
 				extratg=s.extratg}

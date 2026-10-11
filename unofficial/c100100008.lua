@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
-	local e1=Fusion.CreateSummonEff({handler=c,fusfilter=function(c) return c.miracle_synchro_fusion end,matfilter=Fusion.OnFieldMat(Card.IsAbleToRemove),extrafil=s.fextra,extraop=Fusion.BanishMaterial,desc=aux.Stringid(id,0),extratg=s.extratg})
+	local e1=Fusion.CreateSummonEff({handler=c,fusfilter=function(c) return c.miracle_synchro_fusion end,matfilter=Fusion.OnFieldMat(aux.LimitParams(Card.IsAbleToRemove)),extrafil=s.fextra,extraop=Fusion.BanishMaterial,desc=aux.Stringid(id,0),extratg=s.extratg})
 	e1:SetCost(s.cost)
 	c:RegisterEffect(e1)
 	--Draw

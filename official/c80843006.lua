@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	local fusion_params={
 		handler=c,
 		gc=Fusion.ForcedHandler,
-		matfilter=Fusion.OnFieldMat(Card.IsAbleToRemove),
+		matfilter=Fusion.OnFieldMat(aux.LimitParams(Card.IsAbleToRemove)),
 		extrafil=function(e,tp,mg)
 			if not Duel.IsPlayerAffectedByEffect(tp,CARD_SPIRIT_ELIMINATION) then
 				return Duel.GetMatchingGroup(Fusion.IsMonsterFilter(Card.IsAbleToRemove),tp,LOCATION_GRAVE,0,nil)

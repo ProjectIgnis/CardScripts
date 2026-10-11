@@ -14,7 +14,7 @@ function s.initial_effect(c)
 	e1:SetTarget(s.splimit)
 	c:RegisterEffect(e1)
 	--Fusion summon
-	local params = {fusfilter=aux.FilterBoolFunction(Card.IsSetCard,SET_LUNALIGHT),matfilter=Fusion.OnFieldMat(Card.IsAbleToRemove),
+	local params = {fusfilter=aux.FilterBoolFunction(Card.IsSetCard,SET_LUNALIGHT),matfilter=Fusion.OnFieldMat(aux.LimitParams(Card.IsAbleToRemove)),
 					extrafil=s.fextra,extraop=Fusion.BanishMaterial,extratg=s.extratarget}
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)

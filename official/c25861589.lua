@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 	--Fusion Summon 1 Plant Fusion Monster
 	local params={handler=c,fusfilter=aux.FilterBoolFunction(Card.IsRace,RACE_PLANT),
-				matfilter=Card.IsAbleToRemove,extrafil=s.extrafil,
+				matfilter=aux.LimitParams(Card.IsAbleToRemove),extrafil=s.extrafil,
 				extraop=Fusion.BanishMaterial,extratg=s.extratg}
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))

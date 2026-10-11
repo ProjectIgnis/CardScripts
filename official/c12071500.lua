@@ -3,7 +3,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	--Activate
-	local e1=Fusion.CreateSummonEff{handler=c,fusfilter=s.fusfilter,matfilter=Fusion.InHandMat(Card.IsAbleToRemove),
+	local e1=Fusion.CreateSummonEff{handler=c,fusfilter=s.fusfilter,matfilter=Fusion.InHandMat(aux.LimitParams(Card.IsAbleToRemove)),
 									extrafil=s.fextra,extraop=Fusion.BanishMaterial,extratg=s.extratg,chkf=FUSPROC_NOLIMIT}
 	c:RegisterEffect(e1)
 end

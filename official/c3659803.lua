@@ -2,7 +2,7 @@
 --Overload Fusion
 local s,id=GetID()
 function s.initial_effect(c)
-	local e1=Fusion.CreateSummonEff(c,s.ffilter,Fusion.OnFieldMat(Card.IsAbleToRemove),s.fextra,Fusion.BanishMaterial,nil,nil,nil,nil,nil,nil,nil,nil,nil,s.extratg)
+	local e1=Fusion.CreateSummonEff(c,s.ffilter,Fusion.OnFieldMat(aux.LimitParams(Card.IsAbleToRemove)),s.fextra,Fusion.BanishMaterial,nil,nil,nil,nil,nil,nil,nil,nil,nil,s.extratg)
 	c:RegisterEffect(e1)
 end
 function s.ffilter(c)

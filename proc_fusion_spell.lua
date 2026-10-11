@@ -179,7 +179,7 @@ function(fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locati
 				local gc=gc2
 				gc=type(gc)=="function" and gc(e,tp,eg,ep,ev,re,r,rp,chk) or gc
 				gc=type(gc)=="Card" and Group.FromCards(gc) or gc
-				matfilter=matfilter or Card.IsAbleToGrave
+				matfilter=matfilter or aux.LimitParams(Card.IsAbleToGrave)
 				stage2 = stage2 or aux.TRUE
 				if chk==0 then
 					--Separate the Fusion Materials filtered by matfilter
@@ -323,7 +323,7 @@ function (fusfilter,matfilter,extrafil,extraop,gc2,stage2,exactcount,value,locat
 				local gc=gc2
 				gc=type(gc)=="function" and gc(e,tp,eg,ep,ev,re,r,rp,chk) or gc
 				gc=type(gc)=="Card" and Group.FromCards(gc) or gc
-				matfilter=matfilter or Card.IsAbleToGrave
+				matfilter=matfilter or aux.LimitParams(Card.IsAbleToGrave)
 				stage2 = stage2 or aux.TRUE
 				local checkAddition
 				--Same as line 167 above

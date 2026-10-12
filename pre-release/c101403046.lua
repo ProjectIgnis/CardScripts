@@ -19,15 +19,23 @@ function s.initial_effect(c)
 	e1:SetValue(LOCATION_REMOVED)
 	c:RegisterEffect(e1)
 	--During your Main Phase: You can destroy, or banish, 1 card you control, then you can shuffle up to 2 cards from any GY(s) into the Deck
-	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(id,0))
-	e2:SetCategory(CATEGORY_DESTROY+CATEGORY_REMOVE+CATEGORY_TODECK)
-	e2:SetType(EFFECT_TYPE_IGNITION)
-	e2:SetRange(LOCATION_MZONE)
-	e2:SetCountLimit(1,{id,0})
-	e2:SetTarget(s.desbantg)
-	e2:SetOperation(s.desbanop)
-	c:RegisterEffect(e2)
+	local e2a=Effect.CreateEffect(c)
+	e2a:SetDescription(aux.Stringid(id,0))
+	e2a:SetCategory(CATEGORY_DESTROY+CATEGORY_REMOVE+CATEGORY_TODECK)
+	e2a:SetType(EFFECT_TYPE_IGNITION)
+	e2a:SetRange(LOCATION_MZONE)
+	e2a:SetCountLimit(1,{id,0})
+	e2a:SetCondition(aux.NOT(s.citrinitascon))
+	e2a:SetTarget(s.desbantg)
+	e2a:SetOperation(s.desbanop)
+	c:RegisterEffect(e2a)
+	--Quick version if the effect of "Ars Magna - "Citrinitas"" is applying
+	local e2b=e2a:Clone()
+	e2b:SetType(EFFECT_TYPE_QUICK_O)
+	e2b:SetCode(EVENT_FREE_CHAIN)
+	e2b:SetCondition(s.citrinitascon)
+	e2b:SetHintTiming(0,TIMING_STANDBY_PHASE|TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E)
+	c:RegisterEffect(e2b)
 	--You can banish this card from your GY; Special Summon 1 "DoomZ" monster from your hand
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
@@ -44,6 +52,9 @@ s.listed_series={SET_ARS_MAGNA,SET_DOOMZ}
 s.material_setcode={SET_ARS_MAGNA,SET_DOOMZ}
 function s.matcheck(g,lc,sumtype,tp)
 	return g:IsExists(Card.IsSetCard,1,nil,{SET_ARS_MAGNA,SET_DOOMZ},lc,sumtype,tp)
+end
+function s.citrinitascon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.IsPlayerAffectedByEffect(tp,EFFECT_ARS_MAGNA_CITRINITAS)
 end
 function s.desbantg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD,0)>0 end

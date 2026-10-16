@@ -11,8 +11,9 @@ function s.initial_effect(c)
 	e0:SetCode(EFFECT_SUMMON_PROC)
 	e0:SetCondition(function(e,c,minc,zone,relzone,exeff)
 		if c==nil then return true end
-		local min_tributes=c:GetTributeRequirement()
-		if min_tributes<=0 then return false end
+		local min_tributes,max_tributes=c:GetTributeRequirement()
+		if min_tributes<minc then min_tributes=minc end
+		if min_tributes<=0 or min_tributes>max_tributes then return false end
 		local tp=c:GetControler()
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 or Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)>0 then return false end
 		local mg=Duel.GetMatchingGroup(Card.IsReleasable,tp,LOCATION_HAND,LOCATION_MZONE,c,tp)
@@ -20,6 +21,7 @@ function s.initial_effect(c)
 	end)
 	e0:SetTarget(function(e,tp,eg,ep,ev,re,r,rp,chk,c,minc,zone,relzone,exeff)
 		local min_tributes,max_tributes=c:GetTributeRequirement()
+		if min_tributes<minc then min_tributes=minc end
 		local mg=Duel.GetMatchingGroup(Card.IsReleasable,tp,LOCATION_HAND,LOCATION_MZONE,c,tp)
 		local sg=aux.SelectUnselectGroup(mg,e,tp,min_tributes,max_tributes,nil,1,tp,HINTMSG_RELEASE,nil,nil,Duel.IsSummonCancelable())
 		if sg and #sg>0 then

@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	e0:SetTarget(function(e,tp,eg,ep,ev,re,r,rp,chk,c,minc,zone,relzone,exeff)
 		local min_tributes,max_tributes=c:GetTributeRequirement()
 		local mg=Duel.GetMatchingGroup(Card.IsReleasable,tp,LOCATION_HAND,LOCATION_MZONE,c,tp)
-		local sg=aux.SelectUnselectGroup(mg,e,tp,min_tributes,max_tributes,nil,1,tp,HINTMSG_RELEASE,nil,nil,true)
+		local sg=aux.SelectUnselectGroup(mg,e,tp,min_tributes,max_tributes,nil,1,tp,HINTMSG_RELEASE,nil,nil,Duel.IsSummonCancelable())
 		if sg and #sg>0 then
 			e:SetLabelObject(sg)
 			return true

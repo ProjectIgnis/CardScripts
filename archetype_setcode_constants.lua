@@ -156,6 +156,7 @@ SET_NINJITSU_ART                  = 0x61
 SET_TOON                          = 0x62
 SET_REACTOR                       = 0x63
 SET_HARPIE                        = 0x64
+SET_HARPIE_LADY                   = 0x1064
 SET_INFESTATION                   = 0x65
 SET_MAGNET                        = 0x1066
 SET_WARRIOR                       = 0x2066

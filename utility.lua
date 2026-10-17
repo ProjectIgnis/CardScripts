@@ -2965,6 +2965,16 @@ function Auxiliary.LimitParams(f,n)
 	end
 end
 
+function Auxiliary.popcount(value)
+	local count=0
+	while value>0 do
+		value=value&(value-1)
+		count=count+1
+	end
+	return count
+end
+
+
 Duel.LoadScript("debug_utility.lua")
 Duel.LoadScript("chain.lua")
 Duel.LoadScript("cards_specific_functions.lua")

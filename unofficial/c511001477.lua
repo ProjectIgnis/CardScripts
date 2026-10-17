@@ -6,18 +6,15 @@ function s.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_COIN+CATEGORY_RECOVER+CATEGORY_DAMAGE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetCode(EVENT_LEAVE_FIELD)
-	e1:SetCondition(s.condition)
+	e1:SetCode(EVENT_DESTROYED)
+	e1:SetCondition(function(e,tp,eg,ep,ev,re,r,rp)	return eg:IsExists(s.confilter,1,nil) end)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
 s.toss_coin=true
 function s.confilter(c)
-	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsReason(REASON_DESTROY|REASON_EFFECT)
-end
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(s.confilter,1,nil)
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsReason(REASON_EFFECT)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

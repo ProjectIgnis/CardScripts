@@ -93,7 +93,7 @@ function s.damop(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,LOCATION_MZONE,0,nil)
 	g:AddCard(c)
-	if Duel.Remove(g,POS_FACEUP,REASON_EFFECT)>0
+	if Duel.Remove(g,POS_FACEUP,REASON_EFFECT)>0 then
 		local dg=Duel.GetOperatedGroup()
 		Duel.Damage(1-tp,dg:GetSum(Card.GetPreviousAttackOnField),REASON_EFFECT)
 	end

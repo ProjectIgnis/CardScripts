@@ -1,146 +1,57 @@
+--ハーフ・ライフ
 --Half Life
 local s,id=GetID()
 function s.initial_effect(c)
-	--
+	--Target 1 monster on the field. Once during this turn, if the targeted monster would be destroyed by battle, you can halve its original ATK instead.
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
-	e1:SetCondition(s.condition)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.GetAttacker()
-	local bc=tc:GetBattleTarget()
-	if not tc or not bc then return false end
-	local tcindes=false
-	local bcindes=false
-	if tc:IsHasEffect(EFFECT_INDESTRUCTABLE_BATTLE) then
-		local tcind={tc:GetCardEffect(EFFECT_INDESTRUCTABLE_BATTLE)}
-		for i=1,#tcind do
-			local te=tcind[i]
-			local f=te:GetValue()
-			if type(f)=='function' then
-				if f(te,bc) then tcindes=true end
-			else tcindes=true end
-		end
-	end
-	if bc:IsHasEffect(EFFECT_INDESTRUCTABLE_BATTLE) then
-		local tcind={bc:GetCardEffect(EFFECT_INDESTRUCTABLE_BATTLE)}
-		for i=1,#tcind do
-			local te=tcind[i]
-			local f=te:GetValue()
-			if type(f)=='function' then
-				if f(te,tc) then bcindes=true end
-			else bcindes=true end
-		end
-	end
-	local g=Group.CreateGroup()
-	if bc~=Duel.GetAttackTarget() or bc:IsAttackPos() then
-		if bc:IsPosition(POS_FACEUP_DEFENSE) and bc==Duel.GetAttacker() then
-			if bc:IsHasEffect(EFFECT_DEFENSE_ATTACK) then
-				if bc:IsHasEffect(75372290) then
-					if tc:IsAttackPos() then
-						if bc:GetAttack()>0 and bc:GetAttack()>=tc:GetAttack() then
-							g:AddCard(tc)
-						end
-					else
-						if bc:GetAttack()>tc:GetDefense() then
-							g:AddCard(tc)
-						end
-					end
-				else
-					if tc:IsAttackPos() then
-						if bc:GetDefense()>0 and bc:GetDefense()>=tc:GetAttack() then
-							g:AddCard(tc)
-						end
-					else
-						if bc:GetDefense()>tc:GetDefense() then
-							g:AddCard(tc)
-						end
-					end
-				end
-			end
-		else
-			if tc:IsAttackPos() then
-				if bc:GetAttack()>0 and bc:GetAttack()>=tc:GetAttack() then
-					g:AddCard(tc)
-				end
-			else
-				if bc:GetAttack()>tc:GetDefense() then
-					g:AddCard(tc)
-				end
-			end
-		end
-	end
-	if tc~=Duel.GetAttackTarget() or tc:IsAttackPos() then
-		if tc:IsPosition(POS_FACEUP_DEFENSE) and tc==Duel.GetAttacker() then
-			if tc:IsHasEffect(EFFECT_DEFENSE_ATTACK) then
-				if tc:IsHasEffect(75372290) then
-					if bc:IsAttackPos() then
-						if tc:GetAttack()>0 and tc:GetAttack()>=bc:GetAttack() then
-							g:AddCard(bc)
-						end
-					else
-						if tc:GetAttack()>bc:GetDefense() then
-							g:AddCard(bc)
-						end
-					end
-				else
-					if bc:IsAttackPos() then
-						if tc:GetDefense()>0 and tc:GetDefense()>=bc:GetAttack() then
-							g:AddCard(bc)
-						end
-					else
-						if tc:GetDefense()>bc:GetDefense() then
-							g:AddCard(bc)
-						end
-					end
-				end
-			end
-		else
-			if bc:IsAttackPos() then
-				if tc:GetAttack()>0 and tc:GetAttack()>=bc:GetAttack() then
-					g:AddCard(bc)
-				end
-			else
-				if tc:GetAttack()>bc:GetDefense() then
-					g:AddCard(bc)
-				end
-			end
-		end
-	end
-	if #g>0 then
-		g:KeepAlive()
-		e:SetLabelObject(g)
-		return true
-	else return false end
+function s.cfilter(c)
+	return c:IsFaceup() and c:GetBaseAttack()>0 and not c:IsHasEffect(EFFECT_INDESTRUCTABLE_BATTLE)
 end
-function s.filter(c)
-	return c:GetAttack()>1
-end
-function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=e:GetLabelObject()
-	if chk==0 then return #g>0 and g:IsExists(s.filter,1,nil) end
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and s.cfilter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(s.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_APPLYTO)
+	Duel.SelectTarget(tp,s.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local g=e:GetLabelObject()
-	if #g==0 then return end
-	local tc=g:GetFirst()
-	while tc do
-		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-		e1:SetValue(1)
-		e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
-		tc:RegisterEffect(e1)
-		local e2=Effect.CreateEffect(e:GetHandler())
-		e2:SetType(EFFECT_TYPE_SINGLE)
-		e2:SetCode(EFFECT_SET_ATTACK_FINAL)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
-		e2:SetValue(tc:GetAttack()/2)
-		tc:RegisterEffect(e2)
-		tc=g:GetNext()
+	local c=e:GetHandler()
+	local tc=Duel.GetFirstTarget()
+	if tc and tc:IsRelateToEffect(e) and not tc:IsHasEffect(EFFECT_INDESTRUCTABLE_BATTLE) then
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		e1:SetCode(EFFECT_DESTROY_REPLACE)
+		e1:SetCountLimit(1)
+		e1:SetLabelObject(tc)
+		e1:SetTarget(s.desreptg)
+		e1:SetOperation(s.desrepop)
+		e1:SetValue(function(e,c) return s.desrepfilter(c,e) end)
+		e1:SetReset(RESET_PHASE|PHASE_END)
+		Duel.RegisterEffect(e1,tp)
 	end
+end
+function s.desrepfilter(c,e)
+	return c==e:GetLabelObject() and c:IsReason(REASON_BATTLE) and not c:IsReason(REASON_REPLACE|REASON_RULE) and c:GetEffectCount(EFFECT_INDESTRUCTABLE_BATTLE)==0
+end
+function s.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
+	if chk==0 then return eg:IsExists(s.desrepfilter,1,nil,e) end
+	if Duel.SelectEffectYesNo(tp,c,96) then return true end
+	return false
+end
+function s.desrepop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local tc=e:GetLabelObject()
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_SET_BASE_ATTACK)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
+	e1:SetValue(tc:GetBaseAttack()/2)
+	tc:RegisterEffect(e1)
 end

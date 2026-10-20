@@ -49,7 +49,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 			and Duel.IsExistingMatchingCard(s.ritualfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,tc)
 			and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-			local sc=Duel.SelectMatchingCard(tp,ritualfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp):GetFirst()
+			local sc=Duel.SelectMatchingCard(tp,s.ritualfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp):GetFirst()
 			if sc and Duel.SendtoGrave(tc,REASON_MATERIAL|REASON_RITUAL)>0 then
 				Duel.SpecialSummon(sc,SUMMON_TYPE_RITUAL,tp,tp,false,true,POS_FACEUP)
 				sc:SetMaterial(tc)

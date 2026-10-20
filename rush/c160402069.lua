@@ -37,7 +37,7 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsSpellTrap,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
 	if #g>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-		local dg=g:Select(tp,1,1)
+		local dg=g:Select(tp,1,1,nil)
 		Duel.HintSelection(dg)
 		if Duel.Destroy(dg,REASON_EFFECT)>0 then
 			--This card can attack twice this turn

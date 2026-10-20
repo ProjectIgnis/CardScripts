@@ -11,7 +11,6 @@ function s.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
 	e1:SetCondition(function(e) return e:GetHandler():IsStatus(STATUS_SUMMON_TURN) end)
-	e1:SetCost(s.cost)
 	e1:SetTarget(s.target)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
@@ -29,13 +28,12 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_GRAVE)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	--Requirement
-	if Duel.DiscardDeck(tp,1,REASON_COST)<1 then return end
 	--Effect
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SELECT)
 	local sg=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_GRAVE,0,1,1,nil)
 	Duel.HintSelection(sg)
-	local atk=sg:GetFirst():GetLevel()*100
+	local tc=sg:GetFirst()
+	local atk=tc:GetLevel()*100
 	--This card gains ATK equal to [the chosen monster's Level] x 100
 	local c=e:GetHandler()
 	local e1=Effect.CreateEffect(c)
@@ -44,8 +42,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetValue(atk)
 	e1:SetReset(RESETS_STANDARD_PHASE_END)
 	c:RegisterEffect(e1)
-	if sg:GetFirst():IsAbleToHand() then
-		Duel.SendtoHand(g,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,sg)
+	if tc:IsAbleToHand() then
+		Duel.SendtoHand(tc,nil,REASON_EFFECT)
+		Duel.ConfirmCards(1-tp,tc)
 	end
 end

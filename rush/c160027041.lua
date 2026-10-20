@@ -5,7 +5,7 @@ local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--Fusion Materials: "Doomed by the Blackblight" + "The Royal Crown of Zeil" + "The Royal Sword of Zeil"
-	Fusion.AddProcMix(c,true,true,CARD_DOOMED_BY_THE_BLACKBLIGHT,160027021,160027021)
+	Fusion.AddProcMix(c,true,true,CARD_DOOMED_BY_THE_BLACKBLIGHT,160027021,160027022)
 	Fusion.AddUnionFusionProc(c)
 	--Face-up DARK Attribute Warrior Type monsters on your field inflict piercing battle damage
 	local e1=Effect.CreateEffect(c)

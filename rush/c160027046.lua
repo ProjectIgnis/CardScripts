@@ -17,8 +17,8 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e1:SetTarget(s.target)
 	e1:SetValue(-2000)
+	e1:SetTarget(s.target)
 	c:RegisterEffect(e1)
 	local e1b=e1:Clone()
 	e1b:SetCode(EFFECT_UPDATE_DEFENSE)
@@ -29,5 +29,5 @@ function s.splimit(e,se,sp,st)
 	return se and se:GetHandler():IsSpell()
 end
 function s.target(e,c)
-	return not c:GetBaseDefense()==1000
+	return c:GetBaseDefense()~=1000
 end

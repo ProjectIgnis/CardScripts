@@ -25,7 +25,7 @@ function s.matfilter1(c,fc,sumtype,tp)
 	return c:IsRace(RACE_DRAGON,fc,sumtype,tp) and c:IsType(TYPE_NORMAL,fc,sumtype,tp) 
 end
 function s.matfilter2(c,fc,sumtype,tp)
-	return c:IsRace(RACE_DRAGON,fc,sumtype,tp) and c:IsDefense(1000) and c:IsLevelBelow(4)
+	return c:IsRace(RACE_DRAGON,fc,sumtype,tp) and c:IsDefense(900) and c:IsLevelBelow(4)
 end
 function s.contactfil(tp)
 	return Duel.GetMatchingGroup(aux.FaceupFilter(Card.IsAbleToDeckOrExtraAsCost),tp,LOCATION_MZONE,0,nil)

@@ -37,7 +37,7 @@ function s.initial_effect(c)
 end
 s.listed_names={160216046,160017058} --"Princess Cosmos the Trickster", "Princess Cosmos' Jest"
 function s.spcfilter(c)
-	return c:IsCode(160017058,160017058) and not c:IsPublic()
+	return c:IsCode(160216046,160017058) and not c:IsPublic()
 end
 function s.spcon(e,c)
 	if c==nil then return true end

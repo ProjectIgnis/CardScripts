@@ -62,5 +62,5 @@ jobs:
         fi
         if [[ $(git status --porcelain) ]]; then
           git commit --author="$AUTHOR <$EMAIL>" -m "$MESSAGE"
-          git push
+          docker run -t --rm -v ${HOME}:/root -v $(pwd)/..:/git alpine/git push
         fi

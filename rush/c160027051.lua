@@ -28,7 +28,7 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,tp,3)
 end
 function s.cfilter(c)
-	return c:IsLocation(LOCATION_GRAVE) and c:IsRace(RACE_DRAGON) and c:IsMonster()
+	return c:IsLocation(LOCATION_GRAVE) and c:IsRace(RACE_DRAGON) and c:IsType(TYPE_NORMAL) and c:IsMonster()
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Effect

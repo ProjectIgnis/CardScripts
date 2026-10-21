@@ -3,7 +3,7 @@
 --scripted by Naim
 local s,id=GetID()
 function s.initial_effect(c)
-	--This card's name becomes "Princess Cosmos' Jest" while in the hand.
+	--This card's name becomes "Princess Cosmos' Jest" while in the hand
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_SINGLE)
 	e0:SetCode(EFFECT_CHANGE_CODE)
@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.activate)
 	c:RegisterEffect(e1)
 end
-s.listed_names={160017058}
+s.listed_names={160017058} --"Princess Cosmos' Jest"
 function s.desfilter(c)
 	return c:IsRace(RACE_GALAXY) and c:IsBaseAttack(900) and c:IsFaceup()
 end
@@ -34,7 +34,7 @@ end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Effect
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local dg=Duel.SelectTarget(tp,Card.desfilter,tp,LOCATION_MZONE,0,1,1,nil)
+	local dg=Duel.SelectTarget(tp,s.desfilter,tp,LOCATION_MZONE,0,1,1,nil)
 	if #dg>0 then
 		Duel.HintSelection(dg)
 		if Duel.Destroy(dg,REASON_EFFECT)>0 and Duel.IsPlayerCanDraw(tp,2)

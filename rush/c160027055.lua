@@ -29,7 +29,8 @@ end
 function s.ritualfilter(c,e,tp,mat_c)
 	return c:IsRitualMonster() and c:IsLevel(1) and c:IsAttribute(ATTRIBUTE_DARK) and c:IsRace(RACE_WARRIOR)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,true)
-		and Duel.GetLocationCountFromEx(tp,tp,mat_c,c)>0
+		and Duel.GetMZoneCount(tp,mat_c,tp)
+		--and Duel.GetLocationCountFromEx(tp,tp,mat_c,c)>0
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	--Effect

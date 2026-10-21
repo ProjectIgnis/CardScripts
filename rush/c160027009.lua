@@ -3,7 +3,6 @@
 --scripted by Cybercatman
 local s,id=GetID()
 local CARD_ALPHA_BURN_DRAKE  = 160315024
-local CARD_ALPHA_COUNT = 160016048
 function s.initial_effect(c)
 	--This card's name becomes "Alpha Count" while in the Graveyard
 	local e0=Effect.CreateEffect(c)

@@ -21,7 +21,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
 	e2:SetTarget(s.target)
-	e1:SetOperation(s.operation)
+	e2:SetOperation(s.operation)
 	c:RegisterEffect(e2)
 end
 s.material_setcode={SET_HERO,SET_ELEMENTAL_HERO}

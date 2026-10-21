@@ -3,24 +3,30 @@ on:
   push:
     branches:
       - master
+env:
+  REMOTE: ProjectIgnis/DeltaBagooska.git
+  REPO_NAME: DeltaBagooska
+  DESTINATION: DeltaBagooska/script
+  BASE_SHA: 20250420
 jobs:
   commit:
     runs-on: ubuntu-latest
-    env:
-      REMOTE: ProjectIgnis/DeltaBagooska.git
-      REPO_NAME: DeltaBagooska
-      DESTINATION: DeltaBagooska/script
-      BASE_SHA: 20250420
     steps:
-    - uses: actions/checkout@v1
-    - name: Clone destination repository
-      run: |
-        cd $HOME
-        git clone https://${{ secrets.DEPLOY_TOKEN_BAGOOSKA }}@github.com/$REMOTE
-        mkdir -p $DESTINATION
+    - uses: actions/checkout@v7
+      with:
+        fetch-depth: 0
+    - name: Clone Delta repository
+      uses: actions/checkout@v7
+      with:
+        repository: ${{ env.REMOTE }}
+        path: DeltaBagooska
+        ref: 'master'
+        token: ${{ secrets.DEPLOY_TOKEN_BAGOOSKA }}
     - name: Copy new or changed files
       id: copy
       run: |
+        mv $REPO_NAME $HOME/
+        mkdir -p $HOME/$DESTINATION
         c1grep() { grep "$@" || test $? = 1; }
         mv $HOME/$DESTINATION /tmp
         mkdir -p $HOME/$DESTINATION
@@ -54,6 +60,7 @@ jobs:
         CEMAIL=$(git log -1 --pretty=format:'%ce')
         cd $HOME/$DESTINATION
         echo $GITHUB_SHA > VERSION
+        sudo rm -f ~/.gitconfig /etc/gitconfig
         git config user.email "$CEMAIL"
         git config user.name "$COMMITTER"
         git add -A .

@@ -33,16 +33,12 @@ function s.spcon(e,c)
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_MZONE,0,2,nil)
 end
-function s.retcfilter(c)
-	return c:IsSetCard(SET_BATTERYMAN)
-end
-function s.retfilter(c,e)
-	return c:IsAbleToHand() and c:IsCanBeEffectTarget(e)
+function s.retcfilter(c,tp)
+	return c:IsSetCard(SET_BATTERYMAN) and Duel.IsExistingTarget(Card.IsAbleToHand,tp,0,LOCATION_ONFIELD,1,c:GetEquipGroup()+c)
 end
 function s.retcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local dg=Duel.GetMatchingGroup(s.retfilter,tp,0,LOCATION_ONFIELD,nil,e)
-	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.retcfilter,1,false,aux.ReleaseCheckTarget,e:GetHandler(),dg) end
-	local g=Duel.SelectReleaseGroupCost(tp,s.retcfilter,1,1,false,aux.ReleaseCheckTarget,e:GetHandler(),dg)
+	if chk==0 then return Duel.CheckReleaseGroupCost(tp,s.retcfilter,1,false,nil,e:GetHandler(),tp) end
+	local g=Duel.SelectReleaseGroupCost(tp,s.retcfilter,1,1,false,nil,e:GetHandler(),tp)
 	Duel.Release(g,REASON_COST)
 end
 function s.rettg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

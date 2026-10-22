@@ -3,7 +3,7 @@
 --scripted by YoshiDuels
 local s,id=GetID()
 function s.initial_effect(c)
-	--Gain ATK
+	--This card gains 200 ATK until the end of this turn. If a face-up Spell Card is on the field, you can draw 1 card.
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DRAW)
@@ -34,7 +34,9 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if #g>0 then
 		Duel.HintSelection(g)
 		if Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST)>0 then
-			Duel.ShuffleDeck(tp)
+			if g:IsExists(Card.IsLocation,1,nil,LOCATION_DECK) then
+				Duel.ShuffleDeck(tp)
+			end
 			--Effect
 			local c=e:GetHandler()
 			local e1=Effect.CreateEffect(c)

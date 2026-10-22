@@ -7,6 +7,7 @@ function s.initial_effect(c)
 	local e1=aux.AddNormalSummonProcedure(c,true,true,1,1,SUMMON_TYPE_TRIBUTE,aux.Stringid(id,0),nil,s.otop)
 	--This card gains ATK equal to [the number of face-up LIGHT Attribute monsters on your field] x 300 until the end of this turn. Then, you can add 1 "Praime Call" from your Graveyard to your hand.
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_ATKCHANGE|CATEGORY_TOHAND)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)

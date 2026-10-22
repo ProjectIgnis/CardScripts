@@ -53,6 +53,7 @@ function s.eqeffect(c,tc)
 	e2:SetType(EFFECT_TYPE_EQUIP)
 	e2:SetCode(EFFECT_CANNOT_TO_DECK)
 	e2:SetValue(1)
+	e2:SetCondition(s.noreturncondition)
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
 	e3:SetCode(EFFECT_CANNOT_TO_HAND)
@@ -67,4 +68,8 @@ function s.eqeffect(c,tc)
 end
 function s.eqlimit(e,c)
 	return c:IsFaceup()
+end
+function s.noreturncondition(e)
+	local source_eff=Duel.GetReasonEffect()
+	return source_eff and (source_eff:IsActivated() or not source_eff:GetCode()==EFFECT_SPSUMMON_PROC)
 end

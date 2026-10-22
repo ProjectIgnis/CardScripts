@@ -24,7 +24,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.costfilter(c)
-	return c:IsRace(RACE_DRAGON) and c:IsMonster() and c:IsAbleToDeckAsCost()
+	return c:IsRace(RACE_DRAGON) and c:IsMonster() and c:IsAbleToDeckOrExtraAsCost()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetMatchingGroupCount(s.costfilter,tp,LOCATION_GRAVE,0,nil)>=2 end

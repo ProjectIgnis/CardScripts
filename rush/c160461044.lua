@@ -12,15 +12,13 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_CANNOT_TO_DECK)
 	e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_SET_AVAILABLE)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetTarget(s.indtg)
+	e1:SetTarget(function(e,c) return c:IsMonster() end)
 	e1:SetTargetRange(LOCATION_MZONE,0)
-	e1:SetValue(s.value)
+	e1:SetCondition(s.noreturncondition)
 	c:RegisterEffect(e1)
-	c:AddSideMaximumHandler(e1)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_CANNOT_TO_HAND)
 	c:RegisterEffect(e2)
-	c:AddSideMaximumHandler(e2)
 	--Face-up monsters on your opponent's field become LIGHT Attribute
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
@@ -34,9 +32,7 @@ s.named_material={160016008} --"Transam Praime Armor Nova"
 function s.matfilter(c,scard,sumtype,tp)
 	return c:IsAttribute(ATTRIBUTE_LIGHT,scard,sumtype,tp) and c:IsLevelBelow(8)
 end
-function s.indtg(e,c)
-	return c:IsMonster()
-end
-function s.value(e,re,rp)
-	return re
+function s.noreturncondition(e)
+	local source_eff=Duel.GetReasonEffect()
+	return source_eff and (source_eff:IsActivated() or not source_eff:GetCode()==EFFECT_SPSUMMON_PROC)
 end

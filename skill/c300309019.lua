@@ -27,7 +27,7 @@ function s.flipop(e,tp,eg,ep,ev,re,r,rp)
 		local sg=Duel.SelectMatchingCard(tp,Card.IsAbleToDeck,tp,LOCATION_HAND,0,1,1,nil)
 		if #sg>0 then
 			Duel.BreakEffect()
-			Duel.SendtoDeck(g,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
+			Duel.SendtoDeck(sg,nil,SEQ_DECKBOTTOM,REASON_EFFECT)
 		end
 	end
 end

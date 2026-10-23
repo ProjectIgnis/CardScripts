@@ -59,8 +59,10 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
 	return false
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
+	local c=e:GetHandler()
 	local g=e:GetLabelObject()
 	if not g then return end
+	c:SetMaterial(g)
 	Duel.SendtoGrave(g,REASON_COST)
 	g:DeleteGroup()
 end

@@ -43,7 +43,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	c:AddPiercing(RESETS_STANDARD_PHASE_END)
 	--Increase ATK
 	local ct=g:FilterCount(Card.IsMonster,nil)
-	if ct>0 and c:IsSummonPhaseMain() and c:IsStatus(STATUS_SPSUMMON_TURN) then
+	if ct>0 and c:IsSummonPhaseMain() and c:IsStatus(STATUS_SPSUMMON_TURN) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_UPDATE_ATTACK)

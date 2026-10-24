@@ -23,7 +23,7 @@ function s.initial_effect(c)
 end
 s.listed_names={CARD_TAMABOT}
 function s.ffilter(c,fc,sumtype,tp)
-	return c:IsCode(CARD_TAMABOT) and c:IsHasEffect(160021007)
+	return c:IsCode(CARD_TAMABOT) and c:IsHasEffect(160021007) and c:IsControler(tp)
 end
 function s.tdfilter(c)
 	return c:IsMonster() and c:IsCode(CARD_TAMABOT) and c:IsAbleToDeckAsCost()

@@ -26,7 +26,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function s.spcostfilter(c)
-	return c:IsFaceup() and c:IsRace(RACE_DRAGON) and c:IsAbleToDeckAsCost()
+	return c:IsFaceup() and c:IsRace(RACE_DRAGON) and c:IsNotMaximumModeSide() and c:IsAbleToDeck()
 end
 function s.spcon(e,c)
 	if c==nil then return true end
@@ -46,8 +46,10 @@ function s.sptg(e,tp,eg,ep,ev,re,r,rp,c)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	local g=e:GetLabelObject()
+	local dg=g:AddMaximumCheck()
 	if not g then return end
-	Duel.SendtoDeck(g,nil,SEQ_DECKBOTTOM,REASON_COST)
+	Duel.SendtoDeck(dg,nil,SEQ_DECKBOTTOM,REASON_COST)
+	if #dg>1 then Duel.SortDeckbottom(tp,tp,#dg) end
 	g:DeleteGroup()
 end
 function s.spfilter(c,e,tp)

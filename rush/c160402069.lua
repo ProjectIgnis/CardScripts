@@ -31,8 +31,8 @@ function s.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local cg=Duel.SelectMatchingCard(tp,aux.AND(Card.IsMonster,Card.IsAbleToDeckOrExtraAsCost),tp,LOCATION_GRAVE,0,1,1,nil)
 	if #cg==0 then return end
-	Duel.HintSelection(cg,true)
-	if Duel.SendtoDeck(cg,nil,SEQ_DECKSHUFFLE,REASON_EFFECT)==0 then return end
+	Duel.HintSelection(cg)
+	if Duel.SendtoDeck(cg,nil,SEQ_DECKBOTTOM,REASON_EFFECT)==0 then return end
 	--Effect
 	local g=Duel.GetMatchingGroup(Card.IsSpellTrap,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
 	if #g>0 then

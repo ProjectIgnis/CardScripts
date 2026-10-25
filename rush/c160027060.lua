@@ -28,7 +28,7 @@ end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetLabelObject():SetLabel(0) --Reset flag
 	local ec=eg:GetFirst()
-	if ec:IsSpellTrap() and ec:IsReason(REASON_COST) then
+	if ec:IsSpellTrap() and ec:IsReason(REASON_COST) and ec:IsPreviousLocation(LOCATION_HAND|LOCATION_ONFIELD) then
 		e:GetLabelObject():SetLabel(1)
 	end
 end

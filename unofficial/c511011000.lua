@@ -1,6 +1,6 @@
 --スカブ・ブラスト
 --Scab Blast
---scripted by Keddy
+--Scripted by Keddy
 local s,id=GetID()
 local COUNTER_SCAB=0x109a
 function s.initial_effect(c)
@@ -40,11 +40,11 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Damage(p,dam,REASON_EFFECT)
 end
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return tp==Duel.GetTurnPlayer() and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>0
+	return Duel.IsTurnPlayer(tp) and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>0
 		and Duel.GetDrawCount(tp)>0
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHanderl()
+	local c=e:GetHandler()
 	if chk==0 then return c:IsAbleToHand() end
 	local dt=Duel.GetDrawCount(tp)
 	if dt~=0 then

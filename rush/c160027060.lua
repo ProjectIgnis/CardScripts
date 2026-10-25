@@ -25,10 +25,12 @@ function s.initial_effect(c)
 	e0:SetOperation(s.regop)
 	c:RegisterEffect(e0)
 end
+function s.filter(c)
+	return c:IsSpellTrap() and c:IsReason(REASON_COST) and c:IsPreviousLocation(LOCATION_HAND|LOCATION_ONFIELD)
+end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetLabelObject():SetLabel(0) --Reset flag
 	local ec=eg:GetFirst()
-	if ec:IsSpellTrap() and ec:IsReason(REASON_COST) and ec:IsPreviousLocation(LOCATION_HAND|LOCATION_ONFIELD) then
+	if eg:IsExists(s.filter,1,nil) then
 		e:GetLabelObject():SetLabel(1)
 	end
 end
@@ -42,4 +44,5 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1)
 		Duel.Draw(tp,1,REASON_EFFECT)
 	end
+	e:SetLabel(0) --Reset flag
 end

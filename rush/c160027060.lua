@@ -30,13 +30,12 @@ function s.filter(c)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
 	local ec=eg:GetFirst()
-	if eg:IsExists(s.filter,1,nil) then
+	if rp==tp and re and re:GetHandler():IsMonster() and eg:IsExists(s.filter,1,nil) then
 		e:GetLabelObject():SetLabel(1)
 	end
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
-	local rc=re:GetHandler()
-	return rp==tp and re:GetHandler():IsMonster() and e:GetLabel()==1
+	return e:GetLabel()==1
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.HasFlagEffect(tp,id) and Duel.IsPlayerCanDraw(tp,1) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then

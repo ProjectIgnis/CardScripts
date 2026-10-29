@@ -2,7 +2,7 @@
 --Buster Blader
 local s,id=GetID()
 function s.initial_effect(c)
-	--Gains 500 ATK for each Dragon monster your opponent controls or is in their GY.
+	--Gains 500 ATK for each Dragon monster your opponent controls or is in their GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)

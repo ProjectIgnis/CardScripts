@@ -96,7 +96,7 @@ function s.drwop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Draw(p,d,REASON_EFFECT)
 end
 function s.banishtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=eg:Filter(Card.IsAbleToRemove,nil)
+	local g=eg:Filter(Card.IsAbleToRemove,nil):Filter(Card.IsSummonPlayer,nil,1-tp)
 	if chk==0 then return #g>0 end
 	for sc in eg:Iter() do
 		sc:CreateEffectRelation(e)
@@ -104,7 +104,7 @@ function s.banishtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,#g,tp,0)
 end
 function s.banishop(e,tp,eg,ep,ev,re,r,rp)
-	local g=eg:Filter(Card.IsRelateToEffect,nil,e)
+	local g=eg:Filter(Card.IsRelateToEffect,nil,e):Filter(Card.IsSummonPlayer,nil,1-tp)
 	if #g>0 then
 		Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 	end

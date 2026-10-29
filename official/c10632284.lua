@@ -44,7 +44,7 @@ function s.chfilter(c,e)
 	return c:IsFaceup() and c:IsCanBeEffectTarget(e)
 end
 function s.tgfilter(c,rc,att)
-	return c:IsRaceExcept(rc) and c:IsAttributeExcept(att)
+	return c:IsRaceExcept(rc) or c:IsAttributeExcept(att)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsFaceup() and chkc:IsLocation(LOCATION_MZONE) and s.tgfilter(chkc,e:GetLabel()) end

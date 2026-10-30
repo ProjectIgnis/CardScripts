@@ -29,6 +29,7 @@ function s.initial_effect(c)
 end
 s.material_setcode={SET_HERO,SET_ELEMENTAL_HERO}
 s.listed_names={CARD_DARK_FUSION,CARD_SUPER_POLYMERIZATION,58932615,21844576}
+s.dark_calling=true
 function s.splimit(e,se,sp,st)
 	return se:GetHandler():IsCode(CARD_DARK_FUSION,CARD_SUPER_POLYMERIZATION)
 end

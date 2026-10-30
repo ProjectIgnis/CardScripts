@@ -32,6 +32,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_names={CARD_DARK_FUSION,CARD_SUPER_POLYMERIZATION}
+s.dark_calling=true
 function s.splimit(e,se,sp,st)
 	return se:GetHandler():IsCode(CARD_DARK_FUSION,CARD_SUPER_POLYMERIZATION)
 end

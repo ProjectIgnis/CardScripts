@@ -48,12 +48,11 @@ function s.eqeffect(c,tc)
 	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
 	e1:SetValue(s.eqlimit)
 	c:RegisterEffect(e1)
-	--The equipped monster cannot be returned to the hand/Deck/Extra Deck by card effects
+	--Cannot be returned to the hand or Deck
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_EQUIP)
 	e2:SetCode(EFFECT_CANNOT_TO_DECK)
-	e2:SetValue(1)
-	e2:SetCondition(s.noreturncondition)
+	e2:SetValue(s.indtg2)
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
 	e3:SetCode(EFFECT_CANNOT_TO_HAND)
@@ -69,7 +68,6 @@ end
 function s.eqlimit(e,c)
 	return c:IsFaceup()
 end
-function s.noreturncondition(e)
-	local source_eff=Duel.GetReasonEffect()
-	return source_eff and (source_eff:IsActivated() or not source_eff:GetCode()==EFFECT_SPSUMMON_PROC)
+function s.indtg2(e,c,rp,reason,re)
+    return reason==REASON_EFFECT
 end

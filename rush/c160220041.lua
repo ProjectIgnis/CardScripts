@@ -60,7 +60,7 @@ function s.eqeffect(c,tc)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_EQUIP)
 	e2:SetCode(EFFECT_CANNOT_TO_DECK)
-	e2:SetValue(1)
+	e2:SetValue(s.indtg2)
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
 	e3:SetCode(EFFECT_CANNOT_TO_HAND)
@@ -68,4 +68,7 @@ function s.eqeffect(c,tc)
 end
 function s.eqlimit(e,c)
 	return c:IsFaceup()
+end
+function s.indtg2(e,c,rp,reason,re)
+    return reason==REASON_EFFECT
 end

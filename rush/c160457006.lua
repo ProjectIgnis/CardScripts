@@ -47,7 +47,8 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_CANNOT_TO_DECK)
 		e1:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
 		e1:SetCondition(s.indcond)
-		e1:SetValue(1)
+		e1:SetRange(LOCATION_MZONE)
+    	e1:SetValue(s.indtg2)
 		e1:SetReset(RESETS_STANDARD_PHASE_END,2)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()
@@ -57,4 +58,7 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function s.indcond(e)
 	return Duel.IsTurnPlayer(1-e:GetHandlerPlayer())
+end
+function s.indtg2(e,c,rp,reason,re)
+    return reason==REASON_EFFECT
 end

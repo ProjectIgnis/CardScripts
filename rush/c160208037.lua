@@ -20,7 +20,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return at and at:IsCanChangePositionRush()
 end
 function s.filter(c)
-	return c:IsMonster() and c:IsLevelAbove(7) and c:IsAttribute(ATTRIBUTE_WIND) and c:IsAbleToHand() and c:IsFaceup() and not c:IsMaximumModeSide()
+	return c:IsMonster() and c:IsLevelAbove(7) and c:IsAttribute(ATTRIBUTE_WIND) and c:IsAbleToHandAsCost() and c:IsFaceup() and not c:IsMaximumModeSide()
 end
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil) end
@@ -36,7 +36,7 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.HintSelection(g,true)
 	g=g:AddMaximumCheck()
-	if Duel.SendtoHand(g,nil,REASON_EFFECT)<1 then return end
+	if Duel.SendtoHand(g,nil,REASON_COST)<1 then return end
 	--Effect
 	local at=Duel.GetAttacker()
 	if at and at:IsAttackPos() and at:IsRelateToBattle() and Duel.ChangePosition(at,POS_FACEUP_DEFENSE)>0 then

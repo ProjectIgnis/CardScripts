@@ -14,20 +14,17 @@ function s.initial_effect(c)
 	c:RegisterEffect(e0)
 	--Spells/Traps cannot be returned
 	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetCode(EFFECT_CANNOT_TO_DECK)
-	e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_SET_AVAILABLE)
-	e1:SetRange(LOCATION_MZONE)
-	e1:SetCondition(s.indcond)
-	e1:SetTarget(s.indtg)
-	e1:SetTargetRange(LOCATION_ONFIELD,0)
-	e1:SetValue(s.value)
-	c:RegisterEffect(e1)
-	c:AddSideMaximumHandler(e1)
+    e1:SetType(EFFECT_TYPE_FIELD)
+    e1:SetCode(EFFECT_CANNOT_TO_DECK)
+    e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_SET_AVAILABLE)
+    e1:SetRange(LOCATION_MZONE)
+    e1:SetCondition(s.indcond)
+    e1:SetTargetRange(LOCATION_ONFIELD,0)
+    e1:SetValue(s.indtg)
+    c:RegisterEffect(e1)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_CANNOT_TO_HAND)
 	c:RegisterEffect(e2)
-	c:AddSideMaximumHandler(e2)
 end
 s.listed_cards={160020003,160020051} --Sentinel Officer, Galaxy Chaos Fusion
 function s.splimit(e,se,sp,st)
@@ -36,9 +33,6 @@ end
 function s.indcond(e)
 	return Duel.IsTurnPlayer(1-e:GetHandlerPlayer())
 end
-function s.indtg(e,c)
-	return c:IsSpellTrap()
-end
-function s.value(e,re,rp)
-	return nil~=re
+function s.indtg(e,c,rp,reason,re)
+    return reason==REASON_EFFECT and c:IsSpellTrap()
 end

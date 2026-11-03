@@ -27,7 +27,7 @@ function s.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_EQUIP)
 	e4:SetCode(EFFECT_CANNOT_TO_DECK)
 	e4:SetCondition(s.indcond)
-	e4:SetValue(1)
+	e4:SetValue(s.indtg2)
 	c:RegisterEffect(e4)
 	local e5=e4:Clone()
 	e5:SetCode(EFFECT_CANNOT_TO_HAND)
@@ -47,4 +47,7 @@ function s.eftg(e,c)
 end
 function s.indcond(e)
 	return Duel.IsTurnPlayer(1-e:GetHandlerPlayer())
+end
+function s.indtg2(e,c,rp,reason,re)
+    return reason==REASON_EFFECT
 end

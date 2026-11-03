@@ -21,10 +21,6 @@ function s.initial_effect(c)
 	e2:SetTargetRange(0,LOCATION_MZONE)
 	e2:SetCondition(s.poscon)
 	c:RegisterEffect(e2)
-	local e3=e2:Clone()
-	e3:SetCode(EFFECT_MUST_ATTACK_MONSTER)
-	e3:SetValue(s.atklimit)
-	c:RegisterEffect(e3)
 end
 s.material_setcode={SET_HERO,SET_EVIL_HERO}
 s.dark_calling=true
@@ -37,7 +33,4 @@ function s.splimit(e,se,sp,st)
 end
 function s.poscon(e)
 	return Duel.GetTurnPlayer()==1-e:GetHandlerPlayer() and Duel.IsBattlePhase()
-end
-function s.atklimit(e,c)
-	return c==e:GetHandler()
 end

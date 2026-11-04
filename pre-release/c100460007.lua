@@ -35,7 +35,7 @@ function s.negatktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetPossibleOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND|LOCATION_DECK)
 end
 function s.spfilter(c,e,tp)
-	return c:IsSetCard(SET_CUBIC) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+	return c:IsSetCard(SET_CUBIC) and c:IsMonster() and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function s.negatkop(e,tp,eg,ep,ev,re,r,rp)
 	local max_sp_count=Duel.GetLocationCount(tp,LOCATION_MZONE)

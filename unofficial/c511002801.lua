@@ -15,7 +15,7 @@ end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return re:IsSpellTrapEffect() and Duel.IsChainDisablable(ev) and Duel.GetAttacker()
 end
-function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local rc=re:GetHandler()
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,eg,1,tp,0)
@@ -23,7 +23,7 @@ function s.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,1,tp,0)
 	end
 end
-function s.disop(e,tp,eg,ep,ev,re,r,rp)
+function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.NegateEffect(ev) and re:GetHandler():IsRelateToEffect(re) then
 		Duel.Destroy(eg,REASON_EFFECT)
 	end

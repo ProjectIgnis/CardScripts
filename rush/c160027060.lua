@@ -29,7 +29,6 @@ function s.filter(c)
 	return c:IsSpellTrap() and c:IsReason(REASON_COST) and c:IsPreviousLocation(LOCATION_HAND|LOCATION_ONFIELD)
 end
 function s.regop(e,tp,eg,ep,ev,re,r,rp)
-	local ec=eg:GetFirst()
 	if rp==tp and re and re:GetHandler():IsMonster() and eg:IsExists(s.filter,1,nil) then
 		e:GetLabelObject():SetLabel(1)
 	end
@@ -38,7 +37,7 @@ function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetLabel()==1
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	if not Duel.HasFlagEffect(tp,id) and Duel.IsPlayerCanDraw(tp,1) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+	if not Duel.HasFlagEffect(tp,id) then
 		Duel.Hint(HINT_CARD,0,id)
 		Duel.RegisterFlagEffect(tp,id,RESET_PHASE|PHASE_END,0,1)
 		Duel.Draw(tp,1,REASON_EFFECT)

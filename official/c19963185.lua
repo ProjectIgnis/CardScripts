@@ -4,7 +4,7 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	Duel.EnableGlobalFlag(GLOBALFLAG_SELF_TOGRAVE)
-	--Send itself to the GY if "Adanced Dark" is not face-up in the Field Spell Zone
+	--If "Advanced Dark" is not in a Field Zone, send this monster to the GY
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -12,7 +12,7 @@ function s.initial_effect(c)
 	e1:SetCode(EFFECT_SELF_TOGRAVE)
 	e1:SetCondition(s.tgcon)
 	c:RegisterEffect(e1)
-	--Place itself in the S/T instead of sending it to the GY
+	--If this face-up card is destroyed in a Monster Zone, you can place it face-up in your Spell & Trap Zone as a Continuous Spell, instead of sending it to the GY
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_TO_GRAVE_REDIRECT_CB)
@@ -20,7 +20,7 @@ function s.initial_effect(c)
 	e2:SetCondition(s.replacecon)
 	e2:SetOperation(s.replaceop)
 	c:RegisterEffect(e2)
-	--"Advanced Crystal Beast" monster can attack directly
+	--Your "Advanced Crystal Beast" monsters can attack directly
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetCode(EFFECT_DIRECT_ATTACK)
@@ -62,6 +62,6 @@ end
 function s.rdmgcond(e)
 	local tp=e:GetHandlerPlayer()
 	local c=Duel.GetAttacker()
-	return Duel.GetAttackTarget()==nil and c:GetEffectCount(EFFECT_DIRECT_ATTACK)<2
+	return Duel.GetAttackTarget()==nil and c:GetEffectCount(EFFECT_DIRECT_ATTACK)>0
 		and Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0 --if there are 0 monsters, it's not attacking directly using this effect
 end

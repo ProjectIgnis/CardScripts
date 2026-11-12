@@ -2,10 +2,10 @@
 -- Grave Shadow
 local s,id=GetID()
 function s.initial_effect(c)
-	--Special Summon
+	--Shuffle 1 "Grave Shadow" or 5 monsters from your Graveyard into the Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_ATKCHANGE)
+	e1:SetCategory(CATEGORY_TODECK+CATEGORY_ATKCHANGE)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
@@ -45,9 +45,10 @@ function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=aux.SelectUnselectGroup(cg,e,tp,1,5,s.rescon,1,tp,HINTMSG_TODECK,s.rescon)
 	Duel.HintSelection(g)
 	if Duel.SendtoDeck(g,nil,SEQ_DECKSHUFFLE,REASON_COST)<1 then return end
-	if Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_MZONE,0,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+	if Duel.IsExistingMatchingCard(s.filter,tp,0,LOCATION_MZONE,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 		local g2=Duel.SelectMatchingCard(tp,s.filter,tp,0,LOCATION_MZONE,1,1,nil)
 		Duel.HintSelection(g2)
+		--1 face-up monster on your opponent's field lose 1500 ATK/DEF until the end of this turn
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)

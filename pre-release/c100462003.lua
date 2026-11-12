@@ -75,6 +75,7 @@ function s.initial_effect(c)
 end
 s.listed_series={SET_MAGISTUS,SET_ENDYMION}
 s.listed_names={id}
+s.counter_place_list={COUNTER_SPELL}
 function s.spellcostfilter(c)
 	return c:IsSpell() and c:IsFaceup() and c:IsAbleToRemoveAsCost()
 end

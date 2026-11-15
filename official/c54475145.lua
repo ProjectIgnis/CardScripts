@@ -78,7 +78,7 @@ end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local g=eg:Filter(s.spconfilter,nil,tp)
-	if chk==0 then return Duel.GetMZoneCount(tp,g)>0
+	if chk==0 then return #g>0 and Duel.GetMZoneCount(tp,g)>0
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetTargetCard(g)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,g,#g,tp,0)

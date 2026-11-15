@@ -32,7 +32,7 @@ function s.initial_effect(c)
 	e2c:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
 	c:RegisterEffect(e2c)
 end
-s.coin_toss=true
+s.toss_coin=true
 function s.spcond(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(function(c) return c.toss_coin and c:IsFaceup() end,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
 end

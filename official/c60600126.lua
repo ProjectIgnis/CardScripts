@@ -26,6 +26,22 @@ function s.initial_effect(c)
 	e2:SetTarget(s.thtg)
 	e2:SetOperation(s.thop)
 	c:RegisterEffect(e2)
+	--To handle the scenario where it has its activation negated but no secondary action is performed (e.g. 'destroy it')
+	local e2b=e2:Clone(c)
+	e2b:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e2b:SetProperty(EFFECT_FLAG_DELAY)
+	e2b:SetCode(EVENT_TO_GRAVE)
+	e2b:SetCondition(function(e,tp) return e:GetHandler():HasFlagEffect(id) end)
+	c:RegisterEffect(e2b)
+	--Register if EVENT_CHAIN_NEGATED results on this card being sent to the GY
+	aux.GlobalCheck(s,function()
+		local ge1=Effect.CreateEffect(c)
+		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		ge1:SetCode(EVENT_CHAIN_NEGATED)
+		ge1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CANNOT_INACTIVATE+EFFECT_FLAG_CANNOT_NEGATE)
+		ge1:SetOperation(s.checkop)
+		Duel.RegisterEffect(ge1,0)
+	end)
 end
 s.listed_series={SET_CYBER_DRAGON}
 function s.filter(c)
@@ -62,5 +78,10 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(e) then
 		Duel.SendtoHand(c,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,c)
+	end
+end
+function s.checkop(e,tp,eg,ep,ev,re,r,rp)
+	if re and re:GetHandler():IsCode(id) and rp==1-tp then
+		re:GetHandler():RegisterFlagEffect(id,RESET_EVENT|(RESETS_STANDARD&~RESET_TOGRAVE),0,1,0)
 	end
 end

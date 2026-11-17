@@ -5,55 +5,72 @@ function s.initial_effect(c)
 	c:EnableReviveLimit()
 	--Xyz Summon procedure: 2 Level 5 monsters
 	Xyz.AddProcedure(c,nil,5,2)
-	--Activate 1 of these effects
+	--Once per turn (Quick Effect): You can activate 1 of these effects;
+	--● When a monster effect is activated on the field or a Normal Spell/Trap Card is activated: You can detach 1 material from this card; the activated effect becomes "Destroy 1 Spell/Trap your opponent controls"
+	--● You can detach 1 material from this card; each player with a hand shuffles their entire hand into the Deck, then draws the same number of cards they shuffled into the Deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetHintTiming(0,TIMING_STANDBY_PHASE|TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E)
 	e1:SetCountLimit(1)
 	e1:SetCost(Cost.DetachFromSelf(1))
 	e1:SetTarget(s.efftg)
 	e1:SetOperation(s.effop)
+	e1:SetHintTiming(0,TIMING_STANDBY_PHASE|TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E)
 	c:RegisterEffect(e1)
 end
 function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local event_chaining,_,_,event_value,reason_effect,_,reason_player=Duel.CheckEvent(EVENT_CHAINING,true)
-	--The activated effect becomes "Destroy 1 Spell/Trap Card your opponent controls"
-	local b1=event_chaining and Duel.IsExistingMatchingCard(Card.IsSpellTrap,reason_player,0,LOCATION_ONFIELD,1,nil)
+	--● When a monster effect is activated on the field or a Normal Spell/Trap Card is activated: You can detach 1 material from this card; the activated effect becomes "Destroy 1 Spell/Trap your opponent controls"
+	local option_1=event_chaining and Duel.IsExistingMatchingCard(Card.IsSpellTrap,reason_player,0,LOCATION_ONFIELD,1,nil)
 		and ((reason_effect:IsMonsterEffect() and Duel.GetChainInfo(event_value,CHAININFO_TRIGGERING_LOCATION)==LOCATION_MZONE)
 		or (reason_effect:GetHandler():IsNormalSpellTrap() and reason_effect:IsHasType(EFFECT_TYPE_ACTIVATE)))
-	--Each player with a hand shuffles their entire hand into the Deck, then draws the same number of cards they shuffled into the Deck
-	local b2=(Duel.IsPlayerCanDraw(tp) or Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)==0)
+	--● You can detach 1 material from this card; each player with a hand shuffles their entire hand into the Deck, then draws the same number of cards they shuffled into the Deck
+	local option_2=(Duel.IsPlayerCanDraw(tp) or Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)==0)
 		and (Duel.IsPlayerCanDraw(1-tp) or Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)==0)
 		and Duel.IsExistingMatchingCard(Card.IsAbleToDeck,tp,LOCATION_HAND,LOCATION_HAND,1,nil)
-	if chk==0 then return b1 or b2 end
-	local op=not b1 and 2
+	if chk==0 then return option_1 or option_2 end
+	local choice=not option_1 and 2
 		or Duel.SelectEffect(tp,
-			{b1,aux.Stringid(id,1)},
-			{b2,aux.Stringid(id,2)})
-	e:SetLabel(op)
-	if op==1 then
+			{option_1,aux.Stringid(id,1)},
+			{option_2,aux.Stringid(id,2)})
+	local chain_data=e:GetChainData()
+	chain_data.choice=choice
+	if choice==1 then
+		--● When a monster effect is activated on the field or a Normal Spell/Trap Card is activated: You can detach 1 material from this card; the activated effect becomes "Destroy 1 Spell/Trap your opponent controls"
 		e:SetCategory(0)
-		Duel.SetTargetParam(event_value)
-	elseif op==2 then
+		chain_data.event_value=event_value
+	elseif choice==2 then
+		--● You can detach 1 material from this card; each player with a hand shuffles their entire hand into the Deck, then draws the same number of cards they shuffled into the Deck
 		e:SetCategory(CATEGORY_TODECK+CATEGORY_DRAW)
-		if not b1 then Duel.Hint(HINT_OPSELECTED,1-tp,aux.Stringid(id,2)) end
+		if not option_1 then Duel.Hint(HINT_OPSELECTED,1-tp,aux.Stringid(id,2)) end
 		Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,PLAYER_ALL,LOCATION_HAND)
 		Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,PLAYER_ALL,1)
 	end
 end
 function s.effop(e,tp,eg,ep,ev,re,r,rp)
-	local op=e:GetLabel()
-	if op==1 then
-		--The activated effect becomes "Destroy 1 Spell/Trap Card your opponent controls"
+	local chain_data=e:GetChainData()
+	local choice=chain_data.choice
+	if choice==1 then
+		--● When a monster effect is activated on the field or a Normal Spell/Trap Card is activated: You can detach 1 material from this card; the activated effect becomes "Destroy 1 Spell/Trap your opponent controls"
 		local g=Group.CreateGroup()
-		local event_value=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
+		local event_value=chain_data.event_value
 		Duel.ChangeTargetCard(event_value,g)
-		Duel.ChangeChainOperation(event_value,s.repop)
-	elseif op==2 then
-		--Each player with a hand shuffles their entire hand into the Deck, then draws the same number of cards they shuffled into the Deck
+		Duel.ChangeChainOperation(event_value,function(e,tp,eg,ep,ev,re,r,rp)
+			local c=e:GetHandler()
+			if c:IsNormalSpellTrap() then
+				c:CancelToGrave(false)
+			end
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+			local g=Duel.SelectMatchingCard(tp,Card.IsSpellTrap,tp,0,LOCATION_ONFIELD,1,1,nil)
+			if #g>0 then
+				Duel.HintSelection(g)
+				Duel.Destroy(g,REASON_EFFECT)
+			end
+		end)
+	elseif choice==2 then
+		--● You can detach 1 material from this card; each player with a hand shuffles their entire hand into the Deck, then draws the same number of cards they shuffled into the Deck
 		local g=Duel.GetFieldGroup(tp,LOCATION_HAND,LOCATION_HAND)
 		if Duel.SendtoDeck(g,nil,SEQ_DECKTOP,REASON_EFFECT)>0 then
 			local og=Duel.GetOperatedGroup():Match(Card.IsLocation,nil,LOCATION_DECK)
@@ -61,27 +78,18 @@ function s.effop(e,tp,eg,ep,ev,re,r,rp)
 			local non_turn_player=1-turn_player
 			if og:IsExists(Card.IsControler,1,nil,turn_player) then Duel.ShuffleDeck(turn_player) end
 			if og:IsExists(Card.IsControler,1,nil,non_turn_player) then Duel.ShuffleDeck(non_turn_player) end
-			local ct1=og:FilterCount(Card.IsPreviousControler,nil,turn_player)
-			local ct2=og:FilterCount(Card.IsPreviousControler,nil,non_turn_player)
-			Duel.BreakEffect()
-			if ct1>0 then
-				Duel.Draw(turn_player,ct1,REASON_EFFECT)
+			local turn_player_drawcount=og:FilterCount(Card.IsPreviousControler,nil,turn_player)
+			local non_turn_player_drawcount=og:FilterCount(Card.IsPreviousControler,nil,non_turn_player)
+			local break_chk=true
+			if turn_player_drawcount>0 then
+				break_chk=false
+				Duel.BreakEffect()
+				Duel.Draw(turn_player,turn_player_drawcount,REASON_EFFECT)
 			end
-			if ct2>0 then
-				Duel.Draw(non_turn_player,ct2,REASON_EFFECT)
+			if non_turn_player_drawcount>0 then
+				if break_chk then Duel.BreakEffect() end
+				Duel.Draw(non_turn_player,non_turn_player_drawcount,REASON_EFFECT)
 			end
 		end
-	end
-end
-function s.repop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	if c:IsNormalSpellTrap() then
-		c:CancelToGrave(false)
-	end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectMatchingCard(tp,Card.IsSpellTrap,tp,0,LOCATION_ONFIELD,1,1,nil)
-	if #g>0 then
-		Duel.HintSelection(g)
-		Duel.Destroy(g,REASON_EFFECT)
 	end
 end

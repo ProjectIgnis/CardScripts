@@ -1,4 +1,4 @@
---バイ・バインド
+d--バイ・バインド
 --Double Bind
 --Scripted by The Razgriz and Larry126
 Duel.EnableUnofficialProc(PROC_STATS_CHANGED)
@@ -10,7 +10,7 @@ function s.initial_effect(c)
 	e1:SetDescription(aux.Stringid(id,0))
 	e1:SetCategory(CATEGORY_ATKCHANGE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(TIMING_DAMAGE_STEP)
 	e1:SetCondition(aux.StatChangeDamageStepCondition)

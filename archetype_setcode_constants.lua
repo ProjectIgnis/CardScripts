@@ -291,6 +291,7 @@ SET_POWER_TOOL                    = 0xc2
 SET_EDGE_IMP                      = 0xc3
 SET_ZEFRA                         = 0xc4
 SET_VOID                          = 0xc5
+SET_VOID_OGRE_DRAGON              = 0x10c5
 SET_PERFORMAGE                    = 0xc6
 SET_DRACOSLAYER                   = 0xc7
 SET_IGKNIGHT                      = 0xc8

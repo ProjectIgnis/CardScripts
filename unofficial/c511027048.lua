@@ -1,4 +1,4 @@
-d--バイ・バインド
+--バイ・バインド
 --Double Bind
 --Scripted by The Razgriz and Larry126
 Duel.EnableUnofficialProc(PROC_STATS_CHANGED)

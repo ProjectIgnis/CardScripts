@@ -22,7 +22,7 @@ function s.revealfilter(c,tp,handler_name)
 		and Duel.IsExistingMatchingCard(s.gyfilter,tp,LOCATION_GRAVE,0,1,nil,c,handler_name)
 end
 function s.gyfilter(c,fusion_monster,handler_name)
-	if c:IsFusionMonster() or c:IsCode(handler_name) then return false end
+	if not c:IsMonster() or c:IsFusionMonster() or c:IsCode(handler_name) then return false end
 	local code=c:GetCode()
 	return fusion_monster:ListsCode(code) or fusion_monster:ListsCodeAsMaterial(code)
 end

@@ -16,7 +16,7 @@ function s.initial_effect(c)
 	e2:SetCode(EVENT_DAMAGE_STEP_END)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCondition(s.accon)
-	e2:SetCost(s.accost)
+	e2:SetCost(Cost.SelfToGrave)
 	e2:SetTarget(s.actg)
 	e2:SetOperation(s.acop)
 	c:RegisterEffect(e2)
@@ -29,11 +29,7 @@ function s.accon(e,tp,eg,ep,ev,re,r,rp)
 	if eq==at then at=Duel.GetAttackTarget() end
 	return at and at:IsRelateToBattle() and not at:IsStatus(STATUS_BATTLE_DESTROYED)
 end
-function s.accost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
-end
-function s.filter(c,tp)
+function s.acfilter(c,tp)
 	local te=c:GetActivateEffect()
 	if c:IsHasEffect(EFFECT_CANNOT_TRIGGER) then return false end
 	local pre={Duel.GetPlayerEffect(tp,EFFECT_CANNOT_ACTIVATE)}
@@ -47,10 +43,10 @@ function s.filter(c,tp)
 end
 function s.actg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>-1
-		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,nil,tp) end
+		and Duel.IsExistingMatchingCard(s.acfilter,tp,LOCATION_HAND,0,1,nil,tp) end
 end
 function s.acop(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_HAND,0,1,1,nil,tp):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,s.acfilter,tp,LOCATION_HAND,0,1,1,nil,tp):GetFirst()
 	local tpe=tc:GetType()
 	local te=tc:GetActivateEffect()
 	local tg=te:GetTarget()
@@ -75,7 +71,7 @@ function s.acop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.MoveToField(tc,tp,tp,loc,POS_FACEUP,true)
 	Duel.Hint(HINT_CARD,0,tc:GetCode())
 	tc:CreateEffectRelation(te)
-	if tpe&(TYPE_EQUIP+TYPE_CONTINUOUS+TYPE_FIELD)==0 and not tc:IsHasEffect(EFFECT_REMAIN_FIELD) then
+	if tpe&(TYPE_EQUIP|TYPE_CONTINUOUS|TYPE_FIELD)==0 and not tc:IsHasEffect(EFFECT_REMAIN_FIELD) then
 		tc:CancelToGrave(false)
 	end
 	if co then co(te,tp,eg,ep,ev,re,r,rp,1) end

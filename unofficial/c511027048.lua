@@ -28,13 +28,13 @@ function s.initial_effect(c)
 		Duel.RegisterEffect(ge1,0)
 	end)
 end
-function s.chkfilter(c,tp)
+function s.chkfilter(c)
 	local val=0
 	if c:GetFlagEffect(284)>0 then val=c:GetFlagEffectLabel(284) end
-	return c:IsControler(tp) and c:IsFaceup() and c:GetAttack()<val
+	return c:IsFaceup() and c:GetAttack()<val
 end
 function s.checkop(e,tp,eg,ep,ev,re,r,rp)
-	local g=eg:Filter(s.chkfilter,nil,tp)
+	local g=eg:Filter(s.chkfilter,nil)
 	for tc in g:Iter() do
 		tc:RegisterFlagEffect(id,RESETS_STANDARD_PHASE_END,0,1)
 	end

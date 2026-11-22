@@ -2924,7 +2924,9 @@ end
 function Auxiliary.RemoveUntil(card_or_group,pos,reason,phase,flag,e,tp,oper,cond,reset,reset_count,hint,effect_desc)
 	local g=(type(card_or_group)=="Group" and card_or_group or Group.FromCards(card_or_group))
 	if #g>0 and Duel.Remove(g,pos,reason|REASON_TEMPORARY)>0 and #g:Match(Card.IsLocation,nil,LOCATION_REMOVED)>0 then
-		return aux.DelayedOperation(g,phase,flag,e,tp,oper,cond,reset,reset_count,hint,effect_desc)
+		local re=aux.DelayedOperation(g,phase,flag,e,tp,oper,cond,reset,reset_count,hint,effect_desc)
+		g:ForEach(Card.SetReasonEffect,re)
+		return re
 	end
 end
 

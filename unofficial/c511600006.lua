@@ -17,68 +17,58 @@ function s.filter(c)
 	return c:IsFaceup() and c:IsRace(RACE_SPELLCASTER) and c:GetAttackedCount()==0 and c:CanAttack()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.filter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(s.filter,tp,LOCATION_MZONE,0,2,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	local g1=Duel.SelectTarget(tp,s.filter,tp,LOCATION_MZONE,0,2,2,nil,tp)
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and s.cfilter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(s.cfilter,tp,LOCATION_MZONE,0,2,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
+	local g1=Duel.SelectTarget(tp,s.cfilter,tp,LOCATION_MZONE,0,2,2,nil,tp)
 	Duel.SetOperationInfo(0,CATEGORY_ATKCHANGE,nil,1,tp,LOCATION_MZONE)
 end
-function s.tgfilter(c,e)
-	return c:IsFaceup() and c:IsRelateToEffect(e)
-end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
-	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(s.tgfilter,nil,e)
-	if #tg==2 then
-		local c=e:GetHandler()
-		for tc in aux.Next(tg) do
-			local g=tg
-			g:RemoveCard(tc)
-			tc:SetCardTarget(g:GetFirst())
-			--Destroy
-			local e1=Effect.CreateEffect(c)
-			e1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
-			e1:SetCode(EVENT_LEAVE_FIELD)
-			e1:SetLabelObject(g:GetFirst())
-			e1:SetOperation(s.desop)
-			tc:RegisterEffect(e1)
-		end
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTACK)
-		local ag=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(s.tgfilter,nil,e):Select(tp,1,1,nil)
-		tg:Sub(ag)
-		local tc1=ag:GetFirst()
-		local tc2=tg:GetFirst()
-		if tc1 then
-			local e2=Effect.CreateEffect(c)
-			e2:SetType(EFFECT_TYPE_SINGLE)
-			e2:SetCode(EFFECT_SET_ATTACK_FINAL)
-			e2:SetLabelObject(tc2)
-			e2:SetCondition(s.atkcon)
-			e2:SetValue(3000)
-			e2:SetReset(RESET_EVENT|RESETS_STANDARD)
-			tc1:RegisterEffect(e2)
-		end
-		if tc2 then
-			local e3=Effect.CreateEffect(c)
-			e3:SetType(EFFECT_TYPE_SINGLE)
-			e3:SetCode(EFFECT_CANNOT_ATTACK)
-			e3:SetLabelObject(tc2)
-			e3:SetCondition(s.atkcon)
-			e3:SetValue(3000)
-			e3:SetReset(RESET_EVENT|RESETS_STANDARD)
-			tc2:RegisterEffect(e3)
-		end
+	local c=e:GetHandler()
+	local g=Duel.GetTargetCards(e)
+	if #g~=2 then return end
+	for tc in g:Iter() do
+		tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,0)
 	end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATKDEF)
+	local selected_monster=g:Select(tp,1,1,nil):GetFirst()
+	g:RemoveCard(selected_monster)
+	local other_monster=g:GetFirst()
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_SET_ATTACK_FINAL)
+	e1:SetReset(RESET_EVENT|RESETS_STANDARD)
+	e1:SetValue(3000)
+	selected_monster:RegisterEffect(e1)
+	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(3206)
+	e2:SetType(EFFECT_TYPE_SINGLE)
+	e2:SetProperty(EFFECT_FLAG_CLIENT_HINT)
+	e2:SetCode(EFFECT_CANNOT_ATTACK)
+	e2:SetReset(RESET_EVENT|RESETS_STANDARD)
+	other_monster:RegisterEffect(e2)
+	--Destroy those monsters by the same reason
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e3:SetCode(EVENT_LEAVE_FIELD_P)
+	e3:SetCountLimit(1)
+	e3:SetCondition(s.descon)
+	e3:SetOperation(s.desop)
+	Duel.RegisterEffect(e3,tp)
 end
-function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetLabelObject() and #e:GetHandler():GetCardTarget()>0
-		and e:GetHandler():GetCardTarget():IsContains(e:GetLabelObject())
+function s.desfilter(c)
+	return c:HasFlagEffect(id) and c:IsReason(REASON_DESTROY)
+end
+function s.descon(e,tp,eg,ep,ev,re,r,rp)
+	return eg:IsExists(s.desfilter,1,nil)
 end
 function s.desop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local tc=e:GetLabelObject()
-	local g=c:GetCardTarget()
-	if c:IsReason(REASON_DESTROY) and g:IsContains(tc) and tc:IsLocation(LOCATION_MZONE) then
-		Duel.Destroy(tc,r&REASON_EFFECT|r&REASON_BATTLE|r&REASON_RULE)
+	local g=eg:Filter(s.desfilter,nil)
+	local dg=Duel.GetMatchingGroup(Card.HasFlagEffect,tp,LOCATION_MZONE,0,g,id)
+	if #dg>0 then
+		Duel.Destroy(dg,g:GetFirst():GetReason())
+	else
+		return
 	end
 	e:Reset()
 end

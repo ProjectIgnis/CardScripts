@@ -16,8 +16,9 @@ function s.cfilter(c,code)
 	return c:IsAttackPos() and c:IsCode(code)
 end
 function s.condition(e,tp,eg,ev,ep,re,r,rp)
-	local code=e:GetHandler():GetCode()
-	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,code) 
+	local c=e:GetHandler()
+	local code=c:GetCode()
+	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,c,code) 
 end
 function s.target(e,tp,eg,ev,ep,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(Card.IsNegatableMonster,tp,0,LOCATION_MZONE,nil)

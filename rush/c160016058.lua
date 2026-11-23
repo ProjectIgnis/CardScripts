@@ -41,8 +41,7 @@ function s.operation(fustg,fusop)
 		--Effect
 		local g=Duel.SelectMatchingCard(tp,Card.IsCanChangePositionRush,tp,0,LOCATION_MZONE,1,1,nil)
 		Duel.HintSelection(g)
-		Duel.ChangeToFaceupAttackOrFacedownDefense(g:GetFirst(),tp)
-		if fustg(e,tp,eg,ep,ev,re,r,rp,0) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
+		if Duel.ChangeToFaceupAttackOrFacedownDefense(g:GetFirst(),tp)>0 and fustg(e,tp,eg,ep,ev,re,r,rp,0) and Duel.SelectYesNo(tp,aux.Stringid(id,1)) then
 			Duel.BreakEffect()
 			fusop(e,tp,eg,ep,ev,re,r,rp)
 		end

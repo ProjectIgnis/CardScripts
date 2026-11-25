@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	e1:SetOperation(s.operation)
 	c:RegisterEffect(e1)
 end
-function s.filter(c)
+function s.cfilter(c)
 	return c:IsFaceup() and c:IsRace(RACE_SPELLCASTER) and c:GetAttackedCount()==0 and c:CanAttack()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

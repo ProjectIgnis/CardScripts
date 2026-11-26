@@ -2,77 +2,72 @@
 --Summoner Monk
 local s,id=GetID()
 function s.initial_effect(c)
-	--to defense
-	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(id,0))
-	e1:SetCategory(CATEGORY_POSITION)
-	e1:SetType(EFFECT_TYPE_TRIGGER_F+EFFECT_TYPE_SINGLE)
-	e1:SetCode(EVENT_SUMMON_SUCCESS)
-	e1:SetTarget(s.potg)
-	e1:SetOperation(s.poop)
-	c:RegisterEffect(e1)
-	local e2=e1:Clone()
-	e2:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
-	c:RegisterEffect(e2)
-	--special summon
+	--While this card is face-up on the field, it cannot be Tributed
+	local e1a=Effect.CreateEffect(c)
+	e1a:SetType(EFFECT_TYPE_SINGLE)
+	e1a:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e1a:SetCode(EFFECT_UNRELEASABLE_SUM)
+	e1a:SetRange(LOCATION_MZONE)
+	e1a:SetValue(1)
+	c:RegisterEffect(e1a)
+	local e1b=e1a:Clone()
+	e1b:SetCode(EFFECT_UNRELEASABLE_NONSUM)
+	c:RegisterEffect(e1b)
+	--If this card is Normal or Flip Summoned: Change this card to Defense Position
+	local e2a=Effect.CreateEffect(c)
+	e2a:SetDescription(aux.Stringid(id,0))
+	e2a:SetCategory(CATEGORY_POSITION)
+	e2a:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
+	e2a:SetCode(EVENT_SUMMON_SUCCESS)
+	e2a:SetTarget(s.postg)
+	e2a:SetOperation(s.posop)
+	c:RegisterEffect(e2a)
+	local e2b=e2a:Clone()
+	e2b:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
+	c:RegisterEffect(e2b)
+	--Once per turn: You can discard 1 Spell; Special Summon 1 Level 4 monster from your Deck, but that monster cannot attack this turn
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(id,1))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_IGNITION)
-	e3:SetCountLimit(1)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetCost(s.spcost)
+	e3:SetCountLimit(1)
+	e3:SetCost(Cost.Discard(Card.IsSpell))
 	e3:SetTarget(s.sptg)
 	e3:SetOperation(s.spop)
 	c:RegisterEffect(e3)
-	--cannot release
-	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_SINGLE)
-	e4:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e4:SetRange(LOCATION_MZONE)
-	e4:SetCode(EFFECT_UNRELEASABLE_SUM)
-	e4:SetValue(1)
-	c:RegisterEffect(e4)
-	local e5=e4:Clone()
-	e5:SetCode(EFFECT_UNRELEASABLE_NONSUM)
-	c:RegisterEffect(e5)
 end
-function s.potg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chk==0 then return e:GetHandler():IsAttackPos() end
-	Duel.SetOperationInfo(0,CATEGORY_POSITION,e:GetHandler(),1,0,0)
+function s.postg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chk==0 then return true end
+	Duel.SetOperationInfo(0,CATEGORY_POSITION,e:GetHandler(),1,tp,POS_FACEUP_DEFENSE)
 end
-function s.poop(e,tp,eg,ep,ev,re,r,rp)
+function s.posop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsFaceup() and c:IsAttackPos() and c:IsRelateToEffect(e) then
+	if c:IsRelateToEffect(e) and c:IsFaceup() then
 		Duel.ChangePosition(c,POS_FACEUP_DEFENSE)
 	end
 end
-function s.costfilter(c)
-	return c:IsSpell() and c:IsDiscardable()
-end
-function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(s.costfilter,tp,LOCATION_HAND,0,1,e:GetHandler()) end
-	Duel.DiscardHand(tp,s.costfilter,1,1,REASON_COST|REASON_DISCARD)
-end
-function s.filter(c,e,tp)
-	return c:GetLevel()==4 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+function s.spfilter(c,e,tp)
+	return c:IsLevel(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_DECK,0,1,nil,e,tp) end
+		and Duel.IsExistingMatchingCard(s.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
-	local tc=g:GetFirst()
-	if tc then
-		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
+	local sc=Duel.SelectMatchingCard(tp,s.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp):GetFirst()
+	if sc and Duel.SpecialSummonStep(sc,0,tp,tp,false,false,POS_FACEUP) then
+		--But that monster cannot attack this turn
 		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetDescription(3206)
 		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CLIENT_HINT)
 		e1:SetCode(EFFECT_CANNOT_ATTACK)
 		e1:SetReset(RESETS_STANDARD_PHASE_END)
-		tc:RegisterEffect(e1)
+		sc:RegisterEffect(e1)
 	end
+	Duel.SpecialSummonComplete()
 end

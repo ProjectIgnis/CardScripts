@@ -55,25 +55,24 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 	if #tg==2 and Duel.GetLocationCount(tp,LOCATION_MZONE)<2 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		tg=tg:FilterSelect(tp,Card.IsCanBeSpecialSummoned,1,1,nil,e,0,tp,false,false)
-	else
-		for tc in tg:Iter() do
-			if Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
-				tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,1))
-				--You cannot Special Summon, except Fiend monsters, while you control either of those face-up monsters
-				local e1=Effect.CreateEffect(e:GetHandler())
-				e1:SetType(EFFECT_TYPE_FIELD)
-				e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CANNOT_DISABLE)
-				e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-				e1:SetRange(LOCATION_MZONE)
-				e1:SetAbsoluteRange(tp,1,0)
-				e1:SetCondition(function(e) return e:GetHandler():IsControler(e:GetOwnerPlayer()) end)
-				e1:SetTarget(function(e,c) return c:IsRaceExcept(RACE_FIEND) end)
-				e1:SetReset(RESET_EVENT|RESETS_STANDARD)
-				tc:RegisterEffect(e1)
-			end
-		end
-		Duel.SpecialSummonComplete()
 	end
+	for tc in tg:Iter() do
+		if Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
+			tc:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(id,1))
+			--You cannot Special Summon, except Fiend monsters, while you control either of those face-up monsters
+			local e1=Effect.CreateEffect(e:GetHandler())
+			e1:SetType(EFFECT_TYPE_FIELD)
+			e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CANNOT_DISABLE)
+			e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+			e1:SetRange(LOCATION_MZONE)
+			e1:SetAbsoluteRange(tp,1,0)
+			e1:SetCondition(function(e) return e:GetHandler():IsControler(e:GetOwnerPlayer()) end)
+			e1:SetTarget(function(e,c) return c:IsRaceExcept(RACE_FIEND) end)
+			e1:SetReset(RESET_EVENT|RESETS_STANDARD)
+			tc:RegisterEffect(e1)
+		end
+	end
+	Duel.SpecialSummonComplete()
 end
 function s.repfilter(c,e)
 	return c:IsFaceup() and c:IsDestructable(e) and not c:IsStatus(STATUS_DESTROY_CONFIRMED|STATUS_BATTLE_DESTROYED)

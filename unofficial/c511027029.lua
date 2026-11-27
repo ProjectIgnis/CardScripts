@@ -2,10 +2,10 @@
 --Slifer the Sky Dragon (TF3)
 local s,id=GetID()
 function s.initial_effect(c)
-	--summon with 3 tribute
+	--Must be Normal Summoned/Set by Tributing 3 monsters
 	local e1=aux.AddNormalSummonProcedure(c,true,false,3,3)
-	local e2=aux.AddNormalSetProcedure(c)
-	--cannot be target
+	local e2=aux.AddNormalSetProcedure(c,true,false,3,3)
+	--Neither player can target this card with card effects
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
@@ -13,7 +13,7 @@ function s.initial_effect(c)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetValue(1)
 	c:RegisterEffect(e3)
-	--to grave
+	--Send this Special Summoned card to the Graveyard
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(id,0))
 	e4:SetCategory(CATEGORY_TOGRAVE)
@@ -25,7 +25,7 @@ function s.initial_effect(c)
 	e4:SetTarget(s.tgtg)
 	e4:SetOperation(s.tgop)
 	c:RegisterEffect(e4)
-	--atk/def
+	--This card's ATK/DEF become the number of cards in your hand x 1000
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_SINGLE)
 	e5:SetCode(EFFECT_SET_ATTACK)
@@ -36,7 +36,7 @@ function s.initial_effect(c)
 	local e6=e5:Clone()
 	e6:SetCode(EFFECT_SET_DEFENSE)
 	c:RegisterEffect(e6)
-	--destroy
+	--Destroy that monster your opponent Normal or Flip Summons with 2000 or less DEF
 	local e7=Effect.CreateEffect(c)
 	e7:SetDescription(aux.Stringid(id,1))
 	e7:SetCategory(CATEGORY_DESTROY)

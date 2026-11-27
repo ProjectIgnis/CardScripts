@@ -30,7 +30,7 @@ function s.initial_effect(c)
 	e3:SetValue(1)
 	c:RegisterEffect(e3)
 end
-s.listed_series={SET_XENOVADER}
+s.listed_series={SET_TRIREALM_RIFT}
 s.listed_names={id}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local dg=Duel.GetDecktopGroup(tp,5)
@@ -50,7 +50,7 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(rg,POS_FACEDOWN,REASON_COST)
 end
 function s.thfilter(c)
-	return c:IsFacedown() and c:IsSetCard(SET_XENOVADER) and not c:IsCode(id) and c:IsAbleToHand()
+	return c:IsFacedown() and c:IsSetCard(SET_TRIREALM_RIFT) and not c:IsCode(id) and c:IsAbleToHand()
 end
 function s.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.thfilter,tp,LOCATION_REMOVED,0,1,nil) end
@@ -65,7 +65,7 @@ function s.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.actfilter(c)
-	return c:IsLevelAbove(5) and c:IsSetCard(SET_XENOVADER) and c:IsFaceup()
+	return c:IsLevelAbove(5) and c:IsSetCard(SET_TRIREALM_RIFT) and c:IsFaceup()
 end
 function s.actcon(e)
 	local tp=e:GetHandlerPlayer()

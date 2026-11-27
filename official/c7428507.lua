@@ -47,7 +47,7 @@ function s.initial_effect(c)
 	e3a:SetRange(LOCATION_MZONE)
 	e3a:SetTargetRange(LOCATION_ONFIELD,0)
 	e3a:SetTarget(function(e,c)
-		return c:IsSetCard(SET_XENOVADER) and c~=e:GetHandler()
+		return c:IsSetCard(SET_TRIREALM_RIFT) and c~=e:GetHandler()
 	end)
 	e3a:SetValue(aux.indoval)
 	c:RegisterEffect(e3a)
@@ -57,9 +57,9 @@ function s.initial_effect(c)
 	e3b:SetValue(aux.tgoval)
 	c:RegisterEffect(e3b)
 end
-s.listed_series={SET_XENOVADER}
+s.listed_series={SET_TRIREALM_RIFT}
 function s.spfilter(c,e,tp)
-	return c:IsFacedown() and c:IsSetCard(SET_XENOVADER) and not c:IsLevel(6)
+	return c:IsFacedown() and c:IsSetCard(SET_TRIREALM_RIFT) and not c:IsLevel(6)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.selfbantg(e,tp,eg,ep,ev,re,r,rp,chk)

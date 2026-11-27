@@ -53,7 +53,7 @@ function s.initial_effect(c)
 	e2:SetOperation(s.atkop)
 	c:RegisterEffect(e2)
 end
-s.listed_series={SET_XENOVADER}
+s.listed_series={SET_TRIREALM_RIFT}
 s.listed_names={id}
 function s.sumgroupregop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=eg:Filter(Card.IsFaceup,nil)
@@ -72,7 +72,7 @@ function s.tgfilter(c,e,tp,opp,mmz_chk)
 		and Duel.IsExistingMatchingCard(s.thspfilter,tp,LOCATION_REMOVED,0,1,nil,e,tp,mmz_chk,c:GetAttribute())
 end
 function s.thspfilter(c,e,tp,mmz_chk,attr)
-	return c:IsFacedown() and c:IsSetCard(SET_XENOVADER) and c:IsAttribute(attr) and s.attr_list[tp]&c:GetAttribute()==0
+	return c:IsFacedown() and c:IsSetCard(SET_TRIREALM_RIFT) and c:IsAttribute(attr) and s.attr_list[tp]&c:GetAttribute()==0
 		and (c:IsAbleToHand() or (mmz_chk and c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
 end
 function s.thsptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -125,14 +125,14 @@ function s.thspop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetCode(EFFECT_CANNOT_ACTIVATE)
 	e1:SetTargetRange(1,0)
-	e1:SetValue(function(e,re) return not re:GetHandler():IsSetCard(SET_XENOVADER) end)
+	e1:SetValue(function(e,re) return not re:GetHandler():IsSetCard(SET_TRIREALM_RIFT) end)
 	e1:SetReset(RESET_PHASE|PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
 function s.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>0 then return false end
 	local bc1,bc2=Duel.GetBattleMonster(tp)
-	return bc1 and bc1:IsSetCard(SET_XENOVADER) and bc2 and bc2:IsControler(1-tp) and bc2:HasNonZeroAttack()
+	return bc1 and bc1:IsSetCard(SET_TRIREALM_RIFT) and bc2 and bc2:IsControler(1-tp) and bc2:HasNonZeroAttack()
 end
 function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local _,bc=Duel.GetBattleMonster(tp)

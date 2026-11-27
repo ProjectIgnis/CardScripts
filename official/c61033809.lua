@@ -49,9 +49,9 @@ function s.initial_effect(c)
 	e3:SetOperation(s.negop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={SET_XENOVADER}
+s.listed_series={SET_TRIREALM_RIFT}
 function s.thfilter(c)
-	return c:IsFacedown() and c:IsSetCard(SET_XENOVADER) and not c:IsLevel(5) and c:IsAbleToHand()
+	return c:IsFacedown() and c:IsSetCard(SET_TRIREALM_RIFT) and not c:IsLevel(5) and c:IsAbleToHand()
 end
 function s.selfbantg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -75,7 +75,7 @@ function s.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==1-tp and re:IsMonsterEffect() and Duel.IsChainNegatable(ev)
 end
 function s.tdfilter(c,attr)
-	return c:IsFacedown() and c:IsSetCard(SET_XENOVADER) and c:IsAttribute(attr) and c:IsAbleToDeck()
+	return c:IsFacedown() and c:IsSetCard(SET_TRIREALM_RIFT) and c:IsAttribute(attr) and c:IsAbleToDeck()
 end
 function s.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tdfilter,tp,LOCATION_REMOVED,0,1,nil,re:GetCardAttribute()) end

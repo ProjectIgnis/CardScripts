@@ -17,7 +17,7 @@ function s.initial_effect(c)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTargetRange(LOCATION_HAND|LOCATION_MZONE,0)
 	e2:SetTarget(function(e,c)
-		return c:IsSetCard(SET_XENOVADER)
+		return c:IsSetCard(SET_TRIREALM_RIFT)
 	end)
 	c:RegisterEffect(e2)
 	--During your Main Phase: You can banish (face-down) 1 "Trirealm Rift" monster you control whose original Level is 4 or lower, and if you do, Special Summon 1 of your face-down banished Level 5 or higher "Trirealm Rift" monsters. You can only use this effect of "Trirealm Rift Gospel" once per turn
@@ -31,7 +31,7 @@ function s.initial_effect(c)
 	e3:SetOperation(s.banspop)
 	c:RegisterEffect(e3)
 end
-s.listed_series={SET_XENOVADER}
+s.listed_series={SET_TRIREALM_RIFT}
 function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local dg=Duel.GetDecktopGroup(tp,5)
 	local dc=dg:FilterCount(Card.IsAbleToRemoveAsCost,nil,POS_FACEDOWN)
@@ -50,11 +50,11 @@ function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(rg,POS_FACEDOWN,REASON_COST)
 end
 function s.banfilter(c,tp)
-	return c:IsSetCard(SET_XENOVADER) and c:GetOriginalLevel()<=4 and c:IsAbleToRemove(tp,POS_FACEDOWN) and c:IsFaceup()
+	return c:IsSetCard(SET_TRIREALM_RIFT) and c:GetOriginalLevel()<=4 and c:IsAbleToRemove(tp,POS_FACEDOWN) and c:IsFaceup()
 		and Duel.GetMZoneCount(tp,c)>0
 end
 function s.spfilter(c,e,tp)
-	return c:IsFacedown() and c:IsSetCard(SET_XENOVADER) and c:IsLevelAbove(5)
+	return c:IsFacedown() and c:IsSetCard(SET_TRIREALM_RIFT) and c:IsLevelAbove(5)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function s.bansptg(e,tp,eg,ep,ev,re,r,rp,chk)

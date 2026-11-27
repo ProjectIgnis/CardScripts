@@ -50,9 +50,9 @@ function s.initial_effect(c)
 	e3:SetHintTiming(0,TIMING_STANDBY_PHASE|TIMING_MAIN_END|TIMINGS_CHECK_MONSTER_E)
 	c:RegisterEffect(e3)
 end
-s.listed_series={SET_XENOVADER}
+s.listed_series={SET_TRIREALM_RIFT}
 function s.selfbancostfilter(c,tp)
-	return c:IsSetCard(SET_XENOVADER) and not c:IsPublic() and c:IsAbleToRemove(tp,POS_FACEDOWN)
+	return c:IsSetCard(SET_TRIREALM_RIFT) and not c:IsPublic() and c:IsAbleToRemove(tp,POS_FACEDOWN)
 end
 function s.selfbancost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -80,7 +80,7 @@ function s.selfbanop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function s.tdfilter(c)
-	return c:IsFacedown() and c:IsSetCard(SET_XENOVADER) and c:IsMonster() and c:IsAbleToDeck()
+	return c:IsFacedown() and c:IsSetCard(SET_TRIREALM_RIFT) and c:IsMonster() and c:IsAbleToDeck()
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(s.tdfilter,tp,LOCATION_REMOVED,0,1,nil) end

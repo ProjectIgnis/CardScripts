@@ -49,9 +49,9 @@ function s.effcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	--● You cannot Special Summon from the Extra Deck until the end of the next turn, except Rank 7 Xyz Monsters, also this turn, each time a card(s) is added to your opponent's hand, except by drawing it, immediately draw 1 card
-	local option_1=not Duel.HasFlagEffect(tp,id+100)
+	local option_1=not Duel.HasFlagEffect(tp,id+1)
 	--● Draw 1 card
-	local option_2=not Duel.HasFlagEffect(tp,id+200)
+	local option_2=not Duel.HasFlagEffect(tp,id+2)
 		and Duel.IsPlayerCanDraw(tp,1)
 	if chk==0 then return option_1 or option_2 end
 	local choice=Duel.SelectEffect(tp,
@@ -59,10 +59,10 @@ function s.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 		{option_2,aux.Stringid(id,3)})
 	e:GetChainData().choice=choice
 	if choice==1 then
-		Duel.RegisterFlagEffect(tp,id+100,RESET_PHASE|PHASE_END,0,1)
+		Duel.RegisterFlagEffect(tp,id+1,RESET_PHASE|PHASE_END,0,1)
 		Duel.SetPossibleOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 	elseif choice==2 then
-		Duel.RegisterFlagEffect(tp,id+200,RESET_PHASE|PHASE_END,0,1)
+		Duel.RegisterFlagEffect(tp,id+2,RESET_PHASE|PHASE_END,0,1)
 		Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 	end
 end

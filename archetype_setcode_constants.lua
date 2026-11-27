@@ -612,6 +612,9 @@ SET_BLITZCLIQUE                   = 0x1d6
 SET_THEOREALIZE                   = 0x1d7
 SET_ALEISTER                      = 0x1d8
 SET_ANGELECHY                     = 0x1dc
+SET_ZENET                         = 0x1e1
+SET_TRIREALM_RIFT                 = 0x1e3
+SET_RAISE_MOON                    = 0x1e4
 --Released but the official English name is unconfirmed
 SET_DARK_TUNER                    = 0x1d5
 SET_WHITE_KNIGHT_NIGHT            = 0x1d9
@@ -623,9 +626,6 @@ SET_MEDIUS                        = 0x1df
 SET_MASQUERADE                    = 0x1e0
 SET_DOMINATORS                    = 0x1e2
 --Pre-release archetypes
-SET_ZENET                         = 0x1e1
-SET_XENOVADER                     = 0x1e3
-SET_RAISE_MOON                    = 0x1e4
 SET_DRAGON_CARD                   = 0x1e5
 SET_SUN_GOD                       = 0x1e6
 SET_THE_WINGED_DRAGON_OF_RA       = 0x1e7
